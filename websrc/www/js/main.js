@@ -73,7 +73,7 @@ var application = {
             });
             application.historyStack = [];
 
-            application.info.sigCd = "11110";
+            application.info.sigCd = "44440";
             application.info.sigNm = "충청북도 청주시";
             application.info.opeId = "cjjytb00";
             application.info.opeNm = "조영태";
