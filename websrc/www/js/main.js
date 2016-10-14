@@ -75,7 +75,7 @@ var application = {
 
             switch(application.telNo) {
             case "01059237764": // 사업단 테스트
-                application.info.sigCd = "114400";
+                application.info.sigCd = "11440";
                 application.info.sigNm = "서울특별시 마포구";
                 application.info.opeId = "kais";
                 application.info.opeNm = "kais관리자";
