@@ -70,5 +70,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+
+platforms/android/CordovaLib/CordovaLib.iml
+
 !./platforms/android/cordova
 !config.xml
