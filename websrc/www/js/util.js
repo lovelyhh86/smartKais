@@ -5,11 +5,7 @@ var util = {
         var def = $.Deferred();
         $.ajax({
             type: "get",
-          //type:"get",
             url: url,
-         //   url: "http://localhost:8000/android/www/sample/codemaster.js",
-         //   url:'http://lab.cubiq.org/iscroll5/demos/infinite/dataset.php?start=10&count=30',
-         //   acceptType: "application/json",
             dataType: "json",
             timeout: 100000,
             data: {},
@@ -284,8 +280,8 @@ var util = {
             case "appmenu":
                 util.showMenuPanel('#mainMenu');
                 return;
-            case "download":
-                 MKaisvPlugins.dn('https://goo.gl/l4o5X0',function(msg){
+                case "download":
+                 MKaisvPlugins.dn('http://api.juso.go.kr/gis/dnSmartKaisApp.jsp?sigCd=' + application.info.sigCd, function(msg){
                     alert(msg.message);
                  });
                  return;

@@ -11,7 +11,7 @@ var application = {
         var data = array.split("cn=");
         var divid=data[1];
 
-        application.telnum = array.split("tel=")[1];
+        application.telNo = array.split("tel=")[1];
 
     },
 
@@ -73,10 +73,30 @@ var application = {
             });
             application.historyStack = [];
 
-            application.info.sigCd = "44440";
-            application.info.sigNm = "충청북도 청주시";
-            application.info.opeId = "cjjytb00";
-            application.info.opeNm = "조영태";
+            switch(application.telNo) {
+            case "01059237764": // 사업단 테스트
+                application.info.sigCd = "114400";
+                application.info.sigNm = "서울특별시 마포구";
+                application.info.opeId = "kais";
+                application.info.opeNm = "kais관리자";
+                break;
+
+            case "01040599961":  // 충북 청주시
+                application.info.sigCd = "4311_";
+                application.info.sigNm = "충청북도 청주시";
+                application.info.opeId = "cjjytb00";
+                application.info.opeNm = "조영태";
+                break;
+            case "01059237764":  // 전북 김제시
+                application.info.sigCd = "45210";
+                application.info.sigNm = "전라북도 김제시";
+                application.info.opeId = "kjn1235";
+                application.info.opeNm = "김정남";
+                break;
+            }
+
+
+
             application.deviceReadyOK.resolve();
             util.dismissProgress();
         }, false);

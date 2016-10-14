@@ -166,14 +166,6 @@ public class CameraActivity extends Activity implements SensorEventListener {
 				finish();
 			}
 		});
-
-
-	//	flBtnContainer.setVisibility(LinearLayout.VISIBLE);
-	//	pickBtnContainer.setVisibility(LinearLayout.GONE);
-
-
-	//	cameraPreview.setVisibility(LinearLayout.VISIBLE);
-	//	takePreview.setVisibility(LinearLayout.GONE);
 	}
 
 	private void createCamera() {
