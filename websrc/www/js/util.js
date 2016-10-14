@@ -259,7 +259,7 @@ var util = {
 
                 application.historyStack = [];
                 url = pages.workpage.link();
-                document.location.href = url;
+                document.location.href = url + '?cn=&tel='+application.telnum;
                 param = "";
                 return;
             case "buildsign":
@@ -289,9 +289,9 @@ var util = {
                     alert(msg.message);
                  });
                  return;
-                 case "camera":
+             case "camera":
 
-        MKaisvPlugins.camera(function(result){
+                MKaisvPlugins.camera(function(result){
                          ;
                       });
                       return;

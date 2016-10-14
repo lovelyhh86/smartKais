@@ -10,7 +10,7 @@
 *.class
 
 # Generated files
-bin/
+
 gen/
 
 # Android Studio Generated files
@@ -69,3 +69,6 @@ Desktop.ini
 Network Trash Folder
 Temporary Items
 .apdisk
+
+!./platforms/android/cordova
+!config.xml

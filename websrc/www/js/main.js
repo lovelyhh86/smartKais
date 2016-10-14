@@ -12,7 +12,7 @@ var application = {
         var divid=data[1];
 
         application.telnum = array.split("tel=")[1];
-
+alert(application.telnum);
     },
 
     //페이지 preload

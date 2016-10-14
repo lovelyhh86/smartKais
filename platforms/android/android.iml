@@ -109,8 +109,8 @@
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-23.2.1" level="project" />
-    <orderEntry type="library" exported="" name="MFF_Attachment" level="project" />
     <orderEntry type="library" exported="" name="PushLibrary_local" level="project" />
+    <orderEntry type="library" exported="" name="MFF_Attachment" level="project" />
     <orderEntry type="library" exported="" name="MFF_ServiceBroker" level="project" />
     <orderEntry type="library" exported="" name="MFF_Gov" level="project" />
     <orderEntry type="library" exported="" name="design-23.2.1" level="project" />
