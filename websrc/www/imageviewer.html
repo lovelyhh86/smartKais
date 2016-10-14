@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<div id="imageviewer_page"  style="position:absolute;" data-role="page" data-category=''   data-dom-cache="true">
+
+
+    <div class="float-camera" id = "close_gallery" data-position="fixed"style='font-size:17px;box-shadow:0 0 0 #fff;top:10px;right:20px;background-color:#434242;opacity:0.25;'  >
+        <i class="fa fa-remove fa-inverse  back"></i>
+    </div>
+
+    <div class="float-camera" id = "refresh_gallery" data-position="fixed"style='font-size:17px;box-shadow:0 0 0 #fff;top:10px;right:70px;background-color:#434242;opacity:0.25;'  >
+        <i class="fa fa-refresh fa-inverse "></i>
+    </div>
+
+
+    <div data-role="content"  class="ui-content" >
+        <div id ="imagecontent" style='width:100%;height100%;' align='center'>
+            <img style='object-fit: contain;width: 100%;' >
+        </div>
+    </div>
+
+    <div data-role=“footer” >
+
+    </div>
+
+    <script type="text/javascript" src="js/panzoom/jquery.panzoom.js"></script>
+    <script>
+
+        $( document ).on("pagecreate",pages.imageviewer.div,  function() {
+            $(this).children(".ui-content").height($.mobile.getScreenHeight());
+           // $("#imagecontent").height($.mobile.getScreenHeight());
+        //application.scaleContentToDevice(this);
+            });
+
+        $( document ).on("pagebeforeshow",pages.imageviewer.div,  function(event,data) {
+
+
+            var context = application.context;
+            if (util.isEmpty(context))
+                return;
+            application.context = {};
+
+            $('#imagecontent img').attr('src',context.imagesrc);
+
+            $('#imagecontent').panzoom({
+                increment:0.4,
+                $reset:$('#refresh_gallery')
+            });
+
+
+            var top = ($.mobile.getScreenHeight() - $("#imagecontent").height()  ) / 2 ;
+            $("#imagecontent").css({'position':'absolute','top':'50%'});
+
+        });
+        $( document ).on("pageshow",pages.imageviewer.div,  function(event,data) {
+
+        });
+
+
+    </script>
+</div>
+
+
+
+
+
+
+
+
+

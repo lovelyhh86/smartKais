@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<style>
+
+.menu-fixed-right { right:-80%; }
+
+.menu-tabbar {display:block;position:relative;background-color: #545894;width:100%;overflow:hidden;}
+.menu-tabbar .menu-tab {position:relative;float:left;font-size:1.8em;padding:0.5em 0px;width:50%;text-align:center;border-bottom:0px solid #E0346A;color:#DDDDDD;}
+.menu-tabbar .menu-tab-selected { color:orange; border-bottom:3px solid orange; }
+
+
+.menu-listview {display:block;position:static;}
+
+.menu-search { padding:5px; }
+
+.menu-table {
+display:table;
+
+white-space:nowrap;
+background-color: #9796DD;
+width:100%;
+    color:rgba(11, 6, 39, 0.8);
+    border-radius: 1em;
+}
+
+.menu-table-row{
+display: table-row;
+}
+
+.menu-table-cell{
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.menu-table-rightcell{
+    display:table-cell;
+    right:0px;
+    width:2em;
+    text-align:right;
+    vertical-align:middle;
+    font-size:1.8em;
+    font-weight:500;
+    padding-right:1em;
+}
+
+.menu-table-rightcell a {right:0;}
+
+.combo-value{ display:inline;text-align:left;padding-left:1em;font-size:1.5em; }
+
+.combobox-options {
+width: 100%;
+position: relative;
+color: #DDDDDD;
+    z-index:40000;
+display:none;
+}
+.combobox-options li {
+height: 3em;
+    line-height:3em;
+    background-color: #9796DD;
+}
+
+.combobox-options li label {
+font-size:1em;
+    width:80%;
+    left:10%;
+    position:relative;
+    border-bottom:1px solid #B0C4DE
+}
+    .combobox-options li:last-child {
+    border-bottom-left-radius:1.2em;
+    border-bottom-right-radius:1.2em;
+
+    }
+    .combobox-options li:last-child > label{
+    border-bottom:0px solid #B0C4DE;
+    }
+
+.combobox-options .select {
+    color: #545894;
+}
+
+.qna-content{ padding:0px;color:rgba(0,0,0,0.7);overflow-y: auto;left:0;bottom:0;width:100%;position:absolute;height:400px;background:#FFFFFF;transform:none;-webkit-animation-name:none;-webkit-animation-duration:0;    }
+.qna-list-contents {width:100%;position:absolute;top:0px;background-color:#FFFFFF;}
+
+</style>
+
+<div id='qna-menu' >
+    <div id='qna-header' class="menu-header  menu-fixed-right" >
+        <div class="menu-header-title">
+            <h1>도움센터(QnA)</h1>
+            <a>
+                <i class="fa fa-close fa-inverse"> </i>
+            </a>
+        </div>
+
+        <div class="menu-tabbar">
+            <div class="menu-tab menu-tab-selected">미답변</div>
+            <div class="menu-tab">전 체</div>
+        </div>
+<!--
+        <div class='menu-search'>
+            <div  class='menu-table' >
+                <div class='menu-table-row'>
+                    <div class='menu-table-cell'  >
+                        <h1 class='combo-value'>전 체</h1>
+                    </div>
+
+                    <div class='menu-table-rightcell'>
+                        <i class="fa fa-chevron-down"> </i>
+                    </div>
+                </div>
+            </div>
+            <ul class="combobox-options" type='none'>
+                <li data-boardtype='0' class='select'><label>전 체</label></li>
+                <li data-boardtype='1'><label>건물명변경</label></li>
+                <li data-boardtype='2'><label>타사이트검색</label></li>
+                <li data-boardtype='3'><label>주소검색</label></li>
+                <li data-boardtype='4'><label>도로명정보제공</label></li>
+            </ul>
+        </div>
+-->
+        <div class='menu-search ' >
+            <div  class='menu-table' >
+                <div class='menu-table-row'>
+                    <div class='menu-table-cell'  >
+                        <h1 class='combo-value'>전 체</h1>
+                    </div>
+
+                    <div class='menu-table-rightcell'>
+                        <a>
+                            <i class="fa fa-chevron-down"> </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <ul class="combobox-options" type='none'>
+                <li data-boardtype='ALL' class='select'><label>전 체</label></li>
+                <li data-boardtype="01"><label>정책/제도</label></li>
+                <li data-boardtype="42"><label>건물명판</label></li>
+                <li data-boardtype="43"><label>도로명칭</label></li>
+                <li data-boardtype="44"><label>주소미검색</label></li>
+                <li data-boardtype="45"><label>기타</label></li>
+                <li data-boardtype="46"><label>홈페이지운영</label></li>
+                <li data-boardtype="47"><label>주소검색</label></li>
+                <li data-boardtype="48"><label>건물명변경</label></li>
+                <li data-boardtype="49"><label>정보연계</label></li>
+                <li data-boardtype="50"><label>도로명주소부여</label></li>
+                <li data-boardtype="52"><label>타사이트검색</label></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div  id = "qna-list-container" class='qna-content'>
+        <div class='pulldown-header'>
+            <h2>당겨서 새로고침</h2>
+        </div>
+        <div id ="qna-list" class='qna-list-contents' >
+        </div>
+    </div>
+
+    <div  id = "qna-list-all-container" class='qna-content  display-none '>
+        <div class='pulldown-header' >
+            <h2>당겨서 새로고침</h2>
+        </div>
+        <div id ="qna-list-all" class='qna-list-contents' >
+        </div>
+    </div>
+</div>

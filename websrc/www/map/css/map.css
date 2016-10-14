@@ -1,0 +1,85 @@
+#map { width: 100%; height: 100%; margin: 0; }
+
+/* Override jQuery.mobile.css */
+#mapview_page .ui-checkbox { width: 33.3%; }
+#mapview_page .ui-checkbox .ui-btn {
+    text-align: center;
+    background-color: #f6f6f6 /*{a-bup-background-color}*/;
+    border-color: #ddd /*{a-bup-border}*/;
+    color: #333 /*{a-bup-color}*/;
+}
+#mapview_page .ui-checkbox  label[for="top_menu_1"].ui-btn.ui-btn-active {
+    background-color: orange /*{a-active-background-color}*/;
+    border-color: orange /*{a-active-border}*/;
+    color: #fff /*{a-active-color}*/;
+}
+#mapview_page .ui-checkbox  label[for="top_menu_2"].ui-btn.ui-btn-active {
+    background-color: blue /*{a-active-background-color}*/;
+    border-color: blue /*{a-active-border}*/;
+    color: #fff /*{a-active-color}*/;
+}
+#mapview_page .ui-checkbox  label[for="top_menu_3"].ui-btn.ui-btn-active {
+    background-color: green /*{a-active-background-color}*/;
+    border-color: green /*{a-active-border}*/;
+    color: #fff /*{a-active-color}*/;
+}
+#mapview_page .ui-checkbox  label[for="top_menu_4"].ui-btn.ui-btn-active {
+    background-color: skyblue /*{a-active-background-color}*/;
+    border-color: skyblue /*{a-active-border}*/;
+    color: #fff /*{a-active-color}*/;
+}
+#mapview_page .ui-input-text, .ui-input-search { margin: 0 }
+
+#mapview_page .ui-controlgroup, fieldset.ui-controlgroup { margin: 0; }
+#mapview_page .ui-controlgroup-horizontal .ui-controlgroup-controls { width: 100%; }
+
+
+/* Override Openlayers.css */
+#mapview_page .ol-zoom { top: unset; bottom: .5em; }
+#mapview_page .ol-rotate { top: 2.5em; }
+
+#mapview_page .ol-popup {
+	position: absolute;
+	background-color: white;
+	-webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+	filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+	padding: 15px;
+	border-radius: 10px;
+	border: 1px solid #cccccc;
+	bottom: 15px;
+	left: -50px;
+	min-width: 280px;
+}
+#mapview_page .ol-popup:after, .ol-popup:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#mapview_page .ol-popup:after {
+	border-top-color: white;
+	border-width: 10px;
+	left: 48px;
+	margin-left: -10px;
+}
+#mapview_page .ol-popup:before {
+	border-top-color: #cccccc;
+	border-width: 11px;
+	left: 48px;
+	margin-left: -11px;
+}
+#mapview_page .ol-popup-closer {
+	text-decoration: none;
+	position: absolute;
+	top: 2px;
+	right: 8px;
+}
+#mapview_page .ol-popup-closer:after {
+	content: "✖";
+}
+
+
+#map_current { position:absolute; left: .5em; top: 9.5em; }

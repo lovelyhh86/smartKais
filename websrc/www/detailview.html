@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+
+<div id="detailview_page" data-sn='' data-sigcd='' data-category='' style="position:absolute;" data-role="page"    data-dom-cache="true">
+
+    <style>
+        div.detailview_radiobox{ display:table;width:80%;margin:0 auto; }
+        div.detailview_radiobox_container{ display:table-row;height:50px; }
+
+        div.formElement.radio {
+        min-height: 16px;
+        display:table-cell;
+        margin-right: 60px
+        }
+
+        span.radio-wrapper {
+        position: relative;
+        display: inline-block;
+        color: #666;
+        }
+
+        div.formElement.radio input[type=radio] {
+        display: none;
+        }
+
+        div.formElement.radio .radioBox {
+        position: absolute;
+        box-sizing: border-box;
+        top: 0;
+        left: 0;
+        width: 32px;
+        height: 32px;
+        border-width: 3px;
+        border-style: solid;
+        border-radius: 50%;
+        }
+        div.formElement.radio .radioBox .radioButton {
+        pointer-events: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        }
+
+        div.formElement.radio .radioBox .radioText {
+        position:absolute;
+        top:0;
+        left:50%;
+        width:80px;
+        font-size:20px;
+        margin-left:30px;
+        }
+
+        div.formElement.radio input[type=radio]:checked + label.radioBox > span.radioButton{
+        background-color: #3D4190;
+        }
+        div.formElement.radio input[type=radio]:checked + label.radioBox
+        {
+        border-color: #3D4190;
+        }
+
+
+        #detailview_footer {
+        position:absolute;
+        bottom:0;
+        left:0;
+        right:0;
+        border:none;
+        margin:0 10px;
+        padding:0 10px;
+        transform:none;
+        -webkit-animation-name:none;
+        }
+
+
+        #detailview_property_btn{ color:#3D4190;font-size:2em;text-align:center;}
+
+        #detailview_property_detail{ overflow-y:scroll;z-index:1000;position:absolute;background:white;color:rgb(119, 136, 153); left:0;width:100%;border:none; margin:0;padding:0; }
+        #detailview_property_detail > ul > li {
+        background-color: rgba(61,65,144,0.1);
+        padding: 10px;
+        margin: 5px 10px;
+        font-size: 1.3em;
+        border-radius: 0.3em;
+        }
+        #detailview_property_detail > ul > li > div {
+        display: inline-block;
+        position: relative;
+        width: 40%;
+        word-break: break-all;
+        vertical-align: text-top;
+        }
+        #detailview_property_detail > ul > li > div:last-child {
+        text-align:right;
+        width:60%;
+        color: #3D4190;
+        }
+
+        .detailview_property {
+        display: table;
+        width: 100%;
+        }
+
+        .detailview_property > div {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        border-color: rgba(61,65,144,0.1);
+        border-radius: 0.3em;
+        border-style: solid;
+        border-width: thin;
+        text-align: center;
+        font-size:1.5em;
+        }
+
+        .detailview_property > div.title {
+        background-color: rgba(61,65,144,0.1);
+        color: rgba(61,65,144,0.6);
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        width:4em;
+        }
+
+        .detailview_property > div.value {
+        background-color: rgba(61,65,144,0.05);
+        color: rgba(61,65,144,0.9);
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+        width:5em;
+        }
+
+        .detailview_property > div.detail {
+
+        background-color: rgba(61,65,144,0.5);
+        color: #FFF;
+        width: 4em;
+        padding: 4px 0;
+        }
+        .detailview_property > div.detail > a {
+        text-decoration: none;
+        }
+
+
+
+    </style>
+
+
+    <div class="subtitleheader" >
+        <label id='detailview_title' class='ellipsis'></label>
+    </div>
+
+    <div id='detail_images_container' class='image-slider'  >
+        <div id="detail_images" >
+            <ul class="slides">
+                <li> </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="float-camera" id = "detail_addimage" data-position="fixed"   >
+        <i class="fa fa-camera fa-inverse "></i>
+    </div>
+
+    <div id='detailview_contents' data-role="content"  class="ui-content" style='border:0;padding:10px;' >
+
+        <div id='detailview_property' class='detailview_property'>
+            <div class='title'>
+                설치유형
+            </div>
+            <div class='value'>
+
+            </div>
+            <div style="display: table-cell;width: 0.5em;border:none;"></div>
+            <div class='detail'>
+                <a href='#'>속성보기</a>
+            </div>
+        </div>
+
+        <div class='memo_container'>
+            <textarea id='detailview_memo' data-role='none'  rows='5' placeholder='기타사항을 입력하세요'></textarea>
+        </div>
+
+        <div id='detailview_footer'>
+            <div class='detailview_radiobox'>
+                <div class='detailview_radiobox_container'>
+                    <div class="formElement radio">
+                  <span class="radio-wrapper">
+                    <input data-role='none' id="facStat_1" name="facStat" type="radio" value="01">
+                    <label for="facStat_1" class="radioBox">
+                        <span class='radioText'>정상</span>
+                        <span class="radioButton"></span>
+                    </label>
+                  </span>
+                    </div>
+                    <div class="formElement radio"  >
+                  <span class="radio-wrapper">
+                    <input data-role='none' id="facStat_2" name="facStat" type="radio" value="02">
+                    <label for="facStat_2" class="radioBox">
+                        <span class='radioText'>훼손</span>
+                        <span class="radioButton"></span>
+                    </label>
+                  </span>
+                    </div>
+                    <div class="formElement radio">
+                  <span class="radio-wrapper">
+                    <input data-role='none' id="facStat_3" name="facStat" type="radio" value="03">
+                    <label for="facStat_3" class="radioBox">
+                        <span class='radioText'>망실</span>
+                        <span class="radioButton"></span>
+                    </label>
+                  </span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a class="accept_btn accept_btn--download accept_btn--large" href="#">적   용</a>
+            </div>
+        </div>
+    </div>
+
+    <div id='detailview_property_detail' class='display-none'>
+        <div id='detailview_property_btn'>
+            <i  class="fa fa-angle-double-down"></i>
+        </div>
+
+        <ul>
+        </ul>
+    </div>
+</div>
+
+

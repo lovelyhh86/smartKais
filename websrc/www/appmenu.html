@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<style>
+
+.menu-fixed-left { left:-80%; }
+.menu-title {text-align:left;color:#fff;padding-left:0.5em;margin:0;font-size:1.5em;}
+.menu-content { position:relative;float:left;font-size:24px;padding:18px 0px;width:100%;text-align:left;border-bottom:0px solid #E0346A; }
+
+.appMenuPanel > ul {
+padding:1em;
+list-style-type:none;
+background:#FFFFFF;
+}
+
+.appMenuPanel ul a {
+display:block;
+padding:5px;
+color:#c7c7c7;
+text-decoration:none;
+font-size:18px;
+font-weight:800;
+}
+
+.appMenuPanel i {
+padding-right:5px;
+}
+
+.appMenuPanel ul > li > a:active {color :sandybrown !important;}
+
+.appMenuPanel > div{padding:0}
+.appMenuPanel ul > li{overflow:hidden}
+.appMenuPanel ul > li > a{overflow:hidden;display:block;padding:1em 0 1em 1em;font-size:1.2em;color:rgba(61,65,144,0.6);line-height:1.2em;border-bottom:1px solid rgba(84,88,148,0.2)}
+.appMenuPanel ul > li > a > span{width:21px;height:20px;display:block;float:left;margin:0 17px 0 7px}
+.appMenuPanel ul > li > a > span img{width:100%}
+.appMenuPanel ul > li > ul{border-bottom:1px solid #3c3c3c;padding:8px 0 9px 61px}
+.appMenuPanel ul > li.last > ul{border-bottom:none}
+.appMenuPanel ul > li > ul > li{line-height:30px}
+.appMenuPanel ul > li > ul > li > a{font-size:13px;color:#ccc !important;font-weight:normal;line-height:34px;padding:0;border:none}
+.appMenuPanel ul > li > ul > li > ul{padding:0 0 0 10px;border:none}
+.appMenuPanel ul > li > ul > li > ul li{padding:0 0 0 10px;background:url('../img/ico_gnb_dot.png') no-repeat 0 50%;background-size:5px 4px;border:none}
+.appMenuPanel ul > li > ul > li > ul li a{font-size:13px;color:#ccc !important;font-weight:normal;line-height:34px}
+
+
+</style>
+
+<div>
+    <div class="menu-header menu-fixed-left" >
+        <div class="menu-header-title">
+            <div class='menu-title' >도로명주소 안내시스템</div>
+            <a>
+                <i class="fa fa-close fa-inverse"> </i>
+            </a>
+            <h1>스마트KAIS</h1>
+        </div>
+
+        <nav class="appMenuPanel" >
+            <ul >
+                <li data-link='home'>
+                    <a href='#'>
+                        <i  class="fa fa-tasks" ></i>Home
+                    </a>
+                </li>
+                <li  data-link='mapservice'>
+                    <a href='#'>
+                        <i  class="fa fa-map-signs" ></i>지도서비스
+                    </a>
+                </li>
+                <!--
+                <li  data-link='roadsign'>
+                    <a href='#'>
+                        <i  class="fa fa-map-signs" ></i>도로명판
+                    </a>
+                </li>
+                <li  data-link='buildsign'>
+                    <a href='#'>
+                        <i  class="fa fa-building-o" ></i>건물번호판
+                    </a>
+                </li>
+                <li  data-link='areasign'>
+                    <a href='#'>
+                        <i  class="fa fa-globe " ></i>지역안내판
+                    </a>
+                </li>
+                <li  data-link='point'>
+                    <a href='#'>
+                        <i  class="fa fa-flag" ></i>기초번호판
+                    </a>
+                </li>
+                -->
+                <li  data-link='address'>
+                    <a href='#'>
+                        <i  class="fa fa-home " ></i>기초조사(상세주소)
+                    </a>
+                </li>
+                <li  data-link='download'>
+                    <a href='#'>
+                        <i  class="fa fa-home " ></i>최신 버전 설치
+                    </a>
+                </li>
+                <li  data-link='camera'>
+                    <a href='#'>
+                        <i  class="fa fa-home " ></i>카메라
+                    </a>
+                </li>
+                <li  data-link='album'>
+                    <a href='#'>
+                        <i  class="fa fa-home " ></i>카메라
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
