@@ -87,7 +87,8 @@ var application = {
                 application.info.opeId = "cjjytb00";
                 application.info.opeNm = "조영태";
                 break;
-            case "01059237764":  // 전북 김제시
+
+            case "01045399699":  // 전북 김제시
                 application.info.sigCd = "45210";
                 application.info.sigNm = "전라북도 김제시";
                 application.info.opeId = "kjn1235";
