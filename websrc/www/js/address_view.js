@@ -135,7 +135,10 @@ $( document ).on("pageshow",pages.detailaddress.div,  function() {
     var slider = $('#addressview_images').data('flexslider');
     slider.resize();
 
-    var contentTop = $('#addressview_images_container').height() + $('#addressview_images_container').offset().top;
+    //var contentTop = $('#addressview_images_container').height() + $('#addressview_images_container').offset().top;
+
+    var contentTop = $('#addressview_state_remark').height() + $('#addressview_state_remark').offset().top;
+
 
     $('#addressview_contents').css('top', contentTop);
     $('#addressview_contents').css('height', ( $(window).height() - contentTop - parseInt($('#addressview_contents').css('padding-top')) - parseInt($('#addressview_contents').css('padding-bottom'))  ) + 'px');
@@ -154,6 +157,7 @@ $(document).on("focus","#address_memo", function(){
 
     $('#addressview_contents > ul').addClass('display-none');
     $('#addressview_contents a.accept_btn').addClass('display-none');
+    $('#addresslview_keypad_opt').removeClass('display-none');
 });
 
 $(document).on("focusout","#address_memo", function(){
@@ -165,6 +169,7 @@ $(document).on("focusout","#address_memo", function(){
 
     $('#addressview_contents > ul').removeClass('display-none');
     $('#addressview_contents a.accept_btn').removeClass('display-none');
+    $('#addresslview_keypad_opt').addClass('display-none');
 
     var memo = $('#address_memo').val();
     if (memo.length > memoMaxLength)
