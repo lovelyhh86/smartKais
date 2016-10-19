@@ -281,7 +281,7 @@ var util = {
                 util.showMenuPanel('#mainMenu');
                 return;
                 case "download":
-                 MKaisvPlugins.dn('http://api.juso.go.kr/gis/dnSmartKaisApp.jsp?sigCd=' + application.info.sigCd, function(msg){
+                 MKaisvPlugins.dn('http://api.juso.go.kr/gis/dnSmartKaisApp.jsp', function(msg){
                     alert(msg.message);
                  });
                  return;
