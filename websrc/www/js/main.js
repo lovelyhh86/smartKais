@@ -73,30 +73,7 @@ var application = {
             });
             application.historyStack = [];
 
-            switch(application.telNo) {
-            case "01059237764": // 사업단 테스트
-                application.info.sigCd = "11440";
-                application.info.sigNm = "서울특별시 마포구";
-                application.info.opeId = "kais";
-                application.info.opeNm = "kais관리자";
-                break;
-
-            case "01040599961":  // 충북 청주시
-                application.info.sigCd = "4311_";
-                application.info.sigNm = "충청북도 청주시";
-                application.info.opeId = "cjjytb00";
-                application.info.opeNm = "조영태";
-                break;
-
-            case "01045399699":  // 전북 김제시
-                application.info.sigCd = "45210";
-                application.info.sigNm = "전라북도 김제시";
-                application.info.opeId = "kjn1235";
-                application.info.opeNm = "김정남";
-                break;
-            }
-
-
+            application.selectSig(application.telNo);
 
             application.deviceReadyOK.resolve();
             util.dismissProgress();
@@ -170,8 +147,47 @@ var application = {
 //        $.mobile.ajaxEnabled = false;
 
     },
+    selectSig: function (telno) {
+       for (var index = 0 ; index < application.sigInfos.length; index++)
+       {
+            if (telno === application.sigInfos[index].telno){
+                application.info = application.sigInfos[index].info;
+            }
+       }
+    },
+    sigInfos : [
+        {
+         telno : "01059237764", // 사업단 테스트
+         info : {
+                     sigCd : "11440",
+                     sigNm : "서울특별시 마포구",
+                     opeId : "kais",
+                     opeNm : "kais관리자"
+                 }
+         },
+        {
+         telno : "01040599961", // 충북 청주시
+         info : {
+                     sigCd : "4311_",
+                     sigNm : "충청북도 청주시",
+                     opeId : "cjjytb00",
+                     opeNm : "조영태"
+                 }
+         },
+        {
+         telno : "01045399699", // 전북 김제시
+         info : {
+                     sigCd : "45210",
+                     sigNm : "전라북도 김제시",
+                     opeId : "kjn1235",
+                     opeNm : "김정남"
+                 }
+         }
+    ],
+
     context : {},
     info :   new Object(),
+    mode : '11',
     historyStack : [],
     _dummy : ""
 };

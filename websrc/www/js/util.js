@@ -23,7 +23,7 @@ var util = {
     },
     postAJAX : function(context,urldata , direct){
         var def = $.Deferred();
-        urldata = $.extend({},{sigCd:application.info.sigCd}, urldata);  //시군구 코드 필수 추가
+        urldata = $.extend({},{sigCd:application.info.sigCd,mode:application.mode}, urldata);  //시군구 코드 필수 추가
         MKaisvPlugins.callServiceBroker(urldata,
                     function(results) {
                         var jsondata = results.resultData;//JSON.parse(results.resultData);
@@ -255,7 +255,7 @@ var util = {
 
                 application.historyStack = [];
                 url = pages.workpage.link();
-                document.location.href = url + '?cn=&tel='+application.telnum;
+                document.location.href = url + '?cn=&tel='+application.telNo;
                 param = "";
                 return;
             case "buildsign":
@@ -290,6 +290,8 @@ var util = {
                 MKaisvPlugins.camera(function(result){
                          ;
                       });
+                      return;
+              case "debug":
                       return;
         }
         util.slide_page('left', url, param);

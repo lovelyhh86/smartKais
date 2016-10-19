@@ -141,6 +141,18 @@ visibility: hidden;
     overflow:hidden;
 }
 
+/******* keypad menu ********/
+.keypad_menubar {
+        position: absolute;
+        bottom: 0px;
+        background-color: #3D4190;
+        color: white;
+        font-size: 1.5em;
+        padding: 5px 10px;
+        text-align: right;
+        right: 0;
+        left: 0;
+        }
 
 /************  button *************/
 

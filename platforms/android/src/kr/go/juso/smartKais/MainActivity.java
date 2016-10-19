@@ -44,6 +44,7 @@ public class MainActivity extends CordovaActivity
         loadUrl(launchUrl);
         String cn = getIntent().getStringExtra("cn");
         String tel = getIntent().getStringExtra("tel");
+        cn ="";
         loadUrl("javascript:var cn=\"" + cn + "\";var telnum=\"" + tel + "\";");
 
         new PushReceiverRegister(this).initialize();;

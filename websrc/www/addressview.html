@@ -5,9 +5,9 @@
 
     <style>
 
-        #addressview_contents  i.fa-circle-o { color:rgba(92, 66, 252, 0.6); font-size:1.2em;  vertical-align: middle;}
-        #addressview_contents  i.fa-check-circle-o { color:red; font-size:1.2em;  vertical-align: middle;}
-        #addressview_contents  i.fa-times-circle-o { color:rgba(0,0,0,0.5); font-size:1.2em;  vertical-align: middle;}
+        #addressview_page  i.fa-circle-o { color:rgba(92, 66, 252, 0.6); font-size:1.2em;  vertical-align: middle;}
+        #addressview_page  i.fa-check-circle-o { color:red; font-size:1.2em;  vertical-align: middle;}
+        #addressview_page  i.fa-times-circle-o { color:rgba(0,0,0,0.5); font-size:1.2em;  vertical-align: middle;}
 
         #addressview_contents{ position:absolute;background:white;color:rgb(119, 136, 153); border:none; padding:10px ; }
         #addressview_contents > ul > li {
@@ -37,9 +37,10 @@
         font-size:1.8em;
         }
 
-        #addressview_contents > .remark { display:table;width:100%;margin:0 auto; background-color: rgba(80, 83, 158, 0.22); border-radius: 0.3em;height:2em;font-size:1.5em;}
-        #addressview_contents > .remark > div{ display:table-row; }
-        #addressview_contents > .remark > div > div { display:table-cell; text-align: center;  vertical-align: middle;}
+        #addressview_page > .remark {margin:0 10px;}
+        #addressview_page > .remark > div{ display:table;width:100%;margin:0 auto; background-color: rgba(80, 83, 158, 0.22); border-radius: 0.3em;height:2em;font-size:1.5em;}
+        #addressview_page > .remark > div > div { display:table-row; }
+        #addressview_page > .remark > div > div > div { display:table-cell; text-align: center;  vertical-align: middle;}
     </style>
 
     <div class="subtitleheader" >
@@ -62,15 +63,17 @@
         <i class="fa fa-camera fa-inverse"></i>
     </div>
 
-    <div id='addressview_contents' data-role="content"   class="ui-content" >
-
-        <div class='remark'>
+    <div id='addressview_state_remark' class='remark'>
+        <div>
             <div >
                 <div><i class='fa fa-check-circle-o'></i>적 합</div>
                 <div><i class='fa fa-times-circle-o'></i>부적합</div>
                 <div><i class='fa fa-circle-o '></i>해당 없음</div>
             </div>
         </div>
+    </div>
+    <div id='addressview_contents' data-role="content"   class="ui-content" >
+
         <ul type='none'>
             <li><div>해당 건물등에 도로명주소가 부여되어 있습니까?</div><div class='addressviewCheck'><i id='address_item_0' class='fa fa-check-circle-o'></i></div></li>
             <li><div>상세주소 부여 / 변경 / 폐지 대상 건물입니까?<br>(공동주택 제외)</div><div class='addressviewCheck'><i id='address_item_1' class='fa  fa-check-circle-o'></i></div></li>
@@ -88,7 +91,7 @@
         </ul>
 
         <div class='memo_container'>
-            <textarea id='address_memo' data-role='none'  rows='8' placeholder='기타사항을 입력하세요'></textarea>
+            <textarea id='address_memo' data-role='none'  rows='5' placeholder='기타사항을 입력하세요'></textarea>
         </div>
 
         <div >
@@ -96,6 +99,12 @@
         </div>
 
     </div>
+    <div id="addresslview_keypad_opt" class='keypad_menubar display-none'>
+        <div >
+            입력 완료
+        </div>
+    </div>
+
 </div>
 
 

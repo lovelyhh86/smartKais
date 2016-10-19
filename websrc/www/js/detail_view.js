@@ -98,11 +98,13 @@ function buildContent(content ){
                 case 'basenumsign': functor = makePointInfo; status = data.lastCheckState;break;
             }
             $('#detailview_memo').val(data.checkComment);
-            if (status !== ''){
-                checker = $('input:radio[name="facStat"]:input[value='+status+']');
-                checker.prop("checked", true);
-              //  checker.checked = true;
-            }
+            if (util.isEmpty(status))
+                status = '01';
+
+            checker = $('input:radio[name="facStat"]:input[value='+status+']');
+            checker.prop("checked", true);
+          //  checker.checked = true;
+
 
             functor(data);
             facilityOrg = getProperties();
@@ -291,6 +293,8 @@ $(document).on("focus","#detailview_memo", function(){
     $('#detail_addimage').addClass('display-none');
     $('#detailview_footer').addClass('display-none');
     $('#detailview_property').addClass('display-none');
+
+    $('#detailview_keypad_opt').removeClass('display-none');
 });
 
 $(document).on("focusout","#detailview_memo", function(){
@@ -301,6 +305,8 @@ $(document).on("focusout","#detailview_memo", function(){
     $('#detail_addimage').removeClass('display-none');
     $('#detailview_footer').removeClass('display-none');
     $('#detailview_property').removeClass('display-none');
+
+    $('#detailview_keypad_opt').addClass('display-none');
 
     var memo = $('#detailview_memo').val();
     if (memo.length > memoMaxLength)
