@@ -147,17 +147,23 @@ var application = {
 //        $.mobile.ajaxEnabled = false;
 
     },
-    selectSig: function (telno) {
-       for (var index = 0 ; index < application.sigInfos.length; index++)
-       {
-            if (telno === application.sigInfos[index].telno){
+    selectSig: function (telNo) {
+        if( telNo == "01059237764") {
+            application.mode = "11";
+        } else {
+            application.mode = "00";
+        }
+
+        for (var index = 0 ; index < application.sigInfos.length; index++)
+        {
+            if (telNo === application.sigInfos[index].telNo){
                 application.info = application.sigInfos[index].info;
             }
-       }
+        }
     },
     sigInfos : [
         {
-         telno : "01059237764", // 사업단 테스트
+         telNo : "01059237764", // 사업단 테스트
          info : {
                      sigCd : "11440",
                      sigNm : "서울특별시 마포구",
@@ -166,7 +172,7 @@ var application = {
                  }
          },
         {
-         telno : "01040599961", // 충북 청주시
+         telNo : "01040599961", // 충북 청주시
          info : {
                      sigCd : "4311_",
                      sigNm : "충청북도 청주시",
@@ -175,7 +181,7 @@ var application = {
                  }
          },
         {
-         telno : "01045399699", // 전북 김제시
+         telNo : "01045399699", // 전북 김제시
          info : {
                      sigCd : "45210",
                      sigNm : "전라북도 김제시",
@@ -187,7 +193,7 @@ var application = {
 
     context : {},
     info :   new Object(),
-    mode : '11',
+    mode : '00',
     historyStack : [],
     _dummy : ""
 };

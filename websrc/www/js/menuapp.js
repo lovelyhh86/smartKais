@@ -6,12 +6,13 @@ function loadAppMenu(container){
         $('#menu_version').text('현재 버전:'+ BuildInfo.version);
 
 
-        if (application.mode !== '00'){
+        if (application.telNo == '01059237764'){
 
             for (var index = 0 ; index < application.sigInfos.length; index++) {
-                var telNo = application.sigInfos[index].telno;
+                var title = application.sigInfos[index].info.sigNm;
+                var telNo = application.sigInfos[index].telNo;
                 var elm = '<li  data-link="debug"> <a href="#" onclick="application.selectSig(\''+ telNo +'\')">' +
-                                telNo +
+                                title +
                                 '</a></li>';
 
                 $('.appMenuPanel ul').append(elm);

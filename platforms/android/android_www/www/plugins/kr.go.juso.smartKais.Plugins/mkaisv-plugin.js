@@ -82,10 +82,7 @@ MKaisvPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, d
         };
     }
 
-
 //return errorFn('e');
-    //reqParam = $.extend(reqParam,{mode:"00"});
-
     return exec(
                 successFn,
                 errorFn,
