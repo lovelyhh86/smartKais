@@ -69,6 +69,7 @@ MKaisvPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, d
     var param = $.extend({},{scode:'MF_MOI_SMART_KAIS', timeout:30000 },data );
 
     var svcNm = data.svcNm;
+    var mode = data.mode;
 
     var reqParam;
 
@@ -78,18 +79,30 @@ MKaisvPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, d
         delete data.svcNm;
         reqParam = {
             svcNm :svcNm,
+            mode : mode,
             req : JSON.stringify(data)
         };
     }
 
-//return errorFn('e');
-    return exec(
-                successFn,
-                errorFn,
-                'MKaisvPlugins',
-                'callServiceBroker',
-                [param, $.param(reqParam)]
-                );
+    if(data.brokerMode == MODE.DEBUG) {
+//        reqParam.svcType = "T";
+        $.ajax({
+            type: "POST",
+            url : "http://api.juso.go.kr/gis/proxyGeo4mkais.jsp?",
+            dataType: "json",
+            data: reqParam
+        }).done(successFn)
+          .fail(errorFn);
+    } else {
+        return exec(
+            successFn,
+            errorFn,
+            'MKaisvPlugins',
+            'callServiceBroker',
+            [param, $.param(reqParam)]
+        );
+    }
+
 };
 
 MKaisvPlugins.prototype.getSSOinfo = function(successFn) {

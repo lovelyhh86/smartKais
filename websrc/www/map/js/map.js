@@ -28,8 +28,6 @@ case MODE.RUNTIME:
     serviceProjection = ol.proj.get('SR-ORG:6640');
     break;
 case MODE.DEBUG:
-//    GIS_SERVICE_URL = "http://10.60.182.20/smartKaisProxy/mobile.proxy?mode=11&svcNm=mapService&sigCd=11440";
-    GIS_SERVICE_URL = "http://api.juso.go.kr/gis/proxyGeo4mkais.jsp?mode=11&svcNm=mapService&sigCd=11440";
     baseProjection = ol.proj.get('EPSG:5179');
     sourceProjection = ol.proj.get('EPSG:5174');
     serviceProjection = ol.proj.get('SR-ORG:6640');
@@ -409,30 +407,19 @@ var getFeatureLayer = function(options) {
           typeName: options.typeName
         };
 
-		switch(mode) {
-			case MODE.DEBUG:
-				$.ajax({
-				  url: GIS_SERVICE_URL,
-				  dataType: 'xml',
-				  data: param
-			    }).done(function(response) {
-				  vectorSource.addFeatures(new ol.format.WFS().readFeatures(response, {featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode()}));
-				});
-				break;
-			case MODE.RUNTIME:
-				var urldata = URLs.postURL(URLs.mapServiceLink,param);
-					util.showProgress();
-					util.postAJAX('', urldata, true)
-					.then(function(context,rcode,results) {
-						util.dismissProgress();
-						var features = new ol.format.WFS().readFeatures(results, {featureProjection: baseProjection.getCode(), dataProjection:sourceProjection.getCode()});
-						console.log("Count of loaded features are " + features.length);
-						vectorSource.addFeatures(features);
-					},function(context,xhr,error) {
-						console.log("조회 error >> " + error +'   '+ xhr);
-						util.dismissProgress();
-					});
-				}
+        var urldata = URLs.postURL(URLs.mapServiceLink,param);
+
+        util.showProgress();
+        util.postAJAX('', urldata, true)
+        .then(function(context,rcode,results) {
+            util.dismissProgress();
+            var features = new ol.format.WFS().readFeatures(results, {featureProjection: baseProjection.getCode(), dataProjection:sourceProjection.getCode()});
+            console.log("Count of loaded features are " + features.length);
+            vectorSource.addFeatures(features);
+        },function(context,xhr,error) {
+            console.log("조회 error >> " + error +'   '+ xhr);
+            util.dismissProgress();
+        });
     },
     strategy: ol.loadingstrategy.tile(new ol.tilegrid.createXYZ({
       maxZoom: 19
