@@ -213,21 +213,24 @@ $( document ).on("click","#detailview_footer a.accept_btn", function(event){
     }
     if (checkModified(facilityCur) == true)
     {
+        var param = $.extend({},{
+                                svcNm :  (  $('#detailview_page').data('category') == 'buildsign' ? 'uSPBD' : 'uSPGF' ),
+                                sn : $('#detailview_page').data('sn'),
+                                sigCd : $('#detailview_page').data('sigcd'),
+                                checkState : facilityCur.status,
+                                checkType : '01',
+                                checkComment: facilityCur.memo,
+                                checkUserNm:application.info.opeNm,
+                                checkDate : util.getToday(),
+                                workId : application.info.opeId,//,,
+                                files : facilityCur.images[0].base64.length == 0 ? []
+                                            : ( (facilityCur.hasNewImage || facilityOrg.hasNewImage) ? facilityCur.images : null )
+                               // images : facilityCur.images
+                            },
+                            facilityCur.attrs);
         updateWork(
-            {
-                svcNm :  (  $('#detailview_page').data('category') == 'buildsign' ? 'uSPBD' : 'uSPGF' ),
-                sn : $('#detailview_page').data('sn'),
-                sigCd : $('#detailview_page').data('sigcd'),
-                checkState : facilityCur.status,
-                checkType : '01',
-                checkComment: facilityCur.memo,
-                checkUserNm:application.info.opeNm,
-                checkDate : util.getToday(),
-                workId : application.info.opeId,//,,
-                files : facilityCur.images[0].base64.length == 0 ? []
-                            : ( (facilityCur.hasNewImage || facilityOrg.hasNewImage) ? facilityCur.images : null )
-               // images : facilityCur.images
-            },
+            param
+            ,
             function(){
                 util.toast('변경사항이 적용되었습니다');
                 var attr = {
@@ -347,13 +350,13 @@ function makeFacInfo(data)
           {key:'규 격',value:data.gdftyWide + ' x ' + data.gdftyVertical + ' x ' + data.gdftyThickness },
           {key:'재 질',value:data.gdftyQualityLbl},
           {key:'사용대상',value:data.useTargetLbl},
-          {key:'안내시설형식',value:data.gdftyFormLbl},
+          {key:'안내시설형식',value:data.gdftyFormLbl,  property:'gdftyForm', dropdown: ['표준형','비표준형'], dropdownAttr:['01','02']},
           {key:'제작형식',value:data.gdftyMnfLbl},
           {key:'단 가',value:data.gdftyUnitPrice},
           {key:'설치기준',value:data.instCrossCdLbl},
-          {key:'설치지점',value:data.instSpotCdLbl},
-          {key:'설치지점 참고',value:data.instSpotDesc},
-          {key:'설치/재설치 여부',value:data.isLgnYnLbl},
+          {key:'설치지점',value:data.instSpotCdLbl ,   property:'instSpotCd', dropdown: ['시작지점','중간지점','끝지점'], dropdownAttr:['01','02','03']},
+          {key:'설치지점 설명',value:data.instSpotDesc, property:'instSpotDesc', editable:true},
+          {key:'설치/재설치 여부',value:data.isLgnYnLbl, property:'isLgnYn', dropdown: ['설치','재설치'], dropdownAttr:['01','02']},
           {key:'설치기관',value:data.instInsLbl},
           {key:'설치기관 참고',value:data.instInstDesc},
           {key:'관리기관',value:data.manageInsLbl},
@@ -361,7 +364,7 @@ function makeFacInfo(data)
           {key:'제2외국어 표기유형',value:data.scfggMktyLbl},
           {key:'제2외국어 사용언어 1',value:data.scfggUla1},
           {key:'제2외국어 사용언어 2',value:data.scfggUla2},
-          {key:'양면여부',value:data.bdrclAtLbl},
+          {key:'양면여부',value:data.bdrclAtLbl,       property:'bdrclAt' , dropdown:['예','아니오'], dropdownAttr:['01','02']},
           {key:'망실여부',value:data.lossAtLbl},
           {key:'관리번호',value:data.ftyManageNo},
           {key:'입력방법',value:data.inputMethodLbl},
@@ -395,6 +398,30 @@ function makePointInfo(data)
     $('#detailview_property > .value').text(data.instSeLbl);
     makeFacInfo(data);
 }
+function createInput(item){
+    return  '<input data-property="'+ item.property +'" name="detailattr" style="width:100%" type="text"   value="' + item.value + '">';
+}
+
+function createDropDown( items){
+    var selectname = items.value;
+    var options = '';
+    var vals = items.vals;
+    var attrs = items.attrs;
+    for (var i = 0 ; i < vals.length ; i++)
+    {
+        var selected = "";
+        if (selectname == vals[i])
+            selected = "selected";
+        options += '<option value="' + attrs[i] +  '" '+ selected +'>' + vals[i] + "</option>";
+    }
+
+    var elem = '<div>' +
+               '<select data-property="'+ items.property +'" name="detailattr" data-native-menu="false">'+
+                    options +
+               '</select></div>';
+    return elem;
+}
+
 function makeDetailInfo(infolist){
 
     $('#detailview_property_detail > ul > li').remove();
@@ -406,7 +433,14 @@ function makeDetailInfo(infolist){
             val = infolist[index].value;
             if (val == null || val == undefined)
               val = '';
-            childs.push('<li><div>' + infolist[index].key + '</div><div>' + val + '</div></li>');
+
+            var fieldContent = '<div>' + val + '</div>';
+            if (infolist[index].dropdown) {
+                fieldContent = createDropDown( {value:val, property:infolist[index].property, vals: infolist[index].dropdown, attrs:infolist[index].dropdownAttr});
+            } else if (infolist[index].editable) {
+                fieldContent = createInput({value:val, property:infolist[index].property});
+            }
+            childs.push('<li><div>' + infolist[index].key + '</div>' + fieldContent +'</li>');
         }
         $('#detailview_property_detail > ul').append(childs);
     }
@@ -443,7 +477,8 @@ function getProperties(){
         status : '',
         memo: '',
         images:[],
-        hasNewImage :false
+        hasNewImage :false,
+        attrs:{}
     };
     properties.status = $('input:radio[name="facStat"]:checked').val();
     if (properties.status == undefined)
@@ -477,6 +512,25 @@ function getProperties(){
         }
 
     }
+
+    var inputs = $( "#detailview_property_detail input[name*='detailattr']" );
+    var selects = $( "#detailview_property_detail select[name*='detailattr']" );
+    var attrs = {};
+    for (var idx = 0 ; idx < inputs.length; idx++)
+    {
+        attrs[ $(inputs[idx]).data('property') ] = $(inputs[idx]).val();
+    }
+
+    for (var idx = 0 ; idx < selects.length; idx++)
+    {
+        attrs[ $(selects[idx]).data('property') ] = $(selects[idx]).val();
+    }
+
+    properties['attrs'] = attrs;
+
+    for (var a in properties){
+        console.log(properties[a]);
+    }
     return properties;
 }
 
@@ -486,8 +540,8 @@ function checkModified(obj)
             || facilityOrg.memo !== obj.memo
         //    || $("#detail_images .slides").find( " li[data-id='-1000']").length > 0
             || function(){
-                var ofname ='';
-                var nfname ='';
+                var ofname = '';
+                var nfname = '';
                 for (var i = 0 ; i < facilityOrg.images.length; i++)
                 {
                     ofname += facilityOrg.images[i].name;
@@ -497,6 +551,15 @@ function checkModified(obj)
                     nfname += obj.images[i].name;
                 }
                 return ofname !== nfname;
+
+            }()
+            || function(){
+                for (var key in facilityOrg.attrs){
+                    console.log(facilityOrg.attrs[key] +'    '+ obj.attrs[key]);
+                    if ( facilityOrg.attrs[key] !== obj.attrs[key] )
+                        return true;
+                }
+                    return false;
 
             }();
 }
