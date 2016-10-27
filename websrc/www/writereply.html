@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+
+<div id='write_reply_page' style='z-index:100000;' data-role="page"    data-dom-cache="true">
+
+    <style>
+        #write_reply_memo {
+          position: absolute;
+          padding: 10px;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width:100%;
+
+          border: none;
+        }
+
+        #write_reply_memo:focus {
+          border: none;
+          outline: none !important;
+        }
+
+        #write_reply_contents {
+          padding:10px;
+          border:0;
+          top: 55px;
+          height: 560px;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+        }
+
+    </style>
+    <!-- fixed header -->
+    <div data-role="header" data-theme='a' data-position="fixed" class="titleheader" >
+        <a class='leftMenuBtn' data-role='none'>
+            <i class="fa fa-navicon fa-inverse "></i>
+        </a>
+        <h1>스마트 KAIS</h1>
+        <a class='rightMenuBtn' data-role='none'>
+            <i class="fa fa-save fa-inverse"></i>
+        </a>
+    </div>
+
+
+    <div id='write_reply_contents' data-role="content"  class="ui-content"  >
+        <textarea id='write_reply_memo' data-role='none'  placeholder='답변 내용을 입력하세요'></textarea>
+    </div>
+
+    <div id="write_reply_keypad_opt" class='keypad_menubar display-none'>
+        <div >
+            입력 완료
+        </div>
+    </div>
+</div>

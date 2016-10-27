@@ -280,7 +280,7 @@ var util = {
             case "appmenu":
                 util.showMenuPanel('#mainMenu');
                 return;
-                case "download":
+            case "download":
                  MKaisvPlugins.dn('http://api.juso.go.kr/gis/dnSmartKaisApp.jsp', function(msg){
                     alert(msg.message);
                  });

@@ -6,6 +6,7 @@ var URLs = {
 
 
     "helpdesklistlink"   :  { scode : 'MF_MOI_SMART_KAIS', svcNm: "sQnABoard" },
+    "helpdeskReplylink"   :  { scode : 'MF_MOI_SMART_KAIS', svcNm: "replyQnABoard" },
     "addresslink" :   { scode : 'MF_MOI_SMART_KAIS', svcNm: "vADRDC"},
     "addresslistlink" :   { scode : 'MF_MOI_SMART_KAIS', svcNm: "sADRDC"},
     "roadsignlink" :   { scode : 'MF_MOI_SMART_KAIS', svcNm: "vSPGF"},
@@ -73,7 +74,8 @@ var pages ={
     "addressview" : {link: function () { return cordova.file.applicationDirectory +   "www/board.html"; }, div:"#bbs_page" },
     "detailview" : {link: function () { return cordova.file.applicationDirectory +   "www/detailview.html"; },  div:"#detailview_page" },
     "detailaddress" : {link: function () { return cordova.file.applicationDirectory +   "www/addressview.html"; },  div:"#addressview_page" },
-    "imageviewer" : { link: function () { return cordova.file.applicationDirectory +   "www/imageviewer.html"; },  div:"#imageviewer_page" }
+    "imageviewer" : { link: function () { return cordova.file.applicationDirectory +   "www/imageviewer.html"; },  div:"#imageviewer_page" },
+    "writereplypage" : {link: function () { return cordova.file.applicationDirectory +   "www/writereply.html"; },  div:"#write_reply_page"}
 };
 
 SSO = new function (){

@@ -88,6 +88,16 @@ function loadHelpdesk(container){
                 RefreshQnAList(scroll_all);
             });
 
+            $(document).on('refresh_qna', '',  function() {
+
+                var scroll = $('#qna-list').data('infinitescroll');
+                var scroll_all = $('#qna-list-all').data('infinitescroll');
+                scroll.context.boardType = $('#qna-header .combobox-options .select').data('boardtype');
+                scroll_all.context.boardType = scroll.context.boardType;
+                RefreshQnAList(scroll);
+                RefreshQnAList(scroll_all);
+            });
+
             $('#qna-menu').on("click",".helpdeskitem", function()     {
                 var parents = $(this).parents('.qna-content');
                 parents.find(".qna-item-detail").slideUp(500);
@@ -103,6 +113,15 @@ function loadHelpdesk(container){
                                                 function(errormsg){} );
             });
 
+            $('#qna-menu').on("click","a.ans_btn", function()     {
+                var sn = $(this).data('sn');
+                util.hiddenHelpDeskPanel('#helpdeskmenu');
+                setTimeout( function () {
+                    var page = pages.writereplypage;
+                    util.slide_page('left', page,{ sn : sn });
+
+                },100);
+            });
 
         });
     });
@@ -131,6 +150,7 @@ function loadHelpdesk(container){
             "</div>";
         }
 
+        var ansbutton = '';
         var reply = '';
         if (util.isEmpty(data.replySubject) == false)
         {
@@ -142,6 +162,15 @@ function loadHelpdesk(container){
                              "<pre style='font-size:18px;white-space:pre-wrap;'>" + data.replyContent + "</pre>" +
                      "</div></div>";
         }
+        else {
+            ansbutton = "<div class='listItemTable'>" +
+                            "<div class='listItemCellRight' style='padding:5px 10px'>" +
+                                "<a class='ans_btn ' href='#' data-sn='"+ data.noticeMgtSn +"'>답변 작성</a>" +
+                            "</div>" +
+                        "</div>";
+        }
+
+
       //  alert (reply);
       //  alert (data.replySubject);
         return   "<div class='helpdeskitem' style='padding:10px;'  data-sn='" + data.noticeMgtSn + "'>"+
@@ -155,6 +184,7 @@ function loadHelpdesk(container){
                      "</div>" +
                  "</div>" +
                  "<div class='qna-item-detail' style='display:none;'>" +
+                    ansbutton +
                     attacheLinks+
                     "<div class='listItemTable'>"+
                         "<div style='display:table-cell;padding-left:10px;border-top:1px dashed #545894;'>" +
