@@ -5,10 +5,22 @@
 <div id='write_reply_page' style='z-index:100000;' data-role="page"    data-dom-cache="true">
 
     <style>
-        #write_reply_memo {
+        #write_reply_subject{
           position: absolute;
           padding: 10px;
           top: 0;
+          left: 0;
+          height:2em;
+          width:100%;
+
+          border: none;
+          border-bottom: 1px dashed rgb(47, 47, 47)  ;
+        }
+
+        #write_reply_memo {
+          position: absolute;
+          padding: 10px;
+          top: 3.5em;
           left: 0;
           bottom: 0;
           width:100%;
@@ -46,6 +58,7 @@
 
 
     <div id='write_reply_contents' data-role="content"  class="ui-content"  >
+        <textarea id='write_reply_subject' data-role='none'  placeholder='제목을 입력하세요'></textarea>
         <textarea id='write_reply_memo' data-role='none'  placeholder='답변 내용을 입력하세요'></textarea>
     </div>
 

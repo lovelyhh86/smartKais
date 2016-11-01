@@ -1,6 +1,11 @@
 
 $(function(){
 
+    $( document ).on("pagebeforeshow",pages.writereplypage.div,  function() {
+
+        $('#write_reply_memo').val('');
+        $('#write_reply_subject').val('');
+    });
     $( document ).on("pageshow",pages.writereplypage.div,  function() {
         //var contentTop = $('#addressview_images_container').height() + $('#addressview_images_container').offset().top;
 
@@ -11,14 +16,16 @@ $(function(){
         application.context = {};
         var attr = {
             sn : context.sn,
-            sigcd : application.info.sigCd,
-            userid : application.info.opeId
+            sigCd : application.info.sigCd,
+            userid : application.info.opeId,
+            registName : application.info.opeNm
         };
         $('#write_reply_page').data('context',attr);
         var top = $('#write_reply_page > .titleheader').outerHeight() ;
 
         $('#write_reply_contents').css('top',top);
         $('#write_reply_contents').css('height',$.mobile.getScreenHeight() -top);
+
      });
 
     $(document).on("focus","#write_reply_memo", function() {
@@ -49,7 +56,13 @@ $(function(){
 
         var data = $('#write_reply_page').data('context');
         console.log(data);
-        data.reply = $('#write_reply_memo').val();
+        data.content = $('#write_reply_memo').val();
+        data.subject = $('#write_reply_subject').val();
+        if (data.subject.length == 0 ){
+            util.toast('제목은 필수항목입니다');
+            return;
+        }
+
 
         util.showProgress();
 
@@ -57,8 +70,7 @@ $(function(){
 
         util.postAJAX('',urldata)
             .then( function(context,rcode,results) {
-
-                if (true || util.isEmpty( results.data ) == false && result.data.success == '1'){
+                if (util.isEmpty( results.response ) == false && results.response.status == '1'){
                     navigator.notification.alert('도움센터 답변을 등록하였습니다', function (){
                         util.goBack();
                         $(document).trigger('refresh_qna');
