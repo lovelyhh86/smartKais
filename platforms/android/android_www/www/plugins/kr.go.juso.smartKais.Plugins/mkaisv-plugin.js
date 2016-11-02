@@ -18,12 +18,13 @@ function MKaisvPlugins(){
 
     function fireTrigger(json) {
         var event = json.eventName;
-        for (var i = 0; i < this.triggerHandler[event].length;i++)
+    console.log(me.triggerHandler);
+        for (var i = 0; i < me.triggerHandler[event].length;i++)
         {
-            var func = this.triggerHandler[event][i];
+            var func = me.triggerHandler[event][i];
             if (typeof func === 'function')
             {
-                func.apply(undefined,json.args);
+                func(json.args);
             }
         }
     }

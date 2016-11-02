@@ -25,11 +25,11 @@ class PushReceiverRegister implements PushAppRegistListener
         this.context_ = context;
     }
 
-    public void initialize(){
+    public void initialize(String userid){
         PackageManager pm = context_.getPackageManager();
         String appId = "smartkais";
         String svrAddr = SVRADDR;
-        String userId = USERID;
+        String userId = userid;
 
         try {
             PackageInfo pi = pm.getPackageInfo(context_.getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);

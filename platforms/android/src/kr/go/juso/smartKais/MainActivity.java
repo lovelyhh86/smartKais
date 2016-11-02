@@ -47,7 +47,7 @@ public class MainActivity extends CordovaActivity
         cn ="";
         loadUrl("javascript:var cn=\"" + cn + "\";var telnum=\"" + tel + "\";");
 
-        new PushReceiverRegister(this).initialize();;
+        new PushReceiverRegister(this).initialize(tel);;
     }
 
 
