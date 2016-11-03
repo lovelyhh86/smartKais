@@ -141,13 +141,15 @@ function loadHelpdesk(container){
         scroll.context.pos = data.pos;
 
         var attacheLinks = "";
-        for (var index = 0 ; index < data.files.length; index++)
-        {
-            attacheLinks +=
-            "<div class='listItemTable'>" +
-                "<div style='display:table-cell;padding-left:10px;width:3em;'><strong>첨부" + (index+1) + "</strong></div>" +
-                "<div style='display:table-cell;' class='ellipsis attachment' data-sn='"+ data.noticeMgtSn +"' data-filesn='" + data.files[index].fileMgtSn + "' >" + data.files[index].fileName + "</div>" +
-            "</div>";
+        if (util.isEmpty(data.files) == false) {
+            for (var index = 0 ; index < data.files.length; index++)
+            {
+                attacheLinks +=
+                "<div class='listItemTable'>" +
+                    "<div style='display:table-cell;padding-left:10px;width:3em;'><strong>첨부" + (index+1) + "</strong></div>" +
+                    "<div style='display:table-cell;' class='ellipsis attachment' data-sn='"+ data.noticeMgtSn +"' data-filesn='" + data.files[index].fileMgtSn + "' >" + data.files[index].fileName + "</div>" +
+                "</div>";
+            }
         }
 
         var ansbutton = '';
@@ -214,6 +216,7 @@ function loadHelpdesk(container){
             .then( function(context,rcode,results) {
 
                var data = results.data;
+
                if (rcode != 0 && util.isEmpty(data) === false )
                {
                     scroll.updateData(context[0], []);
