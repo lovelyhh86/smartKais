@@ -52,6 +52,8 @@ public class SSO  {
 
             Log.d(TAG,"=== START SSO ====" + packageName);
             boolean binded = context_.getApplicationContext().bindService(intent,connection_, Context.BIND_AUTO_CREATE);
+
+            Log.d(TAG, "BindService : " + SSO_BIND_ACTION + " : result = " + binded);
             Log.d(TAG,binded ? "=== Bind SSO ====" :  "=== Not Bind SSO ====");
         }
     }
