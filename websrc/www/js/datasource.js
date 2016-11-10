@@ -3,6 +3,7 @@ var dbConstant =
 {
 
  //   creationTableExam : 'CREATE TABLE IF NOT EXISTS SAMPLETABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, ATTR1 TEXT NOT NULL, AGE INTEGER)',
+    creationTableRoadfac : 'CREATE TABLE IF NOT EXISTS MEMOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON TEXT)',
 
     creationTableCodeMaster : 'CREATE TABLE IF NOT EXISTS CODEMASTER (CODEID INTEGER PRIMARY KEY , CODECLASS TEXT NOT NULL, CODENAME TEXT NOT NULL, CODEVALUE INTEGER)',
   //  creationTableRoadfac : 'CREATE TABLE IF NOT EXISTS SAMPLETABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, ATTR1 TEXT NOT NULL, AGE INTEGER)',
@@ -66,7 +67,7 @@ var datasource =
 {
     db : {},
     openDB:function(){
-        if (this.db.closeDB != null)
+        if (this.db.close != null)
         {
             this.db.closeDB();
         }
@@ -82,7 +83,7 @@ var datasource =
     },
     closeDB:function()
     {
-        this.db.close();
+     //   this.db.close();
     },
     test : function()
     {
@@ -94,8 +95,8 @@ var datasource =
     },
     initDB: function(tx)
     {
-    //    tx.executeSql(dbConstant.creationTableExam);
-        tx.executeSql(dbConstant.creationTableCodeMaster);
+        tx.executeSql(dbConstant.creationTableRoadfac);
+    //    tx.executeSql(dbConstant.creationTableCodeMaster);
     //    tx.executeSql(dbConstant.creationTableRoadfac);
         //datasource initialize
 
@@ -122,7 +123,6 @@ var datasource =
     ,
         //function will be called when process succeed
     successDB: function () {
-    //    alert("success!");
       //  datasource.db.transaction(queryDB,errorCB);
     }
     ,
@@ -229,6 +229,54 @@ var datasource =
         },
         function(){ //transaction ok
         });
+    },
+    addMemo : function(jsonData) {
+       // ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON
+       this.db.transaction (function(tx) {
+                   var sql = 'INSERT INTO MEMOS (DATE,MEMO,POSX,POSY,ETCJSON) VALUES ( ?, ? ,? ,? ,? )';
+                   var statement = [jsonData.date,jsonData.memo,jsonData.x,jsonData.y,  JSON.stringify(jsonData.jsons)];
+                   tx.executeSql(sql, statement, function(tx,resultset){});
+               },function(err) {
+               },function() {
+               });
+
+    },
+    updateMemo : function(jsonData) {
+       // ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON
+       this.db.transaction (function(tx) {
+                   var sql = 'UPDATE MEMOS SET DATE = ? ,MEMO = ?, ETCJSON = ? ) WHERE ID = ?';
+                   var statement = [jsonData.date,jsonData.memo, JSON.stringify(jsonData.jsons), jsonData.id];
+                   tx.executeSql(sql, statement, function(tx,resultset){});
+               },function(err) {
+               },function() {
+               });
+
+    },
+    deleteMemo : function(id) {
+    },
+    memoList : function(jsonCondition,cb ) {
+        this.db.executeSql('SELECT ID, DATE,MEMO,POSX,POSY,ETCJSON FROM MEMOS ORDER BY DATE DESC', [],
+                    function(result){
+                        var memos = [];;
+
+                        var len = result.rows.length;
+                        for (var i=0; i<len; i++){
+                            var item = result.rows.item(i);
+                            memos.push ( {
+                                id : item.ID,
+                                date : item.DATE,
+                                memo : item.MEMO,
+                                x : item.POSX,
+                                y : item.POSY,
+                                jsons : item.ETCJSON
+                            });
+                        }
+                        cb(memos);
+                      },
+                      function(error){
+                        console.log(error);
+                      });
+
     }
 
 

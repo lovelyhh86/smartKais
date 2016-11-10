@@ -43,7 +43,7 @@ var application = {
     //    $.mobile.loadPage(pages.imageviewer.link(),{ showLoadMsg:false});
 
             //DB초기화
-            //datasource.openDB();
+            datasource.createDB();
 
             /*
             util.getUserInfo(

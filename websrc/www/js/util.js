@@ -274,6 +274,10 @@ var util = {
                 url = pages.addressview;
                 param = "";
                 break;
+            case "memolist":
+                url = pages.memolistpage;
+                param = "refresh";
+                break;
             case "helpdesk":
                 util.showHelpDeskPanel('#helpdeskmenu');
                 return;

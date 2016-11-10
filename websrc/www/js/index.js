@@ -42,11 +42,11 @@ var application = {
         {
      //       alert('debug index.js');
             function gotoMain(){
+                datasource.closeDB();
                 var redirectUrl = "main.html";
                 redirectUrl = "work.html?cn=" + cn + "&tel="+telnum;
                 location.href = redirectUrl;
                 util.dismissProgress();
-                //     datasource.closeDB();
             }
 
             gotoMain();

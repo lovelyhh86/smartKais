@@ -56,6 +56,53 @@
 -->
 
 <div id="mapview_page" data-sn='' data-sigcd='' style="position:absolute;" data-role="page" data-theme="a" data-dom-cache="true">
+  <style>
+    #write_memo{
+      position:absolute;
+      left:.5em;
+      top:13.5em;
+    }
+
+    .memo-container{
+      position:absolute;
+      height:8em;
+      top:-12em;
+      left:.5em;
+      right:.5em;
+      z-index:10;
+      transition: top 0.2s ease-in-out;
+    }
+
+    .memo-container > label {
+      background-color: white;
+      border: 1px solid lightgrey;
+      padding: 10px;
+      border-radius: 0.3em;
+      margin-bottom: 1px;
+    }
+
+    .memo-container > textarea {
+      border-radius : 0.4em;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .memo-container > div {
+      position: absolute;
+      right: 0;
+    }
+    .memo-container > div > button {
+      padding: 5px 10px;
+      margin-top: 0;
+      border-radius: 0.5em;
+      border: 1px solid grey;
+      color: white;
+      background-color: darkgrey;
+    }
+
+  </style>
   <div id="map" data-role="content" data-theme="c" class="ui-content" style='border:0;left:0;bottom:0;right:0;top:0;position:fixed;padding:0;'></div>
   <form class="ui-filterable">
     <input id="autocomplete-input" data-type="search" placeholder="도로명 주소(or 기초번호) 검색(3글자 이상)">
@@ -74,10 +121,26 @@
 -->
   </fieldset>
   <div id="map_current"><img src="../images/ico_map_current.png" width="40px" /></div>
+  <div id="write_memo"><img src="../images/ico_map_current.png" width="40px" /></div>
   <div id="popup" class="ol-popup">
     <a href="#" id="popup-closer" class="ol-popup-closer"></a>
     <div id="popup-content"></div>
   </div>
+
+  <div class='memo-container'>
+    <label>제목</label>
+    <textarea id='mapview_memo' data-role='none'  rows='5' placeholder='기타사항을 입력하세요'></textarea>
+    <div>
+      <button data-role='none' onclick='memoFlush()'>취 소</button>
+      <button data-role='none' onclick='memoAccept()'>입 력</button>
+    </div>
+  </div>
+  <div id="map_keypad_opt" class='keypad_menubar display-none'>
+    <div >
+      입력 완료
+    </div>
+  </div>
+
   <div id="marker"><img src="../images/marker-icon.png"></div>
 
 
@@ -117,7 +180,58 @@
 
       map.setSize([$('#map').width(),$('#map').height()]);
     });
-    
+
+
+
+    $(document).on("focus","#mapview_memo", function(){
+        $('#map_keypad_opt').removeClass('display-none');
+    });
+
+    $(document).on("focusout","#mapview_memo", function(){
+        $('#map_keypad_opt').addClass('display-none');
+    });
+
+    $("#write_memo").on("click", function() {
+      showMemoInput( {} );
+    });
+
+    function showMemoInput(jsonData) {
+      var memocontainer = $('#mapview_page > .memo-container');
+      var top =  ($('.titleheader').outerHeight() + 10) + 'px';
+      memocontainer.css('top', top);
+    }
+
+    function hideMemoInput() {
+      var memocontainer = $('#mapview_page > .memo-container');
+      var top =  '-12em' ;
+      memocontainer.css('top', top);
+    }
+
+    function  memoAccept() {
+      var memo = {
+            date : util.getToday(true),
+            memo : $('#mapview_memo').val(),
+            x : 0,
+            y : 1,
+            jsons : {}
+        }
+      datasource.addMemo(memo);
+
+      memoFlush();
+    }
+
+    function  memoFlush() {
+      $('#mapview_memo').val('');
+      hideMemoInput();
+
+      datasource.memoList({},function(dataArray){
+          console.log(dataArray);
+        for (data in dataArray) {
+          console.log(data);
+        }
+      });
+    }
+
   </script>
 </div>
 

@@ -75,7 +75,8 @@ var pages ={
     "detailview" : {link: function () { return cordova.file.applicationDirectory +   "www/detailview.html"; },  div:"#detailview_page" },
     "detailaddress" : {link: function () { return cordova.file.applicationDirectory +   "www/addressview.html"; },  div:"#addressview_page" },
     "imageviewer" : { link: function () { return cordova.file.applicationDirectory +   "www/imageviewer.html"; },  div:"#imageviewer_page" },
-    "writereplypage" : {link: function () { return cordova.file.applicationDirectory +   "www/writereply.html"; },  div:"#write_reply_page"}
+    "writereplypage" : {link: function () { return cordova.file.applicationDirectory +   "www/writereply.html"; },  div:"#write_reply_page"},
+    "memolistpage" : {link: function () { return cordova.file.applicationDirectory +   "www/memolist.html"; },  div:"#memolist_page"}
 };
 
 SSO = new function (){
