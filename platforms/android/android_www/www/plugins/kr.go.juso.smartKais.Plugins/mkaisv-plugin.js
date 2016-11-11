@@ -84,7 +84,7 @@ MKaisvPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, d
             req : JSON.stringify(data)
         };
     }
-
+console.log($.param(reqParam));
     if(data.brokerMode == MODE.DEBUG) {
 //        reqParam.svcType = "T";
         $.ajax({
@@ -100,7 +100,7 @@ MKaisvPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, d
             errorFn,
             'MKaisvPlugins',
             'callServiceBroker',
-            [param, $.param(reqParam)]
+            [param, $.param(reqParam).replace(/\+/gi,'%20')]
         );
     }
 
