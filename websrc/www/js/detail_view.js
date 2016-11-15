@@ -285,7 +285,7 @@ $(document).on('click','#detail_addimage', function(event) {
     }
 });
 
-$(document).on("focus","#detailview_memo", function(){
+$(document).on("focus","#detailview_memo, #detailview_attr", function(){
     editPosTop = $('#detailview_contents').position().top;
     editPosHeight = $('#detailview_contents').height();
     var top = $('.titleheader').outerHeight() + $('#bbs_page>.subtitleheader').outerHeight();
@@ -295,19 +295,21 @@ $(document).on("focus","#detailview_memo", function(){
     $('#detail_images_container').addClass('display-none');
     $('#detail_addimage').addClass('display-none');
     $('#detailview_footer').addClass('display-none');
-    $('#detailview_property').addClass('display-none');
+  //  $('#detailview_property').addClass('display-none');
+    $('#detailview_property >div.detail').addClass('display-none');
 
     $('#detailview_keypad_opt').removeClass('display-none');
 });
 
-$(document).on("focusout","#detailview_memo", function(){
+$(document).on("focusout","#detailview_memo,  #detailview_attr", function(){
     var editBottom = editPosTop + $('#detailview_contents').height();
     $('#detailview_contents').css('top',editPosTop + 'px');
 
     $('#detail_images_container').removeClass('display-none');
     $('#detail_addimage').removeClass('display-none');
     $('#detailview_footer').removeClass('display-none');
-    $('#detailview_property').removeClass('display-none');
+ //   $('#detailview_property').removeClass('display-none');
+    $('#detailview_property >div.detail').removeClass('display-none');
 
     $('#detailview_keypad_opt').addClass('display-none');
 
@@ -347,6 +349,7 @@ function makeFacInfo(data)
     var infolist = [
           {key:'설치일자',value:data.instDate},
           {key:'최종점검일자',value:data.lastCheckDate},
+          //{key:'설치유형',value:data.instSeLbl},
           {key:'규 격',value:data.gdftyWide + ' x ' + data.gdftyVertical + ' x ' + data.gdftyThickness },
           {key:'재 질',value:data.gdftyQualityLbl},
           {key:'사용대상',value:data.useTargetLbl},
@@ -379,7 +382,8 @@ function makeRoadInfo(data)
     //title : 도로명판
     $('#detailview_title').text(  '(도로) ' + $('#detailview_page').data('title' ) );
     //유형
-    $('#detailview_property > .value').text(data.instSeLbl);
+    $('#detailview_property > .value > input').val(data.instSeLbl);
+    //text(data.instSeLbl);
     makeFacInfo(data);
 }
 function makeLocalInfo(data)
@@ -387,7 +391,7 @@ function makeLocalInfo(data)
     //title : 지역안내판
     $('#detailview_title').text(  '(지역) ' + $('#detailview_page').data('title' ) );
     //유형
-    $('#detailview_property > .value').text(data.instSeLbl);
+    $('#detailview_property > .value > input').val(data.instSeLbl);//text(data.instSeLbl);
     makeFacInfo(data);
 }
 function makePointInfo(data)
@@ -395,7 +399,7 @@ function makePointInfo(data)
     //title : 기초번호판
     $('#detailview_title').text(  '(기초) ' + $('#detailview_page').data('title' ) );
     //유형
-    $('#detailview_property > .value').text(data.instSeLbl);
+    $('#detailview_property > .value > input').val(data.instSeLbl);//text(data.instSeLbl);
     makeFacInfo(data);
 }
 function createInput(item){
@@ -525,7 +529,7 @@ function getProperties(){
     {
         attrs[ $(selects[idx]).data('property') ] = $(selects[idx]).val();
     }
-
+    attrs['basenumSn'] =  $('#detailview_property > .value > input').val();
     properties['attrs'] = attrs;
 
     for (var a in properties){
