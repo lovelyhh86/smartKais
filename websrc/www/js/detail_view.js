@@ -350,16 +350,18 @@ function makeFacInfo(data)
     $('#frontStartBaseSlaveNo').val(data.frontStartBaseSlaveNo);
     $('#frontEndBaseMasterNo').val(data.frontEndBaseMasterNo);
     $('#frontEndBaseSlaveNo').val(data.frontEndBaseSlaveNo);
+    $('#bdrcllbl').text(data.bdrclAt == '0' ? '단면' : '양면');
 
     var infolist = [
           {key:'설치지점',value:data.instSpotCdLbl ,   property:'instSpotCd', dropdown: ['시작지점','중간지점','끝지점'], dropdownAttr:['01','02','03']},
           {key:'설치/재설치 여부',value:data.isLgnYnLbl, property:'isLgnYn', dropdown: ['설치','재설치'], dropdownAttr:['01','02']},
           {key:'설치지점 설명',value:data.instSpotDesc, property:'instSpotDesc', editable:true},
-          {key:'한글 도로명', value:''},
-          {key:'제2외국어 표기유형',value:data.scfggMktyLbl},
+          {key:'한글 도로명', value:data.frontKoreanRoadNm, property:'frontKoreanRoadNm', editable:true},
+          {key:'로마자 도로명',value:data.frontRomeRoadNm, property:'frontRomeRoadNm', editable:true},
           {key:'안내시설형식',value:data.gdftyFormLbl,  property:'gdftyForm', dropdown: ['표준형','비표준형'], dropdownAttr:['01','02']},
-          {key:'안내시설방향', value:''},
-          {key:'양면여부',value:data.bdrclAtLbl,       property:'bdrclAt' , dropdown:['예','아니오'], dropdownAttr:['01','02']}
+          {key:'안내시설방향', value:data.plqDirectionLbl,       property:'plqDirection' , dropdown:['한 방향용','양 방향용', '앞쪽 방향용'], dropdownAttr:['00100','00200','00300']}
+          //,
+     //     {key:'양면여부',value:data.bdrclAtLbl,       property:'bdrclAt' , dropdown:['예','아니오'], dropdownAttr:['01','02']}
           /*
           ,
 
