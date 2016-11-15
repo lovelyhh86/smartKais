@@ -108,27 +108,29 @@
         width: 100%;
         }
 
-        .detailview_property > div {
+        .detailview_property > div{
+            display:table-row;
+        }
+        .detailview_property > div >  div{
         display: table-cell;
         text-align: center;
         vertical-align: middle;
         border-color: rgba(61,65,144,0.1);
-        border-radius: 0.3em;
+        border-radius: 0;
         border-style: solid;
         border-width: thin;
         text-align: center;
-        font-size:1.5em;
+
         }
 
-        .detailview_property > div.title {
+        .detailview_property > div > div.title {
         background-color: rgba(61,65,144,0.1);
         color: rgba(61,65,144,0.6);
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        width:4em;
+        width:2em;
         }
 
-        .detailview_property > div.value {
+
+        .detailview_property > div >div.value {
         background-color: rgba(61,65,144,0.05);
         color: rgba(61,65,144,0.9);
         border-top-left-radius: 0;
@@ -138,14 +140,14 @@
         padding: 5px 10px;
         }
 
-        .detailview_property > div.detail {
+        .detailview_property > div > div.detail {
 
         background-color: rgba(61,65,144,0.5);
         color: #FFF;
-        width: 4em;
+        width: 3em;
         padding: 4px 0;
         }
-        .detailview_property > div.detail > a {
+        .detailview_property > div >div.detail > a {
         text-decoration: none;
         }
 
@@ -173,15 +175,39 @@
     <div id='detailview_contents' data-role="content"  class="ui-content" style='border:0;padding:10px;' >
 
         <div id='detailview_property' class='detailview_property'>
-            <div class='title'>
-                설치유형
+            <div>
+
+                <div class='title' style='border-bottom: none;border-top-left-radius: 0.3em;'>
+                    시작
+                </div>
+                <div id='detailview_attr' class='value'  style='border-bottom: none;border-top-right-radius: 0.3em;'>
+                    <input id='frontStartBaseMasterNo'  type="number" max='99999' data-role='none' name="detailbaseSn" style="width:39%" type="text"   value="">
+                    <span>-</span>
+                    <input id='frontStartBaseSlaveNo'  type="number" max='99999' data-role='none' name="detailbaseSn" style="width:39%" type="text"   value="">
+                </div>
+
+                <div style="display: table-cell;width: 0.5em;border:none;"></div>
+                <div class='detail2' style='  background-color: lightgrey;  border-radius: 0.3em;'>
+                    <span>양면</span>
+                </div>
             </div>
-            <div id='detailview_attr' class='value'>
-                <input data-role='none' name="detailbaseSn" style="width:100%" type="text"   value="">
-            </div>
-            <div style="display: table-cell;width: 0.5em;border:none;"></div>
-            <div class='detail'>
-                <a href='#'>속성보기</a>
+
+
+            <div>
+                <div class='title' style='border-bottom-left-radius: 0.3em;'>
+                    종료
+                </div>
+
+                <div id='detailview_attr2' class='value'  style='border-bottom-right-radius: 0.3em;'>
+                    <input id='frontEndBaseMasterNo'  type="number" max='99999' data-role='none' name="detailbaseSn" style="width:39%" type="text"   value="">
+                    <span>-</span>
+                    <input id='frontEndBaseSlaveNo'  type="number" max='99999' data-role='none' name="detailbaseSn" style="width:39%" type="text"   value="">
+                </div>
+
+                <div style="display: table-cell;width: 0.5em;border:none;"></div>
+                <div class='detail' style='border-radius: 0.3em;'>
+                    <a href='#'>속성보기</a>
+                </div>
             </div>
         </div>
 

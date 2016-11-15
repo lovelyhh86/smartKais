@@ -285,7 +285,7 @@ $(document).on('click','#detail_addimage', function(event) {
     }
 });
 
-$(document).on("focus","#detailview_memo, #detailview_attr", function(){
+$(document).on("focus","#detailview_memo, #detailview_attr,#detailview_attr2", function(){
     editPosTop = $('#detailview_contents').position().top;
     editPosHeight = $('#detailview_contents').height();
     var top = $('.titleheader').outerHeight() + $('#bbs_page>.subtitleheader').outerHeight();
@@ -301,7 +301,7 @@ $(document).on("focus","#detailview_memo, #detailview_attr", function(){
     $('#detailview_keypad_opt').removeClass('display-none');
 });
 
-$(document).on("focusout","#detailview_memo,  #detailview_attr", function(){
+$(document).on("focusout","#detailview_memo,  #detailview_attr,#detailview_attr2", function(){
     var editBottom = editPosTop + $('#detailview_contents').height();
     $('#detailview_contents').css('top',editPosTop + 'px');
 
@@ -346,33 +346,44 @@ function makeBuildInfo(data)
 
 function makeFacInfo(data)
 {
+    $('#frontStartBaseMasterNo').val(data.frontStartBaseMasterNo);
+    $('#frontStartBaseSlaveNo').val(data.frontStartBaseSlaveNo);
+    $('#frontEndBaseMasterNo').val(data.frontEndBaseMasterNo);
+    $('#frontEndBaseSlaveNo').val(data.frontEndBaseSlaveNo);
+
     var infolist = [
+          {key:'설치지점',value:data.instSpotCdLbl ,   property:'instSpotCd', dropdown: ['시작지점','중간지점','끝지점'], dropdownAttr:['01','02','03']},
+          {key:'설치/재설치 여부',value:data.isLgnYnLbl, property:'isLgnYn', dropdown: ['설치','재설치'], dropdownAttr:['01','02']},
+          {key:'설치지점 설명',value:data.instSpotDesc, property:'instSpotDesc', editable:true},
+          {key:'한글 도로명', value:''},
+          {key:'제2외국어 표기유형',value:data.scfggMktyLbl},
+          {key:'안내시설형식',value:data.gdftyFormLbl,  property:'gdftyForm', dropdown: ['표준형','비표준형'], dropdownAttr:['01','02']},
+          {key:'안내시설방향', value:''},
+          {key:'양면여부',value:data.bdrclAtLbl,       property:'bdrclAt' , dropdown:['예','아니오'], dropdownAttr:['01','02']}
+          /*
+          ,
+
           {key:'설치일자',value:data.instDate},
           {key:'최종점검일자',value:data.lastCheckDate},
-          //{key:'설치유형',value:data.instSeLbl},
+          {key:'설치유형',value:data.instSeLbl},
           {key:'규 격',value:data.gdftyWide + ' x ' + data.gdftyVertical + ' x ' + data.gdftyThickness },
           {key:'재 질',value:data.gdftyQualityLbl},
           {key:'사용대상',value:data.useTargetLbl},
-          {key:'안내시설형식',value:data.gdftyFormLbl,  property:'gdftyForm', dropdown: ['표준형','비표준형'], dropdownAttr:['01','02']},
           {key:'제작형식',value:data.gdftyMnfLbl},
           {key:'단 가',value:data.gdftyUnitPrice},
           {key:'설치기준',value:data.instCrossCdLbl},
-          {key:'설치지점',value:data.instSpotCdLbl ,   property:'instSpotCd', dropdown: ['시작지점','중간지점','끝지점'], dropdownAttr:['01','02','03']},
-          {key:'설치지점 설명',value:data.instSpotDesc, property:'instSpotDesc', editable:true},
-          {key:'설치/재설치 여부',value:data.isLgnYnLbl, property:'isLgnYn', dropdown: ['설치','재설치'], dropdownAttr:['01','02']},
           {key:'설치기관',value:data.instInsLbl},
           {key:'설치기관 참고',value:data.instInstDesc},
           {key:'관리기관',value:data.manageInsLbl},
           {key:'관리기관 참고',value:data.manageInstDesc},
-          {key:'제2외국어 표기유형',value:data.scfggMktyLbl},
           {key:'제2외국어 사용언어 1',value:data.scfggUla1},
           {key:'제2외국어 사용언어 2',value:data.scfggUla2},
-          {key:'양면여부',value:data.bdrclAtLbl,       property:'bdrclAt' , dropdown:['예','아니오'], dropdownAttr:['01','02']},
           {key:'망실여부',value:data.lossAtLbl},
           {key:'관리번호',value:data.ftyManageNo},
           {key:'입력방법',value:data.inputMethodLbl},
           {key:'조명여부',value:data.lightCdLbl},
           {key:'생성일자',value:data.registerDate}
+          //*/
       ];
     makeDetailInfo(infolist);
 }
@@ -382,7 +393,10 @@ function makeRoadInfo(data)
     //title : 도로명판
     $('#detailview_title').text(  '(도로) ' + $('#detailview_page').data('title' ) );
     //유형
-    $('#detailview_property > .value > input').val(data.instSeLbl);
+    //$('#detailview_property > .value > input').val(data.instSeLbl);
+
+
+
     //text(data.instSeLbl);
     makeFacInfo(data);
 }
@@ -391,7 +405,7 @@ function makeLocalInfo(data)
     //title : 지역안내판
     $('#detailview_title').text(  '(지역) ' + $('#detailview_page').data('title' ) );
     //유형
-    $('#detailview_property > .value > input').val(data.instSeLbl);//text(data.instSeLbl);
+    //$('#detailview_property > .value > input').val(data.instSeLbl);//text(data.instSeLbl);
     makeFacInfo(data);
 }
 function makePointInfo(data)
@@ -399,7 +413,7 @@ function makePointInfo(data)
     //title : 기초번호판
     $('#detailview_title').text(  '(기초) ' + $('#detailview_page').data('title' ) );
     //유형
-    $('#detailview_property > .value > input').val(data.instSeLbl);//text(data.instSeLbl);
+    //$('#detailview_property > .value > input').val(data.instSeLbl);//text(data.instSeLbl);
     makeFacInfo(data);
 }
 function createInput(item){
@@ -529,7 +543,10 @@ function getProperties(){
     {
         attrs[ $(selects[idx]).data('property') ] = $(selects[idx]).val();
     }
-    attrs['basenumSn'] =  $('#detailview_property > .value > input').val();
+    attrs['frontStartBaseMasterNo'] =  $('#frontStartBaseMasterNo').val();
+    attrs['frontStartBaseSlaveNo'] =  $('#frontStartBaseSlaveNo').val();
+    attrs['frontEndBaseMasterNo'] =  $('#frontEndBaseMasterNo').val();
+    attrs['frontEndBaseSlaveNo'] =  $('#frontEndBaseSlaveNo').val();
     properties['attrs'] = attrs;
 
     for (var a in properties){
