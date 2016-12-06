@@ -353,6 +353,16 @@ function makeFacInfo(data)
     $('#bdrcllbl').text(data.bdrclAt == '0' ? '단면' : '양면');
 
     var infolist = [
+
+        {key:'설치지점',value:data.instSpotCdLbl ,   property:'instSpotCd', dropdownCode:'GFTY015' , dropdown: [], dropdownAttr:[]},
+        {key:'설치/재설치 여부',value:data.isLgnYnLbl, property:'isLgnYn', dropdownCode:'GFTY016' , dropdown: [], dropdownAttr:[]},
+        {key:'설치지점 설명',value:data.instSpotDesc, property:'instSpotDesc', editable:true},
+        {key:'한글 도로명', value:data.frontKoreanRoadNm, property:'frontKoreanRoadNm', editable:true},
+        {key:'로마자 도로명',value:data.frontRomeRoadNm, property:'frontRomeRoadNm', editable:true},
+        {key:'안내시설형식',value:data.gdftyFormLbl,  property:'gdftyForm', dropdownCode:'GFTY012' , dropdown: [], dropdownAttr:[]},
+        {key:'안내시설방향', value:data.plqDirectionLbl,       property:'plqDirection' ,dropdownCode:'GFTY014' ,  dropdown:[], dropdownAttr:[]}
+
+    /*//16.12.05
           {key:'설치지점',value:data.instSpotCdLbl ,   property:'instSpotCd', dropdown: ['시작지점','중간지점','끝지점'], dropdownAttr:['01','02','03']},
           {key:'설치/재설치 여부',value:data.isLgnYnLbl, property:'isLgnYn', dropdown: ['설치','재설치'], dropdownAttr:['01','02']},
           {key:'설치지점 설명',value:data.instSpotDesc, property:'instSpotDesc', editable:true},
@@ -360,6 +370,10 @@ function makeFacInfo(data)
           {key:'로마자 도로명',value:data.frontRomeRoadNm, property:'frontRomeRoadNm', editable:true},
           {key:'안내시설형식',value:data.gdftyFormLbl,  property:'gdftyForm', dropdown: ['표준형','비표준형'], dropdownAttr:['01','02']},
           {key:'안내시설방향', value:data.plqDirectionLbl,       property:'plqDirection' , dropdown:['한 방향용','양 방향용', '앞쪽 방향용'], dropdownAttr:['00100','00200','00300']}
+      //*/
+
+
+
           //,
      //     {key:'양면여부',value:data.bdrclAtLbl,       property:'bdrclAt' , dropdown:['예','아니오'], dropdownAttr:['01','02']}
           /*
@@ -387,6 +401,7 @@ function makeFacInfo(data)
           {key:'생성일자',value:data.registerDate}
           //*/
       ];
+    makeCodeTable(infolist);
     makeDetailInfo(infolist);
 }
 
@@ -463,6 +478,22 @@ function makeDetailInfo(infolist){
             childs.push('<li><div>' + infolist[index].key + '</div>' + fieldContent +'</li>');
         }
         $('#detailview_property_detail > ul').append(childs);
+    }
+}
+
+function makeCodeTable( infolist ) {
+
+    if (util.isEmpty(infolist) === false)
+    {
+        var childs =[];
+        console.log(application.codeMaster);
+        for (var index = 0 ; index < infolist.length; index++) {
+
+            if (infolist[index].dropdownCode) {
+                infolist[index].dropdownAttr = application.codeMaster[infolist[index].dropdownCode].codeids;
+                infolist[index].dropdown = application.codeMaster[infolist[index].dropdownCode].codenms;
+            }
+        }
     }
 }
 

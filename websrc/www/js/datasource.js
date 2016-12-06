@@ -4,7 +4,8 @@ var dbConstant =
 
  //   creationTableExam : 'CREATE TABLE IF NOT EXISTS SAMPLETABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, ATTR1 TEXT NOT NULL, AGE INTEGER)',
     creationTableRoadfac : 'CREATE TABLE IF NOT EXISTS MEMOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON TEXT)',
-
+    dropTableCodeGroup : 'DELETE FROM SCCO_CODE',
+    creationTableCodeGroup : 'CREATE TABLE IF NOT EXISTS SCCO_CODE ( GROUPID TEXT, GROUPNM TEXT, CODEID TEXT, CODENM TEXT )',
     creationTableCodeMaster : 'CREATE TABLE IF NOT EXISTS CODEMASTER (CODEID INTEGER PRIMARY KEY , CODECLASS TEXT NOT NULL, CODENAME TEXT NOT NULL, CODEVALUE INTEGER)',
   //  creationTableRoadfac : 'CREATE TABLE IF NOT EXISTS SAMPLETABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, ATTR1 TEXT NOT NULL, AGE INTEGER)',
 /*
@@ -96,10 +97,9 @@ var datasource =
     initDB: function(tx)
     {
         tx.executeSql(dbConstant.creationTableRoadfac);
-    //    tx.executeSql(dbConstant.creationTableCodeMaster);
+        tx.executeSql(dbConstant.creationTableCodeGroup);
     //    tx.executeSql(dbConstant.creationTableRoadfac);
         //datasource initialize
-
         return;
 
         var sql = "INSERT INTO SAMPLETABLE (NAME,ATTR1,AGE) VALUES(?,?,?)";
@@ -176,25 +176,18 @@ var datasource =
         var def =  $.Deferred();
 
         //query vesion from codemaster
-        this.db.executeSql('SELECT CODENAME, CODECLASS FROM CODEMASTER WHERE CODECLASS = ? OR CODECLASS = ?', ['APPVERSION','CODEVERSION'],
+        this.db.executeSql('SELECT GROUPID, GROUPNM FROM SCCO_CODE WHERE GROUPID = ? ', ['APPVERSION'],
              function(result){
-                var version = {
-                    appversion : '0',
-                    codeversion : '0'
-                };
+                var appversion ='';
 
                 var len = result.rows.length;
                 for (var i=0; i<len; i++){
-                    if (result.rows.item(i).CODECLASS == "APPVERSION")
+                    if (result.rows.item(i).GROUPID == "APPVERSION")
                     {
-                        version.appversion = result.rows.item(i).CODENAME;
-                    }
-                    else if (result.rows.item(i).CODECLASS == "CODEVERSION")
-                    {
-                        version.codeversion = result.rows.item(i).CODENAME;
+                        appversion = result.rows.item(i).GROUPNM;
                     }
                 }
-                def.resolve(version);
+                def.resolve(appversion);
               },
               function(error){
                 def.reject(error);
@@ -202,25 +195,21 @@ var datasource =
 
         return def.promise();
     },
-    updateVersionInfo :function(codemaster)     //앱 & 상수버전 갱신
+    updateVersionInfo :function(appversion, codemaster, successcb)     //앱 & 상수버전 갱신
     {
-        this.db.transaction(function(tx){
-            tx.executeSql(
-                'INSERT or REPLACE INTO CODEMASTER (CODEID,CODENAME,CODEVALUE,CODECLASS) VALUES ( ?,?,?,?)',
-                ['999999',codemaster.appversion,codemaster.appversion,'APPVERSION'],
-                function(tx,resultset){}
-                );
-            tx.executeSql(
-                'INSERT or REPLACE INTO CODEMASTER (CODEID,CODENAME,CODEVALUE,CODECLASS) VALUES ( ?,?,?,?)',
-                ['888888',codemaster.codeversion,codemaster.codeversion,'CODEVERSION'],
-                function(tx,resultset){}
-                );
+    // SCCO_CODE ( GROUPID TEXT, GROUPNM TEXT, CODEID TEXT, CODENM TEXT )',
 
-            for (var i in codemaster.items)
+        this.db.transaction(function(tx){
+
+            tx.executeSql(dbConstant.dropTableCodeGroup);
+            tx.executeSql("INSERT or REPLACE INTO SCCO_CODE (GROUPID,GROUPNM,CODEID,CODENM) VALUES ('APPVERSION' ,?,'','')",
+                [appversion]   );
+
+            for (var i in codemaster)
             {
                 //alert(item + '   '+ item.codeid+' '+item.codename+' '+item.codevalue+' '+item.codecls);
-                tx.executeSql('INSERT or REPLACE INTO CODEMASTER (CODEID,CODENAME,CODEVALUE,CODECLASS) VALUES ( ?,?,?,?)',
-                    [codemaster.items[i].codeid,codemaster.items[i].codename,codemaster.items[i].codevalue,codemaster.items[i].codecls]   );
+                tx.executeSql('INSERT or REPLACE INTO SCCO_CODE (GROUPID,GROUPNM,CODEID,CODENM) VALUES ( ?,?,?,?)',
+                    [codemaster[i].groupId,codemaster[i].groupNm,codemaster[i].codeId,codemaster[i].codeNm]   );
             }
 
         },
@@ -228,7 +217,45 @@ var datasource =
             alert('erro transaction'+error);
         },
         function(){ //transaction ok
+            successcb();
         });
+    },
+    getCodeMaster : function(cb) {
+
+
+        this.db.transaction( function(tx) {
+            tx.executeSql('SELECT GROUPID, CODEID, GROUPNM, CODENM FROM SCCO_CODE ORDER BY GROUPID, CODEID ASC ', [],
+             function(tx,result){
+                            var appversion ='';
+                            var codemaster = {};
+                            var len = result.rows.length;
+                            for (var i=0; i<len; i++){
+
+                                var groupid = result.rows.item(i).GROUPID;
+                                var groupnm = result.rows.item(i).GROUPNM;
+                                var codeid = result.rows.item(i).CODEID;
+                                var codenm = result.rows.item(i).CODENM;
+
+                                if (  codemaster[groupid] == {} || codemaster[groupid] == undefined) {
+                                    codemaster[groupid] = { GroupNm: groupnm , codeids :[], codenms:[]};
+                                }
+
+                                codemaster[groupid].codeids.push(codeid);
+                                codemaster[groupid].codenms.push(codenm);
+
+                            }
+
+                            cb(codemaster);
+                          });
+        },
+        function(error){
+            alert('erro transaction'+error);
+        },
+        function(){ //transaction ok
+
+        });
+
+
     },
     addMemo : function(jsonData) {
        // ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON

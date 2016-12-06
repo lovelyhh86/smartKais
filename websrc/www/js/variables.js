@@ -3,8 +3,7 @@ var URLs = {
     //"versionchecklink" : "../www/sample/codemaster.js",
 
 
-
-
+    "updateCodelink"   :  { scode : 'MF_MOI_SMART_KAIS', svcNm: "sCmCd" },
     "helpdesklistlink"   :  { scode : 'MF_MOI_SMART_KAIS', svcNm: "sQnABoard" },
     "helpdeskReplylink"   :  { scode : 'MF_MOI_SMART_KAIS', svcNm: "replyQnABoard" },
     "addresslink" :   { scode : 'MF_MOI_SMART_KAIS', svcNm: "vADRDC"},

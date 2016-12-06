@@ -23,7 +23,13 @@ var util = {
     },
     postAJAX : function(context,urldata , direct){
         var def = $.Deferred();
-        urldata = $.extend({},{sigCd:application.info.sigCd,mode:application.mode, brokerMode: mode}, urldata);  //시군구 코드 필수 추가
+        if (application.info)
+            urldata = $.extend({},{sigCd:application.info.sigCd,mode:application.mode, brokerMode: mode}, urldata);  //시군구 코드 필수 추가
+        else
+            urldata = $.extend({},{mode:'00', brokerMode: 1 }, urldata);
+        
+
+
         MKaisvPlugins.callServiceBroker(urldata,
                     function(results) {
                         var jsondata = results.resultData;//JSON.parse(results.resultData);

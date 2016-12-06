@@ -85,7 +85,9 @@ MKaisvPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, d
         };
     }
 console.log($.param(reqParam));
-    if(data.brokerMode == MODE.DEBUG) {
+
+    if(data.brokerMode == 0) { //MODE.DEBUG) {
+
 //        reqParam.svcType = "T";
         $.ajax({
             type: "POST",

@@ -24,7 +24,7 @@ var application = {
         clearTimeout();
 
         //db초기화
-        //datasource.createDB();
+        datasource.createDB();
 
         //네트워크 체크 : 공통기반 접속 초기화
         function checkConnection() {
@@ -43,13 +43,37 @@ var application = {
      //       alert('debug index.js');
             function gotoMain(){
                 datasource.closeDB();
+
                 var redirectUrl = "main.html";
                 redirectUrl = "work.html?cn=" + cn + "&tel="+telnum;
                 location.href = redirectUrl;
                 util.dismissProgress();
             }
 
-            gotoMain();
+
+
+
+
+            datasource.getVersion()         //버전 체크
+            .then( function(versionInfo) {  //codemaster 요청
+
+                var  codemasterLink = URLs.postURL(URLs.updateCodelink , null);//util.isEmpty(versionInfo) ? null  : { updateDate: versionInfo });
+
+                return util.postAJAX('',codemasterLink);
+            })
+            .then( function(context,rcode,results) {
+
+                if ( rcode == 0 && !util.isEmpty(results) && results.data.length !== 0  )
+                {
+                    var data = results.data;
+                    datasource.updateVersionInfo(util.getToday(false), data, gotoMain);
+                }
+
+                ;
+            });
+
+
+
             /*
             datasource.getVersion()         //버전 체크
             .then( function(versionInfo) {  //codemaster 요청

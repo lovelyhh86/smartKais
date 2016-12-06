@@ -45,6 +45,10 @@ var application = {
             //DB초기화
             datasource.createDB();
 
+            datasource.getCodeMaster(function( result ) {
+                application.codeMaster = result;
+                console.log(result);
+            });
             /*
             util.getUserInfo(
                 function(result) {
@@ -190,7 +194,7 @@ var application = {
                  }
          }
     ],
-
+    codeMaster:{},
     context : {},
     info :   new Object(),
     mode : '00',
