@@ -116,11 +116,11 @@ public class PushReceiver extends PushLibraryReceiver {
     private void sendPushNotification(Context context, String message) {
         System.out.println("received message : " + message);
 
-        String ticker="";
-        String title="";
+        String ticker="스마트KAIS";
+        String title="스마트KAIS";
         String desc="";
         String type="";
-        String dlgtitle="";
+        String dlgtitle="스마트KAIS";
         String dlgdesc="";
         try {
             JSONObject json = new JSONObject(message);
