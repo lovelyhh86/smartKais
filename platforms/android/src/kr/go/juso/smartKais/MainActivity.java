@@ -47,6 +47,7 @@ public class MainActivity extends CordovaActivity
         cn ="";
         loadUrl("javascript:var cn=\"" + cn + "\";var telnum=\"" + tel + "\";");
 
+        AppEnviroment.setPendingNotificationsCount(0);
         new PushReceiverRegister(this).initialize(tel);;
     }
 
@@ -58,6 +59,7 @@ public class MainActivity extends CordovaActivity
 
         super.onPostResume();
 
+        AppEnviroment.setPendingNotificationsCount(0);
         Log.d("TestAppActivity", "onPostResume");
 
     }

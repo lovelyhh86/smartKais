@@ -14,7 +14,7 @@ $.when(application.deviceReadyOK, workPageReadyOK).then(function(){
 
         util.toast('push:' + json.message);
         //alert('notification' + json.message);
-    })
+    });
 });
 
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+
+
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:background="#dd545894"
+
+
+    >
+
+
+    <ImageView
+        android:id="@+id/appicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/icon"/>
+
+    <LinearLayout
+        android:id="@+id/toastView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/noti_toast_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="닫          기"
+             />
+
+        <TextView
+            android:id="@+id/noti_toast_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="열기"
+             />
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+</LinearLayout>
