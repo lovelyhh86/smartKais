@@ -111,7 +111,11 @@ var mapInit = function(init) {
         text_anti: 'true',
         label: 'HIDE_OVERLAP',
         graphic_buffer: '64'
-      }
+      },
+      tileGrid: new ol.tilegrid.TileGrid({
+        extent: [213568, 1213568, 1786432, 2786432],
+        resolutions: [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25]
+      })
     })
   });
 
