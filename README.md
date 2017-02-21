@@ -1,13 +1,7 @@
 # smartKAIS
 git 저장소 복사
 
-git clone --bare http://192.168.0.5:3200/joehee/skais.git
-
-
-cd smartKAIS.git
-
-git push --mirror https://otherip/new-repository.git
-
+git clone http://192.168.0.34:9000/maniayaa/smartKais.git
 
 # 운영
 ## branch 추가
