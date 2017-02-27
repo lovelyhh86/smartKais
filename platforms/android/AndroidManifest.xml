@@ -1,113 +1,68 @@
 <?xml version='1.0' encoding='utf-8'?>
-<manifest android:hardwareAccelerated="true" android:versionCode="1" android:versionName="1.0.1" package="kr.go.juso.smartKais" xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest android:hardwareAccelerated="true" android:versionCode="10001" android:versionName="1.0.1" package="kr.go.juso.smartKais" xmlns:android="http://schemas.android.com/apk/res/android">
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:resizeable="true" android:smallScreens="true" android:xlargeScreens="true" />
-
     <application android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name" android:supportsRtl="true">
-        <activity
-            android:name="kr.go.juso.smartKais.IntroActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-            android:label="@string/activity_name"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-            >
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/activity_name" android:launchMode="singleTop" android:name="kr.go.juso.smartKais.IntroActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                  <action android:name="android.intent.action.MAIN" />
-        <!--                           <category android:name="android.intent.category.LAUNCHER" />   -->
-              <category android:name="android.intent.category.mobp.mff" />
-
-</intent-filter>
-</activity>
-<!--
-<application android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name" android:supportsRtl="true">
--->     <activity   android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-                    android:label="@string/activity_name"
-                    android:launchMode="singleTop"
-                    android:name="MainActivity"
-                    android:screenOrientation="portrait"
-                    android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
-                    android:windowSoftInputMode="adjustResize">
-        <!--   <intent-filter android:label="@string/launcher_name">
-                        <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.mobp.mff" />
+            </intent-filter>
         </activity>
-
-        <activity
-            android:label="@string/app_name"
-            android:name="kr.go.juso.smartKais.camera.CameraActivity"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/activity_name" android:launchMode="singleTop" android:name="MainActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity android:label="@string/app_name" android:name="kr.go.juso.smartKais.camera.CameraActivity" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity android:label="@string/multi_app_name" android:name="com.synconset.MultiImageChooserActivity" android:theme="@android:style/Theme.Holo.Light" />
-
-
-        <activity
-            android:label="@string/app_name"
-            android:name="kr.go.juso.smartKais.NotifierPopup"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-
+        <activity android:label="@string/app_name" android:name="kr.go.juso.smartKais.NotifierPopup" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
-
-        <receiver android:name="kr.go.juso.smartKais.PushReceiver" android:permission="com.dkitec.pns.permission.SENDER" >
+        <receiver android:name="kr.go.juso.smartKais.PushReceiver" android:permission="com.dkitec.pns.permission.SENDER">
             <intent-filter>
-                <action android:name="com.dkitec.pns.ACTION_PUSH_RECEIVED" /> <category android:name="kr.go.juso.smartKais" />
+                <action android:name="com.dkitec.pns.ACTION_PUSH_RECEIVED" />
+                <category android:name="kr.go.juso.smartKais" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.dkitec.pns.ACTION_PUSH_REGISTERED" />
-                <category android:name="kr.go.juso.smartKais" /> </intent-filter>
-            <intent-filter>
-                <action android:name="com.dkitec.pns.ACTION_AGENTALIVED" /> <category android:name="kr.go.juso.smartKais" />
+                <category android:name="kr.go.juso.smartKais" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.dkitec.intent.CONFIGSET" /> <category android:name="kr.go.juso.smartKais" />
+                <action android:name="com.dkitec.pns.ACTION_AGENTALIVED" />
+                <category android:name="kr.go.juso.smartKais" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.dkitec.intent.CONFIGSET" />
+                <category android:name="kr.go.juso.smartKais" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <category android:name="android.intent.category.DEFAULT"/> <data android:scheme="package"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="package" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
-                <category android:name="android.intent.category.DEFAULT"/> <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="package" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="package" />
-
             </intent-filter>
         </receiver>
-
     </application>
-
     <uses-sdk android:minSdkVersion="14" />
-
     <uses-feature android:name="android.hardware.camera" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
-    <permission
-        android:name="kr.go.juso.smartKais.permission.RECEIVE_MESSAGE"
-        android:protectionLevel="signature" />
-
+    <permission android:name="kr.go.juso.smartKais.permission.RECEIVE_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="kr.go.juso.smartKais.permission.RECEIVE_MESSAGE" />
     <uses-permission android:name="com.dkitec.pns.permission.RECEIVER" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 </manifest>

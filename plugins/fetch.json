@@ -47,14 +47,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-sqlite-storage": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-sqlite-storage@0.7.14"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "com.telerik.plugins.nativepagetransitions": {
         "source": {
             "type": "registry",
@@ -71,10 +63,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "kr.go.juso.mkaisv.Plugins": {
+    "kr.go.juso.smartKais": {
         "source": {
             "type": "local",
-            "path": "customplugins/kr.go.juso.mkaisv.Plugins"
+            "path": "customplugins/kr.go.juso.smartKais"
         },
         "is_top_level": true,
         "variables": {}
@@ -115,6 +107,14 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-imagepicker"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-sqlcipher-adapter": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-sqlcipher-adapter"
         },
         "is_top_level": true,
         "variables": {}

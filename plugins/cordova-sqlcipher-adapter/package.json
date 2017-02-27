@@ -1,0 +1,37 @@
+{
+  "name": "cordova-sqlcipher-adapter",
+  "version": "0.1.8",
+  "description": "SQLCipher database adapter for PhoneGap/Cordova, based on cordova-sqlite-storage",
+  "cordova": {
+    "id": "cordova-sqlcipher-adapter",
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/litehelpers/Cordova-sqlcipher-adapter.git"
+  },
+  "keywords": [
+    "sqlite",
+    "sqlcipher",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows"
+  ],
+  "author": "various",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/litehelpers/Cordova-sqlcipher-adapter/issues"
+  },
+  "homepage": "https://github.com/litehelpers/Cordova-sqlcipher-adapter",
+  "scripts": {
+    "start": "node scripts/prepareSpec.js"
+  },
+  "devDependencies": {
+    "shelljs": "^0.7.4"
+  }
+}

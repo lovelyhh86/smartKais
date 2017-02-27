@@ -29,10 +29,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.liteglue.SQLitePlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"NativePageTransitions\"><param name=\"android-package\" value=\"com.telerik.plugins.nativepagetransitions.NativePageTransitions\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -58,6 +54,10 @@
                         },
                         {
                             "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.sqlc.SQLitePlugin\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -118,9 +118,6 @@
         "cordova-plugin-device-orientation": {
             "PACKAGE_NAME": "kr.go.juso.smartKais"
         },
-        "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "kr.go.juso.smartKais"
-        },
         "com.telerik.plugins.nativepagetransitions": {
             "PACKAGE_NAME": "kr.go.juso.smartKais"
         },
@@ -143,6 +140,9 @@
             "PACKAGE_NAME": "kr.go.juso.smartKais"
         },
         "cordova-plugin-imagepicker": {
+            "PACKAGE_NAME": "kr.go.juso.smartKais"
+        },
+        "cordova-sqlcipher-adapter": {
             "PACKAGE_NAME": "kr.go.juso.smartKais"
         }
     },
@@ -208,13 +208,6 @@
             "id": "cordova-plugin-device-orientation.compass",
             "clobbers": [
                 "navigator.compass"
-            ]
-        },
-        {
-            "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-            "id": "cordova-sqlite-storage.SQLitePlugin",
-            "clobbers": [
-                "SQLitePlugin"
             ]
         },
         {
@@ -430,6 +423,13 @@
             "clobbers": [
                 "plugins.imagePicker"
             ]
+        },
+        {
+            "file": "plugins/cordova-sqlcipher-adapter/www/SQLitePlugin.js",
+            "id": "cordova-sqlcipher-adapter.SQLitePlugin",
+            "clobbers": [
+                "SQLitePlugin"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -439,7 +439,6 @@
         "cordova-plugin-network-information": "1.2.0",
         "cordova-plugin-device-motion": "1.2.0",
         "cordova-plugin-device-orientation": "1.0.2",
-        "cordova-sqlite-storage": "0.7.14",
         "com.telerik.plugins.nativepagetransitions": "0.6.3",
         "cordova-plugin-camera-with-exif": "1.0.2",
         "kr.go.juso.smartKais.Plugins": "1.0.0",
@@ -447,6 +446,7 @@
         "cordova-plugin-buildinfo": "1.1.0",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-file": "4.2.0",
-        "cordova-plugin-imagepicker": "1.1.0"
+        "cordova-plugin-imagepicker": "1.1.0",
+        "cordova-sqlcipher-adapter": "0.1.8"
     }
 }
