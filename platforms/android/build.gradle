@@ -24,13 +24,14 @@ apply plugin: 'android'
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     // Switch the Android Gradle plugin version requirement depending on the
     // installed version of Gradle. This dependency is documented at
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.0'
     }
    }
 
@@ -265,8 +266,6 @@ dependencies {
     debugCompile project(path: 'CordovaLib', configuration: 'debug')
     releaseCompile project(path: 'CordovaLib', configuration: 'release')
     // SUB-PROJECT DEPENDENCIES END
-    compile files('libs/MFF_ServiceBroker.jar')
-    compile files('libs/MFF_Attachment.jar')
     compile 'com.android.support:design:23.2.1'
 }
 
