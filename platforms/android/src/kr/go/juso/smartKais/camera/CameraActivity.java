@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Sensor;
@@ -17,15 +17,11 @@ import android.hardware.SensorManager;
 import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -34,10 +30,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -60,6 +55,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 	private Button ibUse;
 	private Button ibCapture;
 
+
 	private FrameLayout flBtnContainer;
 	private LinearLayout pickBtnContainer;
 	private File sdRoot;
@@ -72,10 +68,12 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 	private ImageView takeImage;
 	private int degrees = -1;
+    private int rotation = 0;
 	android.support.design.widget.FloatingActionButton ac;
 
 	private byte [] storedImage = null;
-
+    //줌이벤트 거리계산
+    float mDist = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +124,21 @@ public class CameraActivity extends Activity implements SensorEventListener {
 				// Add a listener to the Capture button
 		ibCapture.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() { } }, null, mPicture);
+
+				mCamera.autoFocus (new Camera.AutoFocusCallback() {
+
+					public void onAutoFocus(boolean success, Camera camera) {
+
+						if(success){
+
+							mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() { } }, null, mPicture);
+
+						}
+
+					}
+
+				});
+
 			}
 		});
 
@@ -172,8 +184,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		// Create an instance of Camera
 		mCamera = getCameraInstance();
 
-		// Setting the right parameters in the camera
-		Camera.Parameters params = mCamera.getParameters();
+        // Setting the right parameters in the camera
+		final Camera.Parameters params = mCamera.getParameters();
 		List<Camera.Size> sizes = params.getSupportedPictureSizes();
 
 		if (sizes.size() > 0){
@@ -192,6 +204,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 	//	params.setPreviewSize((int)(deviceDm.widthPixels / deviceDm.density), (int)(deviceDm.heightPixels/ deviceDm.density));
 		params.setPictureFormat(PixelFormat.JPEG);
 		params.setJpegQuality(50);
+
 		mCamera.setParameters(params);
 
 		// Create our Preview view and set it as the content of our activity.
@@ -211,12 +224,91 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 		LinearLayout dummyview = (LinearLayout) findViewById(R.id.linearLayoutDummy);
 		layoutParams = new LinearLayout.LayoutParams(
-				(int)(deviceDm.widthPixels) - btnview.getMeasuredWidth() - 100, (int)(deviceDm.heightPixels)
-		);
+				(int)(deviceDm.widthPixels) - btnview.getMeasuredWidth() - 100, (int)(deviceDm.heightPixels));
 		dummyview.setLayoutParams(layoutParams);
 
+        //줌이벤트
+        mPreview.setOnTouchListener(new View.OnTouchListener(){
 
-		cameraPreview.addView(mPreview, 0);
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                // Get the pointer ID
+                Camera.Parameters params = mCamera.getParameters();
+                int action = event.getAction();
+
+
+                if (event.getPointerCount() > 1) {
+                    // handle multi-touch events
+                    if (action == MotionEvent.ACTION_POINTER_DOWN) {
+                        mDist = getFingerSpacing(event);
+                    } else if (action == MotionEvent.ACTION_MOVE && params.isZoomSupported()) {
+                        mCamera.cancelAutoFocus();
+                        handleZoom(event, params);
+                    }
+                } else {
+                    // handle single touch events
+                    if (action == MotionEvent.ACTION_UP) {
+                        handleFocus(event, params);
+                    }
+                }
+                return true;
+            }
+
+            private void handleZoom(MotionEvent event, Camera.Parameters params) {
+                int maxZoom = params.getMaxZoom();
+                int zoom = params.getZoom();
+                float newDist = getFingerSpacing(event);
+                //float mDist = 0;
+                if (newDist > mDist) {
+                    //zoom in
+                    for(int i = 0 ; i < 2 ; i ++) {
+                        if (zoom < maxZoom)
+                            zoom++;
+//                        zoom++;
+                    }
+                } else if (newDist < mDist) {
+                    //zoom out
+                    if (zoom > 0)
+                        zoom--;
+                        //zoom--;
+                }
+                mDist = newDist;
+                params.setZoom(zoom);
+                mCamera.setParameters(params);
+            }
+
+            public void handleFocus(MotionEvent event, Camera.Parameters params) {
+                int pointerId = event.getPointerId(0);
+                int pointerIndex = event.findPointerIndex(pointerId);
+                // Get the pointer's current position
+                float x = event.getX(pointerIndex);
+                float y = event.getY(pointerIndex);
+
+                List<String> supportedFocusModes = params.getSupportedFocusModes();
+                if (supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+                    mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                        @Override
+                        public void onAutoFocus(boolean b, Camera camera) {
+                            // currently set to auto-focus on single touch
+                        }
+                    });
+                }
+            }
+
+            /** Determine the space between the first two fingers */
+            private float getFingerSpacing(MotionEvent event) {
+                // ...
+                float x = event.getX(0) - event.getX(1);
+                float y = event.getY(0) - event.getY(1);
+                return (float)Math.sqrt(x * x + y * y);
+            }
+
+
+        });
+
+        cameraPreview.addView(mPreview, 0);
+
 	}
 
 	@Override
@@ -312,11 +404,45 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 			cameraPreview.setVisibility(LinearLayout.GONE);
 			takePreview.setVisibility(LinearLayout.VISIBLE);
+            //프리뷰용 이미지(회전없음)
+            Bitmap picbitmap = BitmapFactory.decodeByteArray(data,0,data.length); //BitmapFactory.decodeFile(pictureFile.toString());
 
-//
-			Bitmap picbitmap = BitmapFactory.decodeByteArray(data,0,data.length); //BitmapFactory.decodeFile(pictureFile.toString());
+            fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()).toString() + ".jpg";
+            File file = new File(sdRoot, dir + fileName);
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(file);
+                fos.write(data);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            try {
+                exif = new ExifInterface(file.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+
+            Bitmap bmRotated = rotateBitmap(picbitmap, orientation);
+
+            byte[] newData = bitmapToByteArray(bmRotated);
+
+            //프리뷰 이미지
 			takeImage.setImageBitmap(picbitmap);
-			storedImage = data;
+            //이미지 저장
+			storedImage = newData;
+
+
 
 			/*
 			// File name of the image that we just took.
@@ -369,11 +495,14 @@ public class CameraActivity extends Activity implements SensorEventListener {
 						orientation = ExifInterface.ORIENTATION_ROTATE_90;
 						animation = getRotateAnimation(270);
 						degrees = 270;
+                        //새로
+                        rotation = 90;
 					} else if (event.values[1] < 0 && orientation != ExifInterface.ORIENTATION_ROTATE_270) {
 						// UP SIDE DOWN
 						orientation = ExifInterface.ORIENTATION_ROTATE_270;
 						animation = getRotateAnimation(90);
 						degrees = 90;
+                        rotation = 270;
 					}
 				} else if (event.values[1] < 4 && event.values[1] > -4) {
 					if (event.values[0] > 0 && orientation != ExifInterface.ORIENTATION_NORMAL) {
@@ -381,11 +510,13 @@ public class CameraActivity extends Activity implements SensorEventListener {
 						orientation = ExifInterface.ORIENTATION_NORMAL;
 						animation = getRotateAnimation(0);
 						degrees = 0;
+                        rotation = 0;
 					} else if (event.values[0] < 0 && orientation != ExifInterface.ORIENTATION_ROTATE_180) {
 						// RIGHT
 						orientation = ExifInterface.ORIENTATION_ROTATE_180;
 						animation = getRotateAnimation(180);
 						degrees = 180;
+                        rotation = 180;
 					}
 				}
 				if (animation != null) {
@@ -394,6 +525,15 @@ public class CameraActivity extends Activity implements SensorEventListener {
 					textView.startAnimation(animation);
 					textView =  (ImageView) findViewById(R.id.btn_text_r);
 					textView.startAnimation(animation);
+
+                    if(mCamera != null){
+                        Camera.Parameters params = mCamera.getParameters();
+
+                        params.setRotation(rotation);
+
+                        mCamera.setParameters(params);
+                    }
+
 				}
 			}
 
@@ -439,4 +579,62 @@ public class CameraActivity extends Activity implements SensorEventListener {
 	 */
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	}
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+
+
+        //핸드폰 버튼 기준 (카메라 값)
+        //              8
+        //           3  폰  1
+        //              6
+        //
+        //
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(0);//뒤집어짐?
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(90);//뒤집어짐?
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            //bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public byte[] bitmapToByteArray( Bitmap $bitmap ) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
+        $bitmap.compress( Bitmap.CompressFormat.JPEG, 50, stream) ;
+        byte[] byteArray = stream.toByteArray() ;
+        return byteArray ;
+    }
 }

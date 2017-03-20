@@ -64,5 +64,6 @@
     <uses-permission android:name="com.dkitec.pns.permission.RECEIVER" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 </manifest>
