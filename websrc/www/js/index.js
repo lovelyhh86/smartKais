@@ -45,7 +45,7 @@ var application = {
                 datasource.closeDB();
 
                 var redirectUrl = "main.html";
-                redirectUrl = "work.html?cn=" + cn + "&tel="+telnum;
+                redirectUrl = "work.html?sso=" + JSON.stringify(sso);
                 location.href = redirectUrl;
                 util.dismissProgress();
             }

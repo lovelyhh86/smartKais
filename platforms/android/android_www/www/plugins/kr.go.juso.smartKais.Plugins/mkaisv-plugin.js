@@ -84,11 +84,8 @@ MKaisvPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, d
             req : JSON.stringify(data)
         };
     }
-console.log($.param(reqParam));
 
     if(data.brokerMode == 0) { //MODE.DEBUG) {
-
-//        reqParam.svcType = "T";
         $.ajax({
             type: "POST",
             url : "http://api.juso.go.kr/gis/proxyGeo4mkais.jsp?",

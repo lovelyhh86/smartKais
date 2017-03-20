@@ -171,8 +171,7 @@ public class Plugins extends CordovaPlugin
         }
         else if ("getSSOinfo".equals(action))
         {
-            HashMap<String,String> sso = SSO.getSSOinfo();
-            JSONObject ssoJson = new JSONObject(sso);
+            JSONObject ssoJson = SSO.getSSOInfo();
             result = true;
             callbackContext.success(ssoJson);
         }

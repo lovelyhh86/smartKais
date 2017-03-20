@@ -1,4 +1,4 @@
-
+var application;
 var util = {
     //ajax call
     getAJAX : function(context,url){
@@ -23,7 +23,7 @@ var util = {
     },
     postAJAX : function(context,urldata , direct){
         var def = $.Deferred();
-        if (application.info)
+        if (application && application.info)
             urldata = $.extend({},{sigCd:application.info.sigCd,mode:application.mode, brokerMode: mode}, urldata);  //시군구 코드 필수 추가
         else
             urldata = $.extend({},{mode:'00', brokerMode: 1 }, urldata);
