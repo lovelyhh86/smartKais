@@ -19,8 +19,8 @@
 -->
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="kr.go.juso.smartKais.Plugins" version="1.0.0">
-    <name>MkaisvPlugins</name>
-    <description>Juso MKaisv Plugin</description>
+    <name>SmartKaisPlugins</name>
+    <description>Juso SmartKais Plugin</description>
   
 
     <!-- common -->
@@ -39,7 +39,7 @@
         </config-file>
 
         <config-file target="res/xml/config.xml" parent="/*">
-          <feature name="MKaisvPlugins">
+          <feature name="SmartKaisPlugins">
               <param name="android-package" value="kr.go.juso.smartKais.Plugins" />
           </feature>
         </config-file>

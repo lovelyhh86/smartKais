@@ -22,8 +22,8 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <feature name="MKaisvPlugin">
-        <param name="android-package" value="kr.go.juso.smartKais.plugin" />
+    <feature name="SmartKaisPlugins">
+        <param name="android-package" value="kr.go.juso.smartKais.plugins" />
     </feature>
     <preference name="Orientation" value="portrait" />
     <plugin name="cordova-sqlcipher-adapter" spec="~0.1.8" />

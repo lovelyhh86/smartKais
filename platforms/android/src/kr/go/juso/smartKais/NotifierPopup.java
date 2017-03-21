@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 
 public class NotifierPopup extends Activity {
-    private static final String TAG = "MKAIS[POPUP]";
+    private static final String TAG = "SmartKais[POPUP]";
 
     public NotifierPopup()
     {

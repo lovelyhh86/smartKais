@@ -1,48 +1,27 @@
 package kr.go.juso.smartKais;
 
 import android.app.Application;
-import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dkitec.PushLibrary.Listener.PushAppRegistListener;
-import com.dkitec.PushLibrary.PushLibrary;
 import com.dkitec.PushLibrary.Receiver.PushLibraryReceiver;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.List;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
-class AppEnviroment extends Application {
+class AppEnvironment extends Application {
     private static int pendingNotificationsCount = 0;
 
     @Override
@@ -60,7 +39,7 @@ class AppEnviroment extends Application {
 }
 
 public class PushReceiver extends PushLibraryReceiver {
-    private static final String TAG = "MKAIS[PR]";
+    private static final String TAG = "SmartKais[PR]";
 
     public PushReceiver()
     {
@@ -142,8 +121,8 @@ public class PushReceiver extends PushLibraryReceiver {
             intent.addCategory("android.intent.category.mobp.mff");
 
             intent = new Intent();
-            int count = AppEnviroment.getPendingNotificationsCount();
-            AppEnviroment.setPendingNotificationsCount(count + 1);
+            int count = AppEnvironment.getPendingNotificationsCount();
+            AppEnvironment.setPendingNotificationsCount(count + 1);
             NotificationManager notificationmanager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             PendingIntent pendingIntent = //PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     new AppComponentLauncher(context).PendingActivityLaunchApp() ;
@@ -163,7 +142,6 @@ public class PushReceiver extends PushLibraryReceiver {
 
         }
 
-
         //화면 잠금 상태
         PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         Boolean isScreenon = false;
@@ -174,15 +152,6 @@ public class PushReceiver extends PushLibraryReceiver {
          //   isScreenon = pm.isInteractive();
 
         }
-
-        //잠금여부
-/*
-        KeyguardManager km = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
-
-        if (km.inKeyguardRestrictedInputMode() == false ){
-            return;
-        }
-//*/
 
         //잠금상태가 아니라면 토스트
         if (isScreenon) {
@@ -203,7 +172,6 @@ public class PushReceiver extends PushLibraryReceiver {
             toast.show();
 
         } else {
-
             //잠금상태라면 카톡과 같은 팝업 출력
             Intent popup = new Intent(context, NotifierPopup.class)
                     .setFlags(
@@ -219,7 +187,5 @@ public class PushReceiver extends PushLibraryReceiver {
                 popupTask.send();
             } catch (Exception ex) {}
         }
-        //*/
     }
-
 }
