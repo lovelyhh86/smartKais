@@ -38,64 +38,26 @@ var application = {
 
         //로딩 출력개선
         //버전 체크 & 접속 초기화
-        if (checkConnection())
-        {
-     //       alert('debug index.js');
+        if (checkConnection()) {
             function gotoMain(){
                 datasource.closeDB();
-
-                var redirectUrl = "main.html";
-                redirectUrl = "work.html?sso=" + JSON.stringify(sso);
-                location.href = redirectUrl;
+                location.href = "work.html?sso=" + JSON.stringify(sso);
                 util.dismissProgress();
             }
 
-
-
-
-
             datasource.getVersion()         //버전 체크
-            .then( function(versionInfo) {  //codemaster 요청
+            .then( function(version) {
+                var versionLink = URLs.postURL(URLs.versionLink , null);
 
-                var  codemasterLink = URLs.postURL(URLs.updateCodelink , null);//util.isEmpty(versionInfo) ? null  : { updateDate: versionInfo });
-
-                return util.postAJAX('',codemasterLink);
-            })
-            .then( function(context,rcode,results) {
-
-                if ( rcode == 0 && !util.isEmpty(results) && results.data.length !== 0  )
-                {
-                    var data = results.data;
-                    datasource.updateVersionInfo(util.getToday(false), data, gotoMain);
-                }
-
-                ;
+                util.postAJAX('', versionLink)
+                .then( function(context, resCode, results) {
+                    if (resCode == 0 && !(util.isEmpty(results) || util.isEmpty(results))) {
+                        var data = results.data;
+                        datasource.updateVersionInfo(util.getToday(false), data, gotoMain);
+                    }
+                })
             });
-
-
-
-            /*
-            datasource.getVersion()         //버전 체크
-            .then( function(versionInfo) {  //codemaster 요청
-                var url = URLs.getURL(URLs.versionchecklink,versionInfo);
-                return util.getAJAX(versionInfo,url);
-            })
-            .then( function(versionInfo,results) { //codemaster 반영
-                var obj =  results;//JSON.parse(results);
-
-                if (versionInfo.appversion != obj.appversion || versionInfo.codeversion != obj.codeversion)
-                {
-                    datasource.updateVersionInfo(obj);
-                }
-                gotoMain();
-
-            },function(versionInfo,xhr,error) {
-                navigator.notification.alert("서버와의 접속이 원활하지 않습니다.\n앱을 다시 시작해 주십시오.", appExit, '알림', '확인');
-            });
-            //*/
-        }
-        else
-        {
+        } else {
             navigator.notification.alert("서버와의 접속이 원활하지 않습니다2.\n앱을 다시 시작해 주십시오.", appExit, '알림', '확인');
         }
     },

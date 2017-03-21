@@ -13,7 +13,6 @@ $.when(application.deviceReadyOK, workPageReadyOK).then(function(){
     util.on("notification",function(json,param){
 
         util.toast('push:' + json.message);
-        //alert('notification' + json.message);
     });
 });
 

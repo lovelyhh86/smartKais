@@ -15,7 +15,7 @@ class PushReceiverRegister implements PushAppRegistListener
 {
 
     Context context_;
-    private static final String TAG = "MKAIS[PRR]";
+    private static final String TAG = "SmartKais[PRR]";
     private static final String SVRADDR = "https://flpush.mcenter.go.kr:7001/pis/interface";
     private static final String USERID ="joehee";
 

@@ -24,7 +24,7 @@
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
-    <feature name="MKaisvPlugins">
+    <feature name="SmartKaisPlugins">
         <param name="android-package" value="kr.go.juso.smartKais.Plugins" />
     </feature>
     <feature name="Notification">

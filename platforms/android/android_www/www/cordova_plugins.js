@@ -269,10 +269,10 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
             "runs": true
         },
         {
-            "file": "plugins/kr.go.juso.smartKais.Plugins/mkaisv-plugin.js",
-            "id": "kr.go.juso.smartKais.Plugins",
+            "file": "plugins/kr.go.juso.smartKais.plugins/smartKais-plugins.js",
+            "id": "kr.go.juso.smartKais.plugins",
             "clobbers": [
-                "MKaisvPlugins"
+                "SmartKaisPlugins"
             ]
         },
         {
@@ -301,7 +301,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
             "cordova-plugin-device-orientation": "1.0.2",
             "com.telerik.plugins.nativepagetransitions": "0.6.3",
             "cordova-plugin-camera-with-exif": "1.0.2",
-            "kr.go.juso.smartKais.Plugins": "1.0.0",
+            "kr.go.juso.smartKais.plugins": "1.0.0",
             "cordova-plugin-dialogs": "1.2.1",
             "cordova-plugin-buildinfo": "1.1.0",
             "cordova-plugin-compat": "1.0.0",

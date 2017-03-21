@@ -37,7 +37,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"MKaisvPlugins\"><param name=\"android-package\" value=\"kr.go.juso.smartKais.Plugins\" /></feature>",
+                            "xml": "<feature name=\"SmartKaisPlugins\"><param name=\"android-package\" value=\"kr.go.juso.smartKais.Plugins\" /></feature>",
                             "count": 1
                         },
                         {

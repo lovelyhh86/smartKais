@@ -39,7 +39,7 @@ class AppEnvironment extends Application {
 }
 
 public class PushReceiver extends PushLibraryReceiver {
-    private static final String TAG = "MKAIS[PR]";
+    private static final String TAG = "SmartKais[PR]";
 
     public PushReceiver()
     {

@@ -94,6 +94,8 @@ public class IntroActivity extends Activity {
 
                     intent.putExtra("sso", SSO.getSSOInfo().toString());
                     startActivity(intent);
+
+                    finish();
                 }
 
             }

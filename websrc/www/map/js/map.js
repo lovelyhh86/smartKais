@@ -411,23 +411,22 @@ var getFeatureLayer = function(options) {
           typeName: options.typeName
         };
 
-        var urldata = URLs.postURL(URLs.mapServiceLink,param);
+        var urlData = URLs.postURL(URLs.mapServiceLink,param);
 
         util.showProgress();
-        util.postAJAX('', urldata, true)
+        util.postAJAX('', urlData, true)
         .then(function(context,rcode,results) {
             util.dismissProgress();
             var features = new ol.format.WFS().readFeatures(results, {featureProjection: baseProjection.getCode(), dataProjection:sourceProjection.getCode()});
             console.log("Count of loaded features are " + features.length);
             vectorSource.addFeatures(features);
-        },function(context,xhr,error) {
-            console.log("조회 error >> " + error +'   '+ xhr);
+        },function(context, xhr, error) {
+            console.log("조회 error >> " + xhr);
+            console.dir(error);
             util.dismissProgress();
         });
     },
-    strategy: ol.loadingstrategy.tile(new ol.tilegrid.createXYZ({
-      maxZoom: 19
-    }))
+    strategy: ol.loadingstrategy.bbox
   });
 
   var source;
