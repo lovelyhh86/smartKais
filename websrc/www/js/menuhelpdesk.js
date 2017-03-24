@@ -209,7 +209,7 @@ function loadHelpdesk(container){
         dd =(dd[1]?dd:"0"+dd[0]);
 
 
-        var param = $.extend({},{sigCd:application.info.sigCd, size:itemSize, timeout:5000},scroll.context );
+        var param = $.extend({},{sigCd:app.info.sigCd, size:itemSize, timeout:5000},scroll.context );
         var helpdeskurl = URLs.postURL(URLs.helpdesklistlink ,param);
         //util.getAJAX([start,count],helpdeskurl)
         util.postAJAX([start,count],helpdeskurl)

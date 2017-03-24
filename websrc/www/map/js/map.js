@@ -43,10 +43,7 @@ var mapInit = function(init) {
     if (!initial)
         initial = true;
     else
-
         return;
-
-    $(".ui-page").height("100%");
 
     // 도로안내시설물위치 레이어
     // 건물번호판 레이어
@@ -160,18 +157,6 @@ var mapInit = function(init) {
         pos = ol.proj.fromLonLat([location.coords.longitude, location.coords.latitude], baseProjection.getCode());
     });
 
-    // creating the view
-    var view = new ol.View({
-        zoom: 19,
-        projection: baseProjection,
-        center: pos,
-        zoom: 12,
-        maxZoom: 15,
-        minZoom: 6,
-        maxResolution: 2048
-    });
-
-
     map = new ol.Map({
         target: 'map',
         logo: false,
@@ -187,11 +172,16 @@ var mapInit = function(init) {
             })
         }),
         overlays: [overlay, makerOverlay, markerGeoloaction],
-        view: view
+        view: new ol.View({
+            zoom: 19,
+            projection: baseProjection,
+            center: pos,
+            zoom: 12,
+            maxZoom: 15,
+            minZoom: 6,
+            maxResolution: 2048
+        })
     });
-
-
-
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
 

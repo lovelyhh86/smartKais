@@ -1,67 +1,40 @@
 <!DOCTYPE html>
 <html LANG="ko">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' http://m1.juso.go.kr http://en.wikipedia.org/ https://en.wikipedia.org 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://m1.juso.go.kr;">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>현장검증</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' http://m1.juso.go.kr 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://m1.juso.go.kr;">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>스마트 KAIS</title>
 
-    <!-- Phonegap.js import -->
-    <!-- <script type="text/javascript" charset="utf-8" src="js/egovframework/mbl/cmm/cordova.js"></script>  -->
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <link rel="preload" as="image" href="img/main/menu_bg.png">
 
-    <link rel="stylesheet" href="map/css/ol.css" type="text/css">
-
-    <!-- eGovFrame Common import -->
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
-    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
-    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" />
-    <link rel="stylesheet" href="js/flex/flexslider.css" type="text/css" />
-    <link rel="stylesheet" href="css/font-awesome.css" />
-    <link rel="stylesheet" href="css/font-nanum-square-r.css" />
-    <link rel="stylesheet" href="css/toastr.css" type="text/css" />
-
-
-    <!-- 이미지 해상도 낮음
-        <link rel="stylesheet" href="css/egovframework/mbl/cmm/theme-1.1.1.css" />
-        <link rel="stylesheet" href="css/egovframework/mbl/cmm/EgovMobile-1.4.5.css" />
-    -->
-
-    <!--<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery-2.2.1.min.js"></script>-->
-    <!--<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.mobile-1.4.5.min.js"></script>-->
-
-    <!--Debug Mode-->
-    <script type="text/javascript" src="map/js/jquery-2.2.1.js"></script>
+    <!-- for debug -->
+    <script type="text/javascript" src="map/js/jquery-2.1.4.js"></script>
     <script type="text/javascript" src="map/js/jquery.mobile-1.4.5.js"></script>
 
-    <script type="text/javascript" src="js/egovframework/mbl/cmm/modernizr-2.0.4.js"></script>
-    <script type="text/javascript" src="js/egovframework/mbl/cmm/EgovMobile-1.4.5.js"></script>
-    <script type="text/javascript" src="js/egovframework/mbl/cmm/EgovHybrid.js"></script>
+    <!--<script type="text/javascript" src="map/js/jquery-2.2.1.min.js"></script>-->
+    <!--<script type="text/javascript" src="map/js/jquery.mobile-1.4.5.min.js"></script>-->
 
     <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/egovframework/mbl/cmm/json2.js"></script>
 
+    <!-- Phonegap.js import -->
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+    <!-- eGovFrame Common import -->
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+
+    <link rel="stylesheet" href="css/default.css" />
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!-- work page env import -->
     <script type="text/javascript" src="js/toastr.js"></script>
     <script type="text/javascript" src="js/flex/jquery.flexslider.js"></script>
-
-
-    <!-- Customm CSS import -->
-    <!-- <link rel="stylesheet" href="css/juso-cordova.min.css" />
-    -->
-    <link rel="stylesheet" href="css/mkaisv-theme.css" />
-    <link rel="stylesheet" href="css/mkaisv.css" />
-    <link rel="stylesheet" href="map/css/map.css" />
-
-    <!-- application library  -->
-    <script type="text/javascript" src="js/mkaisscroll.js"></script>
     <script type="text/javascript" src="js/variables.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
     <script type="text/javascript" src="js/datasource.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
-
-    <!-- application menu  -->
-    <script type="text/javascript" src="js/menuhelpdesk.js"></script>
-    <script type="text/javascript" src="js/menuapp.js"></script>
 
     <!-- application pages -->
     <script type="text/javascript" src="js/work.js"></script>
@@ -71,126 +44,92 @@
     <script type="text/javascript" src="js/writeans.js"></script>
     <script type="text/javascript" src="js/memolist.js"></script>
 
-    <!-- for Map -->
+    <!-- for map page debug -->
+    <!--<script src="map/js/proj4-src.js" type="text/javascript"></script>-->
+    <!--<script src="map/js/ol-debug.js" type="text/javascript"></script>-->
+
+    <!-- for map page -->
     <script src="map/js/proj4.js" type="text/javascript"></script>
-    <script src="map/js/ol-debug.js" type="text/javascript"></script>
+    <script src="map/js/ol.js" type="text/javascript"></script>
     <script src="map/js/utils.js" type="text/javascript"></script>
     <script src="map/js/map-style.js" type="text/javascript"></script>
     <script src="map/js/map.js" type="text/javascript"></script>
-
-    <style>
-        #work_page { position:absolute;background-color:#3D4190;}
-        #work_page > div > div > label {
-        text-align:center;
-        font-size:1.2em;
-        color:#EFD84B;
-        top:0;
-        height:2em;
-        line-height:2em;
-        width:100%;
-        }
-
-        a > .tasklink{  width:100%;  height:7em; margin-top: 1em; }
-
-        a > .tasklink_area {  background-image: url(./images/app/task_area.png) ;    }
-        todoa:active > .tasklink_area { background-image: url(./images/app/task_area_press.png) ;    }
-
-        a > .tasklink_basenum {  background-image: url(./images/app/task_basenum.png) ;    }
-        todoa:active > .tasklink_basenum { background-image: url(./images/app/task_basenum_press.png) ;    }
-
-        a > .tasklink_road {  background-image: url(./images/app/task_road.png) ;    }
-        todoa:active > .tasklink_road { background-image: url(./images/app/task_road_press.png) ;    }
-
-        a > .tasklink_building {  background-image: url(./images/app/task_building.png) ;    }
-        todoa:active > .tasklink_building { background-image: url(./images/app/task_building_press.png) ;    }
-
-        .tasklink_address {
-        position:absolute;
-        left:0;
-        bottom:0;
-        height:6em;
-        line-height:6em;
-        padding-top:1em;
-        width:100%;
-        text-align:center;
-        }
-        .tasklink_address > a {
-        font-size:1.6em;
-        background: rgba(250,250,250,0.34);
-        border-radius: 1em;
-        display: inline-block;
-        line-height: 2.0em;
-        padding: 0 1em;
-        text-decoration: none;
-        }
-
-    </style>
 </head>
-<body>
 
-<!-- overlay page zorder 900-->
-<!-- 주소 검색창 -->
-<!--
-<div id="searchoverlay" class="overlay overlay-hidden zordertop" >
-    <div style='padding:10px;background:#FFFFFF;'>
-        <input data-role='none' type="search" id="searchinput" class="search-field" placeholder="도로명, 지번으로 검색가능">
-        <div style='position:absolute;top:0px;right:0px;width:40px;vertical-align:middle;'>
-            <a  style='color:#6bb8fa; text-align:center;vertical-align:middle; background-color: none;text-shadow:none;transparent;right:0;font-size:36px;' >
-                <i class="fa fa-search"> </i>
+<body class="main">
+<div data-role="panel" data-position="left" data-display="overlay" id="menu_panel">
+    <a href="#menu_panel"><img src="img/icon/iconCloser.png" class="btn-closer" /></a>
+    <h2 class="ui-bar">스마트KAIS</h2>
+    <div class="ui-body">
+        <ul data-role="listview">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">안내시설물관리</a></li>
+            <li><a href="#">도로업무관리</a></li>
+            <li><a href="#">민원업무조회</a></li>
+        </ul>
+    </div>
+</div><!-- /panel -->
+<div data-role="panel" data-position="right" data-display="overlay" id="push_panel">
+    <a href="#push_panel"><img src="img/icon/iconCloser.png" class="btn-closer" /></a>
+    <h2 class="ui-bar">도움센터(QnA)</h2>
+    <div class="ui-body">
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#noReply" data-ajax="false">미답변글</a></li>
+                    <li><a href="#allQna" data-ajax="false">전체글</a></li>
+                </ul>
+            </div>
+            <div id="noReply">
+                미답변글 내용
+            </div>
+            <div id="allQna">
+                전체글 내용
+            </div>
+        </div>
+    </div>
+</div><!-- /panel -->
+<div data-role="header" data-theme="none">
+    <a href="#" data-role="button" data-shadow="false" data-theme="none" id="menu_btn">
+        <img src="img/icon/iconMenu_l.png" />
+    </a>
+    <h1><img src="img/main/header_logo.png" /></h1>
+    <a href="#" data-role="button" data-shadow="false" data-theme="none" id="push_btn">
+        <img src="img/icon/iconMenu_r.png" />
+    </a>
+</div><!-- /header -->
+<div id="work_page" data-role="page" data-theme="none" style="min-height: 100%;">
+    <div data-role="main" class="ui-content main">
+        <a href="#panel_btn" data-rel="popup" data-transition="slideup" class="ui-btn"><img src="img/icon/iconPanel_dn.png" /></a>
+        <div data-role="popup" id="panel_btn" class="ui-content">
+            <div>
+                도로명판
+            </div>
+            <div>
+                적용
+            </div>
+        </div>
+
+        <div class="title">
+            <img src="img/main/top_logo.png">
+            <div class="text">
+                <p class="msg">쉽고 편리한 국가주소정보시스템</p>
+            </div>
+        </div>
+        <div class="menu_list">
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+                <img src="img/main/img_menu01_on.png" />
+            </a>
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+                <img src="img/main/img_menu02_on.png" />
+            </a>
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+                <img src="img/main/img_menu03_on.png" />
             </a>
         </div>
-    </div>
-    <div style='height:100%;' id='searchbg'></div>
-</div>
--->
-
-<!-- 메뉴 오버레이 배경 -->
-<div id="menuoverlay" class="overlay overlay-hidden" ></div>
-
-<!-- 좌측 앱 메뉴 모듈 -->
-<div id="mainMenu" class="menuPanel" style='left:-80%;' ></div>
-
-<!-- 우측 QnA 메뉴 모듈 -->
-<div id="helpdeskmenu" class="menuPanel" style='right:-80%;' ></div>
-
-<!-- fixed header -->
-<div data-role="header" data-theme='a' data-position="fixed" class="titleheader" >
-    <a class='leftMenuBtn' data-role='none'>
-        <i class="fa fa-navicon fa-inverse "></i>
-    </a>
-    <h1>스마트 KAIS</h1>
-    <a class='rightMenuBtn' data-role='none'>
-        <i class="fa fa-comments fa-inverse"></i>
-    </a>
-</div>
-
-<!-- main page : dash board-->
-<div id="work_page" data-role="page"  >
-    <div data-role="content"  data-position="fixed" class="ui-content " >
-        <div >
-           <label>찾으시는 안내시설물을 선택해주세요</label>
-        </div>
-        <a href='#' onclick='util.gotoTask("roadsign")'>
-            <div class='tasklink tasklink_road' ></div>
-        </a>
-        <a href='#' onclick='util.gotoTask("areasign")'>
-            <div class='tasklink tasklink_area'></div>
-        </a>
-        <a href='#' onclick='util.gotoTask("basenumsign")'>
-            <div class='tasklink tasklink_basenum'></div>
-        </a>
-<!--
-        <a href='#' onclick='util.gotoTask("buildsign")'>
-            <div class='tasklink tasklink_building' ></div>
-        </a>
--->
-
-        <div class="tasklink_address"   >
-            <a  href="#" onclick='util.gotoTask("address")'>상세주소 - 기초조사</a>
-        </div>
-    </div>
-</div>
-
+    </div><!-- /content -->
+</div><!-- /page -->
 </body>
+
 </html>
 

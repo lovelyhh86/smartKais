@@ -13,7 +13,7 @@ $(function () {
         var title = content.title;
 
         var link = categoryid === 'buildsign' ? URLs.buildsignlink : URLs.roadsignlink;
-        var url = URLs.postURL(link, { "sn": sn, "sigCd": sig_cd, "workId": application.info.opeId });
+        var url = URLs.postURL(link, { "sn": sn, "sigCd": sig_cd, "workId": app.info.opeId });
 
         $('#detailview_page').data('sn', '');
         $('#detailview_page').data('category', '');
@@ -115,7 +115,7 @@ $(function () {
 
 
     $(document).on("pagecreate", pages.detailview.div, function () {
-        // application.scaleContentToDevice(this);
+        // app.scaleContentToDevice(this);
 
         $('#detail_images').flexslider({
             animation: "slide",
@@ -132,15 +132,15 @@ $(function () {
     });
 
     $(document).on("pagebeforeshow", pages.detailview.div, function (event, data) {
-        var context = application.context;
+        var context = app.context;
         if (util.isEmpty(context))
             return;
 
-        application.context = {};
+        app.context = {};
         var attr = {
             category: context.categoryid,
             sn: context.sn,
-            sigcd: application.info.sigCd,
+            sigcd: app.info.sigCd,
             title: context.title
         };
         buildContent(attr);
@@ -208,9 +208,9 @@ $(function () {
                 checkState: facilityCur.status,
                 checkType: '01',
                 checkComment: facilityCur.memo,
-                checkUserNm: application.info.opeNm,
+                checkUserNm: app.info.opeNm,
                 checkDate: util.getToday(),
-                workId: application.info.opeId,//,,
+                workId: app.info.opeId,//,,
                 files: facilityCur.images[0].base64.length == 0 ? []
                     : ((facilityCur.hasNewImage || facilityOrg.hasNewImage) ? facilityCur.images : null)
                 // images : facilityCur.images

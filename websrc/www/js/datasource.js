@@ -1,8 +1,9 @@
 var dbConstant = {
-    creationTableRoadfac: 'CREATE TABLE IF NOT EXISTS MEMOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON TEXT)',
+    creationTableRoadFac: 'CREATE TABLE IF NOT EXISTS MEMOS (ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON TEXT)',
     creationTableCodeGroup: 'CREATE TABLE IF NOT EXISTS SCCO_CODE ( GROUPID TEXT, GROUPNM TEXT, CODEID TEXT, CODENM TEXT )',
     creationTableCodeMaster: 'CREATE TABLE IF NOT EXISTS CODEMASTER (CODEID INTEGER PRIMARY KEY , CODECLASS TEXT NOT NULL, CODENAME TEXT NOT NULL, CODEVALUE INTEGER)',
-    creationTableVersion: 'CREATE TABLE IF NOT EXISTS VERSION (PLATFORM TEXT, STORE TEXT, VERSION_CODE TEXT, VERSION_NAME TEXT, UPDATE_DT TEXT, PRIMARY KEY(PLATFORM, STORE))',
+    creationTableVersion: 'CREATE TABLE IF NOT EXISTS VERSION (PLATFORM TEXT, STORE TEXT, VERSION_CODE TEXT, VERSION_NAME TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(PLATFORM, STORE))',
+    creationTableGeolocation: "CREATE TABLE IF NOT EXISTS GEOLOCATION (WORKID TEXT DEFAULT 'MAP' PRIMARY KEY, PROJECTION TEXT, LOCATION_X TEXT, LOCATION_Y TEXT, TYPE TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP)",
 
     dropTableCodeGroup: 'DELETE FROM SCCO_CODE',
 
@@ -20,7 +21,7 @@ var dbConstant = {
 
 var datasource = {
     constant: {
-        STORE   : "EGOV_STORE",
+        STORE: "EGOV_STORE",
         PLATFORM: "Android"
     },
     db: {},
@@ -31,8 +32,22 @@ var datasource = {
         this.db = window.sqlitePlugin.openDatabase({ name: 'smartKais_local.db', location: 'default' });
     },
     createDB: function () {
+        var def = $.Deferred();
+
         this.openDB();
-        this.db.transaction(datasource.initDB, datasource.errorDB, datasource.successDB);
+        this.db.transaction(
+            datasource.initDB,
+            function() {
+                datasource.errorDB
+                def.reject();
+            },
+            function() {
+                datasource.successDB
+                def.resolve();
+            }
+        );
+
+        return def.promise();
     },
     closeDB: function () {
         //        this.db.close();
@@ -41,19 +56,51 @@ var datasource = {
         this.createDB();
     },
     initDB: function (tx) {
-        tx.executeSql(dbConstant.creationTableRoadfac);
+        tx.executeSql(dbConstant.creationTableRoadFac);
         tx.executeSql(dbConstant.creationTableCodeGroup);
+        tx.executeSql(dbConstant.creationTableGeolocation);
         tx.executeSql(dbConstant.creationTableVersion);
-
-        return;
     },
     errorDB: function (err) {
-        alert("Error processing SQL: " + err.code);
+        console.log("Error processing SQL: " + err.code);
     },
     /** function will be called when process succeed */
     successDB: function () {
-        //  datasource.db.transaction(queryDB, errorDB);
+        //  datasource.db.transaction(queryDB,errorCB);
     },
+    getGeolocation: function () {
+        var def = $.Deferred();
+
+        this.db.executeSql('SELECT * FROM GEOLOCATION', [],
+            function (result) {
+                if (result.rows.length > 0) def.resolve(result.rows.item(0));
+            },
+            function (error) {
+                def.reject(error);
+            });
+
+        return def.promise();
+    }
+    ,
+    setGeolocation: function (loc, successCB) {
+        var def = $.Deferred();
+
+        this.db.transaction(
+            function (tx) {
+                tx.executeSql("INSERT or REPLACE INTO  GEOLOCATION (PROJECTION, LOCATION_X, LOCATION_Y, TYPE) VALUES (?, ?, ?, ?)", [ loc.PROJECTION, loc.X, loc.Y, loc.TYPE ]);
+            },
+            function (error) {
+                console.log('error transaction' + error);
+                def.reject(error);
+            },
+            function () { //transaction ok
+                if (successCB) successCB();
+                def.resolve();
+            });
+
+        return def.promise();
+    }
+    ,
     getVersion: function () {
         var def = $.Deferred();
 
@@ -65,40 +112,36 @@ var datasource = {
             }
             def.resolve(ver);
         },
-        function (error) {
-            def.reject(error);
-        });
+            function (error) {
+                def.reject(error);
+            });
 
         return def.promise();
     },
     updateVersionInfo: function (updateDate, d, successCB) { //앱 & 상수버전 갱신
         this.db.transaction(function (tx) {
-            tx.executeSql("INSERT or REPLACE INTO VERSION (PLATFORM, STORE, VERSION_CODE, VERSION_NAME, UPDATE_DT) VALUES (?, ?, ?, ?, ?)", [d.platform, d.store, d.versionCode, d.versionName, updateDate]);
-        },
-        function (error) {
-            console.log('error transaction' + error);
-        },
-        function () { //transaction ok
-            successCB();
-        });
-    },
-    setCodeMaster: function (appversion, codemaster, successcb) { //앱 & 상수버전 갱신
-        this.db.transaction(function (tx) {
-
-            tx.executeSql(dbConstant.dropTableCodeGroup);
-            tx.executeSql("INSERT or REPLACE INTO SCCO_CODE (GROUPID,GROUPNM,CODEID,CODENM) VALUES ('APPVERSION' ,?,'','')", [appversion]);
-
-            for (var i in codemaster) {
-                //alert(item + '   '+ item.codeid+' '+item.codename+' '+item.codevalue+' '+item.codecls);
-                tx.executeSql('INSERT or REPLACE INTO SCCO_CODE (GROUPID,GROUPNM,CODEID,CODENM) VALUES ( ?,?,?,?)', [codemaster[i].groupId, codemaster[i].groupNm, codemaster[i].codeId, codemaster[i].codeNm]);
-            }
-
+            tx.executeSql("INSERT or REPLACE INTO VERSION (PLATFORM, STORE, VERSION_CODE, VERSION_NAME) VALUES (?, ?, ?, ?)", [d.platform, d.store, d.versionCode, d.versionName]);
         },
             function (error) {
-                alert('erro transaction' + error);
+                console.log('error transaction' + error);
             },
             function () { //transaction ok
-                successcb();
+                if (successCB) successCB();
+            });
+    },
+    setCodeMaster: function (codemaster, successCB) { //앱 & 상수버전 갱신
+        this.db.transaction(
+            function (tx) {
+                for (var i in codemaster) {
+                    //alert(item + '   '+ item.codeid+' '+item.codename+' '+item.codevalue+' '+item.codecls);
+                    tx.executeSql('INSERT or REPLACE INTO SCCO_CODE (GROUPID,GROUPNM,CODEID,CODENM) VALUES ( ?,?,?,?)', [codemaster[i].groupId, codemaster[i].groupNm, codemaster[i].codeId, codemaster[i].codeNm]);
+                }
+            },
+            function (error) {
+                console.log('erro transaction' + error);
+            },
+            function () { //transaction ok
+                if (successCB) successCB();
             });
     },
     getCodeMaster: function (cb) {
@@ -123,12 +166,12 @@ var datasource = {
                     cb(codeMaster);
                 });
         },
-        function (error) {
-            alert('erro transaction' + error);
-        },
-        function () { //transaction ok
+            function (error) {
+                console.log('error transaction' + error);
+            },
+            function () { //transaction ok
 
-        });
+            });
     },
     addMemo: function (jsonData) {
         // ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON

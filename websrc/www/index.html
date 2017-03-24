@@ -4,78 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' http://m1.juso.go.kr 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://m1.juso.go.kr;">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>스마트 KAIS </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>스마트 KAIS</title>
 
-    <!-- Phonegap.js import -->
-    <!-- <script type="text/javascript" charset="utf-8" src="js/egovframework/mbl/cmm/cordova.js"></script>  -->
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-
-    <!-- eGovFrame Common import -->
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
-    <link rel="stylesheet" href="css/theme-1.1.1.css" />
-    <link rel="stylesheet" href="css/font-nanum-square-r.css" />
-    <!-- <link rel="stylesheet" href="css/EgovMobile-1.4.5.css" /> -->
+    <link rel="preload" as="image" href="img/intro_bg.jpg">
 
     <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery-2.2.1.min.js"></script>
     <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.mobile-1.4.5.min.js"></script>
-    <script type="text/javascript" src="js/egovframework/mbl/cmm/modernizr-2.0.4.js"></script>
-    <script type="text/javascript" src="js/egovframework/mbl/cmm/EgovMobile-1.4.5.js"></script>
-    <script type="text/javascript" src="js/egovframework/mbl/cmm/EgovHybrid.js"></script>
 
     <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/egovframework/mbl/cmm/json2.js"></script>
 
+    <!-- Phonegap.js import -->
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
-    <!-- Customm CSS import -->
-    <!--<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />-->
-    <!-- <link rel="stylesheet" href="css/egovframework/mbl/hyb/SampleTemplate.css" /> -->
+    <!-- eGovFrame Common import -->
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
 
-
-    <link rel="stylesheet" href="css/mkaisv-theme.css" />
-    <link rel="stylesheet" href="css/mkaisv.css" />
-
+    <link rel="stylesheet" href="css/default.css" />
+    <link rel="stylesheet" href="css/intro.css" />
 
     <script type="text/javascript" src="js/variables.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
     <script type="text/javascript" src="js/datasource.js"></script>
-
     <script type="text/javascript" src="js/index.js"></script>
-
 </head>
 
-<body onload="onLoadIndexPage()">
-
-<div id="app-object_splash" data-theme='a' data-role="page"  class="app">
-
-    <div data-role=“content” class="intro_content">
-        <h2>스마트 KAIS</h2>
-        <p>쉽고 편리한 현장검증!</p>
-        <p class="app_version"></p>
+<body class="intro" onload="app.initialize();">
+    <div data-role="page" style="min-height: 100%;">
+        <div class="title">
+            <img src="img/intro_logo.png">
+            <div class="text">
+                <p class="msg">쉽고 편리한 국가주소정보시스템</p>
+                <p class="ver">Version <span>1.0.2</span></p>
+            </div>
+        </div>
+        <div role="main" class="ui-content"></div>
+        <div class="footer"><img src="img/intro_moi_logo.png"></div>
     </div>
-
-    <div data-role=“footer”>
-        <p class="intro_foot">
-            <img src="images/app/intro_foot.png" width="107" alt="행정자치부" />
-        </p>
-    </div>
-</div>
-</div>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

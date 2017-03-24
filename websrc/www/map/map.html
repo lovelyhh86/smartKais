@@ -1,179 +1,13 @@
 <!DOCTYPE html>
 <html LANG="ko">
-<!--
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' http://m1.juso.go.kr 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://m1.juso.go.kr;">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>현장검증</title>
-
-  <script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
-
-  <link rel="stylesheet" href="../map/css/ol.css" type="text/css">
-
-  <link rel="stylesheet" href="../css/jquery.mobile-1.4.5.min.css" />
-  <link rel="stylesheet" href="../css/jquery.mobile.icons.min.css" />
-  <link rel="stylesheet" href="../css/jquery.mobile.structure-1.4.5.min.css" />
-  <link rel="stylesheet" href="../js/flex/flexslider.css" type="text/css" />
-  <link rel="stylesheet" href="../css/font-awesome.css" />
-  <link rel="stylesheet" href="../css/toastr.css" type="text/css" />
-
-  <link rel="stylesheet" href=" https://s3-us-west-2.amazonaws.com/s.cdpn.io/45816/feather-cp.css" />
-
-
-
-  <script type="text/javascript" src="../js/egovframework/mbl/cmm/jquery-2.2.1.min.js"></script>
-  <script type="text/javascript" src="../js/egovframework/mbl/cmm/jquery.mobile-1.4.5.min.js"></script>
-
-  <script type="text/javascript" src="../js/egovframework/mbl/cmm/modernizr-2.0.4.js"></script>
-  <script type="text/javascript" src="../js/egovframework/mbl/cmm/EgovMobile-1.4.5.js"></script>
-  <script type="text/javascript" src="../js/egovframework/mbl/cmm/EgovHybrid.js"></script>
-
-  <script type="text/javascript" src="../js/egovframework/mbl/cmm/jquery.validate.min.js"></script>
-  <script type="text/javascript" src="../js/egovframework/mbl/cmm/json2.js"></script>
-
-  <script type="text/javascript" src="../js/iscroll/iscroll-infinite.js"></script>
-
-  <script type="text/javascript" src="../js/flex/jquery.flexslider.js"></script>
-
-  <link rel="stylesheet" href="../css/juso-cordova.min.css" />
-  <link rel="stylesheet" href="../css/mkaisv.css" />
-  <link rel="stylesheet" href="../map/css/map.css" />
-
-
-  <script type="text/javascript" src="../js/mkaisscroll.js"></script>
-  <script type="text/javascript" src="../js/toastr.js"></script>
-
-  <script type="text/javascript" src="../js/variables.js"></script>
-  <script type="text/javascript" src="../js/util.js"></script>
-  <script type="text/javascript" src="../js/datasource.js"></script>
-  <script type="text/javascript" src="../js/ownerdatascroll.js"></script>
-
-  <script type="text/javascript" src="../js/main.js"></script>
-</head>
-
-<body>
--->
-
-<div id="mapview_page" data-sn='' data-sigcd='' style="position:absolute;" data-role="page" data-theme="a" data-dom-cache="true">
-    <style>
-        #write_memo {
-            position: absolute;
-            left: .5em;
-            top: 13.5em;
-        }
-        
-        #map_cordova {
-            position: absolute;
-            left: .5em;
-            top: 19.5em;
-        }
-        
-        #viewportline {
-            position: absolute;
-            left: .5em;
-            top: 16.5em;
-        }
-        
-        .memo-container {
-            position: absolute;
-            height: 8em;
-            top: -12em;
-            left: .5em;
-            right: .5em;
-            z-index: 10;
-            transition: top 0.2s ease-in-out;
-        }
-        
-        .memo-container>label {
-            background-color: white;
-            border: 1px solid lightgrey;
-            padding: 10px;
-            border-radius: 0.3em;
-            margin-bottom: 1px;
-        }
-        
-        .memo-container>textarea {
-            border-radius: 0.4em;
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .memo-container>div {
-            position: absolute;
-            right: 0;
-        }
-        
-        .memo-container>div>button {
-            padding: 5px 10px;
-            margin-top: 0;
-            border-radius: 0.5em;
-            border: 1px solid grey;
-            color: white;
-            background-color: darkgrey;
-        }
-        
-        .centerline {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background-color: transparent;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .displaynone {
-            display: none;
-        }
-        
-        #mapview_page .ui-filterable>div {
-            z-index: 1 !important;
-        }
-        
-        #info {
-            position: absolute;
-            font-size: 0.7em;
-            bottom: 10px;
-            right: 10px;
-            background-color: lightgrey;
-            padding: 4px;
-        }
-        
-        #info2 {
-            position: absolute;
-            font-size: 0.7em;
-            bottom: 50px;
-            right: 10px;
-            background-color: lightgrey;
-            padding: 4px;
-        }
-    </style>
-    <div class='centerline '>
-        <canvas id='centerlineCv' style="width: 100%; height: 100%;"></canvas>
-    </div>
-    <div id="map" data-role="content" data-theme="c" class="ui-content" style='border:0;left:0;bottom:0;right:0;top:0;position:fixed;padding:0;'></div>
+<div id="mapview_page" data-sn='' data-sigcd='' style='position:absolute; min-height: 100%;' data-role="page" data-theme="none" data-dom-cache="true">
+    <div id="map" data-role="content" data-theme="none" style="height: 100%;"></div>
     <form class="ui-filterable">
 
         <input id="autocomplete-input" data-type="search" placeholder="도로명 주소(or 기초번호) 검색(3글자 이상)">
 
     </form>
     <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input"></ul>
-    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-        <input type="checkbox" name="rdpq" id="top_menu_2">
-        <label for="top_menu_2">도로명판</label>
-        <input type="checkbox" name="area" id="top_menu_3">
-        <label for="top_menu_3">지역안내판</label>
-        <input type="checkbox" name="bsis" id="top_menu_4">
-        <label for="top_menu_4">기초번호판</label>
-        <!--
-    <input type="checkbox" name="buld" id="top_menu_1">
-    <label for="top_menu_1">건물번호판</label>
--->
-    </fieldset>
     <div id="map_current"><img src="../images/ico_map_current.png" width="40px" /></div>
     <div id="write_memo"><img src="../images/ico_map_current.png" width="40px" /></div>
     <div id="viewportline"><img src="../images/ico_map_current.png" width="40px" /></div>
@@ -219,32 +53,24 @@
 
     <script type="text/javascript">
         $(document).on("pagecreate", pages.map.div, function() {
-            application.scaleContentToDevice(this);
         });
 
-        $(document).on("pagehide", pages.map.div, function(event, data) {});
+        $(document).on("pagehide", pages.map.div, function(event, data) {
+
+        });
 
         $(document).on("pagebeforeshow", pages.map.div, function(event, data) {
-            var context = application.context;
+        });
+
+        $(document).on("pageshow", pages.map.div, function() {
+            var context = app.context;
 
             if (util.isEmpty(context))
                 return;
             mapInit(context.categoryid);
 
-            application.context = {};
+            app.context = {};
         });
-
-        $(document).on("pageshow", pages.map.div, function() {
-            //TODO convert ellipsis string : device width
-
-            map.setSize([$('#map').width(), $('#map').height()]);
-
-            viewportline();
-
-        });
-
-
-
 
         $(document).on("focus", "#mapview_memo", function() {
             $('#map_keypad_opt').removeClass('display-none');
@@ -299,8 +125,6 @@
             });
         }
 
-
-
         function viewportline() {
 
             var canvas = document.getElementById('centerlineCv');
@@ -320,7 +144,6 @@
                 canvas.height = $('#centerlineCv').height() * ratio;
                 ctx.scale(ratio, ratio);
 
-                //console.log( ratio + ' '  +canvas.clientWidth +  ' '  +oldWidth +  ' '  +canvas.width + ' | '  +canvas.clientHeight +  ' '  +oldHeight +  ' '  +canvas.height);
                 var x = canvas.clientWidth / 2;
                 var y = canvas.clientHeight / 2;
                 ctx.clearRect(0, 0, x, y);

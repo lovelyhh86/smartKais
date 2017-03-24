@@ -1,4 +1,4 @@
-var application;
+var app;
 var util = {
     //ajax call
     getAJAX: function (context, url) {
@@ -24,8 +24,8 @@ var util = {
     /** @return jQuery deferred promise object */
     postAJAX: function (context, params, direct) {
         var def = $.Deferred();
-        if (application != undefined && application.info)   //시군구 코드 필수 추가
-            params = $.extend({}, { mode: application.mode, brokerMode: 1, sigCd: application.info.sigCd }, params);
+        if (app != undefined && app.info)   //시군구 코드 필수 추가
+            params = $.extend({}, { mode: app.mode, brokerMode: 1, sigCd: app.info.sigCd }, params);
         else
             params = $.extend({}, { mode: '00', brokerMode: 1 }, params);
 
@@ -59,9 +59,8 @@ var util = {
     },
     //뒤로가기
     goBack: function () {
-        if ($('#menuoverlay').hasClass('overlay-hidden') == false) {
-            util.hiddenMenuPanel('#mainMenu');
-            util.hiddenHelpDeskPanel('#helpdeskmenu');
+        if ($( "body>[data-role='panel']" ).hasClass("ui-panel-open")) {
+            $( "body>[data-role='panel']" ).panel("close");
             return;
         }
 
@@ -71,12 +70,12 @@ var util = {
                 util.appExit();
             return;
         }
-        else if (application.historyStack.length == 1) {
-            application.historyStack.pop();
+        else if (app.historyStack.length == 1) {
+            app.historyStack.pop();
             util.slide_page('right', pages.workpage);
         }
         else {
-            application.historyStack.pop();
+            app.historyStack.pop();
             navigator.app.backHistory();
             util.doSlide("right");
         }
@@ -90,37 +89,6 @@ var util = {
         }
         if (spliceIndex < $.mobile.navigate.history.stack.length) {
             $.mobile.navigate.history.stack.splice(spliceIndex, $.mobile.navigate.history.stack.length - spliceIndex);
-        }
-    },
-    //overlay menu panel
-    showHelpDeskPanel: function (selector) {
-        $('.overlay').addClass('overlay-hidden');
-        $('#menuoverlay').removeClass('overlay-hidden');
-        //  $(selector).removeClass('display-none');
-        $('.menu-fixed-right').css('right', '0');
-        $(selector).css('right', '0');
-    },
-    hiddenHelpDeskPanel: function (selector) {
-        $('#menuoverlay').addClass('overlay-hidden');
-        $(selector).css('right', '-80%');
-        $('.menu-fixed-right').css('right', '-80%');
-
-    },
-    showMenuPanel: function (selector) {
-        $('.overlay').addClass('overlay-hidden');
-        $('#menuoverlay').removeClass('overlay-hidden');
-        $(selector).css('left', '0');
-    },
-    hiddenMenuPanel: function (selector) {
-        $('#menuoverlay').addClass('overlay-hidden');
-        $('#mainMenu').css('left', '-80%');
-    },
-    hiddenSearchPanel: function () {
-        if ($('#searchinput').is(':focus') === true) {
-            $('#searchinput').blur();
-        }
-        else {
-            $('#searchoverlay').addClass('overlay-hidden');
         }
     },
     //native transition
@@ -145,9 +113,9 @@ var util = {
 
         //page url + #page selector
         var link = href.link() + href.div;
-        application.historyStack.push(link);
+        app.historyStack.push(link);
 
-        application.context = param;
+        app.context = param;
         $.mobile.pageContainer.pagecontainer("change", link, {
             transition: "slide",
             reverse: direction === 'left' ? false : true,
@@ -212,16 +180,16 @@ var util = {
         var url = pages.map;
         var param = {
             categoryid: tasktype,
-            sig_cd: application.info.sigCd
+            sig_cd: app.info.sigCd
         };
         var activePage = $.mobile.activePage.attr('id');
 
         switch (tasktype) {
             case "home":
 
-                application.historyStack = [];
+                app.historyStack = [];
                 url = pages.workpage.link();
-                document.location.href = url + '?cn=&tel=' + application.telNo;
+                document.location.href = url + '?cn=&tel=' + app.telNo;
                 param = "";
                 return;
             case "buildsign":
@@ -229,14 +197,14 @@ var util = {
             case "areasign":
             case "basenumsign":
             case "mapservice":
-                application.historyStack = [];
+                app.historyStack = [];
                 url = pages.map;
 
                 break;
             case "address":
                 if (activePage == 'bbs_page')
                     return;
-                application.historyStack = [];
+                app.historyStack = [];
                 url = pages.addressview;
                 param = "";
                 break;
@@ -430,6 +398,19 @@ var util = {
     getUserInfo: function (successFn) {
         SmartKaisPlugins.getSSOInfo(successFn);
     },
+//    getParameter: function (name) {
+//        var url = decodeURI(location.href);
+//        var paramArr = (url.substring(url.indexOf("?")+1,url.length)).split("&");
+//
+//        for(var i = 0 ; i < paramArr.length ; i++){
+//            var temp = paramArr[i].split("=");
+//
+//            if(temp[0].toUpperCase() == param.toUpperCase()){
+//                requestParam = paramArr[i].split("=")[1];
+//                break;
+//            }
+//        }
+//    },
     on: function (triggerName, triggerFunc) {
         SmartKaisPlugins.on(triggerName, triggerFunc);
     },

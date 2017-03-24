@@ -29,16 +29,16 @@
         $( document ).on("pagecreate",pages.imageviewer.div,  function() {
             $(this).children(".ui-content").height($.mobile.getScreenHeight());
            // $("#imagecontent").height($.mobile.getScreenHeight());
-        //application.scaleContentToDevice(this);
+        //app.scaleContentToDevice(this);
             });
 
         $( document ).on("pagebeforeshow",pages.imageviewer.div,  function(event,data) {
 
 
-            var context = application.context;
+            var context = app.context;
             if (util.isEmpty(context))
                 return;
-            application.context = {};
+            app.context = {};
 
             $('#imagecontent img').attr('src',context.imagesrc);
 

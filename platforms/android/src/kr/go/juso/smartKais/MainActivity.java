@@ -18,7 +18,7 @@ public class MainActivity extends CordovaActivity {
         loadUrl(launchUrl);
 
         String sso = getIntent().getStringExtra("sso");
-        loadUrl("javascript:var sso = JSON.parse('" + sso + "');");
+        loadUrl("javascript:sso = JSON.parse('" + sso + "');");
 
         AppEnvironment.setPendingNotificationsCount(0);
         try {

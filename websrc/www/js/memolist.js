@@ -6,13 +6,13 @@ var itemSize = 30000;
 var forceRefresh = false;
 
 $( document ).on("pagecreate",pages.memolistpage.div,  function() {
-   // application.scaleContentToDevice(this);
+   // app.scaleContentToDevice(this);
 
     boardScroll = mkaisvScrollBind('#memolist','#memolistScroll',{
         cache:itemSize,
         buffer:itemSize,
         enablePulldown:false,
-        context:{workId:application.info.opeId, sigCd:application.info.sigCd,size:itemSize, pos:'0'},
+        context:{workId:app.info.opeId, sigCd:app.info.sigCd,size:itemSize, pos:'0'},
         requestCallback : requestDatasource,
         completCallback: scrollAppended,
         updateCallback: updateCallback,
@@ -26,11 +26,11 @@ $( document ).on("pagecreate",pages.memolistpage.div,  function() {
 });
 
 $( document ).on("pagebeforeshow",pages.memolistpage.div,  function(event,data) {
-    var context = application.context;
+    var context = app.context;
     if (util.isEmpty(context))
         return;
 
-    application.context = {};
+    app.context = {};
 
     var scroll = $('#memolistScroll').data('infinitescroll');
 
@@ -67,7 +67,7 @@ console.log(data);
     var mm = data.date.slice(11,13);
 
     var element =
-        "<div  class='listItemTable addressitem memoitem' data-sigcd='" +application.info.sigCd + "' data-sn='" + id + "' >" +
+        "<div  class='listItemTable addressitem memoitem' data-sigcd='" +app.info.sigCd + "' data-sn='" + id + "' >" +
             "<div class='listItemRow' >" +
                 "<div class='ellipsis memotitle' >" + memo + "</div>" +
                 "<div class='listItemCellRight'>"+

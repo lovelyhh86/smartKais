@@ -1,72 +1,190 @@
-
-var application = {
+var sso;
+var msg = {
+    callCenter: "\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(1588-0061)로 문의 주시기 바랍니다."
+}
+var app = {
     // Application Constructor
     initialize: function() {
-        this.bindEvents();
+        document.addEventListener('deviceready', app.onDeviceReady, false);
     },
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-        document.addEventListener('backbutton',function(){ return false;});
+    onDeviceReady: function () {
+        app.bindEvents();
+
+        /** 네트워크 연결 체크 */
+        /** (NET) 인터넛 연결 체크 */
+        app.check.connection()
+
+        /** (NET) 모바일 공통기반 연결 체크 */
+        .then(app.check.mobileConnection)
+
+        /** 기본환경 셋팅 및 로딩 */
+        /** (ENV) 1. DB 초기화 */
+        .then(app.db.init)
+
+        /** (ENV) 2. DB 로딩 */
+        .then(app.db.loading)
+
+        /** 현재위치 확인 */
+        .then(app.check.currentLocation)
+
+        /** (VER) 버전체크 */
+        .then(app.check.version)
+
+        /** 메인 화면(페이지)로 이동 */
+        .then(app.gotoMain);
+
     },
-    onDeviceReady: function() {
-        util.showProgress();
+    bindEvents: function () {
+        document.addEventListener('backbutton', function () { return false; });
+    },
+    gotoMain: function () {
+        app.showProgress("메인 화면 로딩");
+        location.href = "work.html?sso=" + JSON.stringify(sso);
+    },
+    /** 로딩 메시지 보여주기 */
+    showProgress: function (msg) {
+        if (!msg) msg = "";
+        if ($(".ui-loader").css("display") == "none") {
+            $.mobile.loading("show", {
+                textVisible: "true",
+                theme: "c",
+                html: "<span class='ui-bar'><img src='img/loading.gif' width='100%'><h2 class='msg'>" + msg + "</h2></span>"
+            });
+        } else {
+            $(".ui-bar .msg").text(msg);
+        }
+    },
+    /** 로딩 메시지 회수 */
+    dismissProgress: function () {
+        $.mobile.loading("hide");
+    },
+    check: {
+        /** 인터넷 연결 체크 */
+        connection: function () {
+            var def = $.Deferred();
+            app.showProgress("네트워크 연결 확인");
 
-        //default native transition option
-        //    window.plugins.nativepagetransitions.globalOptions.duration = 700;
-        //    window.plugins.nativepagetransitions.globalOptions.androiddelay = 150;
-        //    window.plugins.nativepagetransitions.globalOptions.slowdownfactor = 8;
-        // these are used for slide left/right only currently
-        //     window.plugins.nativepagetransitions.globalOptions.fixedPixelsTop = 64;
-        //     window.plugins.nativepagetransitions.globalOptions.fixedPixelsBottom = 48;
-
-
-        $("#app-object_splash .app_version").text("Version " + BuildInfo.version);
-        clearTimeout();
-
-        //db초기화
-        datasource.createDB();
-
-        //네트워크 체크 : 공통기반 접속 초기화
-        function checkConnection() {
             var networkState = navigator.connection.type;
 
             if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
-                return false;
+                navigator.notification.alert("데이터 통신이 실패 되었습니다.\n인터넷 연결 확인 후 다시 시작해 주십시오.", util.appExit, '알림', '확인');
+            } else {
+                setTimeout(def.resolve, 300);
             }
-            return true;
+
+            return def.promise();
+        },
+        /** 모바일 공통기반 연결 확인 */
+        mobileConnection: function () {
+            var def = $.Deferred();
+            app.showProgress("공통기반 연결 확인");
+
+            if (util.isEmpty(sso)) {
+                navigator.notification.alert("공통기반 연결이 실패 되었습니다.\n\"바로일터\"를 통하여 다시 시작해 주십시오.", util.appExit, '알림', '확인');
+            } else {
+                setTimeout(def.resolve, 300);
+            }
+
+            return def.promise();
+        },
+        /** 현재위치 점검 */
+        currentLocation: function () {
+            var def = $.Deferred();
+            //app.showProgress("위치정보 확인");
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var coords = position.coords;
+                    var loc = { PROJECTION: "EPSG:4326", TYPE: "GPS", X: coords.longitude, Y: coords.latitude };
+
+                    datasource.setGeolocation(loc);
+                    def.resolve();
+                },
+                function(error) {
+                    var loc = { PROJECTION: "EPSG:5179", TYPE: "BASE", X: "946806.7243737652", Y: "1953263.8290969837" };   // 광화문
+
+                    datasource.setGeolocation(loc);
+                    def.resolve();
+                },
+                { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }
+            );
+
+            return def.promise();
         }
+        ,
+        /** 최신버전 정보 체크 */
+        version: function () {
+            var def = $.Deferred();
+            app.showProgress("최신버전 확인");
 
-        //로딩 출력개선
-        //버전 체크 & 접속 초기화
-        if (checkConnection()) {
-            function gotoMain(){
-                datasource.closeDB();
-                location.href = "work.html?sso=" + JSON.stringify(sso);
-                util.dismissProgress();
-            }
-
-            datasource.getVersion()         //버전 체크
+			datasource.getVersion()
             .then( function(version) {
-                var versionLink = URLs.postURL(URLs.versionLink , null);
+                var params = URLs.postURL(URLs.versionLink, null);
 
-                util.postAJAX('', versionLink)
-                .then( function(context, resCode, results) {
-                    if (resCode == 0 && !(util.isEmpty(results) || util.isEmpty(results))) {
-                        var data = results.data;
-                        datasource.updateVersionInfo(util.getToday(false), data, gotoMain);
+                util.postAJAX('', params)
+                .then(function (context, resultCode, results) {
+                    var newVersion = false;
+                    if (resultCode == 0 && !(util.isEmpty(results) || util.isEmpty(results))) {
+                        var d = results.data;
+                        var res = results.response;
+                        if(res.status == 1) {
+                            datasource.updateVersionInfo(util.getToday(false), d);
+                            if(BuildInfo.version < d.versionName) newVersion = true;
+                        }
                     }
-                })
+
+                    if (newVersion) {
+                        navigator.notification.alert("서버에 최신버전이 존재 합니다.\n\"바로일터 > 행정용 앱스토어\"에서 최선버전으로 업데이트 하세요.", def.resolve, '알림', '확인');
+                    } else {
+                        setTimeout(def.resolve, 300);
+                    }
+                });
             });
-        } else {
-            navigator.notification.alert("서버와의 접속이 원활하지 않습니다2.\n앱을 다시 시작해 주십시오.", appExit, '알림', '확인');
+
+            return def.promise();
         }
     },
+    db: {
+        /** DB 초기화 */
+        init: function () {
+            var def = $.Deferred();
+            app.showProgress("환경구성 > DB 초기화");
 
-    _dummy : function (){}
+            datasource.createDB().then(
+                def.resolve,
+                function() {
+                    navigator.notification.alert("기본 환경구성에 장애가 발생하였습니다\n" + msg.callCenter, util.appExit, '알림', '확인');
+                }
+            );
+
+            return def.promise();
+        },
+        /** DB 공통코드 로딩 */
+        loading: function () {
+            var def = $.Deferred();
+            app.showProgress("환경구성 > DB 로딩");
+
+            util.postAJAX('', URLs.postURL(URLs.updateCodeLink, null))
+            .then(function (context, resultCode, results) {
+                var loading = false;
+                if (resultCode == 0 && !(util.isEmpty(results) || util.isEmpty(results))) {
+                    var d = results.data;
+                    var res = results.response;
+                    if(res.status == 1) {
+                        datasource.setCodeMaster(d);
+                        loading = true;
+                    }
+                }
+
+                if (!loading) {
+                    navigator.notification.alert("DB 로딩 중에 장애가 발생하였습니다\n" + msg.callCenter, util.appExit, '알림', '확인');
+                } else {
+                    def.resolve();
+                }
+            });
+
+            return def.promise();
+        }
+    }
 };
 
-
-function onLoadIndexPage()
-{
-    application.initialize();
-}

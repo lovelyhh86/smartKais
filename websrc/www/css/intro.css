@@ -1,0 +1,19 @@
+
+/** JQuery Mobile override CSS */
+.ui-page {
+    background: transparent url("../img/intro_bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+}
+
+.title, .footer { position: inherit; text-align: center; width: inherit; }
+.title { top: 8.5rem; }
+.title img { width: 50%; }
+.title .text { margin-top: .5rem; }
+.title .text p { margin: .5rem; }
+.title .text .msg { font-size: 3.2vw; }
+.title .text .ver { font-size: 3vw; color: rgb(71,154,231);}
+
+.footer { bottom: 2.5rem; }
+.footer img { width: 30%; }

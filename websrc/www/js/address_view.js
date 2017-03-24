@@ -121,11 +121,11 @@ $( document ).on("pagehide",pages.detailaddress.div,  function(event,data) {
 });
 
 $( document ).on("pagebeforeshow",pages.detailaddress.div,  function(event,data) {
-    var context = application.context;
+    var context = app.context;
     if (util.isEmpty(context))
         return;
 
-    application.context = {};
+    app.context = {};
 
     buildContent(context.sn, context.sig_cd );
 
@@ -224,7 +224,7 @@ function updateWork(){
         sn : $('#addressview_page').data('sn'),
         docSurveyResult : "",
         docSurveyEtc : $('#address_memo').val(),
-        ope_id: application.info.opeId ,
+        ope_id: app.info.opeId ,
         bsiSurveyDate : util.getToday(),
         images:[]
     };
@@ -266,7 +266,7 @@ function updateWork(){
             if (results.response.status == 1){
                 navigator.notification.alert('기초조사 결과를 등록하였습니다',
                     function (){
-                        application.context = { categoryid:'address', sig_cd:application.info.sigCd };
+                        app.context = { categoryid:'address', sig_cd:app.info.sigCd };
                         util.goBack();
                     },'기초조사', '확인');
             }

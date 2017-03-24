@@ -5,12 +5,12 @@ var boardScroll;
 var itemSize = 15;
 
 $( document ).on("pagecreate",pages.addressview.div,  function() {
-   // application.scaleContentToDevice(this);
+   // app.scaleContentToDevice(this);
 
     boardScroll = mkaisvScrollBind('#boardlist','#boardlistScroll',{
         cache:90,
         buffer:itemSize,
-        context:{workId:application.info.opeId, sigCd:application.info.sigCd,size:itemSize, pos:'0'},
+        context:{workId:app.info.opeId, sigCd:app.info.sigCd,size:itemSize, pos:'0'},
         requestCallback : requestDatasource,
         completCallback: scrollAppended,
         updateCallback: updateCallback,
@@ -57,11 +57,11 @@ $( document ).on("pagecreate",pages.addressview.div,  function() {
 });
 
 $( document ).on("pagebeforeshow",pages.addressview.div,  function(event,data) {
-    var context = application.context;
+    var context = app.context;
     if (util.isEmpty(context))
         return;
 
-    application.context = {};
+    app.context = {};
     localStorage["searchText"] = '';
     $('#searchinput').val('');
 
@@ -78,7 +78,7 @@ $( document ).on("pageshow",pages.addressview.div,  function() {
 function searchAddress(){
     var scroll = $('#boardlistScroll').data('infinitescroll');
     scroll.clear();
-    scroll.context = {workId:application.info.opeId, sigCd:application.info.sigCd,size:itemSize, pos:'0'};
+    scroll.context = {workId:app.info.opeId, sigCd:app.info.sigCd,size:itemSize, pos:'0'};
     scroll.updateInit();
 }
 
@@ -96,7 +96,7 @@ function updateCallback(scroll,index,data){
     //var completStyle = data.opertDe !== '' ? '' : "addressitem_complet";
     //var slaveNo = util.isEmpty(data.buldSlaveNo) ? "" : '-'+data.buldSlaveNo;
     var element =
-        "<div  class='listItemTable addressitem ' data-sigcd='" +application.info.sigCd + "' data-sn='" + data.requestSn + "' >" +
+        "<div  class='listItemTable addressitem ' data-sigcd='" +app.info.sigCd + "' data-sn='" + data.requestSn + "' >" +
             "<div class='listItemRow' >" +
                 "<div class='ellipsis' >" + data.buldLabel + "</div>" +
                 "<div class='listItemCellRight'  >" + data.requestDate + "</div>" +

@@ -1,0 +1,27 @@
+@font-face{
+    font-family:'NanumGothic';
+    src:url('fonts/NanumGothic.eot');
+    src:url('fonts/NanumGothic.eot?#iefix') format(‘embedded-opentype’), url('fonts/NanumGothicRegular.woff') format(‘woff’);
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    font-family:'NanumGothic';
+    -webkit-user-select: none;
+    user-select:none;
+    height: 100%;
+    width: 100%;
+    padding:0;
+    margin:0 auto;
+}
+
+a, p { margin:0 ; padding: 0; border: 0; }
+img { max-width: 100%; border: 0; }
+
+.ui-loading .ui-loader {
+    text-align: center;
+}
+
+.intro .ui-loader img { margin-bottom: -2.5em; }
+.intro .ui-loader h2 { margin-bottom: 1em; }

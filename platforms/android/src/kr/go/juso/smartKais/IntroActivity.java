@@ -94,8 +94,6 @@ public class IntroActivity extends Activity {
 
                     intent.putExtra("sso", SSO.getSSOInfo().toString());
                     startActivity(intent);
-
-                    finish();
                 }
 
             }
@@ -107,5 +105,7 @@ public class IntroActivity extends Activity {
 
         ServiceBrokerLib lib = new ServiceBrokerLib(this, null, callback);
         lib.request(intent);
+
+        finish();
     }
 }

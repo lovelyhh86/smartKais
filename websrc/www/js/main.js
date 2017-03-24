@@ -1,80 +1,19 @@
-var application = {
+var sso;
+var app = {
     // Application Constructor
     initialize: function () {
-        this.pageLoad();
-        this.bindEvents();
+        document.addEventListener('deviceready', app.onDeviceReady, false);
 
         //TODO gpki info load
-        var sso = JSON.parse(decodeURI(location.search.match(/{.*/)));
-        application.telNo = sso.TEL;
+        if (!sso)
+            sso = JSON.parse(decodeURI(location.search.match(/{.*/)));
+        app.telNo = sso.TEL;
 
     },
-
-    //페이지 preload
-    pageLoad: function () {
-        //    $.mobile.loadPage(pages.addressview.link,{ showLoadMsg:false});
-        //    $.mobile.loadPage(pages.detailview.link,{ showLoadMsg:false});
-        //    $.mobile.loadPage(pages.detailaddress.link,{ showLoadMsg:false});
-        //   $.mobile.loadPage(pages.imageviewer.link,{ showLoadMsg:false});
+    onDeviceReady: function () {
+        app.bindEvents();
     },
-    //content 크기 갱신
-    scaleContentToDevice: function (contentpage) {
-        var content = $.mobile.getScreenHeight() - $(contentpage).children(".ui-header").outerHeight() - $(contentpage).children(".ui-footer").outerHeight()
-            - $(contentpage).children(".ui-content").outerHeight() + $(contentpage).children(".ui-content").height();
-        $(contentpage).children(".ui-content").height(content);
-    },
-    deviceReadyOK: $.Deferred(),
-
     bindEvents: function () {
-        //cordova ready 초기화
-        document.addEventListener('deviceready', function () {
-            util.showProgress();
-
-            clearTimeout();
-            //    $.mobile.loadPage(pages.addressview.link(),{ showLoadMsg:false});
-            //    $.mobile.loadPage(pages.detailview.link(),{ showLoadMsg:false});
-            //    $.mobile.loadPage(pages.detailaddress.link(),{ showLoadMsg:false});
-            //    $.mobile.loadPage(pages.imageviewer.link(),{ showLoadMsg:false});
-
-            //DB초기화
-            datasource.createDB();
-
-            datasource.getCodeMaster(function (result) {
-                application.codeMaster = result;
-            });
-            /*
-            util.getUserInfo(
-                function(result) {
-
-                    application.info.sigCd = "11110";
-                    application.info.sigNm = "서울특별시 종로구";
-                    application.info.opeId = "KMS634090";
-                    application.info.opeNm = "관리자";
-
-                    util.dismissProgress();
-                    application.deviceReadyOK.resolve();
-                },
-                function(xhr,error){
-
-                    util.dismissProgress();
-                    alert('사용자 정보를 가져오는데 실패했습니다. 다시 실행해주십시오.'+ xhr+ ' ' +error);
-                    util.appExit();
-                }
-            );
-            //*/
-            util.getUserInfo(function (attr) {
-                for (var key in attr) {
-
-                }
-            });
-            application.historyStack = [];
-
-            application.selectSig(application.telNo);
-
-            application.deviceReadyOK.resolve();
-            util.dismissProgress();
-        }, false);
-
         /******* Common Action Event *********/
         //뒤로가기, back class ,cancel
         document.addEventListener("backbutton", util.goBack);
@@ -138,21 +77,70 @@ var application = {
             $(this).addClass('button_hover');
         });
 
-        //        $.mobile.ajaxLinksEnabled = false;
-        //        $.mobile.ajaxFormEnabled = false;
-        //        $.mobile.ajaxEnabled = false;
+//        util.showProgress();
+
+        clearTimeout();
+        //    $.mobile.loadPage(pages.addressview.link(),{ showLoadMsg:false});
+        //    $.mobile.loadPage(pages.detailview.link(),{ showLoadMsg:false});
+        //    $.mobile.loadPage(pages.detailaddress.link(),{ showLoadMsg:false});
+        //    $.mobile.loadPage(pages.imageviewer.link(),{ showLoadMsg:false});
+
+        //DB초기화
+        datasource.createDB();
+
+        datasource.getCodeMaster(function (result) {
+            app.codeMaster = result;
+        });
+        /*
+        util.getUserInfo(
+            function(result) {
+
+                app.info.sigCd = "11110";
+                app.info.sigNm = "서울특별시 종로구";
+                app.info.opeId = "KMS634090";
+                app.info.opeNm = "관리자";
+
+                util.dismissProgress();
+                app.deviceReadyOK.resolve();
+            },
+            function(xhr,error){
+
+                util.dismissProgress();
+                alert('사용자 정보를 가져오는데 실패했습니다. 다시 실행해주십시오.'+ xhr+ ' ' +error);
+                util.appExit();
+            }
+        );
+        //*/
+        util.getUserInfo(function (attr) {
+            for (var key in attr) {
+
+            }
+        });
+        app.historyStack = [];
+
+        app.selectSig(app.telNo);
+
+        app.deviceReadyOK.resolve();
+        util.dismissProgress();
 
     },
+    //content 크기 갱신
+    scaleContentToDevice: function (contentpage) {
+        var content = $.mobile.getScreenHeight() - $(contentpage).children(".ui-header").outerHeight() - $(contentpage).children(".ui-footer").outerHeight()
+            - $(contentpage).children(".ui-content").outerHeight() + $(contentpage).children(".ui-content").height();
+        $(contentpage).children(".ui-content").height(content);
+    },
+    deviceReadyOK: $.Deferred(),
     selectSig: function (telNo) {
         if (telNo == "01059237764" || telNo == "01031207751") {
-            application.mode = "11";
+            app.mode = "11";
         } else {
-            application.mode = "00";
+            app.mode = "00";
         }
 
-        for (var index = 0; index < application.sigInfos.length; index++) {
-            if (telNo === application.sigInfos[index].telNo) {
-                application.info = application.sigInfos[index].info;
+        for (var index = 0; index < app.sigInfos.length; index++) {
+            if (telNo === app.sigInfos[index].telNo) {
+                app.info = app.sigInfos[index].info;
             }
         }
     },
@@ -202,4 +190,4 @@ var application = {
     _dummy: ""
 };
 
-application.initialize();
+app.initialize();

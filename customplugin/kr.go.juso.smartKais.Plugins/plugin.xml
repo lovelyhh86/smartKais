@@ -20,19 +20,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         id="kr.go.juso.smartKais.Plugins" version="1.0.0">
     <name>SmartKaisPlugins</name>
-    <description>Juso SmartKais Plugin</description>
-  
-
-    <!-- common -->
-    <!--
-    <js-module src="www/ResourcesInterface.js" name="ResourcesInterface">
-        
-        <clobbers target="ResourceManager" />
-    </js-module>
-  -->
-
-
-    <!-- android -->
+    <description>Korea Address Information System - SmartKais Plugin</description>
     <platform name="android">
 
         <config-file target="AndroidManifest.xml" parent="/*">

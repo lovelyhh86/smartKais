@@ -9,16 +9,16 @@ $(function(){
     $( document ).on("pageshow",pages.writereplypage.div,  function() {
         //var contentTop = $('#addressview_images_container').height() + $('#addressview_images_container').offset().top;
 
-        var context = application.context;
+        var context = app.context;
         if (util.isEmpty(context))
             return;
 
-        application.context = {};
+        app.context = {};
         var attr = {
             sn : context.sn,
-            sigCd : application.info.sigCd,
-            userid : application.info.opeId,
-            registName : application.info.opeNm
+            sigCd : app.info.sigCd,
+            userid : app.info.opeId,
+            registName : app.info.opeNm
         };
         $('#write_reply_page').data('context',attr);
         var top = $('#write_reply_page > .titleheader').outerHeight() ;
