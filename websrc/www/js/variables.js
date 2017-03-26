@@ -46,7 +46,7 @@ var URLs = {
 
 var pages = {
     "workpage": { link: function () { return URLs.realPath() + "www/work.html"; }, div: "#work_page" },
-    "map": { link: function () { return URLs.realPath() + "www/map/map.html"; }, div: "#mapview_page" },
+    "map": { link: function () { return URLs.realPath() + "www/map.html"; }, div: "#mapview_page" },
     "addressview": { link: function () { return URLs.realPath() + "www/board.html"; }, div: "#bbs_page" },
     "detailview": { link: function () { return URLs.realPath() + "www/detailview.html"; }, div: "#detailview_page" },
     "detailaddress": { link: function () { return URLs.realPath() + "www/addressview.html"; }, div: "#addressview_page" },

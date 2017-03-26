@@ -10,11 +10,11 @@
     <link rel="preload" as="image" href="img/main/menu_bg.png">
 
     <!-- for debug -->
-    <script type="text/javascript" src="map/js/jquery-2.1.4.js"></script>
-    <script type="text/javascript" src="map/js/jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 
-    <!--<script type="text/javascript" src="map/js/jquery-2.2.1.min.js"></script>-->
-    <!--<script type="text/javascript" src="map/js/jquery.mobile-1.4.5.min.js"></script>-->
+    <!--<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>-->
+    <!--<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>-->
 
     <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/egovframework/mbl/cmm/json2.js"></script>
@@ -27,6 +27,7 @@
 
     <link rel="stylesheet" href="css/default.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/map.css" />
 
     <!-- work page env import -->
     <script type="text/javascript" src="js/toastr.js"></script>
@@ -45,15 +46,15 @@
     <script type="text/javascript" src="js/memolist.js"></script>
 
     <!-- for map page debug -->
-    <!--<script src="map/js/proj4-src.js" type="text/javascript"></script>-->
-    <!--<script src="map/js/ol-debug.js" type="text/javascript"></script>-->
+    <!--<script src="js/proj4-src.js" type="text/javascript"></script>-->
+    <!--<script src="js/ol-debug.js" type="text/javascript"></script>-->
 
     <!-- for map page -->
-    <script src="map/js/proj4.js" type="text/javascript"></script>
-    <script src="map/js/ol.js" type="text/javascript"></script>
-    <script src="map/js/utils.js" type="text/javascript"></script>
-    <script src="map/js/map-style.js" type="text/javascript"></script>
-    <script src="map/js/map.js" type="text/javascript"></script>
+    <script src="js/proj4.js" type="text/javascript"></script>
+    <script src="js/ol.js" type="text/javascript"></script>
+    <script src="js/utils.js" type="text/javascript"></script>
+    <script src="js/map-style.js" type="text/javascript"></script>
+    <script src="js/map.js" type="text/javascript"></script>
 </head>
 
 <body class="main">
@@ -100,16 +101,6 @@
 </div><!-- /header -->
 <div id="work_page" data-role="page" data-theme="none" style="min-height: 100%;">
     <div data-role="main" class="ui-content main">
-        <a href="#panel_btn" data-rel="popup" data-transition="slideup" class="ui-btn"><img src="img/icon/iconPanel_dn.png" /></a>
-        <div data-role="popup" id="panel_btn" class="ui-content">
-            <div>
-                도로명판
-            </div>
-            <div>
-                적용
-            </div>
-        </div>
-
         <div class="title">
             <img src="img/main/top_logo.png">
             <div class="text">
@@ -128,6 +119,33 @@
             </a>
         </div>
     </div><!-- /content -->
+    <div id="panel-wrap">
+        <a href="#popup-content" data-rel="popup" data-transition="slideup" class="ui-btn popup-btn"><img src="img/icon/iconPanel_dn.png" /></a>
+        <div data-role="popup" id="popup-content" class="popup-content">
+            <h4 class="ui-bar">도로명판</h4>
+            <div class="ui-body">
+                <div class="img-placeholder"></div>
+                <div class="memo">
+                    <textarea placeholder="기타사항을 입력하세요."></textarea>
+                </div>
+                <div class="detail"></div>
+            </div>
+            <div class="ui-body">
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+                    <img src="img/icon/btn_normalcy_on.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+                    <img src="img/icon/btn_damage_off.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+                    <img src="img/icon/btn_loss_off.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+                    <img src="img/icon/btn_loss_off.png" />
+                </a>
+            </div>
+        </div>
+    </div>
 </div><!-- /page -->
 </body>
 
