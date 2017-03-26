@@ -1,0 +1,36 @@
+/** JQuery Mobile override CSS */
+.ui-page {
+    background: #ffffff;
+    height: 94.4%;
+    overflow: hidden;
+}
+.ui-content { height: 100%; padding: 0; }
+
+.ui-header { background: #3b3a40; height: 5.6%; border-width: 0; padding: 0 }
+.ui-header .ui-btn { border: 0; height: calc(100% - (.24em + (.7em * 2))); }
+.ui-header img { height: 100%; }
+.ui-header .ui-title { padding: 1em 0; height: calc(100% - 1em * 2); }
+.ui-panel { background-color: #3b3a40; }
+.ui-panel .ui-bar { color: #ffffff; }
+.ui-panel-position-bottom { top: auto; bottom: -50%; width: 100%; clip: auto; visibility:visible; }
+
+/** Custom CSS */
+.title { margin-top: 20.5%; text-align: center; }
+.title img { width: 32%; }
+.title .text { margin-top: .5rem; }
+.title .text p { margin: .5rem; }
+.title .text .msg { font-size: 3.2vw; }
+.title .text .ver { font-size: 3vw; color: rgb(71,154,231);}
+
+.main {
+    height: 100%; border-width: 0; padding: 0;
+    background-image: url('../img/main/menu_bg.png');
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+}
+.menu_list { margin: 2% 15%; }
+.menu_list .ui-btn { padding: 0; border: 0; }
+
+.ui-panel img.btn-closer { width: 4vw; }
+#bottom_panel img { width: 4vw; }
+.ui-panel .btn_panel { position: absolute; bottom: 0; }

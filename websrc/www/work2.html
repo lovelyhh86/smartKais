@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' http://m1.juso.go.kr 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://m1.juso.go.kr;">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>스마트 KAIS</title>
+
+    <link rel="preload" as="image" href="img/intro_bg.jpg">
+
+    <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.mobile-1.4.5.min.js"></script>
+
+    <script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/egovframework/mbl/cmm/json2.js"></script>
+
+    <!-- Phonegap.js import -->
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+    <!-- eGovFrame Common import -->
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+
+    <link rel="stylesheet" href="css/default.css" />
+    <link rel="stylesheet" href="css/intro.css" />
+
+    <script type="text/javascript" src="js/variables.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/datasource.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+
+    <script type="text/javascript" src="js/toastr.js"></script>
+    <script type="text/javascript" src="js/flex/jquery.flexslider.js"></script>
+
+
+    <!-- application library  -->
+    <script type="text/javascript" src="js/mkaisscroll.js"></script>
+    <script type="text/javascript" src="js/variables.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/datasource.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <!-- application menu  -->
+    <script type="text/javascript" src="js/menuhelpdesk.js"></script>
+    <script type="text/javascript" src="js/menuapp.js"></script>
+
+    <!-- application pages -->
+    <script type="text/javascript" src="js/work.js"></script>
+    <script type="text/javascript" src="js/detail_view.js"></script>
+    <script type="text/javascript" src="js/board.js"></script>
+    <script type="text/javascript" src="js/address_view.js"></script>
+    <script type="text/javascript" src="js/writeans.js"></script>
+    <script type="text/javascript" src="js/memolist.js"></script>
+
+    <!-- for Map -->
+    <script src="map/js/proj4.js" type="text/javascript"></script>
+    <script src="map/js/ol-debug.js" type="text/javascript"></script>
+    <script src="map/js/utils.js" type="text/javascript"></script>
+    <script src="map/js/map-style.js" type="text/javascript"></script>
+    <script src="map/js/map.js" type="text/javascript"></script>
+</head>
+<body>
+
+<!-- 메뉴 오버레이 배경 -->
+<div id="menuoverlay" class="overlay overlay-hidden"></div>
+
+<!-- 좌측 앱 메뉴 모듈 -->
+<div id="mainMenu" class="menuPanel" style='left:-80%;'></div>
+
+<!-- 우측 QnA 메뉴 모듈 -->
+<div id="helpdeskmenu" class="menuPanel" style='right:-80%;'></div>
+
+<!-- fixed header -->
+<div data-role="header" data-theme='a' data-position="fixed" class="titleheader">
+    <a class='leftMenuBtn' data-role='none'>
+        <i class="fa fa-navicon fa-inverse "></i>
+    </a>
+    <h1>스마트 KAIS</h1>
+    <a class='rightMenuBtn' data-role='none'>
+        <i class="fa fa-comments fa-inverse"></i>
+    </a>
+</div>
+
+<!-- main page : dash board-->
+<div id="work_page" data-role="page">
+    <div data-role="content" data-position="fixed" class="ui-content ">
+        <div>
+            <label>찾으시는 안내시설물을 선택해주세요</label>
+        </div>
+        <a href='#' onclick='util.gotoTask("roadsign")'>
+            <div class='tasklink tasklink_road'></div>
+        </a>
+        <a href='#' onclick='util.gotoTask("areasign")'>
+            <div class='tasklink tasklink_area'></div>
+        </a>
+        <a href='#' onclick='util.gotoTask("basenumsign")'>
+            <div class='tasklink tasklink_basenum'></div>
+        </a>
+        <div class="tasklink_address">
+            <a href="#" onclick='util.gotoTask("address")'>상세주소 - 기초조사</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
