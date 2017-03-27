@@ -5,6 +5,7 @@
     overflow: hidden;
 }
 .ui-mobile .ui-page-active { overflow: hidden; }
+.ui-mobile body { height: 100%; }
 .ui-content { height: 100%; padding: 0; }
 
 .ui-header { background: #3b3a40; height: 5.6%; border-width: 0; padding: 0 }
@@ -34,7 +35,8 @@
 .main {
     height: 100%; border-width: 0; padding: 0;
     background-image: url('../img/main/menu_bg.png');
-    background-size: auto 100%;
+    background-position: 0 0;
+    background-size: 100%;
     background-repeat: no-repeat;
 }
 .menu_list { margin: 2% 15%; }

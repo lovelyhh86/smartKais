@@ -4,7 +4,8 @@
     background: transparent url("../img/intro_bg.jpg");
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 100% 100%;
+    background-size: 100% auto;
+    overflow: hidden;
 }
 
 .title, .footer { position: inherit; text-align: center; width: inherit; }

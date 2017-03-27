@@ -189,7 +189,7 @@ var util = {
 
                 app.historyStack = [];
                 url = pages.workpage.link();
-                document.location.href = url + '?cn=&tel=' + app.telNo;
+                document.location.href = url + '?sso=' + JSON.stringify(sso);
                 param = "";
                 return;
             case "buildsign":
