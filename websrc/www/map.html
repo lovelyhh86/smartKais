@@ -8,15 +8,21 @@
 
     </form>
     <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input"></ul>
+    <div id="panel-wrap">
+        <a href="#popup-content" data-rel="popup" data-transition="slideup" class="ui-btn"><img src="img/icon/iconPanel_dn.png" /></a>
+        <div data-role="popup" id="popup-content" class="popup-content">
+            <div>
+                도로명판
+            </div>
+            <div>
+                적용
+            </div>
+        </div>
+    </div>
     <div id="map_current"><img src="../images/ico_map_current.png" width="40px" /></div>
     <div id="write_memo"><img src="../images/ico_map_current.png" width="40px" /></div>
     <div id="viewportline"><img src="../images/ico_map_current.png" width="40px" /></div>
     <div id="map_cordova"><img src="../images/ico_map_current.png" width="40px" /></div>
-    <div id="popup" class="ol-popup">
-        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-        <div id="popup-content"></div>
-    </div>
-
     <div class='memo-container'>
         <label>제목</label>
         <textarea id='mapview_memo' data-role='none' rows='5' placeholder='기타사항을 입력하세요'></textarea>
@@ -35,21 +41,6 @@
     <div id="marker">
         <img src="../images/marker-icon.png">
     </div>
-
-
-    <!-- debug version -->
-    <!--<script src="js/jquery-2.2.1.min.js" type="text/javascript"></script>-->
-    <!--
-  <script src="js/proj4.js" type="text/javascript"></script>
-  <script src="js/ol-debug.js" type="text/javascript"></script>
-  <script src="js/utils.js" type="text/javascript"></script>
-  <script src="js/map-style.js" type="text/javascript"></script>
-  <script src="js/map.js" type="text/javascript"></script>
-  -->
-
-    <!-- release version -->
-    <!--     <script src="js/proj4.js" type="text/javascript"></script>
-    <script src="js/ol.js" type="text/javascript"></script> -->
 
     <script type="text/javascript">
         $(document).on("pagecreate", pages.map.div, function() {
@@ -158,10 +149,3 @@
         }
     </script>
 </div>
-
-
-<!--
-</body>
-</html>
-
--->

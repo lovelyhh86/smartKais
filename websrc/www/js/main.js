@@ -5,9 +5,11 @@ var app = {
         document.addEventListener('deviceready', app.onDeviceReady, false);
 
         //TODO gpki info load
-        if (!sso)
+        if (!sso) {
             sso = JSON.parse(decodeURI(location.search.match(/{.*/)));
-        app.telNo = sso.TEL;
+        }
+        if (sso.TEL)
+            app.telNo = sso.TEL;
 
     },
     onDeviceReady: function () {
