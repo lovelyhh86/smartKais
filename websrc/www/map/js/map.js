@@ -46,19 +46,25 @@ var mapInit = function(init) {
         return;
 
     // 도로안내시설물위치 레이어
-    // 건물번호판 레이어
+    // 건물 레이어
     var lyr_tl_spbd_buld = getFeatureLayer({
-        title: "건물번호판",
-        //        typeName: "tl_spbd_buld",
+        title: "건물",
+        typeName: "tlv_spbd_buld",
+        dataType: DATA_TYPE.BULD,
+        style: {
+            label: {
+                format: "{0}({1}-{2})",
+                data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+                textOffsetY: -20
+            }
+        },
+        maxResolution: 0.5
+    });
+    // 출입구 레이어
+    var lyr_tl_spbd_buld = getFeatureLayer({
+        title: "출입구(건물번호판)",
         typeName: "tl_spbd_entrc",
         dataType: DATA_TYPE.BULD,
-        //        style: {
-        //            label: {
-        //                format: "{0}({1}-{2})",
-        //                data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-        //                textOffsetY: -20
-        //            }
-        //        },
         maxResolution: 0.5
     });
     // 도로명판 레이어
