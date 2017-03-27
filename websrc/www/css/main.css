@@ -47,8 +47,6 @@
 #bottom_panel img { width: 4vw; }
 
 #panel-wrap { position: absolute; width: 100%; bottom: -6px; text-align: center; }
-#panel-wrap .popup-btn { margin: 0; padding: 0; border: 0; }
-#panel-wrap .popup-btn img { width: 12%; }
 #popup-content { background: #3b3a40; height: 100%; padding: 1%; }
 #popup-content .ui-bar { background: #035da6; margin: 0; padding: 1%; color: #ffffff; }
 #popup-content .ui-body { padding: 0; float: left; height: 100%; clear: none; }

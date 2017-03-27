@@ -157,11 +157,9 @@ var datasource = {
                         var codeNm = result.rows.item(i).CODENM;
 
                         if (codeMaster[groupId] == {} || codeMaster[groupId] == undefined) {
-                            codeMaster[groupId] = { GroupNm: groupNm, codeId: [], codenms: [] };
+                            codeMaster[groupId] = { GroupNm: groupNm };
                         }
-
-                        codeMaster[groupId].codeids.push(codeId);
-                        codeMaster[groupId].codenms.push(codeNm);
+                        codeMaster[groupId][codeId] = codeNm;
                     }
                     cb(codeMaster);
                 });
