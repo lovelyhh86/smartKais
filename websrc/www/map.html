@@ -12,13 +12,51 @@
         <div data-role="popup" id="popup-content" class="popup-content">
             <h4 class="ui-bar">도로명판</h4>
             <div class="ui-body">
-                <div class="img-placeholder"></div>
+                <div class="img-placeholder">
+                    <img src="img/main/roadname_bg.png" style="width: 55%; margin-top: 4%; text-align: center;" />
+                </div>
                 <div class="memo">
                     <textarea placeholder="기타사항을 입력하세요."></textarea>
                 </div>
-                <div class="detail"></div>
+                <div class="detail">
+                    <form>
+                        <div class="ui-field-contain">
+                            <label for="instSpotCd">설치지점</label>
+                            <select name="instSpotCd" id="instSpotCd">
+                                <option value="">설치</option>
+                            </select>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="isLgnYn">설치재설치 여부</label>
+                            <select name="isLgnYn" id="isLgnYn">
+                            </select>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="instSpotDesc">설치지점명</label>
+                            <input type="text" name="instSpotDesc" id="instSpotDesc" value="" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="frontKoreanRoadNm">한글도로명</label>
+                            <input type="text" name="frontKoreanRoadNm" id="frontKoreanRoadNm" value="" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="frontRomeRoadNm">로마자 도로명</label>
+                            <input type="text" name="frontRomeRoadNm" id="frontRomeRoadNm" value="" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="gdftyForm">안내시설형식</label>
+                            <select name="gdftyForm" id="gdftyForm">
+                            </select>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="plqDirection">안내시설방향</label>
+                            <select name="plqDirection" id="plqDirection">
+                            </select>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="ui-body">
+            <div class="ui-body popup-btn">
                 <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
                     <img src="img/icon/btn_normalcy_on.png" />
                 </a>
@@ -29,7 +67,8 @@
                     <img src="img/icon/btn_loss_off.png" />
                 </a>
                 <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
-                    <img src="img/icon/btn_loss_off.png" />
+                    <!--<img src="img/icon/btn_loss_off.png" />-->
+                    적용
                 </a>
             </div>
         </div>
@@ -73,8 +112,23 @@
 
             if (util.isEmpty(context))
                 return;
-            mapInit(context.categoryid);
 
+            // 현재 위치 불러오기
+            datasource.getGeolocation().then(function(geoPos) {
+                var pos = (geoPos.TYPE == "GPS" ?
+                ol.proj.fromLonLat([geoPos.LOCATION_X, geoPos.LOCATION_Y], baseProjection.getCode())
+                : [geoPos.LOCATION_X, geoPos.LOCATION_Y]);
+
+                //성암로 189(사업장)
+                //        pos = [946842.8750, 1953211.2031]; //EPSG:5179
+                //상당로 155(청주시청)
+                pos = [999069.3800380124,1849434.7981913204];  //EPSG:5179
+                //중앙로 40(김제시청)
+                //        pos = [944131.2044213761, 1756634.1104898946];  //EPSG:5179
+
+
+                mapInit(pos);
+            });
             app.context = {};
         });
 

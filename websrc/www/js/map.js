@@ -39,7 +39,7 @@ var layers, map;
 var initial = false;
 
 // 지도 초기화 함수(--start--)
-var mapInit = function(init) {
+var mapInit = function(pos) {
     if (!initial)
         initial = true;
     else
@@ -152,380 +152,358 @@ var mapInit = function(init) {
         stopEvent: false
     });
 
-    // 성암로 189(사업장)
-    //    var pos = [946842.8750, 1953211.2031]; //EPSG:5179
-    // 상당로 155(청주시청)
-    //   var pos = [999069.3800380124,1849434.7981913204];  //EPSG:5179
-    // 중앙로 40(김제시청)
-    //   var pos = [944131.2044213761, 1756634.1104898946];  //EPSG:5179
-
-    getCurrentLocation(function(location) {
-        pos = ol.proj.fromLonLat([location.coords.longitude, location.coords.latitude], baseProjection.getCode());
+    map = new ol.Map({
+        target: 'map',
+        logo: false,
+        layers: [baseLayer, lyr_tl_spgf_rdpq],
+        interactions: ol.interaction.defaults({
+            //altShiftDragRotate: false,
+            //pinchRotate: false
+        }),
+        controls: ol.control.defaults({
+            //rotate: false,
+            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+                collapsible: false
+            })
+        }),
+        overlays: [overlay, makerOverlay, markerGeoloaction],
+        view: new ol.View({
+            zoom: 19,
+            projection: baseProjection,
+            center: pos,
+            zoom: 12,
+            maxZoom: 15,
+            minZoom: 6,
+            maxResolution: 2048
+        })
     });
 
-    // 현재 위치 불러오기
-    datasource.getGeolocation().then(function(geoPos) {
-        var pos = (geoPos.TYPE == "GPS" ?
-            ol.proj.fromLonLat([geoPos.LOCATION_X, geoPos.LOCATION_Y], baseProjection.getCode())
-            : [geoPos.LOCATION_X, geoPos.LOCATION_Y]);
+    /*********** 지도 화면 핸들러 (--start--) ***********/
 
-        //성암로 189(사업장)
-//        pos = [946842.8750, 1953211.2031]; //EPSG:5179
-        //상당로 155(청주시청)
-        pos = [999069.3800380124,1849434.7981913204];  //EPSG:5179
-        //중앙로 40(김제시청)
-//        pos = [944131.2044213761, 1756634.1104898946];  //EPSG:5179
+    // 마우스 이동 이벤트 정의(현재 좌표 보여주기) (--start--)
+    map.on('pointermove', function(event) {});
+    // 마우스 이동 이벤트 정의(현재 좌표 보여주기) (--end--)
 
-        map = new ol.Map({
-            target: 'map',
-            logo: false,
-            layers: [baseLayer, lyr_tl_spgf_rdpq],
-            interactions: ol.interaction.defaults({
-                //altShiftDragRotate: false,
-                //pinchRotate: false
-            }),
-            controls: ol.control.defaults({
-                //rotate: false,
-                attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-                    collapsible: false
-                })
-            }),
-            overlays: [overlay, makerOverlay, markerGeoloaction],
-            view: new ol.View({
-                zoom: 19,
-                projection: baseProjection,
-                center: pos,
-                zoom: 12,
-                maxZoom: 15,
-                minZoom: 6,
-                maxResolution: 2048
-            })
-        });
+    // 선택 이벤트 정의()(--start--)
+    map.on('singleclick', function(event) {
+        map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
+            var sn, features;
 
-        /*********** 지도 화면 핸들러 (--start--) ***********/
+            $("#popup-content").popup("open", {transition: "slideup"});
+            return;
 
-        // 마우스 이동 이벤트 정의(현재 좌표 보여주기) (--start--)
-        map.on('pointermove', function(event) {});
-        // 마우스 이동 이벤트 정의(현재 좌표 보여주기) (--end--)
+            if (feature.getKeys().indexOf('features') >= 0)
+                features = feature.get('features');
+            else
+                features = [feature];
 
-        // 선택 이벤트 정의()(--start--)
-        map.on('singleclick', function(event) {
-            map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
-                var sn, features;
+            if (features.length > 1) {
+                var itemHtml = "<li onclick=\"{4}\">{0}({1}-{2},{3})</li>";
+                var strHtml = "",
+                    resultHtml = "<ul>{0}</ul>";
 
-                if (feature.getKeys().indexOf('features') >= 0)
-                    features = feature.get('features');
-                else
-                    features = [feature];
-
-                if (features.length > 1) {
-                    var itemHtml = "<li onclick=\"{4}\">{0}({1}-{2},{3})</li>";
-                    var strHtml = "",
-                        resultHtml = "<ul>{0}</ul>";
-
-                    features.forEach(function(feature, index) {
-                        switch (layer.get('id')) {
-                            case DATA_TYPE.BULD:
-                                var categoryid = "buildsign";
-                                var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BULD_MNNM'), feature.get('BULD_SLNO'));
-                                var data = []
-                                strHtml += itemHtml.format(
-                                    feature.get('BUL_MAN_NO'),
-                                    feature.get('BULD_MNNM'),
-                                    feature.get('BULD_SLNO'),
-                                    feature.get('BULD_NM'),
-                                    "util.slide_page('left', pages.detailview, { sn : '" + feature.get('BUL_MAN_NO') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
-                                );
-                                break;
-                            case DATA_TYPE.RDPQ:
-                                var categoryid = "roadsign";
-                                var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
-
-                                strHtml += itemHtml.format(
-                                    feature.get('RD_GDFTY_SN'),
-                                    feature.get('BSIS_MNNM'),
-                                    feature.get('BSIS_SLNO'),
-                                    feature.get('FT_KOR_RN'),
-                                    "util.slide_page('left', pages.detailview, { sn : '" + feature.get('RD_GDFTY_SN') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
-                                );
-                                break;
-                            case DATA_TYPE.AREA:
-                                var categoryid = "areasign";
-                                var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
-
-                                strHtml += itemHtml.format(
-                                    feature.get('RD_GDFTY_SN'),
-                                    feature.get('FT_KOR_RN'),
-                                    '',
-                                    '',
-                                    "util.slide_page('left', pages.detailview, { sn : '" + feature.get('RD_GDFTY_SN') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
-                                );
-                                break;
-                            case DATA_TYPE.BSIS:
-                                var categoryid = "basenumsign";
-                                var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
-
-                                strHtml += itemHtml.format(
-                                    feature.get('RD_GDFTY_SN'),
-                                    feature.get('FT_KOR_RN'),
-                                    '',
-                                    '',
-                                    "util.slide_page('left', pages.detailview, { sn : '" + feature.get('RD_GDFTY_SN') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
-                                );
-                                break;
-                        }
-                    });
-
-                    $("#popup-content").html(resultHtml.format(strHtml));
-                    overlay.setPosition(event.coordinate);
-                } else {
-                    feature = features[0];
+                features.forEach(function(feature, index) {
                     switch (layer.get('id')) {
                         case DATA_TYPE.BULD:
                             var categoryid = "buildsign";
                             var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BULD_MNNM'), feature.get('BULD_SLNO'));
-                            sn = feature.get('BUL_MAN_NO');
-                            util.slide_page('left', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+                            var data = []
+                            strHtml += itemHtml.format(
+                                feature.get('BUL_MAN_NO'),
+                                feature.get('BULD_MNNM'),
+                                feature.get('BULD_SLNO'),
+                                feature.get('BULD_NM'),
+                                "util.slide_page('left', pages.detailview, { sn : '" + feature.get('BUL_MAN_NO') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
+                            );
                             break;
                         case DATA_TYPE.RDPQ:
                             var categoryid = "roadsign";
                             var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
-                            sn = feature.get('RD_GDFTY_SN');
-                            util.slide_page('left', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+
+                            strHtml += itemHtml.format(
+                                feature.get('RD_GDFTY_SN'),
+                                feature.get('BSIS_MNNM'),
+                                feature.get('BSIS_SLNO'),
+                                feature.get('FT_KOR_RN'),
+                                "util.slide_page('up', pages.detailview, { sn : '" + feature.get('RD_GDFTY_SN') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
+                            );
                             break;
                         case DATA_TYPE.AREA:
                             var categoryid = "areasign";
                             var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
-                            sn = feature.get('RD_GDFTY_SN');
-                            util.slide_page('left', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+
+                            strHtml += itemHtml.format(
+                                feature.get('RD_GDFTY_SN'),
+                                feature.get('FT_KOR_RN'),
+                                '',
+                                '',
+                                "util.slide_page('left', pages.detailview, { sn : '" + feature.get('RD_GDFTY_SN') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
+                            );
                             break;
                         case DATA_TYPE.BSIS:
                             var categoryid = "basenumsign";
                             var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
-                            sn = feature.get('RD_GDFTY_SN');
-                            util.slide_page('left', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+
+                            strHtml += itemHtml.format(
+                                feature.get('RD_GDFTY_SN'),
+                                feature.get('FT_KOR_RN'),
+                                '',
+                                '',
+                                "util.slide_page('left', pages.detailview, { sn : '" + feature.get('RD_GDFTY_SN') + "', categoryid: '" + categoryid + "', title: '" + title + "' })"
+                            );
                             break;
                     }
+                });
+
+                $("#popup-content").html(resultHtml.format(strHtml));
+                overlay.setPosition(event.coordinate);
+            } else {
+                feature = features[0];
+                switch (layer.get('id')) {
+                    case DATA_TYPE.BULD:
+                        var categoryid = "buildsign";
+                        var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BULD_MNNM'), feature.get('BULD_SLNO'));
+                        sn = feature.get('BUL_MAN_NO');
+                        util.slide_page('left', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+                        break;
+                    case DATA_TYPE.RDPQ:
+                        var categoryid = "roadsign";
+                        var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
+                        sn = feature.get('RD_GDFTY_SN');
+                        util.slide_page('up', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+                        break;
+                    case DATA_TYPE.AREA:
+                        var categoryid = "areasign";
+                        var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
+                        sn = feature.get('RD_GDFTY_SN');
+                        util.slide_page('left', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+                        break;
+                    case DATA_TYPE.BSIS:
+                        var categoryid = "basenumsign";
+                        var title = "{0} {1}-{2}".format(feature.get('FT_KOR_RN'), feature.get('BSIS_MNNM'), feature.get('BSIS_SLNO'));
+                        sn = feature.get('RD_GDFTY_SN');
+                        util.slide_page('left', pages.detailview, { sn: sn, categoryid: categoryid, title: title });
+                        break;
                 }
-            });
-        });
-        // 선택 이벤트 정의()(--end--)
-
-        // 지도 변경시 핸들러 정의(--start--)
-        map.getView().on('propertychange', function(event) {
-            switch (event.key) {
-                case 'resolution':
-                    if (map.getView().getResolution() > 0.5)
-                        util.toast("정보를 조회 하시려면 확대해 주세요")
-                    var source = getVectorSource(map);
-                    if (source)
-                        source.clear();
-                    popupCloser(event);
-                    break;
             }
         });
+    });
+    // 선택 이벤트 정의()(--end--)
 
-        // FeatureInfo 정보 팝업 닫기 핸들러 정의(--start--)
-        var popupCloser = function(event) {
-            overlay.setPosition(undefined);
-            $("#popup-closer").blur();
-            event.preventDefault();
-        };
-        $("#popup-closer").on("click", popupCloser);
-        // FeatureInfo 정보 팝업 닫기 핸들러 정의(--end--)
+    // 지도 변경시 핸들러 정의(--start--)
+    map.getView().on('propertychange', function(event) {
+        switch (event.key) {
+            case 'resolution':
+                if (map.getView().getResolution() > 0.5)
+                    util.toast("정보를 조회 하시려면 확대해 주세요")
+                var source = getVectorSource(map);
+                if (source)
+                    source.clear();
+                popupCloser(event);
+                break;
+        }
+    });
 
-        var ori = true;
-        var watchID;
-        $("#map_cordova").on("click", function() {
-            console.log('map_cordova');
-            //html5
-            //getCurrentLocation(locationCallback);
+    // FeatureInfo 정보 팝업 닫기 핸들러 정의(--start--)
+    var popupCloser = function(event) {
+        overlay.setPosition(undefined);
+        $("#popup-closer").blur();
+        event.preventDefault();
+    };
+    $("#popup-closer").on("click", popupCloser);
+    // FeatureInfo 정보 팝업 닫기 핸들러 정의(--end--)
 
-            if (ori) {
-                //기기 방향값 얻기 이벤트
-                // window.addEventListener("deviceorientation", handleOrientation, true);
+    var ori = true;
+    var watchID;
+    $("#map_cordova").on("click", function() {
+        console.log('map_cordova');
+        //html5
+        //getCurrentLocation(locationCallback);
 
-                watchID = navigator.compass.watchHeading(onSuccessHeading, onError, options);
-                ori = false;
-            } else {
-                //window.removeEventListener("deviceorientation", handleOrientation, true);
-                navigator.compass.clearWatch(watchID);
-                map.getView().setRotation(0);
-                ori = true;
-            }
+        if (ori) {
+            //기기 방향값 얻기 이벤트
+            // window.addEventListener("deviceorientation", handleOrientation, true);
 
-        });
-        // var onOff = false;
-        // $("#map_current").on("click", function() {
-        //     //cordova location!!
-        //     //getCurrentLocation(locationCallback);
-
-        //     //openLayers geolocation
-
-        //     var geolocation = new ol.Geolocation({
-        //         tracking: true,
-        //         projection: map.getView().getProjection()
-        //     });
-        //     if (onOff) {
-        //         onOff = false;
-
-        //     } else {
-        //         onOff = true;
-
-        //         geolocation.on('change', function(evt) {
-        //             var coord = geolocation.getPosition();
-
-        //             var iconFeature = new ol.Feature({
-        //                 geometry: new ol.geom.Point(coord)
-        //             });
-        //             iconFeature.getGeometry().setCoordinates(coord);
-
-        //             console.log('coord ' + coord);
-        //             map.getView().setCenter(coord);
-        //         });
-        //     }
-
-        //     console.log('onOff ' + onOff);
-
-        // });
-
-        // Geolocation Control
-        var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ ({
-            //tracking: true,
-            projection: map.getView().getProjection(),
-            trackingOptions: {
-                maximumAge: 10000,
-                enableHighAccuracy: true,
-                timeout: 600000
-            }
-        }));
-
-
-        var accuracyFeature = new ol.Feature();
-        geolocation.on('change:accuracyGeometry', function() {
-            accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
-        });
-
-        var positionFeature = new ol.Feature();
-        positionFeature.setStyle(new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 7,
-                fill: new ol.style.Fill({
-                    color: '#3399CC'
-                }),
-                stroke: new ol.style.Stroke({
-                    color: '#fff',
-                    width: 2
-                })
-            })
-        }));
-
-
-        var cnt = 0;
-        geolocation.on('change:position', function() {
-            console.log('change:position');
-            var coordinates = geolocation.getPosition();
-            positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
-
-            console.log('coord ' + coordinates);
-            var html = [
-                ++cnt + ' Position: ' + coordinates
-            ].join('<br />');
-            document.getElementById('info').innerHTML = html;
-
-            map.getView().setCenter(coordinates);
-
-        });
-
-        var geolocation_source = new ol.source.Vector({});
-
-        var geolocation_layer = new ol.layer.Vector({
-            map: map,
-            source: geolocation_source
-        });
-
-        geolocation.on('error', function() {
-            alert('geolocation error');
-            // FIXME we should remove the coordinates in positions
-        });
-
-        var isCheck = true;
-        $("#map_current").click(function() {
-            if (isCheck) {
-                geolocation.setTracking(true);
-                var coordinates = geolocation.getPosition();
-                geolocation_source.addFeature(accuracyFeature);
-                geolocation_source.addFeature(positionFeature);
-                isCheck = false;
-                console.log('isCheck ' + isCheck);
-
-                //기기 방향값 얻기 이벤트
-                // window.addEventListener("deviceorientation", handleOrientation, true);
-
-                //map.on('postcompose', updateView);
-                map.render();
-            } else {
-                geolocation.setTracking(false);
-                geolocation_source.removeFeature(accuracyFeature);
-                geolocation_source.removeFeature(positionFeature);
-                // map.getView().setRotation(0);
-                isCheck = true;
-                console.log('isCheck ' + isCheck);
-
-            }
-        });
-
-        var locationCallback = function(pos) {
-            map.getView().setCenter(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
-
-            console.log('pos.coords.longitude ' + pos.coords.longitude);
-            console.log('pos.coords.latitude ' + pos.coords.latitude);
-            console.log('pos.coords.heading ' + pos.coords.heading);
-            setTimeout(function() {
-                makerOverlay.setPosition(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
-            }, 1000);
+            watchID = navigator.compass.watchHeading(onSuccessHeading, onError, options);
+            ori = false;
+        } else {
+            //window.removeEventListener("deviceorientation", handleOrientation, true);
+            navigator.compass.clearWatch(watchID);
+            map.getView().setRotation(0);
+            ori = true;
         }
 
-        // 지도 변경시 핸들러 정의(--end--)
-
-        // topMenu 핸들러 정의(--start--)
-    //    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox").bind("change", function(event) {
-    //        var element = event.currentTarget;
-    //        if ($(element).is(":checked")) {
-    //            if (map.getView().getResolution() >= eval("layers.{0}.getMaxResolution()".format(element.name)))
-    //                eval("map.getView().setResolution(layers.{0}.getMaxResolution() / 2)".format(element.name));
-    //            eval("map.addLayer(layers.{0})".format(element.name));
-    //        } else {
-    //            eval("map.removeLayer(layers.{0})".format(element.name));
-    //        }
-    //        element.blur();
-    //        return false;
-    //    });
-
-        // topMenu 핸들러 정의(--end--)
-
-
-        /*********** 지도 화면 핸들러 (-- end --) ***********/
-
-    //    setTimeout(function() {
-    //        if (init) {
-    //            switch (init) {
-    //                case 'roadsign':
-    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='rdpq']").click();
-    //                    break;
-    //                case 'areasign':
-    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='area']").click();
-    //                    break;
-    //                case 'basenumsign':
-    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='bsis']").click();
-    //                    break;
-    //                case 'buildsign':
-    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='buld']").click();
-    //                    break;
-    //            }
-    //        }
-    //    }, 1500);
     });
+    // var onOff = false;
+    // $("#map_current").on("click", function() {
+    //     //cordova location!!
+    //     //getCurrentLocation(locationCallback);
+
+    //     //openLayers geolocation
+
+    //     var geolocation = new ol.Geolocation({
+    //         tracking: true,
+    //         projection: map.getView().getProjection()
+    //     });
+    //     if (onOff) {
+    //         onOff = false;
+
+    //     } else {
+    //         onOff = true;
+
+    //         geolocation.on('change', function(evt) {
+    //             var coord = geolocation.getPosition();
+
+    //             var iconFeature = new ol.Feature({
+    //                 geometry: new ol.geom.Point(coord)
+    //             });
+    //             iconFeature.getGeometry().setCoordinates(coord);
+
+    //             console.log('coord ' + coord);
+    //             map.getView().setCenter(coord);
+    //         });
+    //     }
+
+    //     console.log('onOff ' + onOff);
+
+    // });
+
+    // Geolocation Control
+    var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ ({
+        //tracking: true,
+        projection: map.getView().getProjection(),
+        trackingOptions: {
+            maximumAge: 10000,
+            enableHighAccuracy: true,
+            timeout: 600000
+        }
+    }));
+
+
+    var accuracyFeature = new ol.Feature();
+    geolocation.on('change:accuracyGeometry', function() {
+        accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+    });
+
+    var positionFeature = new ol.Feature();
+    positionFeature.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 7,
+            fill: new ol.style.Fill({
+                color: '#3399CC'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#fff',
+                width: 2
+            })
+        })
+    }));
+
+
+    var cnt = 0;
+    geolocation.on('change:position', function() {
+        console.log('change:position');
+        var coordinates = geolocation.getPosition();
+        positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
+
+        console.log('coord ' + coordinates);
+        var html = [
+            ++cnt + ' Position: ' + coordinates
+        ].join('<br />');
+        document.getElementById('info').innerHTML = html;
+
+        map.getView().setCenter(coordinates);
+
+    });
+
+    var geolocation_source = new ol.source.Vector({});
+
+    var geolocation_layer = new ol.layer.Vector({
+        map: map,
+        source: geolocation_source
+    });
+
+    geolocation.on('error', function() {
+        alert('geolocation error');
+        // FIXME we should remove the coordinates in positions
+    });
+
+    var isCheck = true;
+    $("#map_current").click(function() {
+        if (isCheck) {
+            geolocation.setTracking(true);
+            var coordinates = geolocation.getPosition();
+            geolocation_source.addFeature(accuracyFeature);
+            geolocation_source.addFeature(positionFeature);
+            isCheck = false;
+            console.log('isCheck ' + isCheck);
+
+            //기기 방향값 얻기 이벤트
+            // window.addEventListener("deviceorientation", handleOrientation, true);
+
+            //map.on('postcompose', updateView);
+            map.render();
+        } else {
+            geolocation.setTracking(false);
+            geolocation_source.removeFeature(accuracyFeature);
+            geolocation_source.removeFeature(positionFeature);
+            // map.getView().setRotation(0);
+            isCheck = true;
+            console.log('isCheck ' + isCheck);
+
+        }
+    });
+
+    var locationCallback = function(pos) {
+        map.getView().setCenter(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
+
+        console.log('pos.coords.longitude ' + pos.coords.longitude);
+        console.log('pos.coords.latitude ' + pos.coords.latitude);
+        console.log('pos.coords.heading ' + pos.coords.heading);
+        setTimeout(function() {
+            makerOverlay.setPosition(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
+        }, 1000);
+    }
+
+    // 지도 변경시 핸들러 정의(--end--)
+
+    // topMenu 핸들러 정의(--start--)
+//    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox").bind("change", function(event) {
+//        var element = event.currentTarget;
+//        if ($(element).is(":checked")) {
+//            if (map.getView().getResolution() >= eval("layers.{0}.getMaxResolution()".format(element.name)))
+//                eval("map.getView().setResolution(layers.{0}.getMaxResolution() / 2)".format(element.name));
+//            eval("map.addLayer(layers.{0})".format(element.name));
+//        } else {
+//            eval("map.removeLayer(layers.{0})".format(element.name));
+//        }
+//        element.blur();
+//        return false;
+//    });
+
+    // topMenu 핸들러 정의(--end--)
+
+
+    /*********** 지도 화면 핸들러 (-- end --) ***********/
+
+//    setTimeout(function() {
+//        if (init) {
+//            switch (init) {
+//                case 'roadsign':
+//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='rdpq']").click();
+//                    break;
+//                case 'areasign':
+//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='area']").click();
+//                    break;
+//                case 'basenumsign':
+//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='bsis']").click();
+//                    break;
+//                case 'buildsign':
+//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='buld']").click();
+//                    break;
+//            }
+//        }
+//    }, 1500);
 };
 // 지도 초기화 함수(--end--)
 
