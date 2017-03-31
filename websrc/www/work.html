@@ -9,6 +9,14 @@
 
     <link rel="preload" as="image" href="img/main/menu_bg.png">
 
+    <!-- eGovFrame Common import -->
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+
+    <link rel="stylesheet" href="css/default.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/map.css" />
+
+    <!-- work page env import -->
     <!-- for debug -->
     <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
@@ -22,14 +30,6 @@
     <!-- Phonegap.js import -->
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
-    <!-- eGovFrame Common import -->
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
-
-    <link rel="stylesheet" href="css/default.css" />
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/map.css" />
-
-    <!-- work page env import -->
     <script type="text/javascript" src="js/toastr.js"></script>
     <script type="text/javascript" src="js/flex/jquery.flexslider.js"></script>
     <script type="text/javascript" src="js/variables.js"></script>
@@ -52,74 +52,140 @@
     <!-- for map page -->
     <script src="js/proj4.js" type="text/javascript"></script>
     <script src="js/ol.js" type="text/javascript"></script>
+
     <script src="js/utils.js" type="text/javascript"></script>
     <script src="js/map-style.js" type="text/javascript"></script>
     <script src="js/map.js" type="text/javascript"></script>
 </head>
 
 <body>
-<div data-role="panel" data-position="left" data-display="overlay" id="menu_panel">
-    <a href="#menu_panel"><img src="img/icon/iconCloser.png" class="btn-closer" /></a>
-    <h2 class="ui-bar">스마트KAIS</h2>
-    <div class="ui-body">
-        <ul data-role="listview">
-            <li><a href="javascript:util.gotoTask('home')">HOME</a></li>
-            <li><a href="javascript:util.gotoTask('mapservice')">안내시설물관리</a></li>
-            <li><a href="javascript:util.gotoTask('mapservice')">도로업무관리</a></li>
-            <li><a href="javascript:util.gotoTask('mapservice')">민원업무조회</a></li>
-        </ul>
-    </div>
-</div><!-- /panel -->
-<div data-role="panel" data-position="right" data-display="overlay" id="push_panel">
-    <a href="#push_panel"><img src="img/icon/iconCloser.png" class="btn-closer" /></a>
-    <h2 class="ui-bar">도움센터(QnA)</h2>
-    <div class="ui-body">
-        <div data-role="tabs" id="tabs">
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#noReply" data-ajax="false">미답변글</a></li>
-                    <li><a href="#allQna" data-ajax="false">전체글</a></li>
-                </ul>
-            </div>
-            <div id="noReply">
-                미답변글 내용
-            </div>
-            <div id="allQna">
-                전체글 내용
+
+<div data-role="header" data-position="fixed">
+    <a href="#panel_menu" data-role="button" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
+    <h1><img src="img/main/header_logo.png" /></h1>
+    <a href="#panel_qna" data-role="button" data-shadow="false" data-icon="qna" data-iconpos="notext">QNA</a>
+    <div data-role="panel" data-position="left" data-display="overlay" id="panel_menu">
+        <div data-role="header">
+            <a href="#panel_menu" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext">CLOSE</a>
+            <h2 class="ui-bar">스마트KAIS</h2>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li><a href="javascript:util.gotoTask('home')">HOME</a></li>
+                <li><a href="javascript:util.gotoTask('mapservice')">안내시설물관리</a></li>
+                <li><a href="javascript:util.gotoTask('mapservice')">도로업무관리</a></li>
+                <li><a href="javascript:util.gotoTask('mapservice')">민원업무조회</a></li>
+            </ul>
+        </div>
+    </div><!-- /panel -->
+    <div data-role="panel" data-position="right" data-display="overlay" id="panel_qna">
+        <div data-role="header">
+            <a href="#panel_qna" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext" class="ui-btn-right">CLOSE</a>
+            <h2 class="ui-bar">도움센터(QnA)</h2>
+        </div>
+        <div data-role="content">
+            <div data-role="tabs" id="tabs">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#noReply" data-ajax="false">미답변글</a></li>
+                        <li><a href="#allQna" data-ajax="false">전체글</a></li>
+                    </ul>
+                </div>
+                <div id="noReply">
+                    미답변글 내용
+                </div>
+                <div id="allQna">
+                    전체글 내용
+                </div>
             </div>
         </div>
-    </div>
-</div><!-- /panel -->
-<div data-role="header" data-theme="none">
-    <a href="#" data-role="button" data-shadow="false" data-theme="none" id="menu_btn">
-        <img src="img/icon/iconMenu_l.png" />
-    </a>
-    <h1><img src="img/main/header_logo.png" /></h1>
-    <a href="#" data-role="button" data-shadow="false" data-theme="none" id="push_btn">
-        <img src="img/icon/iconMenu_r.png" />
-    </a>
+    </div><!-- /panel -->
+    <div data-role="popup" id="popup-content">
+        <h4 class="ui-bar">도로명판</h4>
+        <div class="ui-body">
+            <div class="img-obj"></div>
+            <div class="memo">
+                <textarea placeholder="기타사항을 입력하세요."></textarea>
+            </div>
+            <div class="detail">
+                <form>
+                    <div class="ui-field-contain">
+                        <label for="instSpotCd">설치지점</label>
+                        <select name="instSpotCd" id="instSpotCd">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="isLgnYn">설치재설치 여부</label>
+                        <select name="isLgnYn" id="isLgnYn">
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="instSpotDesc">설치지점명</label>
+                        <input type="text" name="instSpotDesc" id="instSpotDesc" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontKoreanRoadNm">한글도로명</label>
+                        <input type="text" name="frontKoreanRoadNm" id="frontKoreanRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontRomeRoadNm">로마자 도로명</label>
+                        <input type="text" name="frontRomeRoadNm" id="frontRomeRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="gdftyForm">안내시설형식</label>
+                        <select name="gdftyForm" id="gdftyForm">
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="plqDirection">안내시설방향</label>
+                        <select name="plqDirection" id="plqDirection">
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ui-body">
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                <img src="img/icon/btn_normalcy_on.png" />
+            </a>
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                <img src="img/icon/btn_damage_off.png" />
+            </a>
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                <img src="img/icon/btn_loss_off.png" />
+            </a>
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                <!--<img src="img/icon/btn_loss_off.png" />-->
+                적용
+            </a>
+        </div>
+    </div><!-- popup -->
 </div><!-- /header -->
-<div id="work_page" data-role="page" data-theme="none" style="min-height: 100%;">
-    <div data-role="main" class="ui-content main">
+
+<div id="work_page" data-role="page">
+    <div data-role="main" class="ui-content">
         <div class="title">
             <img src="img/main/top_logo.png">
             <div class="text">
                 <p class="msg">쉽고 편리한 국가주소정보시스템</p>
             </div>
         </div>
-        <div class="menu_list">
-            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+        <div class="menu-list">
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
                 <img src="img/main/img_menu01_on.png" />
             </a>
-            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
                 <img src="img/main/img_menu02_on.png" />
             </a>
-            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" data-theme="none">
+            <a href='javascript:$("#popup-content").popup("open", {transition: "slideup"})' data-role="button" data-shadow="false">
                 <img src="img/main/img_menu03_on.png" />
             </a>
         </div>
     </div><!-- /content -->
 </div><!-- /page -->
+
+
 </body>
 
 </html>

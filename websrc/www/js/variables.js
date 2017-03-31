@@ -37,7 +37,7 @@ var URLs = {
     },
     realPath: function () {
         try {
-            return cordova.file.applicationDirectory;
+            return cordova.file.applicationDirectory + "www/";
         } catch (e) {
             return '';
         }
@@ -45,14 +45,14 @@ var URLs = {
 };
 
 var pages = {
-    "workpage": { link: function () { return URLs.realPath() + "www/work.html"; }, div: "#work_page" },
-    "map": { link: function () { return URLs.realPath() + "www/map.html"; }, div: "#mapview_page" },
-    "addressview": { link: function () { return URLs.realPath() + "www/board.html"; }, div: "#bbs_page" },
-    "detailview": { link: function () { return URLs.realPath() + "www/detailview.html"; }, div: "#detailview_page" },
-    "detailaddress": { link: function () { return URLs.realPath() + "www/addressview.html"; }, div: "#addressview_page" },
-    "imageviewer": { link: function () { return URLs.realPath() + "www/imageviewer.html"; }, div: "#imageviewer_page" },
-    "writereplypage": { link: function () { return URLs.realPath() + "www/writereply.html"; }, div: "#write_reply_page" },
-    "memolistpage": { link: function () { return URLs.realPath() + "www/memolist.html"; }, div: "#memolist_page" }
+    "workpage": { link: function () { return URLs.realPath() + "work.html"; }, div: "#work_page" },
+    "map": { link: function () { return URLs.realPath() + "map.html"; }, div: "#mapview_page" },
+    "addressview": { link: function () { return URLs.realPath() + "board.html"; }, div: "#bbs_page" },
+    "detailview": { link: function () { return URLs.realPath() + "detailview.html"; }, div: "#detailview_page" },
+    "detailaddress": { link: function () { return URLs.realPath() + "addressview.html"; }, div: "#addressview_page" },
+    "imageviewer": { link: function () { return URLs.realPath() + "imageviewer.html"; }, div: "#imageviewer_page" },
+    "writereplypage": { link: function () { return URLs.realPath() + "writereply.html"; }, div: "#write_reply_page" },
+    "memolistpage": { link: function () { return URLs.realPath() + "memolist.html"; }, div: "#memolist_page" }
 };
 
 //var SSO = {

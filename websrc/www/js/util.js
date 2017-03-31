@@ -124,20 +124,6 @@ var util = {
         });
 
         return;
-
-        var options = {
-            "href": href,
-            "direction": direction, // 'left|right|up|down', default 'left' (which is like 'next')
-            "duration": 500, // in milliseconds (ms), default 400
-            "slowdownfactor": 4, // overlap views (higher number is more) or no overlap (1), default 3
-            "androiddelay": 150  // same as above but for Android, default 50
-        };
-
-        window.plugins.nativepagetransitions.slide(
-            options,
-            function (msg) { console.log("success: " + msg) }, // called when the animation has finished
-            function (msg) { console.log("error: " + msg) } // called in case you pass in weird values
-        );
     },
     //메뉴 생성
     createNavPanel: function (navid, contents) {

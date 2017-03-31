@@ -159,10 +159,10 @@ var app = {
         {
             telNo: "01031207751", // 사업단 테스트(태블릿)
             info: {
-//                sigCd: "11440",
-//                sigNm: "서울특별시 마포구",
-                sigCd: "4311_",
-                sigNm: "충청북도 청주시",
+                sigCd: "11440",
+                sigNm: "서울특별시 마포구",
+//                sigCd: "4311_",
+//                sigNm: "충청북도 청주시",
                 opeId: "kais",
                 opeNm: "kais관리자"
             }

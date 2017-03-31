@@ -15,21 +15,3 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
         util.toast('push:' + json.message);
     });
 });
-
-$(function() {
-    // 패널 초기화
-    $( "body>[data-role='panel']" ).panel();
-
-    // 타이틀 메뉴 버튼 클릭
-    $("#menu_btn").on("click", function(evt) {
-        evt.preventDefault();
-
-        $("#menu_panel").panel("open");
-    });
-    // 타이틀 도움센터 버튼 클릭
-    $("#push_btn").on("click", function(evt) {
-        evt.preventDefault();
-
-        $("#push_panel").panel("open");
-    });
-});
