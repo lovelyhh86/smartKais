@@ -1,3 +1,12 @@
+String.prototype.format = function() {
+  var str = this;
+  for (var i = 0; i < arguments.length; i++) {
+    var reg = new RegExp("\\{" + i + "\\}", "gm");
+    str = str.replace(reg, arguments[i]);
+  }
+  return str;
+}
+
 var app;
 var util = {
     //ajax call
@@ -59,12 +68,17 @@ var util = {
     },
     //뒤로가기
     goBack: function () {
-        if ($( "body>[data-role='panel']" ).hasClass("ui-panel-open")) {
-            $( "body>[data-role='panel']" ).panel("close");
+        if ($( "[data-role='panel']" ).hasClass("ui-panel-open")) {
+            $( "[data-role='panel']" ).panel("close");
             return;
         }
 
-        var activePage = $.mobile.activePage.attr('id')
+        if ($( "body>.ui-popup-container").hasClass("ui-popup-active")) {
+            $(".popup-wrap").popup("close");
+            return;
+        }
+
+        var activePage = $.mobile.activePage.attr('id');
         if ('#' + activePage == pages.workpage.div) {
             if (confirm('현장조사 Smart KAIS를 종료하시겠습니까?') == true)
                 util.appExit();

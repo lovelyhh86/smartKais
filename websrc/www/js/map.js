@@ -1,3 +1,115 @@
+var KEY = {
+    plateType: { "ROAD": 1, "BASE": 2, "LOCAL": 3, "BUILD": 4 },
+    plateDir: { "ONE": "00100", "BI": "00200", "FORWARD": "00300", "ONE_S": "00101", "ONE_E": "00102" },
+};
+var mapUtils = {
+    init: function () {
+
+    },
+    openPopup: function (type, f) {
+        mapUtils.setPopup(type, f);
+
+        $(".popup-wrap").popup("open", { transition: "slideup" });
+    },
+    getPlateDir: function (f) {
+        var ft_stbs_mn = parseInt(f.get("FT_STBS_MN"));
+        var ft_stbs_sn = parseInt(f.get("FT_STBS_SN"));
+        var ft_edbs_mn = parseInt(f.get("FT_EDBS_MN"));
+        var ft_edbs_sn = parseInt(f.get("FT_EDBS_SN"));
+
+        var ft_stbs = ft_stbs_mn + ft_stbs_sn * .1;
+        var ft_edbs = ft_edbs_mn + ft_edbs_sn * .1;
+
+        var ret = {
+            ft_stbs: ft_stbs.toString().replace(/\./g, "-"),
+            ft_edbs: ft_edbs.toString().replace(/\./g, "-"),
+            ft_all: function (dir) {
+                var format = "";
+                switch (dir) {
+                    case KEY.plateDir.ONE_S:
+                        format = "{0} → {1}";
+                        break;
+                    case KEY.plateDir.ONE_E:
+                        format = "{1} ← {0}";
+                        break;
+                    case KEY.plateDir.FORWARD:
+                        format = "{1}<br>↑<br>{0}";
+                        break;
+                    default:
+                        format = "";
+                }
+                return format.format(this.ft_stbs, this.ft_edbs);
+            },
+            direct: null
+        }
+
+        if (ft_stbs > ft_edbs) {
+            ret.direct = KEY.plateDir.ONE_E;
+        } else if (ft_stbs < ft_edbs) {
+            ret.direct = KEY.plateDir.ONE_S;
+        } else {
+            console.error("Equal's FT_STBS({0}) and FT_EDBS({1})".format(ft_stbs, ft_edbs));
+        }
+        return ret;
+    },
+    setPopup: function (type, f) {
+        var pDir = f.get("PLQ_DRC");
+        var pDirDetail = mapUtils.getPlateDir(f);
+
+        $(".popup-content .roadName .kor-rn").html(f.get("FT_KOR_RN"));
+        $(".popup-content .roadName .rom-rn").html(f.get("FT_ROM_RN"));
+        switch (type) {
+            case KEY.plateType.ROAD:
+                var bgUrl = "";
+
+                $(".popup-content .img-plate .base-area").css("width", "");
+                $(".popup-content .img-plate .base-area").html("");
+                $(".popup-content .roadName").css("text-align", "left");
+                switch (pDir) {
+                    case KEY.plateDir.ONE:
+                        switch (pDirDetail.direct) {
+                            case KEY.plateDir.ONE_S:
+                                bgUrl = "img_road_plate_1.png";
+                                $(".popup-content .img-plate .base-left").css("width", "17%");
+                                $(".popup-content .img-plate .base-right").html(pDirDetail.ft_all(pDirDetail.direct));
+                                break;
+                            case KEY.plateDir.ONE_E:
+                                $(".popup-content .img-plate .base-right").css("width", "17%");
+                                $(".popup-content .img-plate .base-left").html(pDirDetail.ft_all(pDirDetail.direct));
+                                bgUrl = "img_road_plate_e.png";
+                                break;
+                        }
+                        break;
+                    case KEY.plateDir.BI:
+                        bgUrl = "img_road_plate_m.png";
+                        $(".popup-content .roadName").css("text-align", "center");
+                        $(".popup-content .img-plate .base-left").html(pDirDetail.ft_stbs);
+                        $(".popup-content .img-plate .base-right").html(pDirDetail.ft_edbs);
+                        break;
+                    case KEY.plateDir.FORWARD:
+                        bgUrl = "img_road_plate_f.png";
+                        $(".popup-content .img-plate .base-left").css("width", "17%");
+                        $(".popup-content .img-plate .base-right").html(pDirDetail.ft_all(pDir));
+                        break;
+                }
+                $(".popup-content .img-plate").css('background-image', 'url("img/main/{0}")'.format(bgUrl));
+
+                break;
+            case KEY.plateType.BASE:
+
+                break;
+            case KEY.plateType.LOCAL:
+
+                break;
+            case KEY.plateType.BUILD:
+
+                break;
+        }
+    }
+};
+
+
+
 var MODE = { RUNTIME: 1, DEBUG: 0 };
 var mode = MODE.RUNTIME;
 // 서비스 정보
@@ -39,7 +151,7 @@ var layers, map;
 var initial = false;
 
 // 지도 초기화 함수(--start--)
-var mapInit = function(pos) {
+var mapInit = function (pos) {
     if (!initial)
         initial = true;
     else
@@ -58,14 +170,14 @@ var mapInit = function(pos) {
                 textOffsetY: -20
             }
         },
-        maxResolution: 0.5
+        maxResolution: .25
     });
     // 출입구 레이어
     var lyr_tl_spbd_buld = getFeatureLayer({
         title: "출입구(건물번호판)",
         typeName: "tl_spbd_entrc",
         dataType: DATA_TYPE.BULD,
-        maxResolution: 0.5
+        maxResolution: .25
     });
     // 도로명판 레이어
     var lyr_tl_spgf_rdpq = getFeatureLayer({
@@ -76,7 +188,7 @@ var mapInit = function(pos) {
             radius: 12
         },
         cluster: { distance: 15 },
-        maxResolution: 1
+        maxResolution: .25
     });
     // 지역안내판 레이어
     var lyr_tl_spgf_area = getFeatureLayer({
@@ -124,7 +236,7 @@ var mapInit = function(pos) {
 
 
     // Feature 정보보기 레이어 생성
-    var overlay = new ol.Overlay( /** @type {olx.OverlayOptions} */ ({
+    var overlay = new ol.Overlay( /** @type {olx.OverlayOptions} */({
         id: 'popup',
         element: document.getElementById('popup'),
         position: undefined,
@@ -135,7 +247,7 @@ var mapInit = function(pos) {
     }));
 
     // 현재위치 마커 생성
-    var makerOverlay = new ol.Overlay( /** @type {olx.OverlayOptions} */ ({
+    var makerOverlay = new ol.Overlay( /** @type {olx.OverlayOptions} */({
         id: 'marker',
         position: undefined,
         element: document.getElementById('marker'),
@@ -155,7 +267,7 @@ var mapInit = function(pos) {
     map = new ol.Map({
         target: 'map',
         logo: false,
-        layers: [baseLayer, lyr_tl_spgf_rdpq],
+        layers: [baseLayer, layers.rdpq, layers.bsis, layers.area],
         interactions: ol.interaction.defaults({
             //altShiftDragRotate: false,
             //pinchRotate: false
@@ -168,10 +280,9 @@ var mapInit = function(pos) {
         }),
         overlays: [overlay, makerOverlay, markerGeoloaction],
         view: new ol.View({
-            zoom: 19,
             projection: baseProjection,
             center: pos,
-            zoom: 12,
+            zoom: 14,
             maxZoom: 15,
             minZoom: 6,
             maxResolution: 2048
@@ -181,28 +292,28 @@ var mapInit = function(pos) {
     /*********** 지도 화면 핸들러 (--start--) ***********/
 
     // 마우스 이동 이벤트 정의(현재 좌표 보여주기) (--start--)
-    map.on('pointermove', function(event) {});
+    map.on('pointermove', function (event) { });
     // 마우스 이동 이벤트 정의(현재 좌표 보여주기) (--end--)
 
     // 선택 이벤트 정의()(--start--)
-    map.on('singleclick', function(event) {
-        map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
+    map.on('singleclick', function (event) {
+        map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
             var sn, features;
-
-            $("#popup-content").popup("open", {transition: "slideup"});
-            return;
 
             if (feature.getKeys().indexOf('features') >= 0)
                 features = feature.get('features');
             else
                 features = [feature];
 
+            mapUtils.openPopup(KEY.plateType.ROAD, features[0]);
+            return;
+
             if (features.length > 1) {
                 var itemHtml = "<li onclick=\"{4}\">{0}({1}-{2},{3})</li>";
                 var strHtml = "",
                     resultHtml = "<ul>{0}</ul>";
 
-                features.forEach(function(feature, index) {
+                features.forEach(function (feature, index) {
                     switch (layer.get('id')) {
                         case DATA_TYPE.BULD:
                             var categoryid = "buildsign";
@@ -291,7 +402,7 @@ var mapInit = function(pos) {
     // 선택 이벤트 정의()(--end--)
 
     // 지도 변경시 핸들러 정의(--start--)
-    map.getView().on('propertychange', function(event) {
+    map.getView().on('propertychange', function (event) {
         switch (event.key) {
             case 'resolution':
                 if (map.getView().getResolution() > 0.5)
@@ -305,7 +416,7 @@ var mapInit = function(pos) {
     });
 
     // FeatureInfo 정보 팝업 닫기 핸들러 정의(--start--)
-    var popupCloser = function(event) {
+    var popupCloser = function (event) {
         overlay.setPosition(undefined);
         $("#popup-closer").blur();
         event.preventDefault();
@@ -315,7 +426,7 @@ var mapInit = function(pos) {
 
     var ori = true;
     var watchID;
-    $("#map_cordova").on("click", function() {
+    $("#map_cordova").on("click", function () {
         console.log('map_cordova');
         //html5
         //getCurrentLocation(locationCallback);
@@ -369,7 +480,7 @@ var mapInit = function(pos) {
     // });
 
     // Geolocation Control
-    var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ ({
+    var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */({
         //tracking: true,
         projection: map.getView().getProjection(),
         trackingOptions: {
@@ -381,7 +492,7 @@ var mapInit = function(pos) {
 
 
     var accuracyFeature = new ol.Feature();
-    geolocation.on('change:accuracyGeometry', function() {
+    geolocation.on('change:accuracyGeometry', function () {
         accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
     });
 
@@ -401,7 +512,7 @@ var mapInit = function(pos) {
 
 
     var cnt = 0;
-    geolocation.on('change:position', function() {
+    geolocation.on('change:position', function () {
         console.log('change:position');
         var coordinates = geolocation.getPosition();
         positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
@@ -423,13 +534,13 @@ var mapInit = function(pos) {
         source: geolocation_source
     });
 
-    geolocation.on('error', function() {
+    geolocation.on('error', function () {
         alert('geolocation error');
         // FIXME we should remove the coordinates in positions
     });
 
     var isCheck = true;
-    $("#map_current").click(function() {
+    $("#map_current").click(function () {
         if (isCheck) {
             geolocation.setTracking(true);
             var coordinates = geolocation.getPosition();
@@ -454,13 +565,13 @@ var mapInit = function(pos) {
         }
     });
 
-    var locationCallback = function(pos) {
+    var locationCallback = function (pos) {
         map.getView().setCenter(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
 
         console.log('pos.coords.longitude ' + pos.coords.longitude);
         console.log('pos.coords.latitude ' + pos.coords.latitude);
         console.log('pos.coords.heading ' + pos.coords.heading);
-        setTimeout(function() {
+        setTimeout(function () {
             makerOverlay.setPosition(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
         }, 1000);
     }
@@ -468,46 +579,46 @@ var mapInit = function(pos) {
     // 지도 변경시 핸들러 정의(--end--)
 
     // topMenu 핸들러 정의(--start--)
-//    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox").bind("change", function(event) {
-//        var element = event.currentTarget;
-//        if ($(element).is(":checked")) {
-//            if (map.getView().getResolution() >= eval("layers.{0}.getMaxResolution()".format(element.name)))
-//                eval("map.getView().setResolution(layers.{0}.getMaxResolution() / 2)".format(element.name));
-//            eval("map.addLayer(layers.{0})".format(element.name));
-//        } else {
-//            eval("map.removeLayer(layers.{0})".format(element.name));
-//        }
-//        element.blur();
-//        return false;
-//    });
+    //    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox").bind("change", function(event) {
+    //        var element = event.currentTarget;
+    //        if ($(element).is(":checked")) {
+    //            if (map.getView().getResolution() >= eval("layers.{0}.getMaxResolution()".format(element.name)))
+    //                eval("map.getView().setResolution(layers.{0}.getMaxResolution() / 2)".format(element.name));
+    //            eval("map.addLayer(layers.{0})".format(element.name));
+    //        } else {
+    //            eval("map.removeLayer(layers.{0})".format(element.name));
+    //        }
+    //        element.blur();
+    //        return false;
+    //    });
 
     // topMenu 핸들러 정의(--end--)
 
 
     /*********** 지도 화면 핸들러 (-- end --) ***********/
 
-//    setTimeout(function() {
-//        if (init) {
-//            switch (init) {
-//                case 'roadsign':
-//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='rdpq']").click();
-//                    break;
-//                case 'areasign':
-//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='area']").click();
-//                    break;
-//                case 'basenumsign':
-//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='bsis']").click();
-//                    break;
-//                case 'buildsign':
-//                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='buld']").click();
-//                    break;
-//            }
-//        }
-//    }, 1500);
+    //    setTimeout(function() {
+    //        if (init) {
+    //            switch (init) {
+    //                case 'roadsign':
+    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='rdpq']").click();
+    //                    break;
+    //                case 'areasign':
+    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='area']").click();
+    //                    break;
+    //                case 'basenumsign':
+    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='bsis']").click();
+    //                    break;
+    //                case 'buildsign':
+    //                    $(".ui-controlgroup-controls  .ui-checkbox input:checkbox[name='buld']").click();
+    //                    break;
+    //            }
+    //        }
+    //    }, 1500);
 };
 // 지도 초기화 함수(--end--)
 
-var getSource = function(source) {
+var getSource = function (source) {
     if (source.getSource) {
         return getSource(source.getSource());
     } else {
@@ -517,9 +628,9 @@ var getSource = function(source) {
     }
 };
 
-var getVectorSource = function(mapObj) {
+var getVectorSource = function (mapObj) {
     var source;
-    mapObj.getLayers().forEach(function(item, index) {
+    mapObj.getLayers().forEach(function (item, index) {
         if (item instanceof ol.layer.Vector)
             source = getSource(item);
     });
@@ -528,11 +639,11 @@ var getVectorSource = function(mapObj) {
 };
 
 
-var getFeatureLayer = function(options) {
+var getFeatureLayer = function (options) {
     var vectorSource = new ol.source.Vector({
         id: "vectorSource:" + options.typeName,
         format: new ol.format.WFS(),
-        loader: function(extent, resolution, projection) {
+        loader: function (extent, resolution, projection) {
             extent = ol.proj.transformExtent(extent, baseProjection.getCode(), sourceProjection.getCode());
             var param = {
                 SERVICE: 'WFS',
@@ -547,12 +658,12 @@ var getFeatureLayer = function(options) {
 
             util.showProgress();
             util.postAJAX('', urldata, true)
-                .then(function(context, rcode, results) {
+                .then(function (context, rcode, results) {
                     util.dismissProgress();
                     var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
                     console.log("Count of loaded features are " + features.length);
                     vectorSource.addFeatures(features);
-                }, function(context, xhr, error) {
+                }, function (context, xhr, error) {
                     console.log("조회 error >> " + error + '   ' + xhr);
                     util.dismissProgress();
                 });
@@ -569,7 +680,7 @@ var getFeatureLayer = function(options) {
         source =
             new ol.source.Cluster({
                 distance: options.cluster.distance,
-                geometryFunction: function(feature) {
+                geometryFunction: function (feature) {
                     if (feature.getGeometry().getType() != "Point")
                         return feature.getGeometry().getInteriorPoint();
                     else
@@ -583,14 +694,14 @@ var getFeatureLayer = function(options) {
 
     // 벡터 레이어 생성
     var vectorOptions = {
-            //    id: "vectorLayer:" + options.typeName,
-            id: options.dataType,
-            title: options.title,
-            maxResolution: options.maxResolution,
-            source: source
-        }
-        //  if(options.style) {
-    vectorOptions.style = function(feature, resolution) {
+        //    id: "vectorLayer:" + options.typeName,
+        id: options.dataType,
+        title: options.title,
+        maxResolution: options.maxResolution,
+        source: source
+    }
+    //  if(options.style) {
+    vectorOptions.style = function (feature, resolution) {
         return defaultStyle(feature, resolution, options);
         //      }
     }
@@ -598,7 +709,7 @@ var getFeatureLayer = function(options) {
     return new ol.layer.Vector(vectorOptions);
 };
 
-var getCurrentLocation = function(callback_func) {
+var getCurrentLocation = function (callback_func) {
     console.log('getCurrentLocation');
     var geolocationOptions = {
         maximumAge: 0,
@@ -609,20 +720,20 @@ var getCurrentLocation = function(callback_func) {
     util.showProgress();
 
     navigator.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
 
             util.dismissProgress();
             if (callback_func != undefined) {
                 callback_func(position);
             }
         },
-        function(error) {
+        function (error) {
             util.dismissProgress();
 
             // PositionError.PERMISSION_DENIED = 1;
             // PositionError.POSITION_UNAVAILABLE = 2;
             // PositionError.TIMEOUT = 3;
-            var fn_msg = function() {};
+            var fn_msg = function () { };
 
             if (error.code == 1) {
                 if (isAndroid()) {
@@ -640,10 +751,34 @@ var getCurrentLocation = function(callback_func) {
     );
 }
 
-var mapPopup = function(data) {
-    $("#popup-content").popup("open", {transition: "slideup"});
+/**
+* @constructor
+* @extends {ol.control.Control}
+* @param {Object=} opt_options Control options.
+*/
+LegendControl = function (opt_options) {
+    var options = opt_options || {};
+
+    var button = document.createElement('button');
+    button.innerHTML = 'N';
+
+    var handleRotateNorth = function () {
+    };
+
+    legend.addEventListener('click', handleRotateNorth, false);
+    legend.addEventListener('touchstart', handleRotateNorth, false);
+
+    var element = document.createElement('div');
+    element.className = 'legend ol-unselectable ol-control';
+    element.appendChild(button);
+
+    ol.control.Control.call(this, {
+        element: element,
+        target: options.target
+    });
 
 };
+ol.inherits(LegendControl, ol.control.Control);
 
 //******************geoloction*************** *
 
@@ -690,8 +825,8 @@ function handleOrientation(event) {
     // var heading = alpha * 0.01745329251;
     map.getView().setRotation(heading);
 
-    //* 0.01745329251
-    //* Math.PI / 180
+    // 0.01745329251
+    // Math.PI / 180
 }
 
 var degtorad = Math.PI / 180; // Degree-to-Radian conversion
@@ -737,8 +872,8 @@ function onSuccessHeading(heading) {
 
     map.getView().setRotation(-heading.magneticHeading * 0.01745329251);
 
-    //* 0.01745329251
-    //* Math.PI / 180
+    // 0.01745329251
+    // Math.PI / 180
 };
 //코르도바 heading 실패 함수
 function onError(compassError) {

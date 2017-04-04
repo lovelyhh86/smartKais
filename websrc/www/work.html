@@ -12,6 +12,9 @@
     <!-- eGovFrame Common import -->
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
 
+    <!-- OpenLayers Style -->
+    <link rel="stylesheet" href="css/ol.css" />
+
     <link rel="stylesheet" href="css/default.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/map.css" />
@@ -47,13 +50,11 @@
 
     <!-- for map page debug -->
     <!--<script src="js/proj4-src.js" type="text/javascript"></script>-->
-    <!--<script src="js/ol-debug.js" type="text/javascript"></script>-->
+    <script src="js/ol-debug.js" type="text/javascript"></script>
 
     <!-- for map page -->
     <script src="js/proj4.js" type="text/javascript"></script>
-    <script src="js/ol.js" type="text/javascript"></script>
-
-    <script src="js/utils.js" type="text/javascript"></script>
+    <!--<script src="js/ol.js" type="text/javascript"></script>-->
     <script src="js/map-style.js" type="text/javascript"></script>
     <script src="js/map.js" type="text/javascript"></script>
 </head>
@@ -61,44 +62,29 @@
 <body>
 
 <div data-role="header" data-position="fixed">
-    <a href="#panel_menu" data-role="button" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
+    <a href="#panel-menu" data-role="button" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
     <h1><img src="img/main/header_logo.png" /></h1>
-    <a href="#panel_qna" data-role="button" data-shadow="false" data-icon="qna" data-iconpos="notext">QNA</a>
-    <div data-role="panel" data-position="left" data-display="overlay" id="panel_menu">
+    <a href="#panel-qna" data-role="button" data-shadow="false" data-icon="qna" data-iconpos="notext">QNA</a>
+    <div data-role="panel" data-position="left" data-display="overlay" id="panel-menu">
         <div data-role="header">
-            <a href="#panel_menu" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext">CLOSE</a>
+            <a href="#panel-menu" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext">CLOSE</a>
             <h2 class="ui-bar">스마트KAIS</h2>
         </div>
-        <div data-role="content">
+        <div class="ui-content">
             <ul data-role="listview">
                 <li><a href="javascript:util.gotoTask('home')">HOME</a></li>
-                <li><a href="javascript:util.gotoTask('mapservice')">안내시설물관리</a></li>
-                <li><a href="javascript:util.gotoTask('mapservice')">도로업무관리</a></li>
-                <li><a href="javascript:util.gotoTask('mapservice')">민원업무조회</a></li>
+                <li><a href="javascript:util.gotoTask('mapservice')">시설물관리</a></li>
+                <li><a href="javascript:util.gotoTask('mapservice')">건물정보관리</a></li>
+                <li><a href="javascript:util.gotoTask('mapservice')">민원관리</a></li>
             </ul>
         </div>
     </div><!-- /panel -->
-    <div data-role="panel" data-position="right" data-display="overlay" id="panel_qna">
+    <div data-role="panel" data-position="right" data-display="overlay" id="panel-qna" style="90%">
         <div data-role="header">
-            <a href="#panel_qna" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext" class="ui-btn-right">CLOSE</a>
+            <a href="#panel-qna" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext" class="ui-btn-right">CLOSE</a>
             <h2 class="ui-bar">도움센터(QnA)</h2>
         </div>
-        <div data-role="content">
-            <div data-role="tabs" id="tabs">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#noReply" data-ajax="false">미답변글</a></li>
-                        <li><a href="#allQna" data-ajax="false">전체글</a></li>
-                    </ul>
-                </div>
-                <div id="noReply">
-                    미답변글 내용
-                </div>
-                <div id="allQna">
-                    전체글 내용
-                </div>
-            </div>
-        </div>
+        <div class="ui-content"></div>
     </div><!-- /panel -->
     <div data-role="popup" class="popup-wrap">
         <div class="ui-bar">
@@ -106,49 +92,55 @@
         </div>
         <div class="popup-content">
             <div class="ui-body">
-                <div class="img-obj"></div>
+                <div class="img-plate">
+                    <div class="base-area base-left">&nbsp;</div>
+                    <div class="roadName">
+                        <div class="kor-rn">&nbsp;</div>
+                        <div class="rom-rn">&nbsp;</div>
+                    </div>
+                    <div class="base-area base-right">&nbsp;</div>
+                </div>
                 <div class="memo">
                     <textarea placeholder="기타사항을 입력하세요."></textarea>
                 </div>
+                <div class="ui-icon-detail">상세속성</div>
                 <div class="detail">
-                    <form>
-                        <div class="ui-field-contain">
-                            <label for="instSpotCd">설치지점</label>
-                            <select name="instSpotCd" id="instSpotCd">
-                                <option value="">설치</option>
-                            </select>
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="isLgnYn">설치재설치 여부</label>
-                            <select name="isLgnYn" id="isLgnYn">
-                                <option value="">설치</option>
-                            </select>
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="instSpotDesc">설치지점명</label>
-                            <input type="text" name="instSpotDesc" id="instSpotDesc" value="" />
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="frontKoreanRoadNm">한글도로명</label>
-                            <input type="text" name="frontKoreanRoadNm" id="frontKoreanRoadNm" value="" />
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="frontRomeRoadNm">로마자 도로명</label>
-                            <input type="text" name="frontRomeRoadNm" id="frontRomeRoadNm" value="" />
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="gdftyForm">안내시설형식</label>
-                            <select name="gdftyForm" id="gdftyForm">
-                                <option value="">설치</option>
-                            </select>
-                        </div>
-                        <div class="ui-field-contain">
-                            <label for="plqDirection">안내시설방향</label>
-                            <select name="plqDirection" id="plqDirection">
-                                <option value="">설치</option>
-                            </select>
-                        </div>
-                    </form>
+                    <div class="ui-field-contain">
+                        <label for="instSpotCd">설치지점</label>
+                        <select name="instSpotCd" id="instSpotCd">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="isLgnYn">설치재설치 여부</label>
+                        <select name="isLgnYn" id="isLgnYn">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="instSpotDesc">설치지점명</label>
+                        <input type="text" name="instSpotDesc" id="instSpotDesc" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontKoreanRoadNm">한글도로명</label>
+                        <input type="text" name="frontKoreanRoadNm" id="frontKoreanRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontRomeRoadNm">로마자 도로명</label>
+                        <input type="text" name="frontRomeRoadNm" id="frontRomeRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="gdftyForm">안내시설형식</label>
+                        <select name="gdftyForm" id="gdftyForm">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="plqDirection">안내시설방향</label>
+                        <select name="plqDirection" id="plqDirection">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="ui-body">
