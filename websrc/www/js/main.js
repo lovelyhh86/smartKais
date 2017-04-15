@@ -93,27 +93,7 @@ var app = {
         datasource.getCodeMaster(function (result) {
             app.codeMaster = result;
         });
-        /*
-        util.getUserInfo(
-            function(result) {
-
-                app.info.sigCd = "11110";
-                app.info.sigNm = "서울특별시 종로구";
-                app.info.opeId = "KMS634090";
-                app.info.opeNm = "관리자";
-
-                util.dismissProgress();
-                app.deviceReadyOK.resolve();
-            },
-            function(xhr,error){
-
-                util.dismissProgress();
-                alert('사용자 정보를 가져오는데 실패했습니다. 다시 실행해주십시오.'+ xhr+ ' ' +error);
-                util.appExit();
-            }
-        );
-        //*/
-        util.getUserInfo(function (attr) {
+      util.getUserInfo(function (attr) {
             for (var key in attr) {
 
             }
@@ -134,7 +114,7 @@ var app = {
     },
     deviceReadyOK: $.Deferred(),
     selectSig: function (telNo) {
-        if (telNo == "01059237764" || telNo == "01031207751") {
+        if (telNo == "01031207751" || telNo == "01041605627" || telNo == "01045065627") {
             app.mode = "11";
         } else {
             app.mode = "00";
@@ -148,7 +128,7 @@ var app = {
     },
     sigInfos: [
         {
-            telNo: "01059237764", // 사업단 테스트(노트4)
+            telNo: "01031207751", // 사업단 테스트(태블릿)
             info: {
                 sigCd: "11440",
                 sigNm: "서울특별시 마포구",
@@ -157,12 +137,21 @@ var app = {
             }
         },
         {
-            telNo: "01031207751", // 사업단 테스트(태블릿)
+            telNo: "01041605627", // 사업단 테스트(태블릿)
             info: {
                 sigCd: "11440",
                 sigNm: "서울특별시 마포구",
+                opeId: "kais",
+                opeNm: "kais관리자"
+            }
+        },
+        {
+            telNo: "01045065627", // 사업단 테스트(태블릿)
+            info: {
 //                sigCd: "4311_",
 //                sigNm: "충청북도 청주시",
+                sigCd: "11440",
+                sigNm: "서울특별시 마포구",
                 opeId: "kais",
                 opeNm: "kais관리자"
             }

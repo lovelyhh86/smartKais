@@ -46,6 +46,9 @@ var util = {
             },
             // error
             function (errorResults) {
+                util.dismissProgress();
+                util.toast("서비스 요청 에러, 다시 시도 해주세요");
+                console.dir(errorResults);
                 def.reject(context, errorResults.resultCode, errorResults.resultData);
             },
             direct
@@ -68,6 +71,8 @@ var util = {
     },
     //뒤로가기
     goBack: function () {
+        util.dismissProgress();
+
         if ($( "[data-role='panel']" ).hasClass("ui-panel-open")) {
             $( "[data-role='panel']" ).panel("close");
             return;
@@ -186,7 +191,6 @@ var util = {
 
         switch (tasktype) {
             case "home":
-
                 app.historyStack = [];
                 url = pages.workpage.link();
                 document.location.href = url + '?sso=' + JSON.stringify(sso);
@@ -199,7 +203,13 @@ var util = {
             case "mapservice":
                 app.historyStack = [];
                 url = pages.map;
-
+                break;
+            case "mapservice2":
+                app.historyStack = [];
+                url = pages.map2;
+                break;
+            case "minwon":
+                url = pages.minwonListPage;
                 break;
             case "address":
                 if (activePage == 'bbs_page')
@@ -348,8 +358,8 @@ var util = {
         });
     },
     toast: function (msg) {
-        toastr.remove();
-        toastr.options.positionClass = 'toast-center';
+//        toastr.remove();
+        toastr.options.positionClass = 'toast-bottom-center';
         toastr.options.timeOut = 1500;
         toastr.info(msg);
     },
@@ -416,6 +426,10 @@ var util = {
     },
     off: function (triggerName, triggerFunc) {
         SmartKaisPlugins.off(triggerName, triggerFunc);
+    },
+    pushCount: function (type, val) {
+        if(type)
+            (val > 0) ? $(".pushCnt." + type).text(val) : $(".pushCnt." + type).text("");
     },
     //app종료
     appExit: function () {

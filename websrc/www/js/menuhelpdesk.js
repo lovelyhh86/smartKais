@@ -5,12 +5,12 @@ function loadHelpdesk(container){
     $(container).load('hdmenu.html', function() {
         $(this).trigger('create');
 
-        $('#qna-menu').ready( function() {
+        $('#helpdesk').ready( function() {
 
-            mkaisvScrollBind('#qna-list-container','#qna-list',{
+            skScrollBind('#noReply', '#noReply .list',{
                     cache:90,
                     buffer:itemSize,
-                    context:{boardType:'ALL', boardSe:'01', pos:'0'},
+                    context:{boardSe:'01', boardType:'ALL', pos:'0'},
                     setStyleCallback: stylesheetCallback,
                     requestCallback : requestDatasource,
                     completCallback: scrollAppended,
@@ -19,10 +19,10 @@ function loadHelpdesk(container){
                     pulldownCallback : scrollPulldown
             });
 
-            mkaisvScrollBind('#qna-list-all-container','#qna-list-all',{
+            skScrollBind('#allQna', '#allQna .list',{
                     cache:90,
                     buffer:itemSize,
-                    context:{boardType:'ALL', boardSe:'ALL', pos:'0'},
+                    context:{boardSe:'ALL', boardType:'ALL', pos:'0'},
                     setStyleCallback: stylesheetCallback,
                     requestCallback : requestDatasource,
                     completCallback: scrollAppended,
@@ -31,94 +31,46 @@ function loadHelpdesk(container){
                     pulldownCallback : scrollPulldown
             });
 
-            var screenheight = $.mobile.getScreenHeight();
-            var headerheight = $('#qna-header').outerHeight();
-            $('.qna-content').height(screenheight - headerheight);
+            var screenHeight = $.mobile.getScreenHeight();
+            var panelMargin = $('#panel-qna .ui-panel-inner').outerHeight(true) - $('#panel-qna .ui-panel-inner').height();
+            var headerHeight = $('#panel-qna .ui-header').outerHeight(true);
+            var contentMargin = $('#panel-qna .ui-content').outerHeight(true) - $('#panel-qna .ui-content').height();
+            var tabsMargin = $('#panel-qna .ui-tabs').outerHeight(true) - $('#panel-qna .ui-tabs').height();
+            var tabsHeaderHeight = $('#panel-qna .tabs-header').outerHeight(true);
+            var totalHeight = panelMargin + headerHeight + contentMargin + tabsMargin + tabsHeaderHeight + 24;
+            $('#panel-qna .list').height(screenHeight - totalHeight);
 
-            $('#qna-header').on( "click", '.menu-tab', function(e){
-                if ($(this).hasClass('menu-tab-selected') == false)
-                {
-                    $('#qna-menu .menu-tab').toggleClass('menu-tab-selected');
-                    $('#qna-menu .qna-content').toggleClass('display-none');
-                }
-            });
-
-            $('#qna-header').on('click', '.fa-chevron-down', function(e) {
-                e.preventDefault();
-                var combobox = $('#qna-header .menu-table');
-                combobox.css('border-radius','1em 1em 0 0');
-
-                var options = $('#qna-header .combobox-options');
-                options.slideToggle('fast');
-
-                $(this).toggleClass('fa-chevron-down');
-                $(this).toggleClass('fa-chevron-up');
-            });
-
-            $('#qna-header').on('click', '.fa-chevron-up', function(e) {
-                e.preventDefault();
-                var combobox = $('#qna-header .menu-table');
-
-                var options = $('#qna-header .combobox-options');
-                options.slideToggle('fast',function() {   combobox.css('border-radius','1em'); });
-
-                $(this).toggleClass('fa-chevron-down');
-                $(this).toggleClass('fa-chevron-up');
-            });
-
-            $('#qna-header .combobox-options').on('click', 'li', function(e) {
-                e.preventDefault();
-                var options = $('#qna-header .combobox-options');
-                options.children('.select').toggleClass('select');
-                $(this).addClass('select');
-
-                $('#qna-header div.menu-search h1').text($(this).text());;
-
-                var combobox = $('#qna-header .menu-table');
-                options.slideToggle('fast',function() {   combobox.css('border-radius','1em'); });
-
-                $('#qna-header .fa-chevron-up').addClass('fa-chevron-down');
-                $('#qna-header .fa-chevron-up').removeClass('fa-chevron-up');
-
-                var scroll = $('#qna-list').data('infinitescroll');
-                var scroll_all = $('#qna-list-all').data('infinitescroll');
-                scroll.context.boardType = $(this).data('boardtype');
-                scroll_all.context.boardType = $(this).data('boardtype');
-                RefreshQnAList(scroll);
-                RefreshQnAList(scroll_all);
-            });
-
-            $(document).on('refresh_qna', '',  function() {
-
-                var scroll = $('#qna-list').data('infinitescroll');
-                var scroll_all = $('#qna-list-all').data('infinitescroll');
-                scroll.context.boardType = $('#qna-header .combobox-options .select').data('boardtype');
+            var refresh_qna = function() {
+                var scroll = $('#noReply').data('infinitescroll');
+                var scroll_all = $('#allQna').data('infinitescroll');
+                scroll.context.boardType = $("board-type option:selected").data('boardtype');
                 scroll_all.context.boardType = scroll.context.boardType;
                 RefreshQnAList(scroll);
                 RefreshQnAList(scroll_all);
+            };
+
+            $(document).on('refresh_qna', '',  refresh_qna);
+
+            $('board-type').on('change', 'option', function(e) {
+                e.preventDefault();
+                refresh_qna();
             });
 
-            $('#qna-menu').on("click",".helpdeskitem", function()     {
-                var parents = $(this).parents('.qna-content');
-                parents.find(".qna-item-detail").slideUp(500);
-                if ($(this).next().css('display') == 'none' ) {
-                    $(this).next().slideDown(500,function() { parents.animate({ scrollTop :  $(this).parent().position().top } ) ;  });
-                }
-            });
-
-            $('#qna-menu').on("click",".attachment", function()     {
+            $('#qna-menu').on("click", ".attachment", function()     {
                 filename = $(this).text();
-                MKaisvPlugins.callAttachViewer(filename,{ noticeMgtSn:$(this).data('sn') ,fileMgtSn:$(this).data('filesn')},
-                                                function(){},
-                                                function(errormsg){} );
+                smartKaisPlugins.callAttachViewer(
+                    filename,
+                    { noticeMgtSn:$(this).data('sn') ,fileMgtSn:$(this).data('filesn')},
+                    function() {},
+                    function(errorMsg) { console.error("Error at attach view file. " + errorMsg) });
             });
 
-            $('#qna-menu').on("click","a.ans_btn", function()     {
+            $('#qna-menu').on("click", "a.ans_btn", function()     {
                 var sn = $(this).data('sn');
                 util.hiddenHelpDeskPanel('#helpdeskmenu');
                 setTimeout( function () {
                     var page = pages.writereplypage;
-                    util.slide_page('left', page,{ sn : sn });
+                    util.slide_page('left', page, { sn : sn });
 
                 },100);
             });
@@ -133,7 +85,7 @@ function loadHelpdesk(container){
     //리스트 목록이 없을 경우
     function noitemCallback() {
         util.dismissProgress();
-        var element = "<p style='text-align:center;'><img src='./images/noitem.png'></p>"
+        var element = '<div data-role="collapsible" class="noItem"><h4>글이 없습니다.</h4><p></p></div>';
         return element;
     }
 
@@ -141,7 +93,7 @@ function loadHelpdesk(container){
         scroll.context.pos = data.pos;
 
         var attacheLinks = "";
-        if (util.isEmpty(data.files) == false) {
+        if (!util.isEmpty(data.files)) {
             for (var index = 0 ; index < data.files.length; index++)
             {
                 attacheLinks +=
@@ -154,8 +106,7 @@ function loadHelpdesk(container){
 
         var ansbutton = '';
         var reply = '';
-        if (util.isEmpty(data.replySubject) == false)
-        {
+        if (util.isEmpty(data.replySubject) == false) {
             reply = "<div class='listItemTable' >" +
                          "<div style='display:table-cell;padding-left:10px;white-space:normal;' > " + data.replySubject +  "</div>" +
                      "</div>" +
@@ -163,8 +114,7 @@ function loadHelpdesk(container){
                          "<div style='display:table-cell;padding-left:10px;border-top:1px dashed #545894;'>" +
                              "<pre style='font-size:18px;white-space:pre-wrap;'>" + data.replyContent + "</pre>" +
                      "</div></div>";
-        }
-        else {
+        } else {
             ansbutton = "<div class='listItemTable'>" +
                             "<div class='listItemCellRight' style='padding:5px 10px'>" +
                                 "<a class='ans_btn ' href='#' data-sn='"+ data.noticeMgtSn +"'>답변 작성</a>" +
@@ -172,29 +122,8 @@ function loadHelpdesk(container){
                         "</div>";
         }
 
-
-      //  alert (reply);
-      //  alert (data.replySubject);
-        return   "<div class='helpdeskitem' style='padding:10px;'  data-sn='" + data.noticeMgtSn + "'>"+
-                     "<div class='listItemTable '>" +
-                         "<div style='display:table-cell;width:120px;' ><strong>" +data.noticeMgtSn + " [" + data.noticeType + "]</strong></div>" +
-                         "<div style='display:table-cell;' class='ellipsis' >" + "" + "</div>" +
-                         "<div class='listItemCellRight' >" + data.registDate + "</div>" +
-                     "</div>" +
-                     "<div class='listItemTable' >" +
-                         "<div style='display:table-cell;padding-left:10px;white-space:normal;' > " + data.subject +  "</div>" +
-                     "</div>" +
-                 "</div>" +
-                 "<div class='qna-item-detail' style='display:none;'>" +
-                    ansbutton +
-                    attacheLinks+
-                    "<div class='listItemTable'>"+
-                        "<div style='display:table-cell;padding-left:10px;border-top:1px dashed #545894;'>" +
-                            "<pre style='font-size:18px;white-space:pre-wrap;'>" + data.content + "</pre>" +
-                        "</div></div>" +
-                    reply +
-                 "</div>";
-
+        return "<h4><strong>{1} [{2}]</strong>{0}</h4><p>[{4}] {0}</p><pre>{3}</pre>"
+                .format(data.subject, data.noticeMgtSn, data.noticeType, data.content, data.registDate);
     }
 
     function requestDatasource(scroll,start,count){
@@ -210,25 +139,20 @@ function loadHelpdesk(container){
 
 
         var param = $.extend({},{sigCd:app.info.sigCd, size:itemSize, timeout:5000},scroll.context );
-        var helpdeskurl = URLs.postURL(URLs.helpdesklistlink ,param);
-        //util.getAJAX([start,count],helpdeskurl)
-        util.postAJAX([start,count],helpdeskurl)
-            .then( function(context,rcode,results) {
-
+        var helpDeskUrl = URLs.postURL(URLs.helpDeskListLink ,param);
+        util.postAJAX( [start, count], helpDeskUrl)
+            .then( function(context, rCode, results) {
                var data = results.data;
 
-               if (rcode != 0 && util.isEmpty(data) === false )
-               {
+               if (rCode != 0 && util.isEmpty(data) === false ) {
                     scroll.updateData(context[0], []);
                     return;
                }
+               scroll.updateData(context[0], data);
 
-
-               scroll.updateData(context[0], results.data);
-             },function(context,xhr,error) {
-                scroll.updateData(context[0], []);
+            }, function(context, xhr, error) {
                 console.log("갱신실패"+ error+'   '+ xhr);
-             });
+            });
         return;
 
     }

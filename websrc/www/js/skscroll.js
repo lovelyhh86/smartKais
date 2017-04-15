@@ -1,8 +1,8 @@
 
 //검색 스크롤 이벤트 바인딩
-function mkaisvScrollBind(page,scrollElement, options) {
+function skScrollBind(page,scrollElement, options) {
 
-    var scroller = function (page,scrollElement,options ){
+    var scroller = function (page, scrollElement, options ) {
 
         var _options = {
             cache:150,
@@ -38,7 +38,7 @@ function mkaisvScrollBind(page,scrollElement, options) {
         };
         scroll.clear = function(){
             this.css('margin-top','0px');
-            $(scrollElement + ' .infinite-row').remove();
+            $(scrollElement + ' div').remove();
         };
         scroll.build = function(start,count){
             _options.requestCallback(this,start,count);
@@ -49,39 +49,26 @@ function mkaisvScrollBind(page,scrollElement, options) {
         scroll.updateData = function(start, dataSource) {
 
             var divs =[];
-            $.each(dataSource,function (index,item){
-
-                var updatedItem = _options.updateCallback(scroll, index,dataSource[index]);
-                //console.log(updatedItem);
-                if (util.isEmpty(updatedItem) == false)
-                {
-                    var style = _options.setStyleCallback(index);
-                    var element = "<div class='" + style + " infinite-row' data-itemid='"+ (start+index) + "'>" + updatedItem + "</div>";
-                    divs.push(element);
+            $.each(dataSource, function (index, item) {
+                var updatedItem = _options.updateCallback(scroll, index, dataSource[index]);
+                if (!util.isEmpty(updatedItem)) {
+                    divs.push("<div data-role='collapsible' data-itemid='{1}' class='item'>{0}</div>".format(updatedItem, start + index));
                 }
             });
 
-            if (divs.length > 0)
-            {
-                $(scrollElement + ' .mkaisscroll_noItemContent').remove();
+            if (divs.length > 0) {
+                $(scrollElement + ' .noItem').remove();
                 $(scrollElement).append(divs);
             }
 
-            setTimeout(function (){
-                console.log( '<<first <'+$('.infinite-row').first().data('itemid') );
-                console.log( '<<Last  <'+$('.infinite-row').last().data('itemid') );
-            });
-
-            if (0 == $(scrollElement).children('.infinite-row').length
-             && 0 == $(scrollElement).children('.mkaisscroll_noItemContent').length)
-            {
-                var element = "<div class='mkaisscroll_noItemContent' style='width:100%" +/*container.width()*/ '' +";height:" + container.height() + "px;'>" + options.noitemCallback() + "</div>";
+            if ( $(scrollElement).children('div').length == 0 ) {
+                var element = '<div data-role="collapsible" class="noItem"><h4>글이 없습니다.</h4><p></p></div>';
                 $(scrollElement).append(element);
-            }
-            else
-            {
+
+            } else {
                 _options.completCallback(divs.length);
             }
+            $(scrollElement).collapsibleset("refresh");
         };
 
 
@@ -91,16 +78,16 @@ function mkaisvScrollBind(page,scrollElement, options) {
             if (event.view == undefined)
                 return;
 
-            var scrollObject = $(scrollElement); //'#boardlistScroll';
-            if (scrollObject.children('.mkaisscroll_noItemContent').length !== 0) //항목이 하나도 없다면 추가갱신을 하지않음
+            var scrollObject = $(scrollElement);
+            if (scrollObject.children('.noItem').length !== 0) //항목이 하나도 없다면 추가갱신을 하지않음
                 return;
 
             var scrollHeight = scrollObject.height();
             var windowHeight = $(window).scrollTop() + $(window).height();
             var documentHeight = parseInt($(document).height());
             var thisHeight = $(this).height();
-            var lastitem =scrollElement + " .infinite-row:last";
-            var firstitem =scrollElement + " .infinite-row:first";
+            var lastitem =scrollElement + " div:last";
+            var firstitem =scrollElement + " div:first";
             var containerBorderTopWd = parseInt(container.css("border-top-width"));
             var containerBorderBtmWd = parseInt(container.css("border-bottom-width"));
 
@@ -191,5 +178,4 @@ function mkaisvScrollBind(page,scrollElement, options) {
     }
 
     return new scroller(page,scrollElement,options);
-
 }

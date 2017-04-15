@@ -10,10 +10,12 @@
     <link rel="preload" as="image" href="img/main/menu_bg.png">
 
     <!-- eGovFrame Common import -->
+    <link rel="stylesheet" href="css/jquery-ui-1.12.1.min.css" />
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
 
     <!-- OpenLayers Style -->
     <link rel="stylesheet" href="css/ol.css" />
+    <link rel="stylesheet" href="css/toastr.min.css" />
 
     <link rel="stylesheet" href="css/default.css" />
     <link rel="stylesheet" href="css/main.css" />
@@ -22,6 +24,7 @@
     <!-- work page env import -->
     <!-- for debug -->
     <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.12.1.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 
     <!--<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>-->
@@ -33,7 +36,10 @@
     <!-- Phonegap.js import -->
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
-    <script type="text/javascript" src="js/toastr.js"></script>
+    <!--for Debug-->
+    <!--<script type="text/javascript" src="js/toastr.js"></script>-->
+
+    <script type="text/javascript" src="js/toastr.min.js"></script>
     <script type="text/javascript" src="js/flex/jquery.flexslider.js"></script>
     <script type="text/javascript" src="js/variables.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
@@ -42,6 +48,8 @@
 
     <!-- application pages -->
     <script type="text/javascript" src="js/work.js"></script>
+    <script type="text/javascript" src="js/skscroll.js"></script>
+    <script type="text/javascript" src="js/menuhelpdesk.js"></script>
     <script type="text/javascript" src="js/detail_view.js"></script>
     <script type="text/javascript" src="js/board.js"></script>
     <script type="text/javascript" src="js/address_view.js"></script>
@@ -61,27 +69,28 @@
 
 <body>
 
-<div data-role="header" data-position="fixed">
-    <a href="#panel-menu" data-role="button" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
+<div id="work-header" data-role="header" data-position="fixed">
+    <a href="#panel-menu" data-role="button" data-corners="false" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
     <h1><img src="img/main/header_logo.png" /></h1>
-    <a href="#panel-qna" data-role="button" data-shadow="false" data-icon="qna" data-iconpos="notext">QNA</a>
+    <a href="#panel-qna" data-role="button" data-corners="false" data-shadow="false" data-icon="qna" data-iconpos="notext">QNA</a>
+    <div class="pushCnt qna"></div>
     <div data-role="panel" data-position="left" data-display="overlay" id="panel-menu">
         <div data-role="header">
-            <a href="#panel-menu" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext">CLOSE</a>
+            <a href="#panel-menu" data-role="button" data-corners="false" data-shadow="false" data-icon="closer" data-iconpos="notext">CLOSE</a>
             <h2 class="ui-bar">스마트KAIS</h2>
         </div>
         <div class="ui-content">
             <ul data-role="listview">
                 <li><a href="javascript:util.gotoTask('home')">HOME</a></li>
                 <li><a href="javascript:util.gotoTask('mapservice')">시설물관리</a></li>
-                <li><a href="javascript:util.gotoTask('mapservice')">건물정보관리</a></li>
-                <li><a href="javascript:util.gotoTask('mapservice')">민원관리</a></li>
+                <li><a href="javascript:util.gotoTask('mapservice2')">건물정보관리</a></li>
+                <li><a href="javascript:util.gotoTask('minwon')">민원관리</a></li>
             </ul>
         </div>
     </div><!-- /panel -->
-    <div data-role="panel" data-position="right" data-display="overlay" id="panel-qna" style="90%">
+    <div data-role="panel" data-position="right" data-display="overlay" id="panel-qna">
         <div data-role="header">
-            <a href="#panel-qna" data-role="button" data-shadow="false" data-icon="closer" data-iconpos="notext" class="ui-btn-right">CLOSE</a>
+            <a href="#panel-qna" data-role="button" data-corners="false" data-shadow="false" data-icon="closer" data-iconpos="notext" class="ui-btn-right">CLOSE</a>
             <h2 class="ui-bar">도움센터(QnA)</h2>
         </div>
         <div class="ui-content"></div>
@@ -145,16 +154,16 @@
             </div>
             <div class="ui-body">
                 <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
-                    <img src="img/icon/btn_normalcy_on.png" />
+                    <img src="img/btn_normalcy_on.png" />
                 </a>
                 <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
-                    <img src="img/icon/btn_damage_off.png" />
+                    <img src="img/btn_damage_off.png" />
                 </a>
                 <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
-                    <img src="img/icon/btn_loss_off.png" />
+                    <img src="img/btn_loss_off.png" />
                 </a>
                 <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
-                    <!--<img src="img/icon/btn_loss_off.png" />-->
+                    <!--<img src="img/btn_loss_off.png" />-->
                     적용
                 </a>
             </div>
@@ -174,11 +183,12 @@
             <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
                 <img src="img/main/img_menu01_on.png" />
             </a>
-            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+            <a href="javascript:util.gotoTask('mapservice2')" data-role="button" data-shadow="false">
                 <img src="img/main/img_menu02_on.png" />
             </a>
-            <a href='javascript:$(".popup-wrap").popup("open", {transition: "slideup"})' data-role="button" data-shadow="false">
+            <a href="javascript:util.gotoTask('minwon')" data-role="button" data-shadow="false">
                 <img src="img/main/img_menu03_on.png" />
+                <div class="pushCnt minwon"></div>
             </a>
         </div>
     </div><!-- /content -->

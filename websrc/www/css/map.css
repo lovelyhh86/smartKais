@@ -1,2 +1,21 @@
 #map { overflow: hidden; }
+
 .ol-zoom { top: auto; bottom: .5em; }
+.ol-touch .ol-control button { font-size: 2.5em; }
+
+.legend { top: .5em; left: .5em; width: 7em; text-align: center; }
+.legend .legendBody {
+    padding: .2em 0;
+    background-image: url('../img/bg_legend.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+.legend a img { width: 60%; }
+.legend .legendBody .ui-btn {
+    background-size: 1.6em;
+    text-align: left;
+    padding: 0 0 0 2.2em;
+    background-position: 0.4em center;
+}
+.legend .legendBody .title { font-size: 1.3em; margin: 0.4em 0; }

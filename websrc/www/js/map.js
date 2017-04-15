@@ -2,12 +2,57 @@ var KEY = {
     plateType: { "ROAD": 1, "BASE": 2, "LOCAL": 3, "BUILD": 4 },
     plateDir: { "ONE": "00100", "BI": "00200", "FORWARD": "00300", "ONE_S": "00101", "ONE_E": "00102" },
 };
-var mapUtils = {
+var MapUtil = {
     init: function () {
+        MapUtil.controls.init();
+    },
+    bind: function () {
 
     },
+    controls: {
+        init: function () {
+            ol.inherits(MapUtil.controls.legendControl, ol.control.Control);
+        },
+        /**
+        * @constructor
+        * @extends {ol.control.Control}
+        * @param {Object=} opt_options Control options.
+        */
+        legendControl : function (opt_options) {
+            var options = opt_options || {};
+
+            var button = document.createElement('a');
+            button.innerHTML = '<img src="img/btn_legend_on.png" />';
+            var legend = document.createElement('div');
+            legend.className = "legendBody";
+            var legendHtml = '<p class="title">범 례</p>';
+               legendHtml += '<a href="#" class="ui-btn ui-icon-rdpq">도로명판</a>';
+               legendHtml += '<a href="#" class="ui-btn ui-icon-bsis">기초번호판</a>';
+               legendHtml += '<a href="#" class="ui-btn ui-icon-area">지역안내판</a>';
+            legend.innerHTML = legendHtml;
+
+            var this_ = this;
+            var handleRotateNorth = function(e) {
+                this_.getMap().getView().setRotation(0);
+            };
+
+            button.addEventListener('click', handleRotateNorth, false);
+            button.addEventListener('touchstart', handleRotateNorth, false);
+
+            var element = document.createElement('div');
+            element.className = 'legend ol-unselectable ol-control';
+            element.appendChild(button);
+            element.appendChild(legend);
+
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+
+        }
+    },
     openPopup: function (type, f) {
-        mapUtils.setPopup(type, f);
+        MapUtil.setPopup(type, f);
 
         $(".popup-wrap").popup("open", { transition: "slideup" });
     },
@@ -54,7 +99,7 @@ var mapUtils = {
     },
     setPopup: function (type, f) {
         var pDir = f.get("PLQ_DRC");
-        var pDirDetail = mapUtils.getPlateDir(f);
+        var pDirDetail = MapUtil.getPlateDir(f);
 
         $(".popup-content .roadName .kor-rn").html(f.get("FT_KOR_RN"));
         $(".popup-content .roadName .rom-rn").html(f.get("FT_ROM_RN"));
@@ -152,10 +197,16 @@ var initial = false;
 
 // 지도 초기화 함수(--start--)
 var mapInit = function (pos) {
-    if (!initial)
+    var def = $.Deferred();
+
+    if (!initial) {
         initial = true;
-    else
-        return;
+    } else {
+        setTimeout(function(){
+            def.resolve(true);
+        }, 300);
+        return def.promise();
+    }
 
     // 도로안내시설물위치 레이어
     // 건물 레이어
@@ -173,10 +224,10 @@ var mapInit = function (pos) {
         maxResolution: .25
     });
     // 출입구 레이어
-    var lyr_tl_spbd_buld = getFeatureLayer({
+    var lyr_tl_spbd_entrc = getFeatureLayer({
         title: "출입구(건물번호판)",
         typeName: "tl_spbd_entrc",
-        dataType: DATA_TYPE.BULD,
+        dataType: DATA_TYPE.ENTRC,
         maxResolution: .25
     });
     // 도로명판 레이어
@@ -185,31 +236,37 @@ var mapInit = function (pos) {
         typeName: "tlv_spgf_rdpq",
         dataType: DATA_TYPE.RDPQ,
         style: {
+            label: {
+                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} }
+            },
             radius: 12
         },
         cluster: { distance: 15 },
-        maxResolution: .25
+        maxResolution: 1
     });
     // 지역안내판 레이어
     var lyr_tl_spgf_area = getFeatureLayer({
         title: "지역안내판",
         typeName: "tlv_spgf_area",
         dataType: DATA_TYPE.AREA,
-        maxResolution: 16
+        maxResolution: 16,
+        viewProgress: false
     });
     // 기초번호판 레이어
     var lyr_tl_spgf_bsis = getFeatureLayer({
         title: "기초번호판",
         typeName: "tlv_spgf_bsis",
         dataType: DATA_TYPE.BSIS,
-        maxResolution: 16
+        maxResolution: 16,
+        viewProgress: false
     });
 
     layers = {
         "buld": lyr_tl_spbd_buld,
         "rdpq": lyr_tl_spgf_rdpq,
         "area": lyr_tl_spgf_area,
-        "bsis": lyr_tl_spgf_bsis
+        "bsis": lyr_tl_spgf_bsis,
+        "entrc": lyr_tl_spbd_entrc
     };
 
 
@@ -264,6 +321,7 @@ var mapInit = function (pos) {
         stopEvent: false
     });
 
+    MapUtil.init();
     map = new ol.Map({
         target: 'map',
         logo: false,
@@ -277,7 +335,9 @@ var mapInit = function (pos) {
             attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
                 collapsible: false
             })
-        }),
+        }).extend([
+            new MapUtil.controls.legendControl()
+        ]),
         overlays: [overlay, makerOverlay, markerGeoloaction],
         view: new ol.View({
             projection: baseProjection,
@@ -305,7 +365,7 @@ var mapInit = function (pos) {
             else
                 features = [feature];
 
-            mapUtils.openPopup(KEY.plateType.ROAD, features[0]);
+            MapUtil.openPopup(KEY.plateType.ROAD, features[0]);
             return;
 
             if (features.length > 1) {
@@ -401,17 +461,19 @@ var mapInit = function (pos) {
     });
     // 선택 이벤트 정의()(--end--)
 
+
+
     // 지도 변경시 핸들러 정의(--start--)
     map.getView().on('propertychange', function (event) {
         switch (event.key) {
-            case 'resolution':
-                if (map.getView().getResolution() > 0.5)
-                    util.toast("정보를 조회 하시려면 확대해 주세요")
-                var source = getVectorSource(map);
-                if (source)
-                    source.clear();
-                popupCloser(event);
-                break;
+//            case 'resolution':
+//                if (map.getView().getResolution() > .25)
+//                    util.toast("정보를 조회 가능한 레벨이 아닙니다. 확대해 주세요.")
+//                var source = getVectorSource(map);
+//                if (source)
+//                    source.clear();
+//                popupCloser(event);
+//                break;
         }
     });
 
@@ -615,6 +677,11 @@ var mapInit = function (pos) {
     //            }
     //        }
     //    }, 1500);
+
+    setTimeout(function(){
+        def.resolve(true);
+    }, 300);
+    return def.promise();
 };
 // 지도 초기화 함수(--end--)
 
@@ -661,16 +728,16 @@ var getFeatureLayer = function (options) {
                 .then(function (context, rcode, results) {
                     util.dismissProgress();
                     var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
-                    console.log("Count of loaded features are " + features.length);
+                    util.toast("{0} 데이터 {1}건 조회".format(options.title, features.length))
+                    console.log("The number of features viewed is {0}. extent({1})".format(features.length, extent.join(',')));
                     vectorSource.addFeatures(features);
                 }, function (context, xhr, error) {
                     console.log("조회 error >> " + error + '   ' + xhr);
                     util.dismissProgress();
                 });
+            if(options.viewProgress != undefined && !options.viewProgress)
+                util.dismissProgress();
         },
-        // strategy: ol.loadingstrategy.tile(new ol.tilegrid.createXYZ({
-        //   maxZoom: 19
-        // }))
         strategy: ol.loadingstrategy.bbox
     });
 
@@ -694,16 +761,13 @@ var getFeatureLayer = function (options) {
 
     // 벡터 레이어 생성
     var vectorOptions = {
-        //    id: "vectorLayer:" + options.typeName,
         id: options.dataType,
         title: options.title,
         maxResolution: options.maxResolution,
         source: source
     }
-    //  if(options.style) {
     vectorOptions.style = function (feature, resolution) {
         return defaultStyle(feature, resolution, options);
-        //      }
     }
 
     return new ol.layer.Vector(vectorOptions);
@@ -751,34 +815,6 @@ var getCurrentLocation = function (callback_func) {
     );
 }
 
-/**
-* @constructor
-* @extends {ol.control.Control}
-* @param {Object=} opt_options Control options.
-*/
-LegendControl = function (opt_options) {
-    var options = opt_options || {};
-
-    var button = document.createElement('button');
-    button.innerHTML = 'N';
-
-    var handleRotateNorth = function () {
-    };
-
-    legend.addEventListener('click', handleRotateNorth, false);
-    legend.addEventListener('touchstart', handleRotateNorth, false);
-
-    var element = document.createElement('div');
-    element.className = 'legend ol-unselectable ol-control';
-    element.appendChild(button);
-
-    ol.control.Control.call(this, {
-        element: element,
-        target: options.target
-    });
-
-};
-ol.inherits(LegendControl, ol.control.Control);
 
 //******************geoloction*************** *
 

@@ -36,7 +36,6 @@ $(function () {
             checkedAttr.prop("checked", false);
         }
 
-        //util.getAJAX({},url)
         util.postAJAX({}, url)
             .then(function (context, rcode, results) {
 
@@ -110,7 +109,7 @@ $(function () {
 
                 util.dismissProgress();
             }
-            );
+        );
     }
 
 
