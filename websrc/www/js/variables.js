@@ -17,7 +17,7 @@ var URLs = {
 
     "updateAddressInfo": { svcNm: "uBSEX" },
     "mapServiceLink": { svcNm: "mapService" },
-    "minwonServiceLink": { svcNm: "" },
+    "minwonServiceLink": { svcNm: "eaiService" },
 
     getURL: function (srcurl, jsondata) {
 

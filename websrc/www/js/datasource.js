@@ -138,7 +138,7 @@ var datasource = {
                 }
             },
             function (error) {
-                console.log('erro transaction' + error);
+                console.log('error transaction' + error);
             },
             function () { //transaction ok
                 if (successCB) successCB();
