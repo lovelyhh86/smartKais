@@ -18,13 +18,13 @@
 #work-header.ui-header .ui-panel { position: inherit; }
 
 #work-header.ui-header .ui-panel  { text-shadow: none; overflow-y: scroll; }
-#work-header.ui-header .ui-panel .ui-content .ui-btn { font-size: 1.2em; color: #ffffff; }
+#work-header.ui-header .ui-panel .ui-content .ui-btn { font-size: 1.2em; color: black; background-color:white; border-color:black; border-width:0px 0px 1px 0px;}
 #work-header.ui-header .ui-panel-dismiss-open.ui-panel-dismiss-position-right { right: 90%; }
-#panel-qna { color: #ffffff; }
+#panel-qna { color: black }
 #panel-qna.ui-panel { width: 90%; }
-#panel-qna .ui-tabs-active { border: 1px solid #ffffff; }
-#panel-qna .ui-collapsible-heading { border: 1px solid; }
-#panel-qna .list { overflow-y: scroll; }
+#panel-qna .ui-tabs-active { border: 1px solid black; }
+#panel-qna .ui-collapsible-heading { border: 1px solid; overflow-x:hidden;}
+#panel-qna .list { overflow-y: scroll; overflow-x:hidden;}
 #panel-qna .ui-field-contain label { font-size: 1.2em; line-height: 1.2em; }
 
 
@@ -74,8 +74,8 @@
 .pushCnt.minwon { margin-left: auto; bottom: 13.4em; }
 
 
-.ui-panel { background-color: #3b3a40; }
-.ui-panel .ui-bar { color: #ffffff; }
+.ui-panel { background-color: white }
+.ui-panel .ui-bar { color: black; }
 .ui-panel-position-bottom { top: auto; bottom: -50%; width: 100%; clip: auto; visibility:visible; }
 .ui-popup-container .popup-wrap {
     max-width: 100% !important;
@@ -118,3 +118,22 @@
 .popup-content .img-plate .roadName { text-align: left; letter-spacing: -0.12em; width: 55%; display: table-cell; vertical-align: middle; }
 .popup-content .img-plate .roadName .kor-rn { font-size: 2.5em; }
 .popup-content .img-plate .roadName .rom-rn { font-size: 1.5em; }
+
+.ui-icon-arrow-r:after {
+	background-image: url("images/icons-png/arrow-r-black.png");
+}
+
+.ui-icon-arrow-d:after {
+	background-image: url("images/icons-png/arrow-d-black.png");
+}
+.ui-icon-carat-d:after{
+    background-image: url("images/icons-png/carat-d-black.png");
+}
+
+.ui-icon-carat-r:after{
+    background-image: url("images/icons-png/carat-r-black.png");
+}
+
+.ui-header, .ui-footer{
+    border-width: 1px 0px 1px 0px;
+}
