@@ -5,6 +5,8 @@ var dbConstant = {
     creationTableVersion: 'CREATE TABLE IF NOT EXISTS VERSION (PLATFORM TEXT, STORE TEXT, VERSION_CODE TEXT, VERSION_NAME TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(PLATFORM, STORE))',
     creationTableGeolocation: "CREATE TABLE IF NOT EXISTS GEOLOCATION (WORKID TEXT DEFAULT 'MAP' PRIMARY KEY, PROJECTION TEXT, LOCATION_X TEXT, LOCATION_Y TEXT, TYPE TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP)",
 
+    creationIndexCodeGroup: 'CREATE INDEX scco_code_index ON SCCO_CODE (GROUPID, CODEID)',
+
     dropTableCodeGroup: 'DELETE FROM SCCO_CODE',
 
     //TODO codemaster function refactoring
@@ -60,6 +62,7 @@ var datasource = {
         tx.executeSql(dbConstant.creationTableCodeGroup);
         tx.executeSql(dbConstant.creationTableGeolocation);
         tx.executeSql(dbConstant.creationTableVersion);
+        tx.executeSql(dbConstant.creationIndexCodeGroup);
     },
     errorDB: function (err) {
         console.log("Error processing SQL: " + err.code);
@@ -144,9 +147,9 @@ var datasource = {
                 if (successCB) successCB();
             });
     },
-    getCodeMaster: function (cb) {
+    getCodeMaster: function (cb, groupId) {
         this.db.transaction(function (tx) {
-            tx.executeSql('SELECT GROUPID, CODEID, GROUPNM, CODENM FROM SCCO_CODE ORDER BY GROUPID, CODEID ASC ', [],
+            tx.executeSql('SELECT GROUPID, CODEID, GROUPNM, CODENM FROM SCCO_CODE WHERE GROUPID = ?', [groupId],
                 function (tx, result) {
                     var codeMaster = {};
                     var len = result.rows.length;

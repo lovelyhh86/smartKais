@@ -1,6 +1,6 @@
 var KEY = {
     plateType: { "ROAD": 1, "BASE": 2, "LOCAL": 3, "BUILD": 4 },
-    plateDir: { "ONE": "00100", "BI": "00200", "FORWARD": "00300", "ONE_S": "00101", "ONE_E": "00102" },
+    plateDir: { "ONE": "00100", "BI": "00200", "FORWARD": "00300", "ONE_S": "00101", "ONE_E": "00102" }
 };
 var MapUtil = {
     init: function () {
@@ -12,6 +12,7 @@ var MapUtil = {
     controls: {
         init: function () {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);
+            ol.inherits(MapUtil.controls.currentControl, ol.control.Control);
         },
         /**
         * @constructor
@@ -26,9 +27,9 @@ var MapUtil = {
             var legend = document.createElement('div');
             legend.className = "legendBody";
             var legendHtml = '<p class="title">범 례</p>';
-               legendHtml += '<a href="#" class="ui-btn ui-icon-rdpq">도로명판</a>';
-               legendHtml += '<a href="#" class="ui-btn ui-icon-bsis">기초번호판</a>';
-               legendHtml += '<a href="#" class="ui-btn ui-icon-area">지역안내판</a>';
+                legendHtml += '<a href="#" class="ui-btn ui-icon-rdpq">도로명판</a>';
+                legendHtml += '<a href="#" class="ui-btn ui-icon-bsis">기초번호판</a>';
+                legendHtml += '<a href="#" class="ui-btn ui-icon-area">지역안내판</a>';
             legend.innerHTML = legendHtml;
 
             var this_ = this;
@@ -49,6 +50,39 @@ var MapUtil = {
                 target: options.target
             });
 
+        },
+        currentControl: function (opt_options) {
+            var options = opt_options || {};
+
+            var button = document.createElement('a');
+            button.innerHTML = '<img src="img/icon_curPos.png" />';
+
+            var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */{
+                tracking: true,
+                projection: baseProjection,
+                trackingOptions: {
+                    maximumAge: 10000,
+                    enableHighAccuracy: true,
+                    timeout: 600000
+                }
+            });
+
+            var curPosition = function () {
+                var coordinate = geolocation.getPosition();
+                map.getView().setCenter(coordinate);
+            }
+
+            button.addEventListener('click', curPosition, false);
+            button.addEventListener('touchstart', curPosition, false);
+
+            var element = document.createElement('div');
+            element.className = 'curPosition ol-unselectable ol-control';
+            element.appendChild(button);
+
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
         }
     },
     openPopup: function (type, f) {
@@ -173,6 +207,8 @@ proj4.defs("EPSG:5176", "+proj=tmerc +lat_0=38 +lon_0=129.0028902777778 +k=1 +x_
 proj4.defs("EPSG:5177", "+proj=tmerc +lat_0=38 +lon_0=131.0028902777778 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +units=m +no_defs +towgs84=-115.80,474.99,674.11,1.16,-2.31,-1.63,6.43");
 //UTM-K(GRS80) 중부원점
 proj4.defs("SR-ORG:6640", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs");
+//WGS84
+proj4.defs("EPSG:4326", "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs");
 
 var GIS_SERVICE_URL, baseProjection, sourceProjection, serviceProjection;
 var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms?FIXED=TRUE";
@@ -196,7 +232,7 @@ var layers, map;
 var initial = false;
 
 // 지도 초기화 함수(--start--)
-var mapInit = function (pos) {
+var mapInit = function (mapId, pos) {
     var def = $.Deferred();
 
     if (!initial) {
@@ -208,6 +244,71 @@ var mapInit = function (pos) {
         return def.promise();
     }
 
+    //기본레이어 생성
+    var baseLayer = new ol.layer.Tile({
+        title: 'Mobile Kais Map',
+        source: new ol.source.TileWMS({
+            url: BASE_GIS_SERVICE_URL,
+            params: {
+                layers: 'ROOT',
+                format: 'image/png',
+                bgcolor: '0x5F93C3',
+                exceptions: 'BLANK',
+                text_anti: 'true',
+                label: 'HIDE_OVERLAP',
+                graphic_buffer: '64'
+            },
+            tileGrid: new ol.tilegrid.TileGrid({
+                extent: [213568, 1213568, 1786432, 2786432],
+                resolutions: [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25]
+            })
+        })
+    });
+
+
+    // Feature 정보보기 레이어 생성
+    var overlay = new ol.Overlay( /** @type {olx.OverlayOptions} */({
+        id: 'popup',
+        element: document.getElementById('popup'),
+        position: undefined,
+        autoPan: true,
+        autoPanAnimation: {
+            duration: 250
+        }
+    }));
+
+    // 현재위치 마커 생성
+    var marker = new ol.Overlay({  /** @type {olx.OverlayOptions} */
+        positioning: 'center-center',
+        element: document.getElementById('marker'),
+        stopEvent: false
+    });
+
+    MapUtil.init();
+    map = new ol.Map({
+        target: mapId,
+        logo: false,
+        layers: [baseLayer],
+        controls: ol.control.defaults({
+            //rotate: false,
+            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+                collapsible: false
+            })
+        }).extend([
+            new MapUtil.controls.legendControl(),
+            new MapUtil.controls.currentControl()
+        ]),
+        overlays: [overlay, marker],
+        view: new ol.View({
+            projection: baseProjection,
+            center: pos,
+            zoom: 14,
+            maxZoom: 15,
+            minZoom: 6,
+            maxResolution: 2048
+        })
+    });
+
     // 도로안내시설물위치 레이어
     // 건물 레이어
     var lyr_tl_spbd_buld = getFeatureLayer({
@@ -217,8 +318,8 @@ var mapInit = function (pos) {
         style: {
             label: {
                 format: "{0}({1}-{2})",
-                data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-                textOffsetY: -20
+                data: ["BUL_MAN_NO", "BULD_MNNM", "BULD_SLNO"],
+                textOffsetY: 0
             }
         },
         maxResolution: .25
@@ -228,6 +329,13 @@ var mapInit = function (pos) {
         title: "출입구(건물번호판)",
         typeName: "tl_spbd_entrc",
         dataType: DATA_TYPE.ENTRC,
+        style: {
+            label: {
+                format: "{0}({1}-{2})",
+                data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+                textOffsetY: -20
+            }
+        },
         maxResolution: .25
     });
     // 도로명판 레이어
@@ -268,86 +376,6 @@ var mapInit = function (pos) {
         "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc
     };
-
-
-    //기본레이어 생성
-    var baseLayer = new ol.layer.Tile({
-        title: 'Mobile Kais Map',
-        source: new ol.source.TileWMS({
-            url: BASE_GIS_SERVICE_URL,
-            params: {
-                layers: 'ROOT',
-                format: 'image/png',
-                bgcolor: '0x5F93C3',
-                exceptions: 'BLANK',
-                text_anti: 'true',
-                label: 'HIDE_OVERLAP',
-                graphic_buffer: '64'
-            },
-            tileGrid: new ol.tilegrid.TileGrid({
-                extent: [213568, 1213568, 1786432, 2786432],
-                resolutions: [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25]
-            })
-        })
-    });
-
-
-    // Feature 정보보기 레이어 생성
-    var overlay = new ol.Overlay( /** @type {olx.OverlayOptions} */({
-        id: 'popup',
-        element: document.getElementById('popup'),
-        position: undefined,
-        autoPan: true,
-        autoPanAnimation: {
-            duration: 250
-        }
-    }));
-
-    // 현재위치 마커 생성
-    var makerOverlay = new ol.Overlay( /** @type {olx.OverlayOptions} */({
-        id: 'marker',
-        position: undefined,
-        element: document.getElementById('marker'),
-        autoPan: true,
-        autoPanAnimation: {
-            duration: 250
-        }
-    }));
-
-    // Geolocation marker
-    var markerGeoloaction = new ol.Overlay({
-        positioning: 'center-center',
-        element: document.getElementById('geolocation_marker'),
-        stopEvent: false
-    });
-
-    MapUtil.init();
-    map = new ol.Map({
-        target: 'map',
-        logo: false,
-        layers: [baseLayer, layers.rdpq, layers.bsis, layers.area],
-        interactions: ol.interaction.defaults({
-            //altShiftDragRotate: false,
-            //pinchRotate: false
-        }),
-        controls: ol.control.defaults({
-            //rotate: false,
-            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-                collapsible: false
-            })
-        }).extend([
-            new MapUtil.controls.legendControl()
-        ]),
-        overlays: [overlay, makerOverlay, markerGeoloaction],
-        view: new ol.View({
-            projection: baseProjection,
-            center: pos,
-            zoom: 14,
-            maxZoom: 15,
-            minZoom: 6,
-            maxResolution: 2048
-        })
-    });
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
 
@@ -627,17 +655,6 @@ var mapInit = function (pos) {
         }
     });
 
-    var locationCallback = function (pos) {
-        map.getView().setCenter(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
-
-        console.log('pos.coords.longitude ' + pos.coords.longitude);
-        console.log('pos.coords.latitude ' + pos.coords.latitude);
-        console.log('pos.coords.heading ' + pos.coords.heading);
-        setTimeout(function () {
-            makerOverlay.setPosition(ol.proj.fromLonLat([pos.coords.longitude, pos.coords.latitude], baseProjection.getCode()));
-        }, 1000);
-    }
-
     // 지도 변경시 핸들러 정의(--end--)
 
     // topMenu 핸들러 정의(--start--)
@@ -801,12 +818,12 @@ var getCurrentLocation = function (callback_func) {
 
             if (error.code == 1) {
                 if (isAndroid()) {
-                    navigator.notification.alert('"주소찾아"에서 위치 정보를 사용하려면 위치 서비스 권한을 허용해 주세요.', fn_msg, '위치 서비스 사용 설정', '확인');
+                    navigator.notification.alert('위치 정보를 사용하려면 위치 서비스 권한을 허용해 주세요.', fn_msg, '위치 서비스 사용 설정', '확인');
                 } else {
-                    navigator.notification.alert('"주소찾아"에서 위치정보를 사용하려면, 단말기의 ‘설정 > 개인 정보 보호’에서 위치서비스를 켜주세요.', fn_msg, '위치 서비스 사용 설정', '확인');
+                    navigator.notification.alert('위치정보를 사용하려면, 단말기의 ‘설정 > 개인 정보 보호’에서 위치서비스를 켜주세요.', fn_msg, '위치 서비스 사용 설정', '확인');
                 }
             } else if (error.code == 2) {
-                navigator.notification.alert('"주소찾아"에서 위치정보를 사용할 수 없습니다.\n잠시 후에 다시 시도해 주세요.', fn_msg, '위치 서비스 사용 설정', '확인');
+                navigator.notification.alert('위치정보를 사용할 수 없습니다.\n잠시 후에 다시 시도해 주세요.', fn_msg, '위치 서비스 사용 설정', '확인');
             } else if (error.code == 3) {
                 navigator.notification.alert("위치 서비스 찾는데 시간을 초과하였습니다. 다시 시도 하십시오.", fn_msg, '알림', '확인');
             }

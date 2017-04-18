@@ -138,8 +138,8 @@ function loadHelpdesk(container){
         dd =(dd[1]?dd:"0"+dd[0]);
 
 
-        var param = $.extend({},{sigCd:app.info.sigCd, size:itemSize, timeout:5000},scroll.context );
-        var helpDeskUrl = URLs.postURL(URLs.helpDeskListLink ,param);
+        var param = $.extend({},{sigCd:app.info.sigCd, size:itemSize, timeout:5000}, scroll.context);
+        var helpDeskUrl = URLs.postURL(URLs.helpDeskListLink, param);
         util.postAJAX( [start, count], helpDeskUrl)
             .then( function(context, rCode, results) {
                var data = results.data;

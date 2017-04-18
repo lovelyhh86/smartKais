@@ -96,14 +96,19 @@ var app = {
                 function(position) {
                     var coords = position.coords;
                     var loc = { PROJECTION: "EPSG:4326", TYPE: "GPS", X: coords.longitude, Y: coords.latitude };
-
                     datasource.setGeolocation(loc);
+                    localStorage["loc.X"] = loc.X;
+                    localStorage["loc.Y"] = loc.Y;
                     def.resolve();
                 },
                 function(error) {
-                    var loc = { PROJECTION: "EPSG:5179", TYPE: "BASE", X: "946806.7243737652", Y: "1953263.8290969837" };   // 광화문
+                    var loc = { PROJECTION: "EPSG:4326", TYPE: "BASE", X: 126.89758049999996, Y: 37.57721929999922 };   // 광화문
+//                    var loc = { PROJECTION: "EPSG:4326", TYPE: "BASE", X: "126.89799370772252", Y: "37.576747067786776" };   // 사업장(성암로 189)
+//                    var loc = { PROJECTION: "EPSG:4326", TYPE: "BASE", X: "127.48958927737773", Y: "36.64281407121404" };   // 청주시청(상당로 155)
 
                     datasource.setGeolocation(loc);
+                    localStorage["loc.X"] = loc.X;
+                    localStorage["loc.Y"] = loc.Y;
                     def.resolve();
                 },
                 { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }

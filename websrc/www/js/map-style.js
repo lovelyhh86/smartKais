@@ -83,10 +83,14 @@ var defaultStyle = function (feature, resolution, options) {
     var key = "";
     if( size == 1 ) {
         var _text = styleOptions.label.text;
-        if( typeof(_text) === "object" ) {
-            key = _text.func(features[0].get(_text.key));
+        if(_text) {
+            if( typeof(_text) === "object" ) {
+                key = _text.func(features[0].get(_text.key));
+            } else {
+                key = _text;
+            }
         } else {
-            key = _text;
+            key = getStyleLabel(feature, styleOptions.label);
         }
         styleOptions.label._text = key;
     } else {

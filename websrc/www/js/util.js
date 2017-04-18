@@ -47,7 +47,7 @@ var util = {
             // error
             function (errorResults) {
                 util.dismissProgress();
-                util.toast("서비스 요청 에러, 다시 시도 해주세요");
+                util.toast("서비스 요청 에러, 다시 시도해 주세요");
                 console.dir(errorResults);
                 def.reject(context, errorResults.resultCode, errorResults.resultData);
             },
@@ -135,12 +135,14 @@ var util = {
         app.historyStack.push(link);
 
         app.context = param;
-        $.mobile.pageContainer.pagecontainer("change", link, {
+        var pageParam = {
             transition: "slide",
             reverse: direction === 'left' ? false : true,
             changeHash: true,
             reloadPage: false
-        });
+        };
+        ( param && param.reloadPage ) ? pageParam.reloadPage = param.reloadPage : "";
+        $.mobile.pageContainer.pagecontainer("change", link, pageParam);
 
         return;
     },
@@ -203,10 +205,12 @@ var util = {
             case "mapservice":
                 app.historyStack = [];
                 url = pages.map;
+                param.type = "map";
                 break;
             case "mapservice2":
                 app.historyStack = [];
-                url = pages.map2;
+                url = pages.map;
+                param.type = "map2";
                 break;
             case "minwon":
                 url = pages.minwonListPage;

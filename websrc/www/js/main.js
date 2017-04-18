@@ -6,7 +6,7 @@ var app = {
 
         //TODO gpki info load
         if (!sso) {
-            sso = JSON.parse(decodeURI(location.search.match(/{.*/)));
+            sso = JSON.parse(decodeURI(location.search.match(/\{.*/)));
         }
         if (sso.TEL)
             app.telNo = sso.TEL;
@@ -79,31 +79,28 @@ var app = {
             $(this).addClass('button_hover');
         });
 
-//        util.showProgress();
-
         clearTimeout();
         //    $.mobile.loadPage(pages.addressview.link(),{ showLoadMsg:false});
         //    $.mobile.loadPage(pages.detailview.link(),{ showLoadMsg:false});
         //    $.mobile.loadPage(pages.detailaddress.link(),{ showLoadMsg:false});
         //    $.mobile.loadPage(pages.imageviewer.link(),{ showLoadMsg:false});
 
-        //DB초기화
-        datasource.createDB();
-
-        datasource.getCodeMaster(function (result) {
-            app.codeMaster = result;
-        });
-      util.getUserInfo(function (attr) {
-            for (var key in attr) {
-
-            }
-        });
         app.historyStack = [];
 
         app.selectSig(app.telNo);
 
-        app.deviceReadyOK.resolve();
-        util.dismissProgress();
+        //util.showProgress();
+
+        //DB초기화
+        datasource.createDB().then(function(){
+            datasource.getCodeMaster(function (result) {
+                app.codeMaster = result;
+                app.deviceReadyOK.resolve();
+                util.dismissProgress();
+            });
+        });
+
+
 
     },
     //content 크기 갱신

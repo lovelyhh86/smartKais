@@ -1,4 +1,4 @@
-#map { overflow: hidden; }
+#map, #map2 { overflow: hidden; }
 
 .ol-zoom { top: auto; bottom: .5em; }
 .ol-touch .ol-control button { font-size: 2.5em; }
@@ -19,3 +19,5 @@
     background-position: 0.4em center;
 }
 .legend .legendBody .title { font-size: 1.3em; margin: 0.4em 0; }
+
+.currentMarker { width: 3em;, left: -50%, bottom: -.5em; position: relative; }

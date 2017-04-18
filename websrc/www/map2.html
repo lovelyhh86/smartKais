@@ -1,46 +1,23 @@
 <!DOCTYPE html>
 <html LANG="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- OpenLayers Style -->
+    <link rel="stylesheet" href="css/ol.css" />
+
+    <!-- for debug -->
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.12.1.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+
+    <!-- for map page -->
+    <script src="js/proj4.js" type="text/javascript"></script>
+    <script src="js/ol.js" type="text/javascript"></script>
+    <script src="js/map-style.js" type="text/javascript"></script>
+    <script src="js/map.js" type="text/javascript"></script>
+</head>
+<body style="height:100%;" onload="mapInit('map2','')">
 <div id="map2view_page" data-sn='' data-sigcd='' data-role="page" data-dom-cache="true">
     <div id="map2" style="height: 100%;"></div>
-
-    <script type="text/javascript">
-        $(document).on("pagecreate", pages.map2.div, function() {
-        });
-
-        $(document).on("pagehide", pages.map2.div, function(event, data) {
-
-        });
-
-        $(document).on("pagebeforeshow", pages.map2.div, function(event, data) {
-        });
-
-        $(document).on("pageshow", pages.map2.div, function() {
-            var context = app.context;
-
-            if (util.isEmpty(context))
-                return;
-
-            // 현재 위치 불러오기
-            datasource.getGeolocation().then(function(geoPos) {
-                var pos = (geoPos.TYPE == "GPS" ?
-                ol.proj.fromLonLat([geoPos.LOCATION_X, geoPos.LOCATION_Y], baseProjection.getCode())
-                : [geoPos.LOCATION_X, geoPos.LOCATION_Y]);
-
-                //성암로 189(사업장)
-                //        pos = [946842.8750, 1953211.2031]; //EPSG:5179
-                //상당로 155(청주시청)
-                //pos = [999069.3800380124,1849434.7981913204];  //EPSG:5179
-                //중앙로 40(김제시청)
-                //        pos = [944131.2044213761, 1756634.1104898946];  //EPSG:5179
-
-                mapInit(pos).then(function(){
-                    map.addLayer(layers.buld);
-                    map.removeLayer(layers.rdpq);
-                    map.removeLayer(layers.area);
-                    map.removeLayer(layers.bsis);
-                });
-            });
-            app.context = {};
-        });
-    </script>
 </div>
+</body>

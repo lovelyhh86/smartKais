@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html LANG="ko">
 <div id="mapview_page" data-sn='' data-sigcd='' data-role="page" data-dom-cache="true">
+    <div id="marker"><img src="img/icon_curMarker.png" /></div>
     <div id="map" style="height: 100%;"></div>
 
     <script type="text/javascript">
@@ -20,22 +21,24 @@
             if (util.isEmpty(context))
                 return;
 
-            // 현재 위치 불러오기
-            datasource.getGeolocation().then(function(geoPos) {
-                var pos = (geoPos.TYPE == "GPS" ?
-                ol.proj.fromLonLat([geoPos.LOCATION_X, geoPos.LOCATION_Y], baseProjection.getCode())
-                : [geoPos.LOCATION_X, geoPos.LOCATION_Y]);
+            var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
 
-                //성암로 189(사업장)
-                //        pos = [946842.8750, 1953211.2031]; //EPSG:5179
-                //상당로 155(청주시청)
-                //pos = [999069.3800380124,1849434.7981913204];  //EPSG:5179
-                //중앙로 40(김제시청)
-                //        pos = [944131.2044213761, 1756634.1104898946];  //EPSG:5179
-
-
-                mapInit(pos);
+            mapInit("map", pos).then(function() {
+                if (context.type == "map") {
+                    map.removeLayer(layers.buld);
+                    map.removeLayer(layers.entrc);
+                    map.addLayer(layers.rdpq);
+                    map.addLayer(layers.bsis);
+                    map.addLayer(layers.area);
+                } else {
+                    map.removeLayer(layers.rdpq);
+                    map.removeLayer(layers.bsis);
+                    map.removeLayer(layers.area);
+                    map.addLayer(layers.buld);
+                    map.addLayer(layers.entrc);
+                }
             });
+
             app.context = {};
         });
 
