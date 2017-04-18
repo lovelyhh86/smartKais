@@ -28,7 +28,7 @@
 #panel-qna .ui-field-contain label { font-size: 1.2em; line-height: 1.2em; }
 
 
-/** Content */
+/** Content pages */
 #work_page .title { margin-top: 20.5%; text-align: center; }
 #work_page .title img { width: 32%; }
 #work_page .title .text { margin-top: .5rem; }
@@ -45,6 +45,9 @@
 #work_page .menu-list { margin: 2% 15%; }
 #work_page .menu-list .ui-btn { background-color: transparent; margin: 0; padding: .2em 0; }
 
+
+#minwonList_page .title { padding: 1em; font-size: 1.5em; }
+#minwonList_page .title span { font-size: .8em; }
 
 /** Footer */
 

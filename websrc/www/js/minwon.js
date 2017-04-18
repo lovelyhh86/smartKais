@@ -43,9 +43,10 @@ $(function () {
                     return;
                 } else {
                     for(var i in data) {
-                        var rowHtml = "<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>";
+                        var rowHtml = "<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>";
                         var d = data[i];
-                        $("#minwon > tbody:last").append(rowHtml.format(d.cvpRceNo, d.reqstDe, mwCode[d.reqstSe], d.reqManNm));
+                        $("#minwon > tbody:last").append(
+                            rowHtml.format(d.reqstDe.replace(/(\d{4})(\d{2})(\d{2})/,'$1/$2/$3'), mwCode[d.reqstSe], d.reqManNm));
                     }
                 }
                 util.dismissProgress();
