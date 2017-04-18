@@ -3,8 +3,8 @@ $(function(){
 
     $( document ).on("pagebeforeshow",pages.writereplypage.div,  function() {
 
-        $('#write_reply_memo').val('');
         $('#write_reply_subject').val('');
+        $('#write_reply_memo').val('');
     });
     $( document ).on("pageshow",pages.writereplypage.div,  function() {
         //var contentTop = $('#addressview_images_container').height() + $('#addressview_images_container').offset().top;
@@ -52,7 +52,7 @@ $(function(){
         },100);
         $('#write_reply_keypad_opt').addClass('display-none');
     });
-    $(document).on('click','#write_reply_page .rightMenuBtn', function(event){
+    $(document).on('click','#write_reply_page .ui-btn', function(event){
 
         var data = $('#write_reply_page').data('context');
         console.log(data);

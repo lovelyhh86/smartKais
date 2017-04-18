@@ -41,9 +41,9 @@ function loadHelpdesk(container){
             $('#panel-qna .list').height(screenHeight - totalHeight);
 
             var refresh_qna = function() {
-                var scroll = $('#noReply').data('infinitescroll');
-                var scroll_all = $('#allQna').data('infinitescroll');
-                scroll.context.boardType = $("board-type option:selected").data('boardtype');
+                var scroll = $('#noReply .list').data('infinitescroll');
+                var scroll_all = $('#allQna .list').data('infinitescroll');
+                scroll.context.boardType = $("#board-type").val();
                 scroll_all.context.boardType = scroll.context.boardType;
                 RefreshQnAList(scroll);
                 RefreshQnAList(scroll_all);
@@ -51,12 +51,12 @@ function loadHelpdesk(container){
 
             $(document).on('refresh_qna', '',  refresh_qna);
 
-            $('board-type').on('change', 'option', function(e) {
+            $('#board-type').on("change", '', function(e) {
                 e.preventDefault();
                 refresh_qna();
             });
 
-            $('#qna-menu').on("click", ".attachment", function()     {
+            $('#helpdesk').on("click", ".attachment", function() {
                 filename = $(this).text();
                 smartKaisPlugins.callAttachViewer(
                     filename,
@@ -65,14 +65,10 @@ function loadHelpdesk(container){
                     function(errorMsg) { console.error("Error at attach view file. " + errorMsg) });
             });
 
-            $('#qna-menu').on("click", "a.ans_btn", function()     {
+            $('#helpdesk').on("click", "a.ans_btn", function() {
                 var sn = $(this).data('sn');
-                util.hiddenHelpDeskPanel('#helpdeskmenu');
-                setTimeout( function () {
-                    var page = pages.writereplypage;
-                    util.slide_page('left', page, { sn : sn });
-
-                },100);
+                var page = pages.writereplypage;
+                util.slide_page('left', page, { sn : sn });
             });
 
         });
@@ -117,17 +113,16 @@ function loadHelpdesk(container){
         } else {
             ansbutton = "<div class='listItemTable'>" +
                             "<div class='listItemCellRight' style='padding:5px 10px'>" +
-                                "<a class='ans_btn ' href='#' data-sn='"+ data.noticeMgtSn +"'>답변 작성</a>" +
+                                "<a class='ans_btn' href='#' data-sn='"+ data.noticeMgtSn +"'>답변 작성</a>" +
                             "</div>" +
                         "</div>";
         }
 
-        return "<h4><strong>{1} [{2}]</strong>{0}</h4><p>[{4}] {0}</p><pre>{3}</pre>"
-                .format(data.subject, data.noticeMgtSn, data.noticeType, data.content, data.registDate);
+        return ("<h4><strong>[{2}]</strong>{0}</h4><p>[{4}] {0}</p><pre>{3}</pre>" + attacheLinks + "<hr>" + reply + ansbutton)
+                    .format(data.subject, data.noticeMgtSn, data.noticeType, data.content, data.registDate);
     }
 
     function requestDatasource(scroll,start,count){
-
         util.showProgress();
 
         var d = new Date();
@@ -136,7 +131,6 @@ function loadHelpdesk(container){
 
         var dd = d.getDate().toString();
         dd =(dd[1]?dd:"0"+dd[0]);
-
 
         var param = $.extend({},{sigCd:app.info.sigCd, size:itemSize, timeout:5000}, scroll.context);
         var helpDeskUrl = URLs.postURL(URLs.helpDeskListLink, param);
@@ -154,13 +148,10 @@ function loadHelpdesk(container){
                 console.log("갱신실패"+ error+'   '+ xhr);
             });
         return;
-
     }
 
     function scrollAppended(count){
-
-        if (count == 0)
-        {
+        if (count == 0) {
             util.toast('더 이상 목록이 없습니다');
         }
         util.dismissProgress();
@@ -171,15 +162,10 @@ function loadHelpdesk(container){
     }
 
     function RefreshQnAList(container) {
-        //"qna-list-all" "qna-list"
         var scroll = container.data('infinitescroll');
-     //   if (scroll.context.boardType !== searchType )
-        {
-            scroll.clear();
-            scroll.context.pos = '0';
-          //  scroll.context = {resolvedOnly: (container == 'qna-list' ? '0' : '1'), boardType:searchType};
-            scroll.updateInit();
-        }
+        scroll.clear();
+        scroll.context.pos = '0';
+        scroll.updateInit();
     }
 }
 
