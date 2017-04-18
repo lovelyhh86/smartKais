@@ -7,7 +7,7 @@ var dbConstant = {
 
     creationIndexCodeGroup: 'CREATE UNIQUE INDEX scco_code_index ON SCCO_CODE (GROUPID, CODEID)',
 
-    dropTableCodeGroup: 'DELETE FROM SCCO_CODE',
+    deleteTableCodeGroup: 'DELETE FROM SCCO_CODE',
 
     //TODO codemaster function refactoring
     sqlboardType: { table: "CODEMASTER", col: "CODEVALUE,CODENAME", where: "CODECLASS = ? ", wherestatement: ["시설구분"] },
@@ -40,7 +40,7 @@ var datasource = {
         this.db.transaction(
             datasource.initDB,
             function() {
-                datasource.errorDB
+                datasource.errorDB;
                 def.reject();
             },
             function() {
@@ -58,13 +58,10 @@ var datasource = {
         this.createDB();
     },
     initDB: function (tx) {
-        tx.executeSql(dbConstant.dropTableCodeGroup);
-
         tx.executeSql(dbConstant.creationTableRoadFac);
         tx.executeSql(dbConstant.creationTableCodeGroup);
         tx.executeSql(dbConstant.creationTableGeolocation);
         tx.executeSql(dbConstant.creationTableVersion);
-        tx.executeSql(dbConstant.creationIndexCodeGroup);
     },
     errorDB: function (err) {
         console.log("Error processing SQL: " + err.code);
@@ -134,11 +131,12 @@ var datasource = {
                 if (successCB) successCB();
             });
     },
-    setCodeMaster: function (codemaster, successCB) { //앱 & 상수버전 갱신
+    setCodeMaster: function (codemaster, successCB) {
         this.db.transaction(
             function (tx) {
+                tx.executeSql(dbConstant.deleteTableCodeGroup);
                 for (var i in codemaster) {
-                    //alert(item + '   '+ item.codeid+' '+item.codename+' '+item.codevalue+' '+item.codecls);
+//                    console.dir([codemaster[i].groupId, codemaster[i].groupNm, codemaster[i].codeId, codemaster[i].codeNm]);
                     tx.executeSql('INSERT or REPLACE INTO SCCO_CODE (GROUPID,GROUPNM,CODEID,CODENM) VALUES ( ?,?,?,?)', [codemaster[i].groupId, codemaster[i].groupNm, codemaster[i].codeId, codemaster[i].codeNm]);
                 }
             },
@@ -149,9 +147,9 @@ var datasource = {
                 if (successCB) successCB();
             });
     },
-    getCodeMaster: function (cb, groupId) {
+    getCodeMaster: function (cb) {
         this.db.transaction(function (tx) {
-            tx.executeSql('SELECT GROUPID, CODEID, GROUPNM, CODENM FROM SCCO_CODE WHERE GROUPID = ?', [groupId],
+            tx.executeSql('SELECT GROUPID, CODEID, GROUPNM, CODENM FROM SCCO_CODE', [],
                 function (tx, result) {
                     var codeMaster = {};
                     var len = result.rows.length;
@@ -169,12 +167,12 @@ var datasource = {
                     cb(codeMaster);
                 });
         },
-            function (error) {
-                console.log('error transaction' + error);
-            },
-            function () { //transaction ok
+        function (error) {
+            console.log('error transaction' + error);
+        },
+        function () { //transaction ok
 
-            });
+        });
     },
     addMemo: function (jsonData) {
         // ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT NOT NULL, MEMO TEXT NOT NULL, POSX TEXT , POSY TEXT, ETCJSON

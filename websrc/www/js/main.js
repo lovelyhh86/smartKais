@@ -89,9 +89,8 @@ var app = {
 
         app.selectSig(app.telNo);
 
-        util.showProgress();
-
         //DB초기화
+        util.showProgress();
         datasource.createDB().then(function(){
             datasource.getCodeMaster(function (result) {
                 app.codeMaster = result;

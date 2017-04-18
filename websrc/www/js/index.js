@@ -1,7 +1,8 @@
 var sso;
 var msg = {
-    callCenter: "\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(1588-0061)로 문의 주시기 바랍니다."
-}
+    callCenter: "\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다."
+};
+
 var app = {
     // Application Constructor
     initialize: function() {
