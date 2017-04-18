@@ -86,9 +86,15 @@ var MapUtil = {
         }
     },
     openPopup: function (type, f) {
-        MapUtil.setPopup(type, f);
+        if(type == KEY.plateType.ROAD ){
+            MapUtil.setPopup(type, f);
+            $(".popup-wrap.ROAD").popup("open", { transition: "slideup" });
+        }else if(type==KEY.plateType.BUILD){
+            $(".popup-wrap.BUILD").popup("open", { transition: "slideup" });
+        }else{
+            $(".popup-wrap.LOCAL").popup("open", { transition: "slideup" });
+        }
 
-        $(".popup-wrap").popup("open", { transition: "slideup" });
     },
     getPlateDir: function (f) {
         var ft_stbs_mn = parseInt(f.get("FT_STBS_MN"));
@@ -393,7 +399,14 @@ var mapInit = function (mapId, pos) {
             else
                 features = [feature];
 
-            MapUtil.openPopup(KEY.plateType.ROAD, features[0]);
+            if(features[0].getId().split("_")[1] == "spgf"){//도로명판
+                MapUtil.openPopup(KEY.plateType.ROAD, features[0]);
+            }else if(features[0].getId().split("_")[1] == "spbd"){//건물번호판
+                MapUtil.openPopup(KEY.plateType.BUILD, features[0]);
+            }else{//건물상세
+                MapUtil.openPopup(KEY.plateType.LOCAL, features[0]);
+            }
+
             return;
 
             if (features.length > 1) {

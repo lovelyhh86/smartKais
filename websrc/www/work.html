@@ -96,7 +96,7 @@
         </div>
         <div class="ui-content"></div>
     </div><!-- /panel -->
-    <div data-role="popup" class="popup-wrap">
+    <div data-role="popup" class="popup-wrap ROAD">
         <div class="ui-bar">
             <h4>도로명판</h4>
         </div>
@@ -163,13 +163,141 @@
                 <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
                     <img src="img/btn_loss_off.png" />
                 </a>
-                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" style="background-color: blue;padding: 10px 0px 10px 0px;position: absolute;width: 100%;bottom: 0px;">
                     <!--<img src="img/btn_loss_off.png" />-->
                     적용
                 </a>
             </div>
         </div>
-    </div><!-- popup -->
+    </div><!-- 도로명판 popup -->
+
+    <div data-role="popup" class="popup-wrap BUILD">
+        <div class="ui-bar">
+            <h4>건물번호판</h4>
+        </div>
+        <div class="popup-content">
+            <div class="ui-body">
+                <div class="ui-icon-detail">상세속성</div>
+                <div class="detail">
+                    <div class="ui-field-contain">
+                        <label for="instSpotCd">설치지점</label>
+                        <select name="instSpotCd" id="instSpotCd">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="isLgnYn">설치재설치 여부</label>
+                        <select name="isLgnYn" id="isLgnYn">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="instSpotDesc">설치지점명</label>
+                        <input type="text" name="instSpotDesc" id="instSpotDesc" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontKoreanRoadNm">한글도로명</label>
+                        <input type="text" name="frontKoreanRoadNm" id="frontKoreanRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontRomeRoadNm">로마자 도로명</label>
+                        <input type="text" name="frontRomeRoadNm" id="frontRomeRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="gdftyForm">안내시설형식</label>
+                        <select name="gdftyForm" id="gdftyForm">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="plqDirection">안내시설방향</label>
+                        <select name="plqDirection" id="plqDirection">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-body">
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                    <img src="img/btn_normalcy_on.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                    <img src="img/btn_damage_off.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                    <img src="img/btn_loss_off.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" style="background-color: blue;padding: 10px 0px 10px 0px;position: absolute;width: 100%;bottom: 0px;">
+                    <!--<img src="img/btn_loss_off.png" />-->
+                    적용
+                </a>
+            </div>
+        </div>
+    </div><!-- 건물 번호판 popup -->
+
+    <div data-role="popup" class="popup-wrap LOCAL">
+        <div class="ui-bar">
+            <h4>상세주소</h4>
+        </div>
+        <div class="popup-content">
+            <div class="ui-body">
+                <div class="ui-icon-detail">상세속성</div>
+                <div class="detail">
+                    <div class="ui-field-contain">
+                        <label for="instSpotCd">설치지점</label>
+                        <select name="instSpotCd" id="instSpotCd">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="isLgnYn">설치재설치 여부</label>
+                        <select name="isLgnYn" id="isLgnYn">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="instSpotDesc">설치지점명</label>
+                        <input type="text" name="instSpotDesc" id="instSpotDesc" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontKoreanRoadNm">한글도로명</label>
+                        <input type="text" name="frontKoreanRoadNm" id="frontKoreanRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="frontRomeRoadNm">로마자 도로명</label>
+                        <input type="text" name="frontRomeRoadNm" id="frontRomeRoadNm" value="" />
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="gdftyForm">안내시설형식</label>
+                        <select name="gdftyForm" id="gdftyForm">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                    <div class="ui-field-contain">
+                        <label for="plqDirection">안내시설방향</label>
+                        <select name="plqDirection" id="plqDirection">
+                            <option value="">설치</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-body">
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                    <img src="img/btn_normalcy_on.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                    <img src="img/btn_damage_off.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                    <img src="img/btn_loss_off.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false" style="background-color: blue;padding: 10px 0px 10px 0px;position: absolute;width: 100%;bottom: 0px;">
+                    <!--<img src="img/btn_loss_off.png" />-->
+                    적용
+                </a>
+            </div>
+        </div>
+    </div><!-- 상세주소 popup -->
 </div><!-- /header -->
 
 <div id="work_page" data-role="page">
