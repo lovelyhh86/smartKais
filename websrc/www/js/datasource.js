@@ -5,7 +5,7 @@ var dbConstant = {
     creationTableVersion: 'CREATE TABLE IF NOT EXISTS VERSION (PLATFORM TEXT, STORE TEXT, VERSION_CODE TEXT, VERSION_NAME TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(PLATFORM, STORE))',
     creationTableGeolocation: "CREATE TABLE IF NOT EXISTS GEOLOCATION (WORKID TEXT DEFAULT 'MAP' PRIMARY KEY, PROJECTION TEXT, LOCATION_X TEXT, LOCATION_Y TEXT, TYPE TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP)",
 
-    creationIndexCodeGroup: 'CREATE INDEX scco_code_index ON SCCO_CODE (GROUPID, CODEID)',
+    creationIndexCodeGroup: 'CREATE UNIQUE INDEX scco_code_index ON SCCO_CODE (GROUPID, CODEID)',
 
     dropTableCodeGroup: 'DELETE FROM SCCO_CODE',
 
@@ -58,6 +58,8 @@ var datasource = {
         this.createDB();
     },
     initDB: function (tx) {
+        tx.executeSql(dbConstant.dropTableCodeGroup);
+
         tx.executeSql(dbConstant.creationTableRoadFac);
         tx.executeSql(dbConstant.creationTableCodeGroup);
         tx.executeSql(dbConstant.creationTableGeolocation);

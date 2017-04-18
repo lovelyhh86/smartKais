@@ -89,7 +89,7 @@ var app = {
 
         app.selectSig(app.telNo);
 
-        //util.showProgress();
+        util.showProgress();
 
         //DB초기화
         datasource.createDB().then(function(){
