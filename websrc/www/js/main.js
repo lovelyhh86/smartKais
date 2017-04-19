@@ -110,7 +110,7 @@ var app = {
     },
     deviceReadyOK: $.Deferred(),
     selectSig: function (telNo) {
-        if (telNo == "01031207751" || telNo == "01041605627" || telNo == "01045065627") {
+        if (telNo == "01031207751" || telNo == "01041605627" || telNo == "01045065627" || telNo == "01054627761") {
             app.mode = "11";
         } else {
             app.mode = "00";
@@ -134,6 +134,15 @@ var app = {
         },
         {
             telNo: "01041605627", // 사업단 테스트(태블릿)
+            info: {
+                sigCd: "11440",
+                sigNm: "서울특별시 마포구",
+                opeId: "kais",
+                opeNm: "kais관리자"
+            }
+        },
+        {
+            telNo: "01054627761", // 사업단 테스트(태블릿)
             info: {
                 sigCd: "11440",
                 sigNm: "서울특별시 마포구",
