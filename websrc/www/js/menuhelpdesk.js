@@ -123,6 +123,18 @@ function loadHelpdesk(container){
     }
 
     function requestDatasource(scroll,start,count){
+        //최상단에서 스크롤시
+        if(scroll.scrollTop() == 0 && start == -1) {
+            start = 1;
+        }
+        if( scroll.height() >= scroll.children().length * scroll.children().height()  && start != 1 ){
+            //스크롤보다 리스트가 적을때
+            return;
+        }
+        if( scroll[0].scrollHeight - scroll.scrollTop() != scroll.outerHeight() && start != 1  ){
+            //리스트 끝까지 안갔을면 리턴
+            return;
+        }
         util.showProgress();
 
         var d = new Date();

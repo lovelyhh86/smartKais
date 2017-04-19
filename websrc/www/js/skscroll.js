@@ -71,6 +71,19 @@ function skScrollBind(page,scrollElement, options) {
             $(scrollElement).collapsibleset("refresh");
         };
 
+        var touchStartPos;
+        var touchEndPos;
+        $(page).bind("touchstart", function(event) {
+            touchStartPos = event.originalEvent.touches[0].pageY;
+            //console.log(touchStartPos);
+        })
+        .bind('touchmove', function(event){
+            touchEndPos = event.originalEvent.touches[0].pageY;
+            //console.log(touchEndPos);
+        })
+        .bind('touchend', function(e){
+            //console.log(touchStartPos + ' && ' + touchEndPos);
+         })
 
         //register event
         $(page).bind("scrollstop", function(event) {
@@ -98,8 +111,10 @@ function skScrollBind(page,scrollElement, options) {
             else if (  (parseInt(container.height()) + parseInt(container.offset().top) + containerBorderTopWd + containerBorderBtmWd )  >= parseInt($(lastitem).offset().top) + parseInt($(lastitem).height()) )
             {
                 var start = $(lastitem).data('itemid') + 1 ;
+                if(isNaN(start) && ( (touchStartPos-touchEndPos) < 0 ) ){
+                    start = -1;
+                }
                 scroll.build(start ,_options.buffer);
-
             }
 
             if (false) {
@@ -111,6 +126,9 @@ function skScrollBind(page,scrollElement, options) {
                 else if ($(lastitem).offset().top + $(lastitem).height() < documentHeight)
                 {
                     var start = $(lastitem).data('itemid') + 1 ;
+                    if(isNaN(start) && ( (touchStartPos-touchEndPos) < 0 ) ){
+                        start = -1;
+                    }
                     scroll.build(start ,_options.buffer);
                     //   alert($(scrollElement).index($(lastitem)));
                     // 항목 마지막
