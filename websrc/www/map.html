@@ -18,8 +18,10 @@
         $(document).on("pageshow", pages.map.div, function() {
             var context = app.context;
 
-            if (util.isEmpty(context))
+            if (util.isEmpty(context)){
+                map.updateSize(); //카메라 다녀온후 지도 안보여서 추가
                 return;
+            }
 
             var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
 
