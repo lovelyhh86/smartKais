@@ -179,6 +179,9 @@ var MapUtil = {
                 }
                 $(".popup-content .img-plate").css('background-image', 'url("img/main/{0}")'.format(bgUrl));
 
+                /** 상태(정상,훼손,망실) 정보 표현 */
+
+
                 break;
             case KEY.plateType.BASE:
 
