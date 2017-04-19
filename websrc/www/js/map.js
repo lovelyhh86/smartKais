@@ -401,6 +401,10 @@ var mapInit = function (mapId, pos) {
 
             if(features[0].getId().split("_")[1] == "spgf"){//도로명판
                 MapUtil.openPopup(KEY.plateType.ROAD, features[0]);
+                util.camera = function() {
+                    var title = "{0} {1}-{2}".format(features[0].get('FT_KOR_RN'), features[0].get('BSIS_MNNM'), features[0].get('BSIS_SLNO'));
+                    util.slide_page('up', pages.detailview, { sn : features[0].get('RD_GDFTY_SN'), categoryid: "roadsign", title: title});
+                };
             }else if(features[0].getId().split("_")[1] == "spbd"){//건물번호판
                 MapUtil.openPopup(KEY.plateType.BUILD, features[0]);
             }else{//건물상세
