@@ -247,6 +247,38 @@ var util = {
                 return;
         }
         util.slide_page('left', url, param);
+        //옆메뉴에있는 지도 바로가기 클릭시 지도 초기화 시켜주는 부분 추가
+        if(url.div == "#mapview_page"  /*링크주소가 지도이고*/
+                          && initial ){  /*이미 지도가 초기화 되어있고*/
+
+            $("[data-role=panel]").panel("close");
+            var context = app.context;
+
+            if (util.isEmpty(context)){
+                map.updateSize();
+                return;
+            }
+
+            var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
+
+            mapInit("map", pos).then(function() {
+                if (context.type == "map") {
+                    map.removeLayer(layers.buld);
+                    map.removeLayer(layers.entrc);
+                    map.addLayer(layers.rdpq);
+                    map.addLayer(layers.bsis);
+                    map.addLayer(layers.area);
+                } else {
+                    map.removeLayer(layers.rdpq);
+                    map.removeLayer(layers.bsis);
+                    map.removeLayer(layers.area);
+                    map.addLayer(layers.buld);
+                    map.addLayer(layers.entrc);
+                }
+            });
+            app.context = {};
+        }
+
     },
     takePictureFromCamera: function (returnFn) {
         SmartKaisPlugins.camera(function (result) {

@@ -178,6 +178,14 @@ var MapUtil = {
                         break;
                 }
                 $(".popup-content .img-plate").css('background-image', 'url("img/main/{0}")'.format(bgUrl));
+                
+
+                //설치지점
+                appendSelectBox("INS_SPO_CD","instSpotCd",f);
+
+                //설치재설치 여부
+                appendSelectBox("ISLGN_YN","isLgnYn",f);
+                
 
                 /** 상태(정상,훼손,망실) 정보 표현 */
 
@@ -195,6 +203,25 @@ var MapUtil = {
         }
     }
 };
+
+function appendSelectBox(colume,selectBoxID,f){
+    var codeList =app.codeMaster[CODE_GROUP[colume]];
+                var code = f.get(colume);
+                var codeValue =app.codeMaster[CODE_GROUP[colume]][f.get(colume)];
+                $("#"+selectBoxID).empty();
+
+                for(var c in codeList){
+                    if(c != "GroupNm"){
+                        if(c == code){
+                             $("#"+selectBoxID).append("<option value='{0}' selected='selected'>{1}</option>".format(c, codeList[c]));
+                        }else{
+                            $("#"+selectBoxID).append("<option value='{0}'>{1}</option>".format(c, codeList[c]));
+                        }
+                        
+                    }
+                }
+                $("#"+selectBoxID).selectmenu("refresh", true);
+}
 
 
 

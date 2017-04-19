@@ -118,37 +118,35 @@
                 <div class="detail">
                     <div class="ui-field-contain">
                         <label for="instSpotCd">설치지점</label>
-                        <select name="instSpotCd">
-                            <option value="">설치</option>
+                        <select id="instSpotCd" name="instSpotCd">
                         </select>
                     </div>
                     <div class="ui-field-contain">
                         <label for="isLgnYn">설치재설치 여부</label>
-                        <select name="isLgnYn">
-                            <option value="">설치</option>
+                        <select id="isLgnYn" name="isLgnYn">
                         </select>
                     </div>
                     <div class="ui-field-contain">
                         <label for="instSpotDesc">설치지점명</label>
-                        <input type="text" name="instSpotDesc" value="" />
+                        <input id="instSpotDesc" type="text" name="instSpotDesc" value="" />
                     </div>
                     <div class="ui-field-contain">
                         <label for="frontKoreanRoadNm">한글도로명</label>
-                        <input type="text" name="frontKoreanRoadNm" value="" />
+                        <input id="frontKoreanRoadNm" type="text" name="frontKoreanRoadNm" value="" />
                     </div>
                     <div class="ui-field-contain">
                         <label for="frontRomeRoadNm">로마자 도로명</label>
-                        <input type="text" name="frontRomeRoadNm" value="" />
+                        <input id="frontRomeRoadNm" type="text" name="frontRomeRoadNm" value="" />
                     </div>
                     <div class="ui-field-contain">
                         <label for="gdftyForm">안내시설형식</label>
-                        <select name="gdftyForm">
+                        <select id="gdftyForm" name="gdftyForm">
                             <option value="">설치</option>
                         </select>
                     </div>
                     <div class="ui-field-contain">
                         <label for="plqDirection">안내시설방향</label>
-                        <select name="plqDirection">
+                        <select id="plqDirection" name="plqDirection">
                             <option value="">설치</option>
                         </select>
                     </div>
@@ -167,7 +165,7 @@
         </div>
     </div><!-- 도로명판 popup -->
 
-    <div data-role="popup" class="popup-wrap BUILD">
+    <div data-role="popup" class="popup-wrap LOCAL">
         <div class="ui-bar">
             <h4>건물번호판</h4>
         </div>
@@ -231,9 +229,9 @@
         </div>
     </div><!-- 건물 번호판 popup -->
 
-    <div data-role="popup" class="popup-wrap LOCAL">
+    <div data-role="popup" class="popup-wrap BUILD">
         <div class="ui-bar">
-            <h4>상세주소</h4>
+            <h4>건물정보</h4>
         </div>
         <div class="popup-content">
             <div class="ui-body">
