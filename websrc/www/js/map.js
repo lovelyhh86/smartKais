@@ -185,7 +185,22 @@ var MapUtil = {
 
                 //설치재설치 여부
                 appendSelectBox("ISLGN_YN","isLgnYn",f);
+
+                //설치지점명
                 
+                //한글도로명
+                // $("frontKoreanRoadNm").val(f.get("FT_KOR_RN"));
+                document.getElementById("frontKoreanRoadNm").value = f.get("FT_KOR_RN");
+
+                //로마자 도로명
+                // $("frontRomeRoadNm").val(f.get("FT_ROM_RN"));
+                document.getElementById("frontRomeRoadNm").value = f.get("FT_ROM_RN");
+
+                //안내시설형식
+                appendSelectBox("GDFTY_FOM","gdftyForm",f);
+                
+                //안내시설방향
+                appendSelectBox("PLQ_DRC","plqDirection",f);
 
                 break;
             case KEY.plateType.BASE:
