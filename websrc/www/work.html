@@ -96,7 +96,7 @@
         </div>
         <div class="ui-content"></div>
     </div><!-- /panel -->
-    <div data-role="popup" class="popup-wrap ROAD">
+    <div id="popup-road" data-role="popup" class="popup-wrap ROAD">
         <div class="ui-bar">
             <h4>도로명판</h4>
             <a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>
@@ -153,19 +153,14 @@
                 </div>
             </div>
             <div class="ui-body">
-                <a href="#" data-role="button" data-shadow="false">
-                    <img src="img/btn_normalcy_on.png" />
-                </a>
-                <a href="#" data-role="button" data-shadow="false">
-                    <img src="img/btn_damage_off.png" />
-                </a>
-                <a href="#" data-role="button" data-shadow="false">
-                    <img src="img/btn_loss_off.png" />
-                </a>
-                <a href="#" data-role="button" data-shadow="false" style="background-color: #189feb;padding: 10px 0px 10px 0px;position: absolute;width: 100%;bottom: 0px;">
-                    <!--<img src="img/btn_loss_off.png" />-->
-                    적용
-                </a>
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <input type="radio" id="btn-status-1" name="btn-check-status" value="01">
+                    <label for="btn-status-1"><img src="img/btn_normalcy_off.png" alt="정상"></label>
+                    <input type="radio" id="btn-status-2" name="btn-check-status" value="02">
+                    <label for="btn-status-2"><img src="img/btn_damage_off.png" alt="훼손"></label>
+                    <input type="radio" id="btn-status-3" name="btn-check-status" value="03">
+                    <label for="btn-status-3"><img src="img/btn_loss_off.png" alt="망실"></label>
+                </fieldset>
             </div>
         </div>
     </div><!-- 도로명판 popup -->

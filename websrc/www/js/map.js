@@ -202,6 +202,9 @@ var MapUtil = {
                 //안내시설방향
                 appendSelectBox("PLQ_DRC","plqDirection",f);
 
+                /** 상태(정상,훼손,망실) 정보 표현 */
+
+
                 break;
             case KEY.plateType.BASE:
 
