@@ -1,7 +1,7 @@
 var defaultStyleOptions = {
     label: {
-        textOffsetX: 0,
-        textOffsetY: 0
+        textOffsetX: 13,
+        textOffsetY: -15
     },
     radius: 5
 };
@@ -51,11 +51,11 @@ for(var k in DATA_TYPE) {
 var createTextStyle = function (styleOptions) {
     return new ol.style.Text({
         text: styleOptions.label._text,
-        textAlign: 'center',
+        //textAlign: 'center',
         fill: new ol.style.Fill({ color: 'white' }),
         stroke: new ol.style.Stroke({ color: 'black' }),
-        offsetX: styleOptions.textOffsetX,
-        offsetY: styleOptions.textOffsetY
+        offsetX: styleOptions.label.textOffsetX,
+        offsetY: styleOptions.label.textOffsetY
     });
 };
 
@@ -90,7 +90,8 @@ var defaultStyle = function (feature, resolution, options) {
                 key = _text;
             }
         } else {
-            key = getStyleLabel(feature, styleOptions.label);
+            //key = getStyleLabel(feature, styleOptions.label);
+            key = "";
         }
         styleOptions.label._text = key;
     } else {
@@ -144,16 +145,23 @@ var buildStyle = function (styleOptions) {
 // 도로명판 스타일
 var roadStyle = function (styleOptions) {
     var opt = {
-        image: new ol.style.Circle({
-            radius: styleOptions.radius,
-            fill: new ol.style.Fill({
-                color: 'blue'
-            }),
-            stroke: new ol.style.Stroke({
-                color: 'white',
-                width: 1
-            })
-        })
+        // image: new ol.style.Circle({
+        //     radius: styleOptions.radius,
+        //     fill: new ol.style.Fill({
+        //         color: 'blue'
+        //     }),
+        //     stroke: new ol.style.Stroke({
+        //         color: 'white',
+        //         width: 1
+        //     })
+        // })
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+          anchor: [0, 50],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
+          src: 'img/icon_legend01.png',
+          scale:0.5
+        }))
     };
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);
@@ -164,16 +172,23 @@ var roadStyle = function (styleOptions) {
 // 지역안내판 스타일
 var areaStyle = function (styleOptions) {
     var opt = {
-        image: new ol.style.Circle({
-            radius: styleOptions.radius,
-            fill: new ol.style.Fill({
-                color: 'green'
-            }),
-            stroke: new ol.style.Stroke({
-                color: 'white',
-                width: 1
-            })
-        })
+        // image: new ol.style.Circle({
+        //     radius: styleOptions.radius,
+        //     fill: new ol.style.Fill({
+        //         color: 'green'
+        //     }),
+        //     stroke: new ol.style.Stroke({
+        //         color: 'white',
+        //         width: 1
+        //     })
+        // })
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+          anchor: [0, 50],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
+          src: 'img/icon_legend03.png',
+          scale:0.5
+        }))
     };
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);
@@ -184,16 +199,23 @@ var areaStyle = function (styleOptions) {
 // 기초번호판 스타일
 var bsisStyle = function (styleOptions) {
     var opt = {
-        image: new ol.style.Circle({
-            radius: styleOptions.radius,
-            fill: new ol.style.Fill({
-                color: 'skyblue'
-            }),
-            stroke: new ol.style.Stroke({
-                color: 'white',
-                width: 1
-            })
-        })
+        // image: new ol.style.Circle({
+        //     radius: styleOptions.radius,
+        //     fill: new ol.style.Fill({
+        //         color: 'skyblue'
+        //     }),
+        //     stroke: new ol.style.Stroke({
+        //         color: 'white',
+        //         width: 1
+        //     })
+        // })
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+          anchor: [0, 50],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
+          src: 'img/icon_legend02.png',
+          scale:0.5
+        }))
     };
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);

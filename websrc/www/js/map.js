@@ -178,6 +178,32 @@ var MapUtil = {
                         break;
                 }
                 $(".popup-content .img-plate").css('background-image', 'url("img/main/{0}")'.format(bgUrl));
+                
+
+                //설치지점
+                appendSelectBox("INS_SPO_CD","instSpotCd",f);
+
+                //설치재설치 여부
+                appendSelectBox("ISLGN_YN","isLgnYn",f);
+
+                //설치지점명
+                
+                //한글도로명
+                // $("frontKoreanRoadNm").val(f.get("FT_KOR_RN"));
+                document.getElementById("frontKoreanRoadNm").value = f.get("FT_KOR_RN");
+
+                //로마자 도로명
+                // $("frontRomeRoadNm").val(f.get("FT_ROM_RN"));
+                document.getElementById("frontRomeRoadNm").value = f.get("FT_ROM_RN");
+
+                //안내시설형식
+                appendSelectBox("GDFTY_FOM","gdftyForm",f);
+                
+                //안내시설방향
+                appendSelectBox("PLQ_DRC","plqDirection",f);
+
+                /** 상태(정상,훼손,망실) 정보 표현 */
+
 
                 break;
             case KEY.plateType.BASE:
@@ -192,6 +218,25 @@ var MapUtil = {
         }
     }
 };
+
+function appendSelectBox(colume,selectBoxID,f){
+    var codeList =app.codeMaster[CODE_GROUP[colume]];
+                var code = f.get(colume);
+                var codeValue =app.codeMaster[CODE_GROUP[colume]][f.get(colume)];
+                $("#"+selectBoxID).empty();
+
+                for(var c in codeList){
+                    if(c != "GroupNm"){
+                        if(c == code){
+                             $("#"+selectBoxID).append("<option value='{0}' selected='selected'>{1}</option>".format(c, codeList[c]));
+                        }else{
+                            $("#"+selectBoxID).append("<option value='{0}'>{1}</option>".format(c, codeList[c]));
+                        }
+                        
+                    }
+                }
+                $("#"+selectBoxID).selectmenu("refresh", true);
+}
 
 
 
