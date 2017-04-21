@@ -64,7 +64,14 @@ var getStyleLabel = function (feature, labelOptions) {
     labelOptions.data.forEach(function (obj, index) {
         arr[index] = feature.get(obj);
     });
-    return eval("labelOptions.format.format('" + arr.join("','") + "')");
+    var strFormat = "";
+    if(labelOptions.chkCondition && labelOptions.chkCondition(feature, labelOptions)) {
+        strFormat = labelOptions.format[1];
+    } else {
+        strFormat = labelOptions.format[0];
+    }
+
+    return eval("strFormat.format('" + arr.join("','") + "')");
 };
 
 var defaultStyle = function (feature, resolution, options) {
@@ -90,8 +97,7 @@ var defaultStyle = function (feature, resolution, options) {
                 key = _text;
             }
         } else {
-            //key = getStyleLabel(feature, styleOptions.label);
-            key = "";
+            key = getStyleLabel(features[0], styleOptions.label);
         }
         styleOptions.label._text = key;
     } else {
@@ -118,11 +124,15 @@ var getStyle = function(dataType, styleOptions) {
         case DATA_TYPE.BSIS:
             retStyle = bsisStyle(styleOptions);
             break;
+        case DATA_TYPE.ENTRC:
+            retStyle = entrcStyle(styleOptions);
+            break;
+
     }
     return retStyle;
 };
 
-// 건물번호판 스타일
+// 건물 스타일
 var buildStyle = function (styleOptions) {
     var opt = {
         image: new ol.style.Circle({
@@ -216,6 +226,26 @@ var bsisStyle = function (styleOptions) {
           src: 'img/icon_legend02.png',
           scale:0.5
         }))
+    };
+    if( styleOptions.label._text)
+        opt.text = createTextStyle(styleOptions);
+
+    return new ol.style.Style(opt);
+};
+
+// 건물번호판(출입구) 스타일
+var entrcStyle = function (styleOptions) {
+    var opt = {
+         image: new ol.style.Circle({
+             radius: styleOptions.radius,
+             fill: new ol.style.Fill({
+                 color: 'skyblue'
+             }),
+             stroke: new ol.style.Stroke({
+                 color: 'white',
+                 width: 1
+             })
+         })
     };
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);

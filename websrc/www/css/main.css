@@ -107,7 +107,7 @@
 .popup-content .ui-body:last-of-type { width: 20%; overflow-y: hidden; background: #434958; padding:0px 0px 26px 0px;}
 .popup-content .ui-body div.memo {  width: 100%; height: 25%; }
 .popup-content .ui-body div.memo textarea { height: 100% !important; margin: 2%; width: 96%; }
-.popup-content .ui-btn { padding: 0; border: 0; color:white; text-shadow:none;}
+.popup-content .ui-btn { padding: 0; border: 0; text-shadow:none;}
 .popup-content .popup-btn .ui-btn:last-of-type { position: fixed; bottom: 0; width: 20%; height: 12%; color: #ffffff; padding-top: 4%; background-color: steelblue; }
 .popup-content .img-plate {
     display: inline-table;
