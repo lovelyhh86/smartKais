@@ -53,7 +53,7 @@ var createTextStyle = function (styleOptions) {
         text: styleOptions.label._text,
         //textAlign: 'center',
         fill: new ol.style.Fill({ color: 'white' }),
-        stroke: new ol.style.Stroke({ color: 'black' }),
+        stroke: new ol.style.Stroke({ color: 'black',width: styleOptions.label.width}),
         offsetX: styleOptions.label.textOffsetX,
         offsetY: styleOptions.label.textOffsetY,
         scale : 2
@@ -136,16 +136,23 @@ var getStyle = function(dataType, styleOptions) {
 // 건물 스타일
 var buildStyle = function (styleOptions) {
     var opt = {
-        image: new ol.style.Circle({
-            radius: 7,
-            fill: new ol.style.Fill({
-                color: 'orange'
-            }),
-            stroke: new ol.style.Stroke({
-                color: 'white',
-                width: 1
-            })
-        })
+        // image: new ol.style.Circle({
+        //     radius: 7,
+        //     fill: new ol.style.Fill({
+        //         color: 'orange'
+        //     }),
+        //     stroke: new ol.style.Stroke({
+        //         color: 'white',
+        //         width: 1
+        //     })
+        // })
+        stroke: new ol.style.Stroke({
+            color: 'blue',
+            width: 3
+          }),
+        fill: new ol.style.Fill({
+            color: 'rgba(0, 0, 255, 0.1)'
+          })
     };
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);
