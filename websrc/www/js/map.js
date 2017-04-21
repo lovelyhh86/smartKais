@@ -179,7 +179,7 @@ var MapUtil = {
                 }
                 $(".popup-content .img-plate").css('background-image', 'url("img/main/{0}")'.format(bgUrl));
                 
-
+                //**************************** 도로명판 시작 *********************************** */
                 //설치지점
                 appendSelectBox("INS_SPO_CD","instSpotCd",f);
 
@@ -203,7 +203,41 @@ var MapUtil = {
                 appendSelectBox("PLQ_DRC","plqDirection",f);
 
                 /** 상태(정상,훼손,망실) 정보 표현 */
+                //**************************** 도로명판 끝 *********************************** */
 
+
+                //**************************** 건물정보 시작 *********************************** */
+                //건축물용도
+                appendSelectBox("BDTYP_CD","bdtypCd",f);
+                //일반 보안??
+
+                //지하건물여부
+                appendSelectBox("BULD_SE_CD","buldSeCd",f);
+
+                //건물종속여부
+                appendSelectBox("BUL_DPN_SE","bulDpnSe",f);
+
+                //건물명
+                document.getElementById("buldNm").value = f.get("BULD_NM");
+
+                //건물명(영)
+                document.getElementById("bulEngNm").value = f.get("BUL_ENG_NM");
+
+                //상세건물명
+                document.getElementById("etcBulNm").value = f.get("ETC_BUL_NM");
+
+                //건물층수(지상)
+                document.getElementById("groFloCo").value = f.get("GRO_FLO_CO");
+
+                //건물층수(지상)
+                document.getElementById("undFloCo").value = f.get("UND_FLO_CO");
+
+                //건물상태
+                document.getElementById("buldSttus").value = f.get("BULD_STTUS");
+
+                //메모
+                document.getElementById("buldMemo").value = f.get("BULD_MEMO");
+                //**************************** 건물정보 끝 *********************************** */
 
                 break;
             case KEY.plateType.BASE:
