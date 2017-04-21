@@ -1,7 +1,7 @@
 var defaultStyleOptions = {
     label: {
-        textOffsetX: 13,
-        textOffsetY: -15
+        textOffsetX: 21,
+        textOffsetY: -23
     },
     radius: 5
 };
@@ -55,7 +55,8 @@ var createTextStyle = function (styleOptions) {
         fill: new ol.style.Fill({ color: 'white' }),
         stroke: new ol.style.Stroke({ color: 'black' }),
         offsetX: styleOptions.label.textOffsetX,
-        offsetY: styleOptions.label.textOffsetY
+        offsetY: styleOptions.label.textOffsetY,
+        scale : 2
     });
 };
 
@@ -170,7 +171,7 @@ var roadStyle = function (styleOptions) {
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
           src: 'img/icon_legend01.png',
-          scale:0.5
+          scale:0.8
         }))
     };
     if( styleOptions.label._text)

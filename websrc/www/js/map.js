@@ -91,6 +91,7 @@ var MapUtil = {
             MapUtil.setPopup(type, f);
             $(".popup-wrap.ROAD").popup("open", { transition: "slideup" });
         }else if(type==KEY.plateType.BUILD){
+            MapUtil.setPopup(type, f);
             $(".popup-wrap.BUILD").popup("open", { transition: "slideup" });
         }else{
             $(".popup-wrap.LOCAL").popup("open", { transition: "slideup" });
@@ -207,38 +208,7 @@ var MapUtil = {
                 //**************************** 도로명판 끝 *********************************** */
 
 
-                //**************************** 건물정보 시작 *********************************** */
-                //건축물용도
-                appendSelectBox("BDTYP_CD","bdtypCd",f);
-                //일반 보안??
-
-                //지하건물여부
-                appendSelectBox("BULD_SE_CD","buldSeCd",f);
-
-                //건물종속여부
-                appendSelectBox("BUL_DPN_SE","bulDpnSe",f);
-
-                //건물명
-                document.getElementById("buldNm").value = f.get("BULD_NM");
-
-                //건물명(영)
-                document.getElementById("bulEngNm").value = f.get("BUL_ENG_NM");
-
-                //상세건물명
-                document.getElementById("etcBulNm").value = f.get("ETC_BUL_NM");
-
-                //건물층수(지상)
-                document.getElementById("groFloCo").value = f.get("GRO_FLO_CO");
-
-                //건물층수(지상)
-                document.getElementById("undFloCo").value = f.get("UND_FLO_CO");
-
-                //건물상태
-                document.getElementById("buldSttus").value = f.get("BULD_STTUS");
-
-                //메모
-                document.getElementById("buldMemo").value = f.get("BULD_MEMO");
-                //**************************** 건물정보 끝 *********************************** */
+                
 
                 break;
             case KEY.plateType.BASE:
@@ -249,10 +219,52 @@ var MapUtil = {
                 break;
             case KEY.plateType.BUILD:
 
+            //**************************** 건물정보 시작 *********************************** */
+                //건축물용도
+                appendSelectBox("BDTYP_CD","bdtypCd",f);
+
+                //지하건물여부
+                appendSelectBox("BULD_SE_CD","buldSeCd",f);
+
+                //건물종속여부
+                appendSelectBox("BUL_DPN_SE","bulDpnSe",f);
+
+                //건물명
+                document.getElementById("buldNm").value = getFeatherValue("BULD_NM",f);
+
+                //건물명(영)
+                document.getElementById("bulEngNm").value = getFeatherValue("BUL_ENG_NM",f);
+
+                //상세건물명
+                document.getElementById("etcBulNm").value = getFeatherValue("ETC_BUL_NM",f);
+
+                //건물층수(지상)
+                document.getElementById("groFloCo").value = getFeatherValue("GRO_FLO_CO",f);
+
+                //건물층수(지상)
+                document.getElementById("undFloCo").value = getFeatherValue("UND_FLO_CO",f);
+
+                //건물상태
+                document.getElementById("buldSttus").value = getFeatherValue("BULD_STTUS",f);
+
+                //메모
+                document.getElementById("buldMemo").value = getFeatherValue("BULD_MEMO",f);
+                //**************************** 건물정보 끝 *********************************** */
+
                 break;
         }
     }
 };
+
+function getFeatherValue(colume, f){
+    
+    var valueText = f.get(colume);
+    if(valueText == undefined){
+        valueText = "";
+    }
+    return valueText;
+
+}
 
 function appendSelectBox(colume,selectBoxID,f){
     var codeList =app.codeMaster[CODE_GROUP[colume]];
@@ -418,7 +430,7 @@ var mapInit = function (mapId, pos) {
         dataType: DATA_TYPE.ENTRC,
         style: {
             label: {
-                format: "{0}({1}-{2})",
+                format: ["{0}({1}-{2})"],
                 data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
                 textOffsetY: -20
             }
