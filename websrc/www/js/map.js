@@ -54,7 +54,7 @@ var MapUtil = {
         currentControl: function (opt_options) {
             var options = opt_options || {};
 
-            var button = document.createElement('a');
+            var button = document.createElement('button');
             button.innerHTML = '<img src="img/icon_curPos.png" />';
 
             var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */{
@@ -69,6 +69,7 @@ var MapUtil = {
 
             var curPosition = function () {
                 var coordinate = geolocation.getPosition();
+                coordinate = [946695.6653704424, 1953211.8303461187];
                 map.getView().setCenter(coordinate);
             }
 
@@ -368,7 +369,8 @@ var mapInit = function (mapId, pos) {
         dataType: DATA_TYPE.BULD,
         style: {
             label: {
-                format: "{0}({1}-{2})",
+                chkCondition: function(f, o) { return (parseInt(f.get(o.data[2])) == 0) },
+                format: ["{1}-{2}({0})", "{1}({0})"],
                 data: ["BUL_MAN_NO", "BULD_MNNM", "BULD_SLNO"],
                 textOffsetY: 0
             }
@@ -377,7 +379,7 @@ var mapInit = function (mapId, pos) {
     });
     // 출입구 레이어
     var lyr_tl_spbd_entrc = getFeatureLayer({
-        title: "출입구(건물번호판)",
+        title: "건물번호판",
         typeName: "tl_spbd_entrc",
         dataType: DATA_TYPE.ENTRC,
         style: {
