@@ -418,7 +418,8 @@ var mapInit = function (mapId, pos) {
                 chkCondition: function(f, o) { return (parseInt(f.get(o.data[2])) == 0) },
                 format: ["{1}-{2}({0})", "{1}({0})"],
                 data: ["BUL_MAN_NO", "BULD_MNNM", "BULD_SLNO"],
-                textOffsetY: 0
+                textOffsetY: 0,
+                width : 3
             }
         },
         maxResolution: .25
@@ -444,7 +445,9 @@ var mapInit = function (mapId, pos) {
         dataType: DATA_TYPE.RDPQ,
         style: {
             label: {
-                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} }
+                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
+                textOffsetX: 21,
+                textOffsetY: -23
             },
             radius: 12
         },
