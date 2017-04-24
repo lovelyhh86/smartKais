@@ -5,9 +5,23 @@ var KEY = {
 var MapUtil = {
     init: function () {
         MapUtil.controls.init();
-    },
-    bind: function () {
-
+        MapUtil.handler.ini();
+    }, handler: {
+        init: function() {
+            MapUtil.handler.popupHandler();
+        },
+        popupHandler: function() {
+            $("#popup-road .ui-body:last .ui-radio input:radio").on("change", function() {
+                $(this).parent().parent().children("label").each(function() {
+                    if( $(this).hasClass("ui-radio-on") ) {
+                        var src = $(this).children("img").attr("src");
+                        $(this).children("img").attr("src", src.replace(/(.*_.*)_.*\.(png)/,"$1_on.$2"));
+                    } else {
+                        $(this).children("img").attr("src", src.replace(/(.*_.*)_.*\.(png)/,"$1_off.$2"));
+                    }
+                });
+            });
+        }
     },
     controls: {
         init: function () {
@@ -181,7 +195,6 @@ var MapUtil = {
                 }
                 $(".popup-content .img-plate").css('background-image', 'url("img/main/{0}")'.format(bgUrl));
                 
-                //**************************** 도로명판 시작 *********************************** */
                 //설치지점
                 appendSelectBox("INS_SPO_CD","instSpotCd",f);
 
@@ -205,10 +218,14 @@ var MapUtil = {
                 appendSelectBox("PLQ_DRC","plqDirection",f);
 
                 /** 상태(정상,훼손,망실) 정보 표현 */
-                //**************************** 도로명판 끝 *********************************** */
+                $("#popup-road .ui-body:last input:radio").each(function() {
+                    var src = $(this).prev().children().attr("src");
+                    var lt_chc_stt = f.get("LT_CHC_STT");
 
-
-                
+                    if( this.value == lt_chc_stt ) {
+                        $(this).prev().children().attr("src", src.replace(/(.*_.*)_.*\.(png)/,"$1_on.$2"));
+                    }
+                });
 
                 break;
             case KEY.plateType.BASE:
