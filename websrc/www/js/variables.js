@@ -13,6 +13,7 @@ var URLs = {
     "addresslistlink": { svcNm: "sADRDC" },
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },
+    "entrclink": { svcNm: "vENTRC" },
     "updateFacilityInfo": { svcNm: "uSPGF" },
 
     "updateAddressInfo": { svcNm: "uBSEX" },
@@ -157,3 +158,11 @@ CODE_GROUP["PLQ_DRC"] = "GFTY014";
 CODE_GROUP["BDTYP_CD"] = "CMMN038";
 CODE_GROUP["BULD_SE_CD"] = "CMMN017";
 CODE_GROUP["BUL_DPN_SE"] = "CMMN046";
+//건물번호판
+CODE_GROUP["BUL_NMT_CD"] = "CMMN057";
+CODE_GROUP["BUL_NMT_TY"] = "CMMN056";
+CODE_GROUP["BUL_NMT_QL"] = "CMMN003";
+CODE_GROUP["BUL_NMT_PR"] = "CMMN056";
+CODE_GROUP["BUL_MNF_CD"] = "CMMN024";
+CODE_GROUP["BUL_NMT_LO"] = "CMMN068";
+CODE_GROUP["LGHT_CD"] = "CMMN130";

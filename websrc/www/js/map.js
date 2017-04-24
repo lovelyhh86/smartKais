@@ -1,5 +1,5 @@
 var KEY = {
-    plateType: { "ROAD": 1, "BASE": 2, "LOCAL": 3, "BUILD": 4 },
+    plateType: { "ROAD": 1, "BASE": 2, "LOCAL": 3, "BUILD": 4, "ENTRC": 5 },
     plateDir: { "ONE": "00100", "BI": "00200", "FORWARD": "00300", "ONE_S": "00101", "ONE_E": "00102" }
 };
 var MapUtil = {
@@ -107,8 +107,9 @@ var MapUtil = {
         }else if(type==KEY.plateType.BUILD){
             MapUtil.setPopup(type, f);
             $(".popup-wrap.BUILD").popup("open", { transition: "slideup" });
-        }else{
-            $(".popup-wrap.LOCAL").popup("open", { transition: "slideup" });
+        }else if(type==KEY.plateType.ENTRC){
+            MapUtil.setPopup(type, f);
+            $(".popup-wrap.entrc").popup("open", { transition: "slideup" });
         }
 
     },
@@ -234,6 +235,59 @@ var MapUtil = {
             case KEY.plateType.LOCAL:
 
                 break;
+            case KEY.plateType.ENTRC:
+
+            //출입구 일련번호
+            var sn = f.get("ENT_MAN_NO");
+
+            var url = URLs.postURL(URLs.entrclink, { "sn":sn, "sigCd":app.info.sigCd , "workId" : app.info.opeId});
+
+            util.postAJAX({},url).then( function(context,rcode,results) {
+                var data = results.data;
+                if (rcode != 0 || util.isEmpty(data) === true ){
+                    navigator.notification.alert('시설물 정보를 가져오지 못하였습니다', function (){
+                                            util.goBack();
+                                            },'시설물 정보 조회', '확인');
+                    util.dismissProgress();
+                    return;
+                }
+
+
+                $("#instlDe").val(data.instDate);
+
+                appendSelectBox2("BUL_NMT_CD","bulNmtCd",data.buldNmtCd);
+
+                appendSelectBox2("BUL_NMT_TY","buldNmtType",data.buldNmtType);
+
+                appendSelectBox2("BUL_NMT_QL","buldNmtMaterial",data.buldNmtMaterial);
+
+                appendSelectBox2("BUL_NMT_PR","buldNmtPurpose",data.buldNmtPurpose);
+                
+                $("#buldNmtUnitPrice").val(data.buldNmtUnitPrice);
+
+                appendSelectBox2("BUL_MNF_CD","buldMnfCd",data.buldMnfCd);
+
+                appendSelectBox2("BUL_NMT_LO","buldNmtLoss",data.buldNmtLoss);
+
+                $("#workId").val(data.workId);
+
+                $("#workDate").val(data.workDate);
+
+                appendSelectBox2("LGHT_CD","lightCd",data.lightCd);
+
+                $("#registerDate").val(data.registerDate);
+            
+            }),function(context,xhr,error) {
+                console.log("갱신실패"+ error+'   '+ xhr);
+                navigator.notification.alert('시설물 정보를 가져오지 못하였습니다', function (){
+                                                util.goBack();
+                                                },'시설물 정보 조회', '확인');
+
+
+                util.dismissProgress();
+            }
+
+                break;
             case KEY.plateType.BUILD:
 
             //**************************** 건물정보 시작 *********************************** */
@@ -300,6 +354,24 @@ function appendSelectBox(colume,selectBoxID,f){
                     }
                 }
                 $("#"+selectBoxID).selectmenu("refresh", true);
+}
+
+function appendSelectBox2(colume,selectBoxID,data){
+    var codeList =app.codeMaster[CODE_GROUP[colume]];
+                
+    $("#"+selectBoxID).empty();
+
+    for(var c in codeList){
+        if(c != "GroupNm"){
+            
+            $("#"+selectBoxID).append("<option value='{0}'>{1}</option>".format(c, codeList[c]));
+            
+        }
+    }
+
+    $("#"+selectBoxID).val(data).attr("selected","selected");
+
+    $("#"+selectBoxID).selectmenu("refresh", true);
 }
 
 
@@ -447,6 +519,7 @@ var mapInit = function (mapId, pos) {
         typeName: "tl_spbd_entrc",
         dataType: DATA_TYPE.ENTRC,
         style: {
+            radius: 20,
             label: {
                 format: ["{0}({1}-{2})"],
                 data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
@@ -504,6 +577,7 @@ var mapInit = function (mapId, pos) {
 
     // 선택 이벤트 정의()(--start--)
     map.on('singleclick', function (event) {
+        event.preventDefault();
         map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
             var sn, features;
 
@@ -512,19 +586,25 @@ var mapInit = function (mapId, pos) {
             else
                 features = [feature];
 
+            var layerNm = layer.get("title");
+
             if(features[0].getId().split("_")[1] == "spgf"){//도로명판
                 MapUtil.openPopup(KEY.plateType.ROAD, features[0]);
                 util.camera = function() {
                     var title = "{0} {1}-{2}".format(features[0].get('FT_KOR_RN'), features[0].get('BSIS_MNNM'), features[0].get('BSIS_SLNO'));
                     util.slide_page('up', pages.detailview, { sn : features[0].get('RD_GDFTY_SN'), categoryid: "roadsign", title: title});
                 };
-            }else if(features[0].getId().split("_")[1] == "spbd"){//건물번호판
+            }else if(features[0].getId().split(".")[0] == "tlv_spbd_buld"){//건물정보
                 MapUtil.openPopup(KEY.plateType.BUILD, features[0]);
+            }else if(layerNm == "건물번호판"){//건물번호판(출입구)
+                MapUtil.openPopup(KEY.plateType.ENTRC, features[0]);
             }else{//건물상세
                 MapUtil.openPopup(KEY.plateType.LOCAL, features[0]);
             }
 
             return;
+
+            // ********************사용안함 ********************
 
             if (features.length > 1) {
                 var itemHtml = "<li onclick=\"{4}\">{0}({1}-{2},{3})</li>";
