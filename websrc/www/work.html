@@ -97,7 +97,32 @@
         </div>
         <div class="ui-content"></div>
     </div><!-- /panel -->
-    <div id="popup-road" data-role="popup" class="popup-wrap ROAD">
+    <!-- 공통 popup -->
+    <div id="common-pop" data-role="popup" class="popup-wrap">
+        <div class="ui-bar">
+        </div>
+        <div class="popup-content">
+            <div class="ui-body">
+
+            </div>
+            <div class="ui-body">
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <input type="radio" id="btn-status-1" name="btn-check-status" value="01">
+                    <label for="btn-status-1"><img src="img/btn_normalcy_off.png" alt="정상"></label>
+                    <input type="radio" id="btn-status-2" name="btn-check-status" value="02">
+                    <label for="btn-status-2"><img src="img/btn_damage_off.png" alt="훼손"></label>
+                    <input type="radio" id="btn-status-3" name="btn-check-status" value="03">
+                    <label for="btn-status-3"><img src="img/btn_loss_off.png" alt="망실"></label>
+                </fieldset>
+                <a href="#" data-role="button" data-shadow="false" style="background-color: #189feb;padding: 10px 0px 10px 0px;position: absolute;width: 100%;bottom: 0px;">
+                    <!--<img src="img/btn_loss_off.png" />-->
+                    적용
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- 공통 popup -->
+    <!--<div id="popup-road" data-role="popup" class="popup-wrap ROAD">
         <div class="ui-bar">
             <h4>도로명판</h4>
             <a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>
@@ -164,9 +189,10 @@
                 </fieldset>
             </div>
         </div>
-    </div><!-- 도로명판 popup -->
+    </div>-->
+    <!-- 도로명판 popup -->
 
-    <div data-role="popup" class="popup-wrap entrc">
+    <!--<div data-role="popup" class="popup-wrap entrc">
         <div class="ui-bar">
             <h4>건물번호판</h4>
         </div>
@@ -242,14 +268,15 @@
                     <img src="img/btn_loss_off.png" />
                 </a>
                 <a href="#" data-role="button" data-shadow="false" style="background-color: #189feb;padding: 10px 0px 10px 0px;position: absolute;width: 100%;bottom: 0px;">
-                    <!--<img src="img/btn_loss_off.png" />-->
+                    <img src="img/btn_loss_off.png" />
                     적용
                 </a>
             </div>
         </div>
-    </div><!-- 건물 번호판 popup -->
+    </div>-->
+    <!-- 건물 번호판 popup -->
 
-    <div data-role="popup" class="popup-wrap BUILD">
+    <!--<div data-role="popup" class="popup-wrap BUILD">
         <div class="ui-bar">
             <h4>건물정보</h4>
         </div>
@@ -260,20 +287,20 @@
                     <div class="ui-field-contain">
                         <label for="bdtypCd">건축물용도</label>
                         <select id="bdtypCd" name="bdtypCd">
-                            <!--<option value="">교육연구 및 복지시설</option>-->
+                            <option value="">교육연구 및 복지시설</option>
                         </select>
-                        <!--<radio name="radio">일반</radio><radio name="radio">보안</radio>-->
+                        <radio name="radio">일반</radio><radio name="radio">보안</radio>
                     </div>
                     <div class="ui-field-contain">
                         <label for="buldSeCd">지하건물여부</label>
                         <select id="buldSeCd" name="buldSeCd">
-                            <!--<option value="">지상건물</option>-->
+                            <option value="">지상건물</option>
                         </select>
                     </div>
                     <div class="ui-field-contain">
                         <label for="bulDpnSe">건물종속여부</label>
                         <select id="bulDpnSe" name="bulDpnSe">
-                            <!--<option value="">부속건물</option>-->
+                            <option value="">부속건물</option>
                         </select>
                     </div>
                     <div class="ui-field-contain">
@@ -319,12 +346,13 @@
                     <img src="img/btn_loss_off.png" />
                 </a>
                 <a href="#" data-role="button" data-shadow="false" style="background-color: #189feb;padding: 10px 0px 10px 0px;position: absolute;width: 100%;bottom: 0px;">
-                    <!--<img src="img/btn_loss_off.png" />-->
+                    <img src="img/btn_loss_off.png" />
                     적용
                 </a>
             </div>
         </div>
-    </div><!-- 상세주소 popup -->
+    </div>-->
+    <!-- 상세주소 popup -->
 </div><!-- /header -->
 
 <div id="work_page" data-role="page">

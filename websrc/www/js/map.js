@@ -88,14 +88,20 @@ var MapUtil = {
     },
     openPopup: function (type, f) {
         if(type == KEY.plateType.ROAD ){
-            MapUtil.setPopup(type, f);
-            $(".popup-wrap.ROAD").popup("open", { transition: "slideup" });
+            openCommonPop('popRoad.html','도로명판',type, f);
+            // MapUtil.setPopup(type, f);
+            // $("#common-pop").popup("open", { transition: "slideup" });
+            // $(".popup-wrap.ROAD").popup("open", { transition: "slideup" });
         }else if(type==KEY.plateType.BUILD){
-            MapUtil.setPopup(type, f);
-            $(".popup-wrap.BUILD").popup("open", { transition: "slideup" });
+            openCommonPop('popBuild.html','건물번호판',type, f);
+            // MapUtil.setPopup(type, f);
+            // $("#common-pop").popup("open", { transition: "slideup" });
+            // $(".popup-wrap.BUILD").popup("open", { transition: "slideup" });
         }else if(type==KEY.plateType.ENTRC){
-            MapUtil.setPopup(type, f);
-            $(".popup-wrap.entrc").popup("open", { transition: "slideup" });
+            openCommonPop('popEnterRc.html','건물정보',type, f);
+            // MapUtil.setPopup(type, f);
+            // $("#common-pop").popup("open", { transition: "slideup" });
+            // $(".popup-wrap.entrc").popup("open", { transition: "slideup" });
         }
 
     },
@@ -141,13 +147,14 @@ var MapUtil = {
         return ret;
     },
     setPopup: function (type, f) {
-        var pDir = f.get("PLQ_DRC");
-        var pDirDetail = MapUtil.getPlateDir(f);
-
-        $(".popup-content .roadName .kor-rn").html(f.get("FT_KOR_RN"));
-        $(".popup-content .roadName .rom-rn").html(f.get("FT_ROM_RN"));
+        
         switch (type) {
             case KEY.plateType.ROAD:
+                var pDir = f.get("PLQ_DRC");
+                var pDirDetail = MapUtil.getPlateDir(f);
+
+                $(".popup-content .roadName .kor-rn").html(f.get("FT_KOR_RN"));
+                $(".popup-content .roadName .rom-rn").html(f.get("FT_ROM_RN"));
                 var bgUrl = "";
 
                 $(".popup-content .img-plate .base-area").css("width", "");
@@ -192,12 +199,12 @@ var MapUtil = {
                 //설치지점명
                 
                 //한글도로명
-                // $("frontKoreanRoadNm").val(f.get("FT_KOR_RN"));
-                document.getElementById("frontKoreanRoadNm").value = f.get("FT_KOR_RN");
+                $("#frontKoreanRoadNm").val(f.get("FT_KOR_RN"));
+                // document.getElementById("").value = f.get("FT_KOR_RN");
 
                 //로마자 도로명
-                // $("frontRomeRoadNm").val(f.get("FT_ROM_RN"));
-                document.getElementById("frontRomeRoadNm").value = f.get("FT_ROM_RN");
+                $("#frontRomeRoadNm").val(f.get("FT_ROM_RN"));
+                // document.getElementById("frontRomeRoadNm").value = f.get("FT_ROM_RN");
 
                 //안내시설형식
                 appendSelectBox("GDFTY_FOM","gdftyForm",f);
@@ -336,7 +343,7 @@ function appendSelectBox(colume,selectBoxID,f){
                         
                     }
                 }
-                $("#"+selectBoxID).selectmenu("refresh", true);
+                // $("#"+selectBoxID).selectmenu("refresh", true);
 }
 
 function appendSelectBox2(colume,selectBoxID,data){
@@ -354,7 +361,7 @@ function appendSelectBox2(colume,selectBoxID,data){
 
     $("#"+selectBoxID).val(data).attr("selected","selected");
 
-    $("#"+selectBoxID).selectmenu("refresh", true);
+    // $("#"+selectBoxID).selectmenu("refresh", true);
 }
 
 
@@ -571,13 +578,13 @@ var mapInit = function (mapId, pos) {
 
             var layerNm = layer.get("title");
 
-            if(features[0].getId().split("_")[1] == "spgf"){//도로명판
+            if(layerNm == "도로명판"){//도로명판
                 MapUtil.openPopup(KEY.plateType.ROAD, features[0]);
                 util.camera = function() {
                     var title = "{0} {1}-{2}".format(features[0].get('FT_KOR_RN'), features[0].get('BSIS_MNNM'), features[0].get('BSIS_SLNO'));
                     util.slide_page('up', pages.detailview, { sn : features[0].get('RD_GDFTY_SN'), categoryid: "roadsign", title: title});
                 };
-            }else if(features[0].getId().split(".")[0] == "tlv_spbd_buld"){//건물정보
+            }else if(layerNm == "건물"){//건물정보
                 MapUtil.openPopup(KEY.plateType.BUILD, features[0]);
             }else if(layerNm == "건물번호판"){//건물번호판(출입구)
                 MapUtil.openPopup(KEY.plateType.ENTRC, features[0]);
