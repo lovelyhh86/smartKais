@@ -98,7 +98,7 @@ var defaultStyle = function (feature, resolution, options) {
                 key = _text;
             }
         } else {
-            key = getStyleLabel(features[0], styleOptions.label);
+                key = getStyleLabel(features[0], styleOptions.label);
         }
         styleOptions.label._text = key;
     } else {
@@ -247,11 +247,11 @@ var entrcStyle = function (styleOptions) {
          image: new ol.style.Circle({
              radius: styleOptions.radius,
              fill: new ol.style.Fill({
-                 color: 'skyblue'
+                 color: 'blue'
              }),
              stroke: new ol.style.Stroke({
                  color: 'white',
-                 width: 1
+                 width: 2
              })
          })
     };
