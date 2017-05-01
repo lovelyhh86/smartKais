@@ -5,7 +5,7 @@ var KEY = {
 var MapUtil = {
     init: function () {
         MapUtil.controls.init();
-        MapUtil.handler.ini();
+        MapUtil.handler.init();
     }, handler: {
         init: function() {
             MapUtil.handler.popupHandler();
