@@ -101,23 +101,32 @@ var MapUtil = {
         }
     },
     openPopup: function (type, f) {
+        var popHeader = "#common-pop .ui-bar";
+        var container = "#common-pop .popup-content .ui-body:first";
+        var url = "", header = "", headerFunc = "";
+
+        $(popHeader).empty();
+        $(container).empty();
+
         if(type == KEY.plateType.ROAD ){
-            openCommonPop('popRoad.html','도로명판',type, f);
-            // MapUtil.setPopup(type, f);
-            // $("#common-pop").popup("open", { transition: "slideup" });
-            // $(".popup-wrap.ROAD").popup("open", { transition: "slideup" });
+            url = pages.detail_road;
+            header = "도로명판";
+            headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
         }else if(type==KEY.plateType.BUILD){
-            openCommonPop('popBuild.html','건물정보',type, f);
-            // MapUtil.setPopup(type, f);
-            // $("#common-pop").popup("open", { transition: "slideup" });
-            // $(".popup-wrap.BUILD").popup("open", { transition: "slideup" });
+            url = pages.detail_buld;
+            header = "건물정보";
         }else if(type==KEY.plateType.ENTRC){
-            openCommonPop('popEnterRc.html','건물번호판',type, f);
-            // MapUtil.setPopup(type, f);
-            // $("#common-pop").popup("open", { transition: "slideup" });
-            // $(".popup-wrap.entrc").popup("open", { transition: "slideup" });
+            url = pages.detail_entrc;
+            header = "건물번호판";
         }
 
+        $(popHeader).append("<h2>{0}</h2>".format(header));
+        $(popHeader).append(headerFunc);
+
+        $(container).load(url.link, function() {
+            MapUtil.setPopup(type, f);
+            $("#common-pop").popup("open", { transition: "slideup" });
+        })
     },
     getPlateDir: function (f) {
         var ft_stbs_mn = parseInt(f.get("FT_STBS_MN"));
