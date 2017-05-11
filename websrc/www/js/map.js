@@ -108,22 +108,29 @@ var MapUtil = {
         $(popHeader).empty();
         $(container).empty();
 
-        if(type == KEY.plateType.ROAD ){
-            url = pages.detail_road;
-            header = "도로명판";
-            headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
-        }else if(type==KEY.plateType.BUILD){
-            url = pages.detail_buld;
-            header = "건물정보";
-        }else if(type==KEY.plateType.ENTRC){
-            url = pages.detail_entrc;
-            header = "건물번호판";
+        switch(type) {
+            case KEY.plateType.ROAD:
+                url = pages.detail_road;
+                header = "도로명판";
+                headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+
+                break;
+            case KEY.plateType.BUILD:
+                url = pages.detail_buld;
+                header = "건물정보";
+
+                break;
+            case KEY.plateType.ENTRC:
+                url = pages.detail_entrc;
+                header = "건물번호판";
+
+                break;
         }
 
         $(popHeader).append("<h2>{0}</h2>".format(header));
         $(popHeader).append(headerFunc);
 
-        $(container).load(url.link, function() {
+        $(container).load(url.link(), function() {
             MapUtil.setPopup(type, f);
             $("#common-pop").popup("open", { transition: "slideup" });
         })
@@ -170,7 +177,6 @@ var MapUtil = {
         return ret;
     },
     setPopup: function (type, f) {
-        
         switch (type) {
             case KEY.plateType.ROAD:
                 var pDir = f.get("PLQ_DRC");
@@ -253,55 +259,55 @@ var MapUtil = {
                 break;
             case KEY.plateType.ENTRC:
 
-            //출입구 일련번호
-            var sn = f.get("ENT_MAN_NO");
+                //출입구 일련번호
+                var sn = f.get("ENT_MAN_NO");
 
-            var url = URLs.postURL(URLs.entrclink, { "sn":sn, "sigCd":app.info.sigCd , "workId" : app.info.opeId});
+                var url = URLs.postURL(URLs.entrclink, { "sn":sn, "sigCd":app.info.sigCd , "workId" : app.info.opeId});
 
-            util.postAJAX({},url).then( function(context,rcode,results) {
-                var data = results.data;
-                if (rcode != 0 || util.isEmpty(data) === true ){
-                    navigator.notification.alert('시설물 정보를 가져오지 못하였습니다', function (){
-                                            util.goBack();
-                                            },'시설물 정보 조회', '확인');
-                    util.dismissProgress();
-                    return;
-                }
-
-
-                $("#instlDe").val(data.instDate);
-
-                appendSelectBox2("BUL_NMT_CD","bulNmtCd",data.buldNmtCd);
-
-                appendSelectBox2("BUL_NMT_TY","buldNmtType",data.buldNmtType);
-
-                appendSelectBox2("BUL_NMT_QL","buldNmtMaterial",data.buldNmtMaterial);
-
-                appendSelectBox2("BUL_NMT_PR","buldNmtPurpose",data.buldNmtPurpose);
-                
-                $("#buldNmtUnitPrice").val(data.buldNmtUnitPrice);
-
-                appendSelectBox2("BUL_MNF_CD","buldMnfCd",data.buldMnfCd);
-
-                appendSelectBox2("BUL_NMT_LO","buldNmtLoss",data.buldNmtLoss);
-
-                $("#workId").val(data.workId);
-
-                $("#workDate").val(data.workDate);
-
-                appendSelectBox2("LGHT_CD","lightCd",data.lightCd);
-
-                $("#registerDate").val(data.registerDate);
-            
-            }),function(context,xhr,error) {
-                console.log("갱신실패"+ error+'   '+ xhr);
-                navigator.notification.alert('시설물 정보를 가져오지 못하였습니다', function (){
+                util.postAJAX({},url).then( function(context,rcode,results) {
+                    var data = results.data;
+                    if (rcode != 0 || util.isEmpty(data) === true ){
+                        navigator.notification.alert('시설물 정보를 가져오지 못하였습니다', function (){
                                                 util.goBack();
                                                 },'시설물 정보 조회', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
 
 
-                util.dismissProgress();
-            }
+                    $("#instlDe").val(data.instDate);
+
+                    appendSelectBox2("BUL_NMT_CD","bulNmtCd",data.buldNmtCd);
+
+                    appendSelectBox2("BUL_NMT_TY","buldNmtType",data.buldNmtType);
+
+                    appendSelectBox2("BUL_NMT_QL","buldNmtMaterial",data.buldNmtMaterial);
+
+                    appendSelectBox2("BUL_NMT_PR","buldNmtPurpose",data.buldNmtPurpose);
+
+                    $("#buldNmtUnitPrice").val(data.buldNmtUnitPrice);
+
+                    appendSelectBox2("BUL_MNF_CD","buldMnfCd",data.buldMnfCd);
+
+                    appendSelectBox2("BUL_NMT_LO","buldNmtLoss",data.buldNmtLoss);
+
+                    $("#workId").val(data.workId);
+
+                    $("#workDate").val(data.workDate);
+
+                    appendSelectBox2("LGHT_CD","lightCd",data.lightCd);
+
+                    $("#registerDate").val(data.registerDate);
+
+                }),function(context,xhr,error) {
+                    console.log("갱신실패"+ error+'   '+ xhr);
+                    navigator.notification.alert('시설물 정보를 가져오지 못하였습니다', function (){
+                                                    util.goBack();
+                                                    },'시설물 정보 조회', '확인');
+
+
+                    util.dismissProgress();
+                }
 
                 break;
             case KEY.plateType.BUILD:
@@ -317,25 +323,25 @@ var MapUtil = {
                 appendSelectBox("BUL_DPN_SE","bulDpnSe",f);
 
                 //건물명
-                document.getElementById("buldNm").value = getFeatherValue("BULD_NM",f);
+                $("#buldNm").val(getFeatherValue("BULD_NM",f));
 
                 //건물명(영)
-                document.getElementById("bulEngNm").value = getFeatherValue("BUL_ENG_NM",f);
+                $("#bulEngNm").val(getFeatherValue("BUL_ENG_NM",f));
 
                 //상세건물명
-                document.getElementById("etcBulNm").value = getFeatherValue("ETC_BUL_NM",f);
+                $("#etcBulNm").val(getFeatherValue("ETC_BUL_NM",f));
 
                 //건물층수(지상)
-                document.getElementById("groFloCo").value = getFeatherValue("GRO_FLO_CO",f);
+                $("#groFloCo").val(getFeatherValue("GRO_FLO_CO",f));
 
                 //건물층수(지상)
-                document.getElementById("undFloCo").value = getFeatherValue("UND_FLO_CO",f);
+                $("#undFloCo").val(getFeatherValue("UND_FLO_CO",f));
 
                 //건물상태
-                document.getElementById("buldSttus").value = getFeatherValue("BULD_STTUS",f);
+                $("#buldSttus").val(getFeatherValue("BULD_STTUS",f));
 
                 //메모
-                document.getElementById("buldMemo").value = getFeatherValue("BULD_MEMO",f);
+                $("#buldMemo").val(getFeatherValue("BULD_MEMO",f));
                 //**************************** 건물정보 끝 *********************************** */
 
                 break;
@@ -620,9 +626,9 @@ var mapInit = function (mapId, pos) {
                 }
 
                 gbn = false;
-
-                return;
             }
+
+            return;
 
             // ********************사용안함 ********************
 
