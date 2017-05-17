@@ -20,6 +20,9 @@ var URLs = {
     "mapServiceLink": { svcNm: "mapService" },
     "minwonServiceLink": { svcNm: "eaiService" },
 
+    "moveingPoint":{svnNm: "iSPGF"},
+    "smartKaisConfimCheckLink": { svcNm: "smartKaisCnfmCk" },
+
     getURL: function (srcurl, jsondata) {
 
         var hasparam = srcurl.search('=') > -1;

@@ -18,6 +18,9 @@ var app = {
         /** (NET) 모바일 공통기반 연결 체크 */
         .then(app.check.mobileConnection)
 
+        /** 스마트KAIS 등록여부 확인 */
+        // .then(app.check.smartKaisConfirm)
+
         /** 기본환경 셋팅 및 로딩 */
         /** (ENV) 1. DB 초기화 */
         .then(app.db.init)
@@ -87,6 +90,18 @@ var app = {
             }
 
             return def.promise();
+        },
+        /** 스마트KAIS 등록여부 확인 */
+        smartKaisConfirm: function(){
+            var dn = sso.DN;
+            var url = URLs.smartKaisConfimCheckLink;
+
+            util.postAJAX('',url)
+            .then(function (context, resultCode, results) {
+
+
+            });
+            
         },
         /** 현재위치 점검 */
         currentLocation: function () {
