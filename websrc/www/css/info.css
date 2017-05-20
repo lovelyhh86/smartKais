@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+.roadView {position:fixed;bottom:0; width:100%; height:830px;}
+.roadView >p.openImage{display: block; text-align: center}
+.roadView >p >span{display:inline-block; width:76px; background:url(../image/open_image.png) 0 0 no-repeat;text-indent: -9999em;}
+
+/*layout*/
+.infoWrap{ bottom:0; width:auto; height:100%; padding:20px; background-color:#3b3a40; overflow: hidden;}
+.infoHeader {height:28px; padding:15px 20px; background-color: #0071bf ;color:#fff;}
+.infoContent{width:auto; height: 640px ;padding:20px; overflow-y: scroll ;background-color:#f5f7f8}
+.infoFooter{padding:10px 20px 0 20px; text-align: center;}
+
+/*title photo*/
+.infoHeader >.title{font-size: 1.5em; text-shadow: none; text-align: left;} 
+.infoHeader >.title > .titleIcon{display: inline-block; margin-right:10px; width: 30px; height: 35px; border-radius:2px; text-align:center; background-color: #f5f7f8}
+.infoHeader >.title > .titleIcon >img{margin-top: 4px;}
+.infoHeader >.photo{position:absolute; top:45px; right:40px; width:42px; height:37px; background:url(../image/photo.png) 100% 100% no-repeat;}
+.infoHeader >.photo>.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
+
+/*infoTable*/
+.infoTable{display: table;min-width:320px; width:100%;height: 630px; border:0;border-collapse:collapse;overflow-y: scroll;}
+.infoTable .row{display: table-row; text-align: left}
+.infoTable .cell1{display: table-cell; width:26%; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#adadad; vertical-align: middle; color: #fff;}
+.infoTable .cell2{display: table-cell; width:auto; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#f5f7f8; vertical-align: middle;}
+.infoTable .cell1 > span.label{margin: 0;font-weight: normal;text-shadow: none;}
+.infoTable .cell2 p{margin-top: 10px;}
+.infoTable .cell2 p:FIRST-CHILD{margin-top: 0px;}
+.infoTable .cellNo{display: block;width:auto;border-bottom: 0 none;padding:0;background-color: #f5f7f8; vertical-align: middle;}
+
+/*button*/
+.btnPoint{display:inline-block; padding:10px 90px; background-color: #0071bf; color:#e6e6e6}
+.btnNormal{display:inline-block; margin-left:10px ; padding:10px 90px; background-color: #9d9ca1; color:#fff}
+
+/*setting*/
+.dataWrap{display: inline-block; position:absolute; top:95px; right:20px; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
+.dataTItle{display: block; margin-bottom:20px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
+
+
+.subTitle{display: block; padding: 0 20px 0 15px; text-align: left;text-shadow: none;}
+
+.dataForm{display: table; width:100%; border:0;border-collapse:collapse; margin: 10px 15px 0 10px}
+.dataForm .row{display: table-row; text-align: left}
+.dataForm .cell{position:relative; display: table-cell; padding:2px 0; vertical-align: middle;}
+.dataForm .cell2{position:relative; top:-2px ;display: table-cell; padding:0; vertical-align: middle;}
+.dataForm span.label{display:inline-block; height:18px;font-weight:normal; text-shadow: none; text-align: left; font-size: 0.8em}
+.inputRadio {display: inline-block; width:27px;height:18px; float: left; top: 0;}
+
+.inputText{display: inline-block; position:inherit; }
+.ui-input-text, .ui-input-search {margin:0;}
+.ui-corner-all {-webkit-border-radius: 0; border-radius:0;}
+.ui-input-text input, .ui-input-search input{margin: 0; min-height: 2em; padding: .3em; line-height: 1.2em; background: #fff none; font-size: 0.8em }
+.ui-radio >input{margin:0; width: 16px; position: absolute; top:-8px;}
+div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
+.cell2 >.radioBox> div.ui-checkbox, .cell2 >.radioBox >div.ui-radio {margin: .8em 0;position: relative;}
+
+.dataBtn{border-top:1px solid #e5e5e5; text-align: center; margin-top:20px; padding: 20px 0  15px 0;}
+.dataBtn >.btnPoint{display:inline-block; padding:8px 50px; background-color: #496388; color:#e5e5e5;text-shadow: none;font-size: 0.9em}
+.dataBtn >.btnNormal{display:inline-block; margin-left:5px ; padding:8px 50px; background-color: #c0c0c0; color:#fff;text-shadow: none; font-size: 0.8em}
+.dataClose{position: absolute;top:15px;right:20px}
+
+/*width*/
+.cell10{ width:10%;} .cell15{ width:15%;}
+.cell20{ width:20%;} .cell25{ width:25%;}
+.cell30{ width:30%;} .cell33{ width:33%;} .cell35{ width:35%;}
+.cell40{ width:40%;} .cell45{ width:45%;}
+.cell50{ width:50%;} .cell55{ width:55%;}
+.cell60{ width:60%;} .cell65{ width:65%;}
+.cell70{ width:70%;} .cell75{ width:75%;}
+.cell80{ width:80%;} .cell85{ width:85%;}
+.cell90{ width:90%;} .cell95{ width:95%;}
+.cell100{ width:100%;}
+.auto{ width:auto;}
+ 
+.w25{width: 25px;}
+.w35{width: 35px;}
+.w45{width: 45px;}
+.w55{width: 55px;}
+.w60{width: 60px;}
+.w75{width: 75px;}
+.w80{width: 80px;}
+.w90{width: 90px;}
+.w100{width: 100px;}
+.w120{width: 120px;}
+.w140{width: 140px;}
+.w150{width: 150px;}
+.w160{width: 160px;}
+.w180{width: 180px;}
+.w200{width: 200px;} .w230{width: 230px;} .w245{width: 245px;}
+.w300{width: 300px;}
+.w320{width: 320px;}
+.w370{width: 370px;}
+.w420{width: 420px;}
+.w470{width: 470px;}
+.w520{width: 520px;}
+
+
+
+
+

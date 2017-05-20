@@ -154,12 +154,33 @@ var pages = {
 //};
 
 var CODE_GROUP = [];
-//도로명판
-CODE_GROUP["USE_TRGET"] = "GFTY013";
+//****** 도로시설물 위치 ********
+//도로시설물 구분
+CODE_GROUP["RDFTY_SE"] = "GFTY003";
+//설치유형
+CODE_GROUP["INSTL_SE"] = "GFTY004";
+//설치지점
 CODE_GROUP["INS_SPO_CD"] = "GFTY015";
-CODE_GROUP["ISLGN_YN"] = "GFTY016";
-CODE_GROUP["GDFTY_FOM"] = "GFTY012";
+//교차로유형
+CODE_GROUP["INS_CRS_CD"] = "GFTY612";
+//사용대상
+CODE_GROUP["USE_TRGET"] = "GFTY013";
+//안내시설방향
 CODE_GROUP["PLQ_DRC"] = "GFTY014";
+//제2외국어여부
+CODE_GROUP["SCFGG_MKTY"] = "GFTY019";
+//언어1
+CODE_GROUP["SCFGG_ULA1"] = "GFTY020";
+//도로명판 규격
+CODE_GROUP["RDPQ_GD_SD"] = "GFTY110";
+
+
+
+//설치장소
+
+CODE_GROUP["GDFTY_FOM"] = "GFTY012";
+CODE_GROUP["ISLGN_YN"] = "GFTY016";
+
 //건물정보
 CODE_GROUP["BDTYP_CD"] = "CMMN038";
 CODE_GROUP["BULD_SE_CD"] = "CMMN017";

@@ -1,52 +1,268 @@
 <!DOCTYPE html>
 <html LANG="ko">
+
+<body class="intro">
+
 <div id="roadView_page">
-    <div class="img-plate">
-        <div class="base-area base-left">&nbsp;</div>
-        <div class="roadName">
-            <div class="kor-rn">&nbsp;</div>
-            <div class="rom-rn">&nbsp;</div>
-        </div>
-        <div class="base-area base-right">&nbsp;</div>
-    </div>
-    <div class="memo">
-        <textarea placeholder="기타사항을 입력하세요."></textarea>
-    </div>
-    <!--<div class="ui-icon-detail">상세속성</div>-->
-    <div class="ui-field-contain ">
-        <div class="ui-field-contain">
-            <label for="instSpotCd">설치지점</label>
-            <select id="instSpotCd" name="instSpotCd">
-            </select>
-        </div>
-        <div class="ui-field-contain">
-            <label for="isLgnYn">설치재설치 여부</label>
-            <select id="isLgnYn" name="isLgnYn">
-            </select>
-        </div>
-        <div class="ui-field-contain">
-            <label for="instSpotDesc">설치지점명</label>
-            <input id="instSpotDesc" type="text" name="instSpotDesc" value="" />
-        </div>
-        <div class="ui-field-contain">
-            <label for="frontKoreanRoadNm">한글도로명</label>
-            <input id="frontKoreanRoadNm" type="text" name="frontKoreanRoadNm" value="" />
-        </div>
-        <div class="ui-field-contain">
-            <label for="frontRomeRoadNm">로마자 도로명</label>
-            <input id="frontRomeRoadNm" type="text" name="frontRomeRoadNm" value="" />
-        </div>
-        <div class="ui-field-contain">
-            <label for="gdftyForm">안내시설형식</label>
-            <select id="gdftyForm" name="gdftyForm">
-                <option value="">설치</option>
-            </select>
-        </div>
-        <div class="ui-field-contain">
-            <label for="plqDirection">안내시설방향</label>
-            <select id="plqDirection" name="plqDirection">
-                <option value="">설치</option>
-            </select>
-        </div>
-    </div>
+	<div class="roadView">
+		<p class="openImage"><span onclick="closeDetailView();">열림</span></p>
+		<div class="infoWrap">
+			<!-- header -->
+			<div class="infoHeader">
+			
+			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
+				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="photo"><span class="photoNum">92</span></p>
+			</div>
+			
+			<!-- content -->
+			<div class="infoContent">
+			<!-- 정보  -->
+				<div class="infoTable">
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">도로시설물</span>
+						</div>
+						<div class="cell2">
+							<p id="rdftySeLbl"></p>
+							<p id="rdftySe" style="display:none"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">설치도로명</span>
+						</div>
+						<div class="cell2">
+							<p id=""></p>
+							<p id="" style="display:none"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">설치기초번호</span>
+						</div>
+						<div class="cell2">
+							<p id="bsis"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">설치유형</span>
+						</div>
+						<div class="cell2">
+							<p id="instSeLbl"></p>
+							<p id="instSe" style="display:none"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">제작형식</span>
+						</div>
+						<div class="cell2">
+							<p id="gdftyMnfLbl"></p>
+							<p id="gdftyMnf" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('instSpotCd');" class="row">
+						<div  class="cell1">
+								<span class="label">설치지점</span>
+						</div>
+						<div class="cell2">
+							<p id="instSpotCdLbl"></p>
+							<p id="instSpotCd" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('instCrossCd');" class="row">
+						<div  class="cell1">
+								<span class="label">교차로유형</span>
+						</div>
+						<div class="cell2">
+							<p id="instCrossCdLbl"></p>
+							<p id="instCrossCd" style="display:none"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">앞면 도로명(국문)</span>
+						</div>
+						<div class="cell2">
+							<p id="frontKoreanRoadNm"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">앞면 도로명(로마)</span>
+						</div>
+						<div class="cell2">
+							<p id="frontRomeRoadNm"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">앞면 시작기초번호</span>
+						</div>
+						<div class="cell2">
+							<p id="frontStartBaseNo"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">앞면 종료기초번호</span>
+						</div>
+						<div class="cell2">
+							<p id="frontEndBaseNo"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">뒷면 도로명(국문)</span>
+						</div>
+						<div class="cell2">
+							<p id="backKoreanRoadNm"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">뒷면 도로명(로마)</span>
+						</div>
+						<div class="cell2">
+							<p id="backRomeRoadNm"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">뒷면 시작기초번호</span>
+						</div>
+						<div class="cell2">
+							<p id="backStartBaseNo"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">뒷면 종료기초번호</span>
+						</div>
+						<div class="cell2">
+							<p id="backEndBaseNo"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">안내시설형식</span>
+						</div>
+						<div class="cell2">
+                            <p id="gdftyFormLbl"></p>
+							<p id="gdftyForm" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('useTarget');" class="row">
+						<div  class="cell1">
+								<span class="label">사용대상</span>
+						</div>
+						<div class="cell2">
+							<p id="useTargetLbl"></p>
+                            <p id="useTarget" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('plqDirection');" class="row">
+						<div  class="cell1">
+								<span class="label">안내시설방향</span>
+						</div>
+						<div class="cell2">
+							<p id="plqDirectionLbl"></p>
+                            <p id="plqDirection" style="display:none"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">양면여부</span>
+						</div>
+						<div class="cell2">
+							<p id="bdrclAtLbl"></p>
+                            <p id="bdrclAt" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('scfggMkty');" class="row">
+						<div  class="cell1">
+								<span class="label">제2외국어여부</span>
+						</div>
+						<div class="cell2">
+							<p id="scfggMktyLbl"></p>
+                            <p id="scfggMkty" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('scfggUla1');" class="row">
+						<div  class="cell1">
+								<span class="label">언어1</span>
+						</div>
+						<div class="cell2">
+							<p id="scfggUla1Lbl"></p>
+                            <p id="scfggUla1" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('scfggUla2');" class="row">
+						<div  class="cell1">
+								<span class="label">언어2</span>
+						</div>
+						<div class="cell2">
+							<p id="scfggUla2Lbl"></p>
+                            <p id="scfggUla2" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('rdpqGdSd');" class="row">
+						<div  class="cell1">
+								<span class="label">규격</span>
+						</div>
+						<div class="cell2">
+							<p id="rdpqGdSdLbl"></p>
+                            <p id="rdpqGdSd" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="" class="row">
+						<div  class="cell1">
+								<span class="label">가격</span>
+						</div>
+						<div class="cell2">
+							<p id="gdftyUnitPrice"></p>
+						</div>
+					</div>
+					<div onclick="" class="row">
+						<div  class="cell1">
+								<span class="label">설치상태</span>
+						</div>
+						<div class="cell2">
+							<p id=""></p>
+						</div>
+					</div>
+
+				<!-- 정보 끝 -->
+				
+                <!-- 공통 데이터 팝업 -->
+                <div id="dataPop" class="dataWrap" style="display: none">
+					<div id="dataTitle" class="dataTItle"></div>
+					<div id="dataForm" class="dataForm">
+						
+					</div>
+					<div class="dataBtn">
+						<span onclick="radioDataSendParent()" class="btnPoint">저장</span>
+						<span onclick="closeDataPop()" class="btnNormal">닫기</span>
+					</div>
+					<p class="dataClose" onclick="closeDataPop();"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+						
+			</div>
+			<!-- content 끝  -->
+			
+		</div>
+		<!-- footer 시작 -->
+		<div class="infoFooter">
+			<span class="btnPoint">저장</span>
+			<span class="btnNormal">초기화</span>
+		</div>
+		<!-- footer 끝 -->
+	</div>
+	
+	
 </div>
+
+</body>
+</html>

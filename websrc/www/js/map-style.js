@@ -98,7 +98,8 @@ var defaultStyle = function (feature, resolution, options) {
                 key = _text;
             }
         } else {
-                key = getStyleLabel(features[0], styleOptions.label);
+                // key = getStyleLabel(features[0], styleOptions.label);
+                key = '';
         }
         styleOptions.label._text = key;
     } else {
