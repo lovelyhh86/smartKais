@@ -4,14 +4,14 @@
 <body class="intro">
 
 <div id="baseView_page">
-	<div class="roadView">
+	<div class="detailView">
 		<p class="openImage"><span onclick="closeDetailView();">열림</span></p>
 		<div class="infoWrap">
 			<!-- header -->
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="title"><span class="titleIcon"><img src="img/icon_legend02.png" title="기초번호판"></span></p>
 				<p class="photo"><span class="photoNum">92</span></p>
 			</div>
 			
@@ -21,7 +21,7 @@
 				<div class="infoTable">
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">도로시설물</span>
+							<span class="label">기초번호판</span>
 						</div>
 						<div class="cell2">
 							<p id="rdftySeLbl"></p>
@@ -30,7 +30,7 @@
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">설치도로명</span>
+							<span class="label">설치도로명</span>
 						</div>
 						<div class="cell2">
 							<p id=""></p>
@@ -39,7 +39,7 @@
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">설치기초번호</span>
+							<span class="label">설치기초번호</span>
 						</div>
 						<div class="cell2">
 							<p id="bsis"></p>
@@ -47,7 +47,7 @@
 					</div>
 					<div class="row">
 						<div class="cell1">
-								<span class="label">설치유형</span>
+							<span class="label">설치유형</span>
 						</div>
 						<div class="cell2">
 							<p id="instSeLbl"></p>
@@ -56,7 +56,7 @@
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">제작형식</span>
+							<span class="label">제작형식</span>
 						</div>
 						<div class="cell2">
 							<p id="gdftyMnfLbl"></p>
@@ -65,7 +65,7 @@
 					</div>
 					<div onclick="openDataIdPop('instSpotCd');" class="row">
 						<div  class="cell1">
-								<span class="label">설치지점</span>
+							<span class="label">설치지점</span>
 						</div>
 						<div class="cell2">
 							<p id="instSpotCdLbl"></p>
@@ -81,73 +81,80 @@
 							<p id="instCrossCd" style="display:none"></p>
 						</div>
 					</div>
-					<div class="row">
+
+					<div onclick="openDataIdPop('');" class="row">
 						<div  class="cell1">
-								<span class="label">앞면 도로명(국문)</span>
+							<span class="label">설치장소 구분</span>
 						</div>
 						<div class="cell2">
-							<p id="frontKoreanRoadNm"></p>
+							<p id="base_itlpcSeLbl"></p>
+							<p id="base_itlpcSe" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('');" class="row">
+						<div  class="cell1">
+							<span class="label">설치시설물</span>
+						</div>
+						<div class="cell2">
+							<p id="base_instlFtyLbl"></p>
+							<p id="base_instlFty" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('');" class="row">
+						<div  class="cell1">
+							<span class="label">곡면분류</span>
+						</div>
+						<div class="cell2">
+							<p id="base_planeCdLbl"></p>
+							<p id="base_planeCd" style="display:none"></p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div  class="cell1">
+							<span class="label">한글도로명</span>
+						</div>
+						<div class="cell2">
+							<p id="base_korRn"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">앞면 도로명(로마)</span>
+								<span class="label">로마자</span>
 						</div>
 						<div class="cell2">
-							<p id="frontRomeRoadNm"></p>
+							<p id="base_RomRn"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">앞면 시작기초번호</span>
+							<span class="label">기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontStartBaseNo"></p>
+							<p id="base_"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">앞면 종료기초번호</span>
+							<span class="label">이전승강장번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontEndBaseNo"></p>
+							<p id="base_"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 도로명(국문)</span>
+							<span class="label">다음승강장번호</span>
 						</div>
 						<div class="cell2">
-							<p id="backKoreanRoadNm"></p>
+							<p id="base_"></p>
 						</div>
 					</div>
+
+
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 도로명(로마)</span>
-						</div>
-						<div class="cell2">
-							<p id="backRomeRoadNm"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div  class="cell1">
-								<span class="label">뒷면 시작기초번호</span>
-						</div>
-						<div class="cell2">
-							<p id="backStartBaseNo"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div  class="cell1">
-								<span class="label">뒷면 종료기초번호</span>
-						</div>
-						<div class="cell2">
-							<p id="backEndBaseNo"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div  class="cell1">
-								<span class="label">안내시설형식</span>
+							<span class="label">안내시설형식</span>
 						</div>
 						<div class="cell2">
                             <p id="gdftyFormLbl"></p>
@@ -183,7 +190,7 @@
 					</div>
 					<div onclick="openDataIdPop('scfggMkty');" class="row">
 						<div  class="cell1">
-								<span class="label">제2외국어여부</span>
+							<span class="label">제2외국어여부</span>
 						</div>
 						<div class="cell2">
 							<p id="scfggMktyLbl"></p>
@@ -210,24 +217,25 @@
 					</div>
 					<div onclick="openDataIdPop('rdpqGdSd');" class="row">
 						<div  class="cell1">
-								<span class="label">규격</span>
+							<span class="label">규격(W*V*T)</span>
 						</div>
 						<div class="cell2">
-							<p id="rdpqGdSdLbl"></p>
-                            <p id="rdpqGdSd" style="display:none"></p>
+							<p id="base_bsisGdSdLbl"></p>
+							<p id="base_bsisGdSd" style="display:none"></p>
 						</div>
 					</div>
 					<div onclick="" class="row">
 						<div  class="cell1">
-								<span class="label">가격</span>
+							<span class="label">단가(원)</span>
 						</div>
 						<div class="cell2">
 							<p id="gdftyUnitPrice"></p>
 						</div>
 					</div>
+
 					<div onclick="" class="row">
 						<div  class="cell1">
-								<span class="label">설치상태</span>
+							<span class="label">설치상태</span>
 						</div>
 						<div class="cell2">
 							<p id=""></p>
@@ -260,9 +268,8 @@
 		</div>
 		<!-- footer 끝 -->
 	</div>
-	
-	
-</div>
 
+	</div>
+</div>
 </body>
 </html>

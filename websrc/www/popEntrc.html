@@ -1,59 +1,148 @@
 <!DOCTYPE html>
 <html LANG="ko">
 <div id="entrcView_page" class="detail">
-    <div class="ui-field-contain">
-        <label for="instlDe">설치일자</label>
-        <input type="text" id="instlDe" name="instlDe" value="" />
+    <div class="detailView">
+        <p class="openImage"><span onclick="closeDetailView();">열림</span></p>
+        <div class="infoWrap">
+            <!-- header -->
+            <div class="infoHeader">
+
+                <!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
+                <p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+                <p class="photo"><span class="photoNum">2</span></p>
+            </div>
+
+            <!-- content -->
+            <div class="infoContent">
+                <!-- 정보  -->
+                <div class="infoTable">
+                    <div class="row">
+                        <div  class="cell1">
+                            <span class="label">도로명</span>
+                        </div>
+                        <div class="cell2">
+                            <p id=""></p>
+                            <p id="" style="display:none"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  class="cell1">
+                            <span class="label">건물번호</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulNo"></p>
+                            buldMnnm - buldSlno
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cell1">
+                            <span class="label">일련번호</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulNmtNo"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  class="cell1">
+                            <span class="label">유형</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulNmtSeLbl"></p>
+                            <p id="entrc_bulNmtSe" style="display:none"></p>
+                        </div>
+                    </div>
+                    <div onclick="openDataIdPop('');" class="row">
+                        <div  class="cell1">
+                            <span class="label">형태</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulNmtTyLbl"></p>
+                            <p id="entrc_bulNmtTy" style="display:none"></p>
+                        </div>
+                    </div>
+                    <div onclick="openDataIdPop('instCrossCd');" class="row">
+                        <div  class="cell1">
+                            <span class="label">용도</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulNmtPrLbl"></p>
+                            <p id="entrc_bulNmtPr" style="display:none"></p>
+                        </div>
+                    </div>
+
+                    <div onclick="openDataIdPop('');" class="row">
+                        <div  class="cell1">
+                            <span class="label">규격</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulNmtCdLbl"></p>
+                            <p id="entrc_bulNmtCd" style="display:none"></p>
+                        </div>
+                    </div>
+                    <div onclick="openDataIdPop('');" class="row">
+                        <div  class="cell1">
+                            <span class="label">제작유형</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulMnfCdLbl"></p>
+                            <p id="entrc_bulMnfCd" style="display:none"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  class="cell1">
+                            <span class="label">재질</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="entrc_bulNmtQlLbl"></p>
+                            <p id="entrc_bulNmtQl" style="display:none"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div  class="cell1">
+                            <span class="label">단가</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="gdftyUnitPrice"></p>
+                        </div>
+                    </div>
+
+                    <div onclick="" class="row">
+                        <div  class="cell1">
+                            <span class="label">설치상태</span>
+                        </div>
+                        <div class="cell2">
+                            <p id=""></p>
+                        </div>
+                    </div>
+                    <!-- 정보 끝 -->
+
+                    <!-- 공통 데이터 팝업 -->
+                    <div id="dataPop" class="dataWrap" style="display: none">
+                        <div id="dataTitle" class="dataTItle"></div>
+                        <div id="dataForm" class="dataForm">
+
+                        </div>
+                        <div class="dataBtn">
+                            <span onclick="radioDataSendParent()" class="btnPoint">저장</span>
+                            <span onclick="closeDataPop()" class="btnNormal">닫기</span>
+                        </div>
+                        <p class="dataClose" onclick="closeDataPop();"><img src="image/dataClose.png" title="닫기"></p>
+                    </div>
+                </div>
+                <!-- content 끝  -->
+
+            </div>
+            <!-- footer 시작 -->
+            <div class="infoFooter">
+                <span class="btnPoint">저장</span>
+                <span class="btnNormal">초기화</span>
+            </div>
+            <!-- footer 끝 -->
+        </div>
     </div>
-    <div class="ui-field-contain">
-        <label for="bulNmtCd">규격</label>
-        <select id="bulNmtCd" name="bulNmtCd">
-        </select>
-    </div>
-    <div class="ui-field-contain">
-        <label for="buldNmtType">형태</label>
-        <select id="buldNmtType" name="buldNmtType">
-        </select>
-    </div>
-    <div class="ui-field-contain">
-        <label for="buldNmtMaterial">재질</label>
-        <select id="buldNmtMaterial" name="buldNmtMaterial">
-        </select>
-    </div>
-    <div class="ui-field-contain">
-        <label for="buldNmtPurpose">용도</label>
-        <select id="buldNmtPurpose" name="buldNmtPurpose">
-        </select>
-    </div>
-    <div class="ui-field-contain">
-        <label for="buldNmtUnitPrice">단가</label>
-        <input type="text" id="buldNmtUnitPrice" name="buldNmtUnitPrice" value="" />
-    </div>
-    <div class="ui-field-contain">
-        <label for="buldMnfCd">제작형식</label>
-        <select id="buldMnfCd" name="buldMnfCd">
-        </select>
-    </div>
-    <div class="ui-field-contain">
-        <label for="buldNmtLoss">망실여부</label>
-        <select id="buldNmtLoss" name="buldNmtLoss">
-        </select>
-    </div>
-    <div class="ui-field-contain">
-        <label for="workId">작업자ID</label>
-        <input type="text" id="workId" name="workId" value="" />
-    </div>
-    <div class="ui-field-contain">
-        <label for="workDate">작업일시</label>
-        <input type="text" id="workDate" name="workDate" value="" />
-    </div>
-    <div class="ui-field-contain">
-        <label for="lightCd">조명여부</label>
-        <select id="lightCd" name="lightCd">
-        </select>
-    </div>
-    <div class="ui-field-contain">
-        <label for="registerDate">생성일자</label>
-        <input type="text" id="registerDate" name="registerDate" value="" />
-    </div>
+
+
 </div>
+
+</body>
+</html>

@@ -39,7 +39,7 @@ var MapUtil = {
             var button = document.createElement('a');
             // button.innerHTML = '<img src="img/btn_legend_on.png" />';
             var legend = document.createElement('div');
-            legend.className = "legendBody";
+           legend.className = "legendBody";
             var legendHtml = '';
                 // legendHtml += '<p class="title">범 례</p>';
                 legendHtml += '<p href="#" id="legendRdpq" class="ui-btn ui-icon-rdpq">도로명판</p>';
@@ -62,6 +62,46 @@ var MapUtil = {
 
             ol.control.Control.call(this, {
                 element: element,
+                target: options.target
+            });
+
+        },
+        legendControl_new : function (opt_options) {
+            var options = opt_options || {};
+            
+            var legend = document.createElement('div');
+            legend.className = 'legend ol-unselectable ol-control';
+
+            var ui = document.createElement('ui');
+            
+            var li = document.createElement('li');
+            li.className = "road_over";
+            li.text ="도로명판";
+
+            var span = document.createElement('span');
+            span.className = "total_over";
+
+
+            li.appendChild(span);
+            ui.appendChild(li);
+            legend.appendChild(ui);
+
+
+            // var legendHtml = '';
+            //     // legendHtml += '<p class="title">범 례</p>';
+            //     legendHtml += '<ui>'
+            //     legendHtml += '<li class="road_over">도로명판<span class="total_over">99건</span></li>';
+            //     legendHtml += '<li class="blocks">기초번호판<span class="total_over">99건</span></li>';
+            //     legendHtml += '<li class="local">지역안내판<span class="total_over">99건</span></li>';
+            //     legendHtml += '</ui>'
+            // legend.innerHTML = legendHtml;
+
+            // var element = document.createElement('div');
+            // element.className = 'curPosition ol-unselectable ol-control';
+            // element.appendChild(button);
+
+            ol.control.Control.call(this, {
+                element: legend,
                 target: options.target
             });
 
@@ -219,9 +259,10 @@ var MapUtil = {
     setDetail: function(type, f){
         var codeList
         
+        var sn = f.get("RD_GDFTY_SN");
+
         switch (type) {
             case KEY.plateType.ROAD:
-                var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
                 
                 var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
@@ -233,12 +274,10 @@ var MapUtil = {
 
 
                         //제목창
-                        var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, f.get('FT_KOR_RN'), f.get('BSIS_MNNM'), f.get('BSIS_SLNO'));
+                        var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.frontStartBaseMasterNo, data.frontStartBaseSlaveNo);
                         $(".title").append(title);
                         
                         //도로시설물
-                        // $("#rdGdftySeLbl").append(data.rdGdftySeLbl);
-                        // $("#rdGdftySe").append(data.rdGdftySe);
                         $("#rdftySeLbl").append(data.rdftySeLbl);
                         $("#rdftySe").append(data.rdftySe);
                         //설치도로명
@@ -263,13 +302,9 @@ var MapUtil = {
                         //앞면 도로명(로마자)
                         $("#frontRomeRoadNm").append(data.frontRomeRoadNm);
                         //앞면시작기초번호(0-0)
-                        // $("#frontStartBaseMasterNo").append(data.frontStartBaseMasterNo);
-                        // $("#frontStartBaseSlaveNo").append(data.frontStartBaseSlaveNo);
                         var frontStartBaseNo = "{0} - {1}".format(data.frontStartBaseMasterNo,data.frontStartBaseSlaveNo);
                         $("#frontStartBaseNo").append(frontStartBaseNo);                             
                         //앞면종료기초번호(0-0)
-                        // $("#frontEndBaseMasterNo").append(data.frontEndBaseMasterNo);
-                        // $("#frontEndBaseSlaveNo").append(data.frontEndBaseSlaveNo);
                         var frontEndBaseNo = "{0} - {1}".format(data.frontEndBaseMasterNo,data.frontEndBaseSlaveNo);
                         $("#frontEndBaseNo").append(frontEndBaseNo);
                         //뒷면 도로명(국문)
@@ -306,16 +341,17 @@ var MapUtil = {
                         //규격
                         $("#rdpqGdSd").append(data.rdpqGdSd);
                         $("#rdpqGdSdLbl").append(data.rdpqGdSdLbl);
+                        //가로*새로*두께
+                        var gdfty = "{0}*{1}*{2}".format(data.gdftyWide,data.gdftyVertical,data.gdftyThickness);
+                        $("#gdfty").append(gdfty);
                         //단가(원)
                         $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
-                        //가로*새로*두꺠
-
                         //설치상태
 
                     });
                 break;
             case KEY.plateType.LOCAL:
-                var sn = '7002';
+                sn = '7002';
                 var link = URLs.roadsignlink;
                 
                 var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
@@ -324,16 +360,176 @@ var MapUtil = {
                     .then(function (context, rcode, results) {
                         var data = results.data;
                         console.log(data);
+
+                        //제목창
+                        var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.frontStartBaseMasterNo, data.frontStartBaseSlaveNo);
+                        $(".title").append(title);
+
+
+                        //도로시설물
+                        // $("#rdGdftySeLbl").append(data.rdGdftySeLbl);
+                        // $("#rdGdftySe").append(data.rdGdftySe);
+                        $("#rdftySeLbl").append(data.rdftySeLbl);
+                        $("#rdftySe").append(data.rdftySe);
+                        //설치도로명
+
+                        //설치기초번호
+                        var bsis = "{0} - {1}".format(data.bsisMnnm,data.bsisSlno);
+                        $("#bsis").append(bsis);
+                        //설치유형
+                        $("#instSeLbl").append(data.instSeLbl);
+                        $("#instSe").append(data.instSe);
+                        //제작형식
+                        $("#gdftyMnf").append(data.gdftyMnf);
+                        $("#gdftyMnfLbl").append(data.gdftyMnfLbl);
+                        //설치지점
+                        $("#instSpotCd").append(data.instSpotCd);
+                        $("#instSpotCdLbl").append(data.instSpotCdLbl);
+                        //교차로유형
+                        $("#instCrossCd").append(data.instCrossCd);
+                        $("#instCrossCdLbl").append(data.instCrossCdLbl);
+                        //한글도로명
+                        $("#area_areaKorRn").append(data.area_areaKorRn);
+                        //로마자
+                        $("#area_romRn").append(data.area_romRn);
+                        //시작기초번호(0-0)]
+                        var area_stbsNo = "{0} - {1}".format(data.area_stbsSn,data.area_stbsMn);
+                        $("#area_stbsNo").append(area_stbsNo);
+                        //종료기초번호(0-0)
+                        var area_edbsNo = "{0} - {1}".format(data.area_edbsMn,data.area_edbsSn);
+                        $("#area_edbsNo").append(area_edbsNo);
+                        //광고에따른 분류
+                        $("#area_advrtsCdLbl").append(data.area_advrtsCdLbl);
+                        $("#area_advrtsCd").append(data.area_advrtsCd);
+                        //광고내용
+                        $("#area_advCn").append(data.area_advCn);
+                        //기타내용
+                        $("#area_etcCn").append(data.area_etcCn);
+                        //안내시설형식
+                        $("#gdftyForm").append(data.gdftyForm);
+                        $("#gdftyFormLbl").append(data.gdftyFormLbl);
+                        //사용대상
+                        $("#useTarget").append(data.useTarget);
+                        $("#useTargetLbl").append(data.useTargetLbl);
+                        //사용방향
+                        $("#plqDirection").append(data.plqDirection);
+                        $("#plqDirectionLbl").append(data.plqDirectionLbl);
+                        //양면여부
+                        $("#bdrclAt").append(data.bdrclAt);
+                        $("#bdrclAtLbl").append(data.bdrclAtLbl);
+                        //제2외국어여부
+                        $("#scfggMkty").append(data.scfggMkty);
+                        $("#scfggMktyLbl").append(data.scfggMktyLbl);
+                        //언어1
+                        $("#scfggUla1").append(data.scfggUla1);
+                        $("#scfggUla1Lbl").append(data.scfggUla1Lbl);
+                        //언어2
+                        $("#scfggUla2").append(data.scfggUla2);
+                        $("#scfggUla2Lbl").append(data.scfggUla2Lbl);
+                        //규격
+                        $("#area_areaGdSdLbl").append(data.area_areaGdSdLbl);
+                        $("#area_areaGdSd").append(data.area_areaGdSd);
+                        //가로*새로*두께
+                        var gdfty = "{0}*{1}*{2}".format(data.gdftyWide,data.gdftyVertical,data.gdftyThickness);
+                        $("#gdfty").append(gdfty);
+                        //단가(원)
+                        $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
+                        //설치상태
+
                     });
 
                 break;
             case KEY.plateType.BASE:
+
+                var link = URLs.roadsignlink;
+
+                var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
+
+                util.postAJAX({}, url)
+                    .then(function (context, rcode, results) {
+                        var data = results.data;
+                        console.log(data);
+
+                        //제목창
+                        var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.frontStartBaseMasterNo, data.frontStartBaseSlaveNo);
+                        $(".title").append(title);
+
+                        //도로시설물
+                        // $("#rdGdftySeLbl").append(data.rdGdftySeLbl);
+                        // $("#rdGdftySe").append(data.rdGdftySe);
+                        $("#rdftySeLbl").append(data.rdftySeLbl);
+                        $("#rdftySe").append(data.rdftySe);
+                        //설치도로명
+
+                        //설치기초번호
+                        var bsis = "{0} - {1}".format(data.bsisMnnm,data.bsisSlno);
+                        $("#bsis").append(bsis);
+                        //설치유형
+                        $("#instSeLbl").append(data.instSeLbl);
+                        $("#instSe").append(data.instSe);
+                        //제작형식
+                        $("#gdftyMnf").append(data.gdftyMnf);
+                        $("#gdftyMnfLbl").append(data.gdftyMnfLbl);
+                        //설치지점
+                        $("#instSpotCd").append(data.instSpotCd);
+                        $("#instSpotCdLbl").append(data.instSpotCdLbl);
+                        //교차로유형
+                        $("#instCrossCd").append(data.instCrossCd);
+                        $("#instCrossCdLbl").append(data.instCrossCdLbl);
+                        //한글도로명
+                        $("#area_areaKorRn").append(data.area_areaKorRn);
+                        //로마자
+                        $("#area_romRn").append(data.area_romRn);
+                        //시작기초번호(0-0)
+                        var area_stbsNo = "{0} - {1}".format(data.area_stbsSn,data.area_stbsMn);
+                        $("#area_stbsNo").append(area_stbsNo);
+                        //종료기초번호(0-0)
+                        var area_edbsNo = "{0} - {1}".format(data.area_edbsMn,data.area_edbsSn);
+                        $("#area_edbsNo").append(area_edbsNo);
+                        //설치장소 구분
+                        $("#base_itlpcSeLbl").append(data.base_itlpcSeLbl);
+                        $("#base_itlpcSe").append(data.base_itlpcSe);
+                        //설치시설물
+                        $("#base_instlFtyLbl").append(data.base_instlFtyLbl);
+                        $("#base_instlFty").append(data.base_instlFty);
+                        //곡면분류
+                        $("#base_planeCdLbl").append(data.base_planeCdLbl);
+                        $("#base_planeCd").append(data.base_planeCd);
+                        //안내시설형식
+                        $("#gdftyForm").append(data.gdftyForm);
+                        $("#gdftyFormLbl").append(data.gdftyFormLbl);
+                        //사용대상
+                        $("#useTarget").append(data.useTarget);
+                        $("#useTargetLbl").append(data.useTargetLbl);
+                        //사용방향
+                        $("#plqDirection").append(data.plqDirection);
+                        $("#plqDirectionLbl").append(data.plqDirectionLbl);
+                        //양면여부
+                        $("#bdrclAt").append(data.bdrclAt);
+                        $("#bdrclAtLbl").append(data.bdrclAtLbl);
+                        //제2외국어여부
+                        $("#scfggMkty").append(data.scfggMkty);
+                        $("#scfggMktyLbl").append(data.scfggMktyLbl);
+                        //언어1
+                        $("#scfggUla1").append(data.scfggUla1);
+                        $("#scfggUla1Lbl").append(data.scfggUla1Lbl);
+                        //언어2
+                        $("#scfggUla2").append(data.scfggUla2);
+                        $("#scfggUla2Lbl").append(data.scfggUla2Lbl);
+                        //가로*새로*두께
+                        var base_bsisGdSdLbl = "{0}*{1}*{2}".format(data.gdftyWide,data.gdftyVertical,data.gdftyThickness);
+                        $("#base_bsisGdSdLbl").append(base_bsisGdSdLbl);
+                        $("#base_bsisGdSd").append(data.base_bsisGdSd);
+                        //단가(원)
+                        $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
+                        //설치상태
+
+
+                    });
                 break;    
             case KEY.plateType.ENTRC:
                 break;    
             case KEY.plateType.BUILD:
-                break;
-            case KEY.plateType.ENTRC:
                 break;
         }
                 
@@ -770,12 +966,12 @@ var mapInit = function (mapId, pos) {
         
         var layerList = map.getLayers().getArray();
         var popupDiv = $("#popup-content");
-        var buttonDiv = "<div id='buttonDiv'>{0}</div>";
+        var buttonDiv = "<div class='{0}'>{1}</div>";
 
-        var popDiv = "<div onclick =\"{0}\">{1}</div>"
-        var popTableHead = "<h2>{0}</h2>";
+        var popDiv = "<div class='mapInfo' onclick =\"{0}\">{1}</div>"
+        var popTableHead = "<p class='localTitle'>{0}</p>";
         var popTableP = "<p>{0} : {1}</p>";
-        var buttonForm ="<button onclick=\"{0}\">{1}</button>" 
+        var buttonForm ="<span class = {0} onclick=\"{1}\"><img src='{2}' title='{3}'></span>" 
         
         //심플팝업 초기화
         popupDiv.empty();
@@ -847,20 +1043,29 @@ var mapInit = function (mapId, pos) {
                 resultHtml+= pointX;
                 resultHtml+= pointY;
 
+                resultHtml = buttonDiv.format('mapInfo',resultHtml);
+
+                //팝업위
+                var box1 = '<div class="mapRow"><span class="box1"></span><div class="box2"></div><span class="box3"></span></div>';
+                popupDiv.append(box1);
                 popupDiv.append(resultHtml);
 
                 //버튼처리
-                buttonHtml = buttonForm.format("insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","저장");
-                buttonHtml += buttonForm.format("clearMoveMode()","취소");
+                buttonHtml = buttonForm.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","","저장");
+                buttonHtml += buttonForm.format("btnNormal","clearMoveMode()","","취소");
                 
-                buttonHtml = buttonDiv.format(buttonHtml);
+                buttonHtml = buttonDiv.format("mapBtn",buttonHtml);
+                
+                //팝업아래
+                var box2 = '<div class="mapRow"><span class="box7"></span><div class="box8_infobulle"></div><span class="box9"></span></div>';
 
                 popupDiv.append(buttonHtml);
+                popupDiv.append(box2);
 
                 $("#popup").show();
-
+                
                 overlay.setPosition(coordinate);
-
+                
             }
         }
         /********** 위치이동 팝업 셋팅 end **********/
@@ -888,40 +1093,26 @@ var mapInit = function (mapId, pos) {
                     switch(layer.get('id')) {
                         case DATA_TYPE.RDPQ:
 
-                            var pDir = feature.get("PLQ_DRC");
-                            var pDirDetail = MapUtil.getPlateDir(feature);
-                            var pDirDetailText = "";
+                            var FT_KOR_RN = popTableHead.format(feature.get('FT_KOR_RN') +" "+ feature.get('FT_EDBS_MN')+" - "+ feature.get('FT_EDBS_SN'));
+                            
+                            var insSpoCd = setCodeValue(feature,'INS_SPO_CD', '설치지점');
 
-                            var bgUrl = "";
+                            var rdpqGdSd = setCodeValue(feature,'RDPQ_GD_SD', '규격');
 
-                            switch (pDir) {
-                                case KEY.plateDir.ONE:
-                                    pDirDetailText = pDirDetail.ft_all(pDirDetail.direct);
-                                    break;
-                                case KEY.plateDir.BI:
-                                    pDirDetailText = pDirDetail.ft_stbs;
-                                    // $(".popup-content .img-plate .base-left").html(pDirDetail.ft_stbs);
-                                    // $(".popup-content .img-plate .base-right").html(pDirDetail.ft_edbs);
-                                    break;
-                                case KEY.plateDir.FORWARD:
-                                    pDirDetailText = pDirDetail.ft_all(pDir);
-                                    break;
-                            }
-
-
-                            var FT_KOR_RN = popTableHead.format(feature.get('FT_KOR_RN'));
-                            var PLQ_DRC = popTableP.format("시점", pDirDetailText);
-                            var RDPQ_GD_SD = popTableP.format("규격", feature.get('RDPQ_GD_SD'));
+                            var insCrsCd = setCodeValue(feature,'INS_CRS_CD', '교차로유형');
                             
                             strHtml += FT_KOR_RN
-                            strHtml += PLQ_DRC
-                            strHtml += RDPQ_GD_SD
+                            strHtml += insSpoCd
+                            strHtml += rdpqGdSd
+                            strHtml += insCrsCd
 
-                            strHtml += "<hr/>"
+                            // strHtml += "<hr/>"
 
                             layerType = KEY.plateType.ROAD;
-                            //변경대상
+                            //레이어변경(임시)
                             layerType = KEY.plateType.LOCAL;
+                            // layerType = KEY.plateType.BASE;
+                            // layerType = KEY.plateType.ENTRC;
 
                             resultHtml = popDiv.format('openDetailPopupCall('+index+')',strHtml);
 
@@ -930,27 +1121,39 @@ var mapInit = function (mapId, pos) {
                             //도로시설물 공간정보
                             var geom = feature.getGeometry().getCoordinates();
 
-                            buttonHtml = buttonDiv.format(buttonForm.format("moveingPoint("+RDFTYLC_SN+","+geom[0]+","+geom[1]+","+index+")","이동"));
+                            buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
+                            buttonHtml += buttonForm.format("addition","moveingPoint("+RDFTYLC_SN+","+geom[0]+","+geom[1]+","+index+")","image/addtion.png","이동");
 
-                            buttonHtml += "<hr/>"
+                            // buttonHtml += "<hr/>"
 
+                            buttonHtml = buttonDiv.format("mapAdd",buttonHtml);
+
+                            //팝업위
+                            var box1 = '<div class="mapRow"><span class="box1"></span><div class="box2"></div><span class="box3"></span></div>';
+                            //팝업아래
+                            var box2 = '<div class="mapRow"><span class="box7"></span><div class="box8_infobulle"></div><span class="box9"></span></div>';
+
+                            popupDiv.append(box1);
                             popupDiv.append(resultHtml);
                             popupDiv.append(buttonHtml);
+                            popupDiv.append(box2);
+
+
                             $("#popup").show();
                             overlay.setPosition(coordinate);
 
                             break;
                         case DATA_TYPE.AREA:
-                            MapUtil.openPopup(KEY.plateType.LOCAL, features[0]);
+                            
                                 break;
                         case DATA_TYPE.BSIS:
-                            MapUtil.openPopup(KEY.plateType.BASE, features[0]);
+                            
                                 break;                
                         case DATA_TYPE.ENTRC:
-                            MapUtil.openPopup(KEY.plateType.ENTRC, features[0]);
+                            
                                 break;
                         case DATA_TYPE.BULD:
-                            MapUtil.openPopup(KEY.plateType.BUILD, features[0]);
+                            
                                 break;
                     }
 
@@ -1691,8 +1894,15 @@ function openDetailPopupCall(index){
     
 }
 
-function setSimplePop(coordinate){
+function setCodeValue(feature, colume, titleText){
 
+    var popTableP = "<p>{0} : {1}</p>";
+
+    var codeValue = feature.get(colume);
+    var codeList = app.codeMaster[CODE_GROUP[colume]];
+    var label = codeList[codeValue];
+    var resultText = popTableP.format(titleText, label);
+    return resultText;
         
 }
 

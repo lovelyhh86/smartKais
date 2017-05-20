@@ -4,14 +4,13 @@
 <body class="intro">
 
 <div id="areaView_page">
-	<div class="roadView">
+	<div class="detailView">
 		<p class="openImage"><span onclick="closeDetailView();">열림</span></p>
 		<div class="infoWrap">
 			<!-- header -->
 			<div class="infoHeader">
-			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="title"><span class="titleIcon"><img src="img/icon_legend03.png" title="지역번호판"></span></p>
 				<p class="photo"><span class="photoNum">92</span></p>
 			</div>
 			
@@ -21,7 +20,7 @@
 				<div class="infoTable">
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">도로시설물</span>
+								<span class="label">지역안내판</span>
 						</div>
 						<div class="cell2">
 							<p id="rdftySeLbl"></p>
@@ -83,71 +82,64 @@
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">앞면 도로명(국문)</span>
+								<span class="label">한글 도로명</span>
 						</div>
 						<div class="cell2">
-							<p id="frontKoreanRoadNm"></p>
+							<p id="area_areaKorRn"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">앞면 도로명(로마)</span>
+								<span class="label">로마자</span>
 						</div>
 						<div class="cell2">
-							<p id="frontRomeRoadNm"></p>
+							<p id="area_romRn"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">앞면 시작기초번호</span>
+								<span class="label">시작기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontStartBaseNo"></p>
+							<p id="area_stbsNo"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">앞면 종료기초번호</span>
+							<span class="label">종료기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontEndBaseNo"></p>
+							<p id="area_edbsNo"></p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('area_advrtsCd');" class="row">
+						<div  class="cell1">
+								<span class="label">광고여부에따른 분류</span>
+						</div>
+						<div class="cell2">
+							<p id="area_advrtsCdLbl"></p>
+							<p id="area_advrtsCd" style="display:none"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 도로명(국문)</span>
+							<span class="label">광고내용</span>
 						</div>
 						<div class="cell2">
-							<p id="backKoreanRoadNm"></p>
+							<p id="area_advCn"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 도로명(로마)</span>
+							<span class="label">기타내용</span>
 						</div>
 						<div class="cell2">
-							<p id="backRomeRoadNm"></p>
+							<p id="area_etcCn"></p>
 						</div>
 					</div>
 					<div class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 시작기초번호</span>
-						</div>
-						<div class="cell2">
-							<p id="backStartBaseNo"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div  class="cell1">
-								<span class="label">뒷면 종료기초번호</span>
-						</div>
-						<div class="cell2">
-							<p id="backEndBaseNo"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div  class="cell1">
-								<span class="label">안내시설형식</span>
+							<span class="label">안내시설형식</span>
 						</div>
 						<div class="cell2">
                             <p id="gdftyFormLbl"></p>
@@ -163,7 +155,7 @@
                             <p id="useTarget" style="display:none"></p>
 						</div>
 					</div>
-					<div onclick="openDataIdPop('plqDirection');" class="row">
+					<div class="row">
 						<div  class="cell1">
 								<span class="label">안내시설방향</span>
 						</div>
@@ -210,16 +202,24 @@
 					</div>
 					<div onclick="openDataIdPop('rdpqGdSd');" class="row">
 						<div  class="cell1">
-								<span class="label">규격</span>
+							<span class="label">규격</span>
 						</div>
 						<div class="cell2">
-							<p id="rdpqGdSdLbl"></p>
-                            <p id="rdpqGdSd" style="display:none"></p>
+							<p id="area_areaGdSdLbl"></p>
+                            <p id="area_areaGdSd" style="display:none"></p>
 						</div>
 					</div>
-					<div onclick="" class="row">
+					<div class="row">
 						<div  class="cell1">
-								<span class="label">가격</span>
+							<span class="label">규격(W*V*T)</span>
+						</div>
+						<div class="cell2">
+							<p id="gdfty"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+							<span class="label">단가(원)</span>
 						</div>
 						<div class="cell2">
 							<p id="gdftyUnitPrice"></p>
@@ -233,34 +233,34 @@
 							<p id=""></p>
 						</div>
 					</div>
-
 				<!-- 정보 끝 -->
 				
-                <!-- 공통 데이터 팝업 -->
-                <div id="dataPop" class="dataWrap" style="display: none">
-					<div id="dataTitle" class="dataTItle"></div>
-					<div id="dataForm" class="dataForm">
+					<!-- 공통 데이터 팝업 -->
+					<div id="dataPop" class="dataWrap" style="display: none">
+						<div id="dataTitle" class="dataTItle"></div>
+						<div id="dataForm" class="dataForm">
+
+						</div>
+						<div class="dataBtn">
+							<span onclick="radioDataSendParent()" class="btnPoint">저장</span>
+							<span onclick="closeDataPop()" class="btnNormal">닫기</span>
+						</div>
+						<p class="dataClose" onclick="closeDataPop();"><img src="image/dataClose.png" title="닫기"></p>
+					</div>
 						
-					</div>
-					<div class="dataBtn">
-						<span onclick="radioDataSendParent()" class="btnPoint">저장</span>
-						<span onclick="closeDataPop()" class="btnNormal">닫기</span>
-					</div>
-					<p class="dataClose" onclick="closeDataPop();"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
-						
-			</div>
 			<!-- content 끝  -->
 			
+			</div>
+			<!-- footer 시작 -->
+			<div class="infoFooter">
+				<span class="btnPoint">저장</span>
+				<span class="btnNormal">초기화</span>
+			</div>
+			<!-- footer 끝 -->
 		</div>
-		<!-- footer 시작 -->
-		<div class="infoFooter">
-			<span class="btnPoint">저장</span>
-			<span class="btnNormal">초기화</span>
-		</div>
-		<!-- footer 끝 -->
+
 	</div>
-	
 	
 </div>
 

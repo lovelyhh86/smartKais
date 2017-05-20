@@ -1,7 +1,7 @@
 var defaultStyleOptions = {
     label: {
-        textOffsetX: 21,
-        textOffsetY: -23
+        textOffsetX: 0,
+        textOffsetY: 0
     },
     radius: 5
 };
@@ -175,11 +175,11 @@ var roadStyle = function (styleOptions) {
         //     })
         // })
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-          anchor: [0, 50],
+        //   anchor: [0, 50],
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
           src: 'img/icon_legend01.png',
-          scale:0.8
+          scale: 1.5
         }))
     };
     if( styleOptions.label._text)
@@ -202,11 +202,11 @@ var areaStyle = function (styleOptions) {
         //     })
         // })
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-          anchor: [0, 50],
+        //   anchor: [0, 50],
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
           src: 'img/icon_legend03.png',
-          scale:0.5
+          scale: 1.5
         }))
     };
     if( styleOptions.label._text)
@@ -229,11 +229,11 @@ var bsisStyle = function (styleOptions) {
         //     })
         // })
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-          anchor: [0, 50],
+        //   anchor: [0, 50],
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
           src: 'img/icon_legend02.png',
-          scale:0.5
+          scale: 1.5
         }))
     };
     if( styleOptions.label._text)
@@ -252,7 +252,7 @@ var entrcStyle = function (styleOptions) {
              }),
              stroke: new ol.style.Stroke({
                  color: 'white',
-                 width: 2
+                 width: 1
              })
          })
     };

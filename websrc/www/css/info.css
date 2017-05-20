@@ -8,7 +8,7 @@
 .positionInfo3{position: absolute; top: 500px; left: 550px;}
 
 /*legend*/
-.legend{display:inline-block; position:relative;	top:20px; left:20px; color: #2c3538; }
+.legend{display:inline-block; top:20px; left:20px; color: #2c3538; }
 .legend ul{width:215px; border:1px solid #e5e5e5; border-radius:8px; box-shadow:2px 2px 3px rgba(0, 0 , 0, .1); padding:15px 10px;background-color:rgba(245, 247, 248, 0.6);}
 .legend ul li{ position:relative; display:inline-block; width: 170px; margin-top: 5px; padding:11px  0  11px 43px; list-style:none; background-color: #ffffff; text-shadow: none; font-size: 0.95em ;}
 .legend ul li:FIRST-CHILD{margin-top: 0;}
@@ -39,7 +39,7 @@
 .box9{position:absolute; float:right; bottom:0; right:0; display:inline-block; width:15px; height:30px;background:url(../image/box9.png) 0 100% no-repeat;}
 
 /*map Info*/
-.mapContent{display:block; width:100%; background:url(../image/box6.png) 100% 0 no-repeat; color: #666; font-size: 0.9em;line-height: 1.4em;}
+.mapContent{display:block; width:100%; height: 90px; background:url(../image/box6.png) 100% 0 no-repeat; color: #666; font-size: 0.9em;line-height: 1.4em;}
 .mapInfo{position:relative; display:block; padding:5px 25px 0 25px; background:url(../image/box4.png) 0 0 no-repeat;}
 .mapAdd{display: inline-block; position: absolute; top: 0; right: 20px;}
 .mapInfo1{position:relative; display:block; padding:5px 25px 20px 25px; background:url(../image/box4.png) 0 0 no-repeat;}
@@ -64,9 +64,9 @@
 
 /*top*/
 
-.roadView {position:fixed;bottom:0; width:100%; height:830px;}
-.roadView >p.openImage{display: block; text-align: center}
-.roadView >p >span{display:inline-block; width:76px; background:url(../image/open_image.png) 0 0 no-repeat;text-indent: -9999em;}
+.detailView {position:fixed;bottom:0; width:100%; height:830px;}
+.detailView >p.openImage{display: block; text-align: center}
+.detailView >p >span{display:inline-block; width:76px; background:url(../image/open_image.png) 0 0 no-repeat;text-indent: -9999em;}
 
 /*layout*/
 .infoWrap{ bottom:0; width:auto; height:100%; padding:20px; background-color:#3b3a40; overflow: hidden;}
