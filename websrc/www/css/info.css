@@ -1,5 +1,69 @@
 @charset "UTF-8";
 
+/************* 범례 ****************/
+
+/*map*/
+.positionInfo1{position: absolute; top: 450px; left: 50px;}
+.positionInfo2{position: absolute; top: 50px; left: 550px;}
+.positionInfo3{position: absolute; top: 500px; left: 550px;}
+
+/*legend*/
+.legend{display:inline-block; position:relative;	top:20px; left:20px; color: #2c3538; }
+.legend ul{width:215px; border:1px solid #e5e5e5; border-radius:8px; box-shadow:2px 2px 3px rgba(0, 0 , 0, .1); padding:15px 10px;background-color:rgba(245, 247, 248, 0.6);}
+.legend ul li{ position:relative; display:inline-block; width: 170px; margin-top: 5px; padding:11px  0  11px 43px; list-style:none; background-color: #ffffff; text-shadow: none; font-size: 0.95em ;}
+.legend ul li:FIRST-CHILD{margin-top: 0;}
+.legend ul li > .total{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/legendLine.png) 0 3px no-repeat; color: #666;}
+
+.legend ul li.road{background: #fff url(../image/roadIconS.png) 15px 9px no-repeat;}
+.legend ul li.road_over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.road_over > .total_over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;}
+
+.legend ul li.blocks{background: #fff url(../image/blocksIconS.png) 15px 9px no-repeat;}
+.legend ul li.blocks_over{background: #f9745c url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.blocks_over > .total_over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/blocksLine.png) 0 3px no-repeat; color: #fff;}
+
+.legend ul li.local{background: #fff url(../image/localIconS.png) 15px 9px no-repeat;}
+.legend ul li.local_over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.local_over > .total_over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
+
+
+/*mapBox*/
+.mapWrap{width:300px;max-width: 400px; color: #2c3538}
+.mapRow{display:block;position:relative; width: auto;}
+.box1{float:left; display:inline-block; width:15px; height:15px; background: url(../image/box1.png) 0 0 no-repeat;}
+.box2{height:15px; margin-right:15px; width:auto; background: url(../image/box2.png) 10px 0 no-repeat;}
+.box3{position:absolute; float:right; top:0; right:0; display:inline-block; width:15px; height:15px; background:url(../image/box3.png) 0 100% no-repeat;}
+.box7{float:left; display:inline-block; width:15px; height:30px;background:url(../image/box7.png) 0 0 no-repeat;}
+.box8{width:auto; height:30px; margin-right:5px; background: url(../image/box8.png) 5px 0 no-repeat;}
+.box8_infobulle{width:auto; height:30px; margin-right:5px; background:url(../image/box8_infobulle.png) 50% 0 no-repeat;}
+.box9{position:absolute; float:right; bottom:0; right:0; display:inline-block; width:15px; height:30px;background:url(../image/box9.png) 0 100% no-repeat;}
+
+/*map Info*/
+.mapContent{display:block; width:100%; background:url(../image/box6.png) 100% 0 no-repeat; color: #666; font-size: 0.9em;line-height: 1.4em;}
+.mapInfo{position:relative; display:block; padding:5px 25px 0 25px; background:url(../image/box4.png) 0 0 no-repeat;}
+.mapAdd{display: inline-block; position: absolute; top: 0; right: 20px;}
+.mapInfo1{position:relative; display:block; padding:5px 25px 20px 25px; background:url(../image/box4.png) 0 0 no-repeat;}
+.mapInfo1 > .mapAdd{display: inline-block; position: absolute; top: 0; right: 20px;}
+.mapInfo2{position:relative; display:block;  padding:0 25px 0 25px; background:url(../image/box4.png) 0 0 no-repeat;}
+.mapInfo2 > .infoLine{border-top:1px solid #e5e5e5; padding-top: 15px;}
+.mapInfo2 > .mapAdd{display: inline-block; position: absolute; top: 15px; right: 20px;}
+.info{ display: inline-block; padding:0 15px; background: url(../image/infoLine.png) 0 6px no-repeat}
+.info:FIRST-CHILD{padding:0 15px 0 0;background:none}
+.iconPosition{text-align: center; p}
+
+.localTitle{margin-bottom:5px; font-weight: bold; color: #000;}
+.boldColor{color: #000;}
+
+.mapBtn{width:auto; border-top:1px solid #e5e5e5; margin:15px 0 0 0; padding: 17px 0  0 0; text-align: center;}
+.mapBtn >.btnPoint{display:inline-block; padding:5px 35px; background-color: #496388; color:#e5e5e5;text-shadow: none;font-size: 1.1em}
+.mapBtn >.btnNormal{display:inline-block; margin-left:5px ; padding:5px 35px; background-color: #c0c0c0; color:#fff;text-shadow: none; font-size: 1.1em}
+
+
+
+/************* 팝업 ****************/
+
+/*top*/
+
 .roadView {position:fixed;bottom:0; width:100%; height:830px;}
 .roadView >p.openImage{display: block; text-align: center}
 .roadView >p >span{display:inline-block; width:76px; background:url(../image/open_image.png) 0 0 no-repeat;text-indent: -9999em;}

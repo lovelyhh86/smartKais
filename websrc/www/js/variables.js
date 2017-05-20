@@ -59,6 +59,8 @@ var pages = {
     "map": { link: function () { return URLs.realPath() + "map.html"; }, div: "#mapview_page" },
     "map2": { link: function () { return URLs.realPath() + "map2.html"; }, div: "#map2view_page" },
     "detail_road": { link: function () { return URLs.realPath() + "popRoad.html"; }, div: "#roadView_page" },
+    "detail_area": { link: function () { return URLs.realPath() + "popArea.html"; }, div: "#areaView_page" },
+    "detail_base": { link: function () { return URLs.realPath() + "popBase.html"; }, div: "#baseView_page" },
     "detail_buld": { link: function () { return URLs.realPath() + "popBuild.html"; }, div: "#buildView_page" },
     "detail_entrc": { link: function () { return URLs.realPath() + "popEntrc.html"; }, div: "#entrcView_page" },
     "minwonListPage": { link: function () { return URLs.realPath() + "minwon.html"; }, div: "#minwonList_page" },

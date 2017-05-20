@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' http://m1.juso.go.kr 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://m1.juso.go.kr;">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>스마트 KAIS</title>
+	
+	<link rel="preload" as="image" href="img/intro_bg2.jpg">
+	
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery-2.2.1.min.js"></script>
+
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.mobile-1.4.5.min.js"></script>
+	
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/json2.js"></script>
+	
+	<!-- Phonegap.js import -->
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	
+	<!-- eGovFrame Common import -->
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+	
+	<link rel="stylesheet" href="css/default.css" />
+	<link rel="stylesheet" href="css/intro.css" />
+	<link rel="stylesheet" href="css/info.css" />
+	
+	<script type="text/javascript" src="js/variables.js"></script>
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/datasource.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</head>
+
+<body class="intro" onload="app.initialize();">
+
+<div id="roadView_page">
+
+<!-- 범례리스트 -->
+<div class="legend">
+	<ul>
+		<li class="road_over">도로명판 <!-- <li class="road"> --> 
+			<span class="total_over">99건</span> <!-- <span class="total"> --> 
+		</li>
+		<li class="blocks">기초번호판 <!-- <li class="blocks_over"> -->
+			<span class="total">7건</span> <!-- <span class="total_over"> --> 
+		</li>
+		<li class="local">지역안내판 <!-- <li class="local_over">-->
+			<span class="total">1건</span> <!-- <span class="total_over"> --> 
+		</li>
+	</ul>
+
+
+</div>
+
+<!-- 범례정보 1 -->
+<div class="positionInfo1">
+	<!-- 위치 정보 -->
+	<div class="mapWrap">
+		<div class="mapRow">
+			<span class="box1"></span>
+			<div class="box2"></div>
+			<span class="box3"></span>
+		</div>
+		<div class="mapContent">
+			<div class="mapInfo1">
+				<div>
+					<p class="localTitle">군군청 앞길111</p>
+					<p>시점 : 92, 종점 : 96,</p>
+					<p><span class="info">양방향</span><span class="info">단면</span><span class="info">123 x 223</span></p>
+				</div>
+				<div class="mapAdd">
+					<span class="more"><img src="image/more.png" title="더보기"></span>
+					<span class="addition"><img src="image/addtion.png" title="화일추가"></span>
+				</div>
+			</div>
+			<div class="mapInfo2">
+				<p class="infoLine"></p>
+				<div>
+					<p class="localTitle">군군청 앞길</p>
+					<p>시점 : 92, 종점 : 96,</p>
+					<p><span class="info">양방향</span><span class="info">단면</span><span class="info">123 x 223</span></p>
+				</div>
+				<div class="mapAdd">
+					<span class="more"><img src="image/more.png" title="더보기"></span>
+					<span class="addition"><img src="image/addtion.png" title="화일추가"></span>
+				</div>
+			</div>
+			
+		</div>
+		<div class="mapRow">
+			<span class="box7"></span>
+			<div class="box8_infobulle"></div>
+			<span class="box9"></span>
+		</div>
+	</div>
+	<div class="iconPosition"><img src="image/roadIconB.png" title="도로명판"></div>
+</div>
+
+<!-- 범례정보 2 -->
+<div class="positionInfo2">
+	<!-- 위치 일련정보 -->
+	<div class="mapWrap">
+		<div class="mapRow">
+			<span class="box1"></span>
+			<div class="box2"></div>
+			<span class="box3"></span>
+		</div>
+		<div class="mapContent">
+			<div class="mapInfo">
+				<div>
+					<p><span class="boldColor">위치 일련번호</span> : 5386</p>
+					<p><span class="boldColor">X</span> : 946734.8054360523</p>
+					<p><span class="boldColor">Y</span> : 1953176.1286510013</p>
+				</div>
+				<div class="mapBtn">
+					<span class="btnPoint">저장</span>
+					<span class="btnNormal">취소</span>
+				</div>
+			</div>
+			
+		</div>
+		<div class="mapRow">
+			<span class="box7"></span>
+			<div class="box8"></div>
+			<span class="box9"></span>
+		</div>
+	</div>
+
+	<!-- 위치 정보 -->
+	<div class="mapWrap">
+		<div class="mapRow">
+			<span class="box1"></span>
+			<div class="box2"></div>
+			<span class="box3"></span>
+		</div>
+		<div class="mapContent">
+			<div class="mapInfo">
+				<div>
+					<p class="localTitle">군군청 앞길</p>
+					<p><span>시점</span> : 92,<span class="">종점</span> : 96,</p>
+					<p><span class="info">양방향</span><span class="info">단면</span><span class="info">123 x 223</span></p>
+				</div>
+				<div class="mapAdd">
+					<span class="more"><img src="image/more.png" title="더보기"></span>
+					<span class="addition"><img src="image/addtion.png" title="화일추가"></span>
+				</div>
+			</div>
+			
+		</div>
+		<div class="mapRow">
+			<span class="box7"></span>
+			<div class="box8_infobulle"></div>
+			<span class="box9"></span>
+		</div>
+	</div>
+	
+	<div class="iconPosition"><img src="image/localIconB.png" title="도로명판"></div>
+</div>
+
+<!-- 범례정보 3 -->
+<div class="positionInfo3">
+	<!-- 위치 정보 -->
+	<div class="mapWrap">
+		<div class="mapRow">
+			<span class="box1"></span>
+			<div class="box2"></div>
+			<span class="box3"></span>
+		</div>
+		<div class="mapContent">
+			<div class="mapInfo">
+				<div>
+					<p class="localTitle">군군청 앞길</p>
+					<p><span class="">시점</span> : 92,<span class="">종점</span> : 96,</p>
+					<p><span class="info">양방향</span><span class="info">단면</span><span class="info">123 x 223</span></p>
+				</div>
+				<div class="mapAdd">
+					<span class="more"><img src="image/more.png" title="더보기"></span>
+					<span class="addition"><img src="image/addtion.png" title="화일추가"></span>
+				</div>
+			</div>
+			
+		</div>
+		<div class="mapRow">
+			<span class="box7"></span>
+			<div class="box8_infobulle"></div>
+			<span class="box9"></span>
+		</div>
+	</div>
+	
+	<div class="iconPosition"><img src="image/blocksIconB.png" title="도로명판"></div>
+			
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

@@ -138,6 +138,7 @@ var MapUtil = {
     },
     openDetail: function (type, f) {
         var detailTaget = '#detailView';
+        
         switch(type) {
             case KEY.plateType.ROAD:
                 url = pages.detail_road;
@@ -145,6 +146,18 @@ var MapUtil = {
                 // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
 
                 break;
+            case KEY.plateType.LOCAL:
+                url = pages.detail_area;
+                header = "지역안내판";
+                // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+
+                break;
+            case KEY.plateType.BASE:
+                url = pages.detail_base;
+                header = "기초번호판";
+                // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+
+                break;        
             case KEY.plateType.BUILD:
                 url = pages.detail_buld;
                 header = "건물정보";
@@ -205,7 +218,7 @@ var MapUtil = {
     },
     setDetail: function(type, f){
         var codeList
-
+        
         switch (type) {
             case KEY.plateType.ROAD:
                 var sn = f.get("RD_GDFTY_SN");
@@ -217,6 +230,8 @@ var MapUtil = {
                     .then(function (context, rcode, results) {
                         var data = results.data;
                         console.log(data);
+
+
                         //제목창
                         var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, f.get('FT_KOR_RN'), f.get('BSIS_MNNM'), f.get('BSIS_SLNO'));
                         $(".title").append(title);
@@ -299,6 +314,23 @@ var MapUtil = {
 
                     });
                 break;
+            case KEY.plateType.LOCAL:
+                var sn = '7002';
+                var link = URLs.roadsignlink;
+                
+                var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
+
+                util.postAJAX({}, url)
+                    .then(function (context, rcode, results) {
+                        var data = results.data;
+                        console.log(data);
+                    });
+
+                break;
+            case KEY.plateType.BASE:
+                break;    
+            case KEY.plateType.ENTRC:
+                break;    
             case KEY.plateType.BUILD:
                 break;
             case KEY.plateType.ENTRC:
@@ -888,6 +920,8 @@ var mapInit = function (mapId, pos) {
                             strHtml += "<hr/>"
 
                             layerType = KEY.plateType.ROAD;
+                            //변경대상
+                            layerType = KEY.plateType.LOCAL;
 
                             resultHtml = popDiv.format('openDetailPopupCall('+index+')',strHtml);
 
@@ -906,12 +940,18 @@ var mapInit = function (mapId, pos) {
                             overlay.setPosition(coordinate);
 
                             break;
-                    case DATA_TYPE.ENTRC:
-                        MapUtil.openPopup(KEY.plateType.ENTRC, features[0]);
-                            break;
-                    case DATA_TYPE.BULD:
-                        MapUtil.openPopup(KEY.plateType.BUILD, features[0]);
-                            break;
+                        case DATA_TYPE.AREA:
+                            MapUtil.openPopup(KEY.plateType.LOCAL, features[0]);
+                                break;
+                        case DATA_TYPE.BSIS:
+                            MapUtil.openPopup(KEY.plateType.BASE, features[0]);
+                                break;                
+                        case DATA_TYPE.ENTRC:
+                            MapUtil.openPopup(KEY.plateType.ENTRC, features[0]);
+                                break;
+                        case DATA_TYPE.BULD:
+                            MapUtil.openPopup(KEY.plateType.BUILD, features[0]);
+                                break;
                     }
 
                     firstClick = false;
