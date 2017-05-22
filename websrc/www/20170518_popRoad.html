@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' http://m1.juso.go.kr 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://m1.juso.go.kr;">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>스마트 KAIS</title>
+	
+	<link rel="preload" as="image" href="img/intro_bg.jpg">
+	
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery-2.2.1.min.js"></script>
+
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.mobile-1.4.5.min.js"></script>
+	
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/egovframework/mbl/cmm/json2.js"></script>
+	
+	<!-- Phonegap.js import -->
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	
+	<!-- eGovFrame Common import -->
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+	
+	<link rel="stylesheet" href="css/default.css" />
+	<link rel="stylesheet" href="css/intro.css" />
+	<link rel="stylesheet" href="css/info.css" />
+	
+	<script type="text/javascript" src="js/variables.js"></script>
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/datasource.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</head>
+
+<body class="intro" onload="app.initialize();">
+
+<div id="roadView_page">
+	<div class="roadView">
+		<p class="openImage"><span>열림</span></p>
+		<div class="infoWrap">
+			<!-- header -->
+			<div class="infoHeader">
+			
+			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
+				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span>[도로명판]월드컵북로 42다길28-9</p>
+				<p class="photo"><span class="photoNum">92</span></p>
+			</div>
+			
+			<!-- content -->
+			<div class="infoContent">
+			<!-- 정보  -->
+				<div class="infoTable">
+					<div class="row">
+						<div class="cell1">
+								<span class="label">도로명</span>
+						</div>
+						<div class="cell2">
+							<p>국문: </p>
+							<p>로마: </p>
+							<p>중문: </p>
+							<p>기타</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">설치상태</span>
+						</div>
+						<div class="cell2">
+							<p>정상설치</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">도로구분</span>
+						</div>
+						<div class="cell2">
+							<p>도로</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">도로명판 크기</span>
+						</div>
+						<div class="cell2">
+							<p>312</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">제작형식</span>
+						</div>
+						<div class="cell2">
+							<p>판자형</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">재질</span>
+						</div>
+						<div class="cell2">
+							<p>알루미늄</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">사용대상</span>
+						</div>
+						<div class="cell2">
+							<p>차량용</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">설치장소</span>
+						</div>
+						<div class="cell2">
+							<p>기점</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">교차로 구분</span>
+						</div>
+						<div class="cell2">
+							<p>+</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">도로명판 종류</span>
+						</div>
+						<div class="cell2">
+							<p>시점용</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">설치유형</span>
+						</div>
+						<div class="cell2">
+							<p>현수막</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">설치 시설물</span>
+						</div>
+						<div class="cell2">
+							<p>가로등</p>
+						</div>
+					</div>
+				</div>
+				<!-- 정보 끝 -->
+				
+				<!-- 재질 style="display: none" -->
+				<div class="dataWrap" style="display: none">
+					<div class="dataTItle">재질</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell cell33">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">알루미늄</span>
+							</div>
+							<div class="cell cell33">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">스테인레스</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">기타</span>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span class="btnPoint">저장</span>
+						<span class="btnNormal">삭제</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 재질 끝 -->
+				
+				<!-- 도로명 크기 style="display: none"-->
+				<div class="dataWrap" style="display: none">
+					<div class="dataTItle">도로명</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w35">크기</span>
+								<div class="inputText w75"><input type="text" name="" title="기타" maxlength="20" value=""></div> X
+								<div class="inputText w75"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span class="btnPoint">저장</span>
+						<span class="btnNormal">삭제</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 도로명판 크기 끝 -->
+				
+				<!-- 도로명 style="display: none"-->
+				<div class="dataWrap" style="display: none">
+					<div class="dataTItle">도로명</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w75">국문</span>
+								<div class="inputText w245"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell">
+								<span class="label w75">로마</span>
+								<div class="inputText w245"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell">
+								<span class="label w75">중문</span>
+								<div class="inputText w245"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell">
+								<span class="label w75">일문</span>
+								<div class="inputText w245"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="cell">
+								<span class="label w75">기타</span>
+								<div class="inputText w245"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell">
+								<span class="label w75">좌 시작/종료</span>
+								<div class="inputText w245"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell">
+								<span class="label w75">우 시작/종료</span>
+								<div class="inputText w245"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+					</div>
+			
+					<div class="dataBtn">
+						<span class="btnPoint">저장</span>
+						<span class="btnNormal">삭제</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 도로명 끝 -->
+				
+				<!-- 설치상태 -->
+				<div class="dataWrap" style="display: none">
+					<div class="dataTItle">설치상태</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">정상설치</span>
+							</div>
+						</div>
+					</div>
+						
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell cell50">
+									<span class="label">훼손</span>
+							</div>
+							<div class="cell auto">
+								<span class="label">망신</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell cell50">
+									<div class="inputRadio"><input type="radio" name="" value=""></div>
+									<span class="label">변형, 파손</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">도로시설물 이동</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell cell50">
+									<div class="inputRadio"><input type="radio" name="" value=""></div>
+									<span class="label">오염</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">사고, 재해</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell cell50">
+									<div class="inputRadio"><input type="radio" name="" value=""></div>
+									<span class="label">탈색, 벗겨짐</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">개발사업자등 미부착</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell cell50">
+									<div class="inputRadio"><input type="radio" name="" value=""></div>
+									<span class="label">가로재파손</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">경첩파손</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell cell50">
+									<div class="inputRadio"><input type="radio" name="" value=""></div>
+									<span class="label">변형, 파손</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">도로시설물 이동</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="dataBtn">
+						<span class="btnPoint">저장</span>
+						<span class="btnNormal">삭제</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 설치상태 끝 -->
+				
+				<!-- 설치시설물 style="display: none" -->
+				<div class="dataWrap" >
+					<div class="dataTItle">설치시설물</div>
+					<div class="subTitle">도로시설물</div>
+						
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell cell25">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">가로등</span>
+							</div>
+							<div class="cell cell25">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">신호등</span>
+							</div>
+							<div class="cell cell30">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">교통표지판</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">전주</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell cell25">
+									<div class="inputRadio"><input type="radio" name="" value=""></div>
+									<span class="label">통신주</span>
+							</div>
+							<div class="cell auto">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">CCTV</span>
+							</div>
+						</div>
+					</div>
+						
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell cell100" >
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">전용지주</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell">
+								<div class="inputRadio"><input type="radio" name="" value=""></div>
+								<span class="label">벽면</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="cell2">
+								<div class="inputRadio radioBox"><input type="radio" name="" value=""></div>
+								<span class="label w60">기타</span>
+								<div class="inputText w250"><input type="text" name="" title="기타" maxlength="20" value=""></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="dataBtn">
+						<span class="btnPoint">저장</span>
+						<span class="btnNormal">삭제</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 설치시설물 끝 -->
+						
+			</div>
+			<!-- content 끝  -->
+			<!-- footer 시작 -->
+			<div class="infoFooter">
+				<span class="btnPoint">저장</span>
+				<span class="btnNormal">초기화</span>
+			</div>
+			<!-- footer 끝 -->
+		</div>
+	</div>
+	
+	
+</div>
+
+</body>
+</html>

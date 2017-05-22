@@ -15,6 +15,7 @@ var URLs = {
     "buildsignlink": { svcNm: "vSPBD" },
     "entrclink": { svcNm: "vENTRC" },
     "updateFacilityInfo": { svcNm: "uSPGF" },
+    "updateBuildNumberInfo": { svcNm: "uSPBD" },
 
     "updateAddressInfo": { svcNm: "uBSEX" },
     "mapServiceLink": { svcNm: "mapService" },
@@ -156,7 +157,7 @@ var pages = {
 //};
 
 var CODE_GROUP = [];
-//****** 도로시설물 위치 ********
+//****** 도로안내시설물 *******
 //도로시설물 구분
 CODE_GROUP["RDFTY_SE"] = "GFTY003";
 //설치유형
@@ -173,8 +174,38 @@ CODE_GROUP["PLQ_DRC"] = "GFTY014";
 CODE_GROUP["SCFGG_MKTY"] = "GFTY019";
 //언어1
 CODE_GROUP["SCFGG_ULA1"] = "GFTY020";
+
+//****** 도로명판 *******
 //도로명판 규격
 CODE_GROUP["RDPQ_GD_SD"] = "GFTY110";
+//****** 지역안내판 *******
+//지역안내판 광고에따른분류
+CODE_GROUP["ADVRTS_CD"] = "CMMN131";
+//지역안내판 규격
+CODE_GROUP["AREA_GD_SD"] = "GFTY510";
+
+//****** 기초번호판 *******
+//설치장소 구분
+CODE_GROUP["ITLPC_SE"] = "GFTY600";
+//곡면분류
+CODE_GROUP["PLANE_CD"] = "GFTY611";
+//기초번호판 규격
+CODE_GROUP["BSIS_GD_SD"] = "GFTY610";
+
+//****** 건물번호판 *******
+//유형
+CODE_GROUP["BUL_NMT_SE"] = "CMMN036";
+//용도
+CODE_GROUP["BUL_NMT_PR"] = "CMMN056";
+//규격
+CODE_GROUP["BUL_NMT_CD"] = "CMMN057";
+//제작유형
+CODE_GROUP["BUL_MNF_CD"] = "CMMN024";
+//재질
+CODE_GROUP["BUL_NMT_QL"] = "CMMN003";
+
+
+
 
 
 
@@ -188,10 +219,6 @@ CODE_GROUP["BDTYP_CD"] = "CMMN038";
 CODE_GROUP["BULD_SE_CD"] = "CMMN017";
 CODE_GROUP["BUL_DPN_SE"] = "CMMN046";
 //건물번호판
-CODE_GROUP["BUL_NMT_CD"] = "CMMN057";
 CODE_GROUP["BUL_NMT_TY"] = "CMMN056";
-CODE_GROUP["BUL_NMT_QL"] = "CMMN003";
-CODE_GROUP["BUL_NMT_PR"] = "CMMN056";
-CODE_GROUP["BUL_MNF_CD"] = "CMMN024";
 CODE_GROUP["BUL_NMT_LO"] = "CMMN068";
 CODE_GROUP["LGHT_CD"] = "CMMN130";

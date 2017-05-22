@@ -87,8 +87,8 @@
 .infoTable .cell1{display: table-cell; width:26%; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#adadad; vertical-align: middle; color: #fff;}
 .infoTable .cell2{display: table-cell; width:auto; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#f5f7f8; vertical-align: middle;}
 .infoTable .cell1 > span.label{margin: 0;font-weight: normal;text-shadow: none;}
-.infoTable .cell2 p{margin-top: 10px;}
-.infoTable .cell2 p:FIRST-CHILD{margin-top: 0px;}
+.infoTable .cell2 p{margin-top: 0px;}
+/*.infoTable .cell2 p:FIRST-CHILD{margin-top: 0px;}*/
 .infoTable .cellNo{display: block;width:auto;border-bottom: 0 none;padding:0;background-color: #f5f7f8; vertical-align: middle;}
 
 /*button*/

@@ -19,6 +19,7 @@
 			<div class="infoContent">
 			<!-- 정보  -->
 				<div class="infoTable">
+					<p id ="sn" style="display:none"></p>
 					<div class="row">
 						<div  class="cell1">
 								<span class="label">도로시설물</span>
@@ -65,20 +66,24 @@
 					</div>
 					<div onclick="openDataIdPop('instSpotCd');" class="row">
 						<div  class="cell1">
-								<span class="label">설치지점</span>
+								<span class="label">* 설치지점</span>
 						</div>
 						<div class="cell2">
-							<p id="instSpotCdLbl"></p>
+							<p id="instSpotCdLbl" name="oldLbl"></p>
 							<p id="instSpotCd" style="display:none"></p>
+							<p id="instSpotCdLbl_new" style="display:none; color:red"></p>
+							<p id="instSpotCd_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div onclick="openDataIdPop('instCrossCd');" class="row">
 						<div  class="cell1">
-								<span class="label">교차로유형</span>
+								<span class="label">* 교차로유형</span>
 						</div>
 						<div class="cell2">
-							<p id="instCrossCdLbl"></p>
+							<p id="instCrossCdLbl" name="oldLbl"></p>
 							<p id="instCrossCd" style="display:none"></p>
+							<p id="instCrossCdLbl_new" style="display:none; color:red"></p>
+							<p id="instCrossCd_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -156,20 +161,24 @@
 					</div>
 					<div onclick="openDataIdPop('useTarget');" class="row">
 						<div  class="cell1">
-								<span class="label">사용대상</span>
+								<span class="label">* 사용대상</span>
 						</div>
 						<div class="cell2">
-							<p id="useTargetLbl"></p>
+							<p id="useTargetLbl" name="oldLbl"></p>
                             <p id="useTarget" style="display:none"></p>
+							<p id="useTargetLbl_new" style="display:none; color:red"></p>
+							<p id="useTarget_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div onclick="openDataIdPop('plqDirection');" class="row">
 						<div  class="cell1">
-								<span class="label">안내시설방향</span>
+								<span class="label">* 안내시설방향</span>
 						</div>
 						<div class="cell2">
-							<p id="plqDirectionLbl"></p>
+							<p id="plqDirectionLbl" name="oldLbl"></p>
                             <p id="plqDirection" style="display:none"></p>
+							<p id="plqDirectionLbl_new" style="display:none; color:red"></p>
+							<p id="plqDirection_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -183,69 +192,86 @@
 					</div>
 					<div onclick="openDataIdPop('scfggMkty');" class="row">
 						<div  class="cell1">
-								<span class="label">제2외국어여부</span>
+								<span class="label">* 제2외국어여부</span>
 						</div>
 						<div class="cell2">
-							<p id="scfggMktyLbl"></p>
+							<p id="scfggMktyLbl" name="oldLbl"></p>
                             <p id="scfggMkty" style="display:none"></p>
+							<p id="scfggMktyLbl_new" style="display:none; color:red"></p>
+							<p id="scfggMkty_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div onclick="openDataIdPop('scfggUla1');" class="row">
 						<div  class="cell1">
-								<span class="label">언어1</span>
+								<span class="label">* 언어1</span>
 						</div>
 						<div class="cell2">
-							<p id="scfggUla1Lbl"></p>
+							<p id="scfggUla1Lbl" name="oldLbl"></p>
                             <p id="scfggUla1" style="display:none"></p>
+							<p id="scfggUla1Lbl_new" style="display:none; color:red"></p>
+							<p id="scfggUla1_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div onclick="openDataIdPop('scfggUla2');" class="row">
 						<div  class="cell1">
-								<span class="label">언어2</span>
+								<span class="label">* 언어2</span>
 						</div>
 						<div class="cell2">
-							<p id="scfggUla2Lbl"></p>
+							<p id="scfggUla2Lbl" name="oldLbl"></p>
                             <p id="scfggUla2" style="display:none"></p>
+							<p id="scfggUla2Lbl_new" style="display:none; color:red"></p>
+							<p id="scfggUla2_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div onclick="openDataIdPop('rdpqGdSd');" class="row">
 						<div  class="cell1">
-								<span class="label">규격</span>
+								<span class="label">* 규격</span>
 						</div>
 						<div class="cell2">
-							<p id="rdpqGdSdLbl"></p>
+							<p id="rdpqGdSdLbl" name="oldLbl"></p>
                             <p id="rdpqGdSd" style="display:none"></p>
+							<p id="rdpqGdSdLbl_new" style="display:none; color:red"></p>
+							<p id="rdpqGdSd_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop('gdftyWVT')" class="row">
 						<div  class="cell1">
-							<span class="label">규격(W*V*T)</span>
+							<span class="label">* 가로*세로*두께</span>
 						</div>
 						<div class="cell2">
-							<p id="gdfty"></p>
+							<p id="gdftyWVT" name="oldLbl"></p>
+							<p id="gdftyWide" style="display:none"></p>
+							<p id="gdftyVertical" style="display:none"></p>
+							<p id="gdftyThickness" style="display:none"></p>
+							<p id="gdftyWVT_new" style="display:none; color:red"></p>
+							<p id="gdftyWide_new" style="display:none"></p>
+							<p id="gdftyVertical_new" style="display:none"></p>
+							<p id="gdftyThickness_new" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openCustomPop('gdftyUnitPrice')" class="row">
+						<div  class="cell1">
+								<span class="label">* 단가(원)</span>
+						</div>
+						<div class="cell2">
+							<p id="gdftyUnitPrice" name="oldLbl"></p>
+							<p id="gdftyUnitPrice_new" style="display:none; color:red"></p>
 						</div>
 					</div>
 					<div onclick="" class="row">
 						<div  class="cell1">
-								<span class="label">가격</span>
+								<span class="label">* 설치상태</span>
 						</div>
 						<div class="cell2">
-							<p id="gdftyUnitPrice"></p>
-						</div>
-					</div>
-					<div onclick="" class="row">
-						<div  class="cell1">
-								<span class="label">설치상태</span>
-						</div>
-						<div class="cell2">
-							<p id=""></p>
+							<p id="" name="oldLbl"></p>
+							<p id="" style="display:none; color:red"></p>
 						</div>
 					</div>
 
 				<!-- 정보 끝 -->
 				
-                <!-- 공통 데이터 팝업 -->
-                <div id="dataPop" class="dataWrap" style="display: none">
+                <!-- 공통 라디오 데이터 팝업 -->
+                <div id="radioDataPop" class="dataWrap" style="display: none">
 					<div id="dataTitle" class="dataTItle"></div>
 					<div id="dataForm" class="dataForm">
 						
@@ -256,6 +282,46 @@
 					</div>
 					<p class="dataClose" onclick="closeDataPop();"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
+				<!-- 공통 라디오 데이터 팝업 끝 -->
+
+				<!-- 단가 데이터 팝업 -->
+				<div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">단가</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w35">단가</span>
+								<div class="inputText w75"><input type="text" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
+						<span onclick="closeDataPop()" class="btnNormal">닫기</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 단가 데이터 팝업 끝 -->
+				<!-- 가로*세로*두께 데이터 팝업 -->
+				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">규격 (가로*새로*두께)</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label cell10">크기</span>
+								<div class="inputText cell10"><input type="text" id = "gdftyWide_fix" name="" title="가로" maxlength="20" value=""></div> *
+								<div class="inputText cell10"><input type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value=""></div> *
+								<div class="inputText cell10"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value=""></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent('gdftyWVT')" class="btnPoint">저장</span>
+						<span onclick="closeDataPop()" class="btnNormal">닫기</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 가로*세로*두께 데이터 팝업 끝 -->
 						
 			</div>
 			<!-- content 끝  -->
@@ -263,8 +329,8 @@
 		</div>
 		<!-- footer 시작 -->
 		<div class="infoFooter">
-			<span class="btnPoint">저장</span>
-			<span class="btnNormal">초기화</span>
+			<span onclick="submit(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+			<span onclick="refresh();" class="btnNormal">초기화</span>
 		</div>
 		<!-- footer 끝 -->
 	</div>

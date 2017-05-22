@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html LANG="ko">
-<div id="entrcView_page" class="detail">
+
+<body class="intro">
+
+<div id="entrcView_page">
     <div class="detailView">
         <p class="openImage"><span onclick="closeDetailView();">열림</span></p>
         <div class="infoWrap">
@@ -17,6 +20,7 @@
                 <!-- 정보  -->
                 <div class="infoTable">
                     <div class="row">
+                        <p id ="sn" style="display:none"></p>
                         <div  class="cell1">
                             <span class="label">도로명</span>
                         </div>
@@ -31,7 +35,6 @@
                         </div>
                         <div class="cell2">
                             <p id="entrc_bulNo"></p>
-                            buldMnnm - buldSlno
                         </div>
                     </div>
                     <div class="row">
@@ -39,88 +42,114 @@
                             <span class="label">일련번호</span>
                         </div>
                         <div class="cell2">
-                            <p id="entrc_bulNmtNo"></p>
+                            <p id="bulNmtNo"></p>
+                        </div>
+                    </div>
+                    <div onclick="openDataIdPop('buldNmtSe');" class="row">
+                        <div  class="cell1">
+                            <span class="label">* 유형</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="buldNmtSeLbl" name="oldLbl"></p>
+                            <p id="buldNmtSe" style="display:none"></p>
+                            <p id="buldNmtSeLbl_new" style="display:none; color:red"></p>
+							<p id="buldNmtSe_new" style="display:none;"></p>
                         </div>
                     </div>
                     <div class="row">
-                        <div  class="cell1">
-                            <span class="label">유형</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="entrc_bulNmtSeLbl"></p>
-                            <p id="entrc_bulNmtSe" style="display:none"></p>
-                        </div>
-                    </div>
-                    <div onclick="openDataIdPop('');" class="row">
                         <div  class="cell1">
                             <span class="label">형태</span>
                         </div>
                         <div class="cell2">
-                            <p id="entrc_bulNmtTyLbl"></p>
-                            <p id="entrc_bulNmtTy" style="display:none"></p>
+                            <p id="buldNmtTypeLbl"></p>
+                            <p id="buldNmtType" style="display:none"></p>
                         </div>
                     </div>
-                    <div onclick="openDataIdPop('instCrossCd');" class="row">
+                    <div onclick="openDataIdPop('buldNmtPurpose');" class="row">
                         <div  class="cell1">
-                            <span class="label">용도</span>
+                            <span class="label">* 용도</span>
                         </div>
                         <div class="cell2">
-                            <p id="entrc_bulNmtPrLbl"></p>
-                            <p id="entrc_bulNmtPr" style="display:none"></p>
+                            <p id="buldNmtPurposeLbl" name="oldLbl"></p>
+                            <p id="buldNmtPurpose" style="display:none"></p>
+                            <p id="buldNmtPurposeLbl_new" style="display:none; color:red"></p>
+                            <p id="buldNmtPurpose_new" style="display:none"></p>
                         </div>
                     </div>
 
-                    <div onclick="openDataIdPop('');" class="row">
+                    <div onclick="openDataIdPop('buldNmtCd');" class="row">
                         <div  class="cell1">
-                            <span class="label">규격</span>
+                            <span class="label">* 규격</span>
                         </div>
                         <div class="cell2">
-                            <p id="entrc_bulNmtCdLbl"></p>
-                            <p id="entrc_bulNmtCd" style="display:none"></p>
+                            <p id="buldNmtCdLbl" name="oldLbl"></p>
+                            <p id="buldNmtCd" style="display:none"></p>
+                            <p id="buldNmtCdLbl_new" style="display:none; color:red"></p>
+                            <p id="buldNmtCd_new" style="display:none"></p>
                         </div>
                     </div>
-                    <div onclick="openDataIdPop('');" class="row">
+                    <div onclick="openCustomPop('gdftyWVT')" class="row">
+						<div  class="cell1">
+							<span class="label">* 가로*세로*두께</span>
+						</div>
+						<div class="cell2">
+							<p id="gdftyWVT" name="oldLbl"></p>
+							<p id="gdftyWide" style="display:none"></p>
+							<p id="gdftyVertical" style="display:none"></p>
+							<p id="gdftyThickness" style="display:none"></p>
+							<p id="gdftyWVT_new" style="display:none; color:red"></p>
+							<p id="gdftyWide_new" style="display:none"></p>
+							<p id="gdftyVertical_new" style="display:none"></p>
+							<p id="gdftyThickness_new" style="display:none"></p>
+						</div>
+					</div>
+                    <div onclick="openDataIdPop('buldMnfCd');" class="row">
                         <div  class="cell1">
-                            <span class="label">제작유형</span>
+                            <span class="label">* 제작유형</span>
                         </div>
                         <div class="cell2">
-                            <p id="entrc_bulMnfCdLbl"></p>
-                            <p id="entrc_bulMnfCd" style="display:none"></p>
+                            <p id="buldMnfCdLbl" name="oldLbl"></p>
+                            <p id="buldMnfCd" style="display:none"></p>
+                            <p id="buldMnfCdLbl_new" style="display:none; color:red"></p>
+                            <p id="buldMnfCd_new" style="display:none"></p>
                         </div>
                     </div>
-                    <div class="row">
+                    <div onclick="openDataIdPop('buldNmtMaterial');" class="row">
                         <div  class="cell1">
-                            <span class="label">재질</span>
+                            <span class="label">* 재질</span>
                         </div>
                         <div class="cell2">
-                            <p id="entrc_bulNmtQlLbl"></p>
-                            <p id="entrc_bulNmtQl" style="display:none"></p>
+                            <p id="buldNmtMaterialLbl" name="oldLbl"></p>
+                            <p id="buldNmtMaterial" style="display:none"></p>
+                            <p id="buldNmtMaterialLbl_new" style="display:none; color:red"></p>
+                            <p id="buldNmtMaterial_new" style="display:none"></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div  class="cell1">
-                            <span class="label">단가</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="gdftyUnitPrice"></p>
-                        </div>
-                    </div>
-
-                    <div onclick="" class="row">
-                        <div  class="cell1">
-                            <span class="label">설치상태</span>
-                        </div>
-                        <div class="cell2">
-                            <p id=""></p>
-                        </div>
-                    </div>
+                    <div onclick="openCustomPop('gdftyUnitPrice')" class="row">
+						<div  class="cell1">
+								<span class="label" name="oldLbl">* 단가(원)</span>
+						</div>
+						<div class="cell2">
+							<p id="gdftyUnitPrice" name="oldLbl"></p>
+							<p id="gdftyUnitPrice_new" style="display:none; color:red"></p>
+						</div>
+					</div>
+                   <div onclick="" class="row">
+						<div  class="cell1">
+								<span class="label">* 설치상태</span>
+						</div>
+						<div class="cell2">
+							<p id="" name="oldLbl"></p>
+							<p id="" style="display:none; color:red"></p>
+						</div>
+					</div>
                     <!-- 정보 끝 -->
 
-                    <!-- 공통 데이터 팝업 -->
-                    <div id="dataPop" class="dataWrap" style="display: none">
+                    <!-- 공통 라디오 데이터 팝업 -->
+                    <div id="radioDataPop" class="dataWrap" style="display: none">
                         <div id="dataTitle" class="dataTItle"></div>
                         <div id="dataForm" class="dataForm">
-
+                            
                         </div>
                         <div class="dataBtn">
                             <span onclick="radioDataSendParent()" class="btnPoint">저장</span>
@@ -128,14 +157,55 @@
                         </div>
                         <p class="dataClose" onclick="closeDataPop();"><img src="image/dataClose.png" title="닫기"></p>
                     </div>
+                    <!-- 공통 라디오 데이터 팝업 끝 -->
+
+                    <!-- 단가 데이터 팝업 -->
+                    <div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
+                        <div class="dataTItle">단가</div>
+                        <div class="dataForm">
+                            <div class="row">
+                                <div class="cell">
+                                    <span class="label w35">단가</span>
+                                    <div class="inputText w75"><input type="text" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dataBtn">
+                            <span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
+                            <span onclick="closeDataPop()" class="btnNormal">닫기</span>
+                        </div>
+                        <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+                    </div>
+                    <!-- 단가 데이터 팝업 끝 -->
+                    <!-- 가로*세로*두께 데이터 팝업 -->
+                    <div id="gdftyWVT_pop" class="dataWrap" style="display: none">
+                        <div class="dataTItle">규격 (가로*새로*두께)</div>
+                        <div class="dataForm">
+                            <div class="row">
+                                <div class="cell">
+                                    <span class="label cell10">크기</span>
+                                    <div class="inputText cell10"><input type="text" id = "gdftyWide_fix" name="" title="가로" maxlength="20" value=""></div> *
+                                    <div class="inputText cell10"><input type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value=""></div> *
+                                    <div class="inputText cell10"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value=""></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dataBtn">
+                            <span onclick="textDataSendParent('gdftyWVT')" class="btnPoint">저장</span>
+                            <span onclick="closeDataPop()" class="btnNormal">닫기</span>
+                        </div>
+                        <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+                    </div>
+                    <!-- 가로*세로*두께 데이터 팝업 끝 -->
+
                 </div>
                 <!-- content 끝  -->
 
             </div>
             <!-- footer 시작 -->
             <div class="infoFooter">
-                <span class="btnPoint">저장</span>
-                <span class="btnNormal">초기화</span>
+                <span onclick="submit(DATA_TYPE.ENTRC);" class="btnPoint">저장</span>
+			    <span onclick="refresh();" class="btnNormal">초기화</span>
             </div>
             <!-- footer 끝 -->
         </div>
