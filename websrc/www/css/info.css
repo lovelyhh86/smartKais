@@ -122,6 +122,25 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .dataBtn >.btnNormal{display:inline-block; margin-left:5px ; padding:8px 50px; background-color: #c0c0c0; color:#fff;text-shadow: none; font-size: 0.8em}
 .dataClose{position: absolute;top:15px;right:20px}
 
+/************* 사진 ****************/
+.photoWrap{display: block; width: 100%; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
+.photoTitle{display: block; position:relative; margin-bottom:20px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
+.photoPage{display: inline-block; position: absolute; top: -5px;right: 0}
+.photoPage li{ display: inline-block; list-style: none;padding: 0 20px; background: url(../image/menuLine.png) 0 3px no-repeat;}
+.photoPage li:FIRST-CHILD{background: none;}
+.pic_on, .pic_over{ }
+
+.photoTable{display: table;min-width:320px; width:100%; border-collapse:collapse;}
+.photoTable .row{display: table-row; text-align: left;}
+.photoTable .cell{display: table-cell; padding:0 10px;  vertical-align: middle;}
+.photoTable .photoTItle{display: block; margin-bottom:10px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
+
+.photoSub{display:inline-block; width: 320px; margin-bottom:5px; color: #000;font-weight: 500;}
+.picInfo{padding:5px; background-color:#fff; vertical-align: middle; color: #fff;}
+.picImg{display:inline-block; width: 320px; height: 240px; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
+/************* 사진(END) ****************/
+
+
 /*width*/
 .cell10{ width:10%;} .cell15{ width:15%;}
 .cell20{ width:20%;} .cell25{ width:25%;}

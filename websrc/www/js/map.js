@@ -21,6 +21,18 @@ var MapUtil = {
                     }
                 });
             });
+        },
+        photoToggle: function() {
+            $(".detailView .infoWrap .infoHeader .photo").on("click", function() {
+                $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+            });
+        },
+        takePhotoHandler: function() {
+            $(".detailView .infoWrap .infoContent .photoWrap .btnNormal").click(function(evt){
+                util.takePictureFromCamera(function(ret){
+                    $(evt.target).parent().parent().children(".picImg").children().attr("src", "data:image/jpeg;base64," + ret.src);
+                });
+            });
         }
     },
     controls: {
@@ -207,6 +219,8 @@ var MapUtil = {
 
         $(detailTaget).load(url.link(), function() {
             MapUtil.setDetail(layerID, f);
+            MapUtil.handler.photoToggle();
+            MapUtil.handler.takePhotoHandler();
             $("#detailView").popup("open", { transition: "slideup" });
         })
     },
@@ -385,6 +399,12 @@ var MapUtil = {
                                 //단가(원)
                                 $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
                                 //설치상태
+                                //사진
+                                $("#roadView_page .photoWrap .photoTable .picImg").each(function(i, o) {
+                                    $(o).html("<img src='data:image/jpeg;base64," + data.files[i].base64 + "'>");
+                                });
+                                //사진건수
+                                $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length)
 
                                 break;
                             case DATA_TYPE.AREA:
