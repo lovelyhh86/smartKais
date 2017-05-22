@@ -39,7 +39,7 @@
 .box9{position:absolute; float:right; bottom:0; right:0; display:inline-block; width:15px; height:30px;background:url(../image/box9.png) 0 100% no-repeat;}
 
 /*map Info*/
-.mapContent{display:block; width:100%; height: 90px; background:url(../image/box6.png) 100% 0 no-repeat; color: #666; font-size: 0.9em;line-height: 1.4em;}
+.mapContent{display:block; width:100%; background:url(../image/box6.png) 100% 0 no-repeat; color: #666; font-size: 0.9em;line-height: 1.4em;}
 .mapInfo{position:relative; display:block; padding:5px 25px 0 25px; background:url(../image/box4.png) 0 0 no-repeat;}
 .mapAdd{display: inline-block; position: absolute; top: 0; right: 20px;}
 .mapInfo1{position:relative; display:block; padding:5px 25px 20px 25px; background:url(../image/box4.png) 0 0 no-repeat;}
@@ -84,7 +84,7 @@
 /*infoTable*/
 .infoTable{display: table;min-width:320px; width:100%;height: 630px; border:0;border-collapse:collapse;overflow-y: scroll;}
 .infoTable .row{display: table-row; text-align: left}
-.infoTable .cell1{display: table-cell; width:26%; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#adadad; vertical-align: middle; color: #fff;}
+.infoTable .cell1{display: table-cell; width:30%; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#adadad; vertical-align: middle; color: #fff;}
 .infoTable .cell2{display: table-cell; width:auto; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#f5f7f8; vertical-align: middle;}
 .infoTable .cell1 > span.label{margin: 0;font-weight: normal;text-shadow: none;}
 .infoTable .cell2 p{margin-top: 0px;}

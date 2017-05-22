@@ -110,7 +110,8 @@ var MapUtil = {
             var options = opt_options || {};
 
             var button = document.createElement('button');
-            button.innerHTML = '<img src="img/icon_curPos.png" />';
+            // button.innerHTML = '<img src="img/icon_curPos.png" />';
+            button.innerHTML = '<img src="image/current.png" />';
 
             var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */{
                 tracking: true,
@@ -337,9 +338,13 @@ var MapUtil = {
                                 //앞면 도로명(로마자)
                                 $("#frontRomeRoadNm").append(data.frontRomeRoadNm);
                                 //앞면시작기초번호(0-0)
+                                $("#frontStartBaseMasterNo").append(data.frontStartBaseMasterNo);
+                                $("#frontStartBaseSlaveNo").append(data.frontStartBaseSlaveNo);
                                 var frontStartBaseNo = "{0} - {1}".format(data.frontStartBaseMasterNo,data.frontStartBaseSlaveNo);
                                 $("#frontStartBaseNo").append(frontStartBaseNo);                             
                                 //앞면종료기초번호(0-0)
+                                $("#frontEndBaseMasterNo").append(data.frontEndBaseMasterNo);
+                                $("#frontEndBaseSlaveNo").append(data.frontEndBaseSlaveNo);
                                 var frontEndBaseNo = "{0} - {1}".format(data.frontEndBaseMasterNo,data.frontEndBaseSlaveNo);
                                 $("#frontEndBaseNo").append(frontEndBaseNo);
                                 //뒷면 도로명(국문)
@@ -1035,7 +1040,8 @@ var mapInit = function (mapId, pos) {
         var popDiv = "<div class='mapInfo' onclick =\"{0}\">{1}</div>"
         var popTableHead = "<p class='localTitle'>{0}</p>";
         var popTableP = "<p>{0} : {1}</p>";
-        var buttonForm ="<span class = {0} onclick=\"{1}\"><img src='{2}' title='{3}'></span>" 
+        var buttonForm ="<span class = {0} onclick=\"{1}\"><img src='{2}' title='{3}'></span>";
+        var buttonForm2 ="<span class = {0} onclick=\"{1}\">{2}</span>"; 
         
         //심플팝업 초기화
         popupDiv.empty();
@@ -1103,9 +1109,20 @@ var mapInit = function (mapId, pos) {
 
                 var pointY = popTableP.format("Y",coordinate[1]);
 
-                resultHtml = pointSn;
-                resultHtml+= pointX;
-                resultHtml+= pointY;
+                resultHtml = "<div>"
+                resultHtml += pointSn;
+                resultHtml += pointX;
+                resultHtml += pointY;
+                resultHtml += "</div>";
+                
+                 //버튼처리
+                resultHtml += "<div class='mapBtn'>"
+                resultHtml += buttonForm2.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","저장");
+                resultHtml += buttonForm2.format("btnNormal","clearMoveMode()","취소");
+                resultHtml += "<div>"
+
+                // resultHtml += buttonForm.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","","저장");
+                // resultHtml += buttonForm.format("btnNormal","clearMoveMode()","","취소");
 
                 resultHtml = buttonDiv.format('mapInfo',resultHtml);
 
@@ -1114,16 +1131,16 @@ var mapInit = function (mapId, pos) {
                 // popupDiv.append(box1);
                 popupDiv.append(resultHtml);
 
-                //버튼처리
-                buttonHtml = buttonForm.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","","저장");
-                buttonHtml += buttonForm.format("btnNormal","clearMoveMode()","","취소");
+                // //버튼처리
+                // buttonHtml = buttonForm.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","","저장");
+                // buttonHtml += buttonForm.format("btnNormal","clearMoveMode()","","취소");
                 
-                buttonHtml = buttonDiv.format("mapBtn",buttonHtml);
+                // buttonHtml = buttonDiv.format("mapBtn",buttonHtml);
                 
                 //팝업아래
                 // var box2 = '<div class="mapRow"><span class="box7"></span><div class="box8_infobulle"></div><span class="box9"></span></div>';
 
-                popupDiv.append(buttonHtml);
+                // popupDiv.append(buttonHtml);
                 // popupDiv.append(box2);
 
                 $("#popup").show();
@@ -1193,14 +1210,14 @@ var mapInit = function (mapId, pos) {
                             buttonHtml = buttonDiv.format("mapAdd",buttonHtml);
 
                             //팝업위
-                            var box1 = '<div class="mapRow"><span class="box1"></span><div class="box2"></div><span class="box3"></span></div>';
+                            // var box1 = '<div class="mapRow"><span class="box1"></span><div class="box2"></div><span class="box3"></span></div>';
                             //팝업아래
-                            var box2 = '<div class="mapRow"><span class="box7"></span><div class="box8_infobulle"></div><span class="box9"></span></div>';
+                            // var box2 = '<div class="mapRow"><span class="box7"></span><div class="box8_infobulle"></div><span class="box9"></span></div>';
 
-                            popupDiv.append(box1);
+                            // popupDiv.append(box1);
                             popupDiv.append(resultHtml);
                             popupDiv.append(buttonHtml);
-                            popupDiv.append(box2);
+                            // popupDiv.append(box2);
 
 
                             $("#popup").show();

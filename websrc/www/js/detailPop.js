@@ -247,6 +247,32 @@
 
         }
 
+        function openCustomPop2(type){
+            switch(type){
+                case 'frontStartBaseNo':
+                    var startBaseMasterNo = $("#frontStartBaseMasterNo_new").text() == "" ? $("#frontStartBaseMasterNo").text(): $("#frontStartBaseMasterNo_new").text();
+                    var startBaseSlaveNo = $("#frontStartBaseSlaveNo_new").text() == "" ? $("#frontStartBaseSlaveNo").text(): $("#frontStartBaseSlaveNo_new").text();
+                    
+                    $("#frontStartBaseMasterNo_fix").val(startBaseMasterNo);
+                    $("#frontStartBaseSlaveNo_fix").val(startBaseSlaveNo);
+
+                    // $("#frontStartBaseNo_pop").show();
+                break;
+                case 'frontEndBaseNo':
+                    var startBaseMasterNo = $("#frontEndBaseMasterNo_new").text() == "" ? $("#frontEndBaseMasterNo").text(): $("#frontEndBaseMasterNo_new").text();
+                    var startBaseSlaveNo = $("#frontEndBaseSlaveNo_new").text() == "" ? $("#frontEndBaseSlaveNo").text(): $("#frontEndBaseSlaveNo_new").text();
+                    
+                    $("#frontEndBaseMasterNo_fix").val(startBaseMasterNo);
+                    $("#frontEndBaseSlaveNo_fix").val(startBaseSlaveNo);
+
+                    // $("#frontStartBaseNo_pop").show();
+                break;
+
+            }
+            $("#"+type+"_pop").show();
+
+        }
+
         function textDataSendParent(type){
             switch(type){
                 case 'gdftyUnitPrice'://단가
@@ -293,6 +319,26 @@
             $("#"+type).hide();
             $("#"+type+"_new").show();
             $("#"+type+"_pop").hide();
+        }
+        function textDataSendParent2(baseNo, id1, id2){
+            var startBaseMasterNo_fix = $("#"+id1+"_fix").val();
+            var startBaseSlaveNo_fix = $("#"+id2+"_fix").val();
+
+            var frontStartBaseNo = "{0} - {1}";
+            var baseNoText = "";
+
+            baseNoText = frontStartBaseNo.format(startBaseMasterNo_fix,startBaseSlaveNo_fix);
+
+
+            $("#"+baseNo+"_new").text(baseNoText);
+
+            $("#"+id1+"_new").text(startBaseMasterNo_fix);
+            $("#"+id2+"_new").text(startBaseSlaveNo_fix);
+            
+            $("#"+baseNo).hide();
+            $("#"+baseNo+"_new").show();
+            $("#"+baseNo+"_pop").hide();
+
         }
 
         function closeDataPop(){
@@ -493,9 +539,6 @@
                         var link = URLs.updateFacilityInfo;
 
                     }else if(type == DATA_TYPE.ENTRC){
-
-                        alert('미적용');
-                        return;
 
                         //건물번호판 유형
                         var buldNmtSe_new = $("buldNmtSe_new").text();
