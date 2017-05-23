@@ -1168,7 +1168,7 @@ var mapInit = function (mapId, pos) {
                 // strHtml += pointX;
                 // strHtml += pointY;
 
-                strHtml = "현재위치로 시설물을 이동하시겠습니까?"
+                strHtml = "<b>검정(원)</b>-&gt; <span style='color:red;'>빨강(원)</span>으로 이동하고자 합니다.<br>(맞으면 저장, 틀리면 다른 위치 선택)";
 
                 resultHtml = commonDiv.format("",strHtml);
                 
@@ -2010,7 +2010,7 @@ function moveingPoint(sn,pointX,pointY,index){
 }
 
 function insertMoveingPoint(sn, pointX, pointY){
-    if (confirm('시설물의 위치를 이동하시겠습니까?') == true){
+    // if (confirm('시설물의 위치를 이동하시겠습니까?') == true){
         var param = {sigCd : app.info.sigCd , rdftylcSn : sn, posX : pointX, posY : pointY, workId : app.info.opeId ,mode:'11'};
         var movePointUrl = URLs.postURL(URLs.moveingPoint, param);
         util.postAJAX('',movePointUrl)
@@ -2031,7 +2031,7 @@ function insertMoveingPoint(sn, pointX, pointY){
             
             if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
                 map.removeLayer(layers.buld);
-                map.removeLayer(layers.entrc);
+                // map.removeLayer(layers.entrc);
                 map.addLayer(layers.rdpq);
                 map.addLayer(layers.bsis);
                 map.addLayer(layers.area);
@@ -2040,12 +2040,12 @@ function insertMoveingPoint(sn, pointX, pointY){
                 map.removeLayer(layers.bsis);
                 map.removeLayer(layers.area);
                 map.addLayer(layers.buld);
-                map.addLayer(layers.entrc);
+                // map.addLayer(layers.entrc);
             }
             
         });
 
-    }
+    // }
     
 }
 
