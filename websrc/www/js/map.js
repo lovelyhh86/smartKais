@@ -30,10 +30,17 @@ var MapUtil = {
         takePhotoHandler: function() {
             $(".detailView .infoWrap .infoContent .photoWrap .btnNormal").click(function(evt){
                 util.takePictureFromCamera(function(ret){
-                    $(evt.target).parent().parent().children(".picImg").children().attr("src", "data:image/jpeg;base64," + ret.src);
+                    $(evt.target).parent().parent().children(".picImg").html("<img src='data:image/jpeg;base64," + ret.src + "'>");
                 });
             });
-        }
+        },
+        delPhotoHandler: function() {
+            $(".detailView .infoWrap .infoContent .photoWrap .btnPoint").click(function(evt){
+                if (confirm('사진을 삭제 하시겠습니까?') == true) {
+                    $(evt.target).parent().parent().children(".picImg").html("");
+                }
+            });
+        },
     },
     controls: {
         init: function () {
@@ -222,6 +229,7 @@ var MapUtil = {
             MapUtil.setDetail(layerID, f);
             MapUtil.handler.photoToggle();
             MapUtil.handler.takePhotoHandler();
+            MapUtil.handler.delPhotoHandler();
             $("#detailView").popup("open", { transition: "slideup" });
         })
     },
@@ -406,7 +414,9 @@ var MapUtil = {
                                 //설치상태
                                 //사진
                                 $("#roadView_page .photoWrap .photoTable .picImg").each(function(i, o) {
-                                    $(o).html("<img src='data:image/jpeg;base64," + data.files[i].base64 + "'>");
+                                    try {
+                                        $(o).html("<img src='data:image/jpeg;base64," + data.files[i].base64 + "'>");
+                                    } catch(e) {}
                                 });
                                 //사진건수
                                 $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length)

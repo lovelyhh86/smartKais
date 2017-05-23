@@ -178,8 +178,7 @@ var roadStyle = function (styleOptions) {
         //   anchor: [0, 50],
         //   anchorXUnits: 'fraction',
         //   anchorYUnits: 'pixels',
-          src: 'img/icon_legend01.png',
-        //   scale: 1.5
+          src: 'img/icon_legend01.png'
         }))
     };
     if( styleOptions.label._text)
@@ -205,8 +204,7 @@ var areaStyle = function (styleOptions) {
         //   anchor: [0, 50],
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
-          src: 'img/icon_legend03.png',
-          scale: 1.5
+          src: 'img/icon_legend03.png'
         }))
     };
     if( styleOptions.label._text)
@@ -232,8 +230,7 @@ var bsisStyle = function (styleOptions) {
         //   anchor: [0, 50],
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
-          src: 'img/icon_legend02.png',
-          scale: 1.5
+          src: 'img/icon_legend02.png'
         }))
     };
     if( styleOptions.label._text)
