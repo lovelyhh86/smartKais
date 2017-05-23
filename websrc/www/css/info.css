@@ -52,6 +52,8 @@
 .iconPosition{text-align: center; p}
 
 .localTitle{margin-bottom:5px; font-weight: bold; color: #000;}
+.titleIcon_number{ position:relative; top:5px; display:inline-block; width:25px; height:17px; background:url(../image/iconNumber.png) 0 0px no-repeat;}
+.titleIcon_building{position:relative; top:5px;  display:inline-block; width:25px; height:17px;background:url(../image/iconBuilding.png) 0 0 no-repeat;}
 .boldColor{color: #000;}
 
 .mapBtn{width:auto; border-top:1px solid #e5e5e5; margin:15px 0 0 0; padding: 17px 0  0 0; text-align: center;}
@@ -141,8 +143,10 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .picImg{display:inline-block; width: 320px; height: 240px; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
 /************* 사진(END) ****************/
 
+/*map position*/
+.position{position: absolute;left: 20px, bottom: 0;}
 
-/*width*/
+/**************** width ****************/
 .cell10{ width:10%;} .cell15{ width:15%;}
 .cell20{ width:20%;} .cell25{ width:25%;}
 .cell30{ width:30%;} .cell33{ width:33%;} .cell35{ width:35%;}
