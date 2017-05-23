@@ -11,13 +11,13 @@
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="img/icon_legend01.png" title="도로명판"></span></p>
-				<p class="photo"><span class="photoNum">2</span></p>
+				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="photo"><span class="photoNum"></span></p>
 			</div>
 			
 			<!-- content -->
 			<div class="infoContent">
-				<!-- 정보  -->
+			<!-- 정보  -->
 				<div class="infoTable">
 					<p id ="sn" style="display:none"></p>
 					<div class="row">
@@ -66,7 +66,7 @@
 					</div>
 					<div onclick="openDataIdPop('instSpotCd');" class="row">
 						<div  class="cell1">
-								<span class="label">* 설치지점</span>
+								<span class="label"><img src="image/openAble3.png" alt="">설치지점</span>
 						</div>
 						<div class="cell2">
 							<p id="instSpotCdLbl" name="oldLbl"></p>
@@ -77,7 +77,7 @@
 					</div>
 					<div onclick="openDataIdPop('instCrossCd');" class="row">
 						<div  class="cell1">
-								<span class="label">* 교차로유형</span>
+								<span class="label"> <img src="image/openAble3.png" alt="">교차로유형</span>
 						</div>
 						<div class="cell2">
 							<p id="instCrossCdLbl" name="oldLbl"></p>
@@ -102,20 +102,30 @@
 							<p id="frontRomeRoadNm"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop2('frontStartBaseNo');" class="row">
 						<div  class="cell1">
-								<span class="label">앞면 시작기초번호</span>
+								<span class="label"><img src="image/openAble3.png" alt="">앞면 시작기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontStartBaseNo"></p>
+							<p id="frontStartBaseNo" name="oldLbl"></p>
+							<p id="frontStartBaseMasterNo" style="display:none"></p>
+							<p id="frontStartBaseSlaveNo" style="display:none"></p>
+							<p id="frontStartBaseNo_new" style="display:none; color:red"></p>
+							<p id="frontStartBaseMasterNo_new" style="display:none;"></p>
+							<p id="frontStartBaseSlaveNo_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop2('frontEndBaseNo');" class="row">
 						<div  class="cell1">
-								<span class="label">앞면 종료기초번호</span>
+								<span class="label"><img src="image/openAble3.png" alt="">앞면 종료기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontEndBaseNo"></p>
+							<p id="frontEndBaseNo" name="oldLbl"></p>
+							<p id="frontEndBaseMasterNo" style="display:none"></p>
+							<p id="frontEndBaseSlaveNo" style="display:none"></p>
+							<p id="frontEndBaseNo_new" style="display:none; color:red"></p>
+							<p id="frontEndBaseMasterNo_new" style="display:none;"></p>
+							<p id="frontEndBaseSlaveNo_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -161,7 +171,7 @@
 					</div>
 					<div onclick="openDataIdPop('useTarget');" class="row">
 						<div  class="cell1">
-								<span class="label">* 사용대상</span>
+								<span class="label"><img src="image/openAble3.png" alt="">사용대상</span>
 						</div>
 						<div class="cell2">
 							<p id="useTargetLbl" name="oldLbl"></p>
@@ -172,7 +182,7 @@
 					</div>
 					<div onclick="openDataIdPop('plqDirection');" class="row">
 						<div  class="cell1">
-								<span class="label">* 안내시설방향</span>
+								<span class="label"><img src="image/openAble3.png" alt="">안내시설방향</span>
 						</div>
 						<div class="cell2">
 							<p id="plqDirectionLbl" name="oldLbl"></p>
@@ -192,7 +202,7 @@
 					</div>
 					<div onclick="openDataIdPop('scfggMkty');" class="row">
 						<div  class="cell1">
-								<span class="label">* 제2외국어여부</span>
+								<span class="label"><img src="image/openAble3.png" alt="">제2외국어여부</span>
 						</div>
 						<div class="cell2">
 							<p id="scfggMktyLbl" name="oldLbl"></p>
@@ -203,7 +213,7 @@
 					</div>
 					<div onclick="openDataIdPop('scfggUla1');" class="row">
 						<div  class="cell1">
-								<span class="label">* 언어1</span>
+								<span class="label"><img src="image/openAble3.png" alt="">언어1</span>
 						</div>
 						<div class="cell2">
 							<p id="scfggUla1Lbl" name="oldLbl"></p>
@@ -214,7 +224,7 @@
 					</div>
 					<div onclick="openDataIdPop('scfggUla2');" class="row">
 						<div  class="cell1">
-								<span class="label">* 언어2</span>
+								<span class="label"><img src="image/openAble3.png" alt="">언어2</span>
 						</div>
 						<div class="cell2">
 							<p id="scfggUla2Lbl" name="oldLbl"></p>
@@ -225,18 +235,18 @@
 					</div>
 					<div onclick="openDataIdPop('rdpqGdSd');" class="row">
 						<div  class="cell1">
-								<span class="label">* 규격</span>
+								<span class="label"><img src="image/openAble3.png" alt="">규격</span>
 						</div>
 						<div class="cell2">
 							<p id="rdpqGdSdLbl" name="oldLbl"></p>
                             <p id="rdpqGdSd" style="display:none"></p>
-							<p id="rdpqGdSdLbl_new" style="display:none; color:red"></p>
+							<p id="rdpqGdSdLbl_new" onchange="setGdft()" style="display:none; color:red"></p>
 							<p id="rdpqGdSd_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div onclick="openCustomPop('gdftyWVT')" class="row">
 						<div  class="cell1">
-							<span class="label">* 가로*세로*두께</span>
+							<span class="label"><img src="image/openAble3.png" alt="">가로*세로*두께</span>
 						</div>
 						<div class="cell2">
 							<p id="gdftyWVT" name="oldLbl"></p>
@@ -251,7 +261,7 @@
 					</div>
 					<div onclick="openCustomPop('gdftyUnitPrice')" class="row">
 						<div  class="cell1">
-								<span class="label">* 단가(원)</span>
+								<span class="label"><img src="image/openAble3.png" alt="">단가(원)</span>
 						</div>
 						<div class="cell2">
 							<p id="gdftyUnitPrice" name="oldLbl"></p>
@@ -260,7 +270,7 @@
 					</div>
 					<div onclick="" class="row">
 						<div  class="cell1">
-								<span class="label">* 설치상태</span>
+								<span class="label"><img src="image/openAble3.png" alt="">설치상태</span>
 						</div>
 						<div class="cell2">
 							<p id="" name="oldLbl"></p>
@@ -337,16 +347,63 @@
 					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
 				<!-- 단가 데이터 팝업 끝 -->
-				<!-- 가로*세로*두께 데이터 팝업 -->
-				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">규격 (가로*새로*두께)</div>
+
+				<!-- 기초번호 데이터 팝업 -->
+				<div id="frontStartBaseNo_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">시작기초번호</div>
 					<div class="dataForm">
 						<div class="row">
 							<div class="cell">
-								<span class="label cell10">크기</span>
-								<div class="inputText cell10"><input type="text" id = "gdftyWide_fix" name="" title="가로" maxlength="20" value=""></div> *
-								<div class="inputText cell10"><input type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value=""></div> *
-								<div class="inputText cell10"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value=""></div>
+								<span class="label w50">기초번호 </span>
+								<div class="inputText"><input type="text" id="frontStartBaseMasterNo_fix" name="" title="시작기초번호" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">-</div>
+								<div class="inputText"><input type="text" id="frontStartBaseSlaveNo_fix" name="" title="종료기초번호" maxlength="20" value="" style="width:50px"></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent2('frontStartBaseNo','frontStartBaseMasterNo','frontStartBaseSlaveNo')" class="btnPoint">저장</span>
+						<span onclick="closeDataPop()" class="btnNormal">닫기</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 기초번호 데이터 팝업 끝 -->
+
+				<!-- 기초번호 데이터 팝업 -->
+				<div id="frontEndBaseNo_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">종료기초번호</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w50">기초번호 </span>
+								<div class="inputText"><input type="text" id="frontEndBaseMasterNo_fix" name="" title="시작기초번호" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">-</div>
+								<div class="inputText"><input type="text" id="frontEndBaseSlaveNo_fix" name="" title="종료기초번호" maxlength="20" value="" style="width:50px"></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent2('frontEndBaseNo','frontEndBaseMasterNo','frontEndBaseSlaveNo')" class="btnPoint">저장</span>
+						<span onclick="closeDataPop()" class="btnNormal">닫기</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 기초번호 데이터 팝업 끝 -->
+
+				<!-- 가로*세로*두께 데이터 팝업 -->
+				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">규격 (가로*세로*두께)</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w50">크기 </span>
+								<div class="inputText">
+									<input type="text" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px">
+								</div>
+								<div class="inputText">*</div>
+								<div class="inputText"><input readonly type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">*</div>
+								<div class="inputText"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
 							</div>
 						</div>
 					</div>

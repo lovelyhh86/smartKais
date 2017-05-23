@@ -122,7 +122,8 @@ var MapUtil = {
             var options = opt_options || {};
 
             var button = document.createElement('button');
-            button.innerHTML = '<img src="img/icon_curPos.png" />';
+            // button.innerHTML = '<img src="img/icon_curPos.png" />';
+            button.innerHTML = '<img src="image/current.png" />';
 
             var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */{
                 tracking: true,
@@ -297,9 +298,9 @@ var MapUtil = {
                 break;    
             case DATA_TYPE.ENTRC:
 
-                sn = f.get("BUL_MAN_NO");
+                sn = f.get("ENT_MAN_NO");
 
-                var link = URLs.buildsignlink;
+                var link = URLs.entrclink;
 
                 MapUtil.setValues(layerID, link, sn);
 
@@ -322,7 +323,7 @@ var MapUtil = {
                             case DATA_TYPE.RDPQ:
 
                                 //제목창
-                                var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.bsisMnnm, data.bsisSlno);
+                                var title = "<span class='label'>[{0}] {1} {2}-{3}<span>".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.bsisMnnm, data.bsisSlno);
                                 $(".title").append(title);
                                 //일련번호
                                 $("#sn").append(sn);
@@ -351,9 +352,13 @@ var MapUtil = {
                                 //앞면 도로명(로마자)
                                 $("#frontRomeRoadNm").append(data.frontRomeRoadNm);
                                 //앞면시작기초번호(0-0)
+                                $("#frontStartBaseMasterNo").append(data.frontStartBaseMasterNo);
+                                $("#frontStartBaseSlaveNo").append(data.frontStartBaseSlaveNo);
                                 var frontStartBaseNo = "{0} - {1}".format(data.frontStartBaseMasterNo,data.frontStartBaseSlaveNo);
                                 $("#frontStartBaseNo").append(frontStartBaseNo);                             
                                 //앞면종료기초번호(0-0)
+                                $("#frontEndBaseMasterNo").append(data.frontEndBaseMasterNo);
+                                $("#frontEndBaseSlaveNo").append(data.frontEndBaseSlaveNo);
                                 var frontEndBaseNo = "{0} - {1}".format(data.frontEndBaseMasterNo,data.frontEndBaseSlaveNo);
                                 $("#frontEndBaseNo").append(frontEndBaseNo);
                                 //뒷면 도로명(국문)
@@ -1047,15 +1052,19 @@ var mapInit = function (mapId, pos) {
 
         var resultHtml = "";
         var buttonHtml = "";
+        var strHtml = "";
         
         var layerList = map.getLayers().getArray();
         var popupDiv = $("#popup-content");
-        var buttonDiv = "<div class='{0}'>{1}</div>";
+        var commonDiv = "<div class='{0}'>{1}</div>";
+        var commonP = "<p class='{0}'>{1}</p>";
+        var commonSpan = "<span class='{0}'>{1}</span>";
+        
 
-        var popDiv = "<div class='mapInfo' onclick =\"{0}\">{1}</div>"
-        var popTableHead = "<p class='localTitle'>{0}</p>";
+        var popDiv = "<div class='{0}' onclick =\"{1}\">{2}</div>"
         var popTableP = "<p>{0} : {1}</p>";
-        var buttonForm ="<span class = {0} onclick=\"{1}\"><img src='{2}' title='{3}'></span>" 
+        var buttonForm ="<span class = {0} onclick=\"{1}\"><img src='{2}' title='{3}'></span>";
+        var buttonForm2 ="<span class = {0} onclick=\"{1}\">{2}</span>"; 
         
         //심플팝업 초기화
         popupDiv.empty();
@@ -1123,28 +1132,23 @@ var mapInit = function (mapId, pos) {
 
                 var pointY = popTableP.format("Y",coordinate[1]);
 
-                resultHtml = pointSn;
-                resultHtml+= pointX;
-                resultHtml+= pointY;
+                // strHtml += pointSn;
+                // strHtml += pointX;
+                // strHtml += pointY;
 
-                resultHtml = buttonDiv.format('mapInfo',resultHtml);
+                strHtml = "현재위치로 시설물을 이동하시겠습니까?"
 
-                //팝업위
-                // var box1 = '<div class="mapRow"><span class="box1"></span><div class="box2"></div><span class="box3"></span></div>';
-                // popupDiv.append(box1);
-                popupDiv.append(resultHtml);
-
+                resultHtml = commonDiv.format("",strHtml);
+                
                 //버튼처리
-                buttonHtml = buttonForm.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","","저장");
-                buttonHtml += buttonForm.format("btnNormal","clearMoveMode()","","취소");
-                
-                buttonHtml = buttonDiv.format("mapBtn",buttonHtml);
-                
-                //팝업아래
-                // var box2 = '<div class="mapRow"><span class="box7"></span><div class="box8_infobulle"></div><span class="box9"></span></div>';
+                buttonHtml += buttonForm2.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","저장");
+                buttonHtml += buttonForm2.format("btnNormal","clearMoveMode()","취소");
 
-                popupDiv.append(buttonHtml);
-                // popupDiv.append(box2);
+                resultHtml += commonDiv.format("mapBtn",buttonHtml)
+
+                resultHtml = commonDiv.format('mapInfo',resultHtml);
+
+                popupDiv.append(resultHtml);
 
                 $("#popup").show();
                 
@@ -1172,7 +1176,8 @@ var mapInit = function (mapId, pos) {
                 
                 features.forEach(function(feature, index) {
                     
-                    var strHtml = "";
+                    strHtml = "";
+                    buttonHtml = "";
 
                     layerID = layer.get('id');
 
@@ -1181,24 +1186,43 @@ var mapInit = function (mapId, pos) {
                     switch(layerID) {
                         case DATA_TYPE.RDPQ:
 
-                            var FT_KOR_RN = popTableHead.format(feature.get('FT_KOR_RN') +" "+ feature.get('BSIS_MNNM')+" - "+ feature.get('BSIS_SLNO'));
-                            
-                            var insSpoCd = setCodeValue(feature,'INS_SPO_CD', '설치지점');
+                            var FT_KOR_RN = commonP.format("localTitle",feature.get('FT_KOR_RN') +" "+ feature.get('BSIS_MNNM')+" - "+ feature.get('BSIS_SLNO'));
 
-                            var rdpqGdSd = setCodeValue(feature,'RDPQ_GD_SD', '규격');
+                            //시점
+                            var FT_STBS_MN = feature.get('FT_STBS_MN');
 
-                            var insCrsCd = setCodeValue(feature,'INS_CRS_CD', '교차로유형');
+                            var FT_STBS_SN = feature.get('FT_STBS_SN');
+
+                            var ftStbsStr = baseNumberMix(FT_STBS_MN,FT_STBS_SN); // 0 - 0
+
+                            var ftStbs = popTableP.format("시점",ftStbsStr);
+
+                            //종점
+
+                            var BK_STBS_MN = feature.get('BK_STBS_MN');
+
+                            var BK_STBS_SN = feature.get('BK_STBS_SN');
+
+                            var bkStbsStr = baseNumberMix(BK_STBS_MN,BK_STBS_SN); // 0 - 0
+
+                            var bkStbs = popTableP.format("종점",bkStbsStr);
+
+                            //명판방향
+                            var PLQ_DRC = setCodeValue(feature,'PLQ_DRC');
+                            var plqDrc = commonSpan.format("info",PLQ_DRC);
+                            //규격
+                            var RDPQ_GD_SD = setCodeValue(feature,'RDPQ_GD_SD');
+                            var rdpqGdSd = commonSpan.format("info",RDPQ_GD_SD);
+                            //양면여부
+                            var BDRCL_AT = feature.get('BDRCL_AT') == 0 ? "단면":"양면";
+                            var bdrclAt = commonSpan.format("info",PLQ_DRC);
                             
                             strHtml += FT_KOR_RN
-                            strHtml += insSpoCd
-                            strHtml += rdpqGdSd
-                            strHtml += insCrsCd
+                            strHtml += ftStbs
+                            strHtml += bkStbs
+                            strHtml += commonP.format("",plqDrc + bdrclAt + rdpqGdSd);
 
-                            // strHtml += "<hr/>"
-
-                           
-
-                            resultHtml = popDiv.format('openDetailPopupCall('+index+')',strHtml);
+                            resultHtml = popDiv.format("",'openDetailPopupCall('+index+')',strHtml);
 
                             //도로시설물위치일련번호
                             var RDFTYLC_SN = feature.get("RDFTYLC_SN");
@@ -1210,17 +1234,17 @@ var mapInit = function (mapId, pos) {
 
                             // buttonHtml += "<hr/>"
 
-                            buttonHtml = buttonDiv.format("mapAdd",buttonHtml);
+                            resultHtml += commonDiv.format("mapAdd",buttonHtml);
 
-                            //팝업위
-                            var box1 = '<div class="mapRow"><span class="box1"></span><div class="box2"></div><span class="box3"></span></div>';
-                            //팝업아래
-                            var box2 = '<div class="mapRow"><span class="box7"></span><div class="box8_infobulle"></div><span class="box9"></span></div>';
+                            resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
 
-                            popupDiv.append(box1);
+                            if(features.length > 1){
+                                resultHtml += commonP.format("infoLine","");
+                            }
+
                             popupDiv.append(resultHtml);
-                            popupDiv.append(buttonHtml);
-                            popupDiv.append(box2);
+                            // popupDiv.append(buttonHtml);
+                            // popupDiv.append(box2);
 
 
                             $("#popup").show();
@@ -1976,15 +2000,30 @@ function openDetailPopupCall(index){
     
 }
 
-function setCodeValue(feature, colume, titleText){
+function setCodeValue(feature, colume){
 
-    var popTableP = "<p>{0} : {1}</p>";
+    // var popTableP = "<p>{0} : {1}</p>";
 
     var codeValue = feature.get(colume);
     var codeList = app.codeMaster[CODE_GROUP[colume]];
     var label = codeList[codeValue];
-    var resultText = popTableP.format(titleText, label);
-    return resultText;
+
+    if(label == undefined){
+        label = "미등록";
+    }
+    
+    return label;
         
+}
+
+function baseNumberMix(mn,sn){
+        var baseNum = "";
+        baseNum += mn;
+        if(sn != 0){
+            baseNum+= "-";
+            baseNum+= sn;
+        }
+
+        return baseNum;
 }
 
