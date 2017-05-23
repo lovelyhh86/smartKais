@@ -176,10 +176,10 @@ var roadStyle = function (styleOptions) {
         // })
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
         //   anchor: [0, 50],
-          anchorXUnits: 'fraction',
-          anchorYUnits: 'pixels',
+        //   anchorXUnits: 'fraction',
+        //   anchorYUnits: 'pixels',
           src: 'img/icon_legend01.png',
-          scale: 1.5
+        //   scale: 1.5
         }))
     };
     if( styleOptions.label._text)

@@ -11,7 +11,7 @@
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="img/icon_legend01.png" title="도로명판"></span></p>
+				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
 				<p class="photo"><span class="photoNum">92</span></p>
 			</div>
 			
@@ -171,7 +171,7 @@
 					</div>
 					<div onclick="openDataIdPop('useTarget');" class="row">
 						<div  class="cell1">
-								<span class="label"><img src="image/openAble3.png" alt="">사용대상<img src="image/openAble3.png" alt=""></span>
+								<span class="label"><img src="image/openAble3.png" alt="">사용대상</span>
 						</div>
 						<div class="cell2">
 							<p id="useTargetLbl" name="oldLbl"></p>
@@ -202,7 +202,7 @@
 					</div>
 					<div onclick="openDataIdPop('scfggMkty');" class="row">
 						<div  class="cell1">
-								<span class="label"><img src="image/openAble3.png" alt="">제2외국어여부<img src="image/openAble3.png" alt=""></span>
+								<span class="label"><img src="image/openAble3.png" alt="">제2외국어여부</span>
 						</div>
 						<div class="cell2">
 							<p id="scfggMktyLbl" name="oldLbl"></p>
@@ -240,7 +240,7 @@
 						<div class="cell2">
 							<p id="rdpqGdSdLbl" name="oldLbl"></p>
                             <p id="rdpqGdSd" style="display:none"></p>
-							<p id="rdpqGdSdLbl_new" style="display:none; color:red"></p>
+							<p id="rdpqGdSdLbl_new" onchange="setGdft()" style="display:none; color:red"></p>
 							<p id="rdpqGdSd_new" style="display:none;"></p>
 						</div>
 					</div>
@@ -366,9 +366,11 @@
 						<div class="row">
 							<div class="cell">
 								<span class="label w50">크기 </span>
-								<div class="inputText"><input type="text" id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">
+									<input type="text" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px">
+								</div>
 								<div class="inputText">*</div>
-								<div class="inputText"><input type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText"><input readonly type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
 								<div class="inputText">*</div>
 								<div class="inputText"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
 							</div>

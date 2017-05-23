@@ -1,5 +1,8 @@
  $(function(){
-            
+     
+    
+
+
         })
         
         function closeDetailView(){
@@ -205,6 +208,11 @@
 
             //이전 라벨 숨김
             $("#"+popID+"Lbl").hide();
+
+            //규격일때 처리
+            if(popID == "rdpqGdSd"){
+                setGdft();
+            }
 
             //팝업닫기
             $("#radioDataPop").hide();
@@ -617,4 +625,18 @@
                             });
             }
 
+        }
+
+        function setGdft(){
+
+            var rdpqGdSdLbl_new = $("#rdpqGdSdLbl_new").text();
+            var rdpqGdSdLblList = rdpqGdSdLbl_new.split('*');
+
+            var gdftyWide_new = $("#gdftyWide_new").text(rdpqGdSdLblList[0]);
+            var gdftyVertical_new = $("#gdftyVertical_new").text(rdpqGdSdLblList[1]);
+            var gdftyThickness = $("#gdftyThickness_new").text() == ""? $("#gdftyThickness").text():$("#gdftyThickness_new").text();
+
+            $("#gdftyWVT_new").text("{0}*{1}*{2}".format(rdpqGdSdLblList[0],rdpqGdSdLblList[1],gdftyThickness));
+            $("#gdftyWVT_new").show();
+            $("#gdftyWVT").hide();
         }
