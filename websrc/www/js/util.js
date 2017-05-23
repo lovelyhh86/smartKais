@@ -264,7 +264,7 @@ var util = {
             mapInit("map", pos).then(function() {
                 if (context.type == "map") {
                     map.removeLayer(layers.buld);
-                    map.removeLayer(layers.entrc);
+                    // map.removeLayer(layers.entrc);
                     map.addLayer(layers.rdpq);
                     map.addLayer(layers.bsis);
                     map.addLayer(layers.area);
@@ -273,7 +273,7 @@ var util = {
                     map.removeLayer(layers.bsis);
                     map.removeLayer(layers.area);
                     map.addLayer(layers.buld);
-                    map.addLayer(layers.entrc);
+                    // map.addLayer(layers.entrc);
                 }
             });
             app.context = {};
