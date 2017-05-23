@@ -110,7 +110,6 @@ var MapUtil = {
             var options = opt_options || {};
 
             var button = document.createElement('button');
-            // button.innerHTML = '<img src="img/icon_curPos.png" />';
             button.innerHTML = '<img src="image/current.png" />';
 
             var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */{
@@ -125,7 +124,7 @@ var MapUtil = {
 
             var curPosition = function () {
                 var coordinate = geolocation.getPosition();
-                coordinate = [946695.6653704424, 1953211.8303461187];
+                // coordinate = [946695.6653704424, 1953211.8303461187];
                 map.getView().setCenter(coordinate);
             }
 
@@ -202,6 +201,11 @@ var MapUtil = {
             case DATA_TYPE.ENTRC:
                 url = pages.detail_entrc;
                 header = "건물번호판";
+
+                break;
+            case DATA_TYPE.ENTRC:
+                url = pages.detail_buld;
+                header = "건물정보";
 
                 break;
         }
@@ -931,7 +935,9 @@ var mapInit = function (mapId, pos) {
             //rotate: false,
             attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
                 collapsible: false
+                
             })
+            
         }).extend([
             new MapUtil.controls.legendControl(),
             new MapUtil.controls.currentControl()
@@ -1138,6 +1144,7 @@ var mapInit = function (mapId, pos) {
         }
         /********** 위치이동 팝업 셋팅 end **********/
 
+        /********** 피쳐 클릭 셋팅 (심플팝업)**********/
         var firstClick = true;
         map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
             if(firstClick){
@@ -1158,6 +1165,7 @@ var mapInit = function (mapId, pos) {
                     
                     strHtml = "";
                     buttonHtml = "";
+                    resultHtml = "";
 
                     layerID = layer.get('id');
 
@@ -1195,7 +1203,7 @@ var mapInit = function (mapId, pos) {
                             var rdpqGdSd = commonSpan.format("info",RDPQ_GD_SD);
                             //양면여부
                             var BDRCL_AT = feature.get('BDRCL_AT') == 0 ? "단면":"양면";
-                            var bdrclAt = commonSpan.format("info",PLQ_DRC);
+                            var bdrclAt = commonSpan.format("info",BDRCL_AT);
                             
                             strHtml += FT_KOR_RN
                             strHtml += ftStbs
@@ -1223,9 +1231,6 @@ var mapInit = function (mapId, pos) {
                             }
 
                             popupDiv.append(resultHtml);
-                            // popupDiv.append(buttonHtml);
-                            // popupDiv.append(box2);
-
 
                             $("#popup").show();
                             overlay.setPosition(coordinate);
@@ -1240,6 +1245,52 @@ var mapInit = function (mapId, pos) {
                         case DATA_TYPE.ENTRC:
                             openDetailPopupCall(0);
                                 break;
+                        case DATA_TYPE.BULD:
+                            // openDetailPopupCall(0);
+                            
+                            //건물명
+                            var BULD_NM = feature.get("BULD_NM");
+
+                            if(BULD_NM == undefined){
+                                BULD_NM = "-";
+                            }
+
+                            strHtml = commonSpan.format("titleIcon_building","");
+                            strHtml += BULD_NM;
+
+                            var buldNm = commonP.format("localTile",strHtml);
+
+                            //건축물대장 건물명
+                            // var BULD_NM = feature.get("BULD_NM");
+                            
+
+                            //팝업내용 추가
+                            strHtml = buldNm
+
+                            
+                            resultHtml = popDiv.format("",'openDetailPopupCall('+index+')',strHtml);
+
+                            //도로시설물위치일련번호
+                            // var RDFTYLC_SN = feature.get("RDFTYLC_SN");
+                            //도로시설물 공간정보
+                            var geom = feature.getGeometry().getCoordinates();
+
+                            buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
+                            // buttonHtml += buttonForm.format("addition","moveingPoint("+RDFTYLC_SN+","+geom[0]+","+geom[1]+","+index+")","image/addtion.png","이동");
+                            buttonHtml += buttonForm.format("addition","alert('이동이 불가능 합니다.')","image/addtion.png","이동");
+
+                            resultHtml += commonDiv.format("mapAdd",buttonHtml);
+
+                            resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
+
+                            resultHtml += commonP.format("infoLine","");
+
+                            popupDiv.append(resultHtml);
+
+                            $("#popup").show();
+                            overlay.setPosition(coordinate);
+
+                                break;
                         
                     }
 
@@ -1247,13 +1298,9 @@ var mapInit = function (mapId, pos) {
 
                 });
             }
-            
+            /********** 피쳐 클릭 셋팅 (심플팝업) end**********/
             
                 /** 팝업처리 end */
-
-           
-            
-            
 
             // if(gbn){
             //     var sn, features;
