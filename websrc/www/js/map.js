@@ -222,7 +222,7 @@ var MapUtil = {
                 header = "건물번호판";
 
                 break;
-            case DATA_TYPE.ENTRC:
+            case DATA_TYPE.BULD:
                 url = pages.detail_buld;
                 header = "건물정보";
 
@@ -281,10 +281,11 @@ var MapUtil = {
     setDetail: function(layerID, f){
         var codeList
         
-        var sn = f.get("RD_GDFTY_SN");
+       
 
         switch (layerID) {
             case DATA_TYPE.RDPQ:
+                var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -292,7 +293,7 @@ var MapUtil = {
                 
                 break;
             case DATA_TYPE.AREA:
-                sn = '7002';
+                var sn = '7002';
                 var link = URLs.roadsignlink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -301,7 +302,7 @@ var MapUtil = {
 
                 break;
             case DATA_TYPE.BSIS:
-
+                var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -310,13 +311,25 @@ var MapUtil = {
                 break;    
             case DATA_TYPE.ENTRC:
 
-                sn = f.get("ENT_MAN_NO");
+                // var sn = f.get("ENT_MAN_NO");
+                var sn = "";
 
                 var link = URLs.entrclink;
 
                 MapUtil.setValues(layerID, link, sn);
 
-                break;    
+                break;   
+
+            case DATA_TYPE.BULD:
+
+                // var sn = f.get("ENT_MAN_NO");
+                var sn = ""
+
+                var link = URLs.buildsignlink;
+
+                MapUtil.setValues(layerID, link, sn);
+
+                break;     
            
         }
                 
@@ -634,6 +647,9 @@ var MapUtil = {
 
                                 //설치상태
 
+                         break;
+                         case DATA_TYPE.BULD:
+                            console.log(data);
                          break;
 
                         }
@@ -1240,7 +1256,11 @@ var mapInit = function (mapId, pos) {
                             strHtml += bkStbs
                             strHtml += commonP.format("",plqDrc + bdrclAt + rdpqGdSd);
 
-                            resultHtml = popDiv.format("",'openDetailPopupCall('+index+')',strHtml);
+                            if(features.length > 1 && index == 1){
+                                resultHtml += commonP.format("infoLine","");
+                            }
+
+                            resultHtml += popDiv.format("",'openDetailPopupCall('+index+')',strHtml);
 
                             //도로시설물위치일련번호
                             var RDFTYLC_SN = feature.get("RDFTYLC_SN");
@@ -1256,9 +1276,7 @@ var mapInit = function (mapId, pos) {
 
                             resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
 
-                            if(features.length > 1){
-                                resultHtml += commonP.format("infoLine","");
-                            }
+                            
 
                             popupDiv.append(resultHtml);
 
@@ -1298,22 +1316,45 @@ var mapInit = function (mapId, pos) {
                             strHtml = buldNm
 
                             
-                            resultHtml = popDiv.format("",'openDetailPopupCall('+index+')',strHtml);
+                            resultHtml = popDiv.format("","",strHtml);
 
                             //도로시설물위치일련번호
                             // var RDFTYLC_SN = feature.get("RDFTYLC_SN");
                             //도로시설물 공간정보
                             var geom = feature.getGeometry().getCoordinates();
 
-                            buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
+                            buttonHtml = buttonForm.format("more","openDetailPopupCall(0)","image/more.png","더보기");
                             // buttonHtml += buttonForm.format("addition","moveingPoint("+RDFTYLC_SN+","+geom[0]+","+geom[1]+","+index+")","image/addtion.png","이동");
-                            buttonHtml += buttonForm.format("addition","alert('이동이 불가능 합니다.')","image/addtion.png","이동");
+                            // buttonHtml += buttonForm.format("addition","alert('이동이 불가능 합니다.')","image/addtion.png","이동");
 
                             resultHtml += commonDiv.format("mapAdd",buttonHtml);
 
-                            resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
+                            resultHtml = commonDiv.format("mapInfo0",resultHtml);
 
-                            resultHtml += commonP.format("infoLine","");
+                            popupDiv.append(resultHtml);
+
+                            //건물번호판
+
+                            strHtml = commonSpan.format("titleIcon_number","");
+                            strHtml += "건물번호판";
+
+                            var aaa = commonP.format("localTile",strHtml);
+
+                             //팝업내용 추가
+                            strHtml = aaa
+                            strHtml += commonP.format("","표준형 | 일반형(오각형)");
+
+                             //라인추가
+                            resultHtml = commonP.format("infoLine","");
+
+                            resultHtml += popDiv.format("","",strHtml);
+
+                            buttonHtml = buttonForm.format("more","openDetailPopupCall(1)","image/more.png","더보기");
+
+                            resultHtml += commonDiv.format("mapAdd",buttonHtml);
+
+                            resultHtml = commonDiv.format("mapInfo1",resultHtml);
+
 
                             popupDiv.append(resultHtml);
 
@@ -2048,7 +2089,19 @@ function openDetailPopupCall(index){
 
     // $("#popup").hide();
 
-    MapUtil.openDetail(layerID, featureClone[index]);
+    if(layerID == DATA_TYPE.BULD){
+        if(index == 0){
+            MapUtil.openDetail(DATA_TYPE.BULD, featureClone[index]);
+        }else{
+            MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[index]);
+        }
+
+    }else{
+        MapUtil.openDetail(layerID, featureClone[index]);
+
+    }
+
+
     // util.camera = function() {
     //     var title = "{0} {1}-{2}".format(featureClone[index].get('FT_KOR_RN'), featureClone[index].get('BSIS_MNNM'), featureClone[index].get('BSIS_SLNO'));
     //     util.slide_page('up', pages.detailview, { sn : featureClone[index].get('RD_GDFTY_SN'), categoryid: "roadsign", title: title});
