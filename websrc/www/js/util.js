@@ -262,7 +262,10 @@ var util = {
             var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
 
             mapInit("map", pos).then(function() {
-                
+                //심플팝업 초기화
+                $("#popup-content").empty();
+                $("#popup").hide();
+
                 if (context.type == "map") {
                     map.removeLayer(layers.move);
                     map.removeLayer(layers.buld);

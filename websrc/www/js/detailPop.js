@@ -275,7 +275,7 @@
                     $("#gdftyVertical_fix").val(gdftyVertical);
                     $("#gdftyThickness_fix").val(gdftyThickness);
 
-                    $("#"+type+"_pop").show();
+                    // $("#"+type+"_pop").show();
                 break;
                 //건물층수
                 case 'floCo':
@@ -285,7 +285,7 @@
                     $("#groFloCo_fix").val(groFloCo);
                     $("#undFloCo_fix").val(undFloCo);
 
-                    $("#"+type+"_pop").show();
+                    // $("#"+type+"_pop").show();
                 break;
                 case 'frontStartBaseNo':
                     var startBaseMasterNo = $("#frontStartBaseMasterNo_new").text() == "" ? $("#frontStartBaseMasterNo").text(): $("#frontStartBaseMasterNo_new").text();
@@ -307,6 +307,8 @@
                 break;
 
             }
+
+            $("#"+type+"_pop").show();
 
         }
 
