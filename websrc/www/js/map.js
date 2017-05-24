@@ -584,7 +584,7 @@ var MapUtil = {
                                  break;
                          case DATA_TYPE.BULD:
 
-                                var buldNm = data.buldNm == null? '' : data.buldNm ;
+                                var buldNm = data.buldNm == null? "" : data.buldNm ;
                                 var title = "[{0}] {1}".format("건물정보", buldNm);
                                 $(".title").append(title);
 
