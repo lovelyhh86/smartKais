@@ -214,25 +214,29 @@
                 </div>
                 <!-- 단가 데이터 팝업 끝 -->
                 <!-- 가로*세로*두께 데이터 팝업 -->
-                <div id="gdftyWVT_pop" class="dataWrap" style="display: none">
-                    <div class="dataTItle">규격 (가로*새로*두께)</div>
-                    <div class="dataForm">
-                        <div class="row">
-                            <div class="cell">
-                                <span class="label cell10">크기</span>
-                                <div class="inputText cell10"><input type="text" id = "gdftyWide_fix" name="" title="가로" maxlength="20" value=""></div> *
-                                <div class="inputText cell10"><input type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value=""></div> *
-                                <div class="inputText cell10"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value=""></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dataBtn">
-                        <span onclick="textDataSendParent('gdftyWVT')" class="btnPoint">저장</span>
-                        <span onclick="closeDataPop()" class="btnNormal">닫기</span>
-                    </div>
-                    <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
-                </div>
-                <!-- 가로*세로*두께 데이터 팝업 끝 -->
+				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">규격 (가로*세로*두께)</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w50">크기 </span>
+								<div class="inputText">
+									<input type="text" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px">
+								</div>
+								<div class="inputText">*</div>
+								<div class="inputText"><input readonly type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">*</div>
+								<div class="inputText"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent('gdftyWVT')" class="btnPoint">저장</span>
+						<span onclick="closeDataPop()" class="btnNormal">닫기</span>
+					</div>
+					<p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 가로*세로*두께 데이터 팝업 끝 -->
             </div>
             <!-- content 끝  -->
             <!-- footer 시작 -->

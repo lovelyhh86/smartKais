@@ -105,7 +105,7 @@
 
 .subTitle{display: block; padding: 0 20px 0 15px; text-align: left;text-shadow: none;}
 
-.dataForm{display: table; width:100%; border:0;border-collapse:collapse; margin: 10px 15px 0 10px}
+.dataForm{display: table; border:0;border-collapse:collapse; margin: 10px 15px 0 10px}
 .dataForm .row{display: table-row; text-align: left}
 .dataForm .cell{position:relative; display: table-cell; padding:2px 0; vertical-align: middle;}
 .dataForm .cell2{position:relative; top:-2px ;display: table-cell; padding:0; vertical-align: middle;}
@@ -182,6 +182,26 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .w520{width: 520px;}
 
 
+/**************** scroll ****************/
+#scrollDiv::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#scrollDiv::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#scrollDiv::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #496388;
+}
 
 
 

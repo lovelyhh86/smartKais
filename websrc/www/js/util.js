@@ -262,13 +262,16 @@ var util = {
             var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
 
             mapInit("map", pos).then(function() {
+                
                 if (context.type == "map") {
+                    map.removeLayer(layers.move);
                     map.removeLayer(layers.buld);
-                    // map.removeLayer(layers.entrc);
+                    map.removeLayer(layers.entrc);
                     map.addLayer(layers.rdpq);
                     map.addLayer(layers.bsis);
                     map.addLayer(layers.area);
                 } else {
+                    map.removeLayer(layers.move);
                     map.removeLayer(layers.rdpq);
                     map.removeLayer(layers.bsis);
                     map.removeLayer(layers.area);

@@ -235,9 +235,9 @@
 							<p id="bsis_bsisGdSd_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div onclick="openCustomPop('gdftyWVT')" class="row">
+					<div onclick="openCustomPop2('gdftyWVT')" class="row">
 						<div  class="cell1">
-							<span class="label">* 가로*세로*두께</span>
+							<span class="label"><img src="image/openAble3.png" alt="">가로*세로*두께</span>
 						</div>
 						<div class="cell2">
 							<p id="gdftyWVT" name="oldLbl"></p>
@@ -305,14 +305,18 @@
 				<!-- 단가 데이터 팝업 끝 -->
 				<!-- 가로*세로*두께 데이터 팝업 -->
 				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">규격 (가로*새로*두께)</div>
+					<div class="dataTItle">규격 (가로*세로*두께)</div>
 					<div class="dataForm">
 						<div class="row">
 							<div class="cell">
-								<span class="label cell10">크기</span>
-								<div class="inputText cell10"><input type="text" id = "gdftyWide_fix" name="" title="가로" maxlength="20" value=""></div> *
-								<div class="inputText cell10"><input type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value=""></div> *
-								<div class="inputText cell10"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value=""></div>
+								<span class="label w50">크기 </span>
+								<div class="inputText">
+									<input type="text" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px">
+								</div>
+								<div class="inputText">*</div>
+								<div class="inputText"><input readonly type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">*</div>
+								<div class="inputText"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
 							</div>
 						</div>
 					</div>
@@ -328,7 +332,7 @@
 		<!-- footer 시작 -->
 		<div class="infoFooter">
 			<span onclick="submit(DATA_TYPE.BSIS);" class="btnPoint">저장</span>
-			<span onclick="refresh();" class="btnNormal">초기화</span>
+			<span onclick="closeDetailView();" class="btnNormal">닫기</span>
 		</div>
 		<!-- footer 끝 -->
 	</div>
