@@ -7,7 +7,7 @@
 
 .ol-control { background-color: white; }
 .ol-control button { background-color: white; }
-.ol-rotate{top: 50em; left:43.6em;}
+.ol-rotate{top: 1.8em; right: 1em;}
 .ol-rotate-reset{background-color: white;}
 
 .legend { top: .5em; left: .5em; width: 7em; text-align: center; }
@@ -27,7 +27,7 @@
 }
 .legend .legendBody .title { font-size: 1.3em; margin: 0.4em 0; }
 
-.curPosition { top: 53em; left: 43.5em; }
+.curPosition { top: 5em; right: 1em; }
 .curPosition button { background-color: transparent !important; }
 .currentMarker { width: 3em;, left: -50%, bottom: -.5em; position: relative; }
 

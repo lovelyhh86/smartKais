@@ -10,21 +10,21 @@
 /*legend*/
 .legend{display:inline-block; top:20px; left:20px; color: #2c3538; }
 .legend ul{width:215px; border:1px solid #e5e5e5; border-radius:8px; box-shadow:2px 2px 3px rgba(0, 0 , 0, .1); padding:15px 10px;background-color:rgba(245, 247, 248, 0.6);}
-.legend ul li{ position:relative; display:inline-block; width: 170px; margin-top: 5px; padding:11px  0  11px 43px; list-style:none; background-color: #ffffff; text-shadow: none; font-size: 0.95em ;}
+.legend ul li{ position:relative; display:inline-block; text-align: left; width: 170px; margin-top: 5px; padding:11px  0  11px 43px; list-style:none; background-color: #ffffff; text-shadow: none; font-size: 0.95em ;}
 .legend ul li:FIRST-CHILD{margin-top: 0;}
 .legend ul li > .total{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/legendLine.png) 0 3px no-repeat; color: #666;}
 
 .legend ul li.road{background: #fff url(../image/roadIconS.png) 15px 9px no-repeat;}
-.legend ul li.road_over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
-.legend ul li.road_over > .total_over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;}
+.legend ul li.road.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.road.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;}
 
-.legend ul li.blocks{background: #fff url(../image/blocksIconS.png) 15px 9px no-repeat;}
-.legend ul li.blocks_over{background: #f9745c url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
-.legend ul li.blocks_over > .total_over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/blocksLine.png) 0 3px no-repeat; color: #fff;}
+.legend ul li.bsis{background: #fff url(../image/blocksIconS.png) 15px 9px no-repeat;}
+.legend ul li.bsis.over{background: #f9745c url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.bsis.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/blocksLine.png) 0 3px no-repeat; color: #fff;}
 
-.legend ul li.local{background: #fff url(../image/localIconS.png) 15px 9px no-repeat;}
-.legend ul li.local_over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
-.legend ul li.local_over > .total_over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
+.legend ul li.area{background: #fff url(../image/localIconS.png) 15px 9px no-repeat;}
+.legend ul li.area.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.area.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
 
 /*mapBox*/
@@ -121,8 +121,8 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .cell2 >.radioBox> div.ui-checkbox, .cell2 >.radioBox >div.ui-radio {margin: .8em 0;position: relative;}
 
 .dataBtn{border-top:1px solid #e5e5e5; text-align: center; margin-top:20px; padding: 20px 0  15px 0;}
-.dataBtn >.btnPoint{display:inline-block; padding:8px 50px; background-color: #496388; color:#e5e5e5;text-shadow: none;font-size: 0.9em}
-.dataBtn >.btnNormal{display:inline-block; margin-left:5px ; padding:8px 50px; background-color: #c0c0c0; color:#fff;text-shadow: none; font-size: 0.8em}
+.dataBtn >.btnPoint{display:inline-block; padding:8px 50px; background-color: #c0c0c0; color:#e5e5e5;text-shadow: none;font-size: 0.9em}
+.dataBtn >.btnNormal{display:inline-block; margin-left:5px ; padding:8px 50px; background-color: #496388; color:#fff;text-shadow: none; font-size: 0.8em}
 .dataClose{position: absolute;top:15px;right:20px}
 
 /************* 사진 ****************/
@@ -140,7 +140,8 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 
 .photoSub{display:inline-block; width: 320px; margin-bottom:5px; color: #000;font-weight: 500;}
 .picInfo{padding:5px; background-color:#fff; vertical-align: middle; color: #fff;}
-.picImg{display:inline-block; width: 320px; height: 240px; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
+.picImg{display:inline-block; width: 320px; height: 240px; line-height: 240px; text-align: center; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
+.picImg img {max-height: 100%; vertical-align: middle;}
 /************* 사진(END) ****************/
 
 /*map position*/
