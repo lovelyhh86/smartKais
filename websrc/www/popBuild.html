@@ -11,7 +11,7 @@
             <div class="infoHeader">
 
                 <!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-                <p class="title"><span class="titleIcon"><img src="image/iconBuilding.png" title="건물정보"></span>건물정보</p>
+                <p class="title"><span class="titleIcon"><img src="image/iconBuilding.png" title="건물정보"></span></p>
                 <!--<p class="photo"><span class="photoNum">2</span></p>-->
             </div>
 
@@ -19,84 +19,97 @@
             <div class="infoContent">
                 <!-- 정보  -->
                 <div class="infoTable">
-                    <div class="row">
+                    <div onclick="openDataIdPop('bdtypCd_main');" class="row">
                         <p id ="sn" style="display:none"></p>
                         <div  class="cell1">
-                            <span class="label">건축물용도</span>
+                            <span class="label"><img src="image/openAble3.png" alt="">용도(대분류)</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="bdtypCd_mainLbl" name="oldLbl"></p>
+                            <p id="bdtypCd_main" style="display:none"></p>
+                            <p id="bdtypCd_mainLbl_new" style="display:none; color:red"></p>
+                            <p id="bdtypCd_main_new" style="display:none"></p>
                         </div>
                     </div>
-                     <div class="row">
+                    <div onclick="openDataIdPop('bdtypCd');" class="row">
                         <p id ="sn" style="display:none"></p>
                         <div  class="cell1">
-                            <span class="label">건물종속여부</span>
+                            <span class="label"><img src="image/openAble3.png" alt="">용도(소분류)</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="bdtypCdLbl" name="oldLbl"></p>
+                            <p id="bdtypCd" style="display:none"></p>
+                            <p id="bdtypCdLbl_new" style="display:none; color:red"></p>
+                            <p id="bdtypCd_new" style="display:none"></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <p id ="sn" style="display:none"></p>
+                    <div onclick="openDataIdPop('bulDpnSe');" class="row">
+                        <div  class="cell1">
+                            <span class="label"><img src="image/openAble3.png" alt="">건물종속여부</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="bulDpnSeLbl" name="oldLbl"></p>
+                            <p id="bulDpnSe" style="display:none"></p>
+                            <p id="bulDpnSeLbl_new" style="display:none; color:red"></p>
+                            <p id="bulDpnSe_new" style="display:none"></p>
+                        </div>
+                    </div>
+                    <div onclick="openCustomPop('buldNm');" class="row">
                         <div  class="cell1">
                             <span class="label">건물명</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="buldNm" name="oldLbl"></p>
+                            <p id="buldNm_new" style="display:none; color:red"></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <p id ="sn" style="display:none"></p>
+                    <div onclick="openCustomPop('bulEngNm');" class="row">
                         <div  class="cell1">
                             <span class="label">건물명(영)</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="bulEngNm" name="oldLbl"></p>
+                            <p id="bulEngNm_new" style="display:none; color:red"></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <p id ="sn" style="display:none"></p>
+                    <div onclick="openCustomPop('buldNmDc');" class="row">
                         <div  class="cell1">
                             <span class="label">상세건물명</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="buldNmDc" name="oldLbl"></p>
+                            <p id="buldNmDc_new" style="display:none; color:red"></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <p id ="sn" style="display:none"></p>
+                    <div onclick="openCustomPop2('floCo');" class="row">
                         <div  class="cell1">
                             <span class="label">건물층수</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="floCo" name="oldLbl"></p>
+                            <p id="groFloCo" style="display:none"></p>
+                            <p id="undFloCo" style="display:none"></p>
+                            <p id="floCo_new" style="display:none; color:red"></p>
+                            <p id="groFloCo_new" style="display:none"></p>
+                            <p id="undFloCo_new" style="display:none"></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <p id ="sn" style="display:none"></p>
+                    <div onclick="openCustomPop('buldSttus');" class="row">
                         <div  class="cell1">
                             <span class="label">건물상태</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="buldSttus" name="oldLbl"></p>
+                            <p id="buldSttus_new" style="display:none; color:red"></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <p id ="sn" style="display:none"></p>
+                    <div onclick="openCustomPop('buldMemo');" class="row">
                         <div  class="cell1">
                             <span class="label">메모</span>
                         </div>
                         <div class="cell2">
-                            <p id=""></p>
-                            <p id="" style="display:none"></p>
+                            <p id="buldMemo" name="oldLbl"></p>
+                            <p id="buldMemo_new" style="display:none; color:red"></p>
                         </div>
                     </div>
                     
@@ -141,8 +154,10 @@
                 <!-- 공통 라디오 데이터 팝업 -->
                 <div id="radioDataPop" class="dataWrap" style="display: none">
                     <div id="dataTitle" class="dataTItle"></div>
+                    <div id="scrollDiv">
                     <div id="dataForm" class="dataForm">
 
+                    </div>
                     </div>
                     <div class="dataBtn">
                         <span onclick="radioDataSendParent()" class="btnPoint">저장</span>
@@ -152,44 +167,126 @@
                 </div>
                 <!-- 공통 라디오 데이터 팝업 끝 -->
 
-                <!-- 단가 데이터 팝업 -->
-                <div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
-                    <div class="dataTItle">단가</div>
+                <!-- 건물명 데이터 팝업 -->
+                <div id="buldNm_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">건물명</div>
                     <div class="dataForm">
                         <div class="row">
                             <div class="cell">
-                                <span class="label w35">단가</span>
-                                <div class="inputText w75"><input type="text" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
+                                <span class="label w75">건물명</span>
+                                <div class="inputText w75"><input type="text" id="buldNm_fix" name="" title="건물명" maxlength="20" value=""></div>
                             </div>
                         </div>
                     </div>
                     <div class="dataBtn">
-                        <span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
+                        <span onclick="textDataSendParent('buldNm')" class="btnPoint">저장</span>
                         <span onclick="closeDataPop()" class="btnNormal">닫기</span>
                     </div>
                     <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
                 </div>
-                <!-- 단가 데이터 팝업 끝 -->
-                <!-- 가로*세로*두께 데이터 팝업 -->
-                <div id="gdftyWVT_pop" class="dataWrap" style="display: none">
-                    <div class="dataTItle">규격 (가로*새로*두께)</div>
+                <!-- 건물명 데이터 팝업 끝 -->
+
+                <!-- 건물명(영) 데이터 팝업 -->
+                <div id="bulEngNm_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">건물명(영)</div>
                     <div class="dataForm">
                         <div class="row">
                             <div class="cell">
-                                <span class="label cell10">크기</span>
-                                <div class="inputText cell10"><input type="text" id = "gdftyWide_fix" name="" title="가로" maxlength="20" value=""></div> *
-                                <div class="inputText cell10"><input type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value=""></div> *
-                                <div class="inputText cell10"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value=""></div>
+                                <span class="label w75">건물명(영)</span>
+                                <div class="inputText w75"><input type="text" id="bulEngNm_fix" name="" title="건물명(영)" maxlength="20" value=""></div>
                             </div>
                         </div>
                     </div>
                     <div class="dataBtn">
-                        <span onclick="textDataSendParent('gdftyWVT')" class="btnPoint">저장</span>
+                        <span onclick="textDataSendParent('bulEngNm')" class="btnPoint">저장</span>
                         <span onclick="closeDataPop()" class="btnNormal">닫기</span>
                     </div>
                     <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
                 </div>
-                <!-- 가로*세로*두께 데이터 팝업 끝 -->
+                <!-- 건물명(영) 데이터 팝업 끝 -->
+
+                <!-- 상세건물명 데이터 팝업 -->
+                <div id="buldNmDc_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">상세건물명</div>
+                    <div class="dataForm">
+                        <div class="row">
+                            <div class="cell">
+                                <span class="label w75">상세건물명</span>
+                                <div class="inputText w75"><input type="text" id="buldNmDc_fix" name="" title="상세건물명" maxlength="20" value=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataBtn">
+                        <span onclick="textDataSendParent('buldNmDc')" class="btnPoint">저장</span>
+                        <span onclick="closeDataPop()" class="btnNormal">닫기</span>
+                    </div>
+                    <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+                </div>
+                <!-- 상세건물명 데이터 팝업 끝 -->
+
+                <!-- 건물층수 데이터 팝업 -->
+                <div id="floCo_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">건물층수</div>
+                    <div class="dataForm">
+                        <div class="row">
+                            <div class="cell">
+								<span class="label w75">지상층</span>
+									<div class="inputText"><input type="text" id = "groFloCo_fix" name="" title="지상층" maxlength="20" value="" style="width:50px"></div>
+							</div>
+                        </div>
+                        <div class="row">     
+                            <div class="cell">
+                                <span class="label w75">지하층</span>
+                                    <div class="inputText"><input type="text" id = "undFloCo_fix" name="" title="지상층" maxlength="20" value="" style="width:50px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataBtn">
+                        <span onclick="textDataSendParent3('floCo')" class="btnPoint">저장</span>
+                        <span onclick="closeDataPop()" class="btnNormal">닫기</span>
+                    </div>
+                    <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+                </div>
+                <!-- 건물층수 데이터 팝업 끝 -->
+
+                 <!-- 건물상태 데이터 팝업 -->
+                <div id="buldSttus_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">건물상태</div>
+                    <div class="dataForm">
+                        <div class="row">
+                            <div class="cell">
+                                <span class="label w75">건물상태</span>
+                                <div class="inputText w75"><input type="text" id="buldSttus_fix" name="" title="건물상태" maxlength="20" value=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataBtn">
+                        <span onclick="textDataSendParent('buldSttus')" class="btnPoint">저장</span>
+                        <span onclick="closeDataPop()" class="btnNormal">닫기</span>
+                    </div>
+                    <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+                </div>
+                <!-- 건물상태 데이터 팝업 끝 -->
+
+                <!-- 메모 데이터 팝업 -->
+                <div id="buldMemo_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">메모</div>
+                    <div class="dataForm">
+                        <div class="row">
+                            <div class="cell">
+                                <span class="label w75">메모</span>
+                                <div class="inputText w75"><input type="text" id="buldMemo_fix" name="" title="메모" maxlength="20" value=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataBtn">
+                        <span onclick="textDataSendParent('buldMemo')" class="btnPoint">저장</span>
+                        <span onclick="closeDataPop()" class="btnNormal">닫기</span>
+                    </div>
+                    <p class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+                </div>
+                <!-- 건물상태 데이터 팝업 끝 -->
+               
             </div>
             <!-- content 끝  -->
             <!-- footer 시작 -->

@@ -18,7 +18,11 @@
         var popID;
         var popColume;
         function openDataIdPop(id){
+            //모든팝업닫기
             closeDataPop();
+            //스크롤처리 초기화
+            $("#scrollDiv").attr("style","");
+
             $("#dataForm").empty();
             popID = id;
             switch(id){
@@ -112,7 +116,7 @@
                     
                     //라디오버튼 구성
                     popColume = 'RDPQ_GD_SD';
-                    createRadioButtonCustom();
+                    createRadioButtonCustom(id);
                     break;
                 case 'area_areaGdSd':
                     //제목
@@ -185,7 +189,34 @@
                     //라디오버튼 구성
                     popColume = 'BUL_NMT_QL';
                     createRadioButton();
-                    break;     
+                    break;
+                case 'bdtypCd_main':
+                    //제목
+                    var titleText = '용도'; //건물정보
+                    setTitle(titleText);
+                    
+                    //라디오버튼 구성
+                    popColume = 'BDTYP_CD';
+                    createRadioButtonCustom(id);
+                    break;
+               case 'bdtypCd':
+                    //제목
+                    var titleText = '용도'; //건물정보
+                    setTitle(titleText);
+                    
+                    //라디오버튼 구성
+                    popColume = 'BDTYP_CD';
+                    createRadioButtonCustom(id);
+                    break;              
+                case 'bulDpnSe':
+                    //제목
+                    var titleText = '종속여부'; //건물정보
+                    setTitle(titleText);
+                    
+                    //라디오버튼 구성
+                    popColume = 'BUL_DPN_SE';
+                    createRadioButton();
+                    break;        
 
                                          
             }
@@ -214,19 +245,26 @@
                 setGdft();
             }
 
+            //건물정보 용도(대분류)일때 처리
+            if(popID == "bdtypCd_main"){
+                setbdtypCd();
+            }
+
             //팝업닫기
             $("#radioDataPop").hide();
         }
 
         function openCustomPop(type){
+                closeDataPop();
+                var textVal = $("#"+type+"_new").text() == "" ? $("#"+type).text():$("#"+type+"_new").text();
+                $("#"+type+"_fix").val(textVal);
+                $("#"+type+"_pop").show();
+
+        }
+
+        function openCustomPop2(type){
             closeDataPop();
             switch(type){
-                //단가
-                case 'gdftyUnitPrice':
-                    var gdftyUnitPrice = $("#gdftyUnitPrice_new").text() == "" ? $("#gdftyUnitPrice").text():$("#gdftyUnitPrice_new").text();
-                    $("#gdftyUnitPrice_fix").val(gdftyUnitPrice);
-                    $("#"+type+"_pop").show();
-                break;
                 //규격(가로*새로*두께)
                 case 'gdftyWVT':
                     var gdftyWide = $("#gdftyWide_new").text() == "" ? $("#gdftyWide").text():$("#gdftyWide_new").text();
@@ -239,24 +277,16 @@
 
                     $("#"+type+"_pop").show();
                 break;
-                //지역안내판 광고내용
-                case 'area_advCn':
-                    var area_advCn = $("#area_advCn_new").text() == "" ? $("#area_advCn").text():$("#area_advCn_new").text();
-                    $("#area_advCn_fix").val(area_advCn);
+                //건물층수
+                case 'floCo':
+                    var groFloCo = $("#groFloCo_new").text() == "" ? $("#groFloCo").text():$("#groFloCo_new").text();
+                    var undFloCo = $("#undFloCo_new").text() == "" ? $("#undFloCo").text():$("#undFloCo_new").text();
+
+                    $("#groFloCo_fix").val(groFloCo);
+                    $("#undFloCo_fix").val(undFloCo);
+
                     $("#"+type+"_pop").show();
                 break;
-                //지역안내판 기타내용
-                case 'area_etcCn':
-                    var area_etcCn = $("#area_etcCn_new").text() == "" ? $("#area_etcCn").text():$("#area_etcCn_new").text();
-                    $("#area_etcCn_fix").val(area_etcCn);
-                    $("#"+type+"_pop").show();
-                break;
-            }
-
-        }
-
-        function openCustomPop2(type){
-            switch(type){
                 case 'frontStartBaseNo':
                     var startBaseMasterNo = $("#frontStartBaseMasterNo_new").text() == "" ? $("#frontStartBaseMasterNo").text(): $("#frontStartBaseMasterNo_new").text();
                     var startBaseSlaveNo = $("#frontStartBaseSlaveNo_new").text() == "" ? $("#frontStartBaseSlaveNo").text(): $("#frontStartBaseSlaveNo_new").text();
@@ -277,22 +307,23 @@
                 break;
 
             }
-            $("#"+type+"_pop").show();
 
         }
 
         function textDataSendParent(type){
-            switch(type){
-                case 'gdftyUnitPrice'://단가
                     
-                    var gdftyUnitPrice_fix = $("#gdftyUnitPrice_fix").val();
-                    $("#"+type+"_new").text(gdftyUnitPrice_fix);
-                    $("#"+type).hide();
-                    $("#"+type+"_new").show();
+                var fixData = $("#"+type+"_fix").val();
+                $("#"+type+"_new").text(fixData);
+                $("#"+type).hide();
+                $("#"+type+"_new").show();
+                $("#"+type+"_pop").hide();
+            
+        }
 
-                    break;
+        function textDataSendParent3(type){
+            switch(type){
                 case 'gdftyWVT'://규격(가로*새로*두께)
-                    
+                        
                     var gdftyWide_fix = $("#gdftyWide_fix").val();
                     var gdftyVertical_fix = $("#gdftyVertical_fix").val();
                     var gdftyThickness_fix = $("#gdftyThickness_fix").val();
@@ -305,29 +336,35 @@
 
                     $("#gdftyWVT_new").text(gdftyWVT_new);
 
-                    break;
-                case 'area_advCn'://지역안내판 광고내용
-                    
-                    var area_advCn_fix = $("#area_advCn_fix").val();
-                    $("#"+type+"_new").text(area_advCn_fix);
                     $("#"+type).hide();
                     $("#"+type+"_new").show();
+                    $("#"+type+"_pop").hide();
 
                     break;
-                case 'area_etcCn'://지역안내판 기타내용
+                case 'floCo'://건물층수
+                        
+                    var groFloCo_fix = $("#groFloCo_fix").val();
+                    var undFloCo_fix = $("#undFloCo_fix").val();
                     
-                    var area_etcCn_fix = $("#area_etcCn_fix").val();
-                    $("#"+type+"_new").text(area_etcCn_fix);
+
+                    $("#groFloCo_new").text(groFloCo_fix);
+                    $("#undFloCo_new").text(undFloCo_fix);
+                    
+
+                    var floCo_new = "{0}(지상층){1}(지하층)".format(groFloCo_fix,undFloCo_fix);
+
+                    $("#floCo_new").text(floCo_new);
+
                     $("#"+type).hide();
                     $("#"+type+"_new").show();
+                    $("#"+type+"_pop").hide();
 
                     break;
+
+
                 }
-                
-            $("#"+type).hide();
-            $("#"+type+"_new").show();
-            $("#"+type+"_pop").hide();
         }
+
         function textDataSendParent2(baseNo, id1, id2){
             var startBaseMasterNo_fix = $("#"+id1+"_fix").val();
             var startBaseSlaveNo_fix = $("#"+id2+"_fix").val();
@@ -390,44 +427,117 @@
             }
         }
 
-        function createRadioButtonCustom(){
+        function createRadioButtonCustom(id){
+            
             var appendText = ''; 
             var cellText = '';
             var strText = '';
-
             var dataForm = $("#dataForm");
-            //사용대상에 따른 분류
-            var type = $("#useTarget_new").text() == "" ? $("#useTarget").text() : $("#useTarget_new").text();
 
             var targetRow = "<div class='row'>{0}</div>"
             var dataCell = "<div class='cell auto'>{0}</div>";
             var InputRadio = '<div class="inputRadio"><input type="radio" name="{0}" value="{1}"></div>';
             var radioSpen = '<span class="label">{0}</span>';
 
-            var checkedValue = $("#"+popID).text();
-            var codeList = app.codeMaster[CODE_GROUP[popColume]];
+            switch(id){
+                case 'rdpqGdSd':
+                    //사용대상에 따른 분류
+                    var useTarget = $("#useTarget_new").text() == "" ? $("#useTarget").text() : $("#useTarget_new").text();
 
-            for(var c in codeList){
-                if(c != "GroupNm"){
-                    if(c.charAt(1) == type.charAt(1)){
 
-                        strText += InputRadio.format(popID,c);
-                        strText += radioSpen.format(codeList[c]);
-                        cellText += dataCell.format(strText);
-                        
-                        appendText = targetRow.format(cellText);
-                        dataForm.append(appendText)
-                        appendText = ''; 
-                        cellText = '';
-                        strText = '';
+                    var checkedValue = $("#"+id).text();
+                    var codeList = app.codeMaster[CODE_GROUP[popColume]];
+                    
+                    for(var c in codeList){
+                        if(c != "GroupNm"){
+                            if(c.charAt(1) == useTarget.charAt(1)){
 
+                                strText += InputRadio.format(id,c);
+                                strText += radioSpen.format(codeList[c]);
+                                cellText += dataCell.format(strText);
+                                
+                                appendText = targetRow.format(cellText);
+                                dataForm.append(appendText)
+                                appendText = ''; 
+                                cellText = '';
+                                strText = '';
+                               
+                            }
+                        }
+                    }
+                    
+                    var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
+
+                    $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
+                break;
+                case'bdtypCd_main':
+                    // 용도 대분류
+                   var codeList = app.codeMaster[CODE_GROUP[popColume]];
+
+                    for(var c in codeList){
+                        if(c != "GroupNm"){
+                            if(c.substr(2,5) == '000'){
+
+                                strText += InputRadio.format(id,c);
+                                strText += radioSpen.format(codeList[c]);
+                                cellText += dataCell.format(strText);
+                                
+                                appendText = targetRow.format(cellText);
+                                dataForm.append(appendText)
+                                appendText = ''; 
+                                cellText = '';
+                                strText = '';
+
+                            }
+
+                        }
                     }
 
-                }
-            }
-            var values = $("#"+popID+"_new").text() == "" ? $("#"+popID).text() :$("#"+popID+"_new").text();
+                    var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
 
-            $('input:radio[name='+popID+']:input[value=' + values + ']').attr("checked", true);
+                    $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
+
+                break;
+                case'bdtypCd':
+                    // 용도 소분류
+                    var codeList = app.codeMaster[CODE_GROUP[popColume]];
+
+                    var bdtypCd_main = $("#bdtypCd_main_new").text() == "" ? $("#bdtypCd_main").text() : $("#bdtypCd_main_new").text();
+                    var i = 0;
+                    for(var c in codeList){
+                        if(c != "GroupNm"){
+                            if(c.substr(2,5) != '000'&& bdtypCd_main.substr(0,2) == c.substr(0,2)){
+
+                                strText += InputRadio.format(id,c);
+                                strText += radioSpen.format(codeList[c]);
+                                cellText += dataCell.format(strText);
+                                
+                                appendText = targetRow.format(cellText);
+                                dataForm.append(appendText)
+                                appendText = ''; 
+                                cellText = '';
+                                strText = '';
+                                i++;
+
+                            }
+
+                        }
+                    }
+
+                    if(i>25){
+                        $("#scrollDiv").attr("style","height:500px;overflow-y:scroll");
+                    }else{
+                        $("#scrollDiv").attr("style","");
+                    }
+
+                    var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
+
+                    $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
+
+                break;
+
+            }
+            
         }
 
         function setTitle(titleText){
@@ -640,3 +750,13 @@
             $("#gdftyWVT_new").show();
             $("#gdftyWVT").hide();
         }
+       function setbdtypCd(){
+           var bdtypCd_main_new = $("#bdtypCd_main_new").text();
+           $("#bdtypCdLbl_new").text('소분류를 선택해 주세요.');
+           $("#bdtypCd_new").text('');
+
+           $("#bdtypCdLbl").hide();
+           $("#bdtypCdLbl_new").show();
+           
+
+       }

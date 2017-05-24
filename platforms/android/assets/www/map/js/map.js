@@ -40,11 +40,23 @@ var initial = false;
 
 // 지도 초기화 함수(--start--)
 var mapInit = function(init) {
+  
+  
+
   if(!initial)
     initial = true;
-  else
+  else{
+      var layerList = map.getLayers().getArray();
+      for(var layer in layerList){
+        var title = layerList[layer].get('title');
+        if(title != "Mobile Kais Map"){
+              map.removeLayer(layerList[layer]);
+          }
+      }
+      return;
+  }
 
-    return;
+    
 
   $(".ui-page").height("100%");
 

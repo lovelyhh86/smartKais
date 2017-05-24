@@ -226,7 +226,7 @@ var MapUtil = {
     },
     setDetail: function(layerID, f){
         var codeList
-        
+
         switch (layerID) {
             case DATA_TYPE.RDPQ:
                 var sn = f.get("RD_GDFTY_SN");
@@ -262,10 +262,9 @@ var MapUtil = {
 
             case DATA_TYPE.BULD:
 
-                // var sn = f.get("ENT_MAN_NO");
-                var sn = ""
+                var sn = f.get("BUL_MAN_NO");
 
-                var link = URLs.buildsignlink;
+                var link = URLs.buildSelectlink;
 
                 MapUtil.setValues(layerID, link, sn);
 
@@ -282,6 +281,9 @@ var MapUtil = {
                     .then(function (context, rcode, results) {
                         var data = results.data;
 
+                        //일련번호
+                        $("#sn").append(sn);
+
                         switch (layerID) {
                             case DATA_TYPE.RDPQ:
 
@@ -289,7 +291,6 @@ var MapUtil = {
                                 var title = "<span class='label'>[{0}] {1} {2}-{3}<span>".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.bsisMnnm, data.bsisSlno);
                                 $(".title").append(title);
                                 //일련번호
-                                $("#sn").append(sn);
                                 //도로시설물
                                 $("#rdftySeLbl").append(data.rdftySeLbl);
                                 $("#rdftySe").append(data.rdftySe);
@@ -383,9 +384,6 @@ var MapUtil = {
                                 //제목창
                                 var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.area_areaKorRn, data.bsisMnnm, data.bsisSlno);
                                 $(".title").append(title);
-                                //일련번호
-                                $("#sn").append(sn);
-
 
                                 //도로시설물
                                 // $("#rdGdftySeLbl").append(data.rdGdftySeLbl);
@@ -467,9 +465,6 @@ var MapUtil = {
                                 //제목창
                                 var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.area_areaKorRn, data.bsisMnnm, data.bsisSlno);
                                 $(".title").append(title);
-                                //일련번호
-                                $("#sn").append(sn);
-
 
                                 //도로시설물
                                 // $("#rdGdftySeLbl").append(data.rdGdftySeLbl);
@@ -586,10 +581,54 @@ var MapUtil = {
 
                                 //설치상태
 
-                                break;
-                            case DATA_TYPE.BULD:
+                                 break;
+                         case DATA_TYPE.BULD:
+
+                                var buldNm = data.buldNm == null? '' : data.buldNm ;
+                                var title = "[{0}] {1}".format("건물정보", buldNm);
+                                $(".title").append(title);
+
+                                //건축물용도
+                                var bdtypCd = data.bdtypCd;
+
+                                if(bdtypCd.substr(2,5) == 000){//대분류
+
+                                    $("#bdtypCd_main").append(data.bdtypCd);
+                                    $("#bdtypCd_mainLbl").append(data.bdtypCdLbl);
+
+                                }else{//소분류일 경우
+                                    var bdtypCd_main = bdtypCd.substr(0,2) + "000";
+                                    $("#bdtypCd_main").append(bdtypCd_main);
+                                    var codeList = app.codeMaster[CODE_GROUP["BDTYP_CD"]];
+                                    $("#bdtypCd_mainLbl").append(codeList[bdtypCd_main]);
+
+                                    $("#bdtypCd").append(data.bdtypCd);
+                                    $("#bdtypCdLbl").append(data.bdtypCdLbl);
+
+                                }
+
+                                //건물종속여부
+                                $("#bulDpnSe").append(data.bulDpnSe);
+                                $("#bulDpnSeLbl").append(data.bulDpnSeLbl);
+                                //건물명
+                                $("#buldNm").append(data.buldNm);
+                                //건물명(영)
+                                $("#bulEngNm").append(data.bulEngNm);
+                                //상세건물명
+                                $("#buldNmDc").append(data.buldNmDc);
+                                //건물층수
+                                //(지상)
+                                $("#groFloCo").append(data.groFloCo);
+                                //(지하)
+                                $("#undFloCo").append(data.undFloCo);
+                                var floCo = "지상층 : {0} 지하층 : {1}".format(data.groFloCo,data.undFloCo);
+                                $("#floCo").append(floCo);
+                                //건물상태
+                                $("#buldSttus").append(data.buldSttus);
+
 
                                 break;
+
                         }
                     });
     },
@@ -1087,8 +1126,6 @@ var mapInit = function (mapId, pos) {
                 newPointFeature.setGeometry(newPoint);
 
                 moveingPoint_source.addFeature(newPointFeature);
-
-
 
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
 

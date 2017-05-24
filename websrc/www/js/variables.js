@@ -13,6 +13,7 @@ var URLs = {
     "addresslistlink": { svcNm: "sADRDC" },
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },
+    "buildSelectlink": { svcNm: "vBULD" },
     "entrclink": { svcNm: "vENTRC" },
     "updateFacilityInfo": { svcNm: "uSPGF" },
     "updateBuildNumberInfo": { svcNm: "uSPBD" },
@@ -203,8 +204,11 @@ CODE_GROUP["BUL_NMT_CD"] = "CMMN057";
 CODE_GROUP["BUL_MNF_CD"] = "CMMN024";
 //재질
 CODE_GROUP["BUL_NMT_QL"] = "CMMN003";
-
-
+//****** 건물정보 *******
+//건물용도코드
+CODE_GROUP["BDTYP_CD"] = "CMMN038";
+//건물종속구분
+CODE_GROUP["BUL_DPN_SE"] = "CMMN046";
 
 
 
@@ -214,10 +218,9 @@ CODE_GROUP["BDRCL_AT"] = "GFTY017";
 CODE_GROUP["GDFTY_FOM"] = "GFTY012";
 CODE_GROUP["ISLGN_YN"] = "GFTY016";
 
-//건물정보
-CODE_GROUP["BDTYP_CD"] = "CMMN038";
+
 CODE_GROUP["BULD_SE_CD"] = "CMMN017";
-CODE_GROUP["BUL_DPN_SE"] = "CMMN046";
+
 //건물번호판
 CODE_GROUP["BUL_NMT_TY"] = "CMMN056";
 CODE_GROUP["BUL_NMT_LO"] = "CMMN068";
