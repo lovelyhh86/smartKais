@@ -267,14 +267,14 @@ var util = {
                 $("#popup").hide();
 
                 if (context.type == "map") {
-                    map.removeLayer(layers.move);
+                    $(".legend").toggle(true);
                     map.removeLayer(layers.buld);
                     map.removeLayer(layers.entrc);
                     map.addLayer(layers.rdpq);
                     map.addLayer(layers.bsis);
                     map.addLayer(layers.area);
                 } else {
-                    map.removeLayer(layers.move);
+                    $(".legend").toggle(false);
                     map.removeLayer(layers.rdpq);
                     map.removeLayer(layers.bsis);
                     map.removeLayer(layers.area);

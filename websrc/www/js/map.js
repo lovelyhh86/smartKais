@@ -250,10 +250,7 @@ var MapUtil = {
 
                 break;
             case DATA_TYPE.ENTRC:
-
-                // var sn = f.get("ENT_MAN_NO");
-                var sn = "";
-
+                var sn = f.get("BUL_MAN_NO");
                 var link = URLs.entrclink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -261,15 +258,12 @@ var MapUtil = {
                 break;
 
             case DATA_TYPE.BULD:
-
                 var sn = f.get("BUL_MAN_NO");
-
                 var link = URLs.buildSelectlink;
 
                 MapUtil.setValues(layerID, link, sn);
 
                 break;
-           
         }
 
     },
@@ -1129,11 +1123,13 @@ var mapInit = function (mapId, pos) {
 
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
 
+                var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
+
                 var pointSn = popTableP.format("위치일련번호",RDFTYLC_SN);
 
-                var pointX = popTableP.format("X",coordinate[0]);
+                var posX = popTableP.format("X",coordinate[0]);
 
-                var pointY = popTableP.format("Y",coordinate[1]);
+                var posY = popTableP.format("Y",coordinate[1]);
 
                 // strHtml += pointSn;
                 // strHtml += pointX;
@@ -1143,8 +1139,17 @@ var mapInit = function (mapId, pos) {
 
                 resultHtml = commonDiv.format("",strHtml);
 
+                var param = "";
+                param = $.extend({},{
+                    sn : RDFTYLC_SN,
+                    rdftySe : RDFTY_SE,
+                    posX : coordinate[0],
+                    posY : coordinate[1]
+
+                });
+
                 //버튼처리
-                buttonHtml += buttonForm2.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","저장");
+                buttonHtml += buttonForm2.format("btnPoint","insertMoveingPoint("+param+")","저장");
                 buttonHtml += buttonForm2.format("btnNormal","clearMoveMode()","취소");
 
                 resultHtml += commonDiv.format("mapBtn",buttonHtml)
@@ -1975,11 +1980,20 @@ function moveingPoint(sn,pointX,pointY,index){
     
 }
 
-function insertMoveingPoint(sn, pointX, pointY){
+function insertMoveingPoint(param){
     // if (confirm('시설물의 위치를 이동하시겠습니까?') == true){
-        var param = {sigCd : app.info.sigCd , rdftylcSn : sn, posX : pointX, posY : pointY, workId : app.info.opeId ,mode:'11'};
-        var movePointUrl = URLs.postURL(URLs.moveingPoint, param);
-        util.postAJAX('',movePointUrl)
+        // var param = {sigCd : app.info.sigCd , rdftylcSn : sn, posX : pointX, posY : pointY, workId : app.info.opeId ,mode:'11'};
+        var link = URLs.moveingPoint;
+
+        var sendParam = $.extend(param,{
+            svcNm: 'iSPGF',
+            sigCd: app.info.sigCd,
+            workId: app.info.opeId
+        });;
+        
+        var url = URLs.postURL(link, sendParam);
+
+        util.postAJAX({},url)
         .then( function(context, rCode, results) {
 
             console.log(results);
@@ -1996,12 +2010,14 @@ function insertMoveingPoint(sn, pointX, pointY){
             }
             
             if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
+                $(".legend").toggle(true);
                 map.removeLayer(layers.buld);
                 // map.removeLayer(layers.entrc);
                 map.addLayer(layers.rdpq);
                 map.addLayer(layers.bsis);
                 map.addLayer(layers.area);
             } else {
+                $(".legend").toggle(false);
                 map.removeLayer(layers.rdpq);
                 map.removeLayer(layers.bsis);
                 map.removeLayer(layers.area);
@@ -2057,9 +2073,9 @@ function openDetailPopupCall(index){
 
     if(layerID == DATA_TYPE.BULD){
         if(index == 0){
-            MapUtil.openDetail(DATA_TYPE.BULD, featureClone[index]);
+            MapUtil.openDetail(DATA_TYPE.BULD, featureClone[0]);
         }else{
-            MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[index]);
+            MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
         }
 
     }else{

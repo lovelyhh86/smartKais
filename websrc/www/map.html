@@ -46,13 +46,14 @@
                 $("#popup").hide();
 
                 if (context.type == "map") {
-                    
+                    $(".legend").toggle(true);
                     map.removeLayer(layers.move);
                     map.removeLayer(layers.buld);
                     map.addLayer(layers.rdpq);
                     map.addLayer(layers.bsis);
                     map.addLayer(layers.area);
                 } else {
+                    $(".legend").toggle(false);
                     map.removeLayer(layers.move);
                     map.removeLayer(layers.rdpq);
                     map.removeLayer(layers.bsis);

@@ -175,6 +175,8 @@ CODE_GROUP["PLQ_DRC"] = "GFTY014";
 CODE_GROUP["SCFGG_MKTY"] = "GFTY019";
 //언어1
 CODE_GROUP["SCFGG_ULA1"] = "GFTY020";
+//안내시설상태코드
+CODE_GROUP["DEL_STT_CD"] = "GFTY613";
 
 //****** 도로명판 *******
 //도로명판 규격
