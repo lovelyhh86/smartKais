@@ -267,8 +267,7 @@
         }
 
         function openCustomPop2(type,idList){
-            closeDataPop();
-
+            $(".dataClose").click();
 
             for(var i in idList){
 
