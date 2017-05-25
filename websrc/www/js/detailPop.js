@@ -210,7 +210,17 @@
                     //라디오버튼 구성
                     popColume = 'BUL_DPN_SE';
                     createRadioButton();
-                    break;        
+                    break;
+                case 'delStateCd':
+                    //제목
+                    var titleText = '설치상태'; //설치상태
+                    setTitle(titleText);
+
+                    //라디오버튼 구성
+                    popColume = 'DEL_STT_CD';
+                    createRadioButton();
+                    break;
+
 
                                          
             }
@@ -256,53 +266,74 @@
 
         }
 
-        function openCustomPop2(type){
-            $(".dataClose").click();
-            switch(type){
-                //규격(가로*새로*두께)
-                case 'gdftyWVT':
-                    var gdftyWide = $("#gdftyWide_new").text() == "" ? $("#gdftyWide").text():$("#gdftyWide_new").text();
-                    var gdftyVertical = $("#gdftyVertical_new").text() == "" ? $("#gdftyVertical").text():$("#gdftyVertical_new").text();
-                    var gdftyThickness = $("#gdftyThickness_new").text() == "" ? $("#gdftyThickness").text():$("#gdftyThickness_new").text();
+        function openCustomPop2(type,idList){
+            closeDataPop();
 
-                    $("#gdftyWide_fix").val(gdftyWide);
-                    $("#gdftyVertical_fix").val(gdftyVertical);
-                    $("#gdftyThickness_fix").val(gdftyThickness);
 
-                    // $("#"+type+"_pop").show();
-                break;
-                //건물층수
-                case 'floCo':
-                    var groFloCo = $("#groFloCo_new").text() == "" ? $("#groFloCo").text():$("#groFloCo_new").text();
-                    var undFloCo = $("#undFloCo_new").text() == "" ? $("#undFloCo").text():$("#undFloCo_new").text();
+            for(var i in idList){
 
-                    $("#groFloCo_fix").val(groFloCo);
-                    $("#undFloCo_fix").val(undFloCo);
-
-                    // $("#"+type+"_pop").show();
-                break;
-                case 'frontStartBaseNo':
-                    var startBaseMasterNo = $("#frontStartBaseMasterNo_new").text() == "" ? $("#frontStartBaseMasterNo").text(): $("#frontStartBaseMasterNo_new").text();
-                    var startBaseSlaveNo = $("#frontStartBaseSlaveNo_new").text() == "" ? $("#frontStartBaseSlaveNo").text(): $("#frontStartBaseSlaveNo_new").text();
-                    
-                    $("#frontStartBaseMasterNo_fix").val(startBaseMasterNo);
-                    $("#frontStartBaseSlaveNo_fix").val(startBaseSlaveNo);
-
-                    // $("#frontStartBaseNo_pop").show();
-                break;
-                case 'frontEndBaseNo':
-                    var startBaseMasterNo = $("#frontEndBaseMasterNo_new").text() == "" ? $("#frontEndBaseMasterNo").text(): $("#frontEndBaseMasterNo_new").text();
-                    var startBaseSlaveNo = $("#frontEndBaseSlaveNo_new").text() == "" ? $("#frontEndBaseSlaveNo").text(): $("#frontEndBaseSlaveNo_new").text();
-                    
-                    $("#frontEndBaseMasterNo_fix").val(startBaseMasterNo);
-                    $("#frontEndBaseSlaveNo_fix").val(startBaseSlaveNo);
-
-                    // $("#frontStartBaseNo_pop").show();
-                break;
+                var value = $("#"+idList[i]+"_new").text() == "" ? $("#"+idList[i]).text():$("#"+idList[i]+"_new").text();
+                $("#"+idList[i]+"_fix").val(value);
 
             }
 
             $("#"+type+"_pop").show();
+
+
+            // switch(type){
+            //     //규격(가로*새로*두께)
+            //     case 'gdftyWVT':
+            //         var gdftyWide = $("#gdftyWide_new").text() == "" ? $("#gdftyWide").text():$("#gdftyWide_new").text();
+            //         var gdftyVertical = $("#gdftyVertical_new").text() == "" ? $("#gdftyVertical").text():$("#gdftyVertical_new").text();
+            //         var gdftyThickness = $("#gdftyThickness_new").text() == "" ? $("#gdftyThickness").text():$("#gdftyThickness_new").text();
+
+            //         $("#gdftyWide_fix").val(gdftyWide);
+            //         $("#gdftyVertical_fix").val(gdftyVertical);
+            //         $("#gdftyThickness_fix").val(gdftyThickness);
+
+            //         // $("#"+type+"_pop").show();
+            //     break;
+            //     //건물층수
+            //     case 'floCo':
+            //         var groFloCo = $("#groFloCo_new").text() == "" ? $("#groFloCo").text():$("#groFloCo_new").text();
+            //         var undFloCo = $("#undFloCo_new").text() == "" ? $("#undFloCo").text():$("#undFloCo_new").text();
+
+            //         $("#groFloCo_fix").val(groFloCo);
+            //         $("#undFloCo_fix").val(undFloCo);
+
+            //         // $("#"+type+"_pop").show();
+            //     break;
+            //     case 'frontStartBaseNo':
+            //         var startBaseMasterNo = $("#frontStartBaseMasterNo_new").text() == "" ? $("#frontStartBaseMasterNo").text(): $("#frontStartBaseMasterNo_new").text();
+            //         var startBaseSlaveNo = $("#frontStartBaseSlaveNo_new").text() == "" ? $("#frontStartBaseSlaveNo").text(): $("#frontStartBaseSlaveNo_new").text();
+
+            //         $("#frontStartBaseMasterNo_fix").val(startBaseMasterNo);
+            //         $("#frontStartBaseSlaveNo_fix").val(startBaseSlaveNo);
+
+            //         // $("#frontStartBaseNo_pop").show();
+            //     break;
+            //     case 'frontEndBaseNo':
+            //         var startBaseMasterNo = $("#frontEndBaseMasterNo_new").text() == "" ? $("#frontEndBaseMasterNo").text(): $("#frontEndBaseMasterNo_new").text();
+            //         var startBaseSlaveNo = $("#frontEndBaseSlaveNo_new").text() == "" ? $("#frontEndBaseSlaveNo").text(): $("#frontEndBaseSlaveNo_new").text();
+
+            //         $("#frontEndBaseMasterNo_fix").val(startBaseMasterNo);
+            //         $("#frontEndBaseSlaveNo_fix").val(startBaseSlaveNo);
+
+            //         // $("#frontStartBaseNo_pop").show();
+            //     break;
+            //     case 'frontStartBaseNo':
+            //         var startBaseMasterNo = $("#frontStartBaseMasterNo_new").text() == "" ? $("#frontStartBaseMasterNo").text(): $("#frontStartBaseMasterNo_new").text();
+            //         var startBaseSlaveNo = $("#frontStartBaseSlaveNo_new").text() == "" ? $("#frontStartBaseSlaveNo").text(): $("#frontStartBaseSlaveNo_new").text();
+
+            //         $("#frontStartBaseMasterNo_fix").val(startBaseMasterNo);
+            //         $("#frontStartBaseSlaveNo_fix").val(startBaseSlaveNo);
+
+            //         // $("#frontStartBaseNo_pop").show();
+            //     break;
+
+            // }
+
+            // $("#"+type+"_pop").show();
 
         }
 
@@ -361,6 +392,7 @@
                 }
         }
 
+        //기초번호용
         function textDataSendParent2(baseNo, id1, id2){
             var startBaseMasterNo_fix = $("#"+id1+"_fix").val();
             var startBaseSlaveNo_fix = $("#"+id2+"_fix").val();

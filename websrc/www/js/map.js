@@ -264,10 +264,7 @@ var MapUtil = {
 
                 break;
             case DATA_TYPE.ENTRC:
-
-                // var sn = f.get("ENT_MAN_NO");
-                var sn = "";
-
+                var sn = f.get("BUL_MAN_NO");
                 var link = URLs.entrclink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -275,15 +272,12 @@ var MapUtil = {
                 break;
 
             case DATA_TYPE.BULD:
-
                 var sn = f.get("BUL_MAN_NO");
-
                 var link = URLs.buildSelectlink;
 
                 MapUtil.setValues(layerID, link, sn);
 
                 break;
-           
         }
 
     },
@@ -344,9 +338,13 @@ var MapUtil = {
                                 //뒷면 도로명(로마자)
                                 $("#backRomeRoadNm").append(data.backRomeRoadNm);
                                 //뒷면시작기초번호(0-0)
+                                $("#backStartBaseMasterNo").append(data.backStartBaseMasterNo);
+                                $("#backStartBaseSlaveNo").append(data.backStartBaseSlaveNo);
                                 var backStartBaseNo = "{0}-{1}".format(data.backStartBaseMasterNo,data.backStartBaseSlaveNo);
                                 $("#backStartBaseNo").append(backStartBaseNo);
                                 //뒷면종료기초번호(0-0)
+                                $("#backEndBaseMasterNo").append(data.backEndBaseMasterNo);
+                                $("#backEndBaseSlaveNo").append(data.backEndBaseSlaveNo);
                                 var backEndBaseNo = "{0}-{1}".format(data.backEndBaseMasterNo,data.backEndBaseSlaveNo);
                                 $("#backEndBaseNo").append(backEndBaseNo);
                                 //도로명판종류
@@ -382,7 +380,9 @@ var MapUtil = {
                                 //단가(원)
                                 $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
                                 //설치상태
-
+                                $("#delStateCd").append(data.delStateCd);
+                                $("#delStateCdLbl").append(data.delStateCdLbl);
+                                
                                 //사진
                                 $("#roadView_page .photoWrap .photoTable .picImg").each(function(i, o) {
                                     try {
@@ -1083,7 +1083,7 @@ var mapInit = function (mapId, pos) {
         var popDiv = "<div class='{0}' onclick =\"{1}\">{2}</div>"
         var popTableP = "<p>{0} : {1}</p>";
         var buttonForm ="<span class = {0} onclick=\"{1}\"><img src='{2}' title='{3}'></span>";
-        var buttonForm2 ="<span class = {0} onclick=\"{1}\">{2}</span>"; 
+        var buttonForm2 ="<span class = {0} onclick='{1}'>{2}</span>"; 
         
         //심플팝업 초기화
         popupDiv.empty();
@@ -1143,11 +1143,13 @@ var mapInit = function (mapId, pos) {
 
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
 
+                var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
+
                 var pointSn = popTableP.format("위치일련번호",RDFTYLC_SN);
 
-                var pointX = popTableP.format("X",coordinate[0]);
+                var posX = popTableP.format("X",coordinate[0]);
 
-                var pointY = popTableP.format("Y",coordinate[1]);
+                var posY = popTableP.format("Y",coordinate[1]);
 
                 // strHtml += pointSn;
                 // strHtml += pointX;
@@ -1157,8 +1159,17 @@ var mapInit = function (mapId, pos) {
 
                 resultHtml = commonDiv.format("",strHtml);
 
+                var param = "";
+                param = $.extend({},{
+                    sn : RDFTYLC_SN,
+                    // rdftySe : RDFTY_SE,
+                    posX : coordinate[0],
+                    posY : coordinate[1]
+
+                });
+
                 //버튼처리
-                buttonHtml += buttonForm2.format("btnPoint","insertMoveingPoint("+RDFTYLC_SN+","+coordinate[0]+","+coordinate[1]+")","저장");
+                buttonHtml += buttonForm2.format("btnPoint",'insertMoveingPoint(' + JSON.stringify(param) + ')',"저장");
                 buttonHtml += buttonForm2.format("btnNormal","clearMoveMode()","취소");
 
                 resultHtml += commonDiv.format("mapBtn",buttonHtml)
@@ -1989,11 +2000,20 @@ function moveingPoint(sn,pointX,pointY,index){
     
 }
 
-function insertMoveingPoint(sn, pointX, pointY){
+function insertMoveingPoint(param){
     // if (confirm('시설물의 위치를 이동하시겠습니까?') == true){
-        var param = {sigCd : app.info.sigCd , rdftylcSn : sn, posX : pointX, posY : pointY, workId : app.info.opeId ,mode:'11'};
-        var movePointUrl = URLs.postURL(URLs.moveingPoint, param);
-        util.postAJAX('',movePointUrl)
+        // var param = {sigCd : app.info.sigCd , rdftylcSn : sn, posX : pointX, posY : pointY, workId : app.info.opeId ,mode:'11'};
+        var link = URLs.moveingPoint;
+
+        var sendParam = $.extend(param,{
+            svcNm: 'iSPGF',
+            sigCd: app.info.sigCd,
+            workId: app.info.opeId
+        });;
+        
+        var url = URLs.postURL(link, sendParam);
+
+        util.postAJAX({},url)
         .then( function(context, rCode, results) {
 
             console.log(results);
@@ -2010,12 +2030,14 @@ function insertMoveingPoint(sn, pointX, pointY){
             }
             
             if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
+                $(".legend").toggle(true);
                 map.removeLayer(layers.buld);
                 // map.removeLayer(layers.entrc);
                 map.addLayer(layers.rdpq);
                 map.addLayer(layers.bsis);
                 map.addLayer(layers.area);
             } else {
+                $(".legend").toggle(false);
                 map.removeLayer(layers.rdpq);
                 map.removeLayer(layers.bsis);
                 map.removeLayer(layers.area);
@@ -2071,9 +2093,9 @@ function openDetailPopupCall(index){
 
     if(layerID == DATA_TYPE.BULD){
         if(index == 0){
-            MapUtil.openDetail(DATA_TYPE.BULD, featureClone[index]);
+            MapUtil.openDetail(DATA_TYPE.BULD, featureClone[0]);
         }else{
-            MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[index]);
+            MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
         }
 
     }else{

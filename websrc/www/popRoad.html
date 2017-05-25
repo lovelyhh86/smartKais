@@ -102,7 +102,7 @@
 							<p id="frontRomeRoadNm"></p>
 						</div>
 					</div>
-					<div onclick="openCustomPop2('frontStartBaseNo');" class="row">
+					<div onclick="openCustomPop2('frontStartBaseNo',['frontStartBaseMasterNo','frontStartBaseSlaveNo']);" class="row">
 						<div  class="cell1">
 								<span class="label"><img src="image/openAble3.png" alt="">앞면 시작기초번호</span>
 						</div>
@@ -115,7 +115,7 @@
 							<p id="frontStartBaseSlaveNo_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div onclick="openCustomPop2('frontEndBaseNo');" class="row">
+					<div onclick="openCustomPop2('frontEndBaseNo',['frontEndBaseMasterNo','frontEndBaseSlaveNo']);" class="row">
 						<div  class="cell1">
 								<span class="label"><img src="image/openAble3.png" alt="">앞면 종료기초번호</span>
 						</div>
@@ -144,17 +144,22 @@
 							<p id="backRomeRoadNm"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop2('backStartBaseNo',['backStartBaseMasterNo',backStartBaseSlaveNo]);" class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 시작기초번호</span>
+								<span class="label"><img src="image/openAble3.png" alt="">뒷면 시작기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="backStartBaseNo"></p>
+							<p id="backStartBaseNo" name="oldLbl"></p>
+							<p id="backStartBaseMasterNo" style="display:none"></p>
+							<p id="backStartBaseSlaveNo" style="display:none"></p>
+							<p id="backStartBaseNo_new" style="display:none; color:red"></p>
+							<p id="backStartBaseMasterNo_new" style="display:none;"></p>
+							<p id="backStartBaseSlaveNo_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop2('backEndBaseNo',['backStartBaseMasterNo',backStartBaseSlaveNo]);" class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 종료기초번호</span>
+								<span class="label"><img src="image/openAble3.png" alt="">뒷면 종료기초번호</span>
 						</div>
 						<div class="cell2">
 							<p id="backEndBaseNo"></p>
@@ -244,7 +249,7 @@
 							<p id="rdpqGdSd_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div onclick="openCustomPop2('gdftyWVT')" class="row">
+					<div onclick="openCustomPop2('gdftyWVT',['gdftyWide','gdftyVertical','gdftyThickness'])" class="row">
 						<div  class="cell1">
 							<span class="label"><img src="image/openAble3.png" alt="">가로*세로*두께</span>
 						</div>
@@ -268,13 +273,15 @@
 							<p id="gdftyUnitPrice_new" style="display:none; color:red"></p>
 						</div>
 					</div>
-					<div onclick="" class="row">
+					<div onclick="openDataIdPop('delStateCd');" class="row">
 						<div  class="cell1">
 								<span class="label"><img src="image/openAble3.png" alt="">설치상태</span>
 						</div>
 						<div class="cell2">
-							<p id="" name="oldLbl"></p>
-							<p id="" style="display:none; color:red"></p>
+							<p id="delStateCdLbl" name="oldLbl"></p>
+							<p id="delStateCd" style="display:none;"></p>
+							<p id="delStateCdLbl_new" style="display:none; color:red"></p>
+							<p id="delStateCd_new" style="display:none"></p>
 						</div>
 					</div>
 				</div>
@@ -348,7 +355,7 @@
 				</div>
 				<!-- 단가 데이터 팝업 끝 -->
 
-				<!-- 기초번호 데이터 팝업 -->
+				<!-- 시작기초번호 데이터 팝업 -->
 				<div id="frontStartBaseNo_pop" class="dataWrap" style="display: none">
 					<div class="dataTItle">시작기초번호</div>
 					<div class="dataForm">
