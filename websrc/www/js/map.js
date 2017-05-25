@@ -1063,7 +1063,7 @@ var mapInit = function (mapId, pos) {
         var popDiv = "<div class='{0}' onclick =\"{1}\">{2}</div>"
         var popTableP = "<p>{0} : {1}</p>";
         var buttonForm ="<span class = {0} onclick=\"{1}\"><img src='{2}' title='{3}'></span>";
-        var buttonForm2 ="<span class = {0} onclick=\"{1}\">{2}</span>"; 
+        var buttonForm2 ="<span class = {0} onclick='{1}'>{2}</span>"; 
         
         //심플팝업 초기화
         popupDiv.empty();
@@ -1142,14 +1142,14 @@ var mapInit = function (mapId, pos) {
                 var param = "";
                 param = $.extend({},{
                     sn : RDFTYLC_SN,
-                    rdftySe : RDFTY_SE,
+                    // rdftySe : RDFTY_SE,
                     posX : coordinate[0],
                     posY : coordinate[1]
 
                 });
 
                 //버튼처리
-                buttonHtml += buttonForm2.format("btnPoint","insertMoveingPoint("+param+")","저장");
+                buttonHtml += buttonForm2.format("btnPoint",'insertMoveingPoint(' + JSON.stringify(param) + ')',"저장");
                 buttonHtml += buttonForm2.format("btnNormal","clearMoveMode()","취소");
 
                 resultHtml += commonDiv.format("mapBtn",buttonHtml)
