@@ -324,9 +324,13 @@ var MapUtil = {
                                 //뒷면 도로명(로마자)
                                 $("#backRomeRoadNm").append(data.backRomeRoadNm);
                                 //뒷면시작기초번호(0-0)
+                                $("#backStartBaseMasterNo").append(data.backStartBaseMasterNo);
+                                $("#backStartBaseSlaveNo").append(data.backStartBaseSlaveNo);
                                 var backStartBaseNo = "{0}-{1}".format(data.backStartBaseMasterNo,data.backStartBaseSlaveNo);
                                 $("#backStartBaseNo").append(backStartBaseNo);
                                 //뒷면종료기초번호(0-0)
+                                $("#backEndBaseMasterNo").append(data.backEndBaseMasterNo);
+                                $("#backEndBaseSlaveNo").append(data.backEndBaseSlaveNo);
                                 var backEndBaseNo = "{0}-{1}".format(data.backEndBaseMasterNo,data.backEndBaseSlaveNo);
                                 $("#backEndBaseNo").append(backEndBaseNo);
                                 //도로명판종류
@@ -362,7 +366,9 @@ var MapUtil = {
                                 //단가(원)
                                 $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
                                 //설치상태
-
+                                $("#delStateCd").append(data.delStateCd);
+                                $("#delStateCdLbl").append(data.delStateCdLbl);
+                                
                                 //사진
                                 $("#roadView_page .photoWrap .photoTable .picImg").each(function(i, o) {
                                     try {
