@@ -598,7 +598,7 @@ var MapUtil = {
                                  break;
                          case DATA_TYPE.BULD:
 
-                                var buldNm = data.buldNm == null? "" : data.buldNm ;
+                                var buldNm = data.posBulNm == null? "" : data.posBulNm ;
                                 var title = "[{0}] {1}".format("건물정보", buldNm);
                                 $(".title").append(title);
 
@@ -625,7 +625,7 @@ var MapUtil = {
                                 $("#bulDpnSe").append(data.bulDpnSe);
                                 $("#bulDpnSeLbl").append(data.bulDpnSeLbl);
                                 //건물명
-                                $("#buldNm").append(data.buldNm);
+                                $("#buldNm").append(data.posBulNm);
                                 //건물명(영)
                                 $("#bulEngNm").append(data.bulEngNm);
                                 //상세건물명
