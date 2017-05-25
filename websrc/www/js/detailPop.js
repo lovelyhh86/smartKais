@@ -9,17 +9,11 @@
             $("#detailView").popup("close", { transition: "slideup" });
         }
 
-        // function closeDataPop(){
-        //     $("#dataTitle").empty();
-        //     $("#row").empty();
-        //     $("#radioDataPop").hide();
-        // }
-
         var popID;
         var popColume;
         function openDataIdPop(id){
             //모든팝업닫기
-            closeDataPop();
+            $(".dataClose").click();
             //스크롤처리 초기화
             $("#scrollDiv").attr("style","");
 
@@ -255,7 +249,7 @@
         }
 
         function openCustomPop(type){
-                closeDataPop();
+                $(".dataClose").click();
                 var textVal = $("#"+type+"_new").text() == "" ? $("#"+type).text():$("#"+type+"_new").text();
                 $("#"+type+"_fix").val(textVal);
                 $("#"+type+"_pop").show();
@@ -263,7 +257,7 @@
         }
 
         function openCustomPop2(type){
-            closeDataPop();
+            $(".dataClose").click();
             switch(type){
                 //규격(가로*새로*두께)
                 case 'gdftyWVT':
@@ -386,10 +380,6 @@
             $("#"+baseNo+"_new").show();
             $("#"+baseNo+"_pop").hide();
 
-        }
-
-        function closeDataPop(){
-            $(".dataWrap").hide()
         }
 
         function createRadioButton(){

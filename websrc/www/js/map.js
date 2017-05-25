@@ -22,9 +22,23 @@ var MapUtil = {
                 });
             });
         },
-        photoToggle: function() {
-            $(".detailView .infoWrap .infoHeader .photo").on("click", function() {
-                $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+        dataPopupCloserHandler : function() {
+            $(".dataPopCloser").on("click", function(){
+                $(".dataWrap").hide();
+            });
+        },
+        photoToggleHandler: function() {
+            $(".detailView .infoWrap .infoHeader .photo").click(function() {
+                $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle(
+                    // 사진 모드 전환
+                    function(){
+                        $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+                    },
+                    // 상세모드 전환
+                    function(){
+                        $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+                    }
+                );
             });
         },
         takePhotoHandler: function() {
@@ -36,9 +50,7 @@ var MapUtil = {
         },
         delPhotoHandler: function() {
             $(".detailView .infoWrap .infoContent .photoWrap .btnPoint").click(function(evt){
-                if (confirm('사진을 삭제 하시겠습니까?') == true) {
-                    $(evt.target).parent().parent().children(".picImg").html("");
-                }
+                $(evt.target).parent().parent().children(".picImg").html("");
             });
         },
     },
@@ -177,9 +189,11 @@ var MapUtil = {
 
         $(detailTaget).load(url.link(), function() {
             MapUtil.setDetail(layerID, f);
-            MapUtil.handler.photoToggle();
+            MapUtil.handler.photoToggleHandler();
             MapUtil.handler.takePhotoHandler();
             MapUtil.handler.delPhotoHandler();
+            MapUtil.handler.dataPopupCloserHandler();
+
             $("#detailView").popup("open", { transition: "slideup" });
         })
     },
@@ -779,7 +793,7 @@ var MapUtil = {
                 appendSelectBox("BUL_DPN_SE","bulDpnSe",f);
 
                 //건물명
-                $("#buldNm").val(getFeatherValue("BULD_NM",f));
+                $("#buldNm").val(getFeatherValue("POS_BUL_NM",f));
 
                 //건물명(영)
                 $("#bulEngNm").val(getFeatherValue("BUL_ENG_NM",f));
@@ -1261,14 +1275,14 @@ var mapInit = function (mapId, pos) {
                             // openDetailPopupCall(0);
                             
                             //건물명
-                            var BULD_NM = feature.get("BULD_NM");
+                            var POS_BUL_NM = feature.get("POS_BUL_NM");
 
-                            if(BULD_NM == undefined){
-                                BULD_NM = "-";
+                            if(POS_BUL_NM == undefined){
+                                POS_BUL_NM = "-";
                             }
 
                             strHtml = commonSpan.format("titleIcon_building","");
-                            strHtml += BULD_NM;
+                            strHtml += POS_BUL_NM;
 
                             var buldNm = commonP.format("localTile",strHtml);
 
