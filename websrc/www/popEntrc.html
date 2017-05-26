@@ -88,7 +88,7 @@
                             <p id="buldNmtCd_new" style="display:none"></p>
                         </div>
                     </div>
-                    <div onclick="openCustomPop('gdftyWVT')" class="row">
+                    <div onclick="openCustomPop2('gdftyWVT',['gdftyWide','gdftyVertical','gdftyThickness'])" class="row">
 						<div  class="cell1">
 							<span class="label"><img src="image/openAble3.png" alt="">가로*세로*두께</span>
 						</div>
@@ -125,22 +125,24 @@
                             <p id="buldNmtMaterial_new" style="display:none"></p>
                         </div>
                     </div>
-                    <div onclick="openCustomPop('gdftyUnitPrice')" class="row">
+                   <div onclick="openCustomPop('gdftyUnitPrice')" class="row">
 						<div  class="cell1">
-								<span class="label" name="oldLbl"><img src="image/openAble3.png" alt="">단가(원)</span>
+								<span class="label"><img src="image/openAble3.png" alt="">단가(원)</span>
 						</div>
 						<div class="cell2">
 							<p id="gdftyUnitPrice" name="oldLbl"></p>
 							<p id="gdftyUnitPrice_new" style="display:none; color:red"></p>
 						</div>
 					</div>
-                    <div onclick="" class="row">
+					<div onclick="openDataIdPop('delStateCd');" class="row">
 						<div  class="cell1">
 								<span class="label"><img src="image/openAble3.png" alt="">설치상태</span>
 						</div>
 						<div class="cell2">
-							<p id="" name="oldLbl"></p>
-							<p id="" style="display:none; color:red"></p>
+							<p id="delStateCdLbl" name="oldLbl"></p>
+							<p id="delStateCd" style="display:none;"></p>
+							<p id="delStateCdLbl_new" style="display:none; color:red"></p>
+							<p id="delStateCd_new" style="display:none"></p>
 						</div>
 					</div>
                 </div>
@@ -196,23 +198,23 @@
                 <!-- 공통 라디오 데이터 팝업 끝 -->
 
                 <!-- 단가 데이터 팝업 -->
-                <div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
-                    <div class="dataTItle">단가</div>
-                    <div class="dataForm">
-                        <div class="row">
-                            <div class="cell">
-                                <span class="label w35">단가</span>
-                                <div class="inputText w75"><input type="text" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dataBtn">
-                        <span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
-                        <span class="btnNormal dataPopCloser">닫기</span>
-                    </div>
-                    <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-                </div>
-                <!-- 단가 데이터 팝업 끝 -->
+				<div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">단가</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w35">단가</span>
+								<div class="inputText w75"><input type="text" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
+						<span class="btnNormal dataPopCloser">닫기</span>
+					</div>
+					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 단가 데이터 팝업 끝 -->
                 <!-- 가로*세로*두께 데이터 팝업 -->
 				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
 					<div class="dataTItle">규격 (가로*세로*두께)</div>
@@ -220,18 +222,16 @@
 						<div class="row">
 							<div class="cell">
 								<span class="label w50">크기 </span>
-								<div class="inputText">
-									<input type="text" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px">
-								</div>
-								<div class="inputText">*</div>
-								<div class="inputText"><input readonly type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
-								<div class="inputText">*</div>
-								<div class="inputText"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
+									<div class="inputText"><input readonly type="text" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px"></div>
+									<div class="inputText">*</div>
+									<div class="inputText"><input readonly type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
+									<div class="inputText">*</div>
+									<div class="inputText"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
 							</div>
 						</div>
 					</div>
 					<div class="dataBtn">
-						<span onclick="textDataSendParent('gdftyWVT')" class="btnPoint">저장</span>
+						<span onclick="textDataSendParent3('gdftyWVT')" class="btnPoint">저장</span>
 						<span class="btnNormal dataPopCloser">닫기</span>
 					</div>
 					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>

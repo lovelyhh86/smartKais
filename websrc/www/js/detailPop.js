@@ -230,22 +230,39 @@
         }
 
         function radioDataSendParent(){
+            var oldCode = $("#"+popID).text();
             var newRadioVal = $("input:radio[name='"+popID+"']:checked").val();
                    
-            var codeList = app.codeMaster[CODE_GROUP[popColume]];
-            
-            // 수정된 새로운라벨
-            $("#"+popID+"Lbl_new").text(codeList[newRadioVal]);
-            $("#"+popID+"Lbl_new").show();
-            
-            //수정시 필요한 코드
-            $("#"+popID+"_new").text(newRadioVal);
 
-            //이전 라벨 숨김
-            $("#"+popID+"Lbl").hide();
+            //기존내용과 같을시 처리안함
+            if(oldCode == newRadioVal){
+                //새로운 데이터창 초기화
+                $("#"+popID+"_new").text('');
+
+                //새로운 라벨창 초기화 및 숨기기
+                $("#"+popID+"Lbl_new").text('');
+                $("#"+popID+"Lbl_new").hide();
+
+                //기존라벨 보이기
+                $("#"+popID+"Lbl").show();
+
+            }else{
+                var codeList = app.codeMaster[CODE_GROUP[popColume]];
+                var newCode = codeList[newRadioVal];
+
+                // 수정된 새로운라벨
+                $("#"+popID+"Lbl_new").text(newCode);
+                $("#"+popID+"Lbl_new").show();
+                
+                //수정시 필요한 코드
+                $("#"+popID+"_new").text(newRadioVal);
+
+                //이전 라벨 숨김
+                $("#"+popID+"Lbl").hide();
+            }
 
             //규격일때 처리
-            if(popID == "rdpqGdSd"){
+            if(popID == "rdpqGdSd" || popID == "buldNmtCd"){
                 setGdft();
             }
 
@@ -337,8 +354,25 @@
         }
 
         function textDataSendParent(type){
-                    
+                var oldData = $("#"+type).text();
                 var fixData = $("#"+type+"_fix").val();
+
+                //기존내용과 같을시 처리안함
+                if(oldData == fixData){
+                    //새로운 데이터창(라벨) 초기화
+                    $("#"+type+"_new").text('');
+
+                    //새로운 데이터창(라벨) 숨기기
+                    $("#"+type+"_new").hide();
+
+                    //기존라벨 보이기
+                    $("#"+type).show();
+
+                    //팝업닫기
+                    $("#"+type+"_pop").hide();
+                    return;
+                }
+                    
                 $("#"+type+"_new").text(fixData);
                 $("#"+type).hide();
                 $("#"+type+"_new").show();
@@ -349,10 +383,34 @@
         function textDataSendParent3(type){
             switch(type){
                 case 'gdftyWVT'://규격(가로*새로*두께)
-                        
+
+                    var gdftyWide_old = $("#gdftyWide").text();
+                    var gdftyVertical_old = $("#gdftyVertical").text();
+                    var gdftyThickness_old = $("#gdftyThickness").text();
+
                     var gdftyWide_fix = $("#gdftyWide_fix").val();
                     var gdftyVertical_fix = $("#gdftyVertical_fix").val();
                     var gdftyThickness_fix = $("#gdftyThickness_fix").val();
+
+                    //기존내용과 같을시 처리안함
+                    if(gdftyWide_old == gdftyWide_fix && gdftyVertical_old == gdftyVertical_fix && gdftyThickness_old == gdftyThickness_fix){
+
+                        //새로운 데이터창 초기화
+                        $("#gdftyWide_new").text('');
+                        $("#gdftyVertical_new").text('');
+                        $("#gdftyThickness_new").text('');
+
+                        //새로운 라벨창 초기화 및 숨기기
+                        $("#"+type+"_new").text('');
+                        $("#"+type+"_new").hide();
+                        
+                        //기존라벨 보이기
+                        $("#"+type).show();
+
+                         //팝업닫기
+                        $("#"+type+"_pop").hide();
+                        return;
+                    }
 
                     $("#gdftyWide_new").text(gdftyWide_fix);
                     $("#gdftyVertical_new").text(gdftyVertical_fix);
@@ -368,16 +426,35 @@
 
                     break;
                 case 'floCo'://건물층수
+
+                    var groFloCo_old = $("#groFloCo").text();
+                    var undFloCo_old = $("#undFloCo").text();
                         
                     var groFloCo_fix = $("#groFloCo_fix").val();
                     var undFloCo_fix = $("#undFloCo_fix").val();
+
+                    //기존내용과 같을시 처리안함
+                    if(groFloCo_old == groFloCo_fix && undFloCo_old == undFloCo_fix){
+                        
+                        $("#groFloCo_new").text('');
+                        $("#undFloCo_new").text('');
+
+                        $("#"+type+"_new").text('');
+                        $("#"+type+"_new").hide();
+
+                        $("#"+type).show();
+
+                         //팝업닫기
+                        $("#"+type+"_pop").hide();
+                        return;
+                    }
                     
 
                     $("#groFloCo_new").text(groFloCo_fix);
                     $("#undFloCo_new").text(undFloCo_fix);
                     
 
-                    var floCo_new = "{0}(지상층){1}(지하층)".format(groFloCo_fix,undFloCo_fix);
+                    var floCo_new = "지상층 : {0} 지하층 : {1}".format(groFloCo_fix,undFloCo_fix);
 
                     $("#floCo_new").text(floCo_new);
 
@@ -392,24 +469,42 @@
         }
 
         //기초번호용
-        function textDataSendParent2(baseNo, id1, id2){
-            var startBaseMasterNo_fix = $("#"+id1+"_fix").val();
-            var startBaseSlaveNo_fix = $("#"+id2+"_fix").val();
+        function textDataSendParent2(type, id1, id2){
+            var baseMasterNo_old = $("#"+id1).text();
+            var baseSlaveNo_old = $("#"+id2).text();
+            
+            var baseMasterNo_fix = $("#"+id1+"_fix").val();
+            var baseSlaveNo_fix = $("#"+id2+"_fix").val();
+
+            //기존내용과 같을시 처리안함
+            if(baseMasterNo_old == baseMasterNo_fix && baseSlaveNo_old == baseSlaveNo_fix){
+                $("#"+id1+"_new").text('');
+                $("#"+id2+"_new").text('');
+
+                $("#"+type+"_new").text('');
+                $("#"+type+"_new").hide();
+
+                $("#"+type).show();
+
+                //팝업닫기
+                $("#"+type+"_pop").hide();
+                return;
+            }
 
             var frontStartBaseNo = "{0} - {1}";
             var baseNoText = "";
 
-            baseNoText = frontStartBaseNo.format(startBaseMasterNo_fix,startBaseSlaveNo_fix);
+            baseNoText = frontStartBaseNo.format(baseMasterNo_fix,baseSlaveNo_fix);
 
 
-            $("#"+baseNo+"_new").text(baseNoText);
+            $("#"+type+"_new").text(baseNoText);
 
-            $("#"+id1+"_new").text(startBaseMasterNo_fix);
-            $("#"+id2+"_new").text(startBaseSlaveNo_fix);
+            $("#"+id1+"_new").text(baseMasterNo_fix);
+            $("#"+id2+"_new").text(baseSlaveNo_fix);
             
-            $("#"+baseNo).hide();
-            $("#"+baseNo+"_new").show();
-            $("#"+baseNo+"_pop").hide();
+            $("#"+type).hide();
+            $("#"+type+"_new").show();
+            $("#"+type+"_pop").hide();
 
         }
 
@@ -610,6 +705,9 @@
                     var gdftyThickness_new = $("#gdftyThickness_new").text();
                     //단가
                     var gdftyUnitPrice_new = $("#gdftyUnitPrice_new").text();
+                    //설치상태
+                    var delStateCd_new = $("#delStateCd_new").text();
+                    
 
                     commomParams = $.extend({}, {
                         
@@ -632,7 +730,8 @@
                         gdftyUnitPrice: gdftyUnitPrice_new,
                         gdftyWide: gdftyWide_new,
                         gdftyVertical: gdftyVertical_new,
-                        gdftyThickness: gdftyThickness_new
+                        gdftyThickness: gdftyThickness_new,
+                        delStateCd: delStateCd_new
                             
                     });
 
@@ -719,41 +818,42 @@
 
                                 // $(".infoContent p").text('');
 
-                                var detailTaget = '#detailView';
+                                closeDetailView();
+
+                                // var detailTaget = '#detailView';
                                 // type = KEY.plateType.ROAD;
+                                // switch(type) {
+                                //     case DATA_TYPE.RDPQ:
+                                //         url = pages.detail_road;
+                                //         header = "도로명판";
+                                //         // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
 
-                                switch(type) {
-                                    case DATA_TYPE.RDPQ:
-                                        url = pages.detail_road;
-                                        header = "도로명판";
-                                        // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+                                //         break;
+                                //     case DATA_TYPE.AREA:
+                                //         url = pages.detail_area;
+                                //         header = "지역안내판";
+                                //         // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
 
-                                        break;
-                                    case DATA_TYPE.AREA:
-                                        url = pages.detail_area;
-                                        header = "지역안내판";
-                                        // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+                                //         break;
+                                //     case DATA_TYPE.BSIS:
+                                //         url = pages.detail_base;
+                                //         header = "기초번호판";
+                                //         // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
 
-                                        break;
-                                    case DATA_TYPE.BSIS:
-                                        url = pages.detail_base;
-                                        header = "기초번호판";
-                                        // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+                                //         break;        
+                                //     case DATA_TYPE.ENTRC:
+                                //         url = pages.detail_entrc;
+                                //         header = "건물번호판";
 
-                                        break;        
-                                    case DATA_TYPE.ENTRC:
-                                        url = pages.detail_entrc;
-                                        header = "건물번호판";
+                                //         break;
+                                // }
 
-                                        break;
-                                }
-
-                                $(detailTaget).load(url.link(), function() {
+                                // $(detailTaget).load(url.link(), function() {
                                     
-                                    var link = URLs.roadsignlink;
-                                    MapUtil.setValues(type, link, sn);
+                                //     var link = URLs.roadsignlink;
+                                //     MapUtil.setValues(type, link, sn);
 
-                                })
+                                // })
 
                             });
             }
@@ -761,20 +861,50 @@
         }
 
         function setGdft(){
+            
+            //새로운 규격 라벨이 빈칸일경우
+            var newLbl = $("#"+popID+"Lbl_new").text();
+            if(newLbl == ""){
+                //새로운 데이터창 초기화
+                $("#gdftyWide_new").text('');
+                $("#gdftyVertical_new").text('');
+                $("#gdftyThickness_new").text('');
+                //새로운 라벨창 초기화 및 숨기기
+                $("#gdftyWVT_new").text('');
+                $("#gdftyWVT_new").hide();
+                //기존라벨 보이기
+                $("#gdftyWVT").show();
 
-            var rdpqGdSdLbl_new = $("#rdpqGdSdLbl_new").text();
-            var rdpqGdSdLblList = rdpqGdSdLbl_new.split('*');
+                return;
+            }
+
+
+            var rdpqGdSdLblList = newLbl.split('*');
 
             var gdftyWide_new = $("#gdftyWide_new").text(rdpqGdSdLblList[0]);
             var gdftyVertical_new = $("#gdftyVertical_new").text(rdpqGdSdLblList[1]);
             var gdftyThickness = $("#gdftyThickness_new").text() == ""? $("#gdftyThickness").text():$("#gdftyThickness_new").text();
+            var gdftyWVT_new = "{0}*{1}*{2}".format(rdpqGdSdLblList[0],rdpqGdSdLblList[1],gdftyThickness);
+            $("#gdftyWVT_new").text(gdftyWVT_new);
 
-            $("#gdftyWVT_new").text("{0}*{1}*{2}".format(rdpqGdSdLblList[0],rdpqGdSdLblList[1],gdftyThickness));
             $("#gdftyWVT_new").show();
             $("#gdftyWVT").hide();
         }
        function setbdtypCd(){
+           var bdtypCd_main_old = $("#bdtypCd_main").text();
            var bdtypCd_main_new = $("#bdtypCd_main_new").text();
+
+           if(bdtypCd_main_new == ""){
+               //새로운 데이터창 초기화
+               $("#bdtypCd_new").text('');
+               //새로운 라벨창 초기화 및 숨기기
+               $("#bdtypCdLbl_new").text('');
+               $("#bdtypCdLbl_new").hide();
+               //기존라벨 보이기
+               $("#bdtypCdLbl").show();
+               return;
+           }
+
            $("#bdtypCdLbl_new").text('소분류를 선택해 주세요.');
            $("#bdtypCd_new").text('');
 
