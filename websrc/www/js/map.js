@@ -298,7 +298,6 @@ var MapUtil = {
                                 //제목창
                                 var title = "<span class='label'>[{0}] {1} {2}-{3}<span>".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.bsisMnnm, data.bsisSlno);
                                 $(".title").append(title);
-                                //일련번호
                                 //도로시설물
                                 $("#rdftySeLbl").append(data.rdftySeLbl);
                                 $("#rdftySe").append(data.rdftySe);
@@ -462,8 +461,7 @@ var MapUtil = {
                                 //규격
                                 $("#area_areaGdSdLbl").append(data.area_areaGdSdLbl);
                                 $("#area_areaGdSd").append(data.area_areaGdSd);
-                                //가로*새로*두께
-                                 //가로*세로*두께
+                                //가로*세로*두께
                                 $("#gdftyWide").append(data.gdftyWide);
                                 $("#gdftyVertical").append(data.gdftyVertical);
                                 $("#gdftyThickness").append(data.gdftyThickness);
@@ -472,7 +470,8 @@ var MapUtil = {
                                 //단가(원)
                                 $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
                                 //설치상태
-
+                                $("#delStateCd").append(data.delStateCd);
+                                $("#delStateCdLbl").append(data.delStateCdLbl);
                                 break;
                             case DATA_TYPE.BSIS:
 
@@ -557,7 +556,8 @@ var MapUtil = {
                                 //단가(원)
                                 $("#gdftyUnitPrice").append(data.gdftyUnitPrice);
                                 //설치상태
-
+                                $("#delStateCd").append(data.delStateCd);
+                                $("#delStateCdLbl").append(data.delStateCdLbl);
                                 break;
                             case DATA_TYPE.ENTRC:
                                 //제목창
@@ -584,7 +584,11 @@ var MapUtil = {
                                 $("#buldNmtCd").append(data.buldNmtCd);
                                 $("#buldNmtCdLbl").append(data.buldNmtCdLbl);
                                 //가로*세로*두께
-
+                                $("#gdftyWide").append(data.buldNmtWide);
+                                $("#gdftyVertical").append(data.buldNmtVertical);
+                                $("#gdftyThickness").append(data.buldNmtThickness);
+                                var gdftyWVT = "{0}*{1}*{2}".format(data.buldNmtWide,data.buldNmtVertical,data.buldNmtThickness);
+                                $("#gdftyWVT").append(gdftyWVT);
                                 //제작유형
                                 $("#buldMnfCd").append(data.buldMnfCd);
                                 $("#buldMnfCdLbl").append(data.buldMnfCdLbl);
@@ -592,9 +596,10 @@ var MapUtil = {
                                 $("#buldNmtMaterial").append(data.buldNmtMaterial);
                                 $("#buldNmtMaterialLbl").append(data.buldNmtMaterialLbl);
                                 //단가(원)
-
+                                $("#gdftyUnitPrice").append(data.buldNmtUnitPrice);
                                 //설치상태
-
+                                $("#delStateCd").append(data.delStateCd);
+                                $("#delStateCdLbl").append(data.delStateCdLbl);
                                  break;
                          case DATA_TYPE.BULD:
 
