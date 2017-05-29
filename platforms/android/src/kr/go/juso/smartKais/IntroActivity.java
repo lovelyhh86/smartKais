@@ -2,7 +2,9 @@ package kr.go.juso.smartKais;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -11,6 +13,8 @@ import com.sds.mobile.servicebrokerLib.ServiceBrokerLib;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.UUID;
 
 /**
  * Created by joehee on 16. 9. 6..
@@ -78,9 +82,13 @@ public class IntroActivity extends Activity {
             @Override
             public void onServiceBrokerResponse(String result) {
                 Log.d(TAG, "ServiceBrokerCB : " + result);
+                DeviceUuidFactory duf = new DeviceUuidFactory(IntroActivity.this);
+                UUID uuid = duf.getDeviceUuid();
+
                 try {
                     SSO.setSSOInfo(result);
                     SSO.putSSOInfo(SSO.SSO_TEL, phoneNum);
+                    SSO.putSSOInfo(SSO.SSO_UUID, uuid);
                 } catch (Exception e) {
                     Log.d(TAG, "SSO information lookup failed");
                     try {

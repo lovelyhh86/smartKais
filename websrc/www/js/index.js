@@ -1,4 +1,6 @@
 var sso;
+var tmDevice;
+var tmSerial
 var msg = {
     callCenter: "\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다."
 };
@@ -19,7 +21,7 @@ var app = {
         .then(app.check.mobileConnection)
 
         /** 스마트KAIS 등록여부 확인 */
-        // .then(app.check.smartKaisConfirm)
+        .then(app.check.smartKaisUserConfirm)
 
         /** 기본환경 셋팅 및 로딩 */
         /** (ENV) 1. DB 초기화 */
@@ -92,12 +94,22 @@ var app = {
             return def.promise();
         },
         /** 스마트KAIS 등록여부 확인 */
-        smartKaisConfirm: function(){
-            var dn = sso.DN;
-            var url = URLs.smartKaisConfimCheckLink;
+        smartKaisUserConfirm: function(){
+
+            var sendParams = {
+                dn : sso.DN,
+                telNO : sso.TEL,
+                UUID : sso.UUID
+            }
+
+            var link = URLs.authLink;
+
+            var url = URLs.postURL(link, sendParams);
 
             util.postAJAX('',url)
-            .then(function (context, resultCode, results) {
+                .then(function (context, resultCode, results) {
+                    var data = results.data;
+                    console.log(data)
 
 
             });

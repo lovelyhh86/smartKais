@@ -12,6 +12,7 @@ public class SSO {
     enum SSO_KEY { NICKNAME, DEPARTMENT, DEPARTMENT_NUMBER, OU, OU_CODE, CN, DN }
     static JSONArray reqParam;
     public static final String SSO_TEL = "TEL";
+    public static final String SSO_UUID = "UUID";
     private static JSONObject json = null;
 
     static {

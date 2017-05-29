@@ -12,7 +12,7 @@
 
                 <!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
                 <p class="title"><span class="titleIcon"><img src="image/iconNumber.png" title="건물번호판"></span>건물번호판</p>
-                <p class="photo"><span class="photoNum">2</span></p>
+                <p class="photo"><span class="photoNum">0</span></p>
             </div>
 
             <!-- content -->
@@ -52,7 +52,7 @@
                         <div class="cell2">
                             <p id="buldNmtSeLbl" name="oldLbl"></p>
                             <p id="buldNmtSe" style="display:none"></p>
-                            <p id="buldNmtSeLbl_new" style="display:none; color:red"></p>
+                            <p id="buldNmtSeLbl_new" name="newLbl" style="display:none; color:red"></p>
 							<p id="buldNmtSe_new" style="display:none;"></p>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <div class="cell2">
                             <p id="buldNmtPurposeLbl" name="oldLbl"></p>
                             <p id="buldNmtPurpose" style="display:none"></p>
-                            <p id="buldNmtPurposeLbl_new" style="display:none; color:red"></p>
+                            <p id="buldNmtPurposeLbl_new" name="newLbl" style="display:none; color:red"></p>
                             <p id="buldNmtPurpose_new" style="display:none"></p>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                         <div class="cell2">
                             <p id="buldNmtCdLbl" name="oldLbl"></p>
                             <p id="buldNmtCd" style="display:none"></p>
-                            <p id="buldNmtCdLbl_new" style="display:none; color:red"></p>
+                            <p id="buldNmtCdLbl_new" name="newLbl" style="display:none; color:red"></p>
                             <p id="buldNmtCd_new" style="display:none"></p>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
 							<p id="gdftyWide" style="display:none"></p>
 							<p id="gdftyVertical" style="display:none"></p>
 							<p id="gdftyThickness" style="display:none"></p>
-							<p id="gdftyWVT_new" style="display:none; color:red"></p>
+							<p id="gdftyWVT_new" name="newLbl" style="display:none; color:red"></p>
 							<p id="gdftyWide_new" style="display:none"></p>
 							<p id="gdftyVertical_new" style="display:none"></p>
 							<p id="gdftyThickness_new" style="display:none"></p>
@@ -121,7 +121,7 @@
                         <div class="cell2">
                             <p id="buldNmtMaterialLbl" name="oldLbl"></p>
                             <p id="buldNmtMaterial" style="display:none"></p>
-                            <p id="buldNmtMaterialLbl_new" style="display:none; color:red"></p>
+                            <p id="buldNmtMaterialLbl_new" name="newLbl" style="display:none; color:red"></p>
                             <p id="buldNmtMaterial_new" style="display:none"></p>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
 						</div>
 						<div class="cell2">
 							<p id="gdftyUnitPrice" name="oldLbl"></p>
-							<p id="gdftyUnitPrice_new" style="display:none; color:red"></p>
+							<p id="gdftyUnitPrice_new" name="newLbl" style="display:none; color:red"></p>
 						</div>
 					</div>
 					<div onclick="openDataIdPop('delStateCd');" class="row">
@@ -141,7 +141,7 @@
 						<div class="cell2">
 							<p id="delStateCdLbl" name="oldLbl"></p>
 							<p id="delStateCd" style="display:none;"></p>
-							<p id="delStateCdLbl_new" style="display:none; color:red"></p>
+							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
 							<p id="delStateCd_new" style="display:none"></p>
 						</div>
 					</div>
@@ -204,7 +204,7 @@
 						<div class="row">
 							<div class="cell">
 								<span class="label w35">단가</span>
-								<div class="inputText w75"><input type="text" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
+								<div class="inputText w75"><input type="number" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
 							</div>
 						</div>
 					</div>
@@ -222,11 +222,11 @@
 						<div class="row">
 							<div class="cell">
 								<span class="label w50">크기 </span>
-									<div class="inputText"><input readonly type="text" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px"></div>
+									<div class="inputText"><input readonly type="number" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px"></div>
 									<div class="inputText">*</div>
-									<div class="inputText"><input readonly type="text" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
+									<div class="inputText"><input readonly type="number" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
 									<div class="inputText">*</div>
-									<div class="inputText"><input type="text" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
+									<div class="inputText"><input type="number" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
 							</div>
 						</div>
 					</div>

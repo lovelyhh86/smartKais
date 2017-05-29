@@ -640,7 +640,7 @@ var MapUtil = {
                                 $("#groFloCo").append(data.groFloCo);
                                 //(지하)
                                 $("#undFloCo").append(data.undFloCo);
-                                var floCo = "지상층 : {0} 지하층 : {1}".format(data.groFloCo,data.undFloCo);
+                                var floCo = "지상층: {0} / 지하층: {1}".format(data.groFloCo,data.undFloCo);
                                 $("#floCo").append(floCo);
                                 //건물상태
                                 $("#buldSttus").append(data.buldSttus);

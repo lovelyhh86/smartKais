@@ -23,7 +23,7 @@ var URLs = {
     "minwonServiceLink": { svcNm: "eaiService" },
 
     "moveingPoint":{svnNm: "iSPGF"},
-    "smartKaisConfimCheckLink": { svcNm: "smartKaisCnfmCk" },
+    "authLink": { svcNm: "auth" },
 
     getURL: function (srcurl, jsondata) {
 

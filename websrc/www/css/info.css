@@ -121,8 +121,8 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .cell2 >.radioBox> div.ui-checkbox, .cell2 >.radioBox >div.ui-radio {margin: .8em 0;position: relative;}
 
 .dataBtn{border-top:1px solid #e5e5e5; text-align: center; margin-top:20px; padding: 20px 0  15px 0;}
-.dataBtn >.btnPoint{display:inline-block; padding:8px 50px; background-color: #c0c0c0; color:#e5e5e5;text-shadow: none;font-size: 0.9em}
-.dataBtn >.btnNormal{display:inline-block; margin-left:5px ; padding:8px 50px; background-color: #496388; color:#fff;text-shadow: none; font-size: 0.8em}
+.dataBtn >.btnPoint{display:inline-block; margin-left:5px ; padding:8px 50px; background-color: #496388; color:#fff;text-shadow: none; font-size: 0.8em}
+.dataBtn >.btnNormal{display:inline-block; padding:8px 50px; background-color: #c0c0c0; color:#e5e5e5;text-shadow: none;font-size: 0.9em}
 .dataClose{position: absolute;top:15px;right:20px}
 
 /************* 사진 ****************/

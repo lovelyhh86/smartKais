@@ -6,7 +6,15 @@
         })
         
         function closeDetailView(){
-            $("#detailView").popup("close", { transition: "slideup" });
+            var newLbl = $("p[name*='newLbl']").text();
+            if(newLbl != ""){
+                if(confirm('작성하시던 데이터를 잃게 됩니다. 닫으시겠습니까?') == true){
+                    
+                    $("#detailView").popup("close", { transition: "slideup" });
+                }
+            }else{
+                    $("#detailView").popup("close", { transition: "slideup" });
+            }
         }
 
         var popID;
@@ -454,7 +462,7 @@
                     $("#undFloCo_new").text(undFloCo_fix);
                     
 
-                    var floCo_new = "지상층 : {0} 지하층 : {1}".format(groFloCo_fix,undFloCo_fix);
+                    var floCo_new = "지상층: {0} / 지하층: {1}".format(groFloCo_fix,undFloCo_fix);
 
                     $("#floCo_new").text(floCo_new);
 
@@ -674,6 +682,11 @@
         }
 
         function submit(type){
+            var newLbl = $("p[name*='newLbl']").text();
+            if(newLbl == ""){
+                confirm('저장할 데이터가 없습니다.')
+                return;
+            }
 
             if (confirm('시설물 정보를 변경하시겠습니까?') == true){
                    var commomParams = {};
@@ -803,6 +816,8 @@
 
                         var link = URLs.updateBuildNumberInfo;
                         
+                    }else if(type == DATA_TYPE.BULD){
+
                     }
 
                     

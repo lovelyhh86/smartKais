@@ -27,7 +27,7 @@
                         <div class="cell2">
                             <p id="bdtypCd_mainLbl" name="oldLbl"></p>
                             <p id="bdtypCd_main" style="display:none"></p>
-                            <p id="bdtypCd_mainLbl_new" style="display:none; color:red"></p>
+                            <p id="bdtypCd_mainLbl_new" name="newLbl" style="display:none; color:red"></p>
                             <p id="bdtypCd_main_new" style="display:none"></p>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                         <div class="cell2">
                             <p id="bdtypCdLbl" name="oldLbl"></p>
                             <p id="bdtypCd" style="display:none"></p>
-                            <p id="bdtypCdLbl_new" style="display:none; color:red"></p>
+                            <p id="bdtypCdLbl_new" name="newLbl" style="display:none; color:red"></p>
                             <p id="bdtypCd_new" style="display:none"></p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                         <div class="cell2">
                             <p id="bulDpnSeLbl" name="oldLbl"></p>
                             <p id="bulDpnSe" style="display:none"></p>
-                            <p id="bulDpnSeLbl_new" style="display:none; color:red"></p>
+                            <p id="bulDpnSeLbl_new" name="newLbl" style="display:none; color:red"></p>
                             <p id="bulDpnSe_new" style="display:none"></p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="cell2">
                             <p id="buldNm" name="oldLbl"></p>
-                            <p id="buldNm_new" style="display:none; color:red"></p>
+                            <p id="buldNm_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
                     </div>
                     <div onclick="openCustomPop('bulEngNm');" class="row">
@@ -69,7 +69,7 @@
                         </div>
                         <div class="cell2">
                             <p id="bulEngNm" name="oldLbl"></p>
-                            <p id="bulEngNm_new" style="display:none; color:red"></p>
+                            <p id="bulEngNm_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
                     </div>
                     <div onclick="openCustomPop('buldNmDc');" class="row">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="cell2">
                             <p id="buldNmDc" name="oldLbl"></p>
-                            <p id="buldNmDc_new" style="display:none; color:red"></p>
+                            <p id="buldNmDc_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
                     </div>
                     <div onclick="openCustomPop2('floCo',['groFloCo','undFloCo']);" class="row">
@@ -89,7 +89,7 @@
                             <p id="floCo" name="oldLbl"></p>
                             <p id="groFloCo" style="display:none"></p>
                             <p id="undFloCo" style="display:none"></p>
-                            <p id="floCo_new" style="display:none; color:red"></p>
+                            <p id="floCo_new" name="newLbl" style="display:none; color:red"></p>
                             <p id="groFloCo_new" style="display:none"></p>
                             <p id="undFloCo_new" style="display:none"></p>
                         </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="cell2">
                             <p id="buldSttus" name="oldLbl"></p>
-                            <p id="buldSttus_new" style="display:none; color:red"></p>
+                            <p id="buldSttus_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
                     </div>
                     <div onclick="openCustomPop('buldMemo');" class="row">
@@ -109,7 +109,7 @@
                         </div>
                         <div class="cell2">
                             <p id="buldMemo" name="oldLbl"></p>
-                            <p id="buldMemo_new" style="display:none; color:red"></p>
+                            <p id="buldMemo_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
                     </div>
                     
@@ -193,7 +193,7 @@
                         <div class="row">
                             <div class="cell">
                                 <span class="label w75">건물명(영)</span>
-                                <div class="inputText w75"><input type="text" id="bulEngNm_fix" name="" title="건물명(영)" maxlength="20" value=""></div>
+                                <div class="inputText w75"><input type="email" id="bulEngNm_fix" name="" title="건물명(영)" maxlength="20" value=""></div>
                             </div>
                         </div>
                     </div>
@@ -230,14 +230,16 @@
                     <div class="dataForm">
                         <div class="row">
                             <div class="cell">
-								<span class="label w75">지상층</span>
-									<div class="inputText"><input type="text" id = "groFloCo_fix" name="" title="지상층" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText w50">지상층: </div>
+                                <div class="inputText"><input type="number" id = "groFloCo_fix" name="" title="지상층" maxlength="20" value="" style="width:50px"></div>
+                                <div class="inputText w50">/</div>
+                                <div class="inputText w50">지하층: </div>
+                                <div class="inputText"><input type="number" id = "undFloCo_fix" name="" title="지상층" maxlength="20" value="" style="width:50px"></div>
 							</div>
                         </div>
                         <div class="row">     
                             <div class="cell">
-                                <span class="label w75">지하층</span>
-                                    <div class="inputText"><input type="text" id = "undFloCo_fix" name="" title="지상층" maxlength="20" value="" style="width:50px"></div>
+                                
                             </div>
                         </div>
                     </div>
@@ -274,8 +276,7 @@
                     <div class="dataForm">
                         <div class="row">
                             <div class="cell">
-                                <span class="label w75">메모</span>
-                                <div class="inputText w75"><input type="text" id="buldMemo_fix" name="" title="메모" maxlength="20" value=""></div>
+                                <div class="inputText w75"><textarea id="buldMemo_fix" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px"></textarea></div>
                             </div>
                         </div>
                     </div>
@@ -291,7 +292,7 @@
             <!-- content 끝  -->
             <!-- footer 시작 -->
             <div class="infoFooter">
-                <span onclick="submit(DATA_TYPE.ENTRC);" class="btnPoint">저장</span>
+                <span onclick="submit(DATA_TYPE.BULD);" class="btnPoint">저장</span>
                 <span onclick="closeDetailView();" class="btnNormal dataPopCloser">닫기</span>
             </div>
             <!-- footer 끝 -->
