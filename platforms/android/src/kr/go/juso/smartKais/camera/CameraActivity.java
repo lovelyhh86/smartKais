@@ -186,19 +186,31 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
         // Setting the right parameters in the camera
 		final Camera.Parameters params = mCamera.getParameters();
+
+
+		List<Camera.Size> previewSizeList = params.getSupportedPreviewSizes();
+		for(Camera.Size cs : previewSizeList){
+			if(cs.width / 100 == 9) {
+				params.setPreviewSize(cs.width, cs.height);
+				break;
+			}
+		}
+
+
+
 		List<Camera.Size> sizes = params.getSupportedPictureSizes();
 
 		if (sizes.size() > 0){
 			Camera.Size sps = sizes.get(0);
 			for ( Camera.Size ps : sizes ){
-				if (ps.height / 100 == 7)
+				if (ps.height / 100 == 15)
+//				if (ps.width / 100 == 9)
 				{
 					sps = ps;
 					break;
 				}
 			}
 			params.setPictureSize(sps.width,sps.height);
-			params.setPreviewSize(sps.width,sps.height);
 
 		}
 	//	params.setPreviewSize((int)(deviceDm.widthPixels / deviceDm.density), (int)(deviceDm.heightPixels/ deviceDm.density));
@@ -214,7 +226,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 				(int)(deviceDm.widthPixels), (int)(deviceDm.heightPixels)
 		);
-		cameraPreview.setLayoutParams(layoutParams);
+//		cameraPreview.setLayoutParams(layoutParams);
 
 
 		LinearLayout btnview = (LinearLayout) findViewById(R.id.linearLayout1);
