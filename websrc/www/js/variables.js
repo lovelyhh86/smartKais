@@ -22,6 +22,8 @@ var URLs = {
     "mapServiceLink": { svcNm: "mapService" },
     "minwonServiceLink": { svcNm: "eaiService" },
 
+    "photoFileInfo": { svcNm: "sPhoto"},
+
     "moveingPoint":{svnNm: "iSPGF"},
     "authLink": { svcNm: "auth" },
 

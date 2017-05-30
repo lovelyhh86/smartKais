@@ -399,11 +399,16 @@ var util = {
             slider.flexAnimate(slider.count - 1); // go back to the first slide
         });
     },
-    toast: function (msg) {
+    toast: function (msg, mode) {
 //        toastr.remove();
         toastr.options.positionClass = 'toast-bottom-center';
         toastr.options.timeOut = 1500;
-        toastr.info(msg);
+
+        if(mode == "error") {
+            toastr.error(msg);
+        } else {
+            toastr.info(msg);
+        }
     },
     showProgress: function () {
         SmartKaisPlugins.showProgress("", function (jsondata) { });

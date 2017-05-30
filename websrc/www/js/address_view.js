@@ -21,7 +21,6 @@ function buildContent( sn, sig_cd){
 
     var param = {"sn":sn,"sigCd":sig_cd};
     var url = URLs.postURL(URLs.addresslink,  param  );
-  //  util.getAJAX({},url)
     util.postAJAX({},url)
         .then( function(context,rcode,results) {  //detailinfo response
 

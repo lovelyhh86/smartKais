@@ -49,7 +49,7 @@
 .mapInfo1 > .mapAdd{display: inline-block; position: absolute; top: 15px; right: 20px;}
 .info{ display: inline-block; padding:0 15px; background: url(../image/infoLine.png) 0 6px no-repeat}
 .info:FIRST-CHILD{padding:0 15px 0 0;background:none}
-.iconPosition{text-align: center; p}
+.iconPosition{text-align: center;}
 
 .localTitle{margin-bottom:5px; font-weight: bold; color: #000;}
 .titleIcon_number{ position:relative; top:5px; display:inline-block; width:25px; height:17px; background:url(../image/iconNumber.png) 0 0px no-repeat;}

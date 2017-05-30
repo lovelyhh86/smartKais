@@ -27,18 +27,35 @@ var MapUtil = {
                 $(".dataWrap").hide();
             });
         },
-        photoToggleHandler: function() {
-            $(".detailView .infoWrap .infoHeader .photo").click(function() {
-                $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle(
-                    // 사진 모드 전환
-                    function(){
-                        $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
-                    },
-                    // 상세모드 전환
-                    function(){
-                        $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+        photoToggleHandler: function(layerID, f) {
+            $(".detailView .infoWrap .infoHeader .photo").click(function(){
+                $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+                // 사진모드
+                if($(".detailView .infoWrap .infoContent .photoWrap").css("display") != "none") {
+                    switch (layerID) {
+                        case DATA_TYPE.RDPQ:
+                        case DATA_TYPE.AREA:
+                        case DATA_TYPE.BSIS:
+                            var param = {"sn" : sn, "sigCd" : sig_cd};
+                            var url = URLs.postURL(URLs.photoFileInfo, param);
+                            util.showProgress();
+                            util.postAJAX({}, url).then(
+                                function(context, rcode, results) {
+                                   var data = results.data;
+                                   if (rcode != 0) {
+                                        util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
+                                        util.dismissProgress();
+                                        return;
+                                   }
+                                }
+                            );
+                            break;
+                        case DATA_TYPE.ENTRC:
+
+                            break;
                     }
-                );
+                }
+
             });
         },
         takePhotoHandler: function() {
@@ -189,7 +206,7 @@ var MapUtil = {
 
         $(detailTaget).load(url.link(), function() {
             MapUtil.setDetail(layerID, f);
-            MapUtil.handler.photoToggleHandler();
+            MapUtil.handler.photoToggleHandler(layerID, f);
             MapUtil.handler.takePhotoHandler();
             MapUtil.handler.delPhotoHandler();
             MapUtil.handler.dataPopupCloserHandler();
@@ -1300,7 +1317,7 @@ var mapInit = function (mapId, pos) {
                             strHtml = commonSpan.format("titleIcon_building","");
                             strHtml += POS_BUL_NM;
 
-                            var buldNm = commonP.format("localTile",strHtml);
+                            var buldNm = commonP.format("localTitle",strHtml);
 
                             //건축물대장 건물명
                             // var BULD_NM = feature.get("BULD_NM");
