@@ -20,6 +20,9 @@
 #work-header.ui-header .ui-panel  { text-shadow: none; overflow-y: scroll; }
 #work-header.ui-header .ui-panel .ui-content .ui-btn { font-size: 1.2em; color: black; background-color:white; border-color:black; border-width:0px 0px 1px 0px;}
 #work-header.ui-header .ui-panel-dismiss-open.ui-panel-dismiss-position-right { right: 90%; }
+
+#panel-menu .ui-content li:last-child { position: absolute; bottom: 1em; right: 1em; }
+
 #panel-qna { color: black }
 #panel-qna.ui-panel { width: 90%; }
 #panel-qna .ui-tabs-active { border: 1px solid black; }

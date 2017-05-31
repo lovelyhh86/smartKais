@@ -59,14 +59,14 @@ var MapUtil = {
             });
         },
         takePhotoHandler: function() {
-            $(".detailView .infoWrap .infoContent .photoWrap .btnNormal").click(function(evt){
+            $(".detailView .infoWrap .infoContent .photoWrap  .btnPoint").click(function(evt){
                 util.takePictureFromCamera(function(ret){
                     $(evt.target).parent().parent().children(".picImg").html("<img src='data:image/jpeg;base64," + ret.src + "'>");
                 });
             });
         },
         delPhotoHandler: function() {
-            $(".detailView .infoWrap .infoContent .photoWrap .btnPoint").click(function(evt){
+            $(".detailView .infoWrap .infoContent .photoWrap .btnNormal").click(function(evt){
                 $(evt.target).parent().parent().children(".picImg").html("");
             });
         },
@@ -313,7 +313,11 @@ var MapUtil = {
                             case DATA_TYPE.RDPQ:
 
                                 //제목창
-                                var title = "<span class='label'>[{0}] {1} {2}-{3}<span>".format(data.rdGdftySeLbl, data.frontKoreanRoadNm, data.bsisMnnm, data.bsisSlno);
+                                var title = "<span class='label'>[{0}] {1} {2}-{3}<span>".format(
+                                    data.rdGdftySeLbl,
+                                    (data.frontKoreanRoadNm ? data.frontKoreanRoadNm : ''),
+                                    (data.bsisMnnm ? data.bsisMnnm : ''),
+                                    (data.bsisSlno ? data.bsisSlno : ''));
                                 $(".title").append(title);
                                 //도로시설물
                                 $("#rdftySeLbl").append(data.rdftySeLbl);
@@ -321,7 +325,7 @@ var MapUtil = {
                                 //설치도로명
 
                                 //설치기초번호
-                                var bsis = "{0}-{1}".format(data.bsisMnnm,data.bsisSlno);
+                                var bsis = "{0}-{1}".format((data.bsisMnnm ? data.bsisMnnm : ''), (data.bsisSlno ? data.bsisSlno : ''));
                                 $("#bsis").append(bsis);
                                 //설치유형
                                 $("#instSeLbl").append(data.instSeLbl);
@@ -354,14 +358,14 @@ var MapUtil = {
                                 //뒷면 도로명(로마자)
                                 $("#backRomeRoadNm").append(data.backRomeRoadNm);
                                 //뒷면시작기초번호(0-0)
-                                $("#backStartBaseMasterNo").append(data.backStartBaseMasterNo);
-                                $("#backStartBaseSlaveNo").append(data.backStartBaseSlaveNo);
-                                var backStartBaseNo = "{0}-{1}".format(data.backStartBaseMasterNo,data.backStartBaseSlaveNo);
+                                $("#backStartBaseMasterNo").append((data.backStartBaseMasterNo ? data.backStartBaseMasterNo : ''));
+                                $("#backStartBaseSlaveNo").append((data.backStartBaseSlaveNo ? data.backStartBaseSlaveNo : ''));
+                                var backStartBaseNo = "{0}-{1}".format((data.backStartBaseMasterNo ? data.backStartBaseMasterNo : ''), (data.backStartBaseSlaveNo ? data.backStartBaseSlaveNo : ''));
                                 $("#backStartBaseNo").append(backStartBaseNo);
                                 //뒷면종료기초번호(0-0)
-                                $("#backEndBaseMasterNo").append(data.backEndBaseMasterNo);
-                                $("#backEndBaseSlaveNo").append(data.backEndBaseSlaveNo);
-                                var backEndBaseNo = "{0}-{1}".format(data.backEndBaseMasterNo,data.backEndBaseSlaveNo);
+                                $("#backEndBaseMasterNo").append((data.backEndBaseMasterNo ? data.backEndBaseMasterNo : ''));
+                                $("#backEndBaseSlaveNo").append((data.backEndBaseSlaveNo ? data.backEndBaseSlaveNo : ''));
+                                var backEndBaseNo = "{0}-{1}".format((data.backEndBaseMasterNo ? data.backEndBaseMasterNo : ''), (data.backEndBaseSlaveNo ? data.backEndBaseSlaveNo : ''));
                                 $("#backEndBaseNo").append(backEndBaseNo);
                                 //도로명판종류
                                 $("#gdftyForm").append(data.gdftyForm);
@@ -915,8 +919,8 @@ var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms?FIXED=TRUE";
 switch (mode) {
     case MODE.RUNTIME:
         baseProjection = ol.proj.get('EPSG:5179');
-        sourceProjection = ol.proj.get('EPSG:5174');
-        serviceProjection = ol.proj.get('SR-ORG:6640');
+        sourceProjection = ol.proj.get(localStorage["sourceProj"]);
+        serviceProjection = ol.proj.get(localStorage["serviceProj"]);
         break;
     case MODE.DEBUG:
         baseProjection = ol.proj.get('EPSG:5179');
@@ -1234,9 +1238,9 @@ var mapInit = function (mapId, pos) {
                             var FT_KOR_RN = commonP.format("localTitle",feature.get('FT_KOR_RN') +" "+ feature.get('BSIS_MNNM')+" - "+ feature.get('BSIS_SLNO'));
 
                             //시점
-                            var FT_STBS_MN = feature.get('FT_STBS_MN');
+                            var FT_STBS_MN = (feature.get('FT_STBS_MN') ? feature.get('FT_STBS_MN') : '');
 
-                            var FT_STBS_SN = feature.get('FT_STBS_SN');
+                            var FT_STBS_SN = (feature.get('FT_STBS_SN') ? feature.get('FT_STBS_SN') : '');
 
                             var ftStbsStr = baseNumberMix(FT_STBS_MN,FT_STBS_SN); // 0 - 0
 
@@ -1244,9 +1248,9 @@ var mapInit = function (mapId, pos) {
 
                             //종점
 
-                            var BK_STBS_MN = feature.get('BK_STBS_MN');
+                            var BK_STBS_MN = (feature.get('BK_STBS_MN') ? feature.get('BK_STBS_MN') : '');
 
-                            var BK_STBS_SN = feature.get('BK_STBS_SN');
+                            var BK_STBS_SN = (feature.get('BK_STBS_SN') ? feature.get('BK_STBS_SN') : '');
 
                             var bkStbsStr = baseNumberMix(BK_STBS_MN,BK_STBS_SN); // 0 - 0
 
@@ -1350,7 +1354,7 @@ var mapInit = function (mapId, pos) {
 
                              //팝업내용 추가
                             strHtml = aaa
-                            strHtml += commonP.format("","표준형 | 일반형(오각형)");
+                            strHtml += commonP.format(""," - | - ");
 
                              //라인추가
                             resultHtml = commonP.format("infoLine","");

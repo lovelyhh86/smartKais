@@ -233,9 +233,14 @@ var util = {
                 util.showMenuPanel('#mainMenu');
                 return;
             case "download":
-                SmartKaisPlugins.dn('http://api.juso.go.kr/gis/dnSmartKaisApp.jsp', function (msg) {
-                    alert(msg.message);
-                });
+                navigator.notification.confirm("다운로드 하시겠습니까?\n다운로드 파일은\n 내 파일 -> 디바이스 저장공간 -> Download\n에서 확인하실 수 있습니다.\n",
+                    function(btnIndex) {
+                        if(btnIndex == 1) {
+                            SmartKaisPlugins.dn('http://api.juso.go.kr/gis/dnSmartKaisApp.jsp', function (msg) {
+                                alert(msg.message);
+                            });
+                        }
+                    }, '알림(최신버전 다운로드)', ['확인', '취소']);
                 return;
             case "camera":
 

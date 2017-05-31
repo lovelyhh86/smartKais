@@ -24,6 +24,9 @@ var app = {
         /** 스마트KAIS 등록여부 확인 */
         .then(app.check.authUser, util.appExit)
         
+        /** 자치단체 정보 조회 */
+        .then(app.check.sggInfo, util.appExit)
+
         /** 기본환경 셋팅 및 로딩 */
         /** (ENV) 1. DB 초기화 */
         .then(app.db.init, util.appExit)
@@ -121,6 +124,10 @@ var app = {
 
                         if(d.testYn == "Y") {
                             app.info.mode = "11";
+                            app.mode = "11";
+                        } else {
+                            app.info.mode = "00";
+                            app.mode = "00";
                         }
 
                         localStorage["appInfo"] = JSON.stringify(app.info);
@@ -131,6 +138,38 @@ var app = {
                         navigator.notification.alert("해당 단말기가 KAIS에 등록되지 않았거나\n접속 가능한 자치단체를 찾을 수 없습니다." + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
                         setTimeout(def.reject, 300);
                     }
+                }
+            );
+
+            return def.promise();
+        },
+        /** 자치단체 정보 조회 */
+        sggInfo: function() {
+            var def = $.Deferred();
+            app.showProgress("자치단체 정보 조회");
+
+            var params = URLs.postURL(URLs.sggInfo, '');
+
+            util.postAJAX('', params).then(
+                function (context, resultCode, results) {
+                    if (resultCode == 0 && !(util.isEmpty(results.data))) {
+                        var d = results.data;
+
+                        localStorage["serviceProj"] = d.trgnptLbl;
+                        if(d.trgnpt == "01") {
+                            localStorage["sourceProj"] = "EPSG:5176";
+                        } else if(d.trgnpt == "02"){
+                            localStorage["sourceProj"] = "EPSG:5174";
+                        } else if(d.trgnpt == "03"){
+                            localStorage["sourceProj"] = "EPSG:5173";
+                        } else if(d.trgnpt == "08"){
+                            localStorage["sourceProj"] = "EPSG:5175";
+                        } else {
+                            navigator.notification.alert("자치단체 정보가 조회되지 않습니다." + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
+                            setTimeout(def.reject, 300);
+                        }
+                    }
+                    setTimeout(def.resolve, 300);
                 }
             );
 

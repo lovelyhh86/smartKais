@@ -28,6 +28,7 @@ var URLs = {
 
     "moveingPoint":{svnNm: "iSPGF"},
     "authLink": { svcNm: "auth" },
+    "sggInfo" : { svcNm: "vAdmInfo"},
 
     getURL: function (srcurl, jsondata) {
 
