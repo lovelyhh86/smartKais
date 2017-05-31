@@ -17,6 +17,8 @@ var URLs = {
     "entrclink": { svcNm: "vENTRC" },
     "updateFacilityInfo": { svcNm: "uSPGF" },
     "updateBuildNumberInfo": { svcNm: "uSPBD" },
+    "updateBuilingInfo": { svcNm: "uBULD" },
+    
 
     "updateAddressInfo": { svcNm: "uBSEX" },
     "mapServiceLink": { svcNm: "mapService" },

@@ -871,7 +871,43 @@
                         var link = URLs.updateBuildNumberInfo;
                         
                     }else if(type == DATA_TYPE.BULD){
+                        //용도
+                        var bdtypCd_new = $("#bdtypCd_new").text();
+                        //건물종속여부
+                        var bulDpnSe_new = $("#bulDpnSe_new").text();
+                        //건물명
+                        var posBulNm_new = $("#posBulNm_new").text();
+                        //건물명(영)
+                        var bulEngNm_new = $("#bulEngNm_new").text();
+                        //상세건물명
+                        var buldNmDc_new = $("#buldNmDc_new").text();
+                        //건물층수(지상층)
+                        var groFloCo_new = $("#groFloCo_new").text();
+                        //건물층수(지하층)
+                        var undFloCo_new = $("#undFloCo_new").text();
+                        //건물상태
+                        var buldSttus_new = $("#buldSttus_new").text();
+                        //메모
+                        var buldMemo_new = $("#buldMemo_new").text();
 
+                         sendParams = $.extend({}, {
+                            bulManNo : sn,
+                            sigCd: sigCd,
+                            workId :app.info.opeId,
+                            
+                            bdtypCd : bdtypCd_new,
+                            bulDpnSe : bulDpnSe_new,
+                            posBulNm : posBulNm_new,
+                            bulEngNm : bulEngNm_new,
+                            buldNmDc : buldNmDc_new,
+                            groFloCo : groFloCo_new,
+                            undFloCo : undFloCo_new,
+                            buldSttus : buldSttus_new,
+                            buldMemo : buldMemo_new,
+
+                         });
+
+                         var link = URLs.updateBuilingInfo;
                     }
 
                     

@@ -647,7 +647,7 @@ var MapUtil = {
                                 $("#bulDpnSe").append(data.bulDpnSe);
                                 $("#bulDpnSeLbl").append(data.bulDpnSeLbl);
                                 //건물명
-                                $("#buldNm").append(data.posBulNm);
+                                $("#posBulNm").append(data.posBulNm);
                                 //건물명(영)
                                 $("#bulEngNm").append(data.bulEngNm);
                                 //상세건물명
@@ -661,7 +661,8 @@ var MapUtil = {
                                 $("#floCo").append(floCo);
                                 //건물상태
                                 $("#buldSttus").append(data.buldSttus);
-
+                                //메모
+                                $("#buldMemo").append(data.buldMemo);
 
                                 break;
 
