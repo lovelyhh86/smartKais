@@ -593,7 +593,7 @@ var MapUtil = {
                                 //건물번호
 
                                 //일련번호
-
+                                $("#entranceSn").append(data.entranceSn);
                                 //유형
                                 $("#buldNmtSe").append(data.buldNmtSe);
                                 $("#buldNmtSeLbl").append(data.buldNmtSeLbl);
