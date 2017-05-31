@@ -11,7 +11,7 @@
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="img/icon_legend02.png" title="기초번호판"></span></p>
+				<p class="title"><span class="titleIcon"><img src="image/blocksIcon.png" title="기초번호판"></span></p>
 				<p class="photo"><span class="photoNum">0</span></p>
 			</div>
 			
@@ -19,6 +19,18 @@
 			<div class="infoContent">
 			<!-- 정보  -->
 				<div class="infoTable">
+					<p id ="sn" style="display:none"></p>
+					<div onclick="openDataIdPop('delStateCd');" class="row">
+						<div  class="cell1">
+								<span class="label"><img src="image/openAble3.png" alt="">설치상태</span>
+						</div>
+						<div class="cell2">
+							<p id="delStateCdLbl" name="oldLbl"></p>
+							<p id="delStateCd" style="display:none;"></p>
+							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+							<p id="delStateCd_new" style="display:none"></p>
+						</div>
+					</div>
 					<div class="row">
 						<div  class="cell1">
 							<span class="label">도로시설물</span>
@@ -257,17 +269,6 @@
 						<div class="cell2">
 							<p id="gdftyUnitPrice" name="oldLbl"></p>
 							<p id="gdftyUnitPrice_new" name="newLbl" style="display:none; color:red"></p>
-						</div>
-					</div>
-					<div onclick="openDataIdPop('delStateCd');" class="row">
-						<div  class="cell1">
-								<span class="label"><img src="image/openAble3.png" alt="">설치상태</span>
-						</div>
-						<div class="cell2">
-							<p id="delStateCdLbl" name="oldLbl"></p>
-							<p id="delStateCd" style="display:none;"></p>
-							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="delStateCd_new" style="display:none"></p>
 						</div>
 					</div>
 				</div>

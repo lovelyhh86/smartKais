@@ -702,8 +702,7 @@
                     var instCrossCd_new = $("#instCrossCd_new").text();
                     //사용대상
                     var useTarget_new = $("#useTarget_new").text();
-                    //안내시설방향
-                    var plqDirection_new = $("#plqDirection_new").text();
+                    
                     //제2외국어여부
                     var scfggMkty_new = $("#scfggMkty_new").text();
                     //언어1
@@ -721,6 +720,7 @@
                     //설치상태
                     var delStateCd_new = $("#delStateCd_new").text();
                     
+                    
 
                     commomParams = $.extend({}, {
                         
@@ -731,19 +731,29 @@
                         // checkType: '01',
                         // checkUserNm: app.info.opeNm,
                         checkDate: util.getToday(),
+                        //id
                         workId: workId,
-
+                        //설치지점코드
                         instSpotCd: instSpotCd_new,
+                        //설치기준(교차로유형)
                         instCrossCd: instCrossCd_new,
+                        //사용대상
                         useTarget: useTarget_new,
-                        plqDirection: plqDirection_new,
+                        //제2외국어여부
                         scfggMkty: scfggMkty_new,
+                        //언어1
                         scfggUla1: scfggUla1_new,
+                        //언어2
                         scfggUla2: scfggUla2_new,
+                        //단가
                         gdftyUnitPrice: gdftyUnitPrice_new,
+                        //가로
                         gdftyWide: gdftyWide_new,
+                        //세로
                         gdftyVertical: gdftyVertical_new,
+                        //두께
                         gdftyThickness: gdftyThickness_new,
+                        //설치상태
                         delStateCd: delStateCd_new
                             
                     });
@@ -751,10 +761,41 @@
                     if(type == DATA_TYPE.RDPQ){
                         //도로명판 규격
                         var rdpqGdSd_new = $("#rdpqGdSd_new").text();
+                        //명판방향
+                        var plqDirection_new = $("#plqDirection_new").text();
+                        //앞면시작기초번호 본번
+                        var frontStartBaseMasterNo_new = $("#frontStartBaseMasterNo_new").text();
+                        //앞면시작기초번호 부번
+                        var frontStartBaseSlaveNo_new = $("#frontStartBaseSlaveNo_new").text();
+                        //앞면종료기초번호 본번
+                        var frontEndBaseMasterNo_new = $("#frontEndBaseMasterNo_new").text();
+                        //앞면종료기초번호 부번
+                        var frontEndBaseSlaveNo_new = $("#frontEndBaseSlaveNo_new").text();
+
+                        //뒷면시작기초번호 본번
+                        var backStartBaseMasterNo_new = $("#backStartBaseMasterNo_new").text();
+                        //뒷면시작기초번호 부번
+                        var backStartBaseSlaveNo_new = $("#backStartBaseSlaveNo_new").text();
+                        //뒷면종료기초번호 본번
+                        var backEndBaseMasterNo_new = $("#backEndBaseMasterNo_new").text();
+                        //뒷면종료기초번호 부번
+                        var backEndBaseSlaveNo_new = $("#backEndBaseSlaveNo_new").text();
                         
                         sendParams = $.extend(commomParams, { 
                             type :type,
-                            rdpqGdSd: rdpqGdSd_new
+                            rdpqGdSd: rdpqGdSd_new,
+                            plqDirection: plqDirection_new,
+
+                            frontStartBaseMasterNo: frontStartBaseMasterNo_new,
+                            frontStartBaseSlaveNo: frontStartBaseSlaveNo_new,
+                            frontEndBaseMasterNo: frontEndBaseMasterNo_new,
+                            frontEndBaseSlaveNo: frontEndBaseSlaveNo_new,
+
+                            backStartBaseMasterNo: backStartBaseMasterNo_new,
+                            backStartBaseSlaveNo: backStartBaseSlaveNo_new,
+                            backEndBaseMasterNo: backEndBaseMasterNo_new,
+                            backEndBaseSlaveNo: backEndBaseSlaveNo_new,
+
                         });
 
                         var link = URLs.updateFacilityInfo;
@@ -792,25 +833,38 @@
                         var link = URLs.updateFacilityInfo;
 
                     }else if(type == DATA_TYPE.ENTRC){
-
+                        //설치상태
+                        var delStateCd_new = $("#delStateCd_new").text();
                         //건물번호판 유형
-                        var buldNmtSe_new = $("buldNmtSe_new").text();
+                        var buldNmtSe_new = $("#buldNmtSe_new").text();
                         //건물번호판 용도
-                        var buldNmtPurpose_new = $("buldNmtPurpose_new").text();
+                        var buldNmtPurpose_new = $("#buldNmtPurpose_new").text();
                         //건물번호판 규격
-                        var buldNmtCd_new = $("buldNmtCd_new").text();
+                        var buldNmtCd_new = $("#buldNmtCd_new").text();
                         //건물번호판 제작유형
-                        var buldMnfCd_new = $("buldMnfCd_new").text();
+                        var buldMnfCd_new = $("#buldMnfCd_new").text();
                         //건물번호판 재질
-                        var buldNmtMaterial_new = $("buldNmtMaterial_new").text();
+                        var buldNmtMaterial_new = $("#buldNmtMaterial_new").text();
 
-                        sendParams = $.extend(commomParams, {
-                            type :type, 
+                        sendParams = $.extend({}, {
+                            sn: sn,
+                            sigCd: sigCd,
+                            workId :app.info.opeId,
+                            
+                            delStateCd : delStateCd_new,
                             buldNmtSe: buldNmtSe_new,
                             buldNmtPurpose: buldNmtPurpose_new,
                             buldNmtCd: buldNmtCd_new,
                             buldMnfCd: buldMnfCd_new,
-                            buldNmtMaterial: buldNmtMaterial_new
+                            buldNmtMaterial: buldNmtMaterial_new,
+                            //단가
+                            buldNmtUnitPrice: gdftyUnitPrice_new,
+                            //가로
+                            buldNmtWide: gdftyWide_new,
+                            //세로
+                            buldNmtVertical: gdftyVertical_new,
+                            //두께
+                            buldNmtThickness: gdftyThickness_new,
 
                         });
 
@@ -831,44 +885,8 @@
 
                                 util.toast('변경사항이 적용되었습니다');
 
-                                // $(".infoContent p").text('');
-
+                                $("p[name*='newLbl']").text('');
                                 closeDetailView();
-
-                                // var detailTaget = '#detailView';
-                                // type = KEY.plateType.ROAD;
-                                // switch(type) {
-                                //     case DATA_TYPE.RDPQ:
-                                //         url = pages.detail_road;
-                                //         header = "도로명판";
-                                //         // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
-
-                                //         break;
-                                //     case DATA_TYPE.AREA:
-                                //         url = pages.detail_area;
-                                //         header = "지역안내판";
-                                //         // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
-
-                                //         break;
-                                //     case DATA_TYPE.BSIS:
-                                //         url = pages.detail_base;
-                                //         header = "기초번호판";
-                                //         // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
-
-                                //         break;        
-                                //     case DATA_TYPE.ENTRC:
-                                //         url = pages.detail_entrc;
-                                //         header = "건물번호판";
-
-                                //         break;
-                                // }
-
-                                // $(detailTaget).load(url.link(), function() {
-                                    
-                                //     var link = URLs.roadsignlink;
-                                //     MapUtil.setValues(type, link, sn);
-
-                                // })
 
                             });
             }
