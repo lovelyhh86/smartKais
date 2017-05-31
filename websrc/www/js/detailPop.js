@@ -144,7 +144,7 @@
                     setTitle(titleText);
                     
                     //라디오버튼 구성
-                    popColume = 'ITLPC_SE';
+                    popColume = 'PLANE_CD';
                     createRadioButton();
                     break;
                 case 'buldNmtSe':

@@ -267,13 +267,15 @@ var MapUtil = {
 
                 break;
             case DATA_TYPE.AREA:
-                var sn = '7002';
+                // var sn = '7002';
+                var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
                 MapUtil.setValues(layerID, link, sn);
 
                 break;
             case DATA_TYPE.BSIS:
+                // var sn = '7003';
                 var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
@@ -1232,6 +1234,9 @@ var mapInit = function (mapId, pos) {
                     resultHtml = "";
                     layerID = layer.get('id');
 
+                    // layerID = DATA_TYPE.AREA;
+                    // layerID = DATA_TYPE.BSIS;
+
                     switch(layerID) {
                         case DATA_TYPE.RDPQ:
 
@@ -1312,7 +1317,7 @@ var mapInit = function (mapId, pos) {
                             var POS_BUL_NM = feature.get("POS_BUL_NM");
 
                             if(POS_BUL_NM == undefined){
-                                POS_BUL_NM = "-";
+                                POS_BUL_NM = "건물명 없음";
                             }
 
                             strHtml = commonSpan.format("titleIcon_building","");
