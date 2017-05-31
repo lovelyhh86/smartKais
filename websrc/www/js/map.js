@@ -1359,7 +1359,7 @@ var mapInit = function (mapId, pos) {
 
                              //팝업내용 추가
                             strHtml = aaa
-                            strHtml += commonP.format(""," - | - ");
+                            strHtml += commonP.format("","");
 
                              //라인추가
                             resultHtml = commonP.format("infoLine","");
