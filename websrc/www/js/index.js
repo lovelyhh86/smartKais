@@ -2,7 +2,8 @@ var sso;
 var tmDevice;
 var tmSerial
 var msg = {
-    callCenter: "\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다."
+    callCenter: "\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
+    exit: "\n\n스마트KAIS 종료합니다."
 };
 
 var app = {
@@ -18,26 +19,26 @@ var app = {
         app.check.connection()
 
         /** (NET) 모바일 공통기반 연결 체크 */
-        .then(app.check.mobileConnection)
+        .then(app.check.mobileConnection, util.appExit)
 
         /** 스마트KAIS 등록여부 확인 */
-        .then(app.check.smartKaisUserConfirm)
+        .then(app.check.authUser, util.appExit)
 
         /** 기본환경 셋팅 및 로딩 */
         /** (ENV) 1. DB 초기화 */
-        .then(app.db.init)
+        .then(app.db.init, util.appExit)
 
         /** (ENV) 2. DB 로딩 */
-        .then(app.db.loading)
+        .then(app.db.loading, util.appExit)
 
         /** 현재위치 확인 */
-        .then(app.check.currentLocation)
+        .then(app.check.currentLocation, util.appExit)
 
         /** (VER) 버전체크 */
-        .then(app.check.version)
+        .then(app.check.version, util.appExit)
 
         /** 메인 화면(페이지)로 이동 */
-        .then(app.gotoMain);
+        .then(app.gotoMain, util.appExit);
 
     },
     bindEvents: function () {
@@ -73,7 +74,7 @@ var app = {
             var networkState = navigator.connection.type;
 
             if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
-                navigator.notification.alert("데이터 통신이 실패 되었습니다.\n인터넷 연결 확인 후 다시 시작해 주십시오.", util.appExit, '알림', '확인');
+                navigator.notification.alert("데이터 통신이 실패 되었습니다.\n인터넷 연결 확인 후 다시 시작해 주십시오." + msg.exit, util.appExit, '알림', '확인');
             } else {
                 setTimeout(def.resolve, 300);
             }
@@ -86,7 +87,7 @@ var app = {
             app.showProgress("공통기반 연결 확인");
 
             if (util.isEmpty(sso)) {
-                navigator.notification.alert("공통기반 연결이 실패 되었습니다.\n\"바로일터\"를 통하여 다시 시작해 주십시오.", util.appExit, '알림', '확인');
+                navigator.notification.alert("공통기반 연결이 실패 되었습니다.\n\"바로일터\"를 통하여 다시 시작해 주십시오." + msg.exit, util.appExit, '알림', '확인');
             } else {
                 setTimeout(def.resolve, 300);
             }
@@ -94,26 +95,41 @@ var app = {
             return def.promise();
         },
         /** 스마트KAIS 등록여부 확인 */
-        smartKaisUserConfirm: function(){
+        authUser: function() {
+            var def = $.Deferred();
+            app.showProgress("접속정보 조회");
 
             var sendParams = {
                 dn : sso.DN,
-                telNO : sso.TEL,
-                UUID : sso.UUID
+                machineNo : sso.TEL,
+                uuid : sso.UUID
             }
 
-            var link = URLs.authLink;
+            var params = URLs.postURL(URLs.authLink, sendParams);
 
-            var url = URLs.postURL(link, sendParams);
+            util.postAJAX('', params).then(
+                function (context, resultCode, results) {
+                    if (resultCode == 0 && !(util.isEmpty(results.data))) {
+                        var d = results.data;
+                        app.info = {
+                            sigCd: d.sigCd,
+                            sigNm: "",
+                            opeId: "{0}_{1}".format(d.userId, d.machineNo),
+                            opeNm: d.userNm
+                        }
+                        if(d.testYn == "Y") {
+                            app.mode = "11";
+                        }
 
-            util.postAJAX('',url)
-                .then(function (context, resultCode, results) {
-                    var data = results.data;
-                    console.log(data)
+                        setTimeout(def.resolve, 300);
+                    } else {
+                        navigator.notification.alert("해당 단말기가 KAIS에 등록되지 않았거나\n접속 가능한 자치단체를 찾을 수 없습니다." + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
+                        setTimeout(def.reject, 300);
+                    }
+                }
+            );
 
-
-            });
-            
+            return def.promise();
         },
         /** 현재위치 점검 */
         currentLocation: function () {
@@ -167,7 +183,7 @@ var app = {
                     }
 
                     if (newVersion) {
-                        navigator.notification.alert("서버에 최신버전이 존재 합니다.\n\"바로일터 > 행정용 앱스토어\"에서 최선버전으로 업데이트 하세요.", def.resolve, '알림', '확인');
+                        navigator.notification.alert("서버에 최신버전이 존재 합니다.\n\"바로일터 > 행정용 앱스토어\"에서 최선버전으로 업데이트 하세요." + msg.exit, util.appExit, '알림', '확인');
                     } else {
                         setTimeout(def.resolve, 300);
                     }
@@ -186,7 +202,7 @@ var app = {
             datasource.createDB().then(
                 def.resolve,
                 function() {
-                    navigator.notification.alert("기본 환경구성에 장애가 발생하였습니다\n" + msg.callCenter, util.appExit, '알림', '확인');
+                    navigator.notification.alert("기본 환경구성에 장애가 발생하였습니다\n" + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
                 }
             );
 
@@ -210,7 +226,7 @@ var app = {
                 }
 
                 if (!loading) {
-                    navigator.notification.alert("DB 로딩 중에 장애가 발생하였습니다\n" + msg.callCenter, util.appExit, '알림', '확인');
+                    navigator.notification.alert("DB 로딩 중에 장애가 발생하였습니다\n" + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
                 } else {
                     def.resolve();
                 }

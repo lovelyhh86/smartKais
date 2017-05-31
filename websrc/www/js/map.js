@@ -1158,10 +1158,10 @@ var mapInit = function (mapId, pos) {
                 }));
 
                 var newPoint = new ol.geom.Point(coordinate);
-
                 newPointFeature.setGeometry(newPoint);
-
                 moveingPoint_source.addFeature(newPointFeature);
+
+
 
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
 
@@ -1169,13 +1169,9 @@ var mapInit = function (mapId, pos) {
 
                 var pointSn = popTableP.format("위치일련번호",RDFTYLC_SN);
 
-                var posX = popTableP.format("X",coordinate[0]);
+                var newCoodi = new ol.proj.transform(coordinate, baseProjection, sourceProjection);
 
-                var posY = popTableP.format("Y",coordinate[1]);
 
-                // strHtml += pointSn;
-                // strHtml += pointX;
-                // strHtml += pointY;
 
                 strHtml = "<b>검정(원)</b>-&gt; <span style='color:red;'>빨강(원)</span>으로 이동하고자 합니다.<br>(맞으면 저장, 틀리면 다른 위치 선택)";
 
@@ -1185,8 +1181,8 @@ var mapInit = function (mapId, pos) {
                 param = $.extend({},{
                     sn : RDFTYLC_SN,
                     // rdftySe : RDFTY_SE,
-                    posX : coordinate[0],
-                    posY : coordinate[1]
+                    posX : newCoodi[0],
+                    posY : newCoodi[1]
 
                 });
 

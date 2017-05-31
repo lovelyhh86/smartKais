@@ -87,8 +87,6 @@ var app = {
 
         app.historyStack = [];
 
-        app.selectSig(app.telNo);
-
         //DB초기화
         util.showProgress();
         datasource.createDB().then(function(){
@@ -109,77 +107,6 @@ var app = {
         $(contentpage).children(".ui-content").height(content);
     },
     deviceReadyOK: $.Deferred(),
-    selectSig: function (telNo) {
-        if (telNo == "01031207751" || telNo == "01041605627" || telNo == "01045065627" || telNo == "01054627761") {
-            app.mode = "11";
-        } else {
-            app.mode = "00";
-        }
-
-        for (var index = 0; index < app.sigInfos.length; index++) {
-            if (telNo === app.sigInfos[index].telNo) {
-                app.info = app.sigInfos[index].info;
-            }
-        }
-    },
-    sigInfos: [
-        {
-            telNo: "01031207751", // 사업단 테스트(태블릿)
-            info: {
-                sigCd: "11440",
-                sigNm: "서울특별시 마포구",
-                opeId: "kais",
-                opeNm: "kais관리자"
-            }
-        },
-        {
-            telNo: "01041605627", // 사업단 테스트(태블릿)
-            info: {
-                sigCd: "11440",
-                sigNm: "서울특별시 마포구",
-                opeId: "kais",
-                opeNm: "kais관리자"
-            }
-        },
-        {
-            telNo: "01054627761", // 사업단 테스트(태블릿)
-            info: {
-                sigCd: "11440",
-                sigNm: "서울특별시 마포구",
-                opeId: "kais",
-                opeNm: "kais관리자"
-            }
-        },
-        {
-            telNo: "01045065627", // 사업단 테스트(태블릿)
-            info: {
-//                sigCd: "4311_",
-//                sigNm: "충청북도 청주시",
-                sigCd: "11440",
-                sigNm: "서울특별시 마포구",
-                opeId: "kais",
-                opeNm: "kais관리자"
-            }
-        },
-        {
-            telNo: "01040599961", // 충북 청주시
-            info: {
-                sigCd: "4311_",
-                sigNm: "충청북도 청주시",
-                opeId: "cjjytb00",
-                opeNm: "조영태"
-            }
-        },
-        {
-            telNo: "01045399679", // 전북 김제시
-            info: {
-                sigCd: "45210",
-                sigNm: "전라북도 김제시",
-                opeId: "kjn1235",
-                opeNm: "김정남"
-            }
-        }
-    ],
     codeMaster: {},
     context: {},
     info: new Object(),
