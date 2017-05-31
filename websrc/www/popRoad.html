@@ -20,6 +20,17 @@
 			<!-- 정보  -->
 				<div class="infoTable">
 					<p id ="sn" style="display:none"></p>
+					<div onclick="openDataIdPop('delStateCd');" class="row">
+						<div  class="cell1">
+								<span class="label"><img src="image/openAble3.png" alt="">설치상태</span>
+						</div>
+						<div class="cell2">
+							<p id="delStateCdLbl" name="oldLbl"></p>
+							<p id="delStateCd" style="display:none;"></p>
+							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+							<p id="delStateCd_new" style="display:none"></p>
+						</div>
+					</div>
 					<div class="row">
 						<div  class="cell1">
 								<span class="label">도로시설물</span>
@@ -88,6 +99,15 @@
 					</div>
 					<div class="row">
 						<div  class="cell1">
+								<span class="label">양면여부</span>
+						</div>
+						<div class="cell2">
+							<p id="bdrclAtLbl"></p>
+                            <p id="bdrclAt" style="display:none"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
 								<span class="label">앞면 도로명(국문)</span>
 						</div>
 						<div class="cell2">
@@ -144,9 +164,9 @@
 							<p id="backRomeRoadNm"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop2('backStartBaseNo',['backStartBaseMasterNo','backStartBaseSlaveNo']);" class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 시작기초번호</span>
+								<span class="label"><img src="image/openAble3.png" alt="">뒷면 시작기초번호</span>
 						</div>
 						<div class="cell2">
 							<p id="backStartBaseNo" name="oldLbl"></p>
@@ -157,12 +177,17 @@
 							<p id="backStartBaseSlaveNo_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop2('backEndBaseNo',['backEndBaseMasterNo','backEndBaseSlaveNo']);" class="row">
 						<div  class="cell1">
-								<span class="label">뒷면 종료기초번호</span>
+								<span class="label"><img src="image/openAble3.png" alt="">뒷면 종료기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="backEndBaseNo"></p>
+							<p id="backEndBaseNo" name="oldLbl"></p>
+							<p id="backEndBaseMasterNo" style="display:none"></p>
+							<p id="backEndBaseSlaveNo" style="display:none"></p>
+							<p id="backEndBaseNo_new" name="newLbl" style="display:none; color:red"></p>
+							<p id="backEndBaseMasterNo_new" style="display:none;"></p>
+							<p id="backEndBaseSlaveNo_new" style="display:none;"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -194,15 +219,6 @@
                             <p id="plqDirection" style="display:none"></p>
 							<p id="plqDirectionLbl_new" name="newLbl" style="display:none; color:red"></p>
 							<p id="plqDirection_new" style="display:none;"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div  class="cell1">
-								<span class="label">양면여부</span>
-						</div>
-						<div class="cell2">
-							<p id="bdrclAtLbl"></p>
-                            <p id="bdrclAt" style="display:none"></p>
 						</div>
 					</div>
 					<div onclick="openDataIdPop('scfggMkty');" class="row">
@@ -271,17 +287,6 @@
 						<div class="cell2">
 							<p id="gdftyUnitPrice" name="oldLbl"></p>
 							<p id="gdftyUnitPrice_new" name="newLbl" style="display:none; color:red"></p>
-						</div>
-					</div>
-					<div onclick="openDataIdPop('delStateCd');" class="row">
-						<div  class="cell1">
-								<span class="label"><img src="image/openAble3.png" alt="">설치상태</span>
-						</div>
-						<div class="cell2">
-							<p id="delStateCdLbl" name="oldLbl"></p>
-							<p id="delStateCd" style="display:none;"></p>
-							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="delStateCd_new" style="display:none"></p>
 						</div>
 					</div>
 				</div>
@@ -355,7 +360,7 @@
 				</div>
 				<!-- 단가 데이터 팝업 끝 -->
 
-				<!-- 시작기초번호 데이터 팝업 -->
+				<!-- 앞면 시작기초번호 데이터 팝업 -->
 				<div id="frontStartBaseNo_pop" class="dataWrap" style="display: none">
 					<div class="dataTItle">시작기초번호</div>
 					<div class="dataForm">
@@ -374,9 +379,9 @@
 					</div>
 					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
-				<!-- 시작기초번호 데이터 팝업 끝 -->
+				<!-- 앞면 시작기초번호 데이터 팝업 끝 -->
 
-				<!-- 종료기초번호 데이터 팝업 -->
+				<!-- 앞면 종료기초번호 데이터 팝업 -->
 				<div id="frontEndBaseNo_pop" class="dataWrap" style="display: none">
 					<div class="dataTItle">종료기초번호</div>
 					<div class="dataForm">
@@ -395,7 +400,49 @@
 					</div>
 					<p class="dataClose "><img src="image/dataClose.png" title="닫기"></p>
 				</div>
-				<!-- 종료기초번호 데이터 팝업 끝 -->
+				<!-- 앞면 종료기초번호 데이터 팝업 끝 -->
+
+				<!-- 뒷면 시작기초번호 데이터 팝업 -->
+				<div id="backStartBaseNo_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">시작기초번호</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w50">기초번호 </span>
+								<div class="inputText"><input type="number" id="backStartBaseMasterNo_fix" name="" title="시작기초번호" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">-</div>
+								<div class="inputText"><input type="number" id="backStartBaseSlaveNo_fix" name="" title="종료기초번호" maxlength="20" value="" style="width:50px"></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent2('backStartBaseNo','backStartBaseMasterNo','backStartBaseSlaveNo')" class="btnPoint">저장</span>
+						<span class="btnNormal dataPopCloser">닫기</span>
+					</div>
+					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 뒷면 시작기초번호 데이터 팝업 끝 -->
+
+				<!-- 뒷면 종료기초번호 데이터 팝업 -->
+				<div id="backEndBaseNo_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">종료기초번호</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<span class="label w50">기초번호 </span>
+								<div class="inputText"><input type="number" id="backEndBaseMasterNo_fix" name="" title="시작기초번호" maxlength="20" value="" style="width:50px"></div>
+								<div class="inputText">-</div>
+								<div class="inputText"><input type="number" id="backEndBaseSlaveNo_fix" name="" title="종료기초번호" maxlength="20" value="" style="width:50px"></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span onclick="textDataSendParent2('backEndBaseNo','backEndBaseMasterNo','backEndBaseSlaveNo')" class="btnPoint">저장</span>
+						<span class="btnNormal dataPopCloser">닫기</span>
+					</div>
+					<p class="dataClose "><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 뒷면 종료기초번호 데이터 팝업 끝 -->
 
 				<!-- 가로*세로*두께 데이터 팝업 -->
 				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">

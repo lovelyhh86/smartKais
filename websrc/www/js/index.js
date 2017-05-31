@@ -23,7 +23,7 @@ var app = {
 
         /** 스마트KAIS 등록여부 확인 */
         .then(app.check.authUser, util.appExit)
-
+        
         /** 기본환경 셋팅 및 로딩 */
         /** (ENV) 1. DB 초기화 */
         .then(app.db.init, util.appExit)
@@ -111,15 +111,20 @@ var app = {
                 function (context, resultCode, results) {
                     if (resultCode == 0 && !(util.isEmpty(results.data))) {
                         var d = results.data;
+
                         app.info = {
                             sigCd: d.sigCd,
                             sigNm: "",
-                            opeId: "{0}_{1}".format(d.userId, d.machineNo),
+                            opeId: "{1}".format(d.userId, d.machineNo),
                             opeNm: d.userNm
                         }
+
                         if(d.testYn == "Y") {
-                            app.mode = "11";
+                            app.info.mode = "11";
                         }
+
+                        localStorage["appInfo"] = JSON.stringify(app.info);
+                        
 
                         setTimeout(def.resolve, 300);
                     } else {

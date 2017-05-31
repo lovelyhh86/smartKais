@@ -4,12 +4,13 @@ var app = {
     initialize: function () {
         document.addEventListener('deviceready', app.onDeviceReady, false);
 
-        //TODO gpki info load
-        if (!sso) {
-            sso = JSON.parse(decodeURI(location.search.match(/\{.*/)));
+        //사용자 기본정보 셋팅
+        
+        app.info = JSON.parse(localStorage["appInfo"]);
+
+        if(app.info.mode){
+            app.mode = app.info.mode;
         }
-        if (sso.TEL)
-            app.telNo = sso.TEL;
 
     },
     onDeviceReady: function () {
