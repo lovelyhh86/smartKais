@@ -30,30 +30,73 @@ var MapUtil = {
         photoToggleHandler: function(layerID, f) {
             $(".detailView .infoWrap .infoHeader .photo").click(function(){
                 $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+                $(".picImg").empty();
                 // 사진모드
                 if($(".detailView .infoWrap .infoContent .photoWrap").css("display") != "none") {
+
                     switch (layerID) {
                         case DATA_TYPE.RDPQ:
+                            var sn = f.get("RD_GDFTY_SN");
+                            var param = {"sn" : sn, "sigCd" : app.info.sigCd, "isImages" : true};
+                            var url = URLs.postURL(URLs.roadsignlink, param);
+                            break;
                         case DATA_TYPE.AREA:
+                            var sn = f.get("RD_GDFTY_SN");
+                            var param = {"sn" : sn, "sigCd" : app.info.sigCd, "isImages" : true};
+                            var url = URLs.postURL(URLs.roadsignlink, param);
+                            break;
                         case DATA_TYPE.BSIS:
-                            var param = {"sn" : sn, "sigCd" : sig_cd};
-                            var url = URLs.postURL(URLs.photoFileInfo, param);
-                            util.showProgress();
+                            var sn = f.get("RD_GDFTY_SN");
+                            var param = {"sn" : sn, "sigCd" : app.info.sigCd, "isImages" : true};
+                            var url = URLs.postURL(URLs.roadsignlink, param);
+                            break;
+                        case DATA_TYPE.ENTRC:
+                            var sn = f.get("BUL_MAN_NO");
+                            var param = {"sn" : sn, "sigCd" : app.info.sigCd, "isImages" : true};
+                            var url = URLs.postURL(URLs.entrclink, param);
+                            break;
+                        case DATA_TYPE.BULD:
+                            var sn = f.get("BUL_MAN_NO");
+                            var param = {"sn" : sn, "sigCd" : app.info.sigCd, "isImages" : true};
+                            var url = URLs.postURL(URLs.buildSelectlink, param);
+                            break;
+                    }
+
+                    util.showProgress();
                             util.postAJAX({}, url).then(
                                 function(context, rcode, results) {
+                                    
                                    var data = results.data;
                                    if (rcode != 0) {
                                         util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
                                         util.dismissProgress();
                                         return;
                                    }
+
+                                   if (util.isEmpty(data.files) === false) {
+                                        for (var index in data.files) {
+                                            var image = data.files[index];
+                                            if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                                $($(".picImg")[index]).html(obj);
+                                            }
+                                            //앞에서 부터 2건만 처리
+                                            if(index == 1){
+                                                break;
+                                            }
+                                        
+                                        }
+                                   }
+                                //    else{
+                                //         var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='./images/no_image.jpg'/></li>";
+                                //         $(".picImg").append(obj);
+                                //         util.dismissProgress();
+                                //    }
+
+                                   util.dismissProgress();
+                                   
                                 }
                             );
-                            break;
-                        case DATA_TYPE.ENTRC:
-
-                            break;
-                    }
                 }
 
             });
@@ -406,11 +449,11 @@ var MapUtil = {
                                 $("#delStateCdLbl").append(data.delStateCdLbl);
                                 
                                 //사진
-                                $("#roadView_page .photoWrap .photoTable .picImg").each(function(i, o) {
-                                    try {
-                                        $(o).html("<img src='data:image/jpeg;base64," + data.files[i].base64 + "'>");
-                                    } catch(e) {}
-                                });
+                                // $("#roadView_page .photoWrap .photoTable .picImg").each(function(i, o) {
+                                //     try {
+                                //         $(o).html("<img src='data:image/jpeg;base64," + data.files[i].base64 + "'>");
+                                //     } catch(e) {}
+                                // });
                                 //사진건수
                                 $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length)
 

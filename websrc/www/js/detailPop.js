@@ -682,14 +682,19 @@
         }
 
         function submit(type){
+
+            //사진데이터 확인여부
+            var picImg = $(".picImg").html();
+            //상세정보 수정여부
             var newLbl = $("p[name*='newLbl']").text();
-            if(newLbl == ""){
+
+            if(newLbl == "" && picImg == ""){
                 confirm('저장할 데이터가 없습니다.')
                 return;
             }
 
             if (confirm('시설물 정보를 변경하시겠습니까?') == true){
-                   var commomParams = {};
+                    var commomParams = {};
                     var sendParams = {};
                     var sn = $("#sn").text();
                     var sigCd = app.info.sigCd;
@@ -719,8 +724,12 @@
                     var gdftyUnitPrice_new = $("#gdftyUnitPrice_new").text();
                     //설치상태
                     var delStateCd_new = $("#delStateCd_new").text();
-                    
-                    
+                    //사진파일
+                    var files ;
+                    if(photoMode){
+                        files = makeImg();
+                    }
+                     
 
                     commomParams = $.extend({}, {
                         
@@ -754,7 +763,9 @@
                         //두께
                         gdftyThickness: gdftyThickness_new,
                         //설치상태
-                        delStateCd: delStateCd_new
+                        delStateCd: delStateCd_new,
+                        //사진파일
+                        files: files
                             
                     });
 
@@ -850,6 +861,8 @@
                             sn: sn,
                             sigCd: sigCd,
                             workId :app.info.opeId,
+                            //사진파일
+                            files: files,
                             
                             delStateCd : delStateCd_new,
                             buldNmtSe: buldNmtSe_new,
@@ -894,6 +907,8 @@
                             bulManNo : sn,
                             sigCd: sigCd,
                             workId :app.info.opeId,
+                            //사진파일
+                            files: files,
                             
                             bdtypCd : bdtypCd_new,
                             bulDpnSe : bulDpnSe_new,
@@ -980,5 +995,52 @@
            $("#bdtypCdLbl").hide();
            $("#bdtypCdLbl_new").show();
            
+
+       }
+
+       function photoMode(){
+           var picImg = $(".picImg");
+           var length = $(".picImg").length;
+           var photoModeGbn = false;
+           for(var index = 0 ; index < picImg.length; index ++ ){
+               if($(".picImg")[index].lastChild != null){
+                    photoModeGbn = true;
+               }
+           }
+
+           return photoModeGbn;
+
+       }
+
+       function makeImg(){
+
+           var picImg = $(".picImg");
+
+           var files = [];
+           
+           var imgParam = "{ base64 : {0}, name : {1} }";
+           
+           var sn = $("#sn").text();
+           var date = util.getToday();
+           var title = $(".infoHeader .title .label").text();
+
+
+           for(var index = 0 ; index < picImg.length; index++){
+                var picImgTag = $(picImg[index]);
+                if(picImgTag[0].lastChild != null){
+                    
+                    var src = picImgTag[0].lastChild.getAttribute("src").split('base64,')[1];
+                    var imgtName = '{0}_{1}_{2}.jpg'.format(date,title,index);
+
+                    var data = new Object() ;
+
+                    data.base64 = src;
+                    data.name = imgtName;
+
+                    files.push(data);
+                }
+           }
+
+           return files;
 
        }
