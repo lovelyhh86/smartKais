@@ -455,7 +455,7 @@ var MapUtil = {
                                 //     } catch(e) {}
                                 // });
                                 //사진건수
-                                $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length)
+                                $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length);
 
                                 break;
                             case DATA_TYPE.AREA:
@@ -538,6 +538,8 @@ var MapUtil = {
                                 //설치상태
                                 $("#delStateCd").append(data.delStateCd);
                                 $("#delStateCdLbl").append(data.delStateCdLbl);
+                                //사진건수
+                                $("#areaView_page .infoHeader .photo .photoNum").html(data.files.length);
                                 break;
                             case DATA_TYPE.BSIS:
 
@@ -624,6 +626,8 @@ var MapUtil = {
                                 //설치상태
                                 $("#delStateCd").append(data.delStateCd);
                                 $("#delStateCdLbl").append(data.delStateCdLbl);
+                                //사진건수
+                                $("#baseView_page .infoHeader .photo .photoNum").html(data.files.length);
                                 break;
                             case DATA_TYPE.ENTRC:
                                 //제목창
@@ -666,6 +670,8 @@ var MapUtil = {
                                 //설치상태
                                 $("#delStateCd").append(data.delStateCd);
                                 $("#delStateCdLbl").append(data.delStateCdLbl);
+                                //사진건수
+                                $("#entrcView_page .infoHeader .photo .photoNum").html(data.files.length);
                                  break;
                          case DATA_TYPE.BULD:
 
