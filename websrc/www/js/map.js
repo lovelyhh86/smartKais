@@ -29,7 +29,23 @@ var MapUtil = {
         },
         photoToggleHandler: function(layerID, f) {
             $(".detailView .infoWrap .infoHeader .photo").click(function(){
-                $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+                // $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+                //검정막
+                wrapWindowByMask();
+                //옵션안됨
+                $("#photoDialog").dialog({
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    position: ['center', 'top'],
+                    buttons: {
+                        "I've read and understand this": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                //2번쨰 클릭부터 표출이 안되서 추가
+                $("#photoDialog").show();
                 $(".picImg").empty();
                 // 사진모드
                 if($(".detailView .infoWrap .infoContent .photoWrap").css("display") != "none") {
@@ -102,14 +118,15 @@ var MapUtil = {
             });
         },
         takePhotoHandler: function() {
-            $(".detailView .infoWrap .infoContent .photoWrap  .btnPoint").click(function(evt){
+            $(".photoWrap .picInfo .btnPoint").click(function(evt){
                 util.takePictureFromCamera(function(ret){
+                    $("#photoIsGgn").val('Y');
                     $(evt.target).parent().parent().children(".picImg").html("<img src='data:image/jpeg;base64," + ret.src + "'>");
                 });
             });
         },
         delPhotoHandler: function() {
-            $(".detailView .infoWrap .infoContent .photoWrap .btnNormal").click(function(evt){
+            $(".photoWrap .picInfo .btnNormal").click(function(evt){
                 $(evt.target).parent().parent().children(".picImg").html("");
             });
         },
@@ -319,7 +336,7 @@ var MapUtil = {
                 break;
             case DATA_TYPE.BSIS:
                 // var sn = '7003';
-                var sn = f.get("RD_GDFTY_SN");
+                // var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -1298,7 +1315,7 @@ var mapInit = function (mapId, pos) {
 
                             var ftStbsStr = baseNumberMix(FT_STBS_MN,FT_STBS_SN); // 0 - 0
 
-                            var ftStbs = popTableP.format("시점",ftStbsStr);
+                            var ftStbs = popTableP.format("시작기초번호",ftStbsStr);
 
                             //종점
 
@@ -1308,7 +1325,7 @@ var mapInit = function (mapId, pos) {
 
                             var bkStbsStr = baseNumberMix(BK_STBS_MN,BK_STBS_SN); // 0 - 0
 
-                            var bkStbs = popTableP.format("종점",bkStbsStr);
+                            var bkStbs = popTableP.format("종료기초번호",bkStbsStr);
 
                             //명판방향
                             var PLQ_DRC = setCodeValue(feature,'PLQ_DRC');
@@ -2215,4 +2232,3 @@ function baseNumberMix(mn,sn){
 
         return baseNum;
 }
-

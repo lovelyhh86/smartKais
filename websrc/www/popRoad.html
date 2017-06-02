@@ -17,6 +17,7 @@
 			
 			<!-- content -->
 			<div class="infoContent">
+			<div id="mask"></div>
 			<!-- 정보  -->
 				<div class="infoTable">
 					<p id ="sn" style="display:none"></p>
@@ -38,15 +39,6 @@
 						<div class="cell2">
 							<p id="rdftySeLbl"></p>
 							<p id="rdftySe" style="display:none"></p>
-						</div>
-					</div>
-					<div class="row">
-						<div  class="cell1">
-								<span class="label">설치도로명</span>
-						</div>
-						<div class="cell2">
-							<p id=""></p>
-							<p id="" style="display:none"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -289,43 +281,20 @@
 							<p id="gdftyUnitPrice_new" name="newLbl" style="display:none; color:red"></p>
 						</div>
 					</div>
-				</div>
-				<!-- 정보 끝 -->
-
-				<!-- 사진 style="display: none"-->
-				<div class="photoWrap" style="display: none">
-					<div class="photoTitle">단면형
-						<ul class="photoPage">
-							<!--li><span class="pic_over">전면</span></li>
-							<li><span class="pic">후면</span></li -->
-						</ul>
-					</div>
-					<div class="photoTable">
-						<div class="row">
-							<div class="cell">
-								<div class="picInfo">
-									<span class="photoSub">근거리</span>
-									<span class="picImg"></span>
-									<div class="dataBtn">
-										<span class="btnNormal">삭제</span>
-										<span class="btnPoint">촬영</span>
-									</div>
-								</div>
-							</div>
-							<div class="cell">
-								<div class="picInfo">
-									<span class="photoSub">원거리</span>
-									<span class="picImg"></span>
-									<div class="dataBtn">
-										<span class="btnNormal">삭제</span>
-										<span class="btnPoint">촬영</span>
-									</div>
-								</div>
-							</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">설치도로명</span>
+						</div>
+						<div class="cell2">
+							<p id=""></p>
+							<p id="" style="display:none"></p>
 						</div>
 					</div>
+					<!-- 정보 끝 -->
 				</div>
-				<!-- 사진 끝-->
+				
+
+				
 
 				<!-- 공통 라디오 데이터 팝업 -->
                 <div id="radioDataPop" class="dataWrap" style="display: none">
@@ -477,9 +446,48 @@
 			<!-- footer 끝 -->
 		</div>
 	</div>
-	
-	
 </div>
 
+<input type="hidden" id="photoIsGgn" value="N"></input>
+<div id="photoDialog" class="photoWrap" >
+<!-- 사진 style="display: none"-->
+	<div id="" class="">
+		<div class="photoTitle">사진
+			<ul class="photoPage">
+				<!--li><span class="pic_over">전면</span></li>
+				<li><span class="pic">후면</span></li -->
+			</ul>
+		</div>
+		<div class="photoTable">
+			<div class="row">
+				<div class="cell">
+					<div class="picInfo">
+						<span class="photoSub">근거리</span>
+						<span class="picImg"></span>
+						<div class="dataBtn">
+							<span class="btnPoint">촬영</span>
+							<span class="btnNormal">삭제</span>
+						</div>
+					</div>
+				</div>
+				<div class="cell">
+					<div class="picInfo">
+						<span class="photoSub">원거리</span>
+						<span class="picImg"></span>
+						<div class="dataBtn">
+							<span class="btnPoint">촬영</span>
+							<span class="btnNormal">삭제</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="infoFooter">
+		<span onclick="saveImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
+	</div>
+</div>
+<!-- 사진 끝-->
 </body>
 </html>
