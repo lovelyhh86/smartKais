@@ -724,12 +724,12 @@
                 if($("#bdtypCd_mainLbl_new").text() != ""){
                     confirm('소분류를 선택해주세요.');
                 }else{
-                    confirm('저장할 데이터가 없습니다.');
+                    alert('저장할 데이터가 없습니다.');
                 }
                 return;
             }
 
-            if (confirm('시설물 정보를 변경하시겠습니까?') == true){
+            if (confirm('시설물 정보를 변경하시겠습니까?')){
                     var commomParams = {};
                     var sendParams = {};
                     var buldParams = {};
@@ -1088,7 +1088,12 @@
                                 util.toast('변경사항이 적용되었습니다');
 
                                 $("p[name*='newLbl']").text('');
-                                closeDetailView();
+
+                                if(photoMode()) {
+                                    $(".detailView .infoWrap .infoHeader .photo").click();
+                                } else {
+                                    closeDetailView();
+                                }
 
                             });
             }

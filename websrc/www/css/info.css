@@ -41,12 +41,13 @@
 /*map Info*/
 .mapContent{display:block; width:100%; background:url(../image/box6.png) 100% 0 no-repeat; color: #666; font-size: 0.9em;line-height: 1.4em;}
 .mapInfo{position:relative; display:block; padding:5px 25px 0 25px; background:url(../image/box4.png) 0 0 no-repeat;}
-.mapAdd{display: inline-block; position: absolute; top: 0; right: 20px;}
+.mapAdd{display: inline-block; position: absolute; top: 0; right: 20px; width: 25px;}
+.mapAdd span { line-height: 1.5em; }
 .mapInfo0{position:relative; display:block; padding:5px 25px 20px 25px; background:url(../image/box4.png) 0 0 no-repeat;}
-.mapInfo0 > .mapAdd{display: inline-block; position: absolute; top: 0; right: 20px;}
-.mapInfo1{position:relative; display:block;  padding:0 25px 0 25px; background:url(../image/box4.png) 0 0 no-repeat;}
+.mapInfo0 > .mapAdd{display: inline-block; position: absolute; top: .4em; right: 20px;}
+.mapInfo1{position:relative; display:block;  padding:6px 25px; background:url(../image/box4.png) 0 0 no-repeat;}
 .mapInfo1 > .infoLine{border-top:1px solid #e5e5e5; padding-top: 15px;}
-.mapInfo1 > .mapAdd{display: inline-block; position: absolute; top: 15px; right: 20px;}
+.mapInfo1 > .mapAdd{display: inline-block; position: absolute; top: 1.4em; right: 20px;}
 .info{ display: inline-block; padding:0 15px; background: url(../image/infoLine.png) 0 6px no-repeat}
 .info:FIRST-CHILD{padding:0 15px 0 0;background:none}
 .iconPosition{text-align: center;}
@@ -85,12 +86,14 @@
 .infoHeader >.photo>.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
 
 /*infoTable*/
-.infoTable{display: table;min-width:320px; width:100%;height: 630px; border:0;border-collapse:collapse;overflow-y: scroll;}
+.infoTable { display: table; min-width:320px; width:100%; border:0; border-collapse: collapse; overflow-y: scroll; }
 .infoTable .row{display: table-row; text-align: left}
-.infoTable .cell1{display: table-cell; width:30%; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#adadad; vertical-align: middle; color: #fff;}
-.infoTable .cell2{display: table-cell; width:auto; border-bottom: 1px solid #e5e5e5; padding:10px 30px 10px 30px; background-color:#f5f7f8; vertical-align: middle;}
+.infoTable .cell1{display: table-cell; width:30%; border-bottom: 1px solid #e5e5e5; padding: 12px 30px; background-color:#adadad; vertical-align: middle; color: #fff;}
+.infoTable .cell2{display: table-cell; width:auto; border-bottom: 1px solid #e5e5e5; padding: 4px 11px; background-color:#f5f7f8; vertical-align: middle;}
 .infoTable .cell1 > span.label{margin: 0;font-weight: normal;text-shadow: none;}
-.infoTable .cell2 p{margin-top: 0px;}
+.infoTable .cell2 p { margin-top: 0px; padding: 7px 14px; height: 1.2em; }
+.infoTable .cell2 p.edit { border: 1px solid #c5c5c5 }
+
 /*.infoTable .cell2 p:FIRST-CHILD{margin-top: 0px;}*/
 .infoTable .cellNo{display: block;width:auto;border-bottom: 0 none;padding:0;background-color: #f5f7f8; vertical-align: middle;}
 
