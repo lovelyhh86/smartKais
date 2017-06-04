@@ -361,7 +361,6 @@ var MapUtil = {
 
     },
     setValues: function(layerID, link, sn){
-
                 var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
 
                 util.postAJAX({}, url)
@@ -384,7 +383,7 @@ var MapUtil = {
                                     (data.frontEndBaseMasterNo),
                                     (data.frontEndBaseSlaveNo != "0" ? '-' + data.frontEndBaseSlaveNo : '')
                                 );
-                                $(".title").html(title);
+                                $(".title").append(title);
                                 //도로시설물
                                 $("#rdftySeLbl").html(data.rdftySeLbl);
                                 $("#rdftySe").html(data.rdftySe);
@@ -493,12 +492,12 @@ var MapUtil = {
                                 //사진건수
                                 $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length);
 
-                                break;
+                            break;
                             case DATA_TYPE.AREA:
 
                                 //제목창
                                 var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.area_areaKorRn, data.bsisMnnm, data.bsisSlno);
-                                $(".title").html(title);
+                                $(".title").appdn(title);
 
                                 //도로시설물
                                 // $("#rdGdftySeLbl").html(data.rdGdftySeLbl);
@@ -576,12 +575,12 @@ var MapUtil = {
                                 $("#delStateCdLbl").html(data.delStateCdLbl);
                                 //사진건수
                                 $("#areaView_page .infoHeader .photo .photoNum").html(data.files.length);
-                                break;
+                            break;
                             case DATA_TYPE.BSIS:
 
                                 //제목창
                                 var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.area_areaKorRn, data.bsisMnnm, data.bsisSlno);
-                                $(".title").html(title);
+                                $(".title").append(title);
 
                                 //도로시설물
                                 // $("#rdGdftySeLbl").html(data.rdGdftySeLbl);
@@ -664,17 +663,13 @@ var MapUtil = {
                                 $("#delStateCdLbl").html(data.delStateCdLbl);
                                 //사진건수
                                 $("#baseView_page .infoHeader .photo .photoNum").html(data.files.length);
-                                break;
+                            break;
                             case DATA_TYPE.ENTRC:
                                 //제목창
-                                // var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.area_areaKorRn, data.bsisMnnm, data.bsisSlno);
-                                // $(".title").html(title);
+                                var title = "[{0}] {1} {2}{3}".format("건물번호판", data.rnCdLbl, data.buldMnnm, (data.buldSlno == '0' ? '' : '-' + data.buldSlno));
+                                $("#entrcView_page .title").append(title);
                                 //일련번호
                                 // $("#sn").html(sn);
-                                //도로명
-
-                                //건물번호
-
                                 //일련번호
                                 $("#entranceSn").html(data.entranceSn);
                                 //유형
@@ -716,12 +711,17 @@ var MapUtil = {
                                 $("#delStateCdLbl").addClass("edit");
                                 //사진건수
                                 $("#entrcView_page .infoHeader .photo .photoNum").html(data.files.length);
-                                 break;
-                         case DATA_TYPE.BULD:
 
-                                var buldNm = data.posBulNm == null? "" : data.posBulNm ;
-                                var title = "[{0}] {1}".format("건물정보", buldNm);
-                                $(".title").html(title);
+                            break;
+                            case DATA_TYPE.BULD:
+
+                                var title = "[{0}] {1} {2}{3}".format(
+                                    "건물정보",
+                                    (data.rnCdLbl ? data.rnCdLbl : ""),
+                                    (data.buldMnnm),
+                                    (data.buldSlno == "0" ? "" : "-" + data.buldSlno)
+                                );
+                                $(".title").append(title);
 
                                 //건축물용도
                                 var bdtypCd = data.bdtypCd;
@@ -773,7 +773,7 @@ var MapUtil = {
                                 $("#buldMemo").html(data.buldMemo);
                                 $("#buldMemo").addClass("edit");
 
-                                break;
+                            break;
 
                         }
                     });
@@ -2093,6 +2093,12 @@ var layerID = "";
 function moveingPoint(sn,pointX,pointY,index){
     console.log(sn);
     console.log(pointX + " , " + pointY);
+
+    var zoom = map.getView().getZoom();
+    if(zoom < 14) {
+        map.getView().setZoom(14);
+        map.getView().setCenter([pointX, pointY]);
+    }
 
     featureIndex = index;
 
