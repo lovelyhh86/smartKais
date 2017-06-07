@@ -1,10 +1,6 @@
- $(function(){
-     
-    
+$(function(){
+})
 
-
-        })
-        
         function closeDetailView(){
             var newLbl = $("p[name*='newLbl']").text();
             if(newLbl != ""){
@@ -713,7 +709,6 @@
         }
 
         function submit(type){
-
             //사진데이터 확인여부
             // var picImg = $(".picImg").html();
             //상세정보 수정여부
@@ -730,372 +725,371 @@
             }
 
             if (confirm('시설물 정보를 변경하시겠습니까?')){
-                    var commomParams = {};
-                    var sendParams = {};
-                    var buldParams = {};
-                    var sn = $("#sn").text();
-                    var sigCd = app.info.sigCd;
-                    var workId = app.info.opeId;
-                    
-                    /** 공통 */
-                    //설치지점
-                    var instSpotCd_new = $("#instSpotCd_new").text();
-                    if(instSpotCd_new != ""){
-                        sendParams = $.extend(sendParams, {instSpotCd: instSpotCd_new});
+                var commomParams = {};
+                var sendParams = {};
+                var buldParams = {};
+                var sn = $("#sn").text();
+                var sigCd = app.info.sigCd;
+                var workId = app.info.opeId;
+
+                /** 공통 */
+                //설치지점
+                var instSpotCd_new = $("#instSpotCd_new").text();
+                if(instSpotCd_new != ""){
+                    sendParams = $.extend(sendParams, {instSpotCd: instSpotCd_new});
+                }
+                //교차로유형
+                var instCrossCd_new = $("#instCrossCd_new").text();
+                if(instCrossCd_new !=""){
+                    sendParams = $.extend(sendParams, {instCrossCd: instCrossCd_new});
+                }
+                //사용대상
+                var useTarget_new = $("#useTarget_new").text();
+                if(useTarget_new !=""){
+                    sendParams = $.extend(sendParams, {useTarget: useTarget_new});
+                }
+                //제2외국어여부
+                var scfggMkty_new = $("#scfggMkty_new").text();
+                if(scfggMkty_new !=""){
+                    sendParams = $.extend(sendParams, {scfggMkty: scfggMkty_new});
+                }
+                //언어1
+                var scfggUla1_new = $("#scfggUla1_new").text();
+                if(scfggUla1_new !=""){
+                    sendParams = $.extend(sendParams, {scfggUla1: scfggUla1_new});
+                }
+                //언어2
+                var scfggUla2_new = $("#scfggUla2_new").text();
+                if(scfggUla2_new !=""){
+                    sendParams = $.extend(sendParams, {scfggUla2: scfggUla2_new});
+                }
+                //규격(가로)
+                var gdftyWide_new = $("#gdftyWide_new").text();
+                if(gdftyWide_new !=""){
+                    sendParams = $.extend(sendParams, {gdftyWide: gdftyWide_new});
+                }
+                //규격(세로)
+                var gdftyVertical_new = $("#gdftyVertical_new").text();
+                if(gdftyVertical_new !=""){
+                    sendParams = $.extend(sendParams, {gdftyVertical: gdftyVertical_new});
+                }
+                //규격(두께)
+                var gdftyThickness_new = $("#gdftyThickness_new").text();
+                if(gdftyThickness_new !=""){
+                    sendParams = $.extend(sendParams, {gdftyThickness: gdftyThickness_new});
+                }
+                //단가
+                var gdftyUnitPrice_new = $("#gdftyUnitPrice_new").text();
+                if(gdftyUnitPrice_new !=""){
+                    sendParams = $.extend(sendParams, {gdftyUnitPrice: gdftyUnitPrice_new});
+                }
+                //설치상태
+                var delStateCd_new = $("#delStateCd_new").text();
+                if(delStateCd_new !=""){
+                    sendParams = $.extend(sendParams, {delStateCd: delStateCd_new});
+                }
+
+                sendParams = $.extend(sendParams, {
+                    svcNm: 'uSPGF',
+                    sn: sn,
+                    sigCd: sigCd,
+
+                    checkDate: util.getToday(),
+                    //id
+                    workId: workId,
+
+
+                });
+
+                if(type == DATA_TYPE.RDPQ){
+                    //도로명판 규격
+                    var rdpqGdSd_new = $("#rdpqGdSd_new").text();
+                    if(rdpqGdSd_new !=""){
+                        sendParams = $.extend(sendParams, {rdpqGdSd: rdpqGdSd_new});
                     }
-                    //교차로유형
-                    var instCrossCd_new = $("#instCrossCd_new").text();
-                    if(instCrossCd_new !=""){
-                        sendParams = $.extend(sendParams, {instCrossCd: instCrossCd_new});
+                    //명판방향
+                    var plqDirection_new = $("#plqDirection_new").text();
+                    if(plqDirection_new !=""){
+                        sendParams = $.extend(sendParams, {plqDirection: plqDirection_new});
                     }
-                    //사용대상
-                    var useTarget_new = $("#useTarget_new").text();
-                    if(useTarget_new !=""){
-                        sendParams = $.extend(sendParams, {useTarget: useTarget_new});
+                    //앞면시작기초번호 본번
+                    var frontStartBaseMasterNo_new = $("#frontStartBaseMasterNo_new").text();
+                    if(frontStartBaseMasterNo_new !=""){
+                        sendParams = $.extend(sendParams, {frontStartBaseMasterNo: frontStartBaseMasterNo_new});
                     }
-                    //제2외국어여부
-                    var scfggMkty_new = $("#scfggMkty_new").text();
-                    if(scfggMkty_new !=""){
-                        sendParams = $.extend(sendParams, {scfggMkty: scfggMkty_new});
+                    //앞면시작기초번호 부번
+                    var frontStartBaseSlaveNo_new = $("#frontStartBaseSlaveNo_new").text();
+                    if(frontStartBaseSlaveNo_new !=""){
+                        sendParams = $.extend(sendParams, {frontStartBaseSlaveNo: frontStartBaseSlaveNo_new});
                     }
-                    //언어1
-                    var scfggUla1_new = $("#scfggUla1_new").text();
-                    if(scfggUla1_new !=""){
-                        sendParams = $.extend(sendParams, {scfggUla1: scfggUla1_new});
+                    //앞면종료기초번호 본번
+                    var frontEndBaseMasterNo_new = $("#frontEndBaseMasterNo_new").text();
+                    if(frontEndBaseMasterNo_new !=""){
+                        sendParams = $.extend(sendParams, {frontEndBaseMasterNo: frontEndBaseMasterNo_new});
                     }
-                    //언어2
-                    var scfggUla2_new = $("#scfggUla2_new").text();
-                    if(scfggUla2_new !=""){
-                        sendParams = $.extend(sendParams, {scfggUla2: scfggUla2_new});
+                    //앞면종료기초번호 부번
+                    var frontEndBaseSlaveNo_new = $("#frontEndBaseSlaveNo_new").text();
+                    if(frontEndBaseSlaveNo_new !=""){
+                        sendParams = $.extend(sendParams, {frontEndBaseSlaveNo: frontEndBaseSlaveNo_new});
                     }
-                    //규격(가로)
-                    var gdftyWide_new = $("#gdftyWide_new").text();
-                    if(gdftyWide_new !=""){
-                        sendParams = $.extend(sendParams, {gdftyWide: gdftyWide_new});
+
+                    //뒷면시작기초번호 본번
+                    var backStartBaseMasterNo_new = $("#backStartBaseMasterNo_new").text();
+                    if(backStartBaseMasterNo_new !=""){
+                        sendParams = $.extend(sendParams, {backStartBaseMasterNo: backStartBaseMasterNo_new});
                     }
-                    //규격(세로)
-                    var gdftyVertical_new = $("#gdftyVertical_new").text();
-                    if(gdftyVertical_new !=""){
-                        sendParams = $.extend(sendParams, {gdftyVertical: gdftyVertical_new});
+                    //뒷면시작기초번호 부번
+                    var backStartBaseSlaveNo_new = $("#backStartBaseSlaveNo_new").text();
+                    if(backStartBaseSlaveNo_new !=""){
+                        sendParams = $.extend(sendParams, {backStartBaseSlaveNo: backStartBaseSlaveNo_new});
                     }
-                    //규격(두께)
-                    var gdftyThickness_new = $("#gdftyThickness_new").text();
-                    if(gdftyThickness_new !=""){
-                        sendParams = $.extend(sendParams, {gdftyThickness: gdftyThickness_new});
+                    //뒷면종료기초번호 본번
+                    var backEndBaseMasterNo_new = $("#backEndBaseMasterNo_new").text();
+                    if(backEndBaseMasterNo_new !=""){
+                        sendParams = $.extend(sendParams, {backEndBaseMasterNo: backEndBaseMasterNo_new});
                     }
-                    //단가
-                    var gdftyUnitPrice_new = $("#gdftyUnitPrice_new").text();
-                    if(gdftyUnitPrice_new !=""){
-                        sendParams = $.extend(sendParams, {gdftyUnitPrice: gdftyUnitPrice_new});
+                    //뒷면종료기초번호 부번
+                    var backEndBaseSlaveNo_new = $("#backEndBaseSlaveNo_new").text();
+                    if(backEndBaseSlaveNo_new !=""){
+                        sendParams = $.extend(sendParams, {backEndBaseSlaveNo: backEndBaseSlaveNo_new});
                     }
+
+                    commomParams = $.extend(sendParams, {
+                        type :type,
+
+                        // rdpqGdSd: rdpqGdSd_new,
+                        // plqDirection: plqDirection_new,
+
+                        // frontStartBaseMasterNo: frontStartBaseMasterNo_new,
+                        // frontStartBaseSlaveNo: frontStartBaseSlaveNo_new,
+                        // frontEndBaseMasterNo: frontEndBaseMasterNo_new,
+                        // frontEndBaseSlaveNo: frontEndBaseSlaveNo_new,
+
+                        // backStartBaseMasterNo: backStartBaseMasterNo_new,
+                        // backStartBaseSlaveNo: backStartBaseSlaveNo_new,
+                        // backEndBaseMasterNo: backEndBaseMasterNo_new,
+                        // backEndBaseSlaveNo: backEndBaseSlaveNo_new,
+
+                    });
+
+                    var link = URLs.updateFacilityInfo;
+
+
+                }else if(type == DATA_TYPE.AREA){
+                    //지역안내판 광고여부에따른 분류
+                    var area_advrtsCd_new = $("#area_advrtsCd_new").text();
+                    if(area_advrtsCd_new !=""){
+                        sendParams = $.extend(sendParams, {area_advrtsCd: area_advrtsCd_new});
+                    }
+                    //지역안내판 광고내용
+                    var area_advCn_new = $("#area_advCn_new").text();
+                    if(area_advCn_new !=""){
+                        sendParams = $.extend(sendParams, {area_advCn: area_advCn_new});
+                    }
+                    //지역안내판 기타내용
+                    var area_etcCn_new = $("#area_etcCn_new").text();
+                    if(area_etcCn_new !=""){
+                        sendParams = $.extend(sendParams, {area_etcCn: area_etcCn_new});
+                    }
+                    //지역안내판 규격
+                    var area_areaGdSd_new = $("#area_areaGdSd_new").text();
+                    if(area_areaGdSd_new !=""){
+                        sendParams = $.extend(sendParams, {area_areaGdSd: area_areaGdSd_new});
+                    }
+
+
+                    commomParams = $.extend(sendParams, {
+                        type :type,
+                        // area_advrtsCd: area_advrtsCd_new,
+                        // area_advCn: area_advCn_new,
+                        // area_etcCn: area_etcCn_new,
+                        // area_areaGdSd: area_areaGdSd_new
+                    });
+
+                    var link = URLs.updateFacilityInfo;
+                }else if(type == DATA_TYPE.BSIS){
+                    //기초번호판 곡면 분류
+                    var bsis_planeCd_new = $("#bsis_planeCd_new").text();
+                    if(bsis_planeCd_new !=""){
+                        sendParams = $.extend(sendParams, {bsis_planeCd: bsis_planeCd_new});
+                    }
+                    //기초번호판 규격
+                    var bsis_bsisGdSdLbl_new = $("#bsis_bsisGdSd_new").text();
+                    if(bsis_bsisGdSdLbl_new !=""){
+                        sendParams = $.extend(sendParams, {bsis_bsisGdSd: bsis_bsisGdSdLbl_new});
+                    }
+
+                    commomParams = $.extend(sendParams, {
+                        type :type,
+                        // bsis_planeCd: bsis_planeCd_new
+                    });
+
+                    var link = URLs.updateFacilityInfo;
+
+                }else if(type == DATA_TYPE.ENTRC){
                     //설치상태
                     var delStateCd_new = $("#delStateCd_new").text();
                     if(delStateCd_new !=""){
-                        sendParams = $.extend(sendParams, {delStateCd: delStateCd_new});
+                        buldParams = $.extend(buldParams, {delStateCd: delStateCd_new});
+                    }
+                    //건물번호판 유형
+                    var buldNmtSe_new = $("#buldNmtSe_new").text();
+                    if(buldNmtSe_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtSe: buldNmtSe_new});
+                    }
+                    //건물번호판 용도
+                    var buldNmtPurpose_new = $("#buldNmtPurpose_new").text();
+                    if(buldNmtPurpose_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtPurpose: buldNmtPurpose_new});
+                    }
+                    //건물번호판 규격
+                    var buldNmtCd_new = $("#buldNmtCd_new").text();
+                    if(buldNmtCd_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtCd: buldNmtCd_new});
+                    }
+                    //건물번호판 제작유형
+                    var buldMnfCd_new = $("#buldMnfCd_new").text();
+                    if(buldMnfCd_new !=""){
+                        buldParams = $.extend(buldParams, {buldMnfCd: buldMnfCd_new});
+                    }
+                    //건물번호판 재질
+                    var buldNmtMaterial_new = $("#buldNmtMaterial_new").text();
+                    if(buldNmtMaterial_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtMaterial: buldNmtMaterial_new});
                     }
 
-                    sendParams = $.extend(sendParams, {
-                        svcNm: 'uSPGF',
+                    //단가
+                    if(gdftyUnitPrice_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtUnitPrice: gdftyUnitPrice_new});
+                    }
+                    //기로
+                    if(gdftyWide_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtWide: gdftyWide_new});
+                    }
+                    //세로
+                    if(gdftyVertical_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtVertical: gdftyVertical_new});
+                    }
+                    //두께
+                    if(gdftyThickness_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmtThickness: gdftyThickness_new});
+                    }
+
+
+                    commomParams = $.extend(buldParams, {
                         sn: sn,
                         sigCd: sigCd,
-                        
-                        checkDate: util.getToday(),
-                        //id
-                        workId: workId,
-                        
-                            
+                        workId :app.info.opeId,
+                        // //사진파일
+                        // files: files,
+
+                        // delStateCd : delStateCd_new,
+                        // buldNmtSe: buldNmtSe_new,
+                        // buldNmtPurpose: buldNmtPurpose_new,
+                        // buldNmtCd: buldNmtCd_new,
+                        // buldMnfCd: buldMnfCd_new,
+                        // buldNmtMaterial: buldNmtMaterial_new,
+
+
+                        // //단가
+                        // buldNmtUnitPrice: gdftyUnitPrice_new,
+                        // //가로
+                        // buldNmtWide: gdftyWide_new,
+                        // //세로
+                        // buldNmtVertical: gdftyVertical_new,
+                        // //두께
+                        // buldNmtThickness: gdftyThickness_new,
+
                     });
 
-                    if(type == DATA_TYPE.RDPQ){
-                        //도로명판 규격
-                        var rdpqGdSd_new = $("#rdpqGdSd_new").text();
-                        if(rdpqGdSd_new !=""){
-                            sendParams = $.extend(sendParams, {rdpqGdSd: rdpqGdSd_new});
-                        }
-                        //명판방향
-                        var plqDirection_new = $("#plqDirection_new").text();
-                        if(plqDirection_new !=""){
-                            sendParams = $.extend(sendParams, {plqDirection: plqDirection_new});
-                        }
-                        //앞면시작기초번호 본번
-                        var frontStartBaseMasterNo_new = $("#frontStartBaseMasterNo_new").text();
-                        if(frontStartBaseMasterNo_new !=""){
-                            sendParams = $.extend(sendParams, {frontStartBaseMasterNo: frontStartBaseMasterNo_new});
-                        }
-                        //앞면시작기초번호 부번
-                        var frontStartBaseSlaveNo_new = $("#frontStartBaseSlaveNo_new").text();
-                        if(frontStartBaseSlaveNo_new !=""){
-                            sendParams = $.extend(sendParams, {frontStartBaseSlaveNo: frontStartBaseSlaveNo_new});
-                        }
-                        //앞면종료기초번호 본번
-                        var frontEndBaseMasterNo_new = $("#frontEndBaseMasterNo_new").text();
-                        if(frontEndBaseMasterNo_new !=""){
-                            sendParams = $.extend(sendParams, {frontEndBaseMasterNo: frontEndBaseMasterNo_new});
-                        }
-                        //앞면종료기초번호 부번
-                        var frontEndBaseSlaveNo_new = $("#frontEndBaseSlaveNo_new").text();
-                        if(frontEndBaseSlaveNo_new !=""){
-                            sendParams = $.extend(sendParams, {frontEndBaseSlaveNo: frontEndBaseSlaveNo_new});
-                        }
+                    var link = URLs.updateBuildNumberInfo;
 
-                        //뒷면시작기초번호 본번
-                        var backStartBaseMasterNo_new = $("#backStartBaseMasterNo_new").text();
-                        if(backStartBaseMasterNo_new !=""){
-                            sendParams = $.extend(sendParams, {backStartBaseMasterNo: backStartBaseMasterNo_new});
-                        }
-                        //뒷면시작기초번호 부번
-                        var backStartBaseSlaveNo_new = $("#backStartBaseSlaveNo_new").text();
-                        if(backStartBaseSlaveNo_new !=""){
-                            sendParams = $.extend(sendParams, {backStartBaseSlaveNo: backStartBaseSlaveNo_new});
-                        }
-                        //뒷면종료기초번호 본번
-                        var backEndBaseMasterNo_new = $("#backEndBaseMasterNo_new").text();
-                        if(backEndBaseMasterNo_new !=""){
-                            sendParams = $.extend(sendParams, {backEndBaseMasterNo: backEndBaseMasterNo_new});
-                        }
-                        //뒷면종료기초번호 부번
-                        var backEndBaseSlaveNo_new = $("#backEndBaseSlaveNo_new").text();
-                        if(backEndBaseSlaveNo_new !=""){
-                            sendParams = $.extend(sendParams, {backEndBaseSlaveNo: backEndBaseSlaveNo_new});
-                        }
-                        
-                        commomParams = $.extend(sendParams, { 
-                            type :type,
-
-                            // rdpqGdSd: rdpqGdSd_new,
-                            // plqDirection: plqDirection_new,
-
-                            // frontStartBaseMasterNo: frontStartBaseMasterNo_new,
-                            // frontStartBaseSlaveNo: frontStartBaseSlaveNo_new,
-                            // frontEndBaseMasterNo: frontEndBaseMasterNo_new,
-                            // frontEndBaseSlaveNo: frontEndBaseSlaveNo_new,
-
-                            // backStartBaseMasterNo: backStartBaseMasterNo_new,
-                            // backStartBaseSlaveNo: backStartBaseSlaveNo_new,
-                            // backEndBaseMasterNo: backEndBaseMasterNo_new,
-                            // backEndBaseSlaveNo: backEndBaseSlaveNo_new,
-
-                        });
-
-                        var link = URLs.updateFacilityInfo;
-                    
-
-                    }else if(type == DATA_TYPE.AREA){
-                        //지역안내판 광고여부에따른 분류
-                        var area_advrtsCd_new = $("#area_advrtsCd_new").text();
-                        if(area_advrtsCd_new !=""){
-                            sendParams = $.extend(sendParams, {area_advrtsCd: area_advrtsCd_new});
-                        }
-                        //지역안내판 광고내용
-                        var area_advCn_new = $("#area_advCn_new").text();
-                        if(area_advCn_new !=""){
-                            sendParams = $.extend(sendParams, {area_advCn: area_advCn_new});
-                        }
-                        //지역안내판 기타내용
-                        var area_etcCn_new = $("#area_etcCn_new").text();
-                        if(area_etcCn_new !=""){
-                            sendParams = $.extend(sendParams, {area_etcCn: area_etcCn_new});
-                        }
-                        //지역안내판 규격
-                        var area_areaGdSd_new = $("#area_areaGdSd_new").text();
-                        if(area_areaGdSd_new !=""){
-                            sendParams = $.extend(sendParams, {area_areaGdSd: area_areaGdSd_new});
-                        }
-
-
-                        commomParams = $.extend(sendParams, {
-                            type :type, 
-                            // area_advrtsCd: area_advrtsCd_new,
-                            // area_advCn: area_advCn_new,
-                            // area_etcCn: area_etcCn_new,
-                            // area_areaGdSd: area_areaGdSd_new
-                        });
-
-                        var link = URLs.updateFacilityInfo;
-                    }else if(type == DATA_TYPE.BSIS){
-                        //기초번호판 곡면 분류
-                        var bsis_planeCd_new = $("#bsis_planeCd_new").text();
-                        if(bsis_planeCd_new !=""){
-                            sendParams = $.extend(sendParams, {bsis_planeCd: bsis_planeCd_new});
-                        }
-                        //기초번호판 규격
-                        var bsis_bsisGdSdLbl_new = $("#bsis_bsisGdSd_new").text();
-                        if(bsis_bsisGdSdLbl_new !=""){
-                            sendParams = $.extend(sendParams, {bsis_bsisGdSd: bsis_bsisGdSdLbl_new});
-                        }
-
-                        commomParams = $.extend(sendParams, {
-                            type :type, 
-                            // bsis_planeCd: bsis_planeCd_new
-                        });
-
-                        var link = URLs.updateFacilityInfo;
-
-                    }else if(type == DATA_TYPE.ENTRC){
-                        //설치상태
-                        var delStateCd_new = $("#delStateCd_new").text();
-                        if(delStateCd_new !=""){
-                            buldParams = $.extend(buldParams, {delStateCd: delStateCd_new});
-                        }
-                        //건물번호판 유형
-                        var buldNmtSe_new = $("#buldNmtSe_new").text();
-                        if(buldNmtSe_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtSe: buldNmtSe_new});
-                        }
-                        //건물번호판 용도
-                        var buldNmtPurpose_new = $("#buldNmtPurpose_new").text();
-                        if(buldNmtPurpose_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtPurpose: buldNmtPurpose_new});
-                        }
-                        //건물번호판 규격
-                        var buldNmtCd_new = $("#buldNmtCd_new").text();
-                        if(buldNmtCd_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtCd: buldNmtCd_new});
-                        }
-                        //건물번호판 제작유형
-                        var buldMnfCd_new = $("#buldMnfCd_new").text();
-                        if(buldMnfCd_new !=""){
-                            buldParams = $.extend(buldParams, {buldMnfCd: buldMnfCd_new});
-                        }
-                        //건물번호판 재질
-                        var buldNmtMaterial_new = $("#buldNmtMaterial_new").text();
-                        if(buldNmtMaterial_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtMaterial: buldNmtMaterial_new});
-                        }
-
-                        //단가
-                        if(gdftyUnitPrice_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtUnitPrice: gdftyUnitPrice_new});
-                        }
-                        //기로
-                        if(gdftyWide_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtWide: gdftyWide_new});
-                        }
-                        //세로
-                        if(gdftyVertical_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtVertical: gdftyVertical_new});
-                        }
-                        //두께
-                        if(gdftyThickness_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmtThickness: gdftyThickness_new});
-                        }
-                        
-
-                        commomParams = $.extend(buldParams, {
-                            sn: sn,
-                            sigCd: sigCd,
-                            workId :app.info.opeId,
-                            // //사진파일
-                            // files: files,
-                            
-                            // delStateCd : delStateCd_new,
-                            // buldNmtSe: buldNmtSe_new,
-                            // buldNmtPurpose: buldNmtPurpose_new,
-                            // buldNmtCd: buldNmtCd_new,
-                            // buldMnfCd: buldMnfCd_new,
-                            // buldNmtMaterial: buldNmtMaterial_new,
-
-
-                            // //단가
-                            // buldNmtUnitPrice: gdftyUnitPrice_new,
-                            // //가로
-                            // buldNmtWide: gdftyWide_new,
-                            // //세로
-                            // buldNmtVertical: gdftyVertical_new,
-                            // //두께
-                            // buldNmtThickness: gdftyThickness_new,
-
-                        });
-
-                        var link = URLs.updateBuildNumberInfo;
-                        
-                    }else if(type == DATA_TYPE.BULD){
-                        //용도
-                        var bdtypCd_new = $("#bdtypCd_new").text();
-                        if(bdtypCd_new !=""){
-                            buldParams = $.extend(buldParams, {bdtypCd: bdtypCd_new});
-                        }
-                        //건물종속여부
-                        var bulDpnSe_new = $("#bulDpnSe_new").text();
-                        if(bulDpnSe_new !=""){
-                            buldParams = $.extend(buldParams, {bulDpnSe: bulDpnSe_new});
-                        }
-                        //건물명
-                        var posBulNm_new = $("#posBulNm_new").text();
-                        if(posBulNm_new !=""){
-                            buldParams = $.extend(buldParams, {posBulNm: posBulNm_new});
-                        }
-                        //건물명(영)
-                        var bulEngNm_new = $("#bulEngNm_new").text();
-                        if(bulEngNm_new !=""){
-                            buldParams = $.extend(buldParams, {bulEngNm: bulEngNm_new});
-                        }
-                        //상세건물명
-                        var buldNmDc_new = $("#buldNmDc_new").text();
-                        if(buldNmDc_new !=""){
-                            buldParams = $.extend(buldParams, {buldNmDc: buldNmDc_new});
-                        }
-                        //건물층수(지상층)
-                        var groFloCo_new = $("#groFloCo_new").text();
-                        if(groFloCo_new !=""){
-                            buldParams = $.extend(buldParams, {groFloCo: groFloCo_new});
-                        }
-                        //건물층수(지하층)
-                        var undFloCo_new = $("#undFloCo_new").text();
-                        if(undFloCo_new !=""){
-                            buldParams = $.extend(buldParams, {undFloCo: undFloCo_new});
-                        }
-                        //건물상태
-                        var buldSttus_new = $("#buldSttus_new").text();
-                        if(buldSttus_new !=""){
-                            buldParams = $.extend(buldParams, {buldSttus: buldSttus_new});
-                        }
-                        //메모
-                        var buldMemo_new = $("#buldMemo_new").text();
-                        if(buldMemo_new !=""){
-                            buldParams = $.extend(buldParams, {buldMemo: buldMemo_new});
-                        }
-
-                         commomParams = $.extend(buldParams, {
-                            bulManNo : sn,
-                            sigCd: sigCd,
-                            workId :app.info.opeId,
-                            // //사진파일
-                            // files: files,
-                            
-                            // bdtypCd : bdtypCd_new,
-                            // bulDpnSe : bulDpnSe_new,
-                            // posBulNm : posBulNm_new,
-                            // bulEngNm : bulEngNm_new,
-                            // buldNmDc : buldNmDc_new,
-                            // groFloCo : groFloCo_new,
-                            // undFloCo : undFloCo_new,
-                            // buldSttus : buldSttus_new,
-                            // buldMemo : buldMemo_new,
-
-                         });
-
-                         var link = URLs.updateBuilingInfo;
+                }else if(type == DATA_TYPE.BULD){
+                    //용도
+                    var bdtypCd_new = $("#bdtypCd_new").text();
+                    if(bdtypCd_new !=""){
+                        buldParams = $.extend(buldParams, {bdtypCd: bdtypCd_new});
+                    }
+                    //건물종속여부
+                    var bulDpnSe_new = $("#bulDpnSe_new").text();
+                    if(bulDpnSe_new !=""){
+                        buldParams = $.extend(buldParams, {bulDpnSe: bulDpnSe_new});
+                    }
+                    //건물명
+                    var posBulNm_new = $("#posBulNm_new").text();
+                    if(posBulNm_new !=""){
+                        buldParams = $.extend(buldParams, {posBulNm: posBulNm_new});
+                    }
+                    //건물명(영)
+                    var bulEngNm_new = $("#bulEngNm_new").text();
+                    if(bulEngNm_new !=""){
+                        buldParams = $.extend(buldParams, {bulEngNm: bulEngNm_new});
+                    }
+                    //상세건물명
+                    var buldNmDc_new = $("#buldNmDc_new").text();
+                    if(buldNmDc_new !=""){
+                        buldParams = $.extend(buldParams, {buldNmDc: buldNmDc_new});
+                    }
+                    //건물층수(지상층)
+                    var groFloCo_new = $("#groFloCo_new").text();
+                    if(groFloCo_new !=""){
+                        buldParams = $.extend(buldParams, {groFloCo: groFloCo_new});
+                    }
+                    //건물층수(지하층)
+                    var undFloCo_new = $("#undFloCo_new").text();
+                    if(undFloCo_new !=""){
+                        buldParams = $.extend(buldParams, {undFloCo: undFloCo_new});
+                    }
+                    //건물상태
+                    var buldSttus_new = $("#buldSttus_new").text();
+                    if(buldSttus_new !=""){
+                        buldParams = $.extend(buldParams, {buldSttus: buldSttus_new});
+                    }
+                    //메모
+                    var buldMemo_new = $("#buldMemo_new").text();
+                    if(buldMemo_new !=""){
+                        buldParams = $.extend(buldParams, {buldMemo: buldMemo_new});
                     }
 
-                    
-                    
-                    var url = URLs.postURL(link, commomParams);
+                     commomParams = $.extend(buldParams, {
+                        bulManNo : sn,
+                        sigCd: sigCd,
+                        workId :app.info.opeId,
+                        // //사진파일
+                        // files: files,
 
-                        util.postAJAX({}, url)
-                            .then(function (context, rcode, results) {
+                        // bdtypCd : bdtypCd_new,
+                        // bulDpnSe : bulDpnSe_new,
+                        // posBulNm : posBulNm_new,
+                        // bulEngNm : bulEngNm_new,
+                        // buldNmDc : buldNmDc_new,
+                        // groFloCo : groFloCo_new,
+                        // undFloCo : undFloCo_new,
+                        // buldSttus : buldSttus_new,
+                        // buldMemo : buldMemo_new,
 
-                                util.toast('변경사항이 적용되었습니다');
+                     });
 
-                                $("p[name*='newLbl']").text('');
+                     var link = URLs.updateBuilingInfo;
+                }
 
-                                if(photoMode()) {
-                                    $(".detailView .infoWrap .infoHeader .photo").click();
-                                } else {
-                                    closeDetailView();
-                                }
 
-                            });
+                util.showProgress();
+                var url = URLs.postURL(link, commomParams);
+                util.postAJAX({}, url).then(
+                    function (context, rcode, results) {
+
+                        util.toast('변경사항이 적용되었습니다');
+
+                        $("p[name*='newLbl']").text('');
+
+                        closeDetailView();
+
+                        util.dismissProgress();
+
+                    },
+                    util.dismissProgress
+                );
             }
 
         }
@@ -1230,99 +1224,100 @@
             //애니메이션 효과
             // $('#mask').fadeIn(1000);      
             $('#mask').fadeTo("slow",0.5);    
-        }
+       }
 
-        function saveImg(type){
+       function saveImg(type){
             //사진데이터 확인여부
             var photoIsGgn = $("#photoIsGgn").val();
             
             if(photoIsGgn == "N"){
-                confirm('저장할 데이터가 없습니다.')
+                confirm('저장할 데이터가 없습니다.');
                 return;
             }
 
-            if (confirm('사진정보를 변경하시겠습니까?') == true){
-                    var commomParams = {};
-                    var sendParams = {};
-                    var buldParams = {};
-                    var sn = $("#sn").text();
-                    var sigCd = app.info.sigCd;
-                    var workId = app.info.opeId;
+            if (confirm('사진정보를 변경하시겠습니까?')){
+                var commomParams = {};
+                var sendParams = {};
+                var buldParams = {};
+                var sn = $("#sn").text();
+                var sigCd = app.info.sigCd;
+                var workId = app.info.opeId;
 
-                    //사진파일
-                    var files = makeImg();
-                    // if(photoMode){
-                    //     files = makeImg();
-                    // }
+                //사진파일
+                var files = makeImg();
+                // if(photoMode){
+                //     files = makeImg();
+                // }
 
-                    //사진파일
-                    if(files.length>0){
-                        commomParams = $.extend(commomParams, {files: files});
-                    }else{
-                        confirm('저장할 데이터가 없습니다.')
-                        return;
-                    }
-                    
-                     
+                //사진파일
+                if(files.length>0){
+                    commomParams = $.extend(commomParams, {files: files});
+                }else{
+                    confirm('저장할 데이터가 없습니다.')
+                    return;
+                }
 
-                    commomParams = $.extend(commomParams, {
-                        sn: sn,
-                        sigCd: sigCd,
+                commomParams = $.extend(commomParams, {
+                    sn: sn,
+                    sigCd: sigCd,
 
-                        checkDate: util.getToday(),
-                        //id
-                        workId: workId,
-                        // //사진파일
-                        // files: files
-                            
+                    checkDate: util.getToday(),
+                    //id
+                    workId: workId,
+                    // //사진파일
+                    // files: files
+
+                });
+
+                if(type == DATA_TYPE.RDPQ){
+                    sendParams = $.extend(commomParams, {
+                        type :type
                     });
 
-                    if(type == DATA_TYPE.RDPQ){
-                        sendParams = $.extend(commomParams, { 
-                            type :type
-                        });
-
-                        var link = URLs.updateFacilityInfo;
-                    
-
-                    }else if(type == DATA_TYPE.AREA){
-                        sendParams = $.extend(commomParams, {
-                            type :type
-                        });
-
-                        var link = URLs.updateFacilityInfo;
-                    }else if(type == DATA_TYPE.BSIS){
-                        sendParams = $.extend(commomParams, {
-                            type :type
-                        });
-
-                        var link = URLs.updateFacilityInfo;
-                    }else if(type == DATA_TYPE.ENTRC){
-                        sendParams = $.extend(commomParams, {
-                        });
-                        // sendParams = $.extend(commomParams, {
-                        //     sn: sn,
-                        //     sigCd: sigCd,
-                        //     workId :app.info.opeId,
-                        //     //사진파일
-                        //     // files: files
-                        // });
-
-                        var link = URLs.updateBuildNumberInfo;
-                    }
+                    var link = URLs.updateFacilityInfo;
 
 
-                    var url = URLs.postURL(link, sendParams);
+                }else if(type == DATA_TYPE.AREA){
+                    sendParams = $.extend(commomParams, {
+                        type :type
+                    });
 
-                        util.postAJAX({}, url)
-                            .then(function (context, rcode, results) {
+                    var link = URLs.updateFacilityInfo;
+                }else if(type == DATA_TYPE.BSIS){
+                    sendParams = $.extend(commomParams, {
+                        type :type
+                    });
 
-                                util.toast('사진이 변경되었습니다.');
-                                $("#photoIsGgn").val('N');
-                                //사진건수
-                                $(".infoHeader .photo .photoNum").html(files.length);
-                                closePhotoView();
+                    var link = URLs.updateFacilityInfo;
+                }else if(type == DATA_TYPE.ENTRC){
+                    sendParams = $.extend(commomParams, {
+                    });
+                    // sendParams = $.extend(commomParams, {
+                    //     sn: sn,
+                    //     sigCd: sigCd,
+                    //     workId :app.info.opeId,
+                    //     //사진파일
+                    //     // files: files
+                    // });
 
-                            });
+                    var link = URLs.updateBuildNumberInfo;
+                }
+
+                util.showProgress();
+                var url = URLs.postURL(link, sendParams);
+                util.postAJAX({}, url).then(
+                    function (context, rcode, results) {
+                        util.toast('사진이 변경되었습니다.');
+                        $("#photoIsGgn").val('N');
+                        //사진건수
+                        var photoNum = $(".infoHeader .photo .photoNum").html();
+                        if(photoNum < 2){
+                            $(".infoHeader .photo .photoNum").html(files.length);
+                        }
+                        closePhotoView();
+                        util.dismissProgress();
+                    },
+                    util.dismissProgress
+                );
             }
-        }
+       }

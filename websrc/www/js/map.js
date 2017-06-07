@@ -79,40 +79,32 @@ var MapUtil = {
                     }
 
                     util.showProgress();
-                            util.postAJAX({}, url).then(
-                                function(context, rcode, results) {
-                                    
-                                   var data = results.data;
-                                   if (rcode != 0) {
-                                        util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
-                                        util.dismissProgress();
-                                        return;
-                                   }
+                    util.postAJAX({}, url).then(
+                        function(context, rcode, results) {
+                            var data = results.data;
+                            if (rcode != 0) {
+                                util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
+                                util.dismissProgress();
+                                return;
+                            }
 
-                                   if (util.isEmpty(data.files) === false) {
-                                        for (var index in data.files) {
-                                            var image = data.files[index];
-                                            if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
-                                                $($(".picImg")[index]).html(obj);
-                                            }
-                                            //앞에서 부터 2건만 처리
-                                            if(index == 1){
-                                                break;
-                                            }
-                                        
-                                        }
-                                   }
-                                //    else{
-                                //         var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='./images/no_image.jpg'/></li>";
-                                //         $(".picImg").html(obj);
-                                //         util.dismissProgress();
-                                //    }
+                            if (util.isEmpty(data.files) === false) {
+                                for (var index in data.files) {
+                                    var image = data.files[index];
+                                    if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                                        var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                        $($(".picImg")[index]).html(obj);
+                                    }
+                                    //앞에서 부터 2건만 처리
+                                    if(index == 1){
+                                        break;
+                                    }
 
-                                   util.dismissProgress();
-                                   
                                 }
-                            );
+                            }
+                           util.dismissProgress();
+                        }
+                    );
                 }
 
             });
@@ -327,7 +319,6 @@ var MapUtil = {
 
                 break;
             case DATA_TYPE.AREA:
-                // var sn = '7002';
                 var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
@@ -335,8 +326,7 @@ var MapUtil = {
 
                 break;
             case DATA_TYPE.BSIS:
-                // var sn = '7003';
-                // var sn = f.get("RD_GDFTY_SN");
+                var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -494,92 +484,13 @@ var MapUtil = {
 
                             break;
                             case DATA_TYPE.AREA:
-
                                 //제목창
-                                var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.area_areaKorRn, data.bsisMnnm, data.bsisSlno);
-                                $(".title").appdn(title);
-
-                                //도로시설물
-                                // $("#rdGdftySeLbl").html(data.rdGdftySeLbl);
-                                // $("#rdGdftySe").html(data.rdGdftySe);
-                                $("#rdftySeLbl").html(data.rdftySeLbl);
-                                $("#rdftySe").html(data.rdftySe);
-                                //설치도로명
-
-                                //설치기초번호
-                                var bsis = "{0}-{1}".format(data.bsisMnnm,data.bsisSlno);
-                                $("#bsis").html(bsis);
-                                //설치유형
-                                $("#instSeLbl").html(data.instSeLbl);
-                                $("#instSe").html(data.instSe);
-                                //제작형식
-                                $("#gdftyMnf").html(data.gdftyMnf);
-                                $("#gdftyMnfLbl").html(data.gdftyMnfLbl);
-                                //설치지점
-                                $("#instSpotCd").html(data.instSpotCd);
-                                $("#instSpotCdLbl").html(data.instSpotCdLbl);
-                                //교차로유형
-                                $("#instCrossCd").html(data.instCrossCd);
-                                $("#instCrossCdLbl").html(data.instCrossCdLbl);
-                                //한글도로명
-                                $("#area_areaKorRn").html(data.area_areaKorRn);
-                                //로마자
-                                $("#area_romRn").html(data.area_romRn);
-                                //시작기초번호(0-0)]
-                                var area_stbsNo = "{0}{1}".format(data.area_stbsSn, (data.area_stbsMn != "0" ? '-' + data.area_stbsMn : ''));
-                                $("#area_stbsNo").html(area_stbsNo);
-                                //종료기초번호(0-0)
-                                var area_edbsNo = "{0}{1}".format(data.area_edbsMn, (data.area_edbsSn != "0" ? '-' + data.area_edbsSn : ''));
-                                $("#area_edbsNo").html(area_edbsNo);
-                                //광고에따른 분류
-                                $("#area_advrtsCdLbl").html(data.area_advrtsCdLbl);
-                                $("#area_advrtsCd").html(data.area_advrtsCd);
-                                //광고내용
-                                $("#area_advCn").html(data.area_advCn);
-                                //기타내용
-                                $("#area_etcCn").html(data.area_etcCn);
-                                //안내시설형식
-                                $("#gdftyForm").html(data.gdftyForm);
-                                $("#gdftyFormLbl").html(data.gdftyFormLbl);
-                                //사용대상
-                                $("#useTarget").html(data.useTarget);
-                                $("#useTargetLbl").html(data.useTargetLbl);
-                                //사용방향
-                                $("#plqDirection").html(data.plqDirection);
-                                $("#plqDirectionLbl").html(data.plqDirectionLbl);
-                                //양면여부
-                                $("#bdrclAt").html(data.bdrclAt);
-                                $("#bdrclAtLbl").html(data.bdrclAtLbl);
-                                //제2외국어여부
-                                $("#scfggMkty").html(data.scfggMkty);
-                                $("#scfggMktyLbl").html(data.scfggMktyLbl);
-                                //언어1
-                                $("#scfggUla1").html(data.scfggUla1);
-                                $("#scfggUla1Lbl").html(data.scfggUla1Lbl);
-                                //언어2
-                                $("#scfggUla2").html(data.scfggUla2);
-                                $("#scfggUla2Lbl").html(data.scfggUla2Lbl);
-                                //규격
-                                $("#area_areaGdSdLbl").html(data.area_areaGdSdLbl);
-                                $("#area_areaGdSd").html(data.area_areaGdSd);
-                                //가로*세로*두께
-                                $("#gdftyWide").html(data.gdftyWide);
-                                $("#gdftyVertical").html(data.gdftyVertical);
-                                $("#gdftyThickness").html(data.gdftyThickness);
-                                var gdftyWVT = "{0}*{1}*{2}".format(data.gdftyWide,data.gdftyVertical,data.gdftyThickness);
-                                $("#gdftyWVT").html(gdftyWVT);
-                                //단가(원)
-                                $("#gdftyUnitPrice").html(data.gdftyUnitPrice);
-                                //설치상태
-                                $("#delStateCd").html(data.delStateCd);
-                                $("#delStateCdLbl").html(data.delStateCdLbl);
-                                //사진건수
-                                $("#areaView_page .infoHeader .photo .photoNum").html(data.files.length);
-                            break;
-                            case DATA_TYPE.BSIS:
-
-                                //제목창
-                                var title = "[{0}] {1} {2}-{3}".format(data.rdGdftySeLbl, data.area_areaKorRn, data.bsisMnnm, data.bsisSlno);
+                                var title = "<span class='label'>[{0}] {1} {2}{3}<span>".format(
+                                    data.rdGdftySeLbl,
+                                    (data.bsisRnLbl ? data.bsisRnLbl : '도로명없음'),
+                                    (data.bsisMnnm),
+                                    (data.bsisSlno != "0" ? '-' + data.bsisSlno : '')
+                                );
                                 $(".title").append(title);
 
                                 //도로시설물
@@ -588,9 +499,9 @@ var MapUtil = {
                                 $("#rdftySeLbl").html(data.rdftySeLbl);
                                 $("#rdftySe").html(data.rdftySe);
                                 //설치도로명
-
+                                $("#bsisRnLbl").html(data.bsisRnLbl);
                                 //설치기초번호
-                                var bsis = "{0}-{1}".format(data.bsisMnnm,data.bsisSlno);
+                                var bsis = "{0}{1}".format((data.bsisMnnm ? data.bsisMnnm : ''), (data.bsisSlno != "0" ? '-' + data.bsisSlno : ''));
                                 $("#bsis").html(bsis);
                                 //설치유형
                                 $("#instSeLbl").html(data.instSeLbl);
@@ -601,9 +512,106 @@ var MapUtil = {
                                 //설치지점
                                 $("#instSpotCd").html(data.instSpotCd);
                                 $("#instSpotCdLbl").html(data.instSpotCdLbl);
+                                $("#instSpotCdLbl").addClass("edit");
                                 //교차로유형
                                 $("#instCrossCd").html(data.instCrossCd);
                                 $("#instCrossCdLbl").html(data.instCrossCdLbl);
+                                $("#instCrossCdLbl").addClass("edit");
+                                //한글도로명
+                                $("#area_areaKorRn").html(data.area_areaKorRn);
+                                //로마자
+                                $("#area_romRn").html(data.area_romRn);
+                                //시작기초번호(0-0)]
+                                var area_stbsNo = "{0}{1}".format(data.area_stbsMn, (data.area_stbsSn != "0" ? '-' + data.area_stbsSn : ''));
+                                $("#area_stbsNo").html(area_stbsNo);
+                                //종료기초번호(0-0)
+                                var area_edbsNo = "{0}{1}".format(data.area_edbsMn, (data.area_edbsSn != "0" ? '-' + data.area_edbsSn : ''));
+                                $("#area_edbsNo").html(area_edbsNo);
+                                //광고에따른 분류
+                                $("#area_advrtsCd").html(data.area_advrtsCd);
+                                $("#area_advrtsCdLbl").html(data.area_advrtsCdLbl);
+                                $("#area_advrtsCdLbl").addClass("edit");
+                                //광고내용
+                                $("#area_advCn").html(data.area_advCn);
+                                $("#area_advCn").addClass("edit");
+                                //기타내용
+                                $("#area_etcCn").html(data.area_etcCn);
+                                $("#area_etcCn").addClass("edit");
+                                //안내시설형식
+                                $("#gdftyForm").html(data.gdftyForm);
+                                $("#gdftyFormLbl").html(data.gdftyFormLbl);
+                                //사용대상
+                                $("#useTarget").html(data.useTarget);
+                                $("#useTargetLbl").html(data.useTargetLbl);
+                                $("#useTargetLbl").addClass("edit");
+                                //양면여부
+                                $("#bdrclAt").html(data.bdrclAt);
+                                $("#bdrclAtLbl").html(data.bdrclAtLbl);
+                                //제2외국어여부
+                                $("#scfggMkty").html(data.scfggMkty);
+                                $("#scfggMktyLbl").html(data.scfggMktyLbl);
+                                $("#scfggMktyLbl").addClass("edit");
+                                //언어1
+                                $("#scfggUla1").html(data.scfggUla1);
+                                $("#scfggUla1Lbl").html(data.scfggUla1Lbl);
+                                $("#scfggUla1Lbl").addClass("edit");
+                                //언어2
+                                $("#scfggUla2").html(data.scfggUla2);
+                                $("#scfggUla2Lbl").html(data.scfggUla2Lbl);
+                                $("#scfggUla2Lbl").addClass("edit");
+                                //규격
+                                $("#area_areaGdSd").html(data.area_areaGdSd);
+                                $("#area_areaGdSdLbl").html(data.area_areaGdSdLbl);
+                                $("#area_areaGdSdLbl").addClass("edit");
+                                //가로*세로*두께
+                                $("#gdftyWide").html(data.gdftyWide);
+                                $("#gdftyVertical").html(data.gdftyVertical);
+                                $("#gdftyThickness").html(data.gdftyThickness);
+                                var gdftyWVT = "{0}*{1}*{2}".format(data.gdftyWide,data.gdftyVertical,data.gdftyThickness);
+                                $("#gdftyWVT").html(gdftyWVT);
+                                $("#gdftyWVT").addClass("edit");
+                                //단가(원)
+                                $("#gdftyUnitPrice").html(data.gdftyUnitPrice);
+                                $("#gdftyUnitPrice").addClass("edit");
+                                //설치상태
+                                $("#delStateCd").html(data.delStateCd);
+                                $("#delStateCdLbl").html(data.delStateCdLbl);
+                                $("#delStateCdLbl").addClass("edit");
+                                //사진건수
+                                $("#areaView_page .infoHeader .photo .photoNum").html(data.files.length);
+                            break;
+                            case DATA_TYPE.BSIS:
+                                //제목창
+                                var title = "<span class='label'>[{0}] {1} {2}{3}<span>".format(
+                                    data.rdGdftySeLbl,
+                                    (data.bsisRnLbl ? data.bsisRnLbl : '도로명없음'),
+                                    (data.bsisMnnm),
+                                    (data.bsisSlno != "0" ? '-' + data.bsisSlno : '')
+                                );
+                                $(".title").append(title);
+
+                                //도로시설물
+                                $("#rdftySe").html(data.rdftySe);
+                                $("#rdftySeLbl").html(data.rdftySeLbl);
+                                //설치도로명
+                                $("#bsisRnLbl").html(data.bsisRnLbl);
+                                //설치기초번호
+                                var bsis = "{0}{1}".format((data.bsisMnnm ? data.bsisMnnm : ''), (data.bsisSlno != "0" ? '-' + data.bsisSlno : ''));
+                                $("#bsis").html(bsis);
+                                //설치유형
+                                $("#instSeLbl").html(data.instSeLbl);
+                                $("#instSe").html(data.instSe);
+                                //제작형식
+                                $("#gdftyMnf").html(data.gdftyMnf);
+                                $("#gdftyMnfLbl").html(data.gdftyMnfLbl);
+                                //설치지점
+                                $("#instSpotCd").html(data.instSpotCd);
+                                $("#instSpotCdLbl").html(data.instSpotCdLbl);
+                                $("#instSpotCdLbl").addClass("edit");
+                                //교차로유형
+                                $("#instCrossCd").html(data.instCrossCd);
+                                $("#instCrossCdLbl").html(data.instCrossCdLbl);
+                                $("#instCrossCdLbl").addClass("edit");
                                 //설치장소 구분
                                 $("#bsis_itlpcSe").html(data.bsis_itlpcSe);
                                 $("#bsis_itlpcSeLbl").html(data.bsis_itlpcSeLbl);
@@ -613,18 +621,19 @@ var MapUtil = {
                                 //곡면분류
                                 $("#bsis_planeCd").html(data.bsis_planeCd);
                                 $("#bsis_planeCdLbl").html(data.bsis_planeCdLbl);
+                                $("#bsis_planeCdLbl").addClass("edit");
                                 //한글도로명
-                                $("#area_areaKorRn").html(data.bsis_korRn);
+                                $("#area_areaKorRn").html((data.bsis_korRn ? data.bsis_korRn : '도로명없음'));
                                 //로마자
                                 $("#area_romRn").html(data.bsis_RomRn);
                                 //기초번호(0-0)
-                                var bsis_ctbsNo = "{0}-{1}".format(data.bsis_ctbsMn, data.bsis_ctbsSn);
+                                var bsis_ctbsNo = "{0}{1}".format(data.bsis_ctbsMn, (data.bsis_ctbsSn != "0" ? '-' + data.bsis_ctbsSn : ''));
                                 $("#bsis_ctbsNo").html(bsis_ctbsNo);
                                 //이전승강장번호
-                                var bsis_bfbsNo = "{0}-{1}".format(data.bsis_bfbsMn, data.bsis_bfbsSn);
+                                var bsis_bfbsNo = "{0}{1}".format(data.bsis_bfbsMn, (data.bsis_bfbsSn != "0" ? '-' + data.bsis_bfbsSn : ''));
                                 $("#bsis_bfbsNo").html(bsis_bfbsNo);
                                 //다음승강장번호
-                                var bsis_ntbsNo = "{0}-{1}".format(data.bsis_ntbsMn, data.bsis_ntbsSn);
+                                var bsis_ntbsNo = "{0}{1}".format(data.bsis_ntbsMn, (data.bsis_ntbsSn != "0" ? '-' + data.bsis_ntbsSn : ''));
                                 $("#bsis_ntbsNo").html(bsis_ntbsNo);
                                 //안내시설형식
                                 $("#gdftyForm").html(data.gdftyForm);
@@ -641,32 +650,44 @@ var MapUtil = {
                                 //제2외국어여부
                                 $("#scfggMkty").html(data.scfggMkty);
                                 $("#scfggMktyLbl").html(data.scfggMktyLbl);
+                                $("#scfggMktyLbl").addClass("edit");
                                 //언어1
                                 $("#scfggUla1").html(data.scfggUla1);
                                 $("#scfggUla1Lbl").html(data.scfggUla1Lbl);
+                                $("#scfggUla1Lbl").addClass("edit");
                                 //언어2
                                 $("#scfggUla2").html(data.scfggUla2);
                                 $("#scfggUla2Lbl").html(data.scfggUla2Lbl);
+                                $("#scfggUla2Lbl").addClass("edit");
                                 //규격
-                                $("#bsis_bsisGdSdLbl").html(data.bsis_bsisGdSdLbl);
                                 $("#bsis_bsisGdSd").html(data.bsis_bsisGdSd);
+                                $("#bsis_bsisGdSdLbl").html(data.bsis_bsisGdSdLbl);
+                                $("#bsis_bsisGdSdLbl").addClass("edit");
                                 //가로*세로*두께
                                 $("#gdftyWide").html(data.gdftyWide);
                                 $("#gdftyVertical").html(data.gdftyVertical);
                                 $("#gdftyThickness").html(data.gdftyThickness);
                                 var gdftyWVT = "{0}*{1}*{2}".format(data.gdftyWide, data.gdftyVertical,data.gdftyThickness);
                                 $("#gdftyWVT").html(gdftyWVT);
+                                $("#gdftyWVT").addClass("edit");
                                 //단가(원)
                                 $("#gdftyUnitPrice").html(data.gdftyUnitPrice);
+                                $("#gdftyUnitPrice").addClass("edit");
                                 //설치상태
                                 $("#delStateCd").html(data.delStateCd);
                                 $("#delStateCdLbl").html(data.delStateCdLbl);
+                                $("#delStateCdLbl").addClass("edit");
                                 //사진건수
                                 $("#baseView_page .infoHeader .photo .photoNum").html(data.files.length);
                             break;
                             case DATA_TYPE.ENTRC:
                                 //제목창
-                                var title = "[{0}] {1} {2}{3}".format("건물번호판", data.rnCdLbl, data.buldMnnm, (data.buldSlno == '0' ? '' : '-' + data.buldSlno));
+                                var title = "[{0}] {1} {2}{3}".format(
+                                    "건물번호판",
+                                    (data.rnCdLbl ? data.rnCdLbl : ''),
+                                    (data.buldMnnm ? data.buldMnnm : ''),
+                                    (data.buldSlno == '0' ? '' : '-' + data.buldSlno)
+                                );
                                 $("#entrcView_page .title").append(title);
                                 //일련번호
                                 // $("#sn").html(sn);
@@ -1171,7 +1192,7 @@ var mapInit = function (mapId, pos) {
         title: "지역안내판",
         typeName: "tlv_spgf_area",
         dataType: DATA_TYPE.AREA,
-        maxResolution: 16,
+        maxResolution: 4,
         viewProgress: false
     });
     // 기초번호판 레이어
@@ -1179,7 +1200,7 @@ var mapInit = function (mapId, pos) {
         title: "기초번호판",
         typeName: "tlv_spgf_bsis",
         dataType: DATA_TYPE.BSIS,
-        maxResolution: 16,
+        maxResolution: 4,
         viewProgress: false
     });
 
@@ -1412,10 +1433,96 @@ var mapInit = function (mapId, pos) {
 
                             break;
                         case DATA_TYPE.AREA:
-                            openDetailPopupCall(0);
+//                            openDetailPopupCall(0);
+                            var title = commonP.format("localTitle",
+                                "{0} {1}{2}".format(
+                                    feature.get('KOR_RN'),
+                                    feature.get('STBS_MN'),
+                                    (feature.get('STBS_SN') == "0" ? "" : "-" + feature.get('STBS_SN'))
+                                )
+                            );
+
+                            strHtml += title
+
+                            if(features.length > 1 && index == 1){
+                                resultHtml += commonP.format("infoLine","");
+                            }
+
+                            resultHtml += popDiv.format("",'openDetailPopupCall(' + index + ')', strHtml);
+
+                            //도로시설물위치일련번호
+                            var RDFTYLC_SN = feature.get("RDFTYLC_SN");
+                            //도로시설물 공간정보
+                            var geom = feature.getGeometry().getCoordinates();
+
+                            buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
+
+                            // buttonHtml += "<hr/>"
+
+                            resultHtml += commonDiv.format("mapAdd",buttonHtml);
+                            resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
+
+                            popupDiv.append(resultHtml);
+
+                            $("#popup").show();
+                            overlay.setPosition(coordinate);
                                 break;
                         case DATA_TYPE.BSIS:
-                            openDetailPopupCall(0);
+//                            openDetailPopupCall(0);
+                            var title = commonP.format("localTitle",
+                                "{0} {1}{2}".format(
+                                    feature.get('KOR_RN'),
+                                    feature.get('CTBS_MN'),
+                                    (feature.get('CTBS_SN') == "0" ? "" : "-" + feature.get('CTBS_SN'))
+                                )
+                            );
+
+                            //시점
+                            var BFBS_MN = (feature.get('BFBS_MN') ? feature.get('BFBS_MN') : '');
+
+                            var BFBS_SN = (feature.get('BFBS_SN') == "0" ? '' : feature.get('BFBS_SN'));
+
+                            var bfbsStr = baseNumberMix(BFBS_MN, BFBS_SN); // 0 - 0
+
+                            var bfbs = popTableP.format("이전승강장기초번호",bfbsStr);
+
+                            //종점
+
+                            var NTBS_MN = (feature.get('NTBS_MN') ? feature.get('NTBS_MN') : '');
+
+                            var NTBS_SN = (feature.get('NTBS_SN') ? feature.get('NTBS_SN') : '');
+
+                            var ntbsStr = baseNumberMix(NTBS_MN, NTBS_SN); // 0 - 0
+
+                            var ntbs = popTableP.format("다음승강장기초번호",ntbsStr);
+
+
+                            strHtml += title
+                            strHtml += commonP.format("", bfbs);
+                            strHtml += commonP.format("", ntbs);
+
+                            if(features.length > 1 && index == 1){
+                                resultHtml += commonP.format("infoLine","");
+                            }
+
+                            resultHtml += popDiv.format("",'openDetailPopupCall(' + index + ')', strHtml);
+
+                            //도로시설물위치일련번호
+                            var RDFTYLC_SN = feature.get("RDFTYLC_SN");
+                            //도로시설물 공간정보
+                            var geom = feature.getGeometry().getCoordinates();
+
+                            buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
+
+                            // buttonHtml += "<hr/>"
+
+                            resultHtml += commonDiv.format("mapAdd",buttonHtml);
+                            resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
+
+                            popupDiv.append(resultHtml);
+
+                            $("#popup").show();
+                            overlay.setPosition(coordinate);
                                 break;
                         case DATA_TYPE.ENTRC:
                             openDetailPopupCall(0);

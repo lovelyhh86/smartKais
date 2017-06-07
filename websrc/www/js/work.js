@@ -7,7 +7,7 @@ $( document ).on("pagecreate",pages.workpage.div,  function() {
 });
 
 $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
-    //loadHelpdesk('#panel-qna .ui-content');  //헬프데스크 메뉴 로딩 menuhelpdesk.js
+    loadHelpdesk('#panel-qna .ui-content');  //헬프데스크 메뉴 로딩 menuhelpdesk.js
     //loadAppMenu('#mainMenu');       //앱 메뉴 로딩 menuapp.js
 
     util.on("notification",function(json,param){
