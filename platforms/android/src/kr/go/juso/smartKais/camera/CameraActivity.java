@@ -203,8 +203,9 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		if (sizes.size() > 0){
 			Camera.Size sps = sizes.get(0);
 			for ( Camera.Size ps : sizes ){
-				if (ps.height / 100 == 15)
+//				if (ps.height / 100 == 15)
 //				if (ps.width / 100 == 9)
+				if (ps.width / 100 == 6)
 				{
 					sps = ps;
 					break;
@@ -419,31 +420,31 @@ public class CameraActivity extends Activity implements SensorEventListener {
             //프리뷰용 이미지(회전없음)
             Bitmap picbitmap = BitmapFactory.decodeByteArray(data,0,data.length); //BitmapFactory.decodeFile(pictureFile.toString());
 
-            fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()).toString() + ".jpg";
-            File file = new File(sdRoot, dir + fileName);
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(file);
-                fos.write(data);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            try {
-                exif = new ExifInterface(file.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_UNDEFINED);
+//            fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()).toString() + ".jpg";
+//            File file = new File(sdRoot, dir + fileName);
+//            FileOutputStream fos = null;
+//            try {
+//                fos = new FileOutputStream(file);
+//                fos.write(data);
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            } finally {
+//                try {
+//                    fos.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            try {
+//                exif = new ExifInterface(file.getPath());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+//                    ExifInterface.ORIENTATION_UNDEFINED);
 
             Bitmap bmRotated = rotateBitmap(picbitmap, orientation);
 
@@ -609,7 +610,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
                 matrix.setScale(-1, 1);
                 break;
             case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.setRotate(0);//뒤집어짐?
+                matrix.setRotate(180);
                 break;
             case ExifInterface.ORIENTATION_FLIP_VERTICAL:
                 matrix.setRotate(180);
@@ -627,7 +628,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
                 matrix.postScale(-1, 1);
                 break;
             case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.setRotate(90);//뒤집어짐?
+                matrix.setRotate(270);
                 break;
             default:
                 return bitmap;
