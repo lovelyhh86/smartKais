@@ -17,7 +17,6 @@ class PushReceiverRegister implements PushAppRegistListener
     Context context_;
     private static final String TAG = "SmartKais[PRR]";
     private static final String SVRADDR = "https://flpush.mcenter.go.kr:7001/pis/interface";
-    private static final String USERID ="joehee";
 
 
     public PushReceiverRegister(Context context)
@@ -27,8 +26,7 @@ class PushReceiverRegister implements PushAppRegistListener
 
     public void initialize(String userid){
         PackageManager pm = context_.getPackageManager();
-        String appId = "smartkais";
-        String svrAddr = SVRADDR;
+        String appId;
         String userId = userid;
 
         try {
@@ -44,7 +42,7 @@ class PushReceiverRegister implements PushAppRegistListener
             appId = context_.getApplicationContext().getPackageName();
         }
 
-        int res = PushLibrary.getInstance().setStart(context_, svrAddr, appId);
+        int res = PushLibrary.getInstance().setStart(context_, SVRADDR, appId);
         boolean regist = PushLibrary.getInstance().AppRegist(this, userId, null);
         Log.d("-----------------------",String.valueOf(res) + "===" + String.valueOf(regist));
     }

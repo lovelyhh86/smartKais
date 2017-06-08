@@ -1154,7 +1154,7 @@ var mapInit = function (mapId, pos) {
                 width : 3
             }
         },
-        maxResolution: .25
+        maxResolution: .5
     });
     // 출입구 레이어
     var lyr_tl_spbd_entrc = getFeatureLayer({
