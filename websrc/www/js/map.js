@@ -352,9 +352,9 @@ var MapUtil = {
     },
     setValues: function(layerID, link, sn){
                 var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
-
-                util.postAJAX({}, url)
-                    .then(function (context, rcode, results) {
+                util.showProgress();
+                util.postAJAX({}, url).then(
+                    function (context, rcode, results) {
                         var data = results.data;
 
                         //일련번호
@@ -365,7 +365,7 @@ var MapUtil = {
                             function (){
                                 $("#detailView").popup("close", { transition: "slideup" });
                             },'시설물 정보 조회', '확인');
-                            
+                            util.dismissProgress();
                             return;
                         }
 
@@ -806,7 +806,10 @@ var MapUtil = {
                             break;
 
                         }
-                    });
+                        util.dismissProgress();
+                    },
+                    util.dismissProgress
+                    );
     },
     setPopup: function (type, f) {
         switch (type) {
@@ -1046,6 +1049,18 @@ proj4.defs("EPSG:5177", "+proj=tmerc +lat_0=38 +lon_0=131.0028902777778 +k=1 +x_
 proj4.defs("SR-ORG:6640", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs");
 //WGS84
 proj4.defs("EPSG:4326", "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs");
+
+//*동부원점(Bessel): 강원도 등 동부지역
+proj4.defs("EPSG:2096", "+proj=tmerc +lat_0=38 +lon_0=129 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +units=m +no_defs +towgs84=-115.80,474.99,674.11,1.16,-2.31,-1.63,6.43");
+//*중부원점(Bessel): 서울 등 중부지역
+proj4.defs("EPSG:2097", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +units=m +no_defs +towgs84=-115.80,474.99,674.11,1.16,-2.31,-1.63,6.43");
+//*서부원점(Bessel): 서해5도 등 서부지역
+proj4.defs("EPSG:2098", "+proj=tmerc +lat_0=38 +lon_0=125 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +units=m +no_defs +towgs84=-115.80,474.99,674.11,1.16,-2.31,-1.63,6.43");
+//제주
+proj4.defs("SR-ORG:6640JEJU", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=550000 +ellps=GRS80 +units=m +no_defs");
+
+
+
 
 var GIS_SERVICE_URL, baseProjection, sourceProjection, serviceProjection;
 var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms?FIXED=TRUE";

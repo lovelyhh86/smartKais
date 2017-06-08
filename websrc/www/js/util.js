@@ -139,7 +139,7 @@ var util = {
             transition: "slide",
             reverse: direction === 'left' ? false : true,
             changeHash: true,
-            reloadPage: false
+            reload: false
         };
         ( param && param.reloadPage ) ? pageParam.reloadPage = param.reloadPage : "";
         $.mobile.pageContainer.pagecontainer("change", link, pageParam);
@@ -264,29 +264,31 @@ var util = {
                 return;
             }
 
-            var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
+            layerToggle(context);
 
-            mapInit("map", pos).then(function() {
-                //심플팝업 초기화
-                $("#popup-content").empty();
-                $("#popup").hide();
+            // var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
 
-                if (context.type == "map") {
-                    $(".legend").toggle(true);
-                    map.removeLayer(layers.buld);
-                    map.removeLayer(layers.entrc);
-                    map.addLayer(layers.rdpq);
-                    map.addLayer(layers.bsis);
-                    map.addLayer(layers.area);
-                } else {
-                    $(".legend").toggle(false);
-                    map.removeLayer(layers.rdpq);
-                    map.removeLayer(layers.bsis);
-                    map.removeLayer(layers.area);
-                    map.addLayer(layers.buld);
-                    // map.addLayer(layers.entrc);
-                }
-            });
+            // mapInit("map", pos).then(function() {
+            //     //심플팝업 초기화
+            //     $("#popup-content").empty();
+            //     $("#popup").hide();
+
+            //     if (context.type == "map") {
+            //         $(".legend").toggle(true);
+            //         map.removeLayer(layers.buld);
+            //         map.removeLayer(layers.entrc);
+            //         map.addLayer(layers.rdpq);
+            //         map.addLayer(layers.bsis);
+            //         map.addLayer(layers.area);
+            //     } else {
+            //         $(".legend").toggle(false);
+            //         map.removeLayer(layers.rdpq);
+            //         map.removeLayer(layers.bsis);
+            //         map.removeLayer(layers.area);
+            //         map.addLayer(layers.buld);
+            //         // map.addLayer(layers.entrc);
+            //     }
+            // });
             app.context = {};
         }
 
@@ -564,3 +566,46 @@ NoClickDelay.prototype = {
         this.theTarget = undefined;
     }
 };
+
+
+function layerToggle(context){
+
+    var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
+
+    mapInit("map", pos).then(function() {
+        //심플팝업 초기화
+        $("#popup-content").empty();
+        $("#popup").hide();
+        var mapZoom = map.getView().getZoom();
+        
+        map.removeLayer(layers.move);
+        map.removeLayer(layers.buld);
+        map.removeLayer(layers.move);
+        map.removeLayer(layers.rdpq);
+        map.removeLayer(layers.bsis);
+        map.removeLayer(layers.area);
+
+
+        if (context.type == "map") {
+            $(".legend").toggle(true);
+            
+            map.addLayer(layers.rdpq);
+            map.addLayer(layers.bsis);
+            map.addLayer(layers.area);
+
+            if(mapZoom <= 12){
+                map.getView().setZoom(13);
+            }
+        } else {
+            $(".legend").toggle(false);
+            
+            
+            map.addLayer(layers.buld);
+            // map.addLayer(layers.entrc);
+            if(mapZoom <= 13){
+                map.getView().setZoom(14);
+            }
+
+        }
+    });
+}
