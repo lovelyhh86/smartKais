@@ -360,6 +360,15 @@ var MapUtil = {
                         //일련번호
                         $("#sn").text(sn);
 
+                        if(data == null){
+                            navigator.notification.alert('시설물 정보가 없습니다.',
+                            function (){
+                                $("#detailView").popup("close", { transition: "slideup" });
+                            },'시설물 정보 조회', '확인');
+                            
+                            return;
+                        }
+
                         switch (layerID) {
                             case DATA_TYPE.RDPQ:
 
