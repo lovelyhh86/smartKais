@@ -1,7 +1,7 @@
 var defaultStyleOptions = {
     label: {
         textOffsetX: 0,
-        textOffsetY: 0
+        textOffsetY: -17
     },
     radius: 5
 };
@@ -175,9 +175,9 @@ var roadStyle = function (styleOptions) {
         //     })
         // })
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-        //   anchor: [0, 50],
-        //   anchorXUnits: 'fraction',
-        //   anchorYUnits: 'pixels',
+        anchor: [0.45, 35],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'pixels',
           src: 'img/icon_legend01.png'
         }))
     };
@@ -201,7 +201,7 @@ var areaStyle = function (styleOptions) {
         //     })
         // })
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-        //   anchor: [0, 50],
+        anchor: [0.45, 35],
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
           src: 'img/icon_legend03.png'
@@ -227,7 +227,7 @@ var bsisStyle = function (styleOptions) {
         //     })
         // })
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-        //   anchor: [0, 50],
+        anchor: [0.45, 35],
           anchorXUnits: 'fraction',
           anchorYUnits: 'pixels',
           src: 'img/icon_legend02.png'

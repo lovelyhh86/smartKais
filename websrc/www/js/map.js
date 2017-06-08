@@ -1201,11 +1201,12 @@ var mapInit = function (mapId, pos) {
         typeName: "tlv_spgf_rdpq",
         dataType: DATA_TYPE.RDPQ,
         style: {
-            // label: {
-            //     text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
-            //     textOffsetX: 21,
-            //     textOffsetY: -23
-            // },
+            label: {
+                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
+                // textOffsetX: 0,
+                // textOffsetY: -1,
+                width:2
+            },
             radius: 12
         },
         cluster: { distance: 15 },
@@ -1216,6 +1217,14 @@ var mapInit = function (mapId, pos) {
         title: "지역안내판",
         typeName: "tlv_spgf_area",
         dataType: DATA_TYPE.AREA,
+        style: {
+            label: {
+                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
+                width:2
+            },
+            radius: 12
+        },
+        cluster: { distance: 15 },
         maxResolution: 4,
         viewProgress: false
     });
@@ -1224,6 +1233,14 @@ var mapInit = function (mapId, pos) {
         title: "기초번호판",
         typeName: "tlv_spgf_bsis",
         dataType: DATA_TYPE.BSIS,
+        style: {
+            label: {
+                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
+                width:2
+            },
+            radius: 12
+        },
+        cluster: { distance: 15 },
         maxResolution: 4,
         viewProgress: false
     });
