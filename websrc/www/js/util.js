@@ -85,9 +85,7 @@ var util = {
 
         var activePage = $.mobile.activePage.attr('id');
         if ('#' + activePage == pages.workpage.div) {
-            if (confirm('현장조사 Smart KAIS를 종료하시겠습니까?') == true)
-                util.appExit();
-            return;
+            navigator.notification.confirm("현장조사 Smart KAIS를 종료하시겠습니까?", appExitCallback,"", ['확인', '취소']);
         }
         else if (app.historyStack.length == 1) {
             app.historyStack.pop();
@@ -608,4 +606,10 @@ function layerToggle(context){
 
         }
     });
+}
+
+function appExitCallback(btnIndex){
+    if(btnIndex == 1){
+        util.appExit()
+    }
 }

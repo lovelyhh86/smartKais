@@ -119,7 +119,13 @@ var MapUtil = {
         },
         delPhotoHandler: function() {
             $(".photoWrap .picInfo .btnNormal").click(function(evt){
-                $(evt.target).parent().parent().children(".picImg").html("");
+                if($(evt.target).parent().parent().children(".picImg").html() != ""){
+                    navigator.notification.alert('사진정보를 삭제합니다. 삭제 후 저장버튼을 누르셔야 삭제가 적용됩니다.',
+                            function (){
+                                $(evt.target).parent().parent().children(".picImg").html("");
+                            },'사진삭제', '확인');
+                }
+                
             });
         },
     },
@@ -314,7 +320,6 @@ var MapUtil = {
             case DATA_TYPE.RDPQ:
                 var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
-
                 MapUtil.setValues(layerID, link, sn);
 
                 break;
@@ -2308,7 +2313,7 @@ function insertMoveingPoint(param){
         util.postAJAX({},url)
         .then( function(context, rCode, results) {
 
-            console.log(results);
+            navigator.notification.alert('위치정보가 임시저장되었습니다. KAIS 업무화면에서 저장된 임시좌표를 확인하세요.','','좌표저장', '확인');
 
             var layerList = map.getLayers().getArray();
             for(var i = 0 ; i < layerList.length; i++){
@@ -2344,7 +2349,11 @@ function insertMoveingPoint(param){
 }
 
 function clearMoveMode(){
-    if (confirm('시설물의 위치를 이동을 취소하시겠습니까?') == true){
+    navigator.notification.confirm("시설물의 위치를 이동을 취소하시겠습니까?", cancleMove, "", ['확인', '취소']);
+}
+
+function cancleMove(btnIndex){
+    if(btnIndex == 1){
         layerClear();
         $("#popup").hide();
     }
