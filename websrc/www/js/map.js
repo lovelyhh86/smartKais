@@ -145,7 +145,7 @@ var MapUtil = {
             var legend = document.createElement('div');
            legend.className = "legend ol-unselectable ol-control";
             var legendHtml = '<ul>';
-                legendHtml += '<li class="road">도로명판<span class="total">0건</span></li>';
+                legendHtml += '<li class="rdpq">도로명판<span class="total">0건</span></li>';
                 legendHtml += '<li class="bsis">기초번호판<span class="total">0건</span></li>';
                 legendHtml += '<li class="area">지역안내판<span class="total">0건</span></li>';
                 legendHtml += '</ul>';
@@ -1781,11 +1781,21 @@ var mapInit = function (mapId, pos) {
 
     // 지도 변경시 핸들러 정의(--start--)
     map.getView().on('propertychange', function (event) {
+        
+        
         // 범례 건수 초기화
-        $('.legend .total').text('0건');
+        // $('.legend .total').text('0건');
 
         switch (event.key) {
-//            case 'resolution':
+           case 'resolution':
+                var mapRS = map.getView().getResolution();
+                
+                for(var l in layers){
+                    if(mapRS >= layers[l].getMaxResolution()){
+                        $('.legend .'+l+' .total').text('0건');
+                    }
+                }
+            break;
 //                if (map.getView().getResolution() > .25)
 //                    util.toast("정보를 조회 가능한 레벨이 아닙니다. 확대해 주세요.")
 //                var source = getVectorSource(map);
@@ -2042,7 +2052,7 @@ var getFeatureLayer = function (options) {
                 .then(function (context, rcode, results) {
                     var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
                     if(options.title =='도로명판'){
-                        $('.legend .road .total').text(features.length + '건');
+                        $('.legend .rdpq .total').text(features.length + '건');
                     }else if(options.title =='기초번호판'){
                         $('.legend .bsis .total').text(features.length + '건');
                     }else if(options.title =='지역안내판'){
@@ -2051,6 +2061,8 @@ var getFeatureLayer = function (options) {
                     
                     console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
                     vectorSource.addFeatures(features);
+                    //피처 추가 후 리플레시 기능(건수 표현때문에 추가.. 확실치 않음)
+                    map.changed();
                     util.dismissProgress();
                 }, function (context, xhr, error) {
                     console.log("조회 error >> " + error + '   ' + xhr);
