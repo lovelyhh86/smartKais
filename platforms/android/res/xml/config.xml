@@ -44,10 +44,10 @@
         <param name="android-package" value="io.sqlc.SQLitePlugin" />
     </feature>
     <allow-intent href="market:*" />
-    <name>스마트Kais</name>
+    <name>스마트 국가주소정보시스템</name>
     <description>
     </description>
-    <author email="" href="">
+    <author email="kais01@klid.or.kr" href="">
           도로명주소 정보화 사업단
     </author>
     <content src="index.html" />

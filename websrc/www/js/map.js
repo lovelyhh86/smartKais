@@ -1214,8 +1214,8 @@ var mapInit = function (mapId, pos) {
             },
             radius: 12
         },
-        cluster: { distance: 15 },
-        maxResolution: 1
+        cluster: { distance: 30 },
+        maxResolution: 2
     });
     // 지역안내판 레이어
     var lyr_tl_spgf_area = getFeatureLayer({
@@ -1229,7 +1229,7 @@ var mapInit = function (mapId, pos) {
             },
             radius: 12
         },
-        cluster: { distance: 15 },
+        cluster: { distance: 30 },
         maxResolution: 4,
         viewProgress: false
     });
@@ -1245,7 +1245,7 @@ var mapInit = function (mapId, pos) {
             },
             radius: 12
         },
-        cluster: { distance: 15 },
+        cluster: { distance: 30 },
         maxResolution: 4,
         viewProgress: false
     });
@@ -1794,6 +1794,8 @@ var mapInit = function (mapId, pos) {
 //                popupCloser(event);
 //                break;
         }
+
+        console.log("Center Point : " + (new ol.proj.transform(event.target.getCenter(), baseProjection, sourceProjection)).toString());
     });
 
     // FeatureInfo 정보 팝업 닫기 핸들러 정의(--start--)
@@ -2029,7 +2031,7 @@ var getFeatureLayer = function (options) {
                 VERSION: '1.1.0',
                 REQUEST: 'GetFeature',
                 bbox: extent.join(','),
-                srName: serviceProjection.getCode(),
+                srsName: serviceProjection.getCode(),
                 typeName: options.typeName
             };
 
@@ -2047,7 +2049,7 @@ var getFeatureLayer = function (options) {
                         $('.legend .area .total').text(features.length + '건');
                     }
                     
-                    console.log("The number of features viewed is {0}. extent({1})".format(features.length, extent.join(',')));
+                    console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
                     vectorSource.addFeatures(features);
                     util.dismissProgress();
                 }, function (context, xhr, error) {
