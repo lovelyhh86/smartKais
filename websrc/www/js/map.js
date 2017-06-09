@@ -1766,10 +1766,28 @@ var mapInit = function (mapId, pos) {
         switch (event.key) {
            case 'resolution':
                 var mapRS = map.getView().getResolution();
+                var useLayers = map.getLayers().getArray();
                 
-                for(var l in layers){
-                    if(mapRS >= layers[l].getMaxResolution()){
-                        $('.legend .'+l+' .total').text('0건');
+                for(var i in useLayers){
+                    var id = useLayers[i].get("id");
+                    if(mapRS == useLayers[i].getMaxResolution()){
+                        
+                        if(id == DATA_TYPE.RDPQ){
+                            $('.legend .rdpq .total').text('0건');
+                            util.toast('도로명판을 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
+                        }
+                        if(id == DATA_TYPE.AREA){
+                            $('.legend .area .total').text('0건');
+                            util.toast('지역번호판을 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
+                        }
+                        if(id == DATA_TYPE.BSIS){
+                            $('.legend .bsis .total').text('0건');
+                            util.toast('기초번호판을 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
+                        }
+                        if(id == DATA_TYPE.BULD){
+                            util.toast('건물정보를 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
+                        }
+                        
                     }
                 }
             break;
