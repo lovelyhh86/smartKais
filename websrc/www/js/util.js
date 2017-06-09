@@ -85,7 +85,7 @@ var util = {
 
         var activePage = $.mobile.activePage.attr('id');
         if ('#' + activePage == pages.workpage.div) {
-            navigator.notification.confirm("현장조사 Smart KAIS를 종료하시겠습니까?", appExitCallback,"", ['확인', '취소']);
+            navigator.notification.confirm("현장조사 Smart KAIS를 종료하시겠습니까?", appExitCallback,"알림", ['확인', '취소']);
         }
         else if (app.historyStack.length == 1) {
             app.historyStack.pop();
@@ -235,7 +235,7 @@ var util = {
                     function(btnIndex) {
                         if(btnIndex == 1) {
                             SmartKaisPlugins.dn('http://api.juso.go.kr/gis/dnSmartKaisApp.jsp', function (msg) {
-                                alert(msg.message);
+                                navigator.notification.alert(msg.message,'','알림', '확인');
                             });
                         }
                     }, '알림(최신버전 다운로드)', ['확인', '취소']);
