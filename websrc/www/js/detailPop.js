@@ -1314,7 +1314,7 @@ $(function(){
                         if(photoNum <= 2){
                             $(".infoHeader .photo .photoNum").html(files.length);
                         }else{
-                            $(".infoHeader .photo .photoNum").html(photoNum - files.length);
+                            $(".infoHeader .photo .photoNum").html(photoNum - 2 + files.length);
                         }
                         closePhotoView();
                         util.dismissProgress();
