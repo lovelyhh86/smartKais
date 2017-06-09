@@ -51,12 +51,12 @@ for(var k in DATA_TYPE) {
 var createTextStyle = function (styleOptions) {
     return new ol.style.Text({
         text: styleOptions.label._text,
-        //textAlign: 'center',
+        textAlign: 'center',
         fill: new ol.style.Fill({ color: 'white' }),
         stroke: new ol.style.Stroke({ color: 'black',width: styleOptions.label.width}),
         offsetX: styleOptions.label.textOffsetX,
         offsetY: styleOptions.label.textOffsetY,
-        scale : 2
+        scale : 1.3
     });
 };
 

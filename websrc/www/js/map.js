@@ -1152,16 +1152,19 @@ var mapInit = function (mapId, pos) {
                 collapsible: false
                 
             })
-            
         }).extend([
             new MapUtil.controls.legendControl(),
-            new MapUtil.controls.currentControl()
+            new MapUtil.controls.currentControl(),
+            new ol.control.Rotate({
+                label: $("<IMG>", {src:'image/coordinate.png', alt: '지도회전 초기화'})[0],
+                autoHide: false
+            })
         ]),
         overlays: [overlay, marker],
         view: new ol.View({
             projection: baseProjection,
             center: pos,
-            zoom: 14,
+            zoom: 13,
             maxZoom: 15,
             minZoom: 6,
             maxResolution: 2048
@@ -1208,9 +1211,9 @@ var mapInit = function (mapId, pos) {
         style: {
             label: {
                 text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
-                // textOffsetX: 0,
-                // textOffsetY: -1,
-                width:2
+                textOffsetX: -1,
+                textOffsetY: -18,
+                width: 1
             },
             radius: 12
         },
@@ -1225,7 +1228,9 @@ var mapInit = function (mapId, pos) {
         style: {
             label: {
                 text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
-                width:2
+                textOffsetX: -1,
+                textOffsetY: -18,
+                width: 1
             },
             radius: 12
         },
@@ -1241,7 +1246,9 @@ var mapInit = function (mapId, pos) {
         style: {
             label: {
                 text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0)} },
-                width:2
+                textOffsetX: -1,
+                textOffsetY: -18,
+                width: 1
             },
             radius: 12
         },
@@ -1251,11 +1258,11 @@ var mapInit = function (mapId, pos) {
     });
 
     layers = {
-        "buld": lyr_tl_spbd_buld,
         "rdpq": lyr_tl_spgf_rdpq,
         "area": lyr_tl_spgf_area,
         "bsis": lyr_tl_spgf_bsis,
-        "entrc": lyr_tl_spbd_entrc
+//        "entrc": lyr_tl_spbd_entrc
+        "buld": lyr_tl_spbd_buld
     };
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
@@ -1318,8 +1325,6 @@ var mapInit = function (mapId, pos) {
 
                 moveingPoint_source.addFeature(oldPointFeature);
 
-
-
                 var newPointFeature = new ol.Feature();
                 newPointFeature.setStyle(new ol.style.Style({
                     image: new ol.style.Circle({
@@ -1338,17 +1343,10 @@ var mapInit = function (mapId, pos) {
                 newPointFeature.setGeometry(newPoint);
                 moveingPoint_source.addFeature(newPointFeature);
 
-
-
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
-
                 var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
-
                 var pointSn = popTableP.format("위치일련번호",RDFTYLC_SN);
-
                 var newCoodi = new ol.proj.transform(coordinate, baseProjection, sourceProjection);
-
-
 
                 strHtml = "<b>검정(원)</b>-&gt; <span style='color:red;'>빨강(원)</span>으로 이동하고자 합니다.<br>(맞으면 저장, 틀리면 다른 위치 선택)";
 
@@ -1386,9 +1384,6 @@ var mapInit = function (mapId, pos) {
             if(firstClick){
                 var sn, features;
 
-                // map.getView().setCenter(coordinate);
-
-
                 if(feature.getKeys().indexOf('features') >= 0)
                     features = feature.get('features');
                 else
@@ -1404,12 +1399,8 @@ var mapInit = function (mapId, pos) {
                     resultHtml = "";
                     layerID = layer.get('id');
 
-                    // layerID = DATA_TYPE.AREA;
-                    // layerID = DATA_TYPE.BSIS;
-
                     switch(layerID) {
                         case DATA_TYPE.RDPQ:
-
                             var title = commonP.format("localTitle",
                                 "{0} {1}{2} {3} {4}{5}".format(
                                     feature.get('FT_KOR_RN'),
@@ -1450,12 +1441,12 @@ var mapInit = function (mapId, pos) {
                             var BDRCL_AT = feature.get('BDRCL_AT') == 0 ? "단면":"양면";
                             var bdrclAt = commonSpan.format("info",BDRCL_AT);
 
+                            if(features.length > 1 && index >= 1){
+                                popupDiv.append(commonP.format("infoLine",""));
+                            }
+
                             strHtml += title
                             strHtml += commonP.format("", bdrclAt + rdpqGdSd);
-
-                            if(features.length > 1 && index == 1){
-                                resultHtml += commonP.format("infoLine","");
-                            }
 
                             resultHtml += popDiv.format("",'openDetailPopupCall('+index+')',strHtml);
 
@@ -1467,10 +1458,8 @@ var mapInit = function (mapId, pos) {
                             buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
                             buttonHtml += buttonForm.format("addition","moveingPoint("+RDFTYLC_SN+","+geom[0]+","+geom[1]+","+index+")","image/addtion.png","이동");
 
-                            // buttonHtml += "<hr/>"
-
                             resultHtml += commonDiv.format("mapAdd",buttonHtml);
-                            resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
+                            resultHtml = commonDiv.format("mapInfo",resultHtml);
 
                             popupDiv.append(resultHtml);
 
@@ -1479,7 +1468,6 @@ var mapInit = function (mapId, pos) {
 
                             break;
                         case DATA_TYPE.AREA:
-//                            openDetailPopupCall(0);
                             var title = commonP.format("localTitle",
                                 "{0} {1}{2}".format(
                                     feature.get('KOR_RN'),
@@ -1512,9 +1500,8 @@ var mapInit = function (mapId, pos) {
 
                             $("#popup").show();
                             overlay.setPosition(coordinate);
-                                break;
+                            break;
                         case DATA_TYPE.BSIS:
-//                            openDetailPopupCall(0);
                             var title = commonP.format("localTitle",
                                 "{0} {1}{2}".format(
                                     feature.get('KOR_RN'),
@@ -1569,10 +1556,12 @@ var mapInit = function (mapId, pos) {
 
                             $("#popup").show();
                             overlay.setPosition(coordinate);
-                                break;
+
+                            break;
                         case DATA_TYPE.ENTRC:
                             openDetailPopupCall(0);
-                                break;
+
+                            break;
                         case DATA_TYPE.BULD:
                             // openDetailPopupCall(0);
                             
@@ -1591,11 +1580,9 @@ var mapInit = function (mapId, pos) {
                             //건축물대장 건물명
                             // var BULD_NM = feature.get("BULD_NM");
                             
-
                             //팝업내용 추가
                             strHtml = buldNm
 
-                            
                             resultHtml = popDiv.format("","",strHtml);
 
                             //도로시설물위치일련번호
@@ -1609,31 +1596,28 @@ var mapInit = function (mapId, pos) {
 
                             resultHtml += commonDiv.format("mapAdd",buttonHtml);
 
-                            resultHtml = commonDiv.format("mapInfo0",resultHtml);
+                            resultHtml = commonDiv.format("mapInfo",resultHtml);
 
                             popupDiv.append(resultHtml);
 
-                            //건물번호판
+                             //라인추가
+                            popupDiv.append(commonP.format("infoLine",""));
 
+                            //건물번호판
                             strHtml = commonSpan.format("titleIcon_number","");
                             strHtml += "건물번호판";
 
-                            var aaa = commonP.format("localTile",strHtml);
-
                              //팝업내용 추가
-                            strHtml = aaa
+                            strHtml = commonP.format("localTile",strHtml);
                             strHtml += commonP.format("","");
 
-                             //라인추가
-                            resultHtml = commonP.format("infoLine","");
-
-                            resultHtml += popDiv.format("","",strHtml);
+                            resultHtml = popDiv.format("","",strHtml);
 
                             buttonHtml = buttonForm.format("more","openDetailPopupCall(1)","image/more.png","더보기");
 
                             resultHtml += commonDiv.format("mapAdd",buttonHtml);
 
-                            resultHtml = commonDiv.format("mapInfo1",resultHtml);
+                            resultHtml = commonDiv.format("mapInfo",resultHtml);
 
 
                             popupDiv.append(resultHtml);
@@ -1641,10 +1625,8 @@ var mapInit = function (mapId, pos) {
                             $("#popup").show();
                             overlay.setPosition(coordinate);
 
-                                break;
-                        
+                            break;
                     }
-
                     firstClick = false;
 
                 });
@@ -1781,11 +1763,6 @@ var mapInit = function (mapId, pos) {
 
     // 지도 변경시 핸들러 정의(--start--)
     map.getView().on('propertychange', function (event) {
-        
-        
-        // 범례 건수 초기화
-        // $('.legend .total').text('0건');
-
         switch (event.key) {
            case 'resolution':
                 var mapRS = map.getView().getResolution();
@@ -1804,8 +1781,6 @@ var mapInit = function (mapId, pos) {
 //                popupCloser(event);
 //                break;
         }
-
-        console.log("Center Point : " + (new ol.proj.transform(event.target.getCenter(), baseProjection, sourceProjection)).toString());
     });
 
     // FeatureInfo 정보 팝업 닫기 핸들러 정의(--start--)

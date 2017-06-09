@@ -28,7 +28,7 @@
 
 
 /*mapBox*/
-.mapWrap{width:300px;max-width: 400px; color: #2c3538}
+.mapWrap{width:300px;max-width: 400px; color: #2c3538; background-color: white; border-radius: 0.3em; }
 .mapRow{display:block;position:relative; width: auto;}
 .box1{float:left; display:inline-block; width:15px; height:15px; background: url(../image/box1.png) 0 0 no-repeat;}
 .box2{height:15px; margin-right:15px; width:auto; background: url(../image/box2.png) 10px 0 no-repeat;}
@@ -39,9 +39,10 @@
 .box9{position:absolute; float:right; bottom:0; right:0; display:inline-block; width:15px; height:30px;background:url(../image/box9.png) 0 100% no-repeat;}
 
 /*map Info*/
-.mapContent{display:block; width:100%; background:url(../image/box6.png) 100% 0 no-repeat; color: #666; font-size: 0.9em;line-height: 1.4em;}
-.mapInfo{position:relative; display:block; padding:5px 25px 0 25px; background:url(../image/box4.png) 0 0 no-repeat;}
-.mapAdd{display: inline-block; position: absolute; top: 0; right: 20px; width: 25px;}
+.mapContent{display:block; width:100%; background-size: contain; color: #666; font-size: 0.9em;line-height: 1.4em;}
+.mapInfo{position:relative; display:block; padding:1.4em 1.8em; }
+.infoLine{border-top:1px solid #e5e5e5; padding-top: 0.3em; margin: 0 1.5em; }
+.mapAdd{display: inline-block; position: absolute; top: 1.1em; right: 20px; width: 25px;}
 .mapAdd span { line-height: 1.5em; }
 .mapInfo0{position:relative; display:block; padding:5px 25px 20px 25px; background:url(../image/box4.png) 0 0 no-repeat;}
 .mapInfo0 > .mapAdd{display: inline-block; position: absolute; top: .4em; right: 20px;}
