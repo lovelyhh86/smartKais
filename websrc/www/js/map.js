@@ -120,7 +120,7 @@ var MapUtil = {
         delPhotoHandler: function() {
             $(".photoWrap .picInfo .btnNormal").click(function(evt){
                 if($(evt.target).parent().parent().children(".picImg").html() != ""){
-                    navigator.notification.alert('사진정보를 삭제합니다. 삭제 후 저장버튼을 누르셔야 삭제가 적용됩니다.',
+                    navigator.notification.alert('사진을 삭제합니다. 아래 저장버튼을 눌러 적용합니다.',
                             function (){
                                 $(evt.target).parent().parent().children(".picImg").html("");
                             },'알림', '확인');
@@ -366,10 +366,12 @@ var MapUtil = {
                         $("#sn").text(sn);
 
                         if(data == null){
-                            navigator.notification.alert('시설물 정보가 없습니다.',
-                            function (){
-                                $("#detailView").popup("close", { transition: "slideup" });
-                            },'시설물 정보 조회', '확인');
+                            navigator.notification.alert(msg.noItem,
+                                function (){
+                                    $("#detailView").popup("close", { transition: "slideup" });
+                                },
+                                '알림', '확인'
+                            );
                             util.dismissProgress();
                             return;
                         }
@@ -907,10 +909,10 @@ var MapUtil = {
                 util.postAJAX({},url).then( function(context,rcode,results) {
                     var data = results.data;
                     if (rcode != 0 || util.isEmpty(data) === true ){
-                        navigator.notification.alert('시설물 정보를 가져오지 못하였습니다',
+                        navigator.notification.alert(msg.noItem,
                             function (){
                                 util.goBack();
-                            },'시설물 정보 조회', '확인');
+                            },'알림', '확인');
                         util.dismissProgress();
                         return;
                     }
@@ -942,10 +944,10 @@ var MapUtil = {
 
                 }),function(context,xhr,error) {
                     console.log("갱신실패"+ error+'   '+ xhr);
-                        navigator.notification.alert('시설물 정보를 가져오지 못하였습니다',
+                        navigator.notification.alert(msg.noItem,
                             function (){
                                 util.goBack();
-                            },'시설물 정보 조회', '확인');
+                            },'알림', '확인');
                         util.dismissProgress();
                 }
 
@@ -1301,9 +1303,9 @@ var mapInit = function (mapId, pos) {
             if(layerList[i].get('title') == '위치이동'){
                 console.log(layerList[i].get('title'));
 
-                var moveingPoint_source = layerList[i].getSource();
+                var movingPoint_source = layerList[i].getSource();
 
-                moveingPoint_source.clear();
+                movingPoint_source.clear();
 
                 var oldPointFeature = new ol.Feature();
                 oldPointFeature.setStyle(new ol.style.Style({
@@ -1323,7 +1325,7 @@ var mapInit = function (mapId, pos) {
 
                 oldPointFeature.setGeometry(oldPoint);
 
-                moveingPoint_source.addFeature(oldPointFeature);
+                movingPoint_source.addFeature(oldPointFeature);
 
                 var newPointFeature = new ol.Feature();
                 newPointFeature.setStyle(new ol.style.Style({
@@ -1341,7 +1343,7 @@ var mapInit = function (mapId, pos) {
 
                 var newPoint = new ol.geom.Point(coordinate);
                 newPointFeature.setGeometry(newPoint);
-                moveingPoint_source.addFeature(newPointFeature);
+                movingPoint_source.addFeature(newPointFeature);
 
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
                 var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
@@ -1491,8 +1493,6 @@ var mapInit = function (mapId, pos) {
 
                             buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
 
-                            // buttonHtml += "<hr/>"
-
                             resultHtml += commonDiv.format("mapAdd",buttonHtml);
                             resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
 
@@ -1547,8 +1547,6 @@ var mapInit = function (mapId, pos) {
 
                             buttonHtml += buttonForm.format("more","openDetailPopupCall("+index+")","image/more.png","더보기");
 
-                            // buttonHtml += "<hr/>"
-
                             resultHtml += commonDiv.format("mapAdd",buttonHtml);
                             resultHtml = commonDiv.format("mapInfo"+index,resultHtml);
 
@@ -1563,8 +1561,6 @@ var mapInit = function (mapId, pos) {
 
                             break;
                         case DATA_TYPE.BULD:
-                            // openDetailPopupCall(0);
-                            
                             //건물명
                             var POS_BUL_NM = feature.get("POS_BUL_NM");
 
@@ -1577,22 +1573,15 @@ var mapInit = function (mapId, pos) {
 
                             var buldNm = commonP.format("localTitle",strHtml);
 
-                            //건축물대장 건물명
-                            // var BULD_NM = feature.get("BULD_NM");
-                            
                             //팝업내용 추가
                             strHtml = buldNm
 
                             resultHtml = popDiv.format("","",strHtml);
 
-                            //도로시설물위치일련번호
-                            // var RDFTYLC_SN = feature.get("RDFTYLC_SN");
                             //도로시설물 공간정보
                             var geom = feature.getGeometry().getCoordinates();
 
                             buttonHtml = buttonForm.format("more","openDetailPopupCall(0)","image/more.png","더보기");
-                            // buttonHtml += buttonForm.format("addition","moveingPoint("+RDFTYLC_SN+","+geom[0]+","+geom[1]+","+index+")","image/addtion.png","이동");
-                            // buttonHtml += buttonForm.format("addition","alert('이동이 불가능 합니다.')","image/addtion.png","이동");
 
                             resultHtml += commonDiv.format("mapAdd",buttonHtml);
 
@@ -2271,12 +2260,12 @@ function moveingPoint(sn,pointX,pointY,index){
     map.removeLayer(layers.area);
 
     /** 위치이동 레이어 start */
-    var moveingPoint_source = new ol.source.Vector({});
+    var movingPoint_source = new ol.source.Vector({});
 
     var moveingPoint_layer = new ol.layer.Vector({
         map: map,
         title : '위치이동',
-        source: moveingPoint_source
+        source: movingPoint_source
     });
 
     map.addLayer(moveingPoint_layer);
@@ -2300,13 +2289,11 @@ function moveingPoint(sn,pointX,pointY,index){
     var oldPoint = new ol.geom.Point([pointX,pointY]);
 
     moveingPointFeature.setGeometry(oldPoint);
-    moveingPoint_source.addFeature(moveingPointFeature);
+    movingPoint_source.addFeature(moveingPointFeature);
     
 }
 
 function insertMoveingPoint(param){
-    // if (confirm('시설물의 위치를 이동하시겠습니까?') == true){
-        // var param = {sigCd : app.info.sigCd , rdftylcSn : sn, posX : pointX, posY : pointY, workId : app.info.opeId ,mode:'11'};
         var link = URLs.moveingPoint;
 
         var sendParam = $.extend(param,{
@@ -2317,17 +2304,19 @@ function insertMoveingPoint(param){
         
         var url = URLs.postURL(link, sendParam);
 
+        util.showProgress();
         util.postAJAX({},url)
         .then( function(context, rCode, results) {
-
-            navigator.notification.alert('위치정보가 임시저장되었습니다. KAIS 업무화면에서 저장된 임시좌표를 확인하세요.','','알림', '확인');
+            util.dismissProgress();
+            util.toast('이동한 위치 정보가 저장되었습니다.');
+            navigator.notification.alert('KAIS C/S\n (자료관리 → 도로안내시설 편집 → 도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.','','알림', '확인');
 
             var layerList = map.getLayers().getArray();
             for(var i = 0 ; i < layerList.length; i++){
                 if(layerList[i].get('title') == '위치이동'){
-                    var moveingPoint_source = layerList[i].getSource();
+                    var movingPoint_source = layerList[i].getSource();
 
-                    moveingPoint_source.clear();
+                    movingPoint_source.clear();
                     map.removeLayer(layers.move);
                     $("#popup").hide();
                 }
@@ -2349,17 +2338,18 @@ function insertMoveingPoint(param){
                 // map.addLayer(layers.entrc);
             }
             
-        });
+        },
+        msg.alert);
 
     // }
     
 }
 
 function clearMoveMode(){
-    navigator.notification.confirm("시설물의 위치를 이동을 취소하시겠습니까?", cancleMove, "알림", ['확인', '취소']);
+    navigator.notification.confirm("위치 이동을 취소 하시겠습니까?", cancelMove, "알림", ['확인', '취소']);
 }
 
-function cancleMove(btnIndex){
+function cancelMove(btnIndex){
     if(btnIndex == 1){
         layerClear();
         $("#popup").hide();
@@ -2370,9 +2360,9 @@ function layerClear(){
     var layerList = map.getLayers().getArray();
         for(var i = 0 ; i < layerList.length; i++){
             if(layerList[i].get('title') == '위치이동'){
-                var moveingPoint_source = layerList[i].getSource();
+                var movingPoint_source = layerList[i].getSource();
 
-                moveingPoint_source.clear();
+                movingPoint_source.clear();
                 map.removeLayer(layers.move);
                 
             }

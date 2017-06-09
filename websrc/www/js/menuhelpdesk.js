@@ -58,9 +58,9 @@ function loadHelpdesk(container){
 
             $('#helpdesk').on("click", ".attachment", function() {
                 filename = $(this).text();
-                smartKaisPlugins.callAttachViewer(
+                SmartKaisPlugins.callAttachViewer(
                     filename,
-                    { noticeMgtSn:$(this).data('sn') ,fileMgtSn:$(this).data('filesn')},
+                    { "noticeMgtSn": $(this).data('sn'), "fileMgtSn": $(this).data('filesn')},
                     function() {},
                     function(errorMsg) { console.error("Error at attach view file. " + errorMsg) });
             });

@@ -4,7 +4,7 @@ $(function(){
         function closeDetailView(){
             var newLbl = $("p[name*='newLbl']").text();
             if(newLbl != ""){
-                navigator.notification.confirm('작성하시던 데이터를 잃게 됩니다. 닫으시겠습니까?', function(btnindex){
+                navigator.notification.confirm(msg.lossClose, function(btnindex){
                     if(btnindex == 1){
                         $("#detailView").popup("close", { transition: "slideup" });
                     }
@@ -702,8 +702,8 @@ $(function(){
         }
 
         function refresh(){
-            navigator.notification.confirm('시설물 정보를 원래대로 되돌리시겠습니까?', function(btnindex){
-                if(btnindex == 1){
+            navigator.notification.confirm(msg.initInfo, function(btnIndex){
+                if(btnIndex == 1){
                     $("p[id*='_new']").text('');
                     $("p[id*='_new']").hide();
                     
@@ -721,14 +721,14 @@ $(function(){
             if(newLbl == ""){
                 
                 if($("#bdtypCd_mainLbl_new").text() != ""){
-                    navigator.notification.alert('소분류를 선택해주세요.','','알림', '확인');
+                    navigator.notification.alert('소분류를 선택합니다.','','알림', '확인');
                 }else{
-                    navigator.notification.alert('저장할 데이터가 없습니다.','','알림', '확인');
+                    navigator.notification.alert(msg.noSave,'','알림', '확인');
                 }
                 return;
             }
-            navigator.notification.confirm('시설물 정보를 변경하시겠습니까?', function(btnindex){
-                if(btnindex == 1){
+            navigator.notification.confirm(msg.isSave, function(btnIndex){
+                if(btnIndex == 1){
                     var commomParams = {};
                     var sendParams = {};
                     var buldParams = {};
@@ -1170,19 +1170,15 @@ $(function(){
 
        function closePhotoView(){
            if($("#photoIsGgn").val() == 'Y'){
-               navigator.notification.confirm('새로 찍은 사진데이터를 잃게 됩니다. 닫으시겠습니까?', function(btnindex){
-                if(btnindex == 1){
-                    $("#photoDialog").hide();
-                    $("#mask").hide();
-                }
-            }, "알림", ["확인","취소"]);
-               
+               navigator.notification.confirm(msg.lossPhotoClose, function(btnIndex){
+                   if(btnIndex == 1){
+                        $("#photoDialog").hide();
+                        $("#mask").hide();
+                   }
+               }, "알림", ["확인","취소"]);
            }
-
            $("#photoDialog").hide();
            $("#mask").hide();  
-
-           
        }
 
        function makeImg(){
@@ -1240,10 +1236,10 @@ $(function(){
             var photoIsGgn = $("#photoIsGgn").val();
             
             if(photoIsGgn == "N"){
-                navigator.notification.alert('저장할 데이터가 없습니다.','','알림', '확인');
+                navigator.notification.alert(msg.noSave,'','알림', '확인');
                 return;
             }
-            navigator.notification.confirm('사진정보를 변경하시겠습니까?', function(btnindex){
+            navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
                 if(btnindex == 1){
                     var commomParams = {};
                     var sendParams = {};
@@ -1262,7 +1258,7 @@ $(function(){
                     if(files.length>0){
                         commomParams = $.extend(commomParams, {files: files});
                     }else{
-                        navigator.notification.alert('저장할 데이터가 없습니다.','','알림', '확인');
+                        navigator.notification.alert(msg.noSave,'','알림', '확인');
                         return;
                     }
 

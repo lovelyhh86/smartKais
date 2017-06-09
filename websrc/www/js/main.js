@@ -1,4 +1,18 @@
 var sso;
+var msg = {
+    callCenter: "비 정상적인 작업이 수행 되었습니다.\n\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
+    exit: "\n\n스마트KAIS 종료합니다.",
+    alert: function() {
+        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+    },
+    noItem: "조회된 정보가 없습니다.",
+    noSave: "변경한 항목이 없습니다.",
+    isSave: "변경한 항목이 있습니다. 저장 하시겠습니까?",
+    isSavePhoto: "촬영한 사진이 있습니다. 저장 하시겠습니까?",
+    lossClose: "변경한 항목이 있습니다. 확인을 누르면 저장되지 않습니다.",
+    lossPhotoClose: "촬영한 사진이 있습니다. 확인을 누르면 저장되지 않습니다.",
+    initInfo: "정보를 다시 조회 하시겠습니까?"
+};
 var app = {
     // Application Constructor
     initialize: function () {

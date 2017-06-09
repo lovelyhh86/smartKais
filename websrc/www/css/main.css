@@ -15,9 +15,9 @@
 #work-header.ui-header>.ui-btn { width: 2.6em; height: 2.6em; }
 #work-header.ui-header>.ui-title { margin: 0 20%; padding: .9em 0; height: calc(100% - .9em * 2); }
 #work-header.ui-header>.ui-title img { height: 100%; }
-#work-header.ui-header .ui-panel { position: inherit; }
+#work-header.ui-header .ui-panel { position: fixed; }
 
-#work-header.ui-header .ui-panel  { text-shadow: none; overflow-y: scroll; }
+#work-header.ui-header .ui-panel  { text-shadow: none; }
 #work-header.ui-header .ui-panel .ui-content .ui-btn { font-size: 1.2em; color: black; background-color:white; border-color:black; border-width:0px 0px 1px 0px;}
 #work-header.ui-header .ui-panel-dismiss-open.ui-panel-dismiss-position-right { right: 90%; }
 
@@ -28,8 +28,22 @@
 #panel-qna .ui-tabs-active { border: 1px solid black; }
 #panel-qna .ui-collapsible-heading { border: 1px solid; overflow-x:hidden;}
 #panel-qna .list { overflow-y: scroll; overflow-x:hidden;}
+#panel-qna .list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+#panel-qna .list::-webkit-scrollbar {
+	width: 12px;
+	background-color: #F5F5F5;
+}
+#panel-qna .list::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #496388;
+}
+#panel-qna .ui-field-contain { display: none; }
 #panel-qna .ui-field-contain label { font-size: 1.2em; line-height: 1.2em; }
-
 
 /** Content pages */
 #work_page .title { margin-top: 20.5%; text-align: center; }
