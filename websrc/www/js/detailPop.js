@@ -1311,8 +1311,10 @@ $(function(){
                         $("#photoIsGgn").val('N');
                         //사진건수
                         var photoNum = $(".infoHeader .photo .photoNum").html();
-                        if(photoNum < 2){
+                        if(photoNum <= 2){
                             $(".infoHeader .photo .photoNum").html(files.length);
+                        }else{
+                            $(".infoHeader .photo .photoNum").html(photoNum - files.length);
                         }
                         closePhotoView();
                         util.dismissProgress();
