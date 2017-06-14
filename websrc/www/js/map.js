@@ -428,22 +428,28 @@ var MapUtil = {
                                 var frontEndBaseNo = "{0}{1}".format(data.frontEndBaseMasterNo, (data.frontEndBaseSlaveNo != "0" ? '-' + data.frontEndBaseSlaveNo : ''));
                                 $("#frontEndBaseNo").html(frontEndBaseNo);
                                 $("#frontEndBaseNo").addClass("edit");
-                                //뒷면 도로명(국문)
-                                $("#backKoreanRoadNm").html(data.backKoreanRoadNm);
-                                //뒷면 도로명(로마자)
-                                $("#backRomeRoadNm").html(data.backRomeRoadNm);
-                                //뒷면시작기초번호(0-0)
-                                $("#backStartBaseMasterNo").html((data.backStartBaseMasterNo ? data.backStartBaseMasterNo : ''));
-                                $("#backStartBaseSlaveNo").html((data.backStartBaseSlaveNo ? data.backStartBaseSlaveNo : ''));
-                                var backStartBaseNo = "{0}{1}".format((data.backStartBaseMasterNo ? data.backStartBaseMasterNo : ''), (data.backStartBaseSlaveNo != "0" ? '-' + data.backStartBaseSlaveNo : ''));
-                                $("#backStartBaseNo").html(backStartBaseNo);
-                                $("#backStartBaseNo").addClass("edit");
-                                //뒷면종료기초번호(0-0)
-                                $("#backEndBaseMasterNo").html((data.backEndBaseMasterNo ? data.backEndBaseMasterNo : ''));
-                                $("#backEndBaseSlaveNo").html((data.backEndBaseSlaveNo ? data.backEndBaseSlaveNo : ''));
-                                var backEndBaseNo = "{0}{1}".format((data.backEndBaseMasterNo ? data.backEndBaseMasterNo : ''), (data.backEndBaseSlaveNo != "0" ? '-' + data.backEndBaseSlaveNo : ''));
-                                $("#backEndBaseNo").html(backEndBaseNo);
-                                $("#backEndBaseNo").addClass("edit");
+                                if(data.bdrclAt == 1){
+                                    // $(".bk").show();
+                                    //뒷면 도로명(국문)
+                                    $("#backKoreanRoadNm").html(data.backKoreanRoadNm);
+                                    //뒷면 도로명(로마자)
+                                    $("#backRomeRoadNm").html(data.backRomeRoadNm);
+                                    //뒷면시작기초번호(0-0)
+                                    $("#backStartBaseMasterNo").html((data.backStartBaseMasterNo ? data.backStartBaseMasterNo : ''));
+                                    $("#backStartBaseSlaveNo").html((data.backStartBaseSlaveNo ? data.backStartBaseSlaveNo : ''));
+                                    var backStartBaseNo = "{0}{1}".format((data.backStartBaseMasterNo ? data.backStartBaseMasterNo : ''), (data.backStartBaseSlaveNo != "0" ? '-' + data.backStartBaseSlaveNo : ''));
+                                    $("#backStartBaseNo").html(backStartBaseNo);
+                                    $("#backStartBaseNo").addClass("edit");
+                                    //뒷면종료기초번호(0-0)
+                                    $("#backEndBaseMasterNo").html((data.backEndBaseMasterNo ? data.backEndBaseMasterNo : ''));
+                                    $("#backEndBaseSlaveNo").html((data.backEndBaseSlaveNo ? data.backEndBaseSlaveNo : ''));
+                                    var backEndBaseNo = "{0}{1}".format((data.backEndBaseMasterNo ? data.backEndBaseMasterNo : ''), (data.backEndBaseSlaveNo != "0" ? '-' + data.backEndBaseSlaveNo : ''));
+                                    $("#backEndBaseNo").html(backEndBaseNo);
+                                    $("#backEndBaseNo").addClass("edit");
+                                }else{
+                                    $(".bk").hide();
+                                }
+                                
                                 //도로명판종류
                                 $("#gdftyForm").html(data.gdftyForm);
                                 $("#gdftyFormLbl").html(data.gdftyFormLbl);
