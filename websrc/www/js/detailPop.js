@@ -161,7 +161,7 @@ $(function(){
                     
                     //라디오버튼 구성
                     popColume = 'BUL_NMT_PR';
-                    createRadioButton();
+                    createRadioButtonCustom(id);
                     break;
                 case 'buldNmtCd':
                     //제목
@@ -683,6 +683,36 @@ $(function(){
                         $("#scrollDiv").attr("style","height:500px;overflow-y:scroll");
                     }else{
                         $("#scrollDiv").attr("style","");
+                    }
+
+                    var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
+
+                    $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
+
+                break;
+            case'buldNmtPurpose':
+                //건물번호판 용도
+                var codeList = app.codeMaster[CODE_GROUP[popColume]];
+
+                var buldNmtType = $("#buldNmtType").text();
+
+                for(var c in codeList){
+                        if(c != "GroupNm"){
+                            if(c.substr(1,4) != '000' && buldNmtType.substr(0,1) == c.substr(0,1)){
+
+                                strText += InputRadio.format(id,c);
+                                strText += radioSpen.format(codeList[c]);
+                                cellText += dataCell.format(strText);
+                                
+                                appendText = targetRow.format(cellText);
+                                dataForm.append(appendText)
+                                appendText = ''; 
+                                cellText = '';
+                                strText = '';
+
+                            }
+
+                        }
                     }
 
                     var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
