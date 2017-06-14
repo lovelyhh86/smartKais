@@ -1176,9 +1176,11 @@ $(function(){
                         $("#mask").hide();
                    }
                }, "알림", ["확인","취소"]);
+           }else{
+                $("#photoDialog").hide();
+                $("#mask").hide();  
            }
-           $("#photoDialog").hide();
-           $("#mask").hide();  
+           
        }
 
        function makeImg(){
