@@ -1199,13 +1199,13 @@ $(function(){
        }
 
        function closePhotoView(){
-           if($("#photoIsGgn").val() == 'Y'){
+           if(MapUtil.state.photo[0].edited || MapUtil.state.photo[1].edited){
                navigator.notification.confirm(msg.lossPhotoClose, function(btnIndex){
                    if(btnIndex == 1){
                         $("#photoDialog").hide();
                         $("#mask").hide();
                    }
-               }, "알림", ["확인","취소"]);
+               }, "알림", ["닫기","취소"]);
            }else{
                 $("#photoDialog").hide();
                 $("#mask").hide();  
@@ -1228,18 +1228,18 @@ $(function(){
 
            for(var index = 0 ; index < picImg.length; index++){
                 var picImgTag = $(picImg[index]);
+                var src = '';
                 if(picImgTag[0].lastChild != null){
-                    
-                    var src = picImgTag[0].lastChild.getAttribute("src").split('base64,')[1];
-                    var imgtName = '{0}_{1}_{2}.jpg'.format(date,title,index);
-
-                    var data = new Object() ;
-
-                    data.base64 = src;
-                    data.name = imgtName;
-
-                    files.push(data);
+                    src = picImgTag[0].lastChild.getAttribute("src").split('base64,')[1];
                 }
+                var imgtName = '{0}_{1}_{2}.jpg'.format(date,title,index);
+
+                var data = new Object() ;
+
+                data.base64 = src;
+                data.name = imgtName;
+
+                files.push(data);
            }
 
            return files;
@@ -1264,13 +1264,12 @@ $(function(){
        }
 
        function saveImg(type){
-            //사진데이터 확인여부
-            var photoIsGgn = $("#photoIsGgn").val();
             
-            if(photoIsGgn == "N"){
+            if(!MapUtil.state.photo[0].edited && !MapUtil.state.photo[1].edited){
                 navigator.notification.alert(msg.noSave,'','알림', '확인');
                 return;
             }
+
             navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
                 if(btnindex == 1){
                     var commomParams = {};
@@ -1285,14 +1284,15 @@ $(function(){
                     // if(photoMode){
                     //     files = makeImg();
                     // }
+                    commomParams = $.extend(commomParams, {files: files});
 
                     //사진파일
-                    if(files.length>0){
-                        commomParams = $.extend(commomParams, {files: files});
-                    }else{
-                        navigator.notification.alert(msg.noSave,'','알림', '확인');
-                        return;
-                    }
+                    // if(files.length>0){
+                    //     commomParams = $.extend(commomParams, {files: files});
+                    // }else{
+                    //     navigator.notification.alert(msg.noSave,'','알림', '확인');
+                    //     return;
+                    // }
 
                     commomParams = $.extend(commomParams, {
                         sn: sn,
@@ -1345,20 +1345,31 @@ $(function(){
                     util.postAJAX({}, url).then(
                         function (context, rcode, results) {
                             util.toast('사진이 변경되었습니다.');
-                            $("#photoIsGgn").val('N');
                             //사진건수
                             var photoNum = $(".infoHeader .photo .photoNum").html();
-                            if(photoNum <= 2){
-                                $(".infoHeader .photo .photoNum").html(files.length);
-                            }else{
-                                $(".infoHeader .photo .photoNum").html(photoNum - 2 + files.length);
+                            
+                            var cnt = 0 ;
+                            for(var i = 0 ; i < files.length; i++ ){
+                                if(files[i].base64 != ''){
+                                    cnt++;
+                                }
                             }
+
+                            if(photoNum <= 2){
+                                $(".infoHeader .photo .photoNum").html(cnt);
+                            }else{
+                                $(".infoHeader .photo .photoNum").html(photoNum - 2 + cnt);
+                            }
+
+                            MapUtil.state.photo[0].edited = false;
+                            MapUtil.state.photo[1].edited = false;
+
                             closePhotoView();
                             util.dismissProgress();
                         },
                         util.dismissProgress
                     );
                 }
-            }, "알림", ["확인","취소"]);
+            }, "알림", ["저장","취소"]);
             
        }

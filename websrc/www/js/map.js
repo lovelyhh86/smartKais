@@ -6,6 +6,8 @@ var MapUtil = {
     init: function () {
         MapUtil.controls.init();
         MapUtil.handler.init();
+    }, state: {
+       photo : []
     }, handler: {
         init: function() {
             MapUtil.handler.popupHandler();
@@ -102,7 +104,19 @@ var MapUtil = {
 
                                 }
                             }
-                           util.dismissProgress();
+
+                            util.toast('최근 사진으로 2장까지만 조회');
+                            util.dismissProgress();
+                            switch(data.files.length) {
+                                case 0:
+                                    MapUtil.state.photo = [{isPhoto: false, edited: false}, {isPhoto: false, edited: false}];
+                                    break;
+                                case 1:
+                                    MapUtil.state.photo = [{isPhoto: true, edited: false}, {isPhoto: false, edited: false}];
+                                    break;
+                                default:
+                                    MapUtil.state.photo = [{isPhoto: true, edited: false}, {isPhoto: true, edited: false}];
+                            }
                         }
                     );
                 }
@@ -111,19 +125,33 @@ var MapUtil = {
         },
         takePhotoHandler: function() {
             $(".photoWrap .picInfo .btnPoint").click(function(evt){
+                var _this = $(this);
                 util.takePictureFromCamera(function(ret){
-                    $("#photoIsGgn").val('Y');
+                    if(_this.parent().hasClass('long')){
+                        MapUtil.state.photo[1].edited = true;
+                    }else if(_this.parent().hasClass('short')){
+                        MapUtil.state.photo[0].edited = true;
+                    }
+                    
                     $(evt.target).parent().parent().children(".picImg").html("<img src='data:image/jpeg;base64," + ret.src + "'>");
                 });
             });
         },
         delPhotoHandler: function() {
             $(".photoWrap .picInfo .btnNormal").click(function(evt){
+                var _this = $(this);
                 if($(evt.target).parent().parent().children(".picImg").html() != ""){
-                    navigator.notification.alert('사진을 삭제합니다. 아래 저장버튼을 눌러 적용합니다.',
-                            function (){
-                                $(evt.target).parent().parent().children(".picImg").html("");
-                            },'알림', '확인');
+                    navigator.notification.confirm(msg.delPhoto,
+                            function (btnIndex){
+                                if(btnIndex == 1){
+                                    if(_this.parent().hasClass('long')){
+                                        MapUtil.state.photo[1].edited = MapUtil.state.photo[1].isPhoto;
+                                    }else if(_this.parent().hasClass('short')){
+                                        MapUtil.state.photo[0].edited = MapUtil.state.photo[0].isPhoto;
+                                    }
+                                    $(evt.target).parent().parent().children(".picImg").html("");
+                                }
+                            },'알림', ['삭제','취소']);
                 }
                 
             });
@@ -2441,4 +2469,11 @@ function baseNumberMix(mn,sn){
         }
 
         return baseNum;
+}
+
+function moveToXy(x,y){
+    var cood = [x,y];
+    map.getView().setCenter(cood);
+    map.updateSize();
+    console.log("["+x+","+y+"]");
 }

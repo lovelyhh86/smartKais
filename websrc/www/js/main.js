@@ -8,10 +8,11 @@ var msg = {
     noItem: "조회된 정보가 없습니다.",
     noSave: "변경한 항목이 없습니다.",
     isSave: "변경한 항목이 있습니다. 저장 하시겠습니까?",
-    isSavePhoto: "촬영한 사진이 있습니다. 저장 하시겠습니까?",
+    isSavePhoto: "변경한 사진이 있습니다. 저장 하시겠습니까?",
     lossClose: "변경한 항목이 있습니다. 확인을 누르면 저장되지 않습니다.",
-    lossPhotoClose: "촬영한 사진이 있습니다. 확인을 누르면 저장되지 않습니다.",
-    initInfo: "정보를 다시 조회 하시겠습니까?"
+    lossPhotoClose: "변경한 사진이 있습니다. 확인을 누르면 저장되지 않습니다.",
+    initInfo: "정보를 다시 조회 하시겠습니까?",
+    delPhoto: "사진을 삭제합니다. 변경 시 아래 저장버튼을 눌러 적용합니다."
 };
 var app = {
     // Application Constructor
