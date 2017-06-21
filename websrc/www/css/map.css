@@ -29,5 +29,10 @@
 
 .curPosition { top: 5em; right: 1em; }
 .curPosition button { background-color: transparent !important; }
-.currentMarker { width: 3em;, left: -50%, bottom: -.5em; position: relative; }
+.currentMarker { width: 3em; left: -50%; bottom: -.5em; position: relative; }
 
+.ui-input-search{top: -59em; width:46em}
+
+#autocomplete{width:100%; position: absolute; top:75px;}
+
+.ui-input-search:after{left: 46.5em}

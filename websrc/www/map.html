@@ -2,6 +2,10 @@
 <html LANG="ko">
 <div id="mapview_page" data-sn='' data-sigcd='' data-role="page" data-dom-cache="true">
     <div id="map" style="height: 100%;"></div>
+    <form class="ui-filterable" >
+        <input id="autocomplete-input" data-type="search" placeholder="도로명주소 검색(3글자 이상)">
+    </form>
+    <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input"></ul>
     <div id="popup" class="mapWrap">
         <div id="popup-content" class="mapContent">
         </div>
@@ -10,6 +14,52 @@
 
     <script type="text/javascript">
         $(document).on("pagecreate", pages.map.div, function() {
+            $( "#autocomplete" ).on( "filterablebeforefilter", function ( e, data ) {
+                var $ul = $( this ),
+                  $input = $( data.input ),
+                  value = $input.val().trim(),
+                  html = "";
+                $ul.html( "" );
+                if ( value && value.length > 2 ) {
+                  $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+                  $ul.listview( "refresh" );
+                  $.ajax({
+                    type: 'POST',
+                    url: "http://www.juso.go.kr/link/mobileSearch.do",
+                    dataType: "xml",
+                    data: {
+                    countPerPage: 4,
+                    currentPage: 1,
+                    keyword: app.info.sigNm + " " + value  // 해당지역 검색을 위하여 시군구명 포함
+                    }
+                  })
+                  .then( function (xml) {
+                    $.each($(xml).find("juso"), function ( i, val ) {
+                    var label = "{0} {1}{2}".format(
+                        $(this).find("rn").text(),
+                        $(this).find("buldMnnm").text(),
+                        util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text()));
+                    var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
+                    if(!util.isEmpty($(this).find("buldSlno").text()))
+                        label += "-{0}".format($(this).find("buldSlno").text());
+                    var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);
+                      html += "<li onclick=\""  + jsCmd + "\">" + label + "</li>";
+                    });
+                    $ul.html( html );
+                    $ul.listview( "refresh" );
+                    $ul.trigger( "updatelayout");
+                  });
+                }
+            });
+
+            $("#autocomplete").on("click", "li", function() {
+                /* selected option */
+                var text = $("a", this).text();
+                /* update input with selected option */
+                $("#autocomplete-input").val(text);
+                /* hide all options */
+                $(this).siblings().addBack().addClass("ui-screen-hidden");
+            });
         });
 
         $(document).on("pagehide", pages.map.div, function(event, data) {
