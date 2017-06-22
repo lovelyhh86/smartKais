@@ -67,8 +67,12 @@ function loadHelpdesk(container){
 
             $('#helpdesk').on("click", "a.ans_btn", function() {
                 var sn = $(this).data('sn');
-                var page = pages.writereplypage;
-                util.slide_page('left', page, { sn : sn });
+                $("#write_reply").data('sn',sn);
+                // var page = pages.writereplypage;
+                // util.slide_page('left', page, { sn : sn });
+                
+                replyToggle();
+                // $('#replyDiv').load('writereply.html', { sn : sn });
             });
 
         });

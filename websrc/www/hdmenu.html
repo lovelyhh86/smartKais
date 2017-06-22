@@ -27,10 +27,27 @@
         </div>
     </div>
     <div id="noReply">
-        <div data-role="collapsibleset" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" class="list">
+        <div id="list_reply" data-role="collapsibleset" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" class="list">
             <div data-role="collapsible" class="noItem">
                 <h4>미답변 글이 없습니다.</h4>
                 <p></p>
+            </div>
+        </div>
+        <div id='write_reply' data-role="" style="display:none" data-dom-cache="true">
+            <div id='write_reply_contents' data-role="content"  class="ui-content"  >
+                <input type="hidden" id="sn" name="sn"></input>
+                <div class="">
+                    <label for="write_reply_subject">제목: </label>
+                    <input type="text" name="write_reply_subject" id="write_reply_subject" placeholder='제목을 입력하세요'></input>
+                </div>
+                <div class="">
+                    <label for="write_reply_memo">내용: </label>
+                    <textarea name="write_reply_memo" id="write_reply_memo"placeholder='답변 내용을 입력하세요'></textarea>
+                </div>
+                <div class="">
+                    <a href="#" class="ui-btn backList ui-corner-all">목록</a>
+                    <a href="#" class="ui-btn submit ui-corner-all">입력 완료</a>
+                </div>
             </div>
         </div>
     </div>
