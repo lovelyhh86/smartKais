@@ -6,7 +6,7 @@ $(function(){
         $('#write_reply_subject').val('');
         $('#write_reply_memo').val('');
     });
-    $( document ).on("pageshow",pages.writereplypage.div,  function() {
+    $( document ).on("pageshow","#write_reply",  function() {
         //var contentTop = $('#addressview_images_container').height() + $('#addressview_images_container').offset().top;
 
         var context = app.context;
@@ -52,29 +52,53 @@ $(function(){
         },100);
         $('#write_reply_keypad_opt').addClass('display-none');
     });
-    $(document).on('click','#write_reply_page .ui-btn', function(event){
+    $(document).on('click','#write_reply .ui-btn.backList', function(event){
+        replyToggle();
+    });
+    $(document).on('click','#write_reply .ui-btn.submit', function(event){
 
-        var data = $('#write_reply_page').data('context');
-        console.log(data);
-        data.content = $('#write_reply_memo').val();
-        data.subject = $('#write_reply_subject').val();
-        if (data.subject.length == 0 ){
+        // var data = $('#write_reply_page').data('context');
+        // console.log(data);
+        // data.content = $('#write_reply_memo').val();
+        // data.subject = $('#write_reply_subject').val();
+        var sn = $("#write_reply").data('sn');
+        var content = $('#write_reply_memo').val();
+        var subject = $('#write_reply_subject').val();
+        
+        if (subject.length == 0 ){
             util.toast('제목은 필수항목입니다');
             return;
         }
 
+        if (content.length == 0 ){
+            util.toast('내용은 필수항목입니다');
+            return;
+        }
 
         util.showProgress();
 
-        var urldata = URLs.postURL(URLs.helpdeskReplylink,data);
+        var param = {
+            sn : sn,
+            content : content,
+            subject : subject,
+            sigCd : app.info.sigCd,
+            userid : app.info.opeId,
+            registName : app.info.opeNm
+        };
+
+        var urldata = URLs.postURL(URLs.helpdeskReplylink,param);
 
         util.postAJAX('',urldata)
             .then( function(context,rcode,results) {
                 if (util.isEmpty( results.response ) == false && results.response.status == '1'){
                     navigator.notification.alert('도움센터 답변을 등록하였습니다', function (){
-                        util.goBack();
+                        // util.goBack();
                         $(document).trigger('refresh_qna');
                     },'도움센터 답변등록', '확인');
+
+                    replyClear();
+                    replyToggle();
+
                     util.dismissProgress();
                 }
                 else {
@@ -90,3 +114,13 @@ $(function(){
     });
 
 });
+
+function replyClear(){
+    $('#write_reply_subject').val('');
+    $('#write_reply_memo').val('');
+}
+
+function replyToggle(){
+    $('#list_reply').toggle();
+    $('#write_reply').toggle();
+}

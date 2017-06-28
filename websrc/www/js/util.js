@@ -616,3 +616,10 @@ function appExitCallback(btnIndex){
         util.appExit()
     }
 }
+
+function decrypt(x, y) {
+    var centerX = x / 0.3 - 333333;
+    var centerY = y / 0.3 - 333333;
+
+    return [centerX, centerY];
+}

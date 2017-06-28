@@ -8,7 +8,7 @@
 .positionInfo3{position: absolute; top: 500px; left: 550px;}
 
 /*legend*/
-.legend{display:inline-block; top:20px; left:20px; color: #2c3538; }
+.legend{display:inline-block; top:40px; left:20px; color: #2c3538; }
 .legend ul{width:215px; border:1px solid #e5e5e5; border-radius:8px; box-shadow:2px 2px 3px rgba(0, 0 , 0, .1); padding:15px 10px;background-color:rgba(245, 247, 248, 0.6);}
 .legend ul li{ position:relative; display:inline-block; text-align: left; width: 170px; margin-top: 5px; padding:11px  0  11px 43px; list-style:none; background-color: #ffffff; text-shadow: none; font-size: 0.95em ;}
 .legend ul li:FIRST-CHILD{margin-top: 0;}
@@ -119,7 +119,7 @@
 .inputText{display: inline-block; position:inherit; }
 .ui-input-text, .ui-input-search {margin:0;}
 .ui-corner-all {-webkit-border-radius: 0; border-radius:0;}
-.ui-input-text input, .ui-input-search input{margin: 0; min-height: 2em; padding: .3em; line-height: 1.2em; background: #fff none; font-size: 0.8em }
+/*.ui-input-text input, .ui-input-search input{margin: 0; min-height: 2em; padding: .3em; line-height: 1.2em; background: #fff none; font-size: 1em }*/
 .ui-radio >input{margin:0; width: 16px; position: absolute; top:-8px;}
 div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .cell2 >.radioBox> div.ui-checkbox, .cell2 >.radioBox >div.ui-radio {margin: .8em 0;position: relative;}

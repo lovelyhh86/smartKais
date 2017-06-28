@@ -44,6 +44,8 @@
 }
 #panel-qna .ui-field-contain { display: none; }
 #panel-qna .ui-field-contain label { font-size: 1.2em; line-height: 1.2em; }
+#write_reply_subject{height: 2em}
+#write_reply_memo{height: 20em;min-height: 20em}
 
 /** Content pages */
 #work_page .title { margin-top: 20.5%; text-align: center; }

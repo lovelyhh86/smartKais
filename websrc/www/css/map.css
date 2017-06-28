@@ -8,7 +8,7 @@
 
 .ol-control { background-color: white; }
 .ol-control button { background-color: white; }
-.ol-rotate{top: 1.8em; right: 1em;}
+.ol-rotate{top: 3.8em; right: 1em;}
 .ol-rotate-reset{background-color: white;}
 
 .legend { top: .5em; left: .5em; width: 7em; text-align: center; }
@@ -28,7 +28,29 @@
 }
 .legend .legendBody .title { font-size: 1.3em; margin: 0.4em 0; }
 
-.curPosition { top: 5em; right: 1em; }
+.curPosition { top: 7em; right: 1em; }
 .curPosition button { background-color: transparent !important; }
-.currentMarker { width: 3em;, left: -50%, bottom: -.5em; position: relative; }
+.currentMarker { width: 3em; left: -50%; bottom: -.5em; position: relative; }
 
+
+/*HTML 추가*/
+/*.ui-filterable{position:absolute;top:3em; left: -1px;display:block;  width: 100%; height: 2em; overflow: hidden;}*/
+.ui-input-search::after {padding: 0 100px 0 0; text-align:left;}
+.ui-input-text input::-moz-placeholder, .ui-input-search input::-moz-placeholder, textarea.ui-input-text::-moz-placeholder {color: #fff;}
+legend, .ui-input-text input, .ui-input-search input {color: inherit;text-shadow: none;}
+.ui-alt-icon.ui-icon-search::after, .ui-alt-icon .ui-icon-search::after, .ui-input-search::after {background:none; }
+#autocomplete{width:100%; position: absolute; top:6.3em;}
+#autocomplete-input{padding-left: 15px;}
+
+/*.ui-input-search:after{left: 46.5em} */
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {text-shadow: none;}
+/*.ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {border: 0 none;	text-shadow: none;}*/
+.ui-input-text, .ui-input-search {border:0 none;}
+
+#search input[type="text"].keyword {display: block; width:100%; height: 60px; border-bottom: 1px solid #186bb9; background-color : #fff; padding:0 15px; line-height:60px; font-size: 20px; font-weight: bold;color:#fff}
+/*#search input[type="button"].searachButton{display:inline-block; position: absolute;right:0; top: 0; width: 80px; height: 60px; border-bottom: 1px solid #186bb9; background: #fff url(../image/btn_search.png) 0 13px no-repeat; background-size: 58px 33px; border-left: 0 none; text-indent: -9999px;}*/
+.ui-input-search{display:inline-block; position: absolute; top: 2.3em; width: 45em; height: 2.2em; border-bottom: 1px solid #186bb9; background: #fff url(../image/btn_search.png) 29.5em 11px no-repeat; background-size: 51px 33px; border-left: 0 none;font-size:1.5em ; text-indent: -9999px;}
+ul.searchList{padding: 0; border:0 none; margin: 0}
+ul.searchList li{width:100%; height: 30px; border-bottom: 1px solid #c7d7e6; overflow: hidden;}
+.ui-listview>.ui-li-static { padding-left: 3em; border-color: #c7d7e6; overflow: hidden; padding-top: 1.1em;}
+li.icon{background: url(../image/searchIcon.png) 10px 12px no-repeat;}

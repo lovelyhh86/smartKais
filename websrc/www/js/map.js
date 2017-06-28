@@ -2475,5 +2475,4 @@ function moveToXy(x,y){
     var cood = [x,y];
     map.getView().setCenter(cood);
     map.updateSize();
-    console.log("["+x+","+y+"]");
 }
