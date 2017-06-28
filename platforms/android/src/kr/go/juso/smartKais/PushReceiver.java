@@ -95,6 +95,8 @@ public class PushReceiver extends PushLibraryReceiver {
     private void sendPushNotification(Context context, String message) {
         System.out.println("received message : " + message);
 
+        Intent intent;
+
         String ticker="스마트KAIS";
         String title="스마트KAIS";
         String desc="";
@@ -117,7 +119,7 @@ public class PushReceiver extends PushLibraryReceiver {
         try {
             Class c = //Class.forName("android.intent.category.mobp.mff");
             MainActivity.class;
-            Intent intent =new Intent(context,c);
+            intent = new Intent(context,c);
             intent.addCategory("android.intent.category.mobp.mff");
 
             intent = new Intent();
@@ -171,6 +173,15 @@ public class PushReceiver extends PushLibraryReceiver {
             //Display toast
             toast.show();
 
+            // PUSH 데이터 처리를 위한 값 전달
+            Intent push = new Intent(context, MainActivity.class);
+            push.putExtra("PUSH", message);
+            push.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            PendingIntent pushTask = PendingIntent.getActivity(context,0,push,PendingIntent.FLAG_CANCEL_CURRENT);
+            try {
+                pushTask.send();
+            } catch (Exception ex) {}
         } else {
             //잠금상태라면 카톡과 같은 팝업 출력
             Intent popup = new Intent(context, NotifierPopup.class)

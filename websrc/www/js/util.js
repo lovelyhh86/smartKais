@@ -479,6 +479,9 @@ var util = {
     off: function (triggerName, triggerFunc) {
         SmartKaisPlugins.off(triggerName, triggerFunc);
     },
+    pushProc: function(data) {
+        util.pushCount("qna", 5);
+    },
     pushCount: function (type, val) {
         if(type)
             (val > 0) ? $(".pushCnt." + type).text(val) : $(".pushCnt." + type).text("");

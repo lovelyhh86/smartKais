@@ -4,6 +4,7 @@
 .ol-touch .ol-control { background-color: transparent; }
 .ol-touch .ol-control button { font-size: 2em; color: black}
 .ol-touch .ol-control button:focus { outline-color: transparent; }
+.ol-touch .ol-control button:hover { background-color: white; }
 
 .ol-control { background-color: white; }
 .ol-control button { background-color: white; }

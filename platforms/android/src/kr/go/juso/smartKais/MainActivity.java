@@ -1,5 +1,6 @@
 package kr.go.juso.smartKais;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -47,8 +48,17 @@ public class MainActivity extends CordovaActivity {
         super.onResume();
     }
 
+    @Override
     protected void onStop() {
         Log.d(TAG, "onStop");
         super.onStop();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        String data = intent.getStringExtra("PUSH");
+        loadUrl(String.format("javascript:util.pushProc(%s);", data));
     }
 }
