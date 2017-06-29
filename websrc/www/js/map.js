@@ -205,7 +205,9 @@ var MapUtil = {
 
             var curPosition = function () {
                 var coordinate = geolocation.getPosition();
-                map.getView().setCenter(coordinate);
+                // map.getView().setCenter(coordinate);
+                
+                setPosition(coordinate);
             }
 
             button.addEventListener('click', curPosition, false);
@@ -2473,6 +2475,85 @@ function baseNumberMix(mn,sn){
 
 function moveToXy(x,y){
     var cood = [x,y];
+    setPosition(cood)
     map.getView().setCenter(cood);
+
+    var zoom = map.getView().getZoom();
+    if(zoom < 14) {
+        map.getView().setZoom(14);
+    }
     map.updateSize();
+}
+
+
+
+function setPosition(coordinates){
+
+    var geolocation_source = currentPositionLayerCheck();
+
+    var positionFeature = new ol.Feature();
+        positionFeature.setStyle(new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 10,
+                fill: new ol.style.Fill({
+                    color: '#4d4d4d'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#fff',
+                    width: 2
+                })
+            })
+        }));
+
+        positionFeature.setStyle(new ol.style.Style({
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'image/searchIcon.png'
+                    }))
+        }));
+
+
+        
+    
+    geolocation_source.addFeature(positionFeature);
+
+    positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
+    map.getView().setCenter(coordinates);
+}
+
+function currentPositionLayerCheck(){
+    var layerList = map.getLayers().getArray();
+    var gbn = false;
+
+    var geolocation_source;
+
+    for(var i = 0 ; i < layerList.length; i++){
+        
+        if(layerList[i].get('title') == '현위치'){
+
+            geolocation_source = layerList[i].getSource();
+
+            geolocation_source.clear();
+
+            gbn = true;
+        }
+    }
+
+    
+    if(!gbn){
+        geolocation_source = new ol.source.Vector({});
+
+        var geolocation_layer = new ol.layer.Vector({
+            map: map,
+            title : '현위치',
+            source: geolocation_source
+        });
+        
+        map.addLayer(geolocation_layer);
+
+    }
+
+    return geolocation_source;
 }

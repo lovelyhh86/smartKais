@@ -154,6 +154,7 @@ var app = {
                     if (resultCode == 0 && !(util.isEmpty(results.data))) {
                         var d = results.data;
 
+                        localStorage["sigNm"] = d.admNm;
                         localStorage["serviceProj"] = d.trgnptLbl;
                         if(d.trgnpt == "01") {
                             localStorage["sourceProj"] = "EPSG:5176";
