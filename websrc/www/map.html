@@ -15,54 +15,58 @@
     <div id="marker"><img src="img/icon_curMarker.png" /></div>
 
     <script type="text/javascript">
-        $(document).on("pagecreate", pages.map.div, function() {
-            $( "#autocomplete" ).on( "filterablebeforefilter", function ( e, data ) {
-                var $ul = $( this ),
-                  $input = $( data.input ),
-                  value = $input.val().trim(),
-                  html = "";
-                $ul.html( "" );
-                if ( value && value.length > 2 ) {
-                  $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
-                  $ul.listview( "refresh" );
-                  $.ajax({
-                    type: 'POST',
-                    url: "http://www.juso.go.kr/link/mobileSearch.do",
-                    dataType: "xml",
-                    data: {
-                    countPerPage: 4,
-                    currentPage: 1,
-                    keyword: app.info.sigNm + " " + value  // 해당지역 검색을 위하여 시군구명 포함
-                    }
-                  })
-                  .then( function (xml) {
-                    $.each($(xml).find("juso"), function ( i, val ) {
-                    var label = "{0} {1}{2}".format(
-                        $(this).find("rn").text(),
-                        $(this).find("buldMnnm").text(),
-                        util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text()));
-                    var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
-                    if(!util.isEmpty($(this).find("buldSlno").text()))
-                        label += "-{0}".format($(this).find("buldSlno").text());
-                    var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);
-                      html += "<li class='icon' onclick=\""  + jsCmd + "\">" + label + "</li>";
-                    });
-                    $ul.html( html );
-                    $ul.listview( "refresh" );
-                    $ul.trigger( "updatelayout");
-                  });
-                }
-            });
+        // $(document).on("pagecreate", pages.map.div, function() {
+        //     $( "#autocomplete" ).on( "filterablebeforefilter", function ( e, data ) {
+        //         var $ul = $( this ),
+        //           $input = $( data.input ),
+        //           value = $input.val().trim(),
+        //           html = "";
+        //         $ul.html( "" );
+        //         if ( value && value.length > 2 ) {
+        //           $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+        //           $ul.listview( "refresh" );
+        //           $.ajax({
+        //             type: 'POST',
+        //             url: "http://www.juso.go.kr/link/mobileSearch.do",
+        //             dataType: "xml",
+        //             data: {
+        //             countPerPage: 4,
+        //             currentPage: 1,
+        //             keyword: app.info.sigNm + " " + value  // 해당지역 검색을 위하여 시군구명 포함
+        //             }
+        //           })
+        //           .then( function (xml) {
+        //             //xml = '<?xml version="1.0" encoding="UTF-8"?><results><totalCount>404</totalCount><currentPage>1</currentPage><countPerPage>4</countPerPage><juso><siNm>서울특별시</siNm><sggNm>마포구</sggNm><emdNm>성산동</emdNm><liNm></liNm><rn>성암로</rn><rnCd>114403113012</rnCd><buldMnnm>15</buldMnnm><buldSlno>0</buldSlno><lnbrMnnm>123</lnbrMnnm><lnbrSlno>8</lnbrSlno><udrtYn></udrtYn><mtYn></mtYn><bdNm><![CDATA[금창타워]]></bdNm><bdkd>10202</bdkd><zipCl>03951</zipCl><admCd>1144012500</admCd><emdNo>01</emdNo><detList><![CDATA[]]></detList><adrDcCount>1</adrDcCount><bdMgtSn>1144012500101230008017012</bdMgtSn><nX>384487.770665827</nX><nY>685678.790390189</nY><engsiNm>Seoul</engsiNm><engsggNm>Mapo-gu</engsggNm><engemdNm>Seongsan-dong</engemdNm><engliNm></engliNm><engrn>Seongam-ro</engrn><engbdNm><![CDATA[Geumchangtawo]]></engbdNm><engUdrtYn></engUdrtYn><juminCount>1</juminCount><ntfcDe>1</ntfcDe><relJibun>서울특별시 마포구 성산동 128-14</relJibun><entD>384487.770665827</entD><entK>685678.790390189</entK><eqbManSn>0</eqbManSn><detBdNm><![CDATA[]]></detBdNm><rdMgtSn>114403113012</rdMgtSn><rdsMgtSn>114403113012</rdsMgtSn><bsiZonNo>03951</bsiZonNo></juso></results>';
+        //             // xml = '<?xml version="1.0" encoding="UTF-8"?><results><totalCount>404</totalCount><currentPage>1</currentPage><countPerPage>4</countPerPage><juso><siNm>서울특별시</siNm><sggNm>마포구</sggNm><emdNm>성산동</emdNm><liNm></liNm><rn>월드컵로</rn><rnCd>114403113018</rnCd><buldMnnm>251</buldMnnm><buldSlno>0</buldSlno><lnbrMnnm>390</lnbrMnnm><lnbrSlno>1</lnbrSlno><udrtYn></udrtYn><mtYn></mtYn><bdNm><![CDATA[서울시생활체육협의회]]></bdNm><bdkd>19000</bdkd><zipCl>03901</zipCl><admCd>1144012500</admCd><emdNo>04</emdNo><detList><![CDATA[]]></detList><adrDcCount>0</adrDcCount><bdMgtSn>1144012500103900001017989</bdMgtSn><nX>384009.951553304</nX><nY>685602.663296475</nY><engsiNm>Seoul</engsiNm><engsggNm>Mapo-gu</engsggNm><engemdNm>Seongsan-dong</engemdNm><engliNm></engliNm><engrn>World Cup-ro</engrn><engbdNm><![CDATA[Seoulsisaenghwalcheyukyeobuihoe]]></engbdNm><engUdrtYn></engUdrtYn><juminCount>0</juminCount><ntfcDe>1</ntfcDe><relJibun>서울특별시 마포구 성산동 531</relJibun><entD>384009.951553304</entD><entK>685602.663296475</entK><eqbManSn>0</eqbManSn><detBdNm><![CDATA[]]></detBdNm><rdMgtSn>114403113018</rdMgtSn><rdsMgtSn>114403113018</rdsMgtSn><bsiZonNo>03901</bsiZonNo></juso></results>';
+        //             $.each($(xml).find("juso"), function ( i, val ) {
+        //             console.log(xml);
+        //             var label = "{0} {1}{2}".format(
+        //                 $(this).find("rn").text(),
+        //                 $(this).find("buldMnnm").text(),
+        //                 util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text()));
+        //             var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
+        //             if(!util.isEmpty($(this).find("buldSlno").text()))
+        //                 label += "-{0}".format($(this).find("buldSlno").text());
+        //             var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);
+        //               html += "<li class='icon' onclick=\""  + jsCmd + "\">" + label + "</li>";
+        //             });
+        //             $ul.html( html );
+        //             console.log(html);
+        //             $ul.listview( "refresh" );
+        //             $ul.trigger( "updatelayout");
+        //           });
+        //         }
+        //     });
 
-            $("#autocomplete").on("click", "li", function() {
-                /* selected option */
-                var text = $("a", this).text();
-                /* update input with selected option */
-                $("#autocomplete-input").val(text);
-                /* hide all options */
-                $(this).siblings().addBack().addClass("ui-screen-hidden");
-            });
-        });
+        //     $("#autocomplete").on("click", "li", function() {
+        //         /* selected option */
+        //         var text = $("a", this).text();
+        //         /* update input with selected option */
+        //         $("#autocomplete-input").val(text);
+        //         /* hide all options */
+        //         $(this).siblings().addBack().addClass("ui-screen-hidden");
+        //     });
+        // });
 
         $(document).on("pagehide", pages.map.div, function(event, data) {
 
