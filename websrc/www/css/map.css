@@ -35,7 +35,7 @@
 
 /*HTML 추가*/
 /*.ui-filterable{position:absolute;top:3em; left: -1px;display:block;  width: 100%; height: 2em; overflow: hidden;}*/
-.ui-input-search::after {padding: 0 100px 0 0; text-align:left;}
+.ui-input-search::after {display: none}
 .ui-input-text input::-moz-placeholder, .ui-input-search input::-moz-placeholder, textarea.ui-input-text::-moz-placeholder {color: #fff;}
 legend, .ui-input-text input, .ui-input-search input {color: inherit;text-shadow: none;}
 .ui-alt-icon.ui-icon-search::after, .ui-alt-icon .ui-icon-search::after, .ui-input-search::after {background:none; }

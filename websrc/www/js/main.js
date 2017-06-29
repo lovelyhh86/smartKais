@@ -22,7 +22,7 @@ var app = {
         //사용자 기본정보 셋팅
         
         app.info = JSON.parse(localStorage["appInfo"]);
-
+        app.info.sigNm = localStorage["sigNm"];
         if(app.info.mode){
             app.mode = app.info.mode;
         }
