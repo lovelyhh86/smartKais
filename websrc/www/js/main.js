@@ -6,6 +6,7 @@ var msg = {
         navigator.notification.alert(msg.callCenter, '', '알림', '확인');
     },
     noItem: "조회된 정보가 없습니다.",
+    noPhoto: "비어있는 사진이 있습니다.\n2장(근거리,원거리) 모두 촬영해 주세요.",
     noSave: "변경한 항목이 없습니다.",
     isSave: "변경한 항목이 있습니다. 저장 하시겠습니까?",
     isSavePhoto: "변경한 사진이 있습니다. 저장 하시겠습니까?",

@@ -1240,8 +1240,8 @@ $(function(){
                 data.name = imgtName;
 
                 files.push(data);
-           }
-
+            }
+                
            return files;
 
        }
@@ -1270,6 +1270,17 @@ $(function(){
                 return;
             }
 
+            //사진파일
+            var files = makeImg();
+
+            if(files[0].base64 != "" && files[1].base64 == ""){
+                navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+                return;
+            }else if(files[0].base64 == "" && files[1].base64 != ""){
+                navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+                return;
+            }
+
             navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
                 if(btnindex == 1){
                     var commomParams = {};
@@ -1278,12 +1289,7 @@ $(function(){
                     var sn = $("#sn").text();
                     var sigCd = app.info.sigCd;
                     var workId = app.info.opeId;
-
-                    //사진파일
-                    var files = makeImg();
-                    // if(photoMode){
-                    //     files = makeImg();
-                    // }
+                    
                     commomParams = $.extend(commomParams, {files: files});
 
                     //사진파일
