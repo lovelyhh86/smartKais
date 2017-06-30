@@ -2580,7 +2580,6 @@ $(document).on("pagecreate", pages.map.div, function() {
                   })
                   .then( function (xml) {
                     $.each($(xml).find("juso"), function ( i, val ) {
-                    console.log(xml);
                     var label = "<span id='rnAddr'>{0} {1}{2}{3}</span><br><span id='jbAddr'>[지번]{4} {5}{6}</span>".format(
                         $(this).find("rn").text(),
                         $(this).find("buldMnnm").text(),
@@ -2595,7 +2594,6 @@ $(document).on("pagecreate", pages.map.div, function() {
                       html += "<li class='icon' onclick=\""  + jsCmd + "\">" + label + "</li>";
                     });
                     $ul.html( html );
-                    console.log(html);
                     $ul.listview( "refresh" );
                     $ul.trigger( "updatelayout");
                   });
