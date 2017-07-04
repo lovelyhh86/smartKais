@@ -57,20 +57,19 @@ public class PushReceiver extends PushLibraryReceiver {
     public void onMsgReceive(Context context, Bundle bundle) {
         Log.v(TAG, "LocalPushReceiver[onMsgReceive]");
 
+        String gbn = bundle.getString("alert");
         String message = bundle.getString("message");
         String requestid = bundle.getString("requestid");
+        Log.d(TAG, "gbn=" + gbn);
         Log.d(TAG, "message=" + message);
         Log.d(TAG, "requestid=" + requestid);
 
-        JSONObject json = new JSONObject();
+        String strMessage = "";
         try{
-            json.put("eventName","notification");
-            JSONObject jsonArg = new JSONObject();
-            jsonArg.put("message",message);
-            jsonArg.put("requestId",requestid);
-            //  jsonArg.put("message",message);
-            json.put("args",jsonArg);
-            sendPushNotification(context,message);
+            JSONObject jsonMessage = new JSONObject(message);
+            strMessage = String.valueOf(jsonMessage);
+
+            sendPushNotification(context, strMessage);
         }catch (JSONException je){
 
         }
@@ -78,10 +77,17 @@ public class PushReceiver extends PushLibraryReceiver {
         boolean isforground = Plugins.isIsForeground();
         if (isforground)
         {
-            Plugins.triggerNotification(json);
+//            Plugins.triggerNotification(json);
+            // PUSH 데이터 처리를 위한 값 전달
+            Intent push = new Intent(context, MainActivity.class);
+            push.putExtra("PUSH", strMessage);
+            push.setFlags(Intent.FLAG_FROM_BACKGROUND);
+
+            PendingIntent pushTask = PendingIntent.getActivity(context,0,push,PendingIntent.FLAG_CANCEL_CURRENT);
+            try {
+                pushTask.send();
+            } catch (Exception ex) {}
         }
-
-
 
     }
 
@@ -92,47 +98,44 @@ public class PushReceiver extends PushLibraryReceiver {
 
     }
 
-    private void sendPushNotification(Context context, String message) {
-        System.out.println("received message : " + message);
+    private void sendPushNotification(Context context, String strMessage) {
 
-        Intent intent;
+        String title = "스마트KAIS";
+        String gbn = "";
+        String cnt = "";
+        String notiText = "";
+        String requestid = "";
 
-        String ticker="스마트KAIS";
-        String title="스마트KAIS";
-        String desc="";
-        String type="";
-        String dlgtitle="스마트KAIS";
-        String dlgdesc="";
         try {
-            JSONObject json = new JSONObject(message);
-            ticker = json.getString("ticker");
-            title = json.getString("title");
-            //type = json.getString("type");
-            desc = json.getString("desc");
-            dlgtitle = json.getString("dlgtitle");
-            dlgdesc = json.getString("dlgdesc");
+            JSONObject json = new JSONObject(strMessage);
+
+            gbn = json.getString("gbn");
+            cnt = json.getString("cnt");
+            notiText = json.getString("text");
+            requestid = json.getString("requestid");
+
+
         } catch(JSONException ex) {
 
         }
 
         //Ticker & Notification List
         try {
-            Class c = //Class.forName("android.intent.category.mobp.mff");
-            MainActivity.class;
-            intent = new Intent(context,c);
-            intent.addCategory("android.intent.category.mobp.mff");
+//            Intent intent = new Intent(context,MainActivity.class);
+//            intent.addCategory("android.intent.category.mobp.mff");
 
-            intent = new Intent();
+            Intent intent = new Intent();
             int count = AppEnvironment.getPendingNotificationsCount();
             AppEnvironment.setPendingNotificationsCount(count + 1);
             NotificationManager notificationmanager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             PendingIntent pendingIntent = //PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     new AppComponentLauncher(context).PendingActivityLaunchApp() ;
 
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setSmallIcon(R.drawable.icon).setTicker(ticker).setWhen(System.currentTimeMillis())
+            builder.setSmallIcon(R.drawable.icon).setTicker(title).setWhen(System.currentTimeMillis())
                     .setNumber(count)
-                    .setContentTitle(title).setContentText(desc)
+                    .setContentTitle(title).setContentText(notiText)
                     .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
@@ -161,8 +164,8 @@ public class PushReceiver extends PushLibraryReceiver {
 
             TextView titleView = (TextView)toastView.findViewById(R.id.noti_toast_title);
             TextView descView = (TextView)toastView.findViewById(R.id.noti_toast_desc);
-            titleView.setText(dlgtitle);
-            descView.setText(dlgdesc);
+            titleView.setText(title);
+            descView.setText(notiText);
 
             Toast toast = new Toast(context);
 
@@ -172,16 +175,6 @@ public class PushReceiver extends PushLibraryReceiver {
 
             //Display toast
             toast.show();
-
-            // PUSH 데이터 처리를 위한 값 전달
-            Intent push = new Intent(context, MainActivity.class);
-            push.putExtra("PUSH", message);
-            push.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            PendingIntent pushTask = PendingIntent.getActivity(context,0,push,PendingIntent.FLAG_CANCEL_CURRENT);
-            try {
-                pushTask.send();
-            } catch (Exception ex) {}
         } else {
             //잠금상태라면 카톡과 같은 팝업 출력
             Intent popup = new Intent(context, NotifierPopup.class)
@@ -190,8 +183,8 @@ public class PushReceiver extends PushLibraryReceiver {
                             Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            popup.putExtra("title", dlgtitle);
-            popup.putExtra("desc", dlgdesc);
+            popup.putExtra("title", title);
+            popup.putExtra("desc", notiText);
 
             PendingIntent popupTask = PendingIntent.getActivity(context,0,popup,PendingIntent.FLAG_ONE_SHOT);
             try {

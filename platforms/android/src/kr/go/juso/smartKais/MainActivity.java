@@ -6,6 +6,7 @@ import android.util.Log;
 
 import org.apache.cordova.CordovaActivity;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends CordovaActivity {
     private static final String TAG = "MainActivity";
@@ -59,6 +60,9 @@ public class MainActivity extends CordovaActivity {
         super.onNewIntent(intent);
 
         String data = intent.getStringExtra("PUSH");
-        loadUrl(String.format("javascript:util.pushProc(%s);", data));
+        if(data != null){
+            loadUrl(String.format("javascript:util.pushProc(%s);", data));
+        }
+
     }
 }

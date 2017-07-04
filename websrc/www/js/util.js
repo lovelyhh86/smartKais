@@ -480,7 +480,10 @@ var util = {
         SmartKaisPlugins.off(triggerName, triggerFunc);
     },
     pushProc: function(data) {
-        // util.pushCount("qna", 5);
+        var type = data.gbn;
+        var count = data.cnt;
+
+        util.pushCount(type, count);
     },
     pushCount: function (type, val) {
         if(type)
