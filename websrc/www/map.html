@@ -74,7 +74,7 @@
 
         $(document).on("pagebeforeshow", pages.map.div, function(event, data) {
         });
-
+        
         $(document).on("pageshow", pages.map.div, function() {
             
             var context = app.context;
@@ -83,8 +83,9 @@
                 map.updateSize(); //카메라 다녀온후 지도 안보여서 추가
                 return;
             }
-
-            layerToggle(context);
+            if(context.categoryid !="minwon"){
+                layerToggle(context);
+            }
 
             // var pos = ol.proj.fromLonLat([localStorage["loc.X"], localStorage["loc.Y"]], baseProjection);
 
