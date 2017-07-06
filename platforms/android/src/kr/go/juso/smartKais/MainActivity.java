@@ -6,7 +6,6 @@ import android.util.Log;
 
 import org.apache.cordova.CordovaActivity;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends CordovaActivity {
     private static final String TAG = "MainActivity";

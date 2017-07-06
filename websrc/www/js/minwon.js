@@ -36,7 +36,7 @@ $(function () {
             .then(function (context, rcode, results) {
                 var data = results.returnData;
                 if (rcode != 0 || util.isEmpty(data) === true) {
-                    navigator.notification.alert('새올 민원접수가 없습니다.', function () {
+                    navigator.notification.alert('새올 민원접수가 없습니다.\n(최근 15일 이내 건 기준)', function () {
                         util.goBack();
                     }, '새올 민원접수 조회', '확인');
                     util.dismissProgress();
