@@ -71,7 +71,7 @@ function loadHelpdesk(container){
                 // var page = pages.writereplypage;
                 // util.slide_page('left', page, { sn : sn });
                 
-                replyToggle();
+                $('#write_reply_a').click();
                 // $('#replyDiv').load('writereply.html', { sn : sn });
             });
 

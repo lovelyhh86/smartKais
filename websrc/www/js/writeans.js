@@ -121,6 +121,7 @@ function replyClear(){
 }
 
 function replyToggle(){
-    $('#list_reply').toggle();
-    $('#write_reply').toggle();
+    
+    // $('#allQna_a').click();
+    $('#noReply_a').click();
 }
