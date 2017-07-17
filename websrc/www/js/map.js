@@ -2172,7 +2172,7 @@ var getFeatureLayer = function (options) {
             if(options.viewProgress != undefined && !options.viewProgress)
                 util.dismissProgress();
         },
-        strategy: ol.loadingstrategy.tile
+        strategy: ol.loadingstrategy.bbox
     });
 
     var source;
