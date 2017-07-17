@@ -241,3 +241,11 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
   display:none;  
 }
 
+#memoMask {  
+  position:absolute;  
+  left:0;
+  top:0;
+  z-index:9000;  
+  background-color:#000;  
+  display:none;  
+}

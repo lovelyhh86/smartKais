@@ -33,7 +33,7 @@ var MapUtil = {
             $(".detailView .infoWrap .infoHeader .photo").click(function(){
                 // $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
                 //검정막
-                wrapWindowByMask();
+                wrapWindowByMask('mask');
                 //옵션안됨
                 $("#photoDialog").dialog({
                     modal: true,
@@ -161,6 +161,8 @@ var MapUtil = {
         init: function () {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);
+            ol.inherits(MapUtil.controls.newPointControl, ol.control.Control);
+            
         },
         /**
         * @constructor
@@ -221,6 +223,87 @@ var MapUtil = {
                 element: element,
                 target: options.target
             });
+        },
+        newPointControl: function(opt_options){
+            var button = document.createElement('button');
+            button.innerHTML = '<img src="image/newPos_plus.png" />';
+            var layerStateGbn = "on";
+            var newPoint = function(){
+
+                if(layerStateGbn == "on"){
+                    //마커지우기
+                    // clearSource('위치이동');
+                    
+                    //레이어 초기화
+                    removeLayers();
+
+                    //센터 포인트 찍기
+                    // var movingPoint_source = addMoveLayer();
+
+                    // var moveingPointFeature = new ol.Feature();
+                    //         moveingPointFeature.setStyle(new ol.style.Style({
+                    //             image: new ol.style.Circle({
+                    //                 radius: 10,
+                    //                 fill: new ol.style.Fill({
+                    //                     color: '#00004d'
+                    //                 }),
+                    //                 stroke: new ol.style.Stroke({
+                    //                     color: '#fff',
+                    //                     width: 2
+                    //                 })
+                    //             })
+                    //         }));
+
+                    // var centerPoint = new ol.geom.Point(map.getView().getCenter());
+                    // moveingPointFeature.setGeometry(centerPoint);
+                    // movingPoint_source.addFeature(moveingPointFeature);
+                
+                    //범례숨김
+                    $(".legend").hide();
+                    //심플팝업숨김
+                    $("#popup").hide();
+                    
+                    //위치마커 및 버튼 표시
+                    $("#newPos").show();
+                    //버튼영역 버튼 표시
+                    $(".buttonDiv").show();
+                    //메모초기화
+                    closeNewPosMemo();
+
+                    $(".newPosition button img").attr("src","image/newPos_cancle.png");
+
+                    layerStateGbn = "off";
+                }else{
+                    
+                    //위치마커 및 버튼 표시
+                    $("#newPos").hide();
+                    //버튼영역 숨김
+                    $(".buttonDiv").hide();
+                    //메모초기화
+                    closeNewPosMemo();
+
+                    var context = app.context;
+
+                    layerToggle(context);
+
+                    $(".newPosition button img").attr("src","image/newPos_plus.png");
+
+                    layerStateGbn = "on";
+                }
+
+            }
+
+            button.addEventListener('click', newPoint, false);
+
+            var element = document.createElement('div');
+            element.className = 'newPosition ol-unselectable ol-control';
+            element.appendChild(button);
+
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+
         }
     },
     openPopup: function (type, f) {
@@ -1193,6 +1276,7 @@ var mapInit = function (mapId, pos) {
         }).extend([
             new MapUtil.controls.legendControl(),
             new MapUtil.controls.currentControl(),
+            new MapUtil.controls.newPointControl(),
             new ol.control.Rotate({
                 label: $("<IMG>", {src:'image/coordinate.png', alt: '지도회전 초기화'})[0],
                 autoHide: false
@@ -1337,7 +1421,6 @@ var mapInit = function (mapId, pos) {
         
         for(var i = 0 ; i < layerList.length; i++){
             if(layerList[i].get('title') == '위치이동'){
-                console.log(layerList[i].get('title'));
 
                 var movingPoint_source = layerList[i].getSource();
 
@@ -1395,8 +1478,8 @@ var mapInit = function (mapId, pos) {
                     sn : RDFTYLC_SN,
                     // rdftySe : RDFTY_SE,
                     posX : newCoodi[0],
-                    posY : newCoodi[1]
-
+                    posY : newCoodi[1],
+                    jobSeCd: 'M'
                 });
 
                 //버튼처리
@@ -2089,7 +2172,7 @@ var getFeatureLayer = function (options) {
             if(options.viewProgress != undefined && !options.viewProgress)
                 util.dismissProgress();
         },
-        strategy: ol.loadingstrategy.bbox
+        strategy: ol.loadingstrategy.tile
     });
 
     var source;
@@ -2295,17 +2378,18 @@ function moveingPoint(sn,pointX,pointY,index){
     map.removeLayer(layers.bsis);
     map.removeLayer(layers.area);
 
-    /** 위치이동 레이어 start */
-    var movingPoint_source = new ol.source.Vector({});
+    var movingPoint_source = addMoveLayer();
+    // /** 위치이동 레이어 start */
+    // var movingPoint_source = new ol.source.Vector({});
 
-    var moveingPoint_layer = new ol.layer.Vector({
-        map: map,
-        title : '위치이동',
-        source: movingPoint_source
-    });
+    // var moveingPoint_layer = new ol.layer.Vector({
+    //     map: map,
+    //     title : '위치이동',
+    //     source: movingPoint_source
+    // });
 
-    map.addLayer(moveingPoint_layer);
-    layers.move = moveingPoint_layer;
+    // map.addLayer(moveingPoint_layer);
+    // layers.move = moveingPoint_layer;
 
     var moveingPointFeature = new ol.Feature();
             moveingPointFeature.setStyle(new ol.style.Style({
@@ -2347,32 +2431,34 @@ function insertMoveingPoint(param){
             util.toast('이동한 위치 정보가 저장되었습니다.');
             navigator.notification.alert('KAIS C/S\n (자료관리 → 도로안내시설 편집 → 도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.','','알림', '확인');
 
-            var layerList = map.getLayers().getArray();
-            for(var i = 0 ; i < layerList.length; i++){
-                if(layerList[i].get('title') == '위치이동'){
-                    var movingPoint_source = layerList[i].getSource();
+            clearSource('위치이동');
 
-                    movingPoint_source.clear();
-                    map.removeLayer(layers.move);
-                    $("#popup").hide();
-                }
-            }
-            
-            if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
-                $(".legend").toggle(true);
-                map.removeLayer(layers.buld);
-                // map.removeLayer(layers.entrc);
-                map.addLayer(layers.rdpq);
-                map.addLayer(layers.bsis);
-                map.addLayer(layers.area);
-            } else {
-                $(".legend").toggle(false);
-                map.removeLayer(layers.rdpq);
-                map.removeLayer(layers.bsis);
-                map.removeLayer(layers.area);
-                map.addLayer(layers.buld);
-                // map.addLayer(layers.entrc);
-            }
+            map.removeLayer(layers.move);
+            $("#popup").hide();
+
+            var context = app.context;
+
+            // if (util.isEmpty(context)){
+            //     map.updateSize();
+            //     return;
+            // }
+
+            layerToggle(context);
+            // if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
+            //     $(".legend").toggle(true);
+            //     map.removeLayer(layers.buld);
+            //     // map.removeLayer(layers.entrc);
+            //     map.addLayer(layers.rdpq);
+            //     map.addLayer(layers.bsis);
+            //     map.addLayer(layers.area);
+            // } else {
+            //     $(".legend").toggle(false);
+            //     map.removeLayer(layers.rdpq);
+            //     map.removeLayer(layers.bsis);
+            //     map.removeLayer(layers.area);
+            //     map.addLayer(layers.buld);
+            //     // map.addLayer(layers.entrc);
+            // }
             
         },
         msg.alert);
@@ -2399,23 +2485,25 @@ function layerClear(){
                 var movingPoint_source = layerList[i].getSource();
 
                 movingPoint_source.clear();
-                map.removeLayer(layers.move);
+                // map.removeLayer(layers.move);
                 
             }
         }
-        if (layerID != DATA_TYPE.BULD|| layerID != DATA_TYPE.ENTRC) {
-            map.removeLayer(layers.buld);
-            map.removeLayer(layers.entrc);
-            map.addLayer(layers.rdpq);
-            map.addLayer(layers.bsis);
-            map.addLayer(layers.area);
-        } else {
-            map.removeLayer(layers.rdpq);
-            map.removeLayer(layers.bsis);
-            map.removeLayer(layers.area);
-            map.addLayer(layers.buld);
-            map.addLayer(layers.entrc);
-        }
+        var context = app.context;
+        layerToggle(context);
+        // if (layerID != DATA_TYPE.BULD|| layerID != DATA_TYPE.ENTRC) {
+        //     map.removeLayer(layers.buld);
+        //     map.removeLayer(layers.entrc);
+        //     map.addLayer(layers.rdpq);
+        //     map.addLayer(layers.bsis);
+        //     map.addLayer(layers.area);
+        // } else {
+        //     map.removeLayer(layers.rdpq);
+        //     map.removeLayer(layers.bsis);
+        //     map.removeLayer(layers.area);
+        //     map.addLayer(layers.buld);
+        //     map.addLayer(layers.entrc);
+        // }
         
 }
 
@@ -2529,6 +2617,7 @@ function currentPositionLayerCheck(){
 
     var geolocation_source;
 
+    
     for(var i = 0 ; i < layerList.length; i++){
         
         if(layerList[i].get('title') == '현위치'){
@@ -2609,3 +2698,80 @@ $(document).on("pagecreate", pages.map.div, function() {
                 $(this).siblings().addBack().addClass("ui-screen-hidden");
             });
         });
+
+/** 위치이동 레이어 추가 */
+function addMoveLayer(){
+    
+    var movingPoint_source = new ol.source.Vector({});
+
+    var moveingPoint_layer = new ol.layer.Vector({
+        map: map,
+        title : '위치이동',
+        source: movingPoint_source
+    });
+
+    map.addLayer(moveingPoint_layer);
+    layers.move = moveingPoint_layer;
+
+    return movingPoint_source;
+}
+/** 메모창 띄우기 */
+function showNewPosMemo(){
+    wrapWindowByMask('memoMask');
+    $("#newPosMemo").show();
+}
+
+function closeNewPosMemo(){
+    $("#newPosMemoText").val('');
+    $("#newPosMemo").hide();
+    $("#memoMask").hide();
+}
+
+/** 새위치등록 입력 */
+function insertNewPos(){
+
+    navigator.notification.confirm(msg.insertPos, function(btnIndex){
+                if(btnIndex == 1){
+                    var param = "";
+                    var coordinate = map.getView().getCenter();
+
+                    var centerPoint = new ol.proj.transform(coordinate, baseProjection, sourceProjection);
+
+                    param = $.extend({},{
+                        // sn : RDFTYLC_SN,
+                        // rdftySe : RDFTY_SE,
+                        posX : centerPoint[0],
+                        posY : centerPoint[1],
+                        memo : $("#newPosMemoText").val(),
+                        jobSeCd: 'C'
+                    });
+
+                    insertMoveingPoint(param);
+
+                    cancleNewPos();                
+                }
+            }, "알림", ["확인","취소"]);
+}
+
+/** 새위치등록 div 취소 */
+function cancleNewPos(){
+    // clearSource('위치이동');
+
+    var context = app.context;
+
+    layerToggle(context);
+
+    $(".newPosition button").click();
+}
+
+/** 위치이동 마커 삭제 */
+function clearSource(title){
+    var layerList = map.getLayers().getArray();
+    for(var i = 0 ; i < layerList.length; i++){
+        if(layerList[i].get('title') == title){
+            var movingPoint_source = layerList[i].getSource();
+            movingPoint_source.clear();
+        }
+    }
+}
+ 
