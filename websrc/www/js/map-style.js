@@ -23,9 +23,11 @@ var LAST_CHECK_STATUS = {
 };
 
 var DATA_TYPE = {
-    BULD: "01", RDPQ: "02", AREA: "03", BSIS: "04", ENTRC: "05",
+    LOC: "00", BULD: "01", RDPQ: "02", AREA: "03", BSIS: "04", ENTRC: "05",
     getStatusNameWithCode: function (code) {
         switch (code) {
+            case "00":
+                return DATA_TYPE.LOC;
             case "01":
                 return DATA_TYPE.BULD;
             case "02":

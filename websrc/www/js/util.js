@@ -587,9 +587,10 @@ function layerToggle(context){
         if (context.type == "map") {
             $(".legend").toggle(true);
             
-            map.addLayer(layers.rdpq);
-            map.addLayer(layers.bsis);
-            map.addLayer(layers.area);
+            // map.addLayer(layers.rdpq);
+            // map.addLayer(layers.bsis);
+            // map.addLayer(layers.area);
+            map.addLayer(layers.loc);
 
             if(mapZoom <= 12){
                 map.getView().setZoom(13);
@@ -616,6 +617,7 @@ function removeLayers(){
     map.removeLayer(layers.rdpq);
     map.removeLayer(layers.bsis);
     map.removeLayer(layers.area);
+    map.removeLayer(layers.loc);
 }
 
 function appExitCallback(btnIndex){
