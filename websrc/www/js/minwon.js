@@ -31,6 +31,7 @@ $(function () {
     var buildContent = function(content) {
         content.sigCd = content.inTakeCggCode = app.info.sigCd;
         var url = URLs.postURL(URLs.minwonServiceLink, content);
+        var rdMinwonCnt = 0;
 
         util.postAJAX("", url, true)
             .then(function (context, rcode, results) {
@@ -45,10 +46,15 @@ $(function () {
                     for(var i in data) {
                         var rowHtml = "<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>";
                         var d = data[i];
+                        //도로명주소대장(등본발급/열람)신청 코드 = 10
+                        if(d.reqstSe == 10){
+                            rdMinwonCnt ++;    
+                        }
                         $("#minwon > tbody:last").append(
                             rowHtml.format(d.reqstDe.replace(/(\d{4})(\d{2})(\d{2})/,'$1/$2/$3'), mwCode[d.reqstSe], d.reqManNm));
                     }
                 }
+                $("#minwonList_page .rdMinwon .rdCnt").text(rdMinwonCnt);
                 util.dismissProgress();
 
             }, function (context, xhr, error) {

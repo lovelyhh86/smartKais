@@ -18,6 +18,7 @@ var URLs = {
     "updateFacilityInfo": { svcNm: "uSPGF" },
     "updateBuildNumberInfo": { svcNm: "uSPBD" },
     "updateBuilingInfo": { svcNm: "uBULD" },
+    "selectLocLink":{svcNm : "sLOC"},
     
 
     "updateAddressInfo": { svcNm: "uBSEX" },

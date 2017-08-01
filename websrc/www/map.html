@@ -1,6 +1,43 @@
 <!DOCTYPE html>
 <html LANG="ko">
 <div id="mapview_page" data-sn='' data-sigcd='' data-role="page" data-dom-cache="true">
+    <div id="newPos" class="newPos">
+        <div class="newPosContent">
+            <div class="location">
+                <img src="image/arrow.png"></img>
+            </div>
+            <!-- <div class="buttonDiv" onclick="showNewPosMemo()">
+                <img src="image/check.png"></img>
+            </div> -->
+            <!--<div class="memoDiv">
+                <textarea id="newPosMemo" rows="2" cols="" placeholder="메모를 입력하세요"></textarea>
+            </div>-->
+              
+        </div>
+    </div>
+    <div class="buttonDiv"> 
+        <button onclick="cancleNewPos()">취소</button> 
+        <button onclick="showNewPosMemo()">위치선택</button> 
+    </div>  
+    <div id="memoMask"></div>
+    <div id="newPosMemo" class="newPosMemo">
+        <div class="dataTItle">메모</div>
+        <div class="dataForm">
+            <div class="row">
+                <div class="cell">
+                    <div class="inputText w75">
+                        <textarea id="newPosMemoText" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dataBtn">
+            <span onclick="closeNewPosMemo()" class="btnNormal">닫기</span>
+            <span onclick="insertNewPos()" class="btnPoint">저장</span>
+        </div>
+        <p onclick="closeNewPosMemo()" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+    </div>
+                
     <div id="map" style="height: 100%;"></div>
     <div id="search">
         <form class="ui-filterable" >
@@ -121,7 +158,7 @@
             //     }
             // });
 
-            app.context = {};
+            // app.context = {};
         });
 
         $(document).on("focus", "#mapview_memo", function() {

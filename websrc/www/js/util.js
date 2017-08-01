@@ -287,7 +287,7 @@ var util = {
             //         // map.addLayer(layers.entrc);
             //     }
             // });
-            app.context = {};
+            // app.context = {};
         }
 
     },
@@ -582,20 +582,15 @@ function layerToggle(context){
         $("#popup").hide();
         var mapZoom = map.getView().getZoom();
         
-        map.removeLayer(layers.move);
-        map.removeLayer(layers.buld);
-        map.removeLayer(layers.move);
-        map.removeLayer(layers.rdpq);
-        map.removeLayer(layers.bsis);
-        map.removeLayer(layers.area);
-
+        removeLayers();
 
         if (context.type == "map") {
             $(".legend").toggle(true);
             
-            map.addLayer(layers.rdpq);
-            map.addLayer(layers.bsis);
-            map.addLayer(layers.area);
+            // map.addLayer(layers.rdpq);
+            // map.addLayer(layers.bsis);
+            // map.addLayer(layers.area);
+            map.addLayer(layers.loc);
 
             if(mapZoom <= 12){
                 map.getView().setZoom(13);
@@ -612,6 +607,17 @@ function layerToggle(context){
 
         }
     });
+}
+
+function removeLayers(){
+    clearSource('현위치');
+    clearSource('위치이동');
+    map.removeLayer(layers.move);
+    map.removeLayer(layers.buld);
+    map.removeLayer(layers.rdpq);
+    map.removeLayer(layers.bsis);
+    map.removeLayer(layers.area);
+    map.removeLayer(layers.loc);
 }
 
 function appExitCallback(btnIndex){

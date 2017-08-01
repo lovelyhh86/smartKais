@@ -1245,21 +1245,34 @@ $(function(){
 
        }
 
-       function wrapWindowByMask(){
+       function wrapWindowByMask(id){
             //화면의 높이와 너비를 구한다.
             var maskHeight = $(document).height();  
             var maskWidth = $(window).width();
-            var openImageH = $(".openImage").height();
-            var infoHeaderH = $(".infoHeader").height();
 
-            var maskTop = openImageH + infoHeaderH;
+            var maskTop = 0;
+
+            if(id == "memoMask"){
+                var searchBarH = $(".ui-input-search").height();
+                
+                maskWidth = maskWidth + searchBarH;
+            }else{
+                // var openImageH = $(".openImage").height();
+                // var infoHeaderH = $(".infoHeader").height();
+                
+                maskTop = 98;
+            }
 
             //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-            $('#mask').css({'width':maskWidth,'height':maskHeight,'top':'98px'});  
+            $('#'+id).css({'width':maskWidth,'height':maskHeight,'top':maskTop});  
 
             //애니메이션 효과
             // $('#mask').fadeIn(1000);      
-            $('#mask').fadeTo("slow",0.5);    
+            $('#'+id).fadeTo("slow",0.5);    
+       }
+
+       function clearMask(){
+           $("#mask").attr("style","");
        }
 
        function saveImg(type){
