@@ -20,7 +20,10 @@
             <div id="mask"></div>
                 <!-- 정보  -->
                 <div class="infoTable">
-                    <p id ="sn" style="display:none"></p>
+                    <input id="sn" type="hidden" value="" />
+                    <input id="entManNo" type="hidden" value="" />
+                    <input id="imageFileSn" type="hidden" value="" />
+
                     <div onclick="openDataIdPop('delStateCd');" class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
@@ -37,7 +40,7 @@
                             <span class="label">일련번호</span>
                         </div>
                         <div class="cell2">
-                            <p id="entranceSn"></p>
+                            <p id="buldNmtSn"></p>
                         </div>
                     </div>
                     <div onclick="openDataIdPop('buldNmtSe');" class="row">

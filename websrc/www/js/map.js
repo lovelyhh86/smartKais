@@ -393,7 +393,7 @@ var MapUtil = {
                         var data = results.data;
 
                         //일련번호
-                        $("#sn").text(sn);
+                        $("#sn").val(sn);
 
                         if(data == null){
                             navigator.notification.alert(msg.noItem,
@@ -733,6 +733,11 @@ var MapUtil = {
                                 $("#baseView_page .infoHeader .photo .photoNum").html(data.files.length);
                             break;
                             case DATA_TYPE.ENTRC:
+                                //일련번호
+                                $("#sn").text(data.buldNmtSn);
+                                $("#entManNo").val(data.entManNo);
+                                $("#imageFileSn").val(data.imageFileSn);
+
                                 //제목창
                                 var title = "[{0}] {1} {2}{3}".format(
                                     "건물번호판",
@@ -744,7 +749,7 @@ var MapUtil = {
                                 //일련번호
                                 // $("#sn").html(sn);
                                 //일련번호
-                                $("#entranceSn").html(data.entranceSn);
+                                $("#buldNmtSn").html(data.buldNmtSn);
                                 //유형
                                 $("#buldNmtSe").html(data.buldNmtSe);
                                 $("#buldNmtSeLbl").html(data.buldNmtSeLbl);

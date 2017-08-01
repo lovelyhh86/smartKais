@@ -762,7 +762,8 @@ $(function(){
                     var commomParams = {};
                     var sendParams = {};
                     var buldParams = {};
-                    var sn = $("#sn").text();
+
+                    var sn = $("#sn").val();
                     var sigCd = app.info.sigCd;
                     var workId = app.info.opeId;
 
@@ -827,12 +828,8 @@ $(function(){
                         svcNm: 'uSPGF',
                         sn: sn,
                         sigCd: sigCd,
-
-                        checkDate: util.getToday(),
-                        //id
                         workId: workId,
-
-
+                        checkDate: util.getToday()
                     });
 
                     if(type == DATA_TYPE.RDPQ){
@@ -889,7 +886,7 @@ $(function(){
                         }
 
                         commomParams = $.extend(sendParams, {
-                            type :type,
+                            type :type
 
                             // rdpqGdSd: rdpqGdSd_new,
                             // plqDirection: plqDirection_new,
@@ -933,7 +930,7 @@ $(function(){
 
 
                         commomParams = $.extend(sendParams, {
-                            type :type,
+                            type :type
                             // area_advrtsCd: area_advrtsCd_new,
                             // area_advCn: area_advCn_new,
                             // area_etcCn: area_etcCn_new,
@@ -954,7 +951,7 @@ $(function(){
                         }
 
                         commomParams = $.extend(sendParams, {
-                            type :type,
+                            type :type
                             // bsis_planeCd: bsis_planeCd_new
                         });
 
@@ -1011,9 +1008,11 @@ $(function(){
 
 
                         commomParams = $.extend(buldParams, {
-                            sn: sn,
-                            sigCd: sigCd,
-                            workId :app.info.opeId,
+                            sn           : sn,
+                            sigCd        : sigCd,
+                            workId       : app.info.opeId,
+                            entManNo     : $("#entManNo").val(),
+                            imageFilesSn : $("#imageFileSn").val()
                             // //사진파일
                             // files: files,
 
@@ -1088,7 +1087,7 @@ $(function(){
                         commomParams = $.extend(buldParams, {
                             bulManNo : sn,
                             sigCd: sigCd,
-                            workId :app.info.opeId,
+                            workId :workId
                             // //사진파일
                             // files: files,
 
