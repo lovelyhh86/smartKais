@@ -30,6 +30,7 @@ var URLs = {
     "moveingPoint":{svnNm: "iSPGF"},
     "authLink": { svcNm: "auth" },
     "sggInfo" : { svcNm: "vAdmInfo"},
+    "updateWorkDate" : {svcNm: "uWorkDate"},
 
     getURL: function (srcurl, jsondata) {
 

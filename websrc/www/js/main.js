@@ -14,7 +14,8 @@ var msg = {
     lossPhotoClose: "변경한 사진이 있습니다. 확인을 누르면 저장되지 않습니다.",
     initInfo: "정보를 다시 조회 하시겠습니까?",
     delPhoto: "사진을 삭제합니다. 변경 시 아래 저장버튼을 눌러 적용합니다.",
-    insertPos: "이 위치에 새로운 시설물을 등록 하시겠습니까?"
+    insertPos: "이 위치에 새로운 시설물을 등록 하시겠습니까?",
+    updateWorkDate: "해당시설물을 점검하셨습니까?"
 };
 var app = {
     // Application Constructor

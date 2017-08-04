@@ -1391,3 +1391,42 @@ $(function(){
             }, "알림", ["저장","취소"]);
             
        }
+
+       //점검날짜 update
+       function updateWorkDate(){
+            navigator.notification.confirm(msg.updateWorkDate, function(btnindex){
+               
+                if(btnindex == 1){
+
+                    var sendParams = {};
+
+                    var sn = $("#sn").text();
+                    var sigCd = app.info.sigCd;
+                    var workId = app.info.opeId;
+
+                    sendParams = $.extend({}, {
+                        sn: sn,
+                        sigCd: sigCd,
+                        workId : workId
+                    });
+                    
+                    var link = URLs.updateWorkDate;
+
+                    util.showProgress();
+                    var url = URLs.postURL(link, sendParams);
+                    util.postAJAX({}, url).then(
+                        function (context, rcode, results) {
+                            
+                            util.toast('점검일자가 갱신되었습니다.');
+
+                            closeDetailView();
+
+                            util.dismissProgress();
+
+                        },
+                        util.dismissProgress
+                    );
+                }
+            }, "알림", ["확인","취소"]);
+            
+       }

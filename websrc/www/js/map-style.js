@@ -79,6 +79,7 @@ var getStyleLabel = function (feature, labelOptions) {
 
 var defaultStyle = function (feature, resolution, options) {
     var features, size, style;
+    var mixStyle = false;
     var styleOptions = $.extend(true, {}, defaultStyleOptions, options.style);
 
     // feature 정보 이용 시 다중 건 단일 건 통일
@@ -89,10 +90,36 @@ var defaultStyle = function (feature, resolution, options) {
     }
     size = features.length;
 
+    var oldRdGdftySe;
+    var newRdGdftySe;
+    for(var i = 0 ; size > i; i++){
+        if(i==0){
+            oldRdGdftySe = features[i].get("RD_GDFTY_SE");
+        }
+        
+        if(oldRdGdftySe == "999"){
+            mixStyle = true ;
+            break;
+        }else{
+            newRdGdftySe = features[i].get("RD_GDFTY_SE");
+            
+            if(newRdGdftySe == "510"){
+                console.log(features[i]);
+            }
+
+            if(oldRdGdftySe != newRdGdftySe){
+                mixStyle = true ;
+                break;
+            }
+        }
+    }
+    
+
     // 스타일 캐쉬 처리
     var key = "";
+    var _text = styleOptions.label.text;
+    var clusterCnt = size;
     if( size == 1 ) {
-        var _text = styleOptions.label.text;
         if(_text) {
             if( typeof(_text) === "object" ) {
                 key = _text.func(features[0].get(_text.key));
@@ -105,17 +132,30 @@ var defaultStyle = function (feature, resolution, options) {
         }
         styleOptions.label._text = key;
     } else {
-        styleOptions.label._text = key = String(size);
+        for(var i = 0 ; size > i ; i++){
+            var label = _text.func(features[i].get(_text.key));
+            var cnt = parseInt(label);
+            if(!isNaN(cnt)){
+                clusterCnt += cnt - 1;
+            }
+        }
+
+        styleOptions.label._text = key = String(clusterCnt);
     }
-    style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions);
-    styleCache[options.dataType][key] = style;
+    // style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
+    // styleCache[options.dataType][key] = style;
+    
+    style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
 
     return style;
 };
 
-var getStyle = function(dataType, styleOptions) {
+var getStyle = function(dataType, styleOptions, feature, mixStyle) {
     var retStyle;
     switch (dataType) {
+        case DATA_TYPE.LOC:
+            retStyle = locStyle(styleOptions, feature, mixStyle);
+            break;
         case DATA_TYPE.BULD:
             retStyle = buildStyle(styleOptions);
             break;
@@ -134,6 +174,98 @@ var getStyle = function(dataType, styleOptions) {
 
     }
     return retStyle;
+};
+
+// 위치레이어 스타일
+var locStyle = function (styleOptions, feature, mixStyle) {
+    var rdGdftySe = feature.get('RD_GDFTY_SE');
+    var ltChcYn = feature.get('LT_CHC_YN');
+    var opt;
+    if(mixStyle == true){
+        opt = {
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                anchor: [0.45, 40],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                src: 'image/mixPos4.png'
+            }))
+        };
+    }else if(rdGdftySe == "110"){
+        if(ltChcYn == 0){
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'img/icon_legend01.png'
+                }))
+            };
+        }else{
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'image/check_road.png'
+                }))
+            };
+        }
+    }else if(rdGdftySe == "510"){
+        if(ltChcYn == 0){
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'img/icon_legend03.png'
+                }))
+            };
+        }else{
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'image/check_area.png'
+                }))
+            };
+        }
+    }else if(rdGdftySe == "610"){
+        if(ltChcYn == 0){
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'img/icon_legend02.png'
+                }))
+            };
+        }else{
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'image/check_bsis.png'
+                }))
+            };
+        }
+    }else if(rdGdftySe == "999"){
+        opt = {
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                anchor: [0.45, 40],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                src: 'image/mixPos.png'
+            }))
+        };
+    }
+    
+    
+    if( styleOptions.label._text)
+        opt.text = createTextStyle(styleOptions);
+
+    return new ol.style.Style(opt);
 };
 
 // 건물 스타일

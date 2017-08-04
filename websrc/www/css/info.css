@@ -26,6 +26,13 @@
 .legend ul li.area.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.area.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
+/*신규 위치등록*/
+.newPosition { top: 15em; left: 1em; width: 9em; height: 3em;}
+/* .newPosition button { background-color: transparent !important;position: relative;} */
+.newPosition ul {width: 9em;}   
+.legend ul li.nPos{background: #fff url(../image/plusPos2.png) 6px 4px no-repeat;    background-size: 2em; width: 6.5em;}
+/* .legend ul li.nPos.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.nPos.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;} */
 
 /*mapBox*/
 .mapWrap{width:300px;max-width: 400px; color: #2c3538; background-color: white; border-radius: 0.3em; }
@@ -92,8 +99,8 @@
 .infoTable .cell1{display: table-cell; width:30%; border-bottom: 1px solid #e5e5e5; padding: 12px 30px; background-color:#adadad; vertical-align: middle; color: #fff;}
 .infoTable .cell2{display: table-cell; width:auto; border-bottom: 1px solid #e5e5e5; padding: 4px 11px; background-color:#f5f7f8; vertical-align: middle;}
 .infoTable .cell1 > span.label{margin: 0;font-weight: normal;text-shadow: none;}
-.infoTable .cell2 p { margin-top: 0px; padding: 7px 14px; height: 1.2em; }
-.infoTable .cell2 p.edit { border: 1px solid #c5c5c5 }
+.infoTable .cell2 p { margin-top: 0px; padding: 7px 14px; height: 1.2em; overflow: hidden; width: 25em; white-space: nowrap;text-overflow: ellipsis;}
+.infoTable .cell2 p.edit { border: 1px solid #c5c5c5 ;}
 
 /*.infoTable .cell2 p:FIRST-CHILD{margin-top: 0px;}*/
 .infoTable .cellNo{display: block;width:auto;border-bottom: 0 none;padding:0;background-color: #f5f7f8; vertical-align: middle;}

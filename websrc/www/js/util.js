@@ -586,6 +586,8 @@ function layerToggle(context){
 
         if (context.type == "map") {
             $(".legend").toggle(true);
+            $(".ol-rotate").toggle(true);
+            $(".curPosition").toggle(true);
             
             // map.addLayer(layers.rdpq);
             // map.addLayer(layers.bsis);
@@ -614,9 +616,9 @@ function removeLayers(){
     clearSource('위치이동');
     map.removeLayer(layers.move);
     map.removeLayer(layers.buld);
-    map.removeLayer(layers.rdpq);
-    map.removeLayer(layers.bsis);
-    map.removeLayer(layers.area);
+    // map.removeLayer(layers.rdpq);
+    // map.removeLayer(layers.bsis);
+    // map.removeLayer(layers.area);
     map.removeLayer(layers.loc);
 }
 
