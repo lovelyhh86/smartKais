@@ -20,7 +20,24 @@
 			<!-- 정보  -->
 				<div class="infoTable">
 					<input id="sn" type="hidden" value="" />
-
+					<div onclick="updateWorkDate()" class="row">
+						<div  class="cell1">
+								<span class="label">최종점검일자</span>
+						</div>
+						<div class="cell2">
+							<p id="lastCheckDate" name="oldLbl" >&nbsp;</p>
+							<p id="checkType" name="oldLbl" style="display:none;">01</p>
+						</div>
+					</div>
+					<div onclick="openCustomPop('checkComment');" class="row">
+                        <div  class="cell1">
+                            <span class="label">점검내용</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="checkComment" name="oldLbl">&nbsp;</p>
+                            <p id="checkComment_new" name="newLbl" style="display:none; color:red"></p>
+                        </div>
+                    </div>
 					<div onclick="openDataIdPop('delStateCd');" class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
@@ -255,102 +272,118 @@
 							<p id="bsis">&nbsp;</p>
 						</div>
 					</div>
-				<!-- 정보 끝 -->
+					<!-- 정보 끝 -->
 
-				<!-- 공통 라디오 데이터 팝업 -->
-				<div id="radioDataPop" class="dataWrap" style="display: none">
-					<div id="dataTitle" class="dataTItle"></div>
-					<div id="dataForm" class="dataForm">
-						
-					</div>
-					<div class="dataBtn">
-						<span onclick="radioDataSendParent()" class="btnPoint">저장</span>
-						<span class="btnNormal dataPopCloser">닫기</span>
-					</div>
-					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-				</div>
-				<!-- 공통 라디오 데이터 팝업 끝 -->
-
-				<!-- 단가 데이터 팝업 -->
-				<div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">단가</div>
-					<div class="dataForm">
-						<div class="row">
-							<div class="cell">
-								<span class="label w35">단가</span>
-								<div class="inputText w75"><input type="number" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
-							</div>
+					<!-- 공통 라디오 데이터 팝업 -->
+					<div id="radioDataPop" class="dataWrap" style="display: none">
+						<div id="dataTitle" class="dataTItle"></div>
+						<div id="dataForm" class="dataForm">
+							
 						</div>
-					</div>
-					<div class="dataBtn">
-						<span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
-						<span class="btnNormal dataPopCloser">닫기</span>
-					</div>
-					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-				</div>
-				<!-- 단가 데이터 팝업 끝 -->
-				<!-- 가로*세로*두께 데이터 팝업 -->
-				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">규격 (가로*세로*두께)</div>
-					<div class="dataForm">
-						<div class="row">
-							<div class="cell">
-								<span class="label w50">크기 </span>
-									<div class="inputText"><input readonly type="number" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px"></div>
-									<div class="inputText">*</div>
-									<div class="inputText"><input readonly type="number" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
-									<div class="inputText">*</div>
-									<div class="inputText"><input type="number" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
-							</div>
+						<div class="dataBtn">
+							<span onclick="radioDataSendParent()" class="btnPoint">저장</span>
+							<span class="btnNormal dataPopCloser">닫기</span>
 						</div>
+						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 					</div>
-					<div class="dataBtn">
-						<span onclick="textDataSendParent3('gdftyWVT')" class="btnPoint">저장</span>
-						<span class="btnNormal dataPopCloser">닫기</span>
-					</div>
-					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-				</div>
-				<!-- 가로*세로*두께 데이터 팝업 끝 -->
+					<!-- 공통 라디오 데이터 팝업 끝 -->
 
-				<!-- 광고내용 데이터 팝업 -->
-				<div id="area_advCn_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">광고내용</div>
-					<div class="dataForm">
-						<div class="row">
-							<div class="cell">
-								<div class="inputText w75">
-									<textarea id="area_advCn_fix" name="" title="광고내용" maxlength="200" value="" style="height:100px;width:335px"></textarea>
+					<!-- 단가 데이터 팝업 -->
+					<div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
+						<div class="dataTItle">단가</div>
+						<div class="dataForm">
+							<div class="row">
+								<div class="cell">
+									<span class="label w35">단가</span>
+									<div class="inputText w75"><input type="number" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
 								</div>
 							</div>
 						</div>
+						<div class="dataBtn">
+							<span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
+							<span class="btnNormal dataPopCloser">닫기</span>
+						</div>
+						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 					</div>
-					<div class="dataBtn">
-						<span onclick="textDataSendParent('area_advCn')" class="btnPoint">저장</span>
-						<span class="btnNormal dataPopCloser">닫기</span>
-					</div>
-					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-				</div>
-				<!-- 광고내용 데이터 팝업 끝 -->
-				<!-- 기타내용 데이터 팝업 -->
-				<div id="area_etcCn_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">기타내용</div>
-					<div class="dataForm">
-						<div class="row">
-							<div class="cell">
-								<div class="inputText w75">
-									<textarea id="area_etcCn_fix" name="" title="기타내용" maxlength="200" value="" style="height:100px;width:335px"></textarea>
+					<!-- 단가 데이터 팝업 끝 -->
+					<!-- 가로*세로*두께 데이터 팝업 -->
+					<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
+						<div class="dataTItle">규격 (가로*세로*두께)</div>
+						<div class="dataForm">
+							<div class="row">
+								<div class="cell">
+									<span class="label w50">크기 </span>
+										<div class="inputText"><input readonly type="number" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px"></div>
+										<div class="inputText">*</div>
+										<div class="inputText"><input readonly type="number" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
+										<div class="inputText">*</div>
+										<div class="inputText"><input type="number" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
 								</div>
 							</div>
 						</div>
+						<div class="dataBtn">
+							<span onclick="textDataSendParent3('gdftyWVT')" class="btnPoint">저장</span>
+							<span class="btnNormal dataPopCloser">닫기</span>
+						</div>
+						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 					</div>
-					<div class="dataBtn">
-						<span onclick="textDataSendParent('area_etcCn')" class="btnPoint">저장</span>
-						<span class="btnNormal dataPopCloser">닫기</span>
+					<!-- 가로*세로*두께 데이터 팝업 끝 -->
+
+					<!-- 광고내용 데이터 팝업 -->
+					<div id="area_advCn_pop" class="dataWrap" style="display: none">
+						<div class="dataTItle">광고내용</div>
+						<div class="dataForm">
+							<div class="row">
+								<div class="cell">
+									<div class="inputText w75">
+										<textarea id="area_advCn_fix" name="" title="광고내용" maxlength="200" value="" style="height:100px;width:335px"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="dataBtn">
+							<span onclick="textDataSendParent('area_advCn')" class="btnPoint">저장</span>
+							<span class="btnNormal dataPopCloser">닫기</span>
+						</div>
+						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 					</div>
-					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-				</div>
-				<!-- 기타내용 데이터 팝업 끝 -->
-						
+					<!-- 광고내용 데이터 팝업 끝 -->
+					<!-- 기타내용 데이터 팝업 -->
+					<div id="area_etcCn_pop" class="dataWrap" style="display: none">
+						<div class="dataTItle">기타내용</div>
+						<div class="dataForm">
+							<div class="row">
+								<div class="cell">
+									<div class="inputText w75">
+										<textarea id="area_etcCn_fix" name="" title="기타내용" maxlength="200" value="" style="height:100px;width:335px"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="dataBtn">
+							<span onclick="textDataSendParent('area_etcCn')" class="btnPoint">저장</span>
+							<span class="btnNormal dataPopCloser">닫기</span>
+						</div>
+						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+					</div>
+					<!-- 기타내용 데이터 팝업 끝 -->
+					<!-- 시설물 점검내용 데이터 팝업 -->
+					<div id="checkComment_pop" class="dataWrap" style="display: none">
+						<div class="dataTItle">점검내용</div>
+						<div class="dataForm">
+							<div class="row">
+								<div class="cell">
+									<div class="inputText w75"><textarea id="checkComment_fix" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px"></textarea></div>
+								</div>
+							</div>
+						</div>
+						<div class="dataBtn">
+							<span onclick="textDataSendParent('checkComment')" class="btnPoint">저장</span>
+							<span class="btnNormal dataPopCloser">닫기</span>
+						</div>
+						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+					</div>
+					<!-- 시설물 점검내용 데이터 팝업 끝 -->			
 				</div>
 				<!-- content 끝  -->
 			

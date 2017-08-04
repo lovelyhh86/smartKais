@@ -516,11 +516,10 @@ var MapUtil = {
                                     (data.frontEndBaseSlaveNo != "0" ? '-' + data.frontEndBaseSlaveNo : '')
                                 );
                                 $(".title").append(title);
-                                //최종점검일자 lastCheckDate
-                                // var workDate = "{0}년{1}월{2}일 {3}:{4}:{5}".format(data.workDate.substr(0,4),data.workDate.substr(4,2),data.workDate.substr(6,2),data.workDate.substr(8,2),data.workDate.substr(10,2),data.workDate.substr(12,2));
-
+                                //최종점검일자
                                 var lastCheckDate = data.lastCheckDate == null ?  "점검이력이 없습니다.":"{0}년{1}월{2}일".format(data.lastCheckDate.substr(0,4),data.lastCheckDate.substr(4,2),data.lastCheckDate.substr(6,2));
-                                $("#workDate").html(lastCheckDate);
+                                $("#lastCheckDate").html(lastCheckDate);
+                                $("#lastCheckDate").addClass("edit");
                                 //도로시설물
                                 $("#rdftySeLbl").html(data.rdftySeLbl);
                                 $("#rdftySe").html(data.rdftySe);
@@ -625,6 +624,9 @@ var MapUtil = {
                                 $("#delStateCd").html(data.delStateCd);
                                 $("#delStateCdLbl").html(data.delStateCdLbl);
                                 $("#delStateCdLbl").addClass("edit");
+                                //점검내용
+                                $("#checkComment").html(data.checkComment);
+                                $("#checkComment").addClass("edit");
 
                                 //사진
                                 // $("#roadView_page .photoWrap .photoTable .picImg").each(function(i, o) {
@@ -645,7 +647,10 @@ var MapUtil = {
                                     (data.bsisSlno != "0" ? '-' + data.bsisSlno : '')
                                 );
                                 $(".title").append(title);
-
+                                //최종점검일자
+                                var lastCheckDate = data.lastCheckDate == null ?  "점검이력이 없습니다.":"{0}년{1}월{2}일".format(data.lastCheckDate.substr(0,4),data.lastCheckDate.substr(4,2),data.lastCheckDate.substr(6,2));
+                                $("#lastCheckDate").html(lastCheckDate);
+                                $("#lastCheckDate").addClass("edit");
                                 //도로시설물
                                 // $("#rdGdftySeLbl").html(data.rdGdftySeLbl);
                                 // $("#rdGdftySe").html(data.rdGdftySe);
@@ -730,6 +735,9 @@ var MapUtil = {
                                 $("#delStateCd").html(data.delStateCd);
                                 $("#delStateCdLbl").html(data.delStateCdLbl);
                                 $("#delStateCdLbl").addClass("edit");
+                                //점검내용
+                                $("#checkComment").html(data.checkComment);
+                                $("#checkComment").addClass("edit");
                                 //사진건수
                                 $("#areaView_page .infoHeader .photo .photoNum").html(data.files.length);
                             break;
@@ -742,7 +750,10 @@ var MapUtil = {
                                     (data.bsisSlno != "0" ? '-' + data.bsisSlno : '')
                                 );
                                 $(".title").append(title);
-
+                                //최종점검일자
+                                var lastCheckDate = data.lastCheckDate == null ?  "점검이력이 없습니다.":"{0}년{1}월{2}일".format(data.lastCheckDate.substr(0,4),data.lastCheckDate.substr(4,2),data.lastCheckDate.substr(6,2));
+                                $("#lastCheckDate").html(lastCheckDate);
+                                $("#lastCheckDate").addClass("edit");
                                 //도로시설물
                                 $("#rdftySe").html(data.rdftySe);
                                 $("#rdftySeLbl").html(data.rdftySeLbl);
@@ -830,14 +841,17 @@ var MapUtil = {
                                 $("#delStateCd").html(data.delStateCd);
                                 $("#delStateCdLbl").html(data.delStateCdLbl);
                                 $("#delStateCdLbl").addClass("edit");
+                                //점검내용
+                                $("#checkComment").html(data.checkComment);
+                                $("#checkComment").addClass("edit");
                                 //사진건수
                                 $("#baseView_page .infoHeader .photo .photoNum").html(data.files.length);
                             break;
                             case DATA_TYPE.ENTRC:
                                 //일련번호
-                                $("#sn").text(data.buldNmtSn);
+                                $("#sn").val(data.bulNmtNo);
                                 $("#entManNo").val(data.entManNo);
-                                $("#imageFileSn").val(data.imageFileSn);
+                                $("#imageFileSn").val(data.imageFilesSn);
 
                                 //제목창
                                 var title = "[{0}] {1} {2}{3}".format(
@@ -850,7 +864,7 @@ var MapUtil = {
                                 //일련번호
                                 // $("#sn").html(sn);
                                 //일련번호
-                                $("#buldNmtSn").html(data.buldNmtSn);
+                                $("#bulNmtNo").html(data.bulNmtNo);
                                 //유형
                                 $("#buldNmtSe").html(data.buldNmtSe);
                                 $("#buldNmtSeLbl").html(data.buldNmtSeLbl);

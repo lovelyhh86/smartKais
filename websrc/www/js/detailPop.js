@@ -766,6 +766,7 @@ $(function(){
                     var sn = $("#sn").val();
                     var sigCd = app.info.sigCd;
                     var workId = app.info.opeId;
+                    
 
                     /** 공통 */
                     //설치지점
@@ -819,10 +820,30 @@ $(function(){
                         sendParams = $.extend(sendParams, {gdftyUnitPrice: gdftyUnitPrice_new});
                     }
                     //설치상태
-                    var delStateCd_new = $("#delStateCd_new").text();
+                    var delStateCd_new = $("#delStateCd_new").text() == ''?$("#delStateCd").text():$("#delStateCd_new").text();
                     if(delStateCd_new !=""){
                         sendParams = $.extend(sendParams, {delStateCd: delStateCd_new});
                     }
+                    //점검내용
+                    var checkComment_new = $("#checkComment_new").text() == ''? $("#checkComment").text() : $("#checkComment_new").text();
+                    
+                    sendParams = $.extend(sendParams, {checkComment: checkComment_new});
+                    
+                    //점검상태
+                    var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
+                    
+                    sendParams = $.extend(sendParams, {checkState: checkState});
+                    
+                    //점검타입
+                    var checkType = $("#checkType").text();
+                    
+                    sendParams = $.extend(sendParams, {checkType: checkType});
+
+                    //점검자명
+                    var checkUserNm = app.info.opeNm;
+
+                    sendParams = $.extend(sendParams, {checkUserNm: checkUserNm});
+                    
 
                     sendParams = $.extend(sendParams, {
                         svcNm: 'uSPGF',
@@ -1011,8 +1032,8 @@ $(function(){
                             sn           : sn,
                             sigCd        : sigCd,
                             workId       : app.info.opeId,
-                            entManNo     : $("#entManNo").val(),
-                            imageFilesSn : $("#imageFileSn").val()
+                            // entManNo     : $("#entManNo").val(),
+                            // imageFilesSn : $("#imageFileSn").val()
                             // //사진파일
                             // files: files,
 
@@ -1220,7 +1241,7 @@ $(function(){
            
            var imgParam = "{ base64 : {0}, name : {1} }";
            
-           var sn = $("#sn").text();
+           var sn = $("#sn").val();
            var date = util.getToday();
            var title = $(".infoHeader .title .label").text();
 
@@ -1298,7 +1319,7 @@ $(function(){
                     var commomParams = {};
                     var sendParams = {};
                     var buldParams = {};
-                    var sn = $("#sn").text();
+                    var sn = $("#sn").val();
                     var sigCd = app.info.sigCd;
                     var workId = app.info.opeId;
                     
@@ -1347,13 +1368,14 @@ $(function(){
                     }else if(type == DATA_TYPE.ENTRC){
                         sendParams = $.extend(commomParams, {
                         });
-                        // sendParams = $.extend(commomParams, {
+                        sendParams = $.extend(commomParams, {
+                            imageFilesSn: $("#imageFilesSn").val()
                         //     sn: sn,
                         //     sigCd: sigCd,
                         //     workId :app.info.opeId,
                         //     //사진파일
                         //     // files: files
-                        // });
+                        });
 
                         var link = URLs.updateBuildNumberInfo;
                     }
@@ -1400,14 +1422,23 @@ $(function(){
 
                     var sendParams = {};
 
-                    var sn = $("#sn").text();
+                    var sn = $("#sn").val();
                     var sigCd = app.info.sigCd;
                     var workId = app.info.opeId;
+                    var checkUserNm = app.info.opeNm;
+                    var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
+                    var checkType = $("#checkType").text(); //01 수시점검, 02 개별점검
+                    var checkComment = $("#checkComment_new").text() == ''? $("#checkComment").text() : $("#checkComment_new").text();
 
                     sendParams = $.extend({}, {
                         sn: sn,
                         sigCd: sigCd,
-                        workId : workId
+                        workId : workId,
+                        checkUserNm: checkUserNm,
+                        checkState : checkState,
+                        checkType : checkType,
+                        checkComment : checkComment
+
                     });
                     
                     var link = URLs.updateWorkDate;

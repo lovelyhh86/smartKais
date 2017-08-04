@@ -26,9 +26,19 @@
 								<span class="label">최종점검일자</span>
 						</div>
 						<div class="cell2">
-							<p id="workDate" name="oldLbl" >&nbsp;</p>
+							<p id="lastCheckDate" name="oldLbl" >&nbsp;</p>
+							<p id="checkType" name="oldLbl" style="display:none;">01</p>
 						</div>
 					</div>
+					<div onclick="openCustomPop('checkComment');" class="row">
+                        <div  class="cell1">
+                            <span class="label">점검내용</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="checkComment" name="oldLbl">&nbsp;</p>
+                            <p id="checkComment_new" name="newLbl" style="display:none; color:red"></p>
+                        </div>
+                    </div>
 					<div onclick="openDataIdPop('delStateCd');" class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
@@ -438,6 +448,24 @@
 					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
 				<!-- 가로*세로*두께 데이터 팝업 끝 -->
+
+				<!-- 시설물 점검내용 데이터 팝업 -->
+                <div id="checkComment_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">점검내용</div>
+                    <div class="dataForm">
+                        <div class="row">
+                            <div class="cell">
+                                <div class="inputText w75"><textarea id="checkComment_fix" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px"></textarea></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataBtn">
+                        <span onclick="textDataSendParent('checkComment')" class="btnPoint">저장</span>
+                        <span class="btnNormal dataPopCloser">닫기</span>
+                    </div>
+                    <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 시설물 점검내용 데이터 팝업 끝 -->
 			</div>
 			<!-- content 끝  -->
 			<!-- footer 시작 -->
