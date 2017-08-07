@@ -1,6 +1,8 @@
 package kr.go.juso.smartKais;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,6 +22,15 @@ public class MainActivity extends CordovaActivity {
 
         String sso = getIntent().getStringExtra("sso");
         loadUrl("javascript:sso = JSON.parse('" + sso + "');");
+
+
+        String version;
+        try {
+            PackageInfo i = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = i.versionName;
+        } catch(PackageManager.NameNotFoundException e) { }
+
+
 
         AppEnvironment.setPendingNotificationsCount(0);
         try {

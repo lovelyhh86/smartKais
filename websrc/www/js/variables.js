@@ -31,6 +31,7 @@ var URLs = {
     "authLink": { svcNm: "auth" },
     "sggInfo" : { svcNm: "vAdmInfo"},
     "updateWorkDate" : {svcNm: "uWorkDate"},
+    "updateSpgfImg" : {svcNm: "uSPGFImg"},
 
     getURL: function (srcurl, jsondata) {
 

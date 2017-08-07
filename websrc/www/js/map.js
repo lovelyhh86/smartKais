@@ -7,7 +7,7 @@ var MapUtil = {
         MapUtil.controls.init();
         MapUtil.handler.init();
     }, state: {
-       photo : []
+       photo : [L = {isPhoto: false, edited: false}, M = {isPhoto: false, edited: false}]
     }, handler: {
         init: function() {
             MapUtil.handler.popupHandler();
@@ -48,7 +48,10 @@ var MapUtil = {
                 });
                 //2번쨰 클릭부터 표출이 안되서 추가
                 $("#photoDialog").show();
-                $(".picImg").empty();
+                //초기화
+                $(".picImg img").attr("src",'');
+                $(".picImg imaFilSn").attr("value",'');
+                
                 // 사진모드
                 if($(".detailView .infoWrap .infoContent .photoWrap").css("display") != "none") {
 
@@ -84,39 +87,110 @@ var MapUtil = {
                     util.postAJAX({}, url).then(
                         function(context, rcode, results) {
                             var data = results.data;
+                            MapUtil.state.photo = [{isPhoto: false, edited: false}, {isPhoto: false, edited: false}];
+
+                            // var emptyObj = "<img style='height: 220px; width: 100%; object-fit: contain' src=''/>";
+                            // emptyObj+= "<input id='imaFilSn' type='hidden' value=''/>";
+                            // emptyObj+= "<input id='tbGbn' type='hidden' value='{0}'/>";
+
                             if (rcode != 0) {
                                 util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
                                 util.dismissProgress();
                                 return;
                             }
 
-                            if (util.isEmpty(data.files) === false) {
+                            if (!util.isEmpty(data)) {
+
                                 for (var index in data.files) {
-                                    var image = data.files[index];
-                                    if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                                        var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
-                                        $($(".picImg")[index]).html(obj);
+                                        var image = data.files[index];
+                                        if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                                            var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                            obj+= "<input id='imaFilSn' type='hidden' value='"+image.imageFilesSn+"'/>";
+                                            obj+= "<input id='tbGbn' type='hidden' value='"+image.tbGbn+"'/>";
+                                            
+                                            $(".picInfo."+image.tbGbn+" .picImg").html(obj);
+
+                                            if(image.tbGbn == "L"){
+                                                MapUtil.state.photo[0].isPhoto = true;
+                                            }else{
+                                                MapUtil.state.photo[1].isPhoto = true;
+                                            }
+                                            
+                                        }
                                     }
+
+
+                                
+                                // if(data.files.length == 1 && data.files[0].tbGbn == 'L'){
+                                //     var image = data.files[0];
+                                    
+                                //     var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                //     obj+= "<input id='imaFilSn' type='hidden' value='"+image.imageFilesSn+"'/>";
+                                //     obj+= "<input id='tbGbn' type='hidden' value='"+image.tbGbn+"'/>";
+                                    
+                                //     $(".picInfo.loc .picImg").html(obj);
+                                //     $(".picInfo.manage .picImg").html(emptyObj.format('M'));
+
+                                //     MapUtil.state.photo.push({isPhoto: true, edited: false});
+                                //     MapUtil.state.photo.push({isPhoto: false, edited: false});
+
+                                // }else if(data.files.length == 1 && data.files[0].tbGbn == 'M'){
+
+                                //     var image = data.files[0];
+                                    
+                                //     var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                //     obj+= "<input id='imaFilSn' type='hidden' value='"+image.imageFilesSn+"'/>";
+                                //     obj+= "<input id='tbGbn' type='hidden' value='"+image.tbGbn+"'/>";
+                                    
+                                //     $(".picInfo.loc .picImg").html(emptyObj.format('L'));
+                                //     $(".picInfo.manage .picImg").html(obj);
+
+                                //     MapUtil.state.photo.push({isPhoto: true, edited: false});
+                                //     MapUtil.state.photo.push({isPhoto: false, edited: false});
+
+                                // }else if(data.files.length == 2){
+                                    
+                                //     for (var index in data.files) {
+                                //         var image = data.files[index];
+                                //         if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                                //             var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                //             obj+= "<input id='imaFilSn' type='hidden' value='"+image.imageFilesSn+"'/>";
+                                //             obj+= "<input id='tbGbn' type='hidden' value='"+image.tbGbn+"'/>";
+                                //             $($(".picImg")[index]).html(obj);
+
+                                //             MapUtil.state.photo.push({isPhoto: true, edited: false});
+                                //         }
+                                //     }
+                                // }
+
+                                    // switch(data.files.length) {
+                                    //     case 0:
+                                    //         MapUtil.state.photo = [{isPhoto: false, edited: false}, {isPhoto: false, edited: false}];
+                                    //         break;
+                                    //     case 1:
+                                    //         MapUtil.state.photo = [{isPhoto: true, edited: false}, {isPhoto: false, edited: false}];
+                                    //         break;
+                                    //     default:
+                                    //         MapUtil.state.photo = [{isPhoto: true, edited: false}, {isPhoto: true, edited: false}];
+                                    // }
+
                                     //앞에서 부터 2건만 처리
-                                    if(index == 1){
-                                        break;
-                                    }
+                                    // if(index == 1){
+                                    //     break;
+                                    // }
 
-                                }
+                               
+                            }else{
+                                
+                                // $(".picInfo.loc .picImg").html(emptyObj.format('L'));
+                                // $(".picInfo.manage .picImg").html(emptyObj.format('M'));
+
+                                // MapUtil.state.photo = [{isPhoto: false, edited: false}, {isPhoto: false, edited: false}];
                             }
 
-                            util.toast('최근 사진으로 2장까지만 조회');
+                            // util.toast('최근 사진으로 조회');
                             util.dismissProgress();
-                            switch(data.files.length) {
-                                case 0:
-                                    MapUtil.state.photo = [{isPhoto: false, edited: false}, {isPhoto: false, edited: false}];
-                                    break;
-                                case 1:
-                                    MapUtil.state.photo = [{isPhoto: true, edited: false}, {isPhoto: false, edited: false}];
-                                    break;
-                                default:
-                                    MapUtil.state.photo = [{isPhoto: true, edited: false}, {isPhoto: true, edited: false}];
-                            }
+                            
                         }
                     );
                 }
@@ -132,8 +206,8 @@ var MapUtil = {
                     }else if(_this.parent().hasClass('short')){
                         MapUtil.state.photo[0].edited = true;
                     }
-                    
-                    $(evt.target).parent().parent().children(".picImg").html("<img src='data:image/jpeg;base64," + ret.src + "'>");
+                    var obj = "data:image/jpeg;base64," + ret.src;
+                    $(evt.target).parent().parent().children(".picImg").children("img").attr("src",obj)
                 });
             });
         },
@@ -490,6 +564,8 @@ var MapUtil = {
 
                         //일련번호
                         $("#sn").val(sn);
+                        //위치일련번호
+                        $("#rdFtyLcSn").val(data.rdFtyLcSn);
 
                         if(data == null){
                             navigator.notification.alert(msg.noItem,
@@ -635,7 +711,10 @@ var MapUtil = {
                                 //     } catch(e) {}
                                 // });
                                 //사진건수
-                                $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length);
+                                if(data.files != null){
+                                    $("#roadView_page .infoHeader .photo .photoNum").html(data.files.length);
+                                }
+                                
 
                             break;
                             case DATA_TYPE.AREA:
@@ -739,7 +818,10 @@ var MapUtil = {
                                 $("#checkComment").html(data.checkComment);
                                 $("#checkComment").addClass("edit");
                                 //사진건수
-                                $("#areaView_page .infoHeader .photo .photoNum").html(data.files.length);
+                                //사진건수
+                                if(data.files != null){
+                                    $("#areaView_page .infoHeader .photo .photoNum").html(data.files.length);
+                                }
                             break;
                             case DATA_TYPE.BSIS:
                                 //제목창
@@ -845,7 +927,9 @@ var MapUtil = {
                                 $("#checkComment").html(data.checkComment);
                                 $("#checkComment").addClass("edit");
                                 //사진건수
-                                $("#baseView_page .infoHeader .photo .photoNum").html(data.files.length);
+                                if(data.files != null){
+                                    $("#baseView_page .infoHeader .photo .photoNum").html(data.files.length);
+                                }
                             break;
                             case DATA_TYPE.ENTRC:
                                 //일련번호

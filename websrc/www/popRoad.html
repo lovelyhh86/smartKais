@@ -12,7 +12,7 @@
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
 				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
-				<p class="photo"><span class="photoNum"></span></p>
+				<p class="photo"><span class="photoNum">0</span></p>
 			</div>
 			
 			<!-- content -->
@@ -20,7 +20,8 @@
 				<div id="mask"></div>
 			<!-- 정보  -->
 				<div class="infoTable">
-                    <input id="sn" type="hidden" value="" />
+					<input id="sn" type="hidden" value="" />
+					<input id="rdFtyLcSn" type="hidden" value="" />
 					<div onclick="updateWorkDate()" class="row">
 						<div  class="cell1">
 								<span class="label">최종점검일자</span>
@@ -492,9 +493,13 @@
 		<div class="photoTable">
 			<div class="row">
 				<div class="cell">
-					<div class="picInfo">
+					<div class="picInfo M">
 						<span class="photoSub">근거리</span>
-						<span class="picImg"></span>
+						<span class="picImg">
+							<img style='height: 220px; width: 100%; object-fit: contain' src=''/>
+							<input id='imaFilSn' type='hidden' value=''/>
+							<input id='tbGbn' type='hidden' value='M'/>
+						</span>
 						<div class="dataBtn short">
 							<span class="btnPoint">촬영</span>
 							<span class="btnNormal">삭제</span>
@@ -502,9 +507,13 @@
 					</div>
 				</div>
 				<div class="cell">
-					<div class="picInfo">
+					<div class="picInfo L">
 						<span class="photoSub">원거리</span>
-						<span class="picImg"></span>
+						<span class="picImg">
+							<img style='height: 220px; width: 100%; object-fit: contain' src=''/>
+							<input id='imaFilSn' type='hidden' value=''/>
+							<input id='tbGbn' type='hidden' value='L'/>
+						</span>
 						<div class="dataBtn long">
 							<span class="btnPoint">촬영</span>
 							<span class="btnNormal">삭제</span>
