@@ -1245,19 +1245,26 @@ $(function(){
            var date = util.getToday();
            var title = $(".infoHeader .title .label").text();
 
-
+           
            for(var index = 0 ; index < picImg.length; index++){
                 var picImgTag = $(picImg[index]);
                 var src = '';
-                if(picImgTag[0].lastChild != null){
-                    src = picImgTag[0].lastChild.getAttribute("src").split('base64,')[1];
+                var imageFilesSn = '';
+                var tbGbn = '';
+                if(picImgTag[0].firstChild != null){
+                    src = picImgTag[0].children[0].getAttribute("src").split('base64,')[1];
+                    imageFilesSn = picImgTag[0].children[1].getAttribute("value");
+                    tbGbn = picImgTag[0].children[2].getAttribute("value");
                 }
-                var imgtName = '{0}_{1}_{2}.jpg'.format(date,title,index);
+                var imgtName = '{0}_{1}_{2}_{3}.jpg'.format(date,title,tbGbn,index);
 
                 var data = new Object() ;
 
                 data.base64 = src;
                 data.name = imgtName;
+                data.imageFilesSn = imageFilesSn;
+                data.tbGbn = tbGbn;
+                
 
                 files.push(data);
             }
@@ -1320,8 +1327,15 @@ $(function(){
                     var sendParams = {};
                     var buldParams = {};
                     var sn = $("#sn").val();
+                    var rdFtyLcSn = $("#rdFtyLcSn").val();
                     var sigCd = app.info.sigCd;
                     var workId = app.info.opeId;
+                    var checkUserNm = app.info.opeNm;
+                    var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
+                    var checkType = $("#checkType").text();
+                    
+                    
+
                     
                     commomParams = $.extend(commomParams, {files: files});
 
@@ -1335,13 +1349,14 @@ $(function(){
 
                     commomParams = $.extend(commomParams, {
                         sn: sn,
+                        rdFtyLcSn: rdFtyLcSn,
                         sigCd: sigCd,
 
                         checkDate: util.getToday(),
-                        //id
                         workId: workId,
-                        // //사진파일
-                        // files: files
+                        checkUserNm : checkUserNm,
+                        checkState : checkState,
+                        checkType : checkType,
 
                     });
 
@@ -1350,21 +1365,25 @@ $(function(){
                             type :type
                         });
 
-                        var link = URLs.updateFacilityInfo;
-
+                        var link = URLs.updateSpgfImg;
+                        var relink = URLs.roadsignlink;
 
                     }else if(type == DATA_TYPE.AREA){
                         sendParams = $.extend(commomParams, {
                             type :type
                         });
 
-                        var link = URLs.updateFacilityInfo;
+                        var link = URLs.updateSpgfImg;
+                        var relink = URLs.roadsignlink;
+
                     }else if(type == DATA_TYPE.BSIS){
                         sendParams = $.extend(commomParams, {
                             type :type
                         });
 
-                        var link = URLs.updateFacilityInfo;
+                        var link = URLs.updateSpgfImg;
+                        var relink = URLs.roadsignlink;
+
                     }else if(type == DATA_TYPE.ENTRC){
                         sendParams = $.extend(commomParams, {
                         });
@@ -1405,6 +1424,11 @@ $(function(){
                             MapUtil.state.photo[1].edited = false;
 
                             closePhotoView();
+
+                            if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
+                                MapUtil.setValues(layerID, relink, rdGdftySn);
+                            }
+
                             util.dismissProgress();
                         },
                         util.dismissProgress
