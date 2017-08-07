@@ -66,20 +66,20 @@
                 android:layout_weight="1"
                 android:gravity="center">
                 <Button
-                    android:id="@+id/ibRetake"
+                    android:id="@+id/ibUse"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
 
                     android:background="@drawable/camera_btn_bg_l"
                    />
-
                 <ImageView
                     android:id="@+id/btn_text_l"
                     android:layout_width="50dip"
                     android:layout_height="50dip"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_menu_cancel" />
+                    android:src="@drawable/ic_menu_ok" />
+
             </FrameLayout>
 
             <FrameLayout
@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 android:gravity="center">
                 <Button
-                    android:id="@+id/ibUse"
+                    android:id="@+id/ibRetake"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
@@ -100,7 +100,7 @@
                     android:layout_width="50dip"
                     android:layout_height="50dip"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_menu_ok" />
+                    android:src="@drawable/ic_menu_cancel" />
             </FrameLayout>
 
         </LinearLayout>
