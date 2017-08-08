@@ -2,8 +2,10 @@ var sso;
 var tmDevice;
 var tmSerial
 var msg = {
-    callCenter: "\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
-    exit: "\n\n스마트KAIS 종료합니다."
+    callCenter: "\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
+    appRun: "\n\"바로일터\"를 통해 다시 시작해 주십시오.",
+    server: "\n서버에 연결할 수 없습니다({0}).",
+    exit: "\n\n스마트KAIS를 종료합니다."
 };
 
 var app = {
@@ -77,7 +79,7 @@ var app = {
             var networkState = navigator.connection.type;
 
             if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
-                navigator.notification.alert("데이터 통신이 실패 되었습니다.\n인터넷 연결 확인 후 다시 시작해 주십시오." + msg.exit, util.appExit, '알림', '확인');
+                navigator.notification.alert("데이터 통신이 실패 하였습니다.\n인터넷 연결 확인 후 다시 시작해 주십시오." + msg.exit, def.reject, '알림', '확인');
             } else {
                 setTimeout(def.resolve, 300);
             }
@@ -90,7 +92,7 @@ var app = {
             app.showProgress("공통기반 연결 확인");
 
             if (util.isEmpty(sso)) {
-                navigator.notification.alert("공통기반 연결이 실패 되었습니다.\n\"바로일터\"를 통하여 다시 시작해 주십시오." + msg.exit, util.appExit, '알림', '확인');
+                navigator.notification.alert("공통기반 연결이 실패 되었습니다." + msg.appRun + msg.exit, def.reject, '알림', '확인');
             } else {
                 setTimeout(def.resolve, 300);
             }
@@ -135,8 +137,10 @@ var app = {
 
                         setTimeout(def.resolve, 300);
                     } else {
-                        navigator.notification.alert("해당 단말기가 KAIS에 등록되지 않았거나\n접속 가능한 자치단체를 찾을 수 없습니다." + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
+                        navigator.notification.alert("해당 단말기가 KAIS에 등록되지 않았거나\n접속 가능한 자치단체를 찾을 수 없습니다." + msg.callCenter + msg.exit, def.reject, '알림', '확인');
                     }
+                }, function(context, resultCode, results) {
+                    navigator.notification.alert(msg.server.format(resultCode) + msg.callCenter + msg.exit, def.reject, '알림', '확인');
                 }
             );
 
@@ -167,8 +171,12 @@ var app = {
                         } else {
                             navigator.notification.alert("자치단체 정보가 조회되지 않습니다." + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
                         }
+                        setTimeout(def.resolve, 300);
+                    } else {
+                        navigator.notification.alert("해당 단말기가 KAIS에 등록되지 않았거나\n접속 가능한 자치단체를 찾을 수 없습니다." + msg.callCenter + msg.exit, def.reject, '알림', '확인');
                     }
-                    setTimeout(def.resolve, 300);
+                }, function(context, resultCode, results) {
+                    navigator.notification.alert(msg.server.format(resultCode) + msg.callCenter + msg.exit, def.reject, '알림', '확인');
                 }
             );
 
@@ -190,8 +198,6 @@ var app = {
                 },
                 function(error) {
                     var loc = { PROJECTION: "EPSG:4326", TYPE: "BASE", X: 126.89758049999996, Y: 37.57721929999922 };   // 광화문
-//                    var loc = { PROJECTION: "EPSG:4326", TYPE: "BASE", X: "126.89799370772252", Y: "37.576747067786776" };   // 사업장(성암로 189)
-
                     datasource.setGeolocation(loc);
                     localStorage["loc.X"] = loc.X;
                     localStorage["loc.Y"] = loc.Y;
@@ -201,8 +207,7 @@ var app = {
             );
 
             return def.promise();
-        }
-        ,
+        },
         /** 최신버전 정보 체크 */
         version: function () {
             var def = $.Deferred();

@@ -48,7 +48,6 @@ var util = {
             function (errorResults) {
                 util.dismissProgress();
                 util.toast("서비스 요청 에러, 다시 시도해 주세요");
-                console.dir(errorResults);
                 def.reject(context, errorResults.resultCode, errorResults.resultData);
             },
             direct
