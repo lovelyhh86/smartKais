@@ -1,17 +1,17 @@
-cordova.define("kr.go.juso.smartKais.plugins", function (require, exports, module) {
+cordova.define("kr.go.juso.smartKais.plugins", function(require, exports, module) {
     var exec = require('cordova/exec');
-    var SmartKaisPlugins = function () {
+    var SmartKaisPlugins = function() {
         this.type = "unknown";
         this.triggerHandler = {
             "notification": []
         };
         exec(
             fireTrigger,
-            function (json) { },
+            function(json) {},
             'SmartKaisPlugins',
-            'initTrigger',
-            []
+            'initTrigger', []
         );
+
         function fireTrigger(json) {
             var event = json.eventName;
             console.log(me.triggerHandler);
@@ -24,38 +24,38 @@ cordova.define("kr.go.juso.smartKais.plugins", function (require, exports, modul
         }
     };
 
-    SmartKaisPlugins.prototype.showProgress = function (keys, successCallback) {
+    SmartKaisPlugins.prototype.showProgress = function(keys, successCallback) {
         if (keys == null)
             keys = {};
 
         return exec(
-            successCallback,    						//Success callback from the plugin
-            function (e) { alert(e); },     				//Error callback from the plugin
-            'SmartKaisPlugins',  						//Tell PhoneGap to run "EgovInterfacePlugin" Plugin
-            'showProgress',              					//Tell plugin, which action we want to perform
-            [keys]);        							//Passing list of args to the plugin
+            successCallback, //Success callback from the plugin
+            function(e) { alert(e); }, //Error callback from the plugin
+            'SmartKaisPlugins', //Tell PhoneGap to run "EgovInterfacePlugin" Plugin
+            'showProgress', //Tell plugin, which action we want to perform
+            [keys]); //Passing list of args to the plugin
     };
 
-    SmartKaisPlugins.prototype.dismissProgress = function () {
+    SmartKaisPlugins.prototype.dismissProgress = function() {
         return exec(
-            function (jsondata) { },    						//Success callback from the plugin
-            function (e) { alert(e); },     				//Error callback from the plugin
-            'SmartKaisPlugins',  						//Tell PhoneGap to run "EgovInterfacePlugin" Plugin
-            'dismissProgress',              					//Tell plugin, which action we want to perform
-            [{}]);        							//Passing list of args to the plugin
+            function(jsondata) {}, //Success callback from the plugin
+            function(e) { alert(e); }, //Error callback from the plugin
+            'SmartKaisPlugins', //Tell PhoneGap to run "EgovInterfacePlugin" Plugin
+            'dismissProgress', //Tell plugin, which action we want to perform
+            [{}]); //Passing list of args to the plugin
     };
 
-    SmartKaisPlugins.prototype.testCallback = function () {
+    SmartKaisPlugins.prototype.testCallback = function() {
         return exec(
-            function (jsondata) { alert(jsondata); },    						//Success callback from the plugin
-            function (e) { alert(e); },     				//Error callback from the plugin
-            'SmartKaisPlugins',  						//Tell PhoneGap to run "EgovInterfacePlugin" Plugin
-            'testCallback',              					//Tell plugin, which action we want to perform
-            ['aaa', 'bbbb', 'ccc']);        							//Passing list of args to the plugin
+            function(jsondata) { alert(jsondata); }, //Success callback from the plugin
+            function(e) { alert(e); }, //Error callback from the plugin
+            'SmartKaisPlugins', //Tell PhoneGap to run "EgovInterfacePlugin" Plugin
+            'testCallback', //Tell plugin, which action we want to perform
+            ['aaa', 'bbbb', 'ccc']); //Passing list of args to the plugin
     };
 
-    SmartKaisPlugins.prototype.callServiceBroker = function (data, successFn, errorFn, direct) {
-        var param = $.extend({}, { scode: 'MF_MOI_SMART_KAIS', timeout: 30000 }, data);
+    SmartKaisPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, direct) {
+        var param = $.extend({}, { scode: 'MF_MOI_SMART_KAIS', timeout: 20000 }, data);
 
         var svcNm = data.svcNm;
         var mode = data.mode;
@@ -75,38 +75,35 @@ cordova.define("kr.go.juso.smartKais.plugins", function (require, exports, modul
 
         if (data.brokerMode == 0) { //MODE.DEBUG) {
             $.ajax({
-                type: "POST",
-                url: "http://api.juso.go.kr/gis/proxyGeo4mkais.jsp?",
-                dataType: "json",
-                data: reqParam
-            })
-            .done(successFn)
-            .fail(errorFn);
+                    type: "POST",
+                    url: "http://api.juso.go.kr/gis/proxyGeo4mkais.jsp?",
+                    dataType: "json",
+                    data: reqParam
+                })
+                .done(successFn)
+                .fail(errorFn);
         } else {
             return exec(
                 successFn,
                 errorFn,
                 'SmartKaisPlugins',
-                'callServiceBroker',
-                [param, $.param(reqParam).replace(/\+/gi, '%20')]
+                'callServiceBroker', [param, $.param(reqParam).replace(/\+/gi, '%20')]
             );
         }
     };
 
-    SmartKaisPlugins.prototype.getSSOInfo = function (successFn) {
+    SmartKaisPlugins.prototype.getSSOInfo = function(successFn) {
         var attrs = {};
 
         return exec(
             successFn,
-            function (errors) {
-            },
+            function(errors) {},
             'SmartKaisPlugins',
-            'getSSOinfo',
-            []
+            'getSSOinfo', []
         );
     }
 
-    SmartKaisPlugins.prototype.callAttachViewer = function (filename, param, successFn, errorFn) {
+    SmartKaisPlugins.prototype.callAttachViewer = function(filename, param, successFn, errorFn) {
         if (param.noticeMgtSn == null || param.noticeMgtSn == undefined || param.fileMgtSn == null || param.fileMgtSn == undefined) {
             errorFn("올바른 첨부파일 데이터가 아닙니다");
             return;
@@ -120,42 +117,39 @@ cordova.define("kr.go.juso.smartKais.plugins", function (require, exports, modul
             successFn,
             errorFn,
             'SmartKaisPlugins',
-            'callAttachViewer',
-            [filename, $.param(data)]
+            'callAttachViewer', [filename, $.param(data)]
         );
     };
 
-    SmartKaisPlugins.prototype.alertList = function (successFn, errorFn) {
+    SmartKaisPlugins.prototype.alertList = function(successFn, errorFn) {
         return exec(
             successFn,
             errorFn,
             'SmartKaisPlugins',
-            'alertList',
-            ['Photo Library', 'Camera']
+            'alertList', ['Photo Library', 'Camera']
         );
     };
 
-    SmartKaisPlugins.prototype.initTrigger = function (trigger, triggerFn) {
-        var successFn = function (json) {
+    SmartKaisPlugins.prototype.initTrigger = function(trigger, triggerFn) {
+        var successFn = function(json) {
             alert('trigger' + json);
 
         }
         return exec(
             successFn,
-            function (json) { },
+            function(json) {},
             'SmartKaisPlugins',
-            'initTrigger',
-            [trigger]
+            'initTrigger', [trigger]
         );
     };
 
-    SmartKaisPlugins.prototype.on = function (triggerName, triggerFunc) {
+    SmartKaisPlugins.prototype.on = function(triggerName, triggerFunc) {
         if (this.triggerHandler.hasOwnProperty(triggerName)) {
             this.triggerHandler[triggerName].push(triggerFunc);
         }
     };
 
-    SmartKaisPlugins.prototype.off = function (triggerName, triggerFunc) {
+    SmartKaisPlugins.prototype.off = function(triggerName, triggerFunc) {
         if (this.triggerHandler.hasOwnProperty(triggerName)) {
             var handleIndex = this.triggerHandler[triggerName].indexOf(triggerFunc);
             if (handleIndex >= 0) {
@@ -164,25 +158,22 @@ cordova.define("kr.go.juso.smartKais.plugins", function (require, exports, modul
         }
     };
 
-    SmartKaisPlugins.prototype.camera = function (successFn, errorFn) {
+    SmartKaisPlugins.prototype.camera = function(successFn, errorFn) {
         return exec(
             successFn,
             errorFn,
             'SmartKaisPlugins',
-            'camera',
-            []
+            'camera', []
         );
     };
 
 
-    SmartKaisPlugins.prototype.dn = function (url, successFn) {
+    SmartKaisPlugins.prototype.dn = function(url, successFn) {
         return exec(
             successFn,
-            function (errors) {
-            },
+            function(errors) {},
             'SmartKaisPlugins',
-            'dn',
-            [url]
+            'dn', [url]
         );
     }
 

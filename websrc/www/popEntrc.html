@@ -143,8 +143,8 @@
 
                     </div>
                     <div class="dataBtn">
-                        <span onclick="radioDataSendParent()" class="btnPoint">저장</span>
                         <span class="btnNormal dataPopCloser">닫기</span>
+                        <span onclick="radioDataSendParent()" class="btnPoint">저장</span>
                     </div>
                     <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
                 </div>
@@ -162,8 +162,8 @@
 						</div>
 					</div>
 					<div class="dataBtn">
-						<span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
 						<span class="btnNormal dataPopCloser">닫기</span>
+						<span onclick="textDataSendParent('gdftyUnitPrice')" class="btnPoint">저장</span>
 					</div>
 					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
@@ -184,8 +184,8 @@
 						</div>
 					</div>
 					<div class="dataBtn">
-						<span onclick="textDataSendParent3('gdftyWVT')" class="btnPoint">저장</span>
 						<span class="btnNormal dataPopCloser">닫기</span>
+						<span onclick="textDataSendParent3('gdftyWVT')" class="btnPoint">저장</span>
 					</div>
 					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
@@ -194,53 +194,60 @@
             <!-- content 끝  -->
             <!-- footer 시작 -->
             <div class="infoFooter">
-                <span onclick="submit(DATA_TYPE.ENTRC);" class="btnPoint">저장</span>
-                <!--<span onclick="refresh();" class="btnNormal dataPopCloser">초기화</span>-->
                 <span onclick="closeDetailView();" class="btnNormal">닫기</span>
+                <span onclick="submit(DATA_TYPE.ENTRC);" class="btnPoint">저장</span>
             </div>
             <!-- footer 끝 -->
         </div>
     </div>
 </div>
-<input type="hidden" id="photoIsGgn" value="N"></input>
+<input type="hidden" id="photoIsGgn" value="N" />
 <div id="photoDialog" class="photoWrap" >
-<!-- 사진 style="display: none"-->
-	<div id="" class="">
-		<div class="photoTitle">사진
-			<ul class="photoPage">
-				<!--li><span class="pic_over">전면</span></li>
-				<li><span class="pic">후면</span></li -->
-			</ul>
-		</div>
-		<div class="photoTable">
-			<div class="row">
-				<div class="cell">
-					<div class="picInfo">
-						<span class="photoSub">근거리</span>
-						<span class="picImg"></span>
-						<div class="dataBtn short">
-							<span class="btnPoint">촬영</span>
-							<span class="btnNormal">삭제</span>
-						</div>
-					</div>
-				</div>
-				<div class="cell">
-					<div class="picInfo">
-						<span class="photoSub">원거리</span>
-						<span class="picImg"></span>
-						<div class="dataBtn long">
-							<span class="btnPoint">촬영</span>
-							<span class="btnNormal">삭제</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="infoFooter">
-		<span onclick="saveImg(DATA_TYPE.ENTRC);" class="btnPoint">저장</span>
-		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
-	</div>
+    <!-- 사진 style="display: none"-->
+    <div id="" class="">
+        <div class="photoTitle">사진
+            <ul class="photoPage">
+                <!--li><span class="pic_over">전면</span></li>
+                <li><span class="pic">후면</span></li -->
+            </ul>
+        </div>
+        <div class="photoTable">
+            <div class="row">
+                <div class="cell">
+                    <div class="picInfo M">
+                        <span class="photoSub">근거리</span>
+                        <span class="picImg">
+							<img style='height: 220px; width: 100%; object-fit: contain' src=''/>
+							<input id='imaFilSn' type='hidden' value=''/>
+							<input id='tbGbn' type='hidden' value='M'/>
+						</span>
+                        <div class="dataBtn short">
+                            <span class="btnNormal">삭제</span>
+                            <span class="btnPoint">촬영</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="picInfo L">
+                        <span class="photoSub">원거리</span>
+                        <span class="picImg">
+							<img style='height: 220px; width: 100%; object-fit: contain' src=''/>
+							<input id='imaFilSn' type='hidden' value=''/>
+							<input id='tbGbn' type='hidden' value='L'/>
+						</span>
+                        <div class="dataBtn long">
+                            <span class="btnNormal">삭제</span>
+                            <span class="btnPoint">촬영</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="infoFooter">
+        <span onclick="closePhotoView();" class="btnNormal">닫기</span>
+        <span onclick="saveImg(DATA_TYPE.ENTRC);" class="btnPoint">저장</span>
+    </div>
 </div>
 <!-- 사진 끝-->
 </body>
