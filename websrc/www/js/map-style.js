@@ -103,10 +103,6 @@ var defaultStyle = function (feature, resolution, options) {
         }else{
             newRdGdftySe = features[i].get("RD_GDFTY_SE");
             
-            if(newRdGdftySe == "510"){
-                console.log(features[i]);
-            }
-
             if(oldRdGdftySe != newRdGdftySe){
                 mixStyle = true ;
                 break;

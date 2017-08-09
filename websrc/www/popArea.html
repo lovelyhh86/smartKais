@@ -99,12 +99,13 @@
 							<p id="instCrossCd_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop('area_areaKorRn')" class="row">
 						<div  class="cell1">
 								<span class="label">한글 도로명</span>
 						</div>
 						<div class="cell2">
 							<p id="area_areaKorRn">&nbsp;</p>
+							<p id="area_areaKorRn_new" name="newLbl" style="display:none; color:red"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -288,6 +289,23 @@
 						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 					</div>
 					<!-- 공통 라디오 데이터 팝업 끝 -->
+					<!-- 한글 도로명 데이터 팝업 -->
+					<div id="area_areaKorRn_pop" class="dataWrap" style="display: none">
+						<div class="dataTItle">한글 도로명</div>
+						<div class="dataForm">
+							<div class="row">
+								<div class="cell">
+									<div class="inputText w75"><input type="text" id="area_areaKorRn_fix" name="" title="한글 도로명" maxlength="20" value=""></div>
+								</div>
+							</div>
+						</div>
+						<div class="dataBtn">
+							<span class="btnNormal dataPopCloser">닫기</span>
+							<span onclick="textDataSendParent('area_areaKorRn')" class="btnPoint">저장</span>
+						</div>
+						<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+					</div>
+					<!-- 앞면 도로명(국문) 데이터 팝업 끝 -->
 
 					<!-- 단가 데이터 팝업 -->
 					<div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">

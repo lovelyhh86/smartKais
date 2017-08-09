@@ -130,12 +130,13 @@
 						</div>
 					</div>
 
-					<div class="row">
+					<div onclick="openCustomPop('bsis_korRn')" class="row">
 						<div  class="cell1">
 							<span class="label">한글도로명</span>
 						</div>
 						<div class="cell2">
 							<p id="bsis_korRn">&nbsp;</p>
+							<p id="bsis_korRn_new" name="newLbl" style="display:none; color:red"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -307,6 +308,24 @@
 					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
 				<!-- 공통 라디오 데이터 팝업 끝 -->
+
+				<!-- 한글도로명 데이터 팝업 -->
+				<div id="bsis_korRn_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">한글도로명</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<div class="inputText w75"><input type="text" id="bsis_korRn_fix" name="" title="한글도로명" maxlength="20" value=""></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span class="btnNormal dataPopCloser">닫기</span>
+						<span onclick="textDataSendParent('bsis_korRn')" class="btnPoint">저장</span>
+					</div>
+					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 한글도로명 데이터 팝업 끝 -->
 
 				<!-- 단가 데이터 팝업 -->
 				<div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">

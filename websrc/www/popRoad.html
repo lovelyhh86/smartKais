@@ -109,12 +109,13 @@
                             <p id="bdrclAt" style="display:none"></p>
 						</div>
 					</div>
-					<div class="row">
+					<div onclick="openCustomPop('frontKoreanRoadNm')" class="row">
 						<div  class="cell1">
 								<span class="label">앞면 도로명(국문)</span>
 						</div>
 						<div class="cell2">
 							<p id="frontKoreanRoadNm">&nbsp;</p>
+							<p id="frontKoreanRoadNm_new" name="newLbl" style="display:none; color:red"></p>
 						</div>
 					</div>
 					<div class="row">
@@ -151,12 +152,13 @@
 							<p id="frontEndBaseSlaveNo_new" style="display:none;"></p>
 						</div>
 					</div>
-					<div class="row bk">
+					<div onclick="openCustomPop('backKoreanRoadNm')" class="row bk">
 						<div  class="cell1">
 								<span class="label">뒷면 도로명(국문)</span>
 						</div>
 						<div class="cell2">
 							<p id="backKoreanRoadNm">&nbsp;</p>
+							<p id="backKoreanRoadNm_new" name="newLbl" style="display:none; color:red"></p>
 						</div>
 					</div>
 					<div class="row bk">
@@ -343,6 +345,24 @@
 				</div>
 				<!-- 단가 데이터 팝업 끝 -->
 
+				<!-- 앞면 도로명(국문) 데이터 팝업 -->
+				<div id="frontKoreanRoadNm_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">앞면 도로명(국문)</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<div class="inputText w75"><input type="text" id="frontKoreanRoadNm_fix" name="" title="앞면 도로명(국문)" maxlength="20" value=""></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span class="btnNormal dataPopCloser">닫기</span>
+						<span onclick="textDataSendParent('frontKoreanRoadNm')" class="btnPoint">저장</span>
+					</div>
+					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 앞면 도로명(국문) 데이터 팝업 끝 -->
+
 				<!-- 앞면 시작기초번호 데이터 팝업 -->
 				<div id="frontStartBaseNo_pop" class="dataWrap" style="display: none">
 					<div class="dataTItle">시작기초번호</div>
@@ -384,6 +404,24 @@
 					<p class="dataClose "><img src="image/dataClose.png" title="닫기"></p>
 				</div>
 				<!-- 앞면 종료기초번호 데이터 팝업 끝 -->
+
+				<!-- 뒷면 도로명(국문) 데이터 팝업 -->
+				<div id="backKoreanRoadNm_pop" class="dataWrap" style="display: none">
+					<div class="dataTItle">뒷면 도로명(국문)</div>
+					<div class="dataForm">
+						<div class="row">
+							<div class="cell">
+								<div class="inputText w75"><input type="text" id="backKoreanRoadNm_fix" name="" title="뒷면 도로명(국문)" maxlength="20" value=""></div>
+							</div>
+						</div>
+					</div>
+					<div class="dataBtn">
+						<span class="btnNormal dataPopCloser">닫기</span>
+						<span onclick="textDataSendParent('backKoreanRoadNm')" class="btnPoint">저장</span>
+					</div>
+					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+				</div>
+				<!-- 뒷면 도로명(국문) 데이터 팝업 끝 -->
 
 				<!-- 뒷면 시작기초번호 데이터 팝업 -->
 				<div id="backStartBaseNo_pop" class="dataWrap" style="display: none">

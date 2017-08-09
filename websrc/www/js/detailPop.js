@@ -859,6 +859,13 @@ function submit(type){
                 if(plqDirection_new !=""){
                     sendParams = $.extend(sendParams, {plqDirection: plqDirection_new});
                 }
+
+                //앞면도로명(국문)
+                var frontKoreanRoadNm_new = $("#frontKoreanRoadNm_new").text();
+                if(frontKoreanRoadNm_new !=""){
+                    sendParams = $.extend(sendParams, {frontKoreanRoadNm: frontKoreanRoadNm_new});
+                }
+
                 //앞면시작기초번호 본번
                 var frontStartBaseMasterNo_new = $("#frontStartBaseMasterNo_new").text();
                 if(frontStartBaseMasterNo_new !=""){
@@ -878,6 +885,11 @@ function submit(type){
                 var frontEndBaseSlaveNo_new = $("#frontEndBaseSlaveNo_new").text();
                 if(frontEndBaseSlaveNo_new !=""){
                     sendParams = $.extend(sendParams, {frontEndBaseSlaveNo: frontEndBaseSlaveNo_new});
+                }
+                //뒷면도로명(국문)
+                var backKoreanRoadNm_new = $("#backKoreanRoadNm_new").text();
+                if(backKoreanRoadNm_new !=""){
+                    sendParams = $.extend(sendParams, {backKoreanRoadNm: backKoreanRoadNm_new});
                 }
 
                 //뒷면시작기초번호 본번
@@ -923,6 +935,11 @@ function submit(type){
 
 
             }else if(type == DATA_TYPE.AREA){
+                //한글도로명
+                var area_areaKorRn_new = $("#area_areaKorRn_new").text();
+                if(area_areaKorRn_new !=""){
+                    sendParams = $.extend(sendParams, {area_areaKorRn: area_areaKorRn_new});
+                }
                 //지역안내판 광고여부에따른 분류
                 var area_advrtsCd_new = $("#area_advrtsCd_new").text();
                 if(area_advrtsCd_new !=""){
@@ -955,6 +972,11 @@ function submit(type){
 
                 var link = URLs.updateFacilityInfo;
             }else if(type == DATA_TYPE.BSIS){
+                //한글도로명
+                var bsis_korRn_new = $("#bsis_korRn_new").text();
+                if(bsis_korRn_new !=""){
+                    sendParams = $.extend(sendParams, {bsis_korRn: bsis_korRn_new});
+                }
                 //기초번호판 곡면 분류
                 var bsis_planeCd_new = $("#bsis_planeCd_new").text();
                 if(bsis_planeCd_new !=""){
@@ -1133,6 +1155,12 @@ function submit(type){
                     $("p[name*='newLbl']").text('');
 
                     closeDetailView();
+
+                    //심플팝업 초기화
+                    $("#popup-content").empty();
+                    $("#popup").hide();
+                    //지도 초기화
+                    getVectorSource(map).clear();
 
                     util.dismissProgress();
 

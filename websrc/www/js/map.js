@@ -627,6 +627,7 @@ var MapUtil = {
                         $("#instCrossCdLbl").addClass("edit");
                         //앞면 도로명(국문)
                         $("#frontKoreanRoadNm").html(data.frontKoreanRoadNm);
+                        $("#frontKoreanRoadNm").addClass("edit");
                         //앞면 도로명(로마자)
                         $("#frontRomeRoadNm").html(data.frontRomeRoadNm);
                         //앞면시작기초번호(0-0)
@@ -645,6 +646,7 @@ var MapUtil = {
                             // $(".bk").show();
                             //뒷면 도로명(국문)
                             $("#backKoreanRoadNm").html(data.backKoreanRoadNm);
+                            $("#backKoreanRoadNm").addClass("edit");
                             //뒷면 도로명(로마자)
                             $("#backRomeRoadNm").html(data.backRomeRoadNm);
                             //뒷면시작기초번호(0-0)
@@ -751,6 +753,7 @@ var MapUtil = {
                         $("#instCrossCdLbl").addClass("edit");
                         //한글도로명
                         $("#area_areaKorRn").html(data.area_areaKorRn);
+                        $("#area_areaKorRn").addClass("edit");
                         //로마자
                         $("#area_romRn").html(data.area_romRn);
                         //시작기초번호(0-0)]
@@ -860,7 +863,8 @@ var MapUtil = {
                         $("#bsis_planeCdLbl").html(data.bsis_planeCdLbl);
                         $("#bsis_planeCdLbl").addClass("edit");
                         //한글도로명
-                        $("#area_areaKorRn").html((data.bsis_korRn ? data.bsis_korRn : '도로명없음'));
+                        $("#bsis_korRn").html((data.bsis_korRn ? data.bsis_korRn : '도로명없음'));
+                        $("#bsis_korRn").addClass("edit");
                         //로마자
                         $("#area_romRn").html(data.bsis_RomRn);
                         //기초번호(0-0)
@@ -1640,6 +1644,10 @@ var mapInit = function(mapId, pos) {
             featureClone = features;
             //레이어ID
             layerID = layer.get('id');
+
+            if(features.length == 4){
+                navigator.notification.alert(msg.noSave,'','알림', '확인');
+            }
 
             features.forEach(function(feature, index) {
 
@@ -2460,7 +2468,25 @@ var getFeatureLayer = function(options) {
                     $('.legend .area .total').text(areaCnt + '건');
                     $('.legend .bsis .total').text(bsisCnt + '건');
 
+                    // for(var i = 0 ; features.length > i ; i++){
+                    //     var fid = features[i].id_;
+                    //     if(fid == 'tlv_spgf_loc_skm.8143'){
+                    //         var LABEL = features[i].get('LABEL');
+                    //         var LT_CHC_YN = features[i].get('LT_CHC_YN');
+                    //         var RDFTYLC_SN = features[i].get('RDFTYLC_SN');
+                    //         var RD_GDFTY_SE = features[i].get('RD_GDFTY_SE');
+                    //         var SIG_CD = features[i].get('SIG_CD');
+                    //         console.log('위치일련번호 '+RDFTYLC_SN+' 의 최종변경 상태 < ' + LT_CHC_YN + ' >');
+                    //     }
+                    // }
+
                     console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
+                    
+                    //피처 추가시 기존피처는 변경하지 않음
+
+                    // if(options.typeName == "tlv_spgf_loc_skm"){
+                    //     vectorSource.clear();
+                    // }
                     vectorSource.addFeatures(features);
                     //피처 추가 후 리플레시 기능(건수 표현때문에 추가.. 확실치 않음)
                     map.changed();
