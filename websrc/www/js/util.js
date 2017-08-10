@@ -72,9 +72,19 @@ var util = {
     goBack: function () {
         util.dismissProgress();
 
+        //신규위치
         if($("#newPos").is(':visible')){
             $(".newPosition").click();
             return;
+        }
+        //위치이동
+        var layerList = map.getLayers().getArray();
+        for(var layer in layerList){
+            var title = layerList[layer].get('title');
+            if(title == "위치이동"){
+                layerToggle(app.context);
+                return;
+            }
         }
 
         if ($( "[data-role='panel']" ).hasClass("ui-panel-open")) {
