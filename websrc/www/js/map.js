@@ -1504,7 +1504,7 @@ var mapInit = function(mapId, pos) {
             radius: 12
         },
         cluster: { distance: 50 },
-        maxResolution: 4,
+        maxResolution: 0.5,
         viewProgress: false
     });
 
@@ -1644,11 +1644,6 @@ var mapInit = function(mapId, pos) {
             featureClone = features;
             //레이어ID
             layerID = layer.get('id');
-
-            if(features.length > 4){
-                navigator.notification.alert(msg.manyFeature,'','알림', '확인');
-                return;
-            }
 
             features.forEach(function(feature, index) {
 

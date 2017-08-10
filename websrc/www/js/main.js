@@ -15,8 +15,7 @@ var msg = {
     initInfo: "정보를 다시 조회 하시겠습니까?",
     delPhoto: "사진을 삭제합니다. 변경 시 아래 저장 버튼을 눌러 적용합니다.",
     insertPos: "이 위치에 새로운 시설물을 등록 하시겠습니까?",
-    updateWorkDate: "해당시설물을 점검하셨습니까?",
-    manyFeature: "시설물이 너무 많습니다.\n4개이하의 시설물만 조회 가능합니다."
+    updateWorkDate: "해당시설물을 점검하셨습니까?"
 };
 var app = {
     // Application Constructor
