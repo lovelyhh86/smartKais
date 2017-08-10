@@ -1645,8 +1645,9 @@ var mapInit = function(mapId, pos) {
             //레이어ID
             layerID = layer.get('id');
 
-            if(features.length == 4){
-                navigator.notification.alert(msg.noSave,'','알림', '확인');
+            if(features.length > 4){
+                navigator.notification.alert(msg.manyFeature,'','알림', '확인');
+                return;
             }
 
             features.forEach(function(feature, index) {
@@ -1732,12 +1733,12 @@ var mapInit = function(mapId, pos) {
                                         strHtml += title
                                         strHtml += commonP.format("", bdrclAt + rdpqGdSd);
 
-                                        resultHtml += popDiv.format("", 'openDetailPopupCall(' + index + ',' + resultList[i].rdGdftySn + ')', strHtml);
+                                        resultHtml += popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", strHtml);
 
                                         //도로시설물 공간정보
                                         var geom = feature.getGeometry().getCoordinates();
 
-                                        buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + "," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
+                                        buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
                                         buttonHtml += buttonForm.format("addition", "moveingPoint(" + RDFTYLC_SN + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
 
                                         resultHtml += commonDiv.format("mapAdd", buttonHtml);
@@ -1773,12 +1774,12 @@ var mapInit = function(mapId, pos) {
                                         //     resultHtml += commonP.format("infoLine","");
                                         // }
 
-                                        resultHtml += popDiv.format("", 'openDetailPopupCall(' + index + ',' + resultList[i].rdGdftySn + ')', strHtml);
+                                        resultHtml += popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", strHtml);
 
                                         //도로시설물 공간정보
                                         var geom = feature.getGeometry().getCoordinates();
 
-                                        buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + "," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
+                                        buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
                                         buttonHtml += buttonForm.format("addition", "moveingPoint(" + RDFTYLC_SN + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
 
                                         resultHtml += commonDiv.format("mapAdd", buttonHtml);
@@ -1827,12 +1828,12 @@ var mapInit = function(mapId, pos) {
                                         //     resultHtml += commonP.format("infoLine","");
                                         // }
 
-                                        resultHtml += popDiv.format("", 'openDetailPopupCall(' + index + ',' + resultList[i].rdGdftySn + ')', strHtml);
+                                        resultHtml += popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", strHtml);
 
                                         //도로시설물 공간정보
                                         var geom = feature.getGeometry().getCoordinates();
 
-                                        buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + "," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
+                                        buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
                                         buttonHtml += buttonForm.format("addition", "moveingPoint(" + RDFTYLC_SN + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
 
                                         resultHtml += commonDiv.format("mapAdd", buttonHtml);
@@ -2839,7 +2840,7 @@ function layerClear() {
 //상세정보 열기
 var rdGdftySn;
 
-function openDetailPopupCall(index, sn) {
+function openDetailPopupCall(index,layer, sn) {
     rdGdftySn = sn;
     // $("#popup").hide();
 
@@ -2851,7 +2852,7 @@ function openDetailPopupCall(index, sn) {
         }
 
     } else {
-        MapUtil.openDetail(layerID, featureClone[index]);
+        MapUtil.openDetail(layer, featureClone[index]);
 
     }
 
