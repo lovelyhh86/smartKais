@@ -72,6 +72,11 @@ var util = {
     goBack: function () {
         util.dismissProgress();
 
+        if($("#newPos").is(':visible')){
+            $(".newPosition").click();
+            return;
+        }
+
         if ($( "[data-role='panel']" ).hasClass("ui-panel-open")) {
             $( "[data-role='panel']" ).panel("close");
             return;
