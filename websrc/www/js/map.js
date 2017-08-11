@@ -7,6 +7,9 @@ var MapUtil = {
         MapUtil.controls.init();
         MapUtil.handler.init();
     },
+    setting:{
+        maxResolution : 0.5
+    },
     state: {
         photo: [L = { isPhoto: false, edited: false }, M = { isPhoto: false, edited: false }]
     },
@@ -1431,7 +1434,7 @@ var mapInit = function(mapId, pos) {
                 width: 3
             }
         },
-        maxResolution: .5
+        maxResolution: MapUtil.setting.maxResolution
     });
     // 출입구 레이어
     var lyr_tl_spbd_entrc = getFeatureLayer({
@@ -1516,7 +1519,7 @@ var mapInit = function(mapId, pos) {
             radius: 12
         },
         cluster: { distance: 50 },
-        maxResolution: 0.5,
+        maxResolution: MapUtil.setting.maxResolution,
         viewProgress: false
     });
 
@@ -2187,17 +2190,11 @@ var mapInit = function(mapId, pos) {
                     var id = useLayers[i].get("id");
                     if (mapRS == useLayers[i].getMaxResolution()) {
 
-                        if (id == DATA_TYPE.RDPQ) {
+                        if (id == DATA_TYPE.LOC) {
                             $('.legend .rdpq .total').text('0건');
-                            util.toast('도로명판을 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
-                        }
-                        if (id == DATA_TYPE.AREA) {
                             $('.legend .area .total').text('0건');
-                            util.toast('지역번호판을 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
-                        }
-                        if (id == DATA_TYPE.BSIS) {
                             $('.legend .bsis .total').text('0건');
-                            util.toast('기초번호판을 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
+                            util.toast('시설물을 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
                         }
                         if (id == DATA_TYPE.BULD) {
                             util.toast('건물정보를 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
