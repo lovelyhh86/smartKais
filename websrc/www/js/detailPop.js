@@ -1148,7 +1148,12 @@ function submit(type){
             util.showProgress();
             var url = URLs.postURL(link, commomParams);
             util.postAJAX({}, url).then(
-                function (context, rcode, results) {
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        return;
+                    }
 
                     util.toast('변경사항이 적용되었습니다');
 
@@ -1425,7 +1430,13 @@ function saveImg(type){
             util.showProgress();
             var url = URLs.postURL(link, sendParams);
             util.postAJAX({}, url).then(
-                function (context, rcode, results) {
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        return;
+                    }
+
                     util.toast('사진이 변경되었습니다.');
                     //사진건수
                     var photoNum = $(".infoHeader .photo .photoNum").html();
@@ -1493,7 +1504,12 @@ function updateWorkDate(){
             util.showProgress();
             var url = URLs.postURL(link, sendParams);
             util.postAJAX({}, url).then(
-                function (context, rcode, results) {
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        return;
+                    }
 
                     util.toast('점검일자가 갱신되었습니다.');
 

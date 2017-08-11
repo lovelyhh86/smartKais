@@ -88,9 +88,6 @@ var MapUtil = {
                     util.showProgress();
                     util.postAJAX({}, url).then(
                         function(context, rcode, results) {
-                            var data = results.data;
-                            MapUtil.state.photo = [{ isPhoto: false, edited: false }, { isPhoto: false, edited: false }];
-
                             // var emptyObj = "<img style='height: 220px; width: 100%; object-fit: contain' src=''/>";
                             // emptyObj+= "<input id='imaFilSn' type='hidden' value=''/>";
                             // emptyObj+= "<input id='tbGbn' type='hidden' value='{0}'/>";
@@ -100,6 +97,9 @@ var MapUtil = {
                                 util.dismissProgress();
                                 return;
                             }
+
+                            var data = results.data;
+                            MapUtil.state.photo = [{ isPhoto: false, edited: false }, { isPhoto: false, edited: false }];
 
                             if (!util.isEmpty(data)) {
 
@@ -563,7 +563,13 @@ var MapUtil = {
         var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
         util.showProgress();
         util.postAJAX({}, url).then(
-            function(context, rcode, results) {
+            function(context, rCode, results) {
+                //통신오류처리
+                if (rCode != 0 || results.response.status < 0) {
+                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                    return;
+                }
+
                 var data = results.data;
 
                 //일련번호
@@ -1135,7 +1141,13 @@ var MapUtil = {
 
                 var url = URLs.postURL(URLs.entrclink, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
 
-                util.postAJAX({}, url).then(function(context, rcode, results) {
+                util.postAJAX({}, url).then(function(context, rCode, results) {
+                        //통신오류처리
+                        if (rCode != 0 || results.response.status < 0) {
+                            navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                            return;
+                        }
+
                         var data = results.data;
                         if (rcode != 0 || util.isEmpty(data) === true) {
                             navigator.notification.alert(msg.noItem,
@@ -1667,6 +1679,12 @@ var mapInit = function(mapId, pos) {
                         util.postAJAX({}, url)
                             .then(function(context, rCode, results) {
                                 util.dismissProgress();
+
+                                //통신오류처리
+                                if (rCode != 0 || results.response.status < 0) {
+                                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                                    return;
+                                }
 
                                 var resultList = results.data;
 
@@ -2439,7 +2457,14 @@ var getFeatureLayer = function(options) {
 
             util.showProgress();
             util.postAJAX('', urldata, true)
-                .then(function(context, rcode, results) {
+                .then(function(context, rCode, results) {
+
+                    //통신오류처리
+                    if (rCode != 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        return;
+                    }
+                    
                     var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
 
                     var rdpqCnt = 0;
