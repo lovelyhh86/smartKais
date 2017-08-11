@@ -1613,8 +1613,8 @@ var mapInit = function(mapId, pos) {
                 });
 
                 //버튼처리
-                buttonHtml += buttonForm2.format("btnPoint", 'insertMoveingPoint(' + JSON.stringify(param) + ')', "저장");
                 buttonHtml += buttonForm2.format("btnNormal", "clearMoveMode()", "취소");
+                buttonHtml += buttonForm2.format("btnPoint", 'insertMoveingPoint(' + JSON.stringify(param) + ')', "저장");
 
                 resultHtml += commonDiv.format("mapBtn", buttonHtml)
 
@@ -1875,9 +1875,6 @@ var mapInit = function(mapId, pos) {
                         resultHtml = commonDiv.format("mapInfo", resultHtml);
 
                         popupDiv.append(resultHtml);
-
-                        //라인추가
-                        popupDiv.append(commonP.format("infoLine", ""));
 
                         //건물번호판
                         strHtml = commonSpan.format("titleIcon_number", "");
@@ -2477,7 +2474,7 @@ var getFeatureLayer = function(options) {
                     // }
 
                     console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
-                    
+
                     //피처 추가시 기존피처는 변경하지 않음
 
                     // if(options.typeName == "tlv_spgf_loc_skm"){
@@ -2752,43 +2749,45 @@ function insertMoveingPoint(param) {
     util.postAJAX({}, url)
         .then(function(context, rCode, results) {
                 util.dismissProgress();
-                util.toast('이동한 위치 정보가 저장되었습니다.');
-                navigator.notification.alert('KAIS C/S\n (자료관리 → 도로안내시설 편집 → 도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.', '', '알림', '확인');
+                if (rCode == 0 && results.response.status > -1) {
+                    util.toast('이동한 위치 정보가 저장되었습니다.');
+                    navigator.notification.alert('KAIS C/S\n (자료관리 → 도로안내시설 편집 → 도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.', '', '알림', '확인');
 
-                clearSource('위치이동');
+                    clearSource('위치이동');
 
-                map.removeLayer(layers.move);
-                $("#popup").hide();
+                    map.removeLayer(layers.move);
+                    $("#popup").hide();
 
-                var context = app.context;
+                    var context = app.context;
 
-                // if (util.isEmpty(context)){
-                //     map.updateSize();
-                //     return;
-                // }
+                    // if (util.isEmpty(context)){
+                    //     map.updateSize();
+                    //     return;
+                    // }
 
-                layerToggle(context);
-                // if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
-                //     $(".legend").toggle(true);
-                //     map.removeLayer(layers.buld);
-                //     // map.removeLayer(layers.entrc);
-                //     map.addLayer(layers.rdpq);
-                //     map.addLayer(layers.bsis);
-                //     map.addLayer(layers.area);
-                // } else {
-                //     $(".legend").toggle(false);
-                //     map.removeLayer(layers.rdpq);
-                //     map.removeLayer(layers.bsis);
-                //     map.removeLayer(layers.area);
-                //     map.addLayer(layers.buld);
-                //     // map.addLayer(layers.entrc);
-                // }
+                    layerToggle(context);
+                    // if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
+                    //     $(".legend").toggle(true);
+                    //     map.removeLayer(layers.buld);
+                    //     // map.removeLayer(layers.entrc);
+                    //     map.addLayer(layers.rdpq);
+                    //     map.addLayer(layers.bsis);
+                    //     map.addLayer(layers.area);
+                    // } else {
+                    //     $(".legend").toggle(false);
+                    //     map.removeLayer(layers.rdpq);
+                    //     map.removeLayer(layers.bsis);
+                    //     map.removeLayer(layers.area);
+                    //     map.addLayer(layers.buld);
+                    //     // map.addLayer(layers.entrc);
+                    // }
+                } else {
+                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                }
 
             },
-            msg.alert);
-
-    // }
-
+            msg.alert
+        );
 }
 
 function clearMoveMode() {
@@ -2835,7 +2834,7 @@ function layerClear() {
 //상세정보 열기
 var rdGdftySn;
 
-function openDetailPopupCall(index,layer, sn) {
+function openDetailPopupCall(index, layer, sn) {
     rdGdftySn = sn;
     // $("#popup").hide();
 

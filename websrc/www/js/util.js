@@ -211,6 +211,7 @@ var util = {
                 break;
             case "minwon":
                 url = pages.minwonListPage;
+                util.pushCount('minwon', 0);
                 break;
             case "address":
                 if (activePage == 'bbs_page')
@@ -486,7 +487,7 @@ var util = {
     },
     pushCount: function (type, val) {
         if(type)
-            (val > 0) ? $(".pushCnt." + type).text(val) : $(".pushCnt." + type).text("");
+            (val > 0) ? $(".pushCnt ." + type).text(val) : $(".pushCnt ." + type).text("");
     },
     //app종료
     appExit: function () {

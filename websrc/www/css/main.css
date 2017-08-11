@@ -81,20 +81,23 @@
 .ui-icon-bsis { background-image: url('../img/icon_legend02.png'); }
 .ui-icon-area { background-image: url('../img/icon_legend03.png'); }
 
-
-.pushCnt {
+.pushCnt { position: absolute; z-index: 10; }
+.pushCnt div {
     background-color: #ff0000;
     border-radius: 1.8em;
     color: white;
     line-height: 1.6em;
     padding: 0;
-    position: relative;
     text-align: center;
     width: 1.6em;
-    z-index: 10;
+    float: left;
 }
-.pushCnt.qna { bottom: 3.3em; right: 2em; margin-left: auto; }
-.pushCnt.minwon { margin-left: auto; bottom: 10.6em; }
+.pushCnt.head { top: 0; right: 25px; }
+.pushCnt.body { bottom: 310px; right: 110px; }
+
+.pushCnt.head .qna {  }
+.pushCnt.head .minwon { margin-right: 16px;margin-top: 12px;width: 2em;line-height: 2em; }
+.pushCnt.body .minwon {  }
 
 
 .ui-panel { background-color: white }

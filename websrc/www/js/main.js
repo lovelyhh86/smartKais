@@ -1,6 +1,6 @@
 var sso;
 var msg = {
-    callCenter: "비 정상적인 작업이 수행 되었습니다.\n\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
+    callCenter: "비 정상적인 작업이 수행 되었습니다.\n\n\"바로일터\"를 통하여 다시 시작해 주십시오.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
     exit: "\n\n스마트KAIS 종료합니다.",
     alert: function() {
         navigator.notification.alert(msg.callCenter, '', '알림', '확인');

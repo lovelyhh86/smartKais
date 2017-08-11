@@ -72,46 +72,51 @@
 
 <body>
 
-<div id="work-header" data-role="header" data-position="fixed">
-    <a href="#panel-menu" data-role="button" data-corners="false" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
-    <h1><img src="img/main/header_logo.png" /></h1>
-    <a href="#panel-qna" data-role="button" data-corners="false" data-shadow="false" data-icon="qna" data-iconpos="notext" onclick="util.pushCount('qna', 0);">QNA</a>
-    <div class="pushCnt qna"></div>
-    <div data-role="panel" data-position="left" data-display="overlay" id="panel-menu" data-theme="a">
-        <div data-role="header" style="background-color:white; border-color: black;">
-            <a href="#panel-menu" data-role="button" data-corners="false" data-shadow="false" data-icon="closer" data-iconpos="notext" style="background-color:white;">CLOSE</a>
-            <h2 class="ui-bar">스마트KAIS</h2>
+    <div id="work-header" data-role="header" data-position="fixed">
+        <a href="#panel-menu" data-role="button" data-corners="false" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
+        <h1><img src="img/main/header_logo.png" /></h1>
+        <a href="#panel-qna" data-role="button" data-corners="false" data-shadow="false" data-icon="qna" data-iconpos="notext" onclick="util.pushCount('qna', 0);">QNA</a>
+        <div class="pushCnt head">
+            <a href="javascript:util.gotoTask('minwon');"><div class="minwon"></div></a>
+            <a href="#panel-qna"><div class="qna"></div></a>
         </div>
-        <div class="ui-content">
-            <ul data-role="listview">
-                <li><a href="javascript:util.gotoTask('home')">HOME</a></li>
-                <li><a href="javascript:util.gotoTask('mapservice')">시설물관리</a></li>
-                <li><a href="javascript:util.gotoTask('mapservice2')">건물정보관리</a></li>
-                <li><a href="javascript:util.gotoTask('minwon')">민원관리</a></li>
-            </ul>
-        </div>
-    </div><!-- /panel -->
-    <div data-role="panel" data-position="right" data-display="overlay" id="panel-qna">
-        <div data-role="header">
-            <a href="#panel-qna" data-role="button" data-corners="false" data-shadow="false" data-icon="closer" data-iconpos="notext" class="ui-btn-right">CLOSE</a>
-            <h2 class="ui-bar">도움센터(QnA)</h2>
-        </div>
-        <div class="ui-content"></div>
-    </div><!-- /panel -->
-    <!-- 상세정보 -->
-    <div id ="detailView" data-role="popup" class="popup-wrap"></div>
-    <!-- 공통 popup -->
-    <div id="common-pop" data-role="popup" class="popup-wrap">
-        <div class="ui-bar">
-        </div>
-        <div class="popup-content">
-            <div class="ui-body">
-
+        <div data-role="panel" data-position="left" data-display="overlay" id="panel-menu" data-theme="a">
+            <div data-role="header" style="background-color:white; border-color: black;">
+                <a href="#panel-menu" data-role="button" data-corners="false" data-shadow="false" data-icon="closer" data-iconpos="notext" style="background-color:white;">CLOSE</a>
+                <h2 class="ui-bar">스마트KAIS</h2>
+            </div>
+            <div class="ui-content">
+                <ul data-role="listview">
+                    <li><a href="javascript:util.gotoTask('home')">HOME</a></li>
+                    <li><a href="javascript:util.gotoTask('mapservice')">시설물관리</a></li>
+                    <li><a href="javascript:util.gotoTask('mapservice2')">건물정보관리</a></li>
+                    <li><a href="javascript:util.gotoTask('minwon');">민원관리</a></li>
+                </ul>
             </div>
         </div>
-    </div>
-    <!-- 공통 popup -->
-    <!--<div id="popup-road" data-role="popup" class="popup-wrap ROAD">
+        <!-- /panel -->
+        <div data-role="panel" data-position="right" data-display="overlay" id="panel-qna">
+            <div data-role="header">
+                <a href="#panel-qna" data-role="button" data-corners="false" data-shadow="false" data-icon="closer" data-iconpos="notext" class="ui-btn-right">CLOSE</a>
+                <h2 class="ui-bar">도움센터(QnA)</h2>
+            </div>
+            <div class="ui-content"></div>
+        </div>
+        <!-- /panel -->
+        <!-- 상세정보 -->
+        <div id="detailView" data-role="popup" class="popup-wrap"></div>
+        <!-- 공통 popup -->
+        <div id="common-pop" data-role="popup" class="popup-wrap">
+            <div class="ui-bar">
+            </div>
+            <div class="popup-content">
+                <div class="ui-body">
+
+                </div>
+            </div>
+        </div>
+        <!-- 공통 popup -->
+        <!--<div id="popup-road" data-role="popup" class="popup-wrap ROAD">
         <div class="ui-bar">
             <h4>도로명판</h4>
             <a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>
@@ -179,9 +184,9 @@
             </div>
         </div>
     </div>-->
-    <!-- 도로명판 popup -->
+        <!-- 도로명판 popup -->
 
-    <!--<div data-role="popup" class="popup-wrap entrc">
+        <!--<div data-role="popup" class="popup-wrap entrc">
         <div class="ui-bar">
             <h4>건물번호판</h4>
         </div>
@@ -263,9 +268,9 @@
             </div>
         </div>
     </div>-->
-    <!-- 건물 번호판 popup -->
+        <!-- 건물 번호판 popup -->
 
-    <!--<div data-role="popup" class="popup-wrap BUILD">
+        <!--<div data-role="popup" class="popup-wrap BUILD">
         <div class="ui-bar">
             <h4>건물정보</h4>
         </div>
@@ -341,34 +346,38 @@
             </div>
         </div>
     </div>-->
-    <!-- 상세주소 popup -->
-</div><!-- /header -->
+        <!-- 상세주소 popup -->
+    </div>
+    <!-- /header -->
 
-<div id="work_page" data-role="page">
-    <div data-role="main" class="ui-content">
-        <div class="title">
-            <img src="img/main/top_logo.png">
-            <div class="text">
-                <p class="msg">쉽고 편리한 국가주소정보시스템</p>
+    <div id="work_page" data-role="page">
+        <div data-role="main" class="ui-content">
+            <div class="title">
+                <img src="img/main/top_logo.png">
+                <div class="text">
+                    <p class="msg">쉽고 편리한 국가주소정보시스템</p>
+                </div>
+            </div>
+            <div class="menu-list">
+                <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
+                    <img src="img/main/img_menu01_on.png" />
+                </a>
+                <a href="javascript:util.gotoTask('mapservice2')" data-role="button" data-shadow="false">
+                    <img src="img/main/img_menu02_on.png" />
+                </a>
+                <a href="javascript:util.gotoTask('minwon')" data-role="butt3on" data-shadow="false">
+                    <img src="img/main/img_menu03_on.png" />
+                </a>
+            </div>
+            <div class="pushCnt body">
+                <div class="minwon"></div>
             </div>
         </div>
-        <div class="menu-list">
-            <a href="javascript:util.gotoTask('mapservice')" data-role="button" data-shadow="false">
-                <img src="img/main/img_menu01_on.png" />
-            </a>
-            <a href="javascript:util.gotoTask('mapservice2')" data-role="button" data-shadow="false">
-                <img src="img/main/img_menu02_on.png" />
-            </a>
-            <a href="javascript:util.gotoTask('minwon')" data-role="button" data-shadow="false">
-                <img src="img/main/img_menu03_on.png" />
-                <div class="pushCnt minwon"></div>
-            </a>
-        </div>
-    </div><!-- /content -->
-</div><!-- /page -->
+        <!-- /content -->
+    </div>
+    <!-- /page -->
 
 
 </body>
 
 </html>
-
