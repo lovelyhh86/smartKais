@@ -78,14 +78,17 @@ var util = {
             return;
         }
         //위치이동
-        var layerList = map.getLayers().getArray();
-        for(var layer in layerList){
-            var title = layerList[layer].get('title');
-            if(title == "위치이동"){
-                layerToggle(app.context);
-                return;
+        if(map !=undefined){
+            var layerList = map.getLayers().getArray();
+            for(var layer in layerList){
+                var title = layerList[layer].get('title');
+                if(title == "위치이동"){
+                    layerToggle(app.context);
+                    return;
+                }
             }
         }
+        
 
         if ($( "[data-role='panel']" ).hasClass("ui-panel-open")) {
             $( "[data-role='panel']" ).panel("close");

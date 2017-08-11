@@ -1,5 +1,7 @@
 package kr.go.juso.smartKais;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -23,14 +25,16 @@ public class MainActivity extends CordovaActivity {
         String sso = getIntent().getStringExtra("sso");
         loadUrl("javascript:sso = JSON.parse('" + sso + "');");
 
+        //버전
+//        String version;
+//        try {
+//            PackageInfo i = getPackageManager().getPackageInfo(getPackageName(), 0);
+//            version = i.versionName;
+//        } catch(PackageManager.NameNotFoundException e) { }
 
-        String version;
-        try {
-            PackageInfo i = getPackageManager().getPackageInfo(getPackageName(), 0);
-            version = i.versionName;
-        } catch(PackageManager.NameNotFoundException e) { }
-
-
+        //앱실행시 알림표시제거
+        NotificationManager nm = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancel(1); // ID
 
         AppEnvironment.setPendingNotificationsCount(0);
         try {
