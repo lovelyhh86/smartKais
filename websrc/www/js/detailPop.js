@@ -1161,11 +1161,7 @@ function submit(type){
 
                     closeDetailView();
 
-                    //심플팝업 초기화
-                    $("#popup-content").empty();
-                    $("#popup").hide();
-                    //지도 초기화
-                    getVectorSource(map).clear();
+                    closePopupAndClearMap();
 
                     util.dismissProgress();
 
@@ -1175,6 +1171,15 @@ function submit(type){
 
         }
     }, "알림", ["확인","취소"]);
+
+}
+
+function closePopupAndClearMap(){
+    //심플팝업 초기화
+    $("#popup-content").empty();
+    $("#popup").hide();
+    //지도 초기화
+    getVectorSource(map).clear();
 
 }
 
@@ -1463,6 +1468,9 @@ function saveImg(type){
                         MapUtil.setValues(layerID, relink, rdGdftySn);
                     }
 
+                    //지도 초기화
+                    getVectorSource(map).clear();
+
                     util.dismissProgress();
                 },
                 util.dismissProgress
@@ -1514,6 +1522,8 @@ function updateWorkDate(){
                     util.toast('점검일자가 갱신되었습니다.');
 
                     closeDetailView();
+
+                    closePopupAndClearMap();
 
                     util.dismissProgress();
 
