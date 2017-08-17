@@ -1315,7 +1315,7 @@ proj4.defs("SR-ORG:6640JEJU", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000
 
 
 var GIS_SERVICE_URL, baseProjection, sourceProjection, serviceProjection;
-var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms?FIXED=TRUE";
+var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms?FIXED=TRUE&rnd=" + Math.random();
 
 
 switch (mode) {
