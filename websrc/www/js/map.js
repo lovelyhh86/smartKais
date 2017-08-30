@@ -37,6 +37,11 @@ var MapUtil = {
         photoToggleHandler: function(layerID, f) {
             $(".detailView .infoWrap .infoHeader .photo").click(function() {
                 // $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
+                var photoNum = $(".photoNum").text();
+                if(photoNum == 0){
+                    navigator.notification.alert(msg.noItem, '', '알림', '확인');
+                    return;
+                }
                 //검정막
                 wrapWindowByMask('mask');
                 //옵션안됨
@@ -574,6 +579,12 @@ var MapUtil = {
                 }
 
                 var data = results.data;
+
+                //데이터 오류 처리
+                if(data == null){
+                    navigator.notification.alert(msg.noItem, '', '알림', '확인');
+                    return;
+                }
 
                 //일련번호
                 $("#sn").val(sn);

@@ -1,4 +1,6 @@
 var sso;
+var versionCode;
+var versionName;
 var tmDevice;
 var tmSerial
 var msg = {
@@ -38,6 +40,9 @@ var app = {
 
         /** 현재위치 확인 */
         .then(app.check.currentLocation, util.appExit)
+
+        /** 기본설정체크 */
+        .then(app.check.checkBaseConfig, util.appExit)
 
         /** (VER) 버전체크 */
         .then(app.check.version, util.appExit)
@@ -119,7 +124,6 @@ var app = {
 
                         app.info = {
                             sigCd: d.sigCd,
-                            sigNm: "",
                             opeId: "{1}".format(d.userId, d.machineNo),
                             opeNm: d.userNm
                         }
@@ -236,6 +240,35 @@ var app = {
                     }
                 });
             });
+
+            return def.promise();
+        },
+
+        /** 기본환경설정 기본셋팅 */
+        checkBaseConfig: function(){
+            var def = $.Deferred();
+            app.showProgress("환경구성 > 기본환경셋팅");
+            if(localStorage.getItem('mapBaseConfig') == null){
+                
+                mapBaseConfig = {
+                    zoom : {
+                        spgf : 14,
+                        buld : 13
+                    }
+                }
+                localStorage["mapBaseConfig"] = JSON.stringify(mapBaseConfig);
+            }
+
+            versionInfo = {
+                versionName : versionName,
+                versionCode : versionCode
+            }
+
+            localStorage["versionInfo"] = JSON.stringify(versionInfo);
+
+            // localStorage["telNo"] = sso.TEL;
+
+            setTimeout(def.resolve, 300);
 
             return def.promise();
         }

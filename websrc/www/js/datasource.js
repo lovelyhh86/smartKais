@@ -4,6 +4,7 @@ var dbConstant = {
     creationTableCodeMaster: 'CREATE TABLE IF NOT EXISTS CODEMASTER (CODEID INTEGER PRIMARY KEY , CODECLASS TEXT NOT NULL, CODENAME TEXT NOT NULL, CODEVALUE INTEGER)',
     creationTableVersion: 'CREATE TABLE IF NOT EXISTS VERSION (PLATFORM TEXT, STORE TEXT, VERSION_CODE TEXT, VERSION_NAME TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(PLATFORM, STORE))',
     creationTableGeolocation: "CREATE TABLE IF NOT EXISTS GEOLOCATION (WORKID TEXT DEFAULT 'MAP' PRIMARY KEY, PROJECTION TEXT, LOCATION_X TEXT, LOCATION_Y TEXT, TYPE TEXT, UPDATE_AT DATETIME DEFAULT CURRENT_TIMESTAMP)",
+    creationTableMapConfig: "CREATE TABLE IF NOT EXISTS MAP_CONFIG (MAP_TYPE TEXT DEFAULT 'MAP' PRIMARY KEY,ZOOM TEXT DEFAULT '13',MAXRESOLUSION TEXT DEFAULT '0.5')",
 
     creationIndexCodeGroup: 'CREATE UNIQUE INDEX scco_code_index ON SCCO_CODE (GROUPID, CODEID)',
 
@@ -62,6 +63,7 @@ var datasource = {
         tx.executeSql(dbConstant.creationTableCodeGroup);
         tx.executeSql(dbConstant.creationTableGeolocation);
         tx.executeSql(dbConstant.creationTableVersion);
+        tx.executeSql(dbConstant.creationTableMapConfig);
     },
     errorDB: function (err) {
         console.log("Error processing SQL: " + err.code);
@@ -216,6 +218,46 @@ var datasource = {
                 console.log(error);
             });
 
+    },
+    insertMapConfig: function(type,zoom,maxResolusion){
+        this.db.transaction(function (tx) {
+            var sql = 'INSERT INTO MAP_CONFIG (MAP_TYPE, ZOOM, MAXRESOLUSION) VALUES (?,?,?)';
+            var statement = [type, zoom, maxResolusion];
+            tx.executeSql(sql, statement, function (tx, resultset) { });
+        }, 
+        function (err) {
+            console.log(err)
+        }, function () { });
+    },
+    setMapConfig: function(type,zoom,maxResolusion){
+        this.db.transaction(function (tx) {
+            var sql = 'UPDATE MAP_CONFIG SET ZOOM = ?, MAXRESOLUSION = ? WHERE MAP_TYPE = ?';
+            var statement = [zoom, maxResolusion,type];
+            tx.executeSql(sql, statement, function (tx, resultset) { });
+        }, 
+        function (err) {
+            console.log(err)
+        }, function () { });
+    },
+    getMapConfig: function(getResultCallback ,type){
+        this.db.transaction(function (tx) {
+            var sql = 'SELECT MAP_TYPE, ZOOM, MAXRESOLUSION FROM MAP_CONFIG WHERE MAP_TYPE = ?';
+            this.db.executeSql(sql, [type],
+                function(result){
+                    var arrayResult = [];
+                    var len = result.rows.length;
+                    for (var i = 0; i < len; i++) {
+                        var item = result.rows.item(i);
+                        arrayResult.push(item);
+                    }
+                    getResultCallback(arrayResult);
+            });
+        },function (err) {
+            console.log(err)
+        }, function () { });
+    },
+    deleteMaxResolusion: function(type){
+        this.db.executeSql('DELETE FROM MAPRESOLUSION WHERE MAP_TYPE = ?',[type])
     },
     /* sample */
     queryDB: function (getResultCallback, sqlSelector, whereExt, sqlExt) {

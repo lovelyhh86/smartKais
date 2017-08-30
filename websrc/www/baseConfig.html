@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html LANG="ko">
+    <body class="intro">
+        <div data-role="page" id="baseConfig_page">
+        <!-- <div data-role="page" id="baseConfig_page" style="height:52em;overflow-y:scroll"> -->
+            <div class="setting">
+                <div class="common">
+                    <h2>기본정보</h2>
+                    <ul>
+                        <li><span>시군구</span><p id="sigNm"></p></li>
+                        <li><span>버전</span><p id="versionName"></p></li>
+                        <li><span>단말기번호</span><p id="telNo"></p></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="settingInfo">
+                        <h2>환경설정</h2>
+                        <p class="setTxt">각 레이어의 시작 축척을 설정합니다.</p>
+                    </div>
+                    <div class="dataContent">
+                        <h3><span>시설물관리 축척</span></h3>
+                        <form>
+                        <!--     <label for="slider-spgf">시설물관리 기본 축척</label> -->
+                            <input type="range" name="slider-spgf" id="slider-spgf" min="10" max="15" value="">
+                        </form>
+                        <div class="dataImg">
+                            <img id="slider-spgf-img" src="">
+                        </div>
+                    </div>
+                    <div class="dataContent">
+                        <h3><span>건물관리 축척</span></h3>
+                        <form>
+                        <!--     <label for="slider-buld">건물 기본 축척</label> -->
+                            <input type="range" name="slider-buld" id="slider-buld" min="10" max="15" value="">
+                        </form>
+                        <div class="dataImg">
+                            <img id="slider-buld-img" src="">
+                        </div>
+                    </div>
+                </div>
+                <!-- <div data-role="header">
+                    <div class="title">기본설정</span></div>
+                </div> -->
+                <!-- <div id="baseConfigDiv" role="main" class="ui-content" style="height:52em;overflow-y:scroll"> -->
+                    
+                    <!-- <table data-role="table" id="baseConfig" data-mode="columntoggle:none" class="ui-responsive table-stroke">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    시군구 : <p id='sigNm'></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    버전 : <p id='versionName'></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    기기번호 : <p id='telNo'></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form>
+                                        <label for="slider-spgf">시설물 기본 축척 : </label>
+                                        <input type="range" name="slider-spgf" id="slider-spgf" min="10" max="15" value="">
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img id="slider-spgf-img" src="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form>
+                                        <label for="slider-buld">건축물 기본 축척 : </label>
+                                        <input type="range" name="slider-buld" id="slider-buld" min="10" max="15" value="">
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img id="slider-buld-img" src="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+                <!-- </div> -->
+            </div>
+        </div>
+    </body>

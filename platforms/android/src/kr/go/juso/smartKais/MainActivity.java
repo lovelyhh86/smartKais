@@ -26,11 +26,19 @@ public class MainActivity extends CordovaActivity {
         loadUrl("javascript:sso = JSON.parse('" + sso + "');");
 
         //버전
-//        String version;
-//        try {
-//            PackageInfo i = getPackageManager().getPackageInfo(getPackageName(), 0);
-//            version = i.versionName;
-//        } catch(PackageManager.NameNotFoundException e) { }
+        String versionName;
+        int versionCode;
+        try {
+            PackageInfo i = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName = i.versionName;
+            versionCode = i.versionCode;
+
+            loadUrl("javascript:versionName = '" + versionName + "';");
+            loadUrl("javascript:versionCode = '" + versionCode + "';");
+
+        } catch(PackageManager.NameNotFoundException e) { }
+
+
 
         //앱실행시 알림표시제거
         NotificationManager nm = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);

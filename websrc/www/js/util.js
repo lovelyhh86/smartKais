@@ -231,6 +231,9 @@ var util = {
                 url = pages.minwonListPage;
                 util.pushCount('minwon', 0);
                 break;
+            case "baseConfig":
+                url = pages.baseConfigPage;
+                break;
             case "address":
                 if (activePage == 'bbs_page')
                     return;
@@ -599,6 +602,7 @@ function layerToggle(context){
         $("#popup-content").empty();
         $("#popup").hide();
         var mapZoom = map.getView().getZoom();
+        var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
         
         removeLayers();
 
@@ -611,19 +615,23 @@ function layerToggle(context){
             // map.addLayer(layers.bsis);
             // map.addLayer(layers.area);
             map.addLayer(layers.loc);
+            
+            map.getView().setZoom(mapBaseConfig.zoom.spgf);
 
-            if(mapZoom <= 12){
-                map.getView().setZoom(13);
-            }
+            // if(mapZoom <= 12){
+            //     map.getView().setZoom(13);
+            // }
         } else {
             $(".legend").toggle(false);
             
-            
             map.addLayer(layers.buld);
             // map.addLayer(layers.entrc);
-            if(mapZoom <= 13){
-                map.getView().setZoom(14);
-            }
+            
+            map.getView().setZoom(mapBaseConfig.zoom.buld);
+
+            // if(mapZoom <= 13){
+            //     map.getView().setZoom(14);
+            // }
 
         }
     });

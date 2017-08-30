@@ -79,7 +79,8 @@ var pages = {
     "detailaddress": { link: function () { return URLs.realPath() + "addressview.html"; }, div: "#addressview_page" },
     "imageviewer": { link: function () { return URLs.realPath() + "imageviewer.html"; }, div: "#imageviewer_page" },
     "writereplypage": { link: function () { return URLs.realPath() + "writereply.html"; }, div: "#write_reply_page" },
-    "memolistpage": { link: function () { return URLs.realPath() + "memolist.html"; }, div: "#memolist_page" }
+    "memolistpage": { link: function () { return URLs.realPath() + "memolist.html"; }, div: "#memolist_page" },
+    "baseConfigPage": { link: function () { return URLs.realPath() + "baseConfig.html"; }, div: "#baseConfig_page" }
 };
 
 //var SSO = {
