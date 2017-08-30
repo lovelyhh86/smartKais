@@ -125,7 +125,8 @@ var app = {
                         app.info = {
                             sigCd: d.sigCd,
                             opeId: "{1}".format(d.userId, d.machineNo),
-                            opeNm: d.userNm
+                            opeNm: d.userNm,
+                            testServerNo : d.testServerNo
                         }
 
                         if(d.testYn == "Y") {

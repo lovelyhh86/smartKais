@@ -59,6 +59,7 @@ cordova.define("kr.go.juso.smartKais.plugins", function(require, exports, module
 
         var svcNm = data.svcNm;
         var mode = data.mode;
+        var testServerNo = data.testServerNo;
         var reqParam;
 
         if (direct) {
@@ -69,6 +70,7 @@ cordova.define("kr.go.juso.smartKais.plugins", function(require, exports, module
             reqParam = {
                 svcNm: svcNm,
                 mode: mode,
+                testServerNo :testServerNo,
                 req: JSON.stringify(data)
             };
         }

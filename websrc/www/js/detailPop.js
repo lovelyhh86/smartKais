@@ -1289,7 +1289,7 @@ function makeImg(){
             imageFilesSn = picImgTag[0].children[1].getAttribute("value");
             tbGbn = picImgTag[0].children[2].getAttribute("value");
         }
-        var imgtName = '{0}_{1}_{2}_{3}.jpg'.format(date,title,tbGbn,index);
+        var imgtName = '{0}_{1}_{2}.jpg'.format(date,title,tbGbn);
 
         var data = new Object() ;
 

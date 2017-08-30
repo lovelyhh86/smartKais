@@ -38,10 +38,10 @@ var MapUtil = {
             $(".detailView .infoWrap .infoHeader .photo").click(function() {
                 // $(".detailView .infoWrap .infoContent .infoTable, .detailView .infoWrap .infoContent .photoWrap").toggle();
                 var photoNum = $(".photoNum").text();
-                if(photoNum == 0){
-                    navigator.notification.alert(msg.noItem, '', '알림', '확인');
-                    return;
-                }
+                // if(photoNum == 0){
+                //     navigator.notification.alert(msg.noItem, '', '알림', '확인');
+                //     return;
+                // }
                 //검정막
                 wrapWindowByMask('mask');
                 //옵션안됨
@@ -949,7 +949,7 @@ var MapUtil = {
                         $("#imageFileSn").val(data.imageFilesSn);
 
                         //제목창
-                        var title = "[{0}] {1} {2}{3}".format(
+                        var title = "<span class='label'>[{0}] {1} {2}{3}<span>".format(
                             "건물번호판",
                             (data.rnCdLbl ? data.rnCdLbl : ''),
                             (data.buldMnnm ? data.buldMnnm : ''),

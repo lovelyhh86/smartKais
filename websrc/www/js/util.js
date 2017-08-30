@@ -34,7 +34,7 @@ var util = {
     postAJAX: function (context, params, direct) {
         var def = $.Deferred();
         if (app != undefined && app.info)   //시군구 코드 필수 추가
-            params = $.extend({}, { mode: app.mode, brokerMode: 1, sigCd: app.info.sigCd }, params);
+            params = $.extend({}, { mode: app.mode, testServerNo : app.info.testServerNo, brokerMode: 1, sigCd: app.info.sigCd }, params);
         else
             params = $.extend({}, { mode: '00', brokerMode: 1 }, params);
 
