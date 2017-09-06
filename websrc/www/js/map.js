@@ -129,7 +129,7 @@ var MapUtil = {
                                     }
                                 }
 
-
+                                
 
                                 // if(data.files.length == 1 && data.files[0].tbGbn == 'L'){
                                 //     var image = data.files[0];
@@ -262,6 +262,7 @@ var MapUtil = {
             legendHtml += '<li class="rdpq">도로명판<span class="total">0건</span></li>';
             legendHtml += '<li class="bsis">기초번호판<span class="total">0건</span></li>';
             legendHtml += '<li class="area">지역안내판<span class="total">0건</span></li>';
+            // legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
 
@@ -446,6 +447,7 @@ var MapUtil = {
         switch (layerID) {
             case DATA_TYPE.RDPQ:
                 url = pages.detail_road;
+                // url = pages.detail_spot;
                 header = "도로명판";
                 // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
 
@@ -2205,6 +2207,7 @@ var mapInit = function(mapId, pos) {
                             $('.legend .rdpq .total').text('0건');
                             $('.legend .area .total').text('0건');
                             $('.legend .bsis .total').text('0건');
+                            // $('.legend .spot .total').text('0건');
                             util.toast('시설물을 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
                         }
                         if (id == DATA_TYPE.BULD) {
@@ -2493,6 +2496,7 @@ var getFeatureLayer = function(options) {
                     $('.legend .rdpq .total').text(rdpqCnt + '건');
                     $('.legend .area .total').text(areaCnt + '건');
                     $('.legend .bsis .total').text(bsisCnt + '건');
+                    // $('.legend .spot .total').text(bsisCnt + '건');
 
                     // for(var i = 0 ; features.length > i ; i++){
                     //     var fid = features[i].id_;
@@ -3025,24 +3029,42 @@ $(document).on("pagecreate", pages.map.div, function() {
                     keyword: app.info.sigNm + " " + value // 해당지역 검색을 위하여 시군구명 포함
                                    
                 }          
-            })          .then(function(xml) {            
-                $.each($(xml).find("juso"), function(i, val) {
-                    var label = "<span id='rnAddr'>{0} {1}{2}{3}</span><br><span id='jbAddr'>[지번]{4} {5}{6}</span>".format(
-                        $(this).find("rn").text(),
-                        $(this).find("buldMnnm").text(),
-                        util.isEmpty($(this).find("buldSlno").text()) ? "" : "-{0}".format($(this).find("buldSlno").text()),
-                        util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text()),
-                        $(this).find("emdNm").text(),
-                        $(this).find("lnbrMnnm").text(),
-                        util.isEmpty($(this).find("lnbrSlno").text()) ? "" : "-{0}".format($(this).find("lnbrSlno").text())
-                    );
-                    var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
-                    var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);              
-                    html += "<li class='icon' onclick=\"" + jsCmd + "\">" + label + "</li>";            
-                });            
-                $ul.html(html);            
-                $ul.listview("refresh");            
-                $ul.trigger("updatelayout");        
+            })          .then(function(xml) {
+                var totalCount = $(xml).find("results").find("totalCount").text();
+
+                if(totalCount > 0){
+                    $.each($(xml).find("juso"), function(i, val) {
+                        var label = "<span id='rnAddr'>{0} {1}{2}{3}</span><br><span id='jbAddr'>{4} {5} {6} {7}{8}</span>"
+                        // var label = "<span id='rnAddr'>{0} {1}{2}{3}</span><br><span id='jbAddr'>{4}</span>"
+                        .format(
+                            $(this).find("rn").text(),
+                            $(this).find("buldMnnm").text(),
+                            util.isEmpty($(this).find("buldSlno").text()) ? "" : "-{0}".format($(this).find("buldSlno").text()),
+                            util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text()),
+                            // $(this).find("relJibun").text()
+                            $(this).find("siNm").text(),
+                            $(this).find("sggNm").text(),
+                            $(this).find("emdNm").text(),
+                            $(this).find("lnbrMnnm").text(),
+                            util.isEmpty($(this).find("lnbrSlno").text()) ? "" : "-{0}".format($(this).find("lnbrSlno").text())
+                        );
+                        var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
+                        var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);              
+                        html += "<li class='icon' onclick=\"" + jsCmd + "\">" + label + "</li>";            
+                    });            
+                    $ul.html(html);            
+                    $ul.listview("refresh");            
+                    $ul.trigger("updatelayout");            
+                }else{
+                    var label = "<span id='rnAddr' class='noResult'>결과가 없습니다.</span>";
+                    html += "<li class='noIcon'>" + label + "</li>";
+
+                    $ul.html(html);            
+                    $ul.listview("refresh");            
+                    $ul.trigger("updatelayout");            
+                    $("#autocomplete .noIcon").removeClass("ui-screen-hidden");
+                }   
+                     
             });        
         }    
     });

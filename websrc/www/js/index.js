@@ -9,6 +9,9 @@ var msg = {
     server: "\n서버에 연결할 수 없습니다({0}).",
     exit: "\n\n스마트KAIS를 종료합니다."
 };
+$(document).on("pagecreate", pages.indexpage.div, function() {
+    $("#verName").html(versionName);
+});
 
 var app = {
     // Application Constructor

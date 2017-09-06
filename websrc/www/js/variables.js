@@ -65,6 +65,7 @@ var URLs = {
 };
 
 var pages = {
+    "indexpage": { link: function () { return URLs.realPath() + "index.html"; }, div: "#index_page" },
     "workpage": { link: function () { return URLs.realPath() + "work.html"; }, div: "#work_page" },
     "map": { link: function () { return URLs.realPath() + "map.html"; }, div: "#mapview_page" },
     "map2": { link: function () { return URLs.realPath() + "map2.html"; }, div: "#map2view_page" },
@@ -73,6 +74,7 @@ var pages = {
     "detail_base": { link: function () { return URLs.realPath() + "popBase.html"; }, div: "#baseView_page" },
     "detail_buld": { link: function () { return URLs.realPath() + "popBuild.html"; }, div: "#buildView_page" },
     "detail_entrc": { link: function () { return URLs.realPath() + "popEntrc.html"; }, div: "#entrcView_page" },
+    "detail_spot": { link: function () { return URLs.realPath() + "popSpot.html"; }, div: "#spotView_page" },
     "minwonListPage": { link: function () { return URLs.realPath() + "minwon.html"; }, div: "#minwonList_page" },
     "addressview": { link: function () { return URLs.realPath() + "board.html"; }, div: "#bbs_page" },
     "detailview": { link: function () { return URLs.realPath() + "detailview.html"; }, div: "#detailview_page" },

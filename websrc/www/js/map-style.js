@@ -80,6 +80,7 @@ var getStyleLabel = function (feature, labelOptions) {
 var defaultStyle = function (feature, resolution, options) {
     var features, size, style;
     var mixStyle = false;
+    var index = 0;
     var styleOptions = $.extend(true, {}, defaultStyleOptions, options.style);
 
     // feature 정보 이용 시 다중 건 단일 건 통일
@@ -93,6 +94,12 @@ var defaultStyle = function (feature, resolution, options) {
     var oldRdGdftySe;
     var newRdGdftySe;
     for(var i = 0 ; size > i; i++){
+        var LT_CHC_YN = features[i].get("LT_CHC_YN");
+        if(LT_CHC_YN == 0 && size >= 2){
+            // console.log(features[i].get("RDFTYLC_SN"));
+            index = i;
+        }
+
         if(i==0){
             oldRdGdftySe = features[i].get("RD_GDFTY_SE");
         }
@@ -118,7 +125,7 @@ var defaultStyle = function (feature, resolution, options) {
     if( size == 1 ) {
         if(_text) {
             if( typeof(_text) === "object" ) {
-                key = _text.func(features[0].get(_text.key));
+                key = _text.func(features[index].get(_text.key));
             } else {
                 key = _text;
             }
@@ -141,7 +148,7 @@ var defaultStyle = function (feature, resolution, options) {
     // style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
     // styleCache[options.dataType][key] = style;
     
-    style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
+    style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
 
     return style;
 };
@@ -255,6 +262,26 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 src: 'image/mixPos.png'
             }))
         };
+    }else if(rdGdftySe == "지점번호판"){
+        if(ltChcYn == 0){
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'img/icon_legend04.png'
+                }))
+            };
+        }else{
+            opt = {
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.45, 35],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'image/check_road.png'
+                }))
+            };
+        }
     }
     
     

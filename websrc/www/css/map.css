@@ -56,4 +56,5 @@ ul.searchList li{width:100%; height: 40px; border-bottom: 1px solid #c7d7e6; ove
 .ui-listview>.ui-li-static { padding-left: 3em; border-color: #c7d7e6; overflow: hidden; padding-top: 0.7em;padding-bottom: 1.2em}
 li.icon{background: url(../image/searchIcon.png) 12px 20px no-repeat;}
 #rnAddr{font-size: 1.4em}
+.noResult{position: absolute; top: 0.8em; left: 1em;}
 #jbAddr{font-size: 1em}

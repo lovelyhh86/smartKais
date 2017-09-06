@@ -26,6 +26,10 @@
 .legend ul li.area.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.area.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
+.legend ul li.spot{background: #fff url(../image/spotIconS.png) 15px 9px no-repeat;}
+.legend ul li.spot.over{background: #58C428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.spot.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
+
 /*신규 위치등록*/
 .newPosition { top: 14em; width: 9em; height: 3em;}
 /* .newPosition button { background-color: transparent !important;position: relative;} */
@@ -154,6 +158,7 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .picInfo{padding:5px; background-color:#fff; vertical-align: middle; color: #fff;}
 .picImg{display:inline-block; width: 320px; height: 240px; line-height: 240px; text-align: center; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
 .picImg img {max-height: 100%; vertical-align: middle;}
+.photoNotice{text-align : center; color: red}
 /************* 사진(END) ****************/
 
 /*map position*/
@@ -280,7 +285,7 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 
 /** modal*/
 /* The Modal (background) */
-.ui-dialog-contain{max-width: 100%; height: 500px; background-color: white;top:-5em}
+.ui-dialog-contain{max-width: 100%; height: 520px; background-color: white;top:-5em}
 #mask {
   position:absolute;
   left:0;
