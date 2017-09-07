@@ -3015,8 +3015,17 @@ $(document).on("pagecreate", pages.map.div, function() {
                       $input = $(data.input),
                       value = $input.val().trim(),
                       html = "";        
-        $ul.html("");        
+        $ul.html("");
+        
         if (value && value.length > 2) {          
+            
+            var koreanList = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+            for(var i in koreanList ){
+                if(value.charAt(value.length - 1) == koreanList[i]){
+                    return;
+                }            
+            }
+
             $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");          
             $ul.listview("refresh");          
             $.ajax({
@@ -3078,6 +3087,65 @@ $(document).on("pagecreate", pages.map.div, function() {
         $(this).siblings().addBack().addClass("ui-screen-hidden");
     });
 });
+
+function autocompleteRd(){
+    // $("#autocomplete").on("filterablebeforefilter", function(e, data) {        
+        var $ul = $("#autocomplete"),
+                      $input = $("#autocomplete-input"),
+                      value = $input.val().trim(),
+                      html = "";        
+        $ul.html("");        
+        if (value && value.length > 2) {          
+            $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");          
+            $ul.listview("refresh");          
+            $.ajax({
+                type: 'POST',
+                            url: "http://www.juso.go.kr/link/mobileSearch.do",
+                            dataType: "xml",
+                            data: {
+                    countPerPage: 4,
+                    currentPage: 1,
+                    keyword: app.info.sigNm + " " + value // 해당지역 검색을 위하여 시군구명 포함
+                                   
+                }          
+            })          .then(function(xml) {
+                var totalCount = $(xml).find("results").find("totalCount").text();
+
+                if(totalCount > 0){
+                    $.each($(xml).find("juso"), function(i, val) {
+                        var label = "<span id='rnAddr'>{0} {1}{2}{3}</span><br><span id='jbAddr'>{4} {5} {6} {7}{8}</span>"
+                        .format(
+                            $(this).find("rn").text(),
+                            $(this).find("buldMnnm").text(),
+                            util.isEmpty($(this).find("buldSlno").text()) ? "" : "-{0}".format($(this).find("buldSlno").text()),
+                            util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text()),
+                            $(this).find("siNm").text(),
+                            $(this).find("sggNm").text(),
+                            $(this).find("emdNm").text(),
+                            $(this).find("lnbrMnnm").text(),
+                            util.isEmpty($(this).find("lnbrSlno").text()) ? "" : "-{0}".format($(this).find("lnbrSlno").text())
+                        );
+                        var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
+                        var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);              
+                        html += "<li class='icon' onclick=\"" + jsCmd + "\">" + label + "</li>";            
+                    });            
+                    $ul.html(html);            
+                    $ul.listview("refresh");            
+                    $ul.trigger("updatelayout");            
+                }else{
+                    var label = "<span id='rnAddr' class='noResult'>결과가 없습니다.</span>";
+                    html += "<li class='noIcon'>" + label + "</li>";
+
+                    $ul.html(html);            
+                    $ul.listview("refresh");            
+                    $ul.trigger("updatelayout");            
+                    $("#autocomplete .noIcon").removeClass("ui-screen-hidden");
+                }   
+                     
+            });        
+        }    
+    // });
+}
 
 /** 위치이동 레이어 추가 */
 function addMoveLayer() {

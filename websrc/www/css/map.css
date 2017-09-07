@@ -50,7 +50,10 @@ legend, .ui-input-text input, .ui-input-search input {color: inherit;text-shadow
 
 #search input[type="text"].keyword {display: block; width:100%; height: 60px; border-bottom: 1px solid #186bb9; background-color : #fff; padding:0 15px; line-height:60px; font-size: 20px; font-weight: bold;color:#fff}
 /*#search input[type="button"].searachButton{display:inline-block; position: absolute;right:0; top: 0; width: 80px; height: 60px; border-bottom: 1px solid #186bb9; background: #fff url(../image/btn_search.png) 0 13px no-repeat; background-size: 58px 33px; border-left: 0 none; text-indent: -9999px;}*/
-.ui-input-search{display:inline-block; position: absolute; top: 2.3em; width: 45em; height: 2.2em; border-bottom: 1px solid #186bb9; background: #fff url(../image/btn_search.png) 29.5em 11px no-repeat; background-size: 51px 33px; border-left: 0 none;font-size:1.5em ; text-indent: -9999px;}
+.ui-input-search{display:inline-block; position: absolute; top: 2.3em; width: 45em; height: 2.2em; border-bottom: 1px solid #186bb9; 
+    /* background: #fff url(../image/btn_search.png) 29.5em 11px no-repeat; background-size: 51px 33px;  */
+    border-left: 0 none;font-size:1.5em ; text-indent: -9999px;}
+.searchIcon{    position: absolute; top: 4em; right: 0.5em; width: 3em;};
 ul.searchList{padding: 0; border:0 none; margin: 0}
 ul.searchList li{width:100%; height: 40px; border-bottom: 1px solid #c7d7e6; overflow: hidden;}
 .ui-listview>.ui-li-static { padding-left: 3em; border-color: #c7d7e6; overflow: hidden; padding-top: 0.7em;padding-bottom: 1.2em}
