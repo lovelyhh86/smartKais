@@ -270,26 +270,21 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 src: 'image/mixPos.png'
             }))
         };
-    }else if(rdGdftySe == "지점번호판"){
-        if(ltChcYn == 0){
-            opt = {
-                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                    anchor: [0.45, 35],
-                    anchorXUnits: 'fraction',
-                    anchorYUnits: 'pixels',
-                    src: 'img/icon_legend04.png'
-                }))
-            };
-        }else{
-            opt = {
-                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                    anchor: [0.45, 35],
-                    anchorXUnits: 'fraction',
-                    anchorYUnits: 'pixels',
-                    src: 'image/check_road.png'
-                }))
-            };
-        }
+    }else{
+        
+        opt = {
+             image: new ol.style.Circle({
+                radius: 0,
+                fill: new ol.style.Fill({
+                    color: '#ffffff'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#ffffff',
+                    width: 0
+                })
+            })
+        };
+        
     }
     
     
