@@ -615,6 +615,7 @@ function layerToggle(context){
             // map.addLayer(layers.bsis);
             // map.addLayer(layers.area);
             map.addLayer(layers.loc);
+            map.addLayer(layers.sppn);
             
             map.getView().setZoom(mapBaseConfig.zoom.spgf);
 
@@ -646,6 +647,7 @@ function removeLayers(){
     // map.removeLayer(layers.bsis);
     // map.removeLayer(layers.area);
     map.removeLayer(layers.loc);
+    map.removeLayer(layers.sppn);
 }
 
 function appExitCallback(btnIndex){

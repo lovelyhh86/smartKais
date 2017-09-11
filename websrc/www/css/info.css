@@ -31,7 +31,7 @@
 .legend ul li.spot.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
 /*신규 위치등록*/
-.newPosition { top: 14em; width: 9em; height: 3em;}
+.newPosition { top: 16em; width: 9em; height: 3em;}
 /* .newPosition button { background-color: transparent !important;position: relative;} */
 .newPosition ul {width: 9em;}
 .legend ul li.nPos{background: #fff url(../image/plusPos2.png) 6px 4px no-repeat;    background-size: 2em; width: 6.5em;}

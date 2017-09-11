@@ -23,7 +23,7 @@ var LAST_CHECK_STATUS = {
 };
 
 var DATA_TYPE = {
-    LOC: "00", BULD: "01", RDPQ: "02", AREA: "03", BSIS: "04", ENTRC: "05",
+    LOC: "00", BULD: "01", RDPQ: "02", AREA: "03", BSIS: "04", ENTRC: "05", SPPN: "06",
     getStatusNameWithCode: function (code) {
         switch (code) {
             case "00":
@@ -38,6 +38,8 @@ var DATA_TYPE = {
                 return DATA_TYPE.BSIS;
             case "05":
                 return DATA_TYPE.ENTRC;
+            case "06":
+                return DATA_TYPE.SPPN;
             default:
                 return;
         }
@@ -135,14 +137,17 @@ var defaultStyle = function (feature, resolution, options) {
         }
         styleOptions.label._text = key;
     } else {
-        for(var i = 0 ; size > i ; i++){
-            var label = _text.func(features[i].get(_text.key));
-            var cnt = parseInt(label);
-            if(!isNaN(cnt)){
-                clusterCnt += cnt - 1;
+        if(_text) {
+            for(var i = 0 ; size > i ; i++){
+                var label = _text.func(features[i].get(_text.key));
+                var cnt = parseInt(label);
+                if(!isNaN(cnt)){
+                    clusterCnt += cnt - 1;
+                }
             }
+        }else{
+            key = '';
         }
-
         styleOptions.label._text = key = String(clusterCnt);
     }
     // style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
@@ -161,6 +166,9 @@ var getStyle = function(dataType, styleOptions, feature, mixStyle) {
             break;
         case DATA_TYPE.BULD:
             retStyle = buildStyle(styleOptions);
+            break;
+        case DATA_TYPE.SPPN:
+            retStyle = sppnStyle(styleOptions, feature, mixStyle);
             break;
         case DATA_TYPE.RDPQ:
             retStyle = roadStyle(styleOptions);
@@ -285,6 +293,31 @@ var locStyle = function (styleOptions, feature, mixStyle) {
     }
     
     
+    if( styleOptions.label._text)
+        opt.text = createTextStyle(styleOptions);
+
+    return new ol.style.Style(opt);
+};
+
+// 지점번호 스타일
+var sppnStyle = function (styleOptions, feature, mixStyle) {
+    
+    var opt = {
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            anchor: [0.45, 35],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            src: 'img/icon_legend04.png'
+        }))
+    };
+    // var opt = {
+    //     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+    //         anchor: [0.45, 35],
+    //         anchorXUnits: 'fraction',
+    //         anchorYUnits: 'pixels',
+    //         src: 'image/check_road.png'
+    //     }))
+    // };
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);
 

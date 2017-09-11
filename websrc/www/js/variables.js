@@ -14,10 +14,12 @@ var URLs = {
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },
     "buildSelectlink": { svcNm: "vBULD" },
+    "spotSelectlink": { svcNm: "vSPOT" },
     "entrclink": { svcNm: "vENTRC" },
     "updateFacilityInfo": { svcNm: "uSPGF" },
     "updateBuildNumberInfo": { svcNm: "uSPBD" },
     "updateBuilingInfo": { svcNm: "uBULD" },
+    "updateSpotInfo": { svcNm: "uSPOT" },
     "selectLocLink":{svcNm : "sLOC"},
     
 

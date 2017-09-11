@@ -757,6 +757,7 @@ function submit(type){
             var commomParams = {};
             var sendParams = {};
             var buldParams = {};
+            var spotParams = {};
 
             var sn = $("#sn").val();
             var sigCd = app.info.sigCd;
@@ -1142,6 +1143,43 @@ function submit(type){
                 });
 
                 var link = URLs.updateBuilingInfo;
+            }else if(type == DATA_TYPE.SPPN){
+
+                var link = URLs.updateSpotInfo;
+
+                //메모
+                var checkComment_new = $("#checkComment_new").text();
+                if(checkComment_new != ""){
+                    spotParams = $.extend(spotParams, {chkSum: checkComment_new});
+                }
+                
+                commomParams = $.extend(spotParams, {
+                    sn           : sn,
+                    sigCd        : sigCd,
+                    workId       : app.info.opeId,
+                    // entManNo     : $("#entManNo").val(),
+                    // imageFilesSn : $("#imageFileSn").val()
+                    // //사진파일
+                    // files: files,
+
+                    // delStateCd : delStateCd_new,
+                    // buldNmtSe: buldNmtSe_new,
+                    // buldNmtPurpose: buldNmtPurpose_new,
+                    // buldNmtCd: buldNmtCd_new,
+                    // buldMnfCd: buldMnfCd_new,
+                    // buldNmtMaterial: buldNmtMaterial_new,
+
+
+                    // //단가
+                    // buldNmtUnitPrice: gdftyUnitPrice_new,
+                    // //가로
+                    // buldNmtWide: gdftyWide_new,
+                    // //세로
+                    // buldNmtVertical: gdftyVertical_new,
+                    // //두께
+                    // buldNmtThickness: gdftyThickness_new,
+
+                });
             }
 
 
@@ -1346,13 +1384,21 @@ function saveImg(type){
     //사진파일
     var files = makeImg();
 
-    if(files[0].base64 != "" && files[1].base64 == ""){
-        navigator.notification.alert(msg.noPhoto,'','알림', '확인');
-        return;
-    }else if(files[0].base64 == "" && files[1].base64 != ""){
-        navigator.notification.alert(msg.noPhoto,'','알림', '확인');
-        return;
+    if(type != DATA_TYPE.SPPN){
+        if(files[0].base64 != "" && files[1].base64 == ""){
+            navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+            return;
+        }else if(files[0].base64 == "" && files[1].base64 != ""){
+            navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+            return;
+        }
+    }else{
+        if(files[0].base64 == ""){
+            navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+            return;
+        }
     }
+    
 
     navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
         if(btnindex == 1){
@@ -1421,7 +1467,7 @@ function saveImg(type){
                 sendParams = $.extend(commomParams, {
                 });
                 sendParams = $.extend(commomParams, {
-                    imageFilesSn: $("#imageFilesSn").val()
+                    imageFilesSn: $("#imageFileSn").val()
                 //     sn: sn,
                 //     sigCd: sigCd,
                 //     workId :app.info.opeId,
@@ -1430,6 +1476,12 @@ function saveImg(type){
                 });
 
                 var link = URLs.updateBuildNumberInfo;
+            }else if(type == DATA_TYPE.SPPN){
+                sendParams = $.extend(commomParams, {
+                    imaFilSn: $("#imaFilSn").val()
+                });
+
+                var link = URLs.updateSpotInfo;
             }
 
             util.showProgress();

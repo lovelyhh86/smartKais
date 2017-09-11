@@ -21,14 +21,14 @@
 			<!-- 정보  -->
 				<div class="infoTable">
 					<input id="sn" type="hidden" value="" />
-					<input id="rdFtyLcSn" type="hidden" value="" />
-					<div onclick="updateWorkDate()" class="row">
+					<input id="imaFilSn" type="hidden" value="" />
+					
+					<div onclick="" class="row">
 						<div  class="cell1">
 								<span class="label">최종점검일자</span>
 						</div>
 						<div class="cell2">
 							<p id="lastCheckDate" name="oldLbl" >&nbsp;</p>
-							<p id="checkType" name="oldLbl" style="display:none;">01</p>
 						</div>
 					</div>
 					<div onclick="openCustomPop('checkComment');" class="row">
@@ -40,7 +40,7 @@
                             <p id="checkComment_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
                     </div>
-					<div onclick="openDataIdPop('delStateCd');" class="row">
+					<!-- <div onclick="openDataIdPop('delStateCd');" class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
 						</div>
@@ -49,6 +49,107 @@
 							<p id="delStateCd" style="display:none;"></p>
 							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
 							<p id="delStateCd_new" style="display:none"></p>
+						</div>
+					</div> -->
+					<!-- <div class="row">
+						<div  class="cell1">
+								<span class="label">토지소재지</span>
+						</div>
+						<div class="cell2">
+							<p id="landAddressLbl" name="oldLbl" >&nbsp;</p>
+							<p id="landAddress" style="display:none;"></p>
+						</div>
+					</div> -->
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">시설물종류</span>
+						</div>
+						<div class="cell2">
+							<p id="fcltylcCdLbl" name="oldLbl" >&nbsp;</p>
+							<p id="fcltylcCd" style="display:none;"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">설치기관</span>
+						</div>
+						<div class="cell2">
+							<p id="insttCdLbl" name="oldLbl" >&nbsp;</p>
+							<p id="insttCd" style="display:none;"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">상세기관명</span>
+						</div>
+						<div class="cell2">
+							<p id="dtorNm" name="oldLbl" >&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">검증일자</span>
+						</div>
+						<div class="cell2">
+							<p id="vrifyDe" name="oldLbl" >&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">설치일자</span>
+						</div>
+						<div class="cell2">
+							<p id="spoInsDe" name="oldLbl" >&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">변경사유</span>
+						</div>
+						<div class="cell2">
+							<p id="chghyLbl" name="oldLbl" >&nbsp;</p>
+							<p id="chghy" style="display:none;"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">표기지역내여부</span>
+						</div>
+						<div class="cell2">
+							<p id="mkareaInLbl" name="oldLbl" >&nbsp;</p>
+							<p id="mkareaIn" style="display:none;"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">X좌표</span>
+						</div>
+						<div class="cell2">
+							<p id="xGrs80" name="oldLbl" >&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">Y좌표</span>
+						</div>
+						<div class="cell2">
+							<p id="yGrs80" name="oldLbl" >&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">경도</span>
+						</div>
+						<div class="cell2">
+							<p id="longitude" name="oldLbl" >&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="cell1">
+								<span class="label">위도</span>
+						</div>
+						<div class="cell2">
+							<p id="latitude" name="oldLbl" >&nbsp;</p>
 						</div>
 					</div>
 				</div>
@@ -88,7 +189,7 @@
 			<!-- footer 시작 -->
 			<div class="infoFooter">
 				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
-				<span onclick="submit(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+				<span onclick="submit(DATA_TYPE.SPPN);" class="btnPoint">저장</span>
 			</div>
 			<!-- footer 끝 -->
 		</div>
@@ -97,17 +198,14 @@
 
 <input type="hidden" id="photoIsGgn" value="N" />
 <div id="photoDialog" class="photoWrap" >
-	<!-- 사진 style="display: none"-->
 	<div id="" class="">
 		<div class="photoTitle">사진
 			<ul class="photoPage">
-				<!--li><span class="pic_over">전면</span></li>
-                <li><span class="pic">후면</span></li -->
 			</ul>
 		</div>
-		<div class="photoTable">
+		<div class="photoTable" style="padding-left: 10em;">
 			<div class="row">
-				<div class="cell">
+				<div class="cell" style="width: 350px;">
 					<div class="picInfo M">
 						<span class="photoSub">근거리</span>
 						<span class="picImg">
@@ -121,27 +219,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="cell">
-					<div class="picInfo L">
-						<span class="photoSub">원거리</span>
-						<span class="picImg">
-							<img style='height: 220px; width: 100%; object-fit: contain' src=''/>
-							<input id='imaFilSn' type='hidden' value=''/>
-							<input id='tbGbn' type='hidden' value='L'/>
-						</span>
-						<div class="dataBtn long">
-							<span class="btnNormal">삭제</span>
-							<span class="btnPoint">촬영</span>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
-		<div class="photoNotice"><span>※ 조회된 사진은 각각의 최근사진 1장씩만 조회(사진건수는 시스템에 저장된 전체건수)</span></div>
 	</div>
 	<div class="infoFooter">
 		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
-		<span onclick="saveImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+		<span onclick="saveImg(DATA_TYPE.SPPN);" class="btnPoint">저장</span>
 	</div>
 </div>
 <!-- 사진 끝-->
