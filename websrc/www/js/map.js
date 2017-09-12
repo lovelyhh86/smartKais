@@ -119,23 +119,52 @@ var MapUtil = {
                                 for (var index in data.files) {
                                     var image = data.files[index];
                                     if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+
+
                                         var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
                                         obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
                                         obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
 
-                                        //사진이 한건일때 왼쪽에 표시되도록 처리
-                                        if(data.files.length == 1){
-                                            $(".picInfo." + "M" + " .picImg").html(obj);
+                                        if(layerID == DATA_TYPE.ENTRC){
+                                            //사진이 한건일때 왼쪽에 표시되도록 처리
+                                            if(data.files.length == 1){
+                                                $(".picInfo." + "M" + " .picImg").html(obj);
+                                            }else{
+
+                                                //건물번호판 쿼리 오류 떄문에 변경
+                                                if(image.tbGbn == "L"){
+                                                    image.tbGbn = "M"
+                                                }else{
+                                                    image.tbGbn = "L"
+                                                }
+
+                                                $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                                            }
+                                            
+                                            if (image.tbGbn == "M") {
+                                                MapUtil.state.photo[0].isPhoto = true;
+                                            } else {
+                                                MapUtil.state.photo[1].isPhoto = true;
+                                            }
                                         }else{
-                                            $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                                            //사진이 한건일때 왼쪽에 표시되도록 처리
+                                            if(data.files.length == 1){
+                                                $(".picInfo." + "M" + " .picImg").html(obj);
+                                            }else{
+                                                $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                                            }
+                                            
+                                            if (image.tbGbn == "M") {
+                                                MapUtil.state.photo[0].isPhoto = true;
+                                            } else {
+                                                MapUtil.state.photo[1].isPhoto = true;
+                                            }
+
                                         }
                                         
+                                        
 
-                                        if (image.tbGbn == "M") {
-                                            MapUtil.state.photo[0].isPhoto = true;
-                                        } else {
-                                            MapUtil.state.photo[1].isPhoto = true;
-                                        }
+                                        
 
                                     }
                                 }
