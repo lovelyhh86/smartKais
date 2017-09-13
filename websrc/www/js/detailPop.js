@@ -1190,6 +1190,7 @@ function submit(type){
                     //통신오류처리
                     if (rCode != 0 || results.response.status < 0) {
                         navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
                         return;
                     }
 
@@ -1491,6 +1492,7 @@ function saveImg(type){
                     //통신오류처리
                     if (rCode != 0 || results.response.status < 0) {
                         navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
                         return;
                     }
 
@@ -1568,6 +1570,7 @@ function updateWorkDate(){
                     //통신오류처리
                     if (rCode != 0 || results.response.status < 0) {
                         navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
                         return;
                     }
 

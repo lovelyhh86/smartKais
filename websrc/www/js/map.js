@@ -628,6 +628,7 @@ var MapUtil = {
                 //통신오류처리
                 if (rCode != 0 || results.response.status < 0) {
                     navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                    util.dismissProgress();
                     return;
                 }
 
@@ -1254,6 +1255,7 @@ var MapUtil = {
                         //통신오류처리
                         if (rCode != 0 || results.response.status < 0) {
                             navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                            util.dismissProgress();
                             return;
                         }
 
@@ -1811,6 +1813,7 @@ var mapInit = function(mapId, pos) {
                                 //통신오류처리
                                 if (rCode != 0 || results.response.status < 0) {
                                     navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                                    util.dismissProgress();
                                     return;
                                 }
 
@@ -2625,6 +2628,7 @@ var getFeatureLayer = function(options) {
                     //통신오류처리
                     if (rCode != 0) {
                         navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
                         return;
                     }
                     
@@ -2985,6 +2989,8 @@ function insertMoveingPoint(param) {
                     // }
                 } else {
                     navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                    util.dismissProgress();
+                    return;
                 }
 
             },
