@@ -147,12 +147,8 @@ var MapUtil = {
                                                 MapUtil.state.photo[1].isPhoto = true;
                                             }
                                         }else{
-                                            //사진이 한건일때 왼쪽에 표시되도록 처리
-                                            if(data.files.length == 1){
-                                                $(".picInfo." + "M" + " .picImg").html(obj);
-                                            }else{
-                                                $(".picInfo." + image.tbGbn + " .picImg").html(obj);
-                                            }
+
+                                            $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                                             
                                             if (image.tbGbn == "M") {
                                                 MapUtil.state.photo[0].isPhoto = true;
