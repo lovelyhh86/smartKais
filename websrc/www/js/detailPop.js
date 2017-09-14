@@ -1499,43 +1499,48 @@ function saveImg(type){
             var url = URLs.postURL(link, sendParams);
             util.postAJAX({}, url).then(
                 function (context, rCode, results) {
-                    //통신오류처리
-                    if (rCode != 0 || results.response.status < 0) {
-                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
-                        util.dismissProgress();
-                        return;
-                    }
-
-                    util.toast('사진이 변경되었습니다.');
-                    //사진건수
-                    var photoNum = $(".infoHeader .photo .photoNum").html();
-
-                    var cnt = 0 ;
-                    for(var i = 0 ; i < files.length; i++ ){
-                        if(files[i].base64 != ''){
-                            cnt++;
+                    try {
+                        //통신오류처리
+                        if (rCode != 0 || results.response.status < 0) {
+                            navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                            util.dismissProgress();
+                            return;
                         }
+
+                        util.toast('사진이 변경되었습니다.');
+                        //사진건수
+                        var photoNum = $(".infoHeader .photo .photoNum").html();
+
+                        var cnt = 0 ;
+                        for(var i = 0 ; i < files.length; i++ ){
+                            if(files[i].base64 != ''){
+                                cnt++;
+                            }
+                        }
+
+                        if(photoNum <= 2){
+                            $(".infoHeader .photo .photoNum").html(cnt);
+                        }else{
+                            $(".infoHeader .photo .photoNum").html(photoNum - 2 + cnt);
+                        }
+
+                        MapUtil.state.photo[0].edited = false;
+                        MapUtil.state.photo[1].edited = false;
+
+                        closePhotoView();
+
+                        if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
+                            MapUtil.setValues(layerID, relink, rdGdftySn);
+
+                            //지도 초기화
+                            getVectorSource(map , "위치레이어").clear();
+                        }
+
+                        util.dismissProgress();
+                    }catch(e) {
+                        util.dismissProgress();
+                        util.toast('데이터 처리에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요.');
                     }
-
-                    if(photoNum <= 2){
-                        $(".infoHeader .photo .photoNum").html(cnt);
-                    }else{
-                        $(".infoHeader .photo .photoNum").html(photoNum - 2 + cnt);
-                    }
-
-                    MapUtil.state.photo[0].edited = false;
-                    MapUtil.state.photo[1].edited = false;
-
-                    closePhotoView();
-
-                    if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
-                        MapUtil.setValues(layerID, relink, rdGdftySn);
-                    }
-
-                    //지도 초기화
-                    getVectorSource(map , "위치레이어").clear();
-
-                    util.dismissProgress();
                 },
                 util.dismissProgress
             );
