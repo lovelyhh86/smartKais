@@ -1382,6 +1382,14 @@ function saveImg(type){
         return;
     }
 
+    //사진이 없는데 촬영도 안한경우
+    for(var i = 0; i < MapUtil.state.photo.length; i ++){
+        if(!MapUtil.state.photo[i].edited && !MapUtil.state.photo[i].isPhoto ){
+            navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+            return;
+        }
+    }
+
     //사진파일
     var files = makeImg();
 
