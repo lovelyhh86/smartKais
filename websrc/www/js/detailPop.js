@@ -1213,13 +1213,21 @@ function submit(type){
 
 }
 
-function closePopupAndClearMap(){
+function closePopupAndClearMap(type){
     //심플팝업 초기화
     $("#popup-content").empty();
     $("#popup").hide();
     
-    //지도 초기화
-    getVectorSource(map , "위치레이어").clear();
+    try {
+        if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
+            //지도 초기화
+            getVectorSource(map , "위치레이어").clear();
+        }
+    }catch(e) {
+        util.dismissProgress();
+        util.toast('데이터 처리에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요.');
+    }
+
 
 }
 
