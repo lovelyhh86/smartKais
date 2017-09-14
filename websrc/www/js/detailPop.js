@@ -1217,8 +1217,9 @@ function closePopupAndClearMap(){
     //심플팝업 초기화
     $("#popup-content").empty();
     $("#popup").hide();
+    
     //지도 초기화
-    getVectorSource(map).clear();
+    getVectorSource(map , "위치레이어").clear();
 
 }
 
@@ -1532,7 +1533,7 @@ function saveImg(type){
                     }
 
                     //지도 초기화
-                    getVectorSource(map).clear();
+                    getVectorSource(map , "위치레이어").clear();
 
                     util.dismissProgress();
                 },

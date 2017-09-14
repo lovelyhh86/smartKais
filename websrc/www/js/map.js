@@ -2571,20 +2571,20 @@ var mapInit = function(mapId, pos) {
 };
 // 지도 초기화 함수(--end--)
 
-var getSource = function(source) {
-    if (source.getSource) {
-        return getSource(source.getSource());
+var getSource = function(layer) {
+    if (layer.getSource) {
+        return getSource(layer.getSource());
     } else {
-        if (source instanceof ol.source.Vector)
-            return source;
+        if (layer instanceof ol.source.Vector)
+            return layer;
         return;
     }
 };
 
-var getVectorSource = function(mapObj) {
+var getVectorSource = function(mapObj, name) {
     var source;
     mapObj.getLayers().forEach(function(item, index) {
-        if (item instanceof ol.layer.Vector)
+        if (item instanceof ol.layer.Vector && item.get("title") == name)
             source = getSource(item);
     });
 
