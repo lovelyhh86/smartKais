@@ -70,7 +70,7 @@ cordova.define("kr.go.juso.smartKais.plugins", function(require, exports, module
             reqParam = {
                 svcNm: svcNm,
                 mode: mode,
-                testServerNo :testServerNo,
+                testServerNo: testServerNo,
                 req: JSON.stringify(data)
             };
         }
@@ -113,13 +113,17 @@ cordova.define("kr.go.juso.smartKais.plugins", function(require, exports, module
 
         var data = {
             svcNm: 'dnfile',
+            mode: param.mode,
+            testServerNo: param.testServerNo,
+            noticeMgtSn: param.noticeMgtSn,
+            fileMgtSn: param.fileMgtSn,
             req: JSON.stringify(param)
         };
         return exec(
             successFn,
             errorFn,
             'SmartKaisPlugins',
-            'callAttachViewer', [filename, $.param(data)]
+            'callAttachViewer', [filename, $.param(data).replace(/\+/gi, '%20')]
         );
     };
 

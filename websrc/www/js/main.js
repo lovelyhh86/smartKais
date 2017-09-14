@@ -19,34 +19,30 @@ var msg = {
 };
 var app = {
     // Application Constructor
-    initialize: function () {
+    initialize: function() {
         document.addEventListener('deviceready', app.onDeviceReady, false);
 
         //사용자 기본정보 셋팅
-        
+
         app.info = JSON.parse(localStorage["appInfo"]);
         app.info.sigNm = localStorage["sigNm"];
-        if(app.info.mode){
-            app.mode = app.info.mode;
-        }
-
     },
-    onDeviceReady: function () {
+    onDeviceReady: function() {
         app.bindEvents();
     },
-    bindEvents: function () {
+    bindEvents: function() {
         /******* Common Action Event *********/
         //뒤로가기, back class ,cancel
         document.addEventListener("backbutton", util.goBack);
         $(document).on("click", ".back", util.goBack);
 
         //overlay touch
-        $(document).on("tap", '#searchbg', function (e) {
+        $(document).on("tap", '#searchbg', function(e) {
             util.hiddenSearchPanel();
             e.preventDefault();
         });
 
-        $(document).on("tap", '#menuoverlay', function (e) {
+        $(document).on("tap", '#menuoverlay', function(e) {
             util.hiddenMenuPanel('#mainMenu');
             util.hiddenHelpDeskPanel('#helpdeskmenu');
             e.preventDefault();
@@ -54,47 +50,45 @@ var app = {
 
         $(document).on('click', '.menu-header-title .fa-close', util.goBack);
 
-        $(document).on("click", '.fa-navicon', function (e) {
+        $(document).on("click", '.fa-navicon', function(e) {
             util.gotoTask("appmenu");
             e.preventDefault();
         });
-        $(document).on("click", '.fa-comments', function (e) {
+        $(document).on("click", '.fa-comments', function(e) {
             util.gotoTask("helpdesk");
             e.preventDefault();
         });
-        $(document).on('touchmove', '#mainMenu', function (e) {
+        $(document).on('touchmove', '#mainMenu', function(e) {
             e.preventDefault();
         });
-        $(document).on('click', '#mainMenu ul li', function (e) {
+        $(document).on('click', '#mainMenu ul li', function(e) {
             util.hiddenMenuPanel('#mainMenu');
             util.gotoTask($(this).data('link'));
         });
 
 
-        $(document).on('touchend', '.float-camera'
-            , function (e) {
-                $(this).removeClass('button_hover');
-            });
-        $(document).on('touchstart', '.float-camera'
-            , function (e) {
-                $(this).addClass('button_hover');
-            });
-        $(document).on('touchend', ' .addressview_status_btn', function (e) {
+        $(document).on('touchend', '.float-camera', function(e) {
             $(this).removeClass('button_hover');
         });
-        $(document).on('touchstart', ' .addressview_status_btn', function (e) {
+        $(document).on('touchstart', '.float-camera', function(e) {
             $(this).addClass('button_hover');
         });
-        $(document).on('touchend', ' .addressitem', function (e) {
+        $(document).on('touchend', ' .addressview_status_btn', function(e) {
             $(this).removeClass('button_hover');
         });
-        $(document).on('touchstart', ' .addressitem', function (e) {
+        $(document).on('touchstart', ' .addressview_status_btn', function(e) {
             $(this).addClass('button_hover');
         });
-        $(document).on('touchend', '.helpdeskitem', function (e) {
+        $(document).on('touchend', ' .addressitem', function(e) {
+            $(this).removeClass('button_hover');
+        });
+        $(document).on('touchstart', ' .addressitem', function(e) {
+            $(this).addClass('button_hover');
+        });
+        $(document).on('touchend', '.helpdeskitem', function(e) {
             $(this).removeClass('button_hover-b');
         });
-        $(document).on('touchstart', '.helpdeskitem-b', function (e) {
+        $(document).on('touchstart', '.helpdeskitem-b', function(e) {
             $(this).addClass('button_hover');
         });
 
@@ -108,8 +102,8 @@ var app = {
 
         //DB초기화
         util.showProgress();
-        datasource.createDB().then(function(){
-            datasource.getCodeMaster(function (result) {
+        datasource.createDB().then(function() {
+            datasource.getCodeMaster(function(result) {
                 app.codeMaster = result;
                 app.deviceReadyOK.resolve();
                 util.dismissProgress();
@@ -120,9 +114,9 @@ var app = {
 
     },
     //content 크기 갱신
-    scaleContentToDevice: function (contentpage) {
-        var content = $.mobile.getScreenHeight() - $(contentpage).children(".ui-header").outerHeight() - $(contentpage).children(".ui-footer").outerHeight()
-            - $(contentpage).children(".ui-content").outerHeight() + $(contentpage).children(".ui-content").height();
+    scaleContentToDevice: function(contentpage) {
+        var content = $.mobile.getScreenHeight() - $(contentpage).children(".ui-header").outerHeight() - $(contentpage).children(".ui-footer").outerHeight() -
+            $(contentpage).children(".ui-content").outerHeight() + $(contentpage).children(".ui-content").height();
         $(contentpage).children(".ui-content").height(content);
     },
     deviceReadyOK: $.Deferred(),

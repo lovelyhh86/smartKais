@@ -285,7 +285,7 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 
 /** modal*/
 /* The Modal (background) */
-.ui-dialog-contain{max-width: 100%; height: 520px; background-color: white;top:-5em}
+.ui-dialog-contain{max-width: 100%; background-color: white;top:-5em; padding-bottom: 1em;overflow-y: hidden;}
 #mask {
   position:absolute;
   left:0;
