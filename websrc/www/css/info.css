@@ -313,7 +313,7 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
 .common ul{margin:0; padding: 0;}
 .common ul li{margin-left:30px; padding: 0.5em 0; font-size: 1em; text-align: left;}
 .common ul li span{display:inline-block; width:100px; color: #000}
-.common ul li p{display:inline-block; width:110px; color: #666}
+.common ul li p{display:inline-block; color: #666}
 
 .settingInfo{position:relative; height:45px; background:url(../image/setIcon.png) 0 0 no-repeat; background-size:45px 45px;  }
 .settingInfo h2{margin:0 0 5px 55px; padding-top: 5px;}
