@@ -130,14 +130,6 @@ var MapUtil = {
                                             if(data.files.length == 1){
                                                 $(".picInfo." + "M" + " .picImg").html(obj);
                                             }else{
-
-                                                //건물번호판 쿼리 오류 떄문에 변경
-                                                if(image.tbGbn == "L"){
-                                                    image.tbGbn = "M"
-                                                }else{
-                                                    image.tbGbn = "L"
-                                                }
-
                                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                                             }
                                             
@@ -253,7 +245,7 @@ var MapUtil = {
                         MapUtil.state.photo[0].edited = true;
                     }
                     var obj = "data:image/jpeg;base64," + ret.src;
-                    $(evt.target).parent().parent().children(".picImg").children("img").attr("src", obj)
+                    $(evt.target).parent().parent().children(".picImg").children("img").attr("src", obj);
                 });
             });
         },
@@ -269,7 +261,7 @@ var MapUtil = {
                                 } else if (_this.parent().hasClass('short')) {
                                     MapUtil.state.photo[0].edited = MapUtil.state.photo[0].isPhoto;
                                 }
-                                $(evt.target).parent().parent().children(".picImg").html("");
+                                $(evt.target).parent().parent().children(".picImg").children("img").attr("src", "");
                             }
                         }, '알림', ['삭제', '취소']);
                 }
