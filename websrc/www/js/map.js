@@ -1724,6 +1724,7 @@ var mapInit = function(mapId, pos) {
                 newPointFeature.setGeometry(newPoint);
                 movingPoint_source.addFeature(newPointFeature);
 
+                var SIG_CD = featureClone[featureIndex].get("SIG_CD");
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
                 var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
                 var pointSn = popTableP.format("위치일련번호", RDFTYLC_SN);
@@ -1736,6 +1737,7 @@ var mapInit = function(mapId, pos) {
                 var param = "";
                 param = $.extend({}, {
                     sn: RDFTYLC_SN,
+                    sigCd : SIG_CD,
                     // rdftySe : RDFTY_SE,
                     posX: newCoodi[0],
                     posY: newCoodi[1],
@@ -2933,7 +2935,7 @@ function insertMoveingPoint(param) {
 
     var sendParam = $.extend(param, {
         svcNm: 'iSPGF',
-        sigCd: app.info.sigCd,
+        // sigCd: app.info.sigCd,
         workId: app.info.opeId
     });;
 
