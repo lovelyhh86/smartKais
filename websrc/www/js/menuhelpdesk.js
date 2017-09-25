@@ -56,11 +56,16 @@ function loadHelpdesk(container) {
             });
 
             $('#helpdesk').on("click", ".attachment", function() {
+                // 공통기반 첨부파일 뷰 장애 수정 후 재배포
+                navigator.notification.alert("현재 공통기반 서비스 오류로\n첨부파일 보기 기능이 사용 불가 합니다.\n다음에 다시 이용해 주시기 바랍니다.", '', '알림', '확인');
+                return;
+
                 filename = $(this).text();
                 SmartKaisPlugins.callAttachViewer(
                     filename, { "noticeMgtSn": $(this).data('sn'), "fileMgtSn": $(this).data('filesn'), "mode": app.info.mode, "testServerNo": app.info.testServerNo },
                     function() {},
-                    function(errorMsg) { console.error("Error at attach view file. " + errorMsg) });
+                    function(errorMsg) { console.error("Error at attach view file. " + errorMsg) }
+                );
             });
 
             $('#helpdesk').on("click", "a.ans_btn", function() {
