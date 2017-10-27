@@ -7,7 +7,7 @@ var itemSize = 15;
 $( document ).on("pagecreate",pages.addressview.div,  function() {
    // app.scaleContentToDevice(this);
 
-    boardScroll = mkaisvScrollBind('#boardlist','#boardlistScroll',{
+    boardScroll = skScrollBind('#boardlist','#boardlistScroll',{
         cache:90,
         buffer:itemSize,
         context:{workId:app.info.opeId, sigCd:app.info.sigCd,size:itemSize, pos:'0'},

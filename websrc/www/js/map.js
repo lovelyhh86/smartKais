@@ -96,6 +96,12 @@ var MapUtil = {
                             var param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
                             var url = URLs.postURL(URLs.spotSelectlink, param);
                             break;
+                        case DATA_TYPE.ADRDC:
+                            var sn = f
+                            var param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                            var url = URLs.postURL(URLs.addresslink, param);
+                            break;
+                            
                     }
 
                     util.showProgress();
@@ -274,6 +280,8 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);
             ol.inherits(MapUtil.controls.newPointControl, ol.control.Control);
+            ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);
+            
 
         },
         /**
@@ -430,7 +438,26 @@ var MapUtil = {
                 target: options.target
             });
 
+        },
+        selectAdrdcControl: function(opt_options) {
+            var selectAdrdc = function(){
+                MapUtil.openDetail(DATA_TYPE.ADRDC);
+            }
+            
+            var element = document.createElement('div');
+            element.className = 'legend selectAdrdc ol-unselectable ol-control';
+    
+            var newPosHtml = "<ul><li class='sAdr'>기초조사대상목록</li></ul>";
+            element.innerHTML = newPosHtml;
+    
+            element.addEventListener('click', selectAdrdc, false);
+    
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
         }
+
     },
     openPopup: function(type, f) {
         var popHeader = "#common-pop .ui-bar";
@@ -507,6 +534,13 @@ var MapUtil = {
                 header = "지점번호판";
 
                 break;
+            case DATA_TYPE.ADRDC:
+                // url = pages.detail_adrdc;
+                url = pages.detail_adrdcList;
+                header = "기초조사";
+
+                break;
+                
         }
 
         $(detailTaget).load(url.link(), function() {
@@ -603,6 +637,14 @@ var MapUtil = {
                 var link = URLs.spotSelectlink;
 
                 MapUtil.setValues(layerID, link, rdGdftySn);
+
+                break;
+            case DATA_TYPE.ADRDC:
+                // var link = URLs.spotSelectlink;
+
+                // MapUtil.setValues(layerID, link, rdGdftySn);
+
+                detailAddressContent();
 
                 break;
         }
@@ -1499,6 +1541,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.legendControl(),
             new MapUtil.controls.currentControl(),
             new MapUtil.controls.newPointControl(),
+            new MapUtil.controls.selectAdrdcControl(),
             new ol.control.Rotate({
                 label: $("<IMG>", { src: 'image/coordinate.png', alt: '지도회전 초기화' })[0],
                 autoHide: false
@@ -2030,7 +2073,6 @@ var mapInit = function(mapId, pos) {
                         resultHtml += commonDiv.format("mapAdd", buttonHtml);
 
                         resultHtml = commonDiv.format("mapInfo", resultHtml);
-
 
                         popupDiv.append(resultHtml);
 
@@ -3039,8 +3081,10 @@ function openDetailPopupCall(index, layer, sn) {
     if (layerID == DATA_TYPE.BULD) {
         if (index == 0) {
             MapUtil.openDetail(DATA_TYPE.BULD, featureClone[0]);
-        } else {
+        } else if(index == 1) {
             MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
+        } else{
+            MapUtil.openDetail(DATA_TYPE.ADRDC, featureClone[0]);
         }
 
     } else {

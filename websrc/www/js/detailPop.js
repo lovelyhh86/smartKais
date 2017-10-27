@@ -1394,7 +1394,7 @@ function saveImg(type){
     //사진파일
     var files = makeImg();
 
-    if(type != DATA_TYPE.SPPN){
+    if(type != DATA_TYPE.SPPN && type != DATA_TYPE.ADRDC){
         //사진이 없는데 촬영도 안한경우
         for(var i = 0; i < MapUtil.state.photo.length; i ++){
             if(!MapUtil.state.photo[i].edited && !MapUtil.state.photo[i].isPhoto ){
@@ -1486,7 +1486,7 @@ function saveImg(type){
                 sendParams = $.extend(commomParams, {
                 });
                 sendParams = $.extend(commomParams, {
-                    imageFilesSn: $("#imageFileSn").val()
+                    imageFilesSn: $("#imaFilSn").val()
                 //     sn: sn,
                 //     sigCd: sigCd,
                 //     workId :app.info.opeId,
@@ -1501,6 +1501,13 @@ function saveImg(type){
                 });
 
                 var link = URLs.updateSpotInfo;
+            }else if(type == DATA_TYPE.ADRDC){
+                sendParams = $.extend(commomParams, {
+                    opeNm : app.info.opeNm,
+                    imaFilSn: $("#imaFilSn").val()
+                });
+
+                var link = URLs.insertBaseResearch;
             }
 
             util.showProgress();
@@ -1526,11 +1533,11 @@ function saveImg(type){
                             }
                         }
 
-                        if(photoNum <= 2){
-                            $(".infoHeader .photo .photoNum").html(cnt);
-                        }else{
-                            $(".infoHeader .photo .photoNum").html(photoNum - 2 + cnt);
-                        }
+                        // if(photoNum <= 2){
+                        //     $(".infoHeader .photo .photoNum").html(cnt);
+                        // }else{
+                            $(".infoHeader .photo .photoNum").html(parseInt(photoNum) + cnt);
+                        // }
 
                         MapUtil.state.photo[0].edited = false;
                         MapUtil.state.photo[1].edited = false;

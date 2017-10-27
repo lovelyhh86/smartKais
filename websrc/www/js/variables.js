@@ -9,8 +9,11 @@ var URLs = {
     "updateCodeLink": { svcNm: "sCmCd" },
     "helpDeskListLink": { svcNm: "sQnABoard" },
     "helpdeskReplylink": { svcNm: "replyQnABoard" },
+    //기초조사
     "addresslink": { svcNm: "vADRDC" },
     "addresslistlink": { svcNm: "sADRDC" },
+    "insertBaseResearch": { svcNm: "iBSEX" },
+    //기초조사 end
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },
     "buildSelectlink": { svcNm: "vBULD" },
@@ -22,8 +25,6 @@ var URLs = {
     "updateSpotInfo": { svcNm: "uSPOT" },
     "selectLocLink":{svcNm : "sLOC"},
     
-
-    "updateAddressInfo": { svcNm: "uBSEX" },
     "mapServiceLink": { svcNm: "mapService" },
     "minwonServiceLink": { svcNm: "eaiService" },
 
@@ -77,8 +78,11 @@ var pages = {
     "detail_buld": { link: function () { return URLs.realPath() + "popBuild.html"; }, div: "#buildView_page" },
     "detail_entrc": { link: function () { return URLs.realPath() + "popEntrc.html"; }, div: "#entrcView_page" },
     "detail_spot": { link: function () { return URLs.realPath() + "popSpot.html"; }, div: "#spotView_page" },
+    "detail_adrdc": { link: function () { return URLs.realPath() + "popAdrdc.html"; }, div: "#baseResearch_page" },
+    "detail_adrdcList": { link: function () { return URLs.realPath() + "popAdrdcList.html"; }, div: "#detailAddress_page" },
     "minwonListPage": { link: function () { return URLs.realPath() + "minwon.html"; }, div: "#minwonList_page" },
-    "addressview": { link: function () { return URLs.realPath() + "board.html"; }, div: "#bbs_page" },
+    "detailAddressListPage": { link: function () { return URLs.realPath() + "detailAddress.html"; }, div: "#detailAddress_page" },
+    "baseResearchPage": { link: function () { return URLs.realPath() + "baseResearch.html"; }, div: "#baseResearch_page" },
     "detailview": { link: function () { return URLs.realPath() + "detailview.html"; }, div: "#detailview_page" },
     "detailaddress": { link: function () { return URLs.realPath() + "addressview.html"; }, div: "#addressview_page" },
     "imageviewer": { link: function () { return URLs.realPath() + "imageviewer.html"; }, div: "#imageviewer_page" },

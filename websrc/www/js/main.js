@@ -15,7 +15,10 @@ var msg = {
     initInfo: "정보를 다시 조회 하시겠습니까?",
     delPhoto: "사진을 삭제합니다(서버에 반영하지 않음).\n다시 촬영해 주세요.",
     insertPos: "이 위치에 새로운 시설물을 등록 하시겠습니까?",
-    updateWorkDate: "해당시설물을 점검하셨습니까?"
+    updateWorkDate: "해당시설물을 점검하셨습니까?",
+    selectAdrdc: "서면조사 결과를 선택하십시오.",
+    completeAuthAdrdc: "기초조사 결과를 등록하면 금일로부터 5일이내에 기초조사 결과 통보서를 출력해야합니다.\n등록 하시겠습니까?",
+    completeAdrdc: "기초조사 결과를 등록 하시겠습니까?"
 };
 var app = {
     // Application Constructor

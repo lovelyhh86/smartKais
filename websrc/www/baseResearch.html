@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<div id="baseReserch_page" data-sn='' data-sigcd='' style="position:absolute;" data-role="page" data-dom-cache="true">
+
+    <style>
+        
+                #baseReserch_page  i.fa-circle-o { color:rgba(92, 66, 252, 0.6); font-size:1.2em;  vertical-align: middle;}
+                #baseReserch_page  i.fa-check-circle-o { color:red; font-size:1.2em;  vertical-align: middle;}
+                #baseReserch_page  i.fa-times-circle-o { color:rgba(0,0,0,0.5); font-size:1.2em;  vertical-align: middle;}
+        
+                /* #addressview_contents{ position:absolute;background:white;color:rgb(119, 136, 153); border:none; padding:10px ; }
+                #addressview_contents > ul > li {
+                background-color: rgba(61,65,144,0.1);
+                margin: 5px 0px;
+                padding:10px;
+                font-size: 1.1em;
+                border-radius: 0.3em;
+                position:relative;
+                }
+                #addressview_contents > ul > li > div {
+                display: inline-block;
+                position: relative;
+                word-break: break-all;
+                vertical-align: text-top;
+                }
+                #addressview_contents > ul > li > div:first-child {  padding-right: 3em;    }
+        
+                #addressview_contents > ul > li > div:last-child {
+                text-align:right;
+                width:2em;
+                right:0.5em;
+                position:absolute;
+                top:50%;
+                margin-top:-0.6em;
+                color: #3D4190;
+                font-size:1.8em;
+                } */
+        
+                #baseReserch_page > .remark {margin:0 10px;}
+                #baseReserch_page > .remark > div{ display:table;width:100%;margin:0 auto; background-color: rgba(80, 83, 158, 0.22); border-radius: 0.3em;height:2em;font-size:1.5em;}
+                #baseReserch_page > .remark > div > div { display:table-row; }
+                #baseReserch_page > .remark > div > div > div { display:table-cell; text-align: center;  vertical-align: middle;}
+            </style>
+
+    <div class="subtitleheader" >
+        <label id='addressview_title'  class='ellipsis' ></label>
+        <a  class='rightMenuBtn' >
+            <i class="fa fa-map-marker fa-inverse"> </i>
+        </a>
+    </div>
+
+
+    <!-- <div id='addressview_images_container' class='image-slider'  >
+        <div id="addressview_images" >
+            <ul class="slides">
+                <li>     </li>
+            </ul>
+        </div>
+    </div> -->
+
+    <!-- <div class="float-camera" id = "address_addimage" data-position="fixed" >
+        <i class="fa fa-camera fa-inverse"></i>
+    </div> -->
+
+    <!-- <div id='addressview_state_remark' class='remark'>
+        <div>
+            <div >
+                <div><i class='fa fa-check-circle-o'></i>적 합</div>
+                <div><i class='fa fa-times-circle-o'></i>부적합</div>
+                <div><i class='fa fa-circle-o '></i>해당 없음</div>
+            </div>
+        </div>
+    </div> -->
+    <div id='addressview_contents' data-role="content"   class="ui-content" >
+
+        <ul type='none'>
+            <li>
+                <div>해당 건물등에 도로명주소가 부여되어 있습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-0" id="radio-choice-h-0a" value="1" checked="checked">
+                            <label for="radio-choice-h-0a">적합</label>
+                            <input type="radio" name="radio-choice-h-0" id="radio-choice-h-0b" value="0">
+                            <label for="radio-choice-h-0b">부적합</label>
+                            <input type="radio" name="radio-choice-h-0" id="radio-choice-h-0c" value="N">
+                            <label for="radio-choice-h-0c">해당없음</label>
+                     </fieldset>
+                </div>
+            </li>
+            <li>
+                <div>상세주소 부여 / 변경 / 폐지 대상 건물입니까?(공동주택 제외)</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-1" id="radio-choice-h-1a" value="1" checked="checked">
+                            <label for="radio-choice-h-1a">적합</label>
+                            <input type="radio" name="radio-choice-h-1" id="radio-choice-h-1b" value="0">
+                            <label for="radio-choice-h-1b">부적합</label>
+                            <input type="radio" name="radio-choice-h-1" id="radio-choice-h-1c" value="N">
+                            <label for="radio-choice-h-1c">해당없음</label>
+                     </fieldset>
+                </div>
+            </li>
+            <li>
+                <div>신청 건물등은 임대 목적이나 임차인이 있는 건물입니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="1" checked="checked">
+                            <label for="radio-choice-h-2a">적합</label>
+                            <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="0">
+                            <label for="radio-choice-h-2b">부적합</label>
+                            <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="N">
+                            <label for="radio-choice-h-2c">해당없음</label>
+                     </fieldset>
+                </div>
+            </li>
+            <li>
+                <div>소유자 신청<br><br>신청인이 건물등의 소유자와 일치합니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-3" id="radio-choice-h-3a" value="1" checked="checked">
+                            <label for="radio-choice-h-3a">적합</label>
+                            <input type="radio" name="radio-choice-h-3" id="radio-choice-h-3b" value="0">
+                            <label for="radio-choice-h-3b">부적합</label>
+                            <input type="radio" name="radio-choice-h-3" id="radio-choice-h-3c" value="N">
+                            <label for="radio-choice-h-3c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>임차인 신청<br><br>신청인이 해당 건물등의 임차인입니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-4" id="radio-choice-h-4a" value="1" checked="checked">
+                            <label for="radio-choice-h-4a">적합</label>
+                            <input type="radio" name="radio-choice-h-4" id="radio-choice-h-4b" value="0">
+                            <label for="radio-choice-h-4b">부적합</label>
+                            <input type="radio" name="radio-choice-h-4" id="radio-choice-h-4c" value="N">
+                            <label for="radio-choice-h-4c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>상세주소 폐지<br><br>주소사용자(임차인 등)는 없습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-5" id="radio-choice-h-5a" value="1" checked="checked">
+                            <label for="radio-choice-h-5a">적합</label>
+                            <input type="radio" name="radio-choice-h-5" id="radio-choice-h-5b" value="0">
+                            <label for="radio-choice-h-5b">부적합</label>
+                            <input type="radio" name="radio-choice-h-5" id="radio-choice-h-5c" value="N">
+                            <label for="radio-choice-h-5c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>하나의 도로명주소가 부여된 건물등이 '동'으로 구별됩니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-6" id="radio-choice-h-6a" value="1" checked="checked">
+                            <label for="radio-choice-h-6a">적합</label>
+                            <input type="radio" name="radio-choice-h-6" id="radio-choice-h-6b" value="0">
+                            <label for="radio-choice-h-6b">부적합</label>
+                            <input type="radio" name="radio-choice-h-6" id="radio-choice-h-6c" value="N">
+                            <label for="radio-choice-h-6c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>건물등의 외벽에 출입구가 별도로 있어 '층 / 호' 를 구별할 수 있습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-7" id="radio-choice-h-7a" value="1" checked="checked">
+                            <label for="radio-choice-h-7a">적합</label>
+                            <input type="radio" name="radio-choice-h-7" id="radio-choice-h-7b" value="0">
+                            <label for="radio-choice-h-7b">부적합</label>
+                            <input type="radio" name="radio-choice-h-7" id="radio-choice-h-7c" value="N">
+                            <label for="radio-choice-h-7c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>건물등의 내부에서 복도나 계단을 이용하는 출입구가 별도로 있어 '층 / 호' 를 구별할 수 있습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-8" id="radio-choice-h-8a" value="1" checked="checked">
+                            <label for="radio-choice-h-8a">적합</label>
+                            <input type="radio" name="radio-choice-h-8" id="radio-choice-h-8b" value="0">
+                            <label for="radio-choice-h-8b">부적합</label>
+                            <input type="radio" name="radio-choice-h-8" id="radio-choice-h-8c" value="N">
+                            <label for="radio-choice-h-8c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>건물번호로 '동'이 구분되어 '동번호'를 생략할 수 있습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-9" id="radio-choice-h-9a" value="1" checked="checked">
+                            <label for="radio-choice-h-9a">적합</label>
+                            <input type="radio" name="radio-choice-h-9" id="radio-choice-h-9b" value="0">
+                            <label for="radio-choice-h-9b">부적합</label>
+                            <input type="radio" name="radio-choice-h-9" id="radio-choice-h-9c" value="N">
+                            <label for="radio-choice-h-9c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>'호수'에 '층수'의 의미가 포함되어 '층수'를 생랴갈 수 있습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-10" id="radio-choice-h-10a" value="1" checked="checked">
+                            <label for="radio-choice-h-10a">적합</label>
+                            <input type="radio" name="radio-choice-h-10" id="radio-choice-h-10b" value="0">
+                            <label for="radio-choice-h-10b">부적합</label>
+                            <input type="radio" name="radio-choice-h-10" id="radio-choice-h-10c" value="N">
+                            <label for="radio-choice-h-10c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>지하가 한 층으로 층수에 포함된 '아라비아 숫자'를 생략할 수 있습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-11" id="radio-choice-h-11a" value="1" checked="checked">
+                            <label for="radio-choice-h-11a">적합</label>
+                            <input type="radio" name="radio-choice-h-11" id="radio-choice-h-11b" value="0">
+                            <label for="radio-choice-h-11b">부적합</label>
+                            <input type="radio" name="radio-choice-h-11" id="radio-choice-h-11c" value="N">
+                            <label for="radio-choice-h-11c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+            <li>
+                <div>주거를 목적으로 하는 건물등으로 '호수'가 중복되지 않아 '층수'를 생략할 수 있습니까?</div>
+                <div class=''>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                            <input type="radio" name="radio-choice-h-12" id="radio-choice-h-12a" value="1" checked="checked">
+                            <label for="radio-choice-h-12a">적합</label>
+                            <input type="radio" name="radio-choice-h-12" id="radio-choice-h-12b" value="0">
+                            <label for="radio-choice-h-12b">부적합</label>
+                            <input type="radio" name="radio-choice-h-12" id="radio-choice-h-12c" value="N">
+                            <label for="radio-choice-h-12c">해당없음</label>
+                     </fieldset>
+                </div>    
+            </li>
+        </ul>
+
+        <div class='memo_container'>
+            <textarea id='docExmSpc' data-role='none' rows='5' placeholder='기타사항을 입력하세요'></textarea>
+        </div>
+
+        <div >
+            <a class="accept_btn accept_btn--download accept_btn--large" href="#" onclick="insertBaseReserch()" >작성 완료</a>
+        </div>
+
+    </div>
+    <!-- <div id="addresslview_keypad_opt" class='keypad_menubar display-none'>
+        <div >
+            입력 완료
+        </div>
+    </div> -->
+
+</div>
+
+

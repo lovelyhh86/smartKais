@@ -10,8 +10,8 @@ function buildContent( sn, sig_cd){
     $('#addressview_contents').scrollTop();
 
 
-    $('#addressview_page').data('sn','');
-    $('#addressview_page').data('sigcd','');
+    $('#baseReserch_page').data('sn','');
+    $('#baseReserch_page').data('sigcd','');
 
     var slider = $('#addressview_images').data('flexslider');
     var imgCount = slider.count ;
@@ -64,8 +64,8 @@ function buildContent( sn, sig_cd){
                 slider.flexslider(firstslide);
            }
 
-            $('#addressview_page').data('sn',sn);
-            $('#addressview_page').data('sigcd',sig_cd);
+            $('#baseReserch_page').data('sn',sn);
+            $('#baseReserch_page').data('sigcd',sig_cd);
             $('#address_memo').val('');
             $('#addressview_title').text( ''  );
             if (util.isEmpty(data) == false ) {
@@ -100,7 +100,7 @@ function buildContent( sn, sig_cd){
     );
 }
 
-$( document ).on("pagecreate",pages.detailaddress.div,  function() {
+$( document ).on("pagecreate",pages.baseReserchPage.div,  function() {
 
      $('#addressview_images').flexslider({
             animation: "slide",
@@ -115,11 +115,11 @@ $( document ).on("pagecreate",pages.detailaddress.div,  function() {
     util.registLimitText('#address_memo',memoMaxLength);
 });
 
-$( document ).on("pagehide",pages.detailaddress.div,  function(event,data) {
+$( document ).on("pagehide",pages.baseReserchPage.div,  function(event,data) {
 
 });
 
-$( document ).on("pagebeforeshow",pages.detailaddress.div,  function(event,data) {
+$( document ).on("pagebeforeshow",pages.baseReserchPage.div,  function(event,data) {
     var context = app.context;
     if (util.isEmpty(context))
         return;
@@ -130,7 +130,7 @@ $( document ).on("pagebeforeshow",pages.detailaddress.div,  function(event,data)
 
 });
 
-$( document ).on("pageshow",pages.detailaddress.div,  function() {
+$( document ).on("pageshow",pages.baseReserchPage.div,  function() {
     var slider = $('#addressview_images').data('flexslider');
     slider.resize();
 
@@ -185,11 +185,11 @@ $( document ).on("click","#addressview_images .slides li img", function(event){
 
 
 
-$(document).on('click','#addressview_page .fa-map-marker', function(e) {
+$(document).on('click','#baseReserch_page .fa-map-marker', function(e) {
 
-    var sn = $('#addressview_page').data('sn');
+    var sn = $('#baseReserch_page').data('sn');
     var category = 'address';
-    var sigcd = $('#addressview_page').data('sigcd');
+    var sigcd = $('#baseReserch_page').data('sigcd');
 
     var page = pages.map;
     util.slide_page('left', page, { sn: sn, type: category, sigcd: sigcd });
@@ -219,8 +219,8 @@ $(document).on('click','#addressview_contents > ul .addressviewCheck'  , functio
 function updateWork(){
     util.showProgress();
     var param = {
-        sidCd : $('#addressview_page').data('sigcd'),
-        sn : $('#addressview_page').data('sn'),
+        sidCd : $('#baseReserch_page').data('sigcd'),
+        sn : $('#baseReserch_page').data('sn'),
         docSurveyResult : "",
         docSurveyEtc : $('#address_memo').val(),
         ope_id: app.info.opeId ,

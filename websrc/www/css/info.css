@@ -32,6 +32,9 @@
 
 /*신규 위치등록*/
 .newPosition { top: 16em; width: 9em; height: 3em;}
+
+.selectAdrdc { top: 2.5em; width: 9em; height: 3em;}
+.sAdr{background: #fff url(../image/plusPos2.png) 6px 4px no-repeat;    background-size: 2em; width: 7.5em;}
 /* .newPosition button { background-color: transparent !important;position: relative;} */
 .newPosition ul {width: 9em;}
 .legend ul li.nPos{background: #fff url(../image/plusPos2.png) 6px 4px no-repeat;    background-size: 2em; width: 6.5em;}
@@ -257,6 +260,47 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 }
 
 #minwonDiv::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #adadad;
+}
+
+/* #detailAddressDiv{height:52em;overflow-y:scroll}
+#detailAddressDiv::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#detailAddressDiv::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#detailAddressDiv::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #adadad;
+} */
+#addressview_contents{height:52em;overflow-y:scroll}
+#addressview_contents::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#addressview_contents::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#addressview_contents::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);

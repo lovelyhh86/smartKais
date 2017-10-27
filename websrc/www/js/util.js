@@ -238,7 +238,7 @@ var util = {
                 if (activePage == 'bbs_page')
                     return;
                 app.historyStack = [];
-                url = pages.addressview;
+                url = pages.detailAddressListPage;
                 param = "";
                 break;
             case "memolist":
@@ -610,6 +610,8 @@ function layerToggle(context){
             $(".legend").toggle(true);
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
+            $(".selectAdrdc").toggle(false);
+            
             
             // map.addLayer(layers.rdpq);
             // map.addLayer(layers.bsis);
@@ -624,6 +626,7 @@ function layerToggle(context){
             // }
         } else {
             $(".legend").toggle(false);
+            $(".selectAdrdc").toggle(true);
             
             map.addLayer(layers.buld);
             // map.addLayer(layers.entrc);
