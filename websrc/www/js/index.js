@@ -125,10 +125,15 @@ var app = {
                     if (resultCode == 0 && !(util.isEmpty(results.data))) {
                         var d = results.data;
 
+                        var userNm = d.userNm;
+                        if(false){
+                            userNm = sso.NICKNAME;
+                        }
+
                         app.info = {
                             sigCd: d.sigCd,
                             opeId: "{1}".format(d.userId, d.machineNo),
-                            opeNm: d.userNm,
+                            opeNm: userNm,
                             testServerNo : d.testServerNo
                         }
 

@@ -717,7 +717,7 @@ var MapUtil = {
                         $("#instSe").html(data.instSe);
                         //제작형식
                         $("#gdftyMnf").html(data.gdftyMnf);
-                        $("#gdftyMnfLbl").html(data.gdftyMnfLbl);
+                        $("#gdftyMnfLbl").html(data.gdftyMnfLbl);                        
                         //설치지점
                         $("#instSpotCd").html(data.instSpotCd);
                         $("#instSpotCdLbl").html(data.instSpotCdLbl);
@@ -769,6 +769,11 @@ var MapUtil = {
                         //도로명판종류
                         $("#gdftyForm").html(data.gdftyForm);
                         $("#gdftyFormLbl").html(data.gdftyFormLbl);
+                        //비표준형 일때
+                        if(data.gdftyForm != "10000"){
+                            $("#gdftyWide_fix").removeAttr("readonly");
+                            $("#gdftyVertical_fix").removeAttr("readonly");
+                        }
                         //사용대상
                         $("#useTarget").html(data.useTarget);
                         $("#useTargetLbl").html(data.useTargetLbl);
@@ -876,6 +881,11 @@ var MapUtil = {
                         //안내시설형식
                         $("#gdftyForm").html(data.gdftyForm);
                         $("#gdftyFormLbl").html(data.gdftyFormLbl);
+                        //비표준형 일때
+                        if(data.gdftyForm != "10000"){
+                            $("#gdftyWide_fix").removeAttr("readonly");
+                            $("#gdftyVertical_fix").removeAttr("readonly");
+                        }
                         //사용대상
                         $("#useTarget").html(data.useTarget);
                         $("#useTargetLbl").html(data.useTargetLbl);
@@ -980,6 +990,11 @@ var MapUtil = {
                         //안내시설형식
                         $("#gdftyForm").html(data.gdftyForm);
                         $("#gdftyFormLbl").html(data.gdftyFormLbl);
+                        //비표준형 일때
+                        if(data.gdftyForm != "10000"){
+                            $("#gdftyWide_fix").removeAttr("readonly");
+                            $("#gdftyVertical_fix").removeAttr("readonly");
+                        }
                         //사용대상
                         $("#useTarget").html(data.useTarget);
                         $("#useTargetLbl").html(data.useTargetLbl);

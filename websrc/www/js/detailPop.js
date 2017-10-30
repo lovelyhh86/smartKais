@@ -357,6 +357,7 @@ function openCustomPop2(type,idList){
 }
 
 function textDataSendParent(type){
+
         var oldData = $("#"+type).text();
         var fixData = $("#"+type+"_fix").val();
 
@@ -1617,5 +1618,30 @@ function updateWorkDate(){
             );
         }
     }, "알림", ["확인","취소"]);
+
+}
+
+
+function checkPrice(type){
+
+    var standPrice = 1000;
+    if(type == "ENTRC"){
+        standPrice = 1000;
+    }else{
+        standPrice = 10000;
+    }
+    
+    var price =$("#gdftyUnitPrice_fix").val();
+
+    if(standPrice > price){
+        navigator.notification.alert("단가는 " + standPrice + "원 이하로 입력할수 없습니다.", function () {
+            // targetText.val(targetText.val().substring(0, size));
+            // targetText.focus();
+            return;
+        }, '알림', '확인');
+    }else{
+        textDataSendParent('gdftyUnitPrice');
+    }
+    
 
 }
