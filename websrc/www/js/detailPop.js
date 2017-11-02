@@ -1222,7 +1222,7 @@ function submit(type){
 
                     closeDetailView();
 
-                    closePopupAndClearMap();
+                    closePopupAndClearMap(type);
 
                     util.dismissProgress();
 
@@ -1244,6 +1244,8 @@ function closePopupAndClearMap(type){
         if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
             //지도 초기화
             getVectorSource(map , "위치레이어").clear();
+        }else if(type == DATA_TYPE.BULD){
+            getVectorSource(map , "건물").clear();
         }
     }catch(e) {
         util.dismissProgress();
