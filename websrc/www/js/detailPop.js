@@ -739,6 +739,7 @@ function refresh(){
 }
 
 function submit(type){
+    var msgText = msg.isSave;
     //사진데이터 확인여부
     // var picImg = $(".picImg").html();
     //상세정보 수정여부
@@ -753,7 +754,22 @@ function submit(type){
         }
         return;
     }
-    navigator.notification.confirm(msg.isSave, function(btnIndex){
+
+    if(type == DATA_TYPE.BULD){
+        //건물명
+        var posBulNm_new = $("#posBulNm_new").text();
+        //건물명(영)
+        var bulEngNm_new = $("#bulEngNm_new").text();
+        //건물군번호
+        var eqbManSn = $("#eqbManSn").val();
+
+        if((posBulNm_new != "" || bulEngNm_new != "") && eqbManSn != 0){
+            msgText = msg.saveBuldNm;
+        }
+        
+    }
+
+    navigator.notification.confirm(msgText, function(btnIndex){
         if(btnIndex == 1){
             var commomParams = {};
             var sendParams = {};
@@ -1123,6 +1139,11 @@ function submit(type){
                 if(buldMemo_new !=""){
                     buldParams = $.extend(buldParams, {buldMemo: buldMemo_new});
                 }
+                //건물군번호
+                var eqbManSn = $("#eqbManSn").val();
+                
+                buldParams = $.extend(buldParams, {eqbManSn: eqbManSn});
+                
 
                 commomParams = $.extend(buldParams, {
                     bulManNo : sn,

@@ -81,7 +81,7 @@ function detailAddressContent(){
                 var d = data[i];
                 
                 $("#detailAddressTable > tbody:last").append(
-                    rowHtml.format("goDetail('"+d.requestSn+"')", d.pos, d.buldLabel, d.reqstDe, d.competDe, d.reqstSeLbl, d.opeSttCdLbl,d.isDocExmRes,d.is_doc_exm_res));
+                    rowHtml.format("goDetail('"+d.requestSn+"')", d.pos, d.buldLabel, d.opeSttCdLbl, d.reqstDe, d.competDe, d.reqstSeLbl, d.reqManNm));
             }
         }
         
@@ -137,29 +137,48 @@ function goDetail(sn){
                 //도로명
                 var title = "<span class='label'>{0}<span>".format(data.buldLabel);
                 $(".title").append(title);
+                
+                //작업상태
+                // $("#opeSttCd").val(data.opeSttCd);
+                //작업상태라벨
+                // $("#opeSttCdLbl").html(data.opeSttCdLbl);
+                //완료일자 - 접수일자
+                // $("#competReqst").val(data.competReqst);
+                //완료일자
+                // $("#competDe").html(data.competDe);
+
+                //접수일자
+                $("#reqstDe").html(data.reqstDe);
+                //접수번호
+                $("#reqstSn").html(sn);
+                //기초조사일자
+                $("#bsiExmDe").html(data.bsiExmDe);
+                //신청인
+                $("#reqManNm").html(data.reqManNm);
                 //신청구분
                 var reqstSe = data.reqstSe;
                 $("#reqstSe").val(reqstSe);
                 //신청구분라벨
                 $("#reqstSeLbl").html(data.reqstSeLbl);
-                //작업상태
-                $("#opeSttCd").val(data.opeSttCd);
-                //작업상태라벨
-                $("#opeSttCdLbl").html(data.opeSttCdLbl);
-                //접수일자
-                $("#reqstDe").html(data.reqstDe);
-                //기초조사일자
-                $("#bsiExmDe").html(data.bsiExmDe);
-                //완료일자 - 접수일자
-                $("#competReqst").val(data.competReqst);
-                //완료일자
-                $("#competDe").html(data.competDe);
+                //주소
+                $("#buld_label").html(data.buldLabel);
                 //직급
                 $("#clsf").val(data.clsf);
-                //서면조사특이사항
+                //조사자
+                $("#opeNm").html(app.info.opeNm);
+                
+                //기초조사특이사항
                 $("#docExmSpc").val(data.docExmSpc);
 
-                //서면조사결과
+                //위치조회용
+                $("#sigCd").val(data.sigCd);
+                $("#emdCd").val(data.emdCd);
+                $("#rnCd").val(data.rnCd);
+                $("#buldMnnm").val(data.buldMnnm);
+                $("#buldSlno").val(data.buldSlno);
+                $("#buldSeCd").val(data.buldSeCd);
+
+                //기초조사결과
                 var der = data.docExmRes;
                 if(der != null){
                     var derList = der.split("|");
@@ -315,4 +334,92 @@ function txtMaxlength(id, size) {
         }, '글자수 제한', '확인');
       
     }
+}
+
+var isPopState = "on";
+function toggleDetailView(){
+    
+    if(isPopState == "on"){
+        $(".detailView").css("height","88px");
+        $("#photoDialog").hide();
+        $(".ui-popup-container.slideup.in.ui-popup-active").css("height","5%");
+        isPopState = "off";
+    }else{
+        $(".detailView").css("height","830px");
+        $("#photoDialog").show();
+        $(".ui-popup-container.slideup.in.ui-popup-active").css("height","60%");
+        isPopState = "on";
+    }
+}
+
+function getLocationByFeature(layerNm, searchList){
+
+    var andTag = "<ogc:Filter><ogc:AND>{0}</ogc:AND></ogc:Filter>";
+    var isEqualToTag = "<ogc:PropertyIsEqualTo>{0}</ogc:PropertyIsEqualTo>";
+    var propertyLiteral = "<ogc:PropertyName>{0}</ogc:PropertyName><ogc:Literal>{1}</ogc:Literal>";
+
+    var fileter = "";
+    var searchText = "";
+    
+    $.map(searchList,function(value,index){
+        //index = 키 , value = 값
+        searchText += isEqualToTag.format(propertyLiteral.format(index , value));
+    });
+
+    fileter = andTag.format(searchText);
+
+
+    var param = {
+        SERVICE: 'WFS',
+        VERSION: '1.1.0',
+        REQUEST: 'GetFeature',
+        FILTER: fileter,
+        srsName: serviceProjection.getCode(),
+        typeName: layerNm
+    }
+
+    var urldata = URLs.postURL(URLs.mapServiceLink, param);
+
+    util.showProgress();
+    util.postAJAX('', urldata, true)
+        .then(function(context, rCode, results) {
+
+            //통신오류처리
+            if (rCode != 0) {
+                navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                util.dismissProgress();
+                return;
+            }
+
+            var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
+            //모든점
+            // var point = features[0].getGeometry().getCoordinates();
+            var point = features[0].getGeometry().getInteriorPoint();
+
+            map.getView().setCenter(point.getCoordinates());
+
+            toggleDetailView();
+
+            util.dismissProgress();
+
+        },function(context, xhr, error) {
+            console.log("조회 error >> " + error + '   ' + xhr);
+            util.dismissProgress();
+        });
+}
+
+function getAdrdcLocation(){
+    
+    var layerNm = "tlv_spbd_buld";
+
+    var sigCd = $("#sigCd").val();
+    var emdCd = $("#emdCd").val();
+    var rnCd  = $("#rnCd").val();
+    var buldMnnm = $("#buldMnnm").val();
+    var buldSlno = $("#buldSlno").val();
+    var buldSeCd = $("#buldSeCd").val();
+
+    var searchList = {sig_cd: sigCd, emd_cd: emdCd, rn_cd: rnCd, buld_mnnm: buldMnnm, buld_slno: buldSlno, buld_se_cd:buldSeCd}
+
+    getLocationByFeature(layerNm, searchList);
 }

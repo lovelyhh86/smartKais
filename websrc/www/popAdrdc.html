@@ -5,13 +5,15 @@
 
 <div id="baseResearch_page">
 	<div class="detailView">
-		<p class="openImage"><span onclick="closeDetailView();">열림</span></p>
+		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
 		<div class="infoWrap">
 			<!-- header -->
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="기초조사"></span></p>
+				<p class="title">
+					<span class="titleIcon"><img src="image/baseAdrdc.png" title="기초조사"></span>
+				</p>
 				<p class="photo"><span class="photoNum">0</span></p>
 			</div>
 			
@@ -24,20 +26,33 @@
 					<input id="reqstSe" type="hidden" value="" />
 					<input id="opeSttCd" type="hidden" value="" />
 					<input id="competReqst" type="hidden" value="" />
-					<div class="row">
-						<div class="cell1">
-								<span class="label">신청구분</span>
-						</div>
-						<div class="cell2">
-							<p id="reqstSeLbl" name="oldLbl" ></p>
-						</div>
+
+					<!-- 위치조회용 -->
+					<input id="sigCd" type="hidden" value="" />
+					<input id="emdCd" type="hidden" value="" />
+					<input id="rnCd" type="hidden" value="" />
+					<input id="buldMnnm" type="hidden" value="" />
+					<input id="buldSlno" type="hidden" value="" />
+					<input id="buldSeCd" type="hidden" value="" />
+					
+					<div class="setting row">
+						<h2>신청정보</h2>
 					</div>
+
 					<div class="row">
 						<div class="cell1">
 								<span class="label">접수일자</span>
 						</div>
 						<div class="cell2">
 							<p id="reqstDe" name="oldLbl" ></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">접수번호</span>
+						</div>
+						<div class="cell2">
+							<p id="reqstSn" name="oldLbl" ></p>
 						</div>
 					</div>
 					<div class="row">
@@ -50,211 +65,216 @@
 					</div>
 					<div class="row">
 						<div class="cell1">
-								<span class="label">직급</span>
+								<span class="label">신청인</span>
 						</div>
 						<div class="cell2">
-							<input type="text" id="clsf"></input>
+							<p id="reqManNm" name="oldLbl" ></p>
 						</div>
-					</div>
-					<!-- <div class="row">
-						<div class="cell1">
-								<span class="label">작업상태</span>
-						</div>
-						<div class="cell2">
-							<p id="opeSttCdLbl" ></p>
-						</div>
-					</div> -->
-					<div class="setting row">
-						<h2>서면조사특이사항</h2>
 					</div>
 					<div class="row">
-						<div class='cell2 memo_container'>
-							<textarea id='docExmSpc' data-role='none'  rows='5' placeholder='기타사항을 입력하세요' onchange="txtMaxlength('docExmSpc',50)"></textarea>
+						<div class="cell1">
+								<span class="label">주소</span>
+						</div>
+						<div class="cell2">
+							<p id="buld_label" name="oldLbl" class="vertBut" ></p>
+							<button onclick="getAdrdcLocation()">위치확인</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">신청구분</span>
+						</div>
+						<div class="cell2">
+							<p id="reqstSeLbl" name="oldLbl" ></p>
+						</div>
+					</div>
+
+					<div class="setting row">
+						<h2>기초조사결과</h2>
+					</div>
+
+					<div class="row">
+						<div class="cell1">
+								<span class="label">조사자 직급</span>
+						</div>
+						<div class="cell2">
+							<input type="text" id="clsf" class='cell100'></input>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">조사자 성명</span>
+						</div>
+						<div class="cell2">
+							<p id="opeNm" name="oldLbl" ></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="cell1">
+								<span class="label">특이사항</span>
+						</div>
+						<div class="cell2">
+							<textarea id='docExmSpc' class='cell100' rows='3' placeholder='기타사항을 입력하세요' onchange="txtMaxlength('docExmSpc',50)"></textarea>
 						</div>
 					</div>
 				</div>
+				<br/>
 				<div class="infoTable">
-					<div class="setting row">
-						<h2>서면조사결과</h2>
-					</div>
-					<div class="setting row">
-						<div class="cell2">일괄선택</div>
-						<div class="cell1">
+					<div class="row selectRadioAll">
+						<div class="cell4">일괄선택</div>
+						<div class="cell4">
 							<input type="radio" name = "radio-all-choice" id="radio-choice-h-a" value="1" onclick="controlRadioAll()" checked="checked">
-					        <label for="radio-choice-h-a">적합</label>
-					        <input type="radio" name = "radio-all-choice" id="radio-choice-h-b" value="0" onclick="controlRadioAll()">
-					        <label for="radio-choice-h-b">부적합</label>
-					        <input type="radio" name = "radio-all-choice" id="radio-choice-h-c" value="N" onclick="controlRadioAll()">
-					        <label for="radio-choice-h-c">해당없음</label>
+							<label class="noLabel" for="radio-choice-h-a">적합</label>
+							<input type="radio" name = "radio-all-choice" id="radio-choice-h-b" value="0" onclick="controlRadioAll()">
+							<label class="noLabel" for="radio-choice-h-b">부적합</label>
+							<input type="radio" name = "radio-all-choice" id="radio-choice-h-c" value="N" onclick="controlRadioAll()">
+							<label class="noLabel" for="radio-choice-h-c">해당없음</label>
 						</div>
 					</div>
+				</div>
+				<br/>
+				<div class="infoTable">
 					<div class="row">
 						<div class="cell2">해당 건물등에 도로명주소가 부여되어 있습니까?</div>
-						<div class="cell1">
-							<fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-0" id="radio-choice-h-0a" value="1">
-							        <label for="radio-choice-h-0a">적합</label>
-							        <input type="radio" name="radio-choice-h-0" id="radio-choice-h-0b" value="0">
-							        <label for="radio-choice-h-0b">부적합</label>
-							        <input type="radio" name="radio-choice-h-0" id="radio-choice-h-0c" value="N">
-							        <label for="radio-choice-h-0c">해당없음</label>
-							 </fieldset>
+						<div class="cell3">
+							<input type="radio" name="radio-choice-h-0" id="radio-choice-h-0a" value="1">
+							<label for="radio-choice-h-0a">적합</label>
+							<input type="radio" name="radio-choice-h-0" id="radio-choice-h-0b" value="0">
+							<label for="radio-choice-h-0b">부적합</label>
+							<input type="radio" name="radio-choice-h-0" id="radio-choice-h-0c" value="N">
+							<label for="radio-choice-h-0c">해당없음</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="cell2">상세주소 부여 / 변경 / 폐지 대상 건물입니까?(공동주택 제외)</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-1" id="radio-choice-h-1a" value="1">
-							        <label for="radio-choice-h-1a">적합</label>
-							        <input type="radio" name="radio-choice-h-1" id="radio-choice-h-1b" value="0">
-							        <label for="radio-choice-h-1b">부적합</label>
-							        <input type="radio" name="radio-choice-h-1" id="radio-choice-h-1c" value="N">
-							        <label for="radio-choice-h-1c">해당없음</label>
-							 </fieldset>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-1" id="radio-choice-h-1a" value="1">
+							<label for="radio-choice-h-1a">적합</label>
+							<input type="radio" name="radio-choice-h-1" id="radio-choice-h-1b" value="0">
+							<label for="radio-choice-h-1b">부적합</label>
+							<input type="radio" name="radio-choice-h-1" id="radio-choice-h-1c" value="N">
+							<label for="radio-choice-h-1c">해당없음</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="cell2">신청 건물등은 임대 목적이나 임차인이 있는 건물입니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="1">
-							        <label for="radio-choice-h-2a">적합</label>
-							        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="0">
-							        <label for="radio-choice-h-2b">부적합</label>
-							        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="N">
-							        <label for="radio-choice-h-2c">해당없음</label>
-							 </fieldset>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="1">
+							<label for="radio-choice-h-2a">적합</label>
+							<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="0">
+							<label for="radio-choice-h-2b">부적합</label>
+							<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="N">
+							<label for="radio-choice-h-2c">해당없음</label>
 						</div>
 					</div>
 					<div class="row">
-						<div class="cell2">소유자 신청<br><br>신청인이 건물등의 소유자와 일치합니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-3" id="radio-choice-h-3a" value="1">
-							        <label for="radio-choice-h-3a">적합</label>
-							        <input type="radio" name="radio-choice-h-3" id="radio-choice-h-3b" value="0">
-							        <label for="radio-choice-h-3b">부적합</label>
-							        <input type="radio" name="radio-choice-h-3" id="radio-choice-h-3c" value="N">
-							        <label for="radio-choice-h-3c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">[소유자 신청] 신청인이 건물등의 소유자와 일치합니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-3" id="radio-choice-h-3a" value="1">
+							<label for="radio-choice-h-3a">적합</label>
+							<input type="radio" name="radio-choice-h-3" id="radio-choice-h-3b" value="0">
+							<label for="radio-choice-h-3b">부적합</label>
+							<input type="radio" name="radio-choice-h-3" id="radio-choice-h-3c" value="N">
+							<label for="radio-choice-h-3c">해당없음</label>
 						</div>  
 					</div>
 					<div class="row">
-						<div class="cell2">임차인 신청<br><br>신청인이 해당 건물등의 임차인입니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-4" id="radio-choice-h-4a" value="1">
-							        <label for="radio-choice-h-4a">적합</label>
-							        <input type="radio" name="radio-choice-h-4" id="radio-choice-h-4b" value="0">
-							        <label for="radio-choice-h-4b">부적합</label>
-							        <input type="radio" name="radio-choice-h-4" id="radio-choice-h-4c" value="N">
-							        <label for="radio-choice-h-4c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">[임차인 신청] 신청인이 해당 건물등의 임차인입니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-4" id="radio-choice-h-4a" value="1">
+							<label for="radio-choice-h-4a">적합</label>
+							<input type="radio" name="radio-choice-h-4" id="radio-choice-h-4b" value="0">
+							<label for="radio-choice-h-4b">부적합</label>
+							<input type="radio" name="radio-choice-h-4" id="radio-choice-h-4c" value="N">
+							<label for="radio-choice-h-4c">해당없음</label>
 						</div> 
 					</div>  
 					<div class="row">
-						<div class="cell2">상세주소 폐지<br><br>주소사용자(임차인 등)는 없습니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-5" id="radio-choice-h-5a" value="1">
-							        <label for="radio-choice-h-5a">적합</label>
-							        <input type="radio" name="radio-choice-h-5" id="radio-choice-h-5b" value="0">
-							        <label for="radio-choice-h-5b">부적합</label>
-							        <input type="radio" name="radio-choice-h-5" id="radio-choice-h-5c" value="N">
-							        <label for="radio-choice-h-5c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">[상세주소 폐지] 주소사용자(임차인 등)는 없습니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-5" id="radio-choice-h-5a" value="1">
+							<label for="radio-choice-h-5a">적합</label>
+							<input type="radio" name="radio-choice-h-5" id="radio-choice-h-5b" value="0">
+							<label for="radio-choice-h-5b">부적합</label>
+							<input type="radio" name="radio-choice-h-5" id="radio-choice-h-5c" value="N">
+							<label for="radio-choice-h-5c">해당없음</label>
 						</div> 
 					</div> 
 					<div class="row">
 						<div class="cell2">하나의 도로명주소가 부여된 건물등이 '동'으로 구별됩니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-6" id="radio-choice-h-6a" value="1">
-							        <label for="radio-choice-h-6a">적합</label>
-							        <input type="radio" name="radio-choice-h-6" id="radio-choice-h-6b" value="0">
-							        <label for="radio-choice-h-6b">부적합</label>
-							        <input type="radio" name="radio-choice-h-6" id="radio-choice-h-6c" value="N">
-							        <label for="radio-choice-h-6c">해당없음</label>
-							 </fieldset>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-6" id="radio-choice-h-6a" value="1">
+							<label for="radio-choice-h-6a">적합</label>
+							<input type="radio" name="radio-choice-h-6" id="radio-choice-h-6b" value="0">
+							<label for="radio-choice-h-6b">부적합</label>
+							<input type="radio" name="radio-choice-h-6" id="radio-choice-h-6c" value="N">
+							<label for="radio-choice-h-6c">해당없음</label>
 						</div>    
 					</div>   
 					<div class="row">
-						<div class="cell2">건물등의 외벽에 출입구가 별도로 있어 '층 / 호' 를 구별할 수 있습니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-7" id="radio-choice-h-7a" value="1">
-							        <label for="radio-choice-h-7a">적합</label>
-							        <input type="radio" name="radio-choice-h-7" id="radio-choice-h-7b" value="0">
-							        <label for="radio-choice-h-7b">부적합</label>
-							        <input type="radio" name="radio-choice-h-7" id="radio-choice-h-7c" value="N">
-							        <label for="radio-choice-h-7c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">건물등의 외벽에 출입구가 별도로 있어 '층 / 호' 를 구별할 수 <br/>있습니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-7" id="radio-choice-h-7a" value="1">
+							<label for="radio-choice-h-7a">적합</label>
+							<input type="radio" name="radio-choice-h-7" id="radio-choice-h-7b" value="0">
+							<label for="radio-choice-h-7b">부적합</label>
+							<input type="radio" name="radio-choice-h-7" id="radio-choice-h-7c" value="N">
+							<label for="radio-choice-h-7c">해당없음</label>
 						</div>   
 					</div>	
 					<div class="row">
-						<div class="cell2">건물등의 내부에서 복도나 계단을 이용하는 출입구가 별도로 있어 '층 / 호' 를 구별할 수 있습니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-8" id="radio-choice-h-8a" value="1">
-							        <label for="radio-choice-h-8a">적합</label>
-							        <input type="radio" name="radio-choice-h-8" id="radio-choice-h-8b" value="0">
-							        <label for="radio-choice-h-8b">부적합</label>
-							        <input type="radio" name="radio-choice-h-8" id="radio-choice-h-8c" value="N">
-							        <label for="radio-choice-h-8c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">건물등의 내부에서 복도나 계단을 이용하는 출입구가 <br/>별도로 있어 '층 / 호' 를 구별할 수 있습니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-8" id="radio-choice-h-8a" value="1">
+							<label for="radio-choice-h-8a">적합</label>
+							<input type="radio" name="radio-choice-h-8" id="radio-choice-h-8b" value="0">
+							<label for="radio-choice-h-8b">부적합</label>
+							<input type="radio" name="radio-choice-h-8" id="radio-choice-h-8c" value="N">
+							<label for="radio-choice-h-8c">해당없음</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="cell2">건물번호로 '동'이 구분되어 '동번호'를 생략할 수 있습니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-9" id="radio-choice-h-9a" value="1">
-							        <label for="radio-choice-h-9a">적합</label>
-							        <input type="radio" name="radio-choice-h-9" id="radio-choice-h-9b" value="0">
-							        <label for="radio-choice-h-9b">부적합</label>
-							        <input type="radio" name="radio-choice-h-9" id="radio-choice-h-9c" value="N">
-							        <label for="radio-choice-h-9c">해당없음</label>
-							 </fieldset>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-9" id="radio-choice-h-9a" value="1">
+							<label for="radio-choice-h-9a">적합</label>
+							<input type="radio" name="radio-choice-h-9" id="radio-choice-h-9b" value="0">
+							<label for="radio-choice-h-9b">부적합</label>
+							<input type="radio" name="radio-choice-h-9" id="radio-choice-h-9c" value="N">
+							<label for="radio-choice-h-9c">해당없음</label>
 						</div>  
 					</div>    
 					<div class="row">
-						<div class="cell2">'호수'에 '층수'의 의미가 포함되어 '층수'를 생랴갈 수 있습니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-10" id="radio-choice-h-10a" value="1">
-							        <label for="radio-choice-h-10a">적합</label>
-							        <input type="radio" name="radio-choice-h-10" id="radio-choice-h-10b" value="0">
-							        <label for="radio-choice-h-10b">부적합</label>
-							        <input type="radio" name="radio-choice-h-10" id="radio-choice-h-10c" value="N">
-							        <label for="radio-choice-h-10c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">'호수'에 '층수'의 의미가 포함되어 '층수'를 생략할 수 <br/>있습니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-10" id="radio-choice-h-10a" value="1">
+							<label for="radio-choice-h-10a">적합</label>
+							<input type="radio" name="radio-choice-h-10" id="radio-choice-h-10b" value="0">
+							<label for="radio-choice-h-10b">부적합</label>
+							<input type="radio" name="radio-choice-h-10" id="radio-choice-h-10c" value="N">
+							<label for="radio-choice-h-10c">해당없음</label>
 						</div>   
 					</div> 
 					<div class="row">
-						<div class="cell2">지하가 한 층으로 층수에 포함된 '아라비아 숫자'를 생략할 수 있습니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-11" id="radio-choice-h-11a" value="1">
-							        <label for="radio-choice-h-11a">적합</label>
-							        <input type="radio" name="radio-choice-h-11" id="radio-choice-h-11b" value="0">
-							        <label for="radio-choice-h-11b">부적합</label>
-							        <input type="radio" name="radio-choice-h-11" id="radio-choice-h-11c" value="N">
-							        <label for="radio-choice-h-11c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">지하가 한 층으로 층수에 포함된 '아라비아 숫자'를 <br/>생략할 수 있습니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-11" id="radio-choice-h-11a" value="1">
+							<label for="radio-choice-h-11a">적합</label>
+							<input type="radio" name="radio-choice-h-11" id="radio-choice-h-11b" value="0">
+							<label for="radio-choice-h-11b">부적합</label>
+							<input type="radio" name="radio-choice-h-11" id="radio-choice-h-11c" value="N">
+							<label for="radio-choice-h-11c">해당없음</label>
 						</div>   
 					</div>
 					<div class="row">
-						<div class="cell2">주거를 목적으로 하는 건물등으로 '호수'가 중복되지 않아 '층수'를 생략할 수 있습니까?</div>
-						<div class='cell1'>
-					        <fieldset data-role="controlgroup" data-type="horizontal">
-							        <input type="radio" name="radio-choice-h-12" id="radio-choice-h-12a" value="1">
-							        <label for="radio-choice-h-12a">적합</label>
-							        <input type="radio" name="radio-choice-h-12" id="radio-choice-h-12b" value="0">
-							        <label for="radio-choice-h-12b">부적합</label>
-							        <input type="radio" name="radio-choice-h-12" id="radio-choice-h-12c" value="N">
-							        <label for="radio-choice-h-12c">해당없음</label>
-							 </fieldset>
+						<div class="cell2">주거를 목적으로 하는 건물등으로 '호수'가 중복되지 않아 <br/>'층수'를 생략할 수 있습니까?</div>
+						<div class='cell3'>
+							<input type="radio" name="radio-choice-h-12" id="radio-choice-h-12a" value="1">
+							<label for="radio-choice-h-12a">적합</label>
+							<input type="radio" name="radio-choice-h-12" id="radio-choice-h-12b" value="0">
+							<label for="radio-choice-h-12b">부적합</label>
+							<input type="radio" name="radio-choice-h-12" id="radio-choice-h-12c" value="N">
+							<label for="radio-choice-h-12c">해당없음</label>
 						</div>
 					</div> 
 				</div>
@@ -265,8 +285,8 @@
 			<!-- footer 시작 -->
 			<div class="infoFooter">
 				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
-				<span onclick="insertBaseResearch();" class="btnPoint">저장</span>
 				<span onclick="MapUtil.openDetail(DATA_TYPE.ADRDC);" class="btnNormal">목록</span>
+				<span onclick="insertBaseResearch();" class="btnPoint">저장</span>
 			</div>
 			<!-- footer 끝 -->
 		</div>

@@ -72,6 +72,11 @@ var util = {
     goBack: function () {
         util.dismissProgress();
 
+        //팝업창이 내려가 있을때
+        if(isPopState == "off"){
+            toggleDetailView();
+        }
+
         //신규위치
         if($("#newPos").is(':visible')){
             $(".newPosition").click();
@@ -87,6 +92,12 @@ var util = {
                     return;
                 }
             }
+        }
+        //사진창이 열려있을때
+        var photo = $("#photoDialog").css("display");
+        if(photo == "block"){
+            closePhotoView();
+            return;
         }
         
 

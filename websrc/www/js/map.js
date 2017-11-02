@@ -135,6 +135,7 @@ var MapUtil = {
                                             //사진이 한건일때 왼쪽에 표시되도록 처리
                                             if(data.files.length == 1){
                                                 $(".picInfo." + "M" + " .picImg").html(obj);
+                                                $(".picInfo." + "M" + " .picImg #tbGbn").val("M");
                                             }else{
                                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                                             }
@@ -1154,6 +1155,9 @@ var MapUtil = {
                         //메모
                         $("#buldMemo").html(data.buldMemo);
                         $("#buldMemo").addClass("edit");
+
+                        //건물군번호
+                        $("#eqbManSn").val(data.eqbManSn);
 
                         break;
                     case DATA_TYPE.SPPN:
