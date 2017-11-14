@@ -32,6 +32,9 @@
 .curPosition button { background-color: transparent !important; }
 .currentMarker { width: 3em; left: -50%; bottom: -.5em; position: relative; }
 
+.returnZoom { top: 10em; right: .5em; }
+.returnZoom button { background-color: transparent !important; }
+
 
 
 /*HTML 추가*/

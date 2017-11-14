@@ -6,13 +6,13 @@ $(function () {
 
     $(document).on("pagebeforeshow", pages.baseConfigPage.div, function (event, data) {
         
-        $("#sigNm").text(localStorage["sigNm"]);
-        
         var versionInfo = JSON.parse(localStorage["versionInfo"]);
         $("#versionName").text("{0}({1})".format(versionInfo.versionName,versionInfo.versionCode));
 
         var appInfo = JSON.parse(localStorage["appInfo"]);
         // var telNo = localStorage["telNo"];
+        // localStorage["sigNm"] = appInfo.sigNm;
+        $("#sigNm").text(appInfo.sigNm);
         $("#telNo").text("{0}".format(appInfo.opeId));
         
         var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);

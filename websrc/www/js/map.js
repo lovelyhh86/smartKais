@@ -135,7 +135,6 @@ var MapUtil = {
                                             //사진이 한건일때 왼쪽에 표시되도록 처리
                                             if(data.files.length == 1){
                                                 $(".picInfo." + "M" + " .picImg").html(obj);
-                                                $(".picInfo." + "M" + " .picImg #tbGbn").val("M");
                                             }else{
                                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                                             }
@@ -282,6 +281,7 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);
             ol.inherits(MapUtil.controls.newPointControl, ol.control.Control);
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);
+            ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);
             
 
         },
@@ -315,7 +315,7 @@ var MapUtil = {
             var options = opt_options || {};
 
             var button = document.createElement('button');
-            button.innerHTML = '<img src="image/current.png" />';
+            button.innerHTML = '<img src="image/icon_curr.png" />';
 
             var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
                 tracking: true,
@@ -453,6 +453,40 @@ var MapUtil = {
     
             element.addEventListener('click', selectAdrdc, false);
     
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+        },
+        returnZoomControl: function(opt_options) {
+            var returnZoom = function(){
+                var useLayers = map.getLayers().getArray();
+                
+                for (var i in useLayers) {
+                    var id = useLayers[i].get("id");
+
+                    // if (id == DATA_TYPE.LOC) {
+                    // }
+
+                    if (id == DATA_TYPE.BULD) {
+                        map.getView().setZoom(14);
+                    }else{
+                        map.getView().setZoom(13);
+                    }
+
+                }
+                
+            }
+            var button = document.createElement('button');
+            button.innerHTML = '<img src="image/icon_base_scale.png" />';
+
+            button.addEventListener('click', returnZoom, false);
+            button.addEventListener('touchstart', returnZoom, false);
+
+            var element = document.createElement('div');
+            element.className = 'returnZoom ol-unselectable ol-control';
+            element.appendChild(button);
+
             ol.control.Control.call(this, {
                 element: element,
                 target: options.target
@@ -1561,8 +1595,10 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.currentControl(),
             new MapUtil.controls.newPointControl(),
             new MapUtil.controls.selectAdrdcControl(),
+            new MapUtil.controls.returnZoomControl(),
+            
             new ol.control.Rotate({
-                label: $("<IMG>", { src: 'image/coordinate.png', alt: '지도회전 초기화' })[0],
+                label: $("<IMG>", { src: 'image/icon_compass.png', alt: '지도회전 초기화' })[0],
                 autoHide: false
             })
         ]),
@@ -1786,7 +1822,7 @@ var mapInit = function(mapId, pos) {
                 newPointFeature.setGeometry(newPoint);
                 movingPoint_source.addFeature(newPointFeature);
 
-                var SIG_CD = featureClone[featureIndex].get("SIG_CD");
+                // var SIG_CD = featureClone[featureIndex].get("SIG_CD");
                 var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
                 var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
                 var pointSn = popTableP.format("위치일련번호", RDFTYLC_SN);
@@ -1799,7 +1835,7 @@ var mapInit = function(mapId, pos) {
                 var param = "";
                 param = $.extend({}, {
                     sn: RDFTYLC_SN,
-                    sigCd : SIG_CD,
+                    // sigCd : SIG_CD,
                     // rdftySe : RDFTY_SE,
                     posX: newCoodi[0],
                     posY: newCoodi[1],
@@ -2996,7 +3032,7 @@ function insertMoveingPoint(param) {
 
     var sendParam = $.extend(param, {
         svcNm: 'iSPGF',
-        // sigCd: app.info.sigCd,
+        sigCd: app.info.sigCd,
         workId: app.info.opeId
     });;
 
@@ -3050,7 +3086,7 @@ function insertMoveingPoint(param) {
 }
 
 function clearMoveMode() {
-    navigator.notification.confirm("위치 이동을 취소 하시겠습니까?", cancelMove, "알림", ['확인', '취소']);
+    navigator.notification.confirm("위치 이동을 취소 하시겠습니까?", cancelMove, "알림", ['예', '아니오']);
 }
 
 function cancelMove(btnIndex) {

@@ -1560,7 +1560,7 @@ function saveImg(type){
                         // if(photoNum <= 2){
                         //     $(".infoHeader .photo .photoNum").html(cnt);
                         // }else{
-                            $(".infoHeader .photo .photoNum").html(parseInt(photoNum) + cnt);
+                            $(".infoHeader .photo .photoNum").html(parseInt(photoNum - 2) + cnt);
                         // }
 
                         MapUtil.state.photo[0].edited = false;

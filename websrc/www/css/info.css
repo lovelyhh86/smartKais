@@ -99,6 +99,8 @@
 .infoHeader >.title > .titleIcon{display: inline-block; margin-right:10px; width: 30px; height: 35px; border-radius:2px; text-align:center; background-color: #f5f7f8}
 .infoHeader >.title > .titleIcon >img{margin-top: 4px;}
 .infoHeader >.title > .label{position: absolute;top:3px}
+.infoHeader >.title > .label.acrdc{position: relative; top: -6px; padding-right: 10px;}
+.infoHeader >.title > .location{position: relative; top: -7px; font-size: 0.8em;}
 .infoHeader >.title > .listLabel{position: absolute;top:0px;left:179px}
 .infoHeader >.photo{position:absolute; top:50px; right:40px; width:42px; height:37px; background:url(../image/photo.png) 100% 100% no-repeat;}
 .infoHeader >.photo>.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
@@ -119,7 +121,7 @@
 .infoTable .cellNo{display: block;width:auto;border-bottom: 0 none;padding:0;background-color: #f5f7f8; vertical-align: middle;}
 
 /*button*/
-.btnPoint{display:inline-block; padding:10px 90px; background-color: #0071bf; color:#e6e6e6}
+.btnPoint{display:inline-block; margin-left:10px; padding:10px 90px; background-color: #0071bf; color:#e6e6e6}
 .btnNormal{display:inline-block; margin-left:10px ; padding:10px 90px; background-color: #9d9ca1; color:#fff}
 
 /*setting*/
@@ -168,6 +170,22 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .picImg img {max-height: 100%; vertical-align: middle;}
 .photoNotice{text-align : center; color: red}
 /************* 사진(END) ****************/
+
+/*board table*/
+table{width:100%; border:0; border-collapse:collapse;}
+table caption{display: none}
+.tableWrap{border-top:1px solid #000 !important; margin-bottom: 0px; border-bottom:1px solid #000;}
+
+.titleTitle{}
+.dataTable {border-bottom:1px solid #bbb;}
+.dataTable  thead tr th{border-bottom: 1px solid #666;}
+.dataTable  tbody tr ~ tr td {border-top:1px solid #bbb;}
+/* .dataTable  tbody tr ~ tr th {border-top:1px solid #bbb; padding:15px 20px; background-color: #adadad; text-align:center; color:#ffffff} */
+.dataTable  th{ border-top:1px solid #bbb; padding:2px 20px; background-color: #adadad; color:#ffffff; text-align:center; }
+.dataTable  td {border-top:1px solid #bbb; padding:2px 20px; line-height: 20px;}
+.dataTable  tr.selected {background: #fdfcce; color:#000;}
+.dataTable  td.noLine {border-left: none}
+.dataTable  td.sampleImage{padding:10px 30px 10px 0px; vertical-align: middle; text-align: center;}
 
 /*map position*/
 .position{position: absolute;left: 20px; bottom: 0;}

@@ -21,103 +21,101 @@
 			<div class="infoContent">
 				<div id="mask"></div>
 			<!-- 정보  -->
-				<div class="infoTable">
-					<input id="sn" type="hidden" value="" />
-					<input id="reqstSe" type="hidden" value="" />
-					<input id="opeSttCd" type="hidden" value="" />
-					<input id="competReqst" type="hidden" value="" />
+				
+				<input id="sn" type="hidden" value="" />
+				<input id="reqstSe" type="hidden" value="" />
+				<input id="opeSttCd" type="hidden" value="" />
+				<input id="competReqst" type="hidden" value="" />
 
-					<!-- 위치조회용 -->
-					<input id="sigCd" type="hidden" value="" />
-					<input id="emdCd" type="hidden" value="" />
-					<input id="rnCd" type="hidden" value="" />
-					<input id="buldMnnm" type="hidden" value="" />
-					<input id="buldSlno" type="hidden" value="" />
-					<input id="buldSeCd" type="hidden" value="" />
-					
-					<div class="setting row">
-						<h2>신청정보</h2>
-					</div>
-
-					<div class="row">
-						<div class="cell1">
-								<span class="label">접수일자</span>
-						</div>
-						<div class="cell2">
-							<p id="reqstDe" name="oldLbl" ></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="cell1">
-								<span class="label">접수번호</span>
-						</div>
-						<div class="cell2">
-							<p id="reqstSn" name="oldLbl" ></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="cell1">
-								<span class="label">기초조사일자</span>
-						</div>
-						<div class="cell2">
-							<p id="bsiExmDe" name="oldLbl" ></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="cell1">
-								<span class="label">신청인</span>
-						</div>
-						<div class="cell2">
-							<p id="reqManNm" name="oldLbl" ></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="cell1">
-								<span class="label">주소</span>
-						</div>
-						<div class="cell2">
-							<p id="buld_label" name="oldLbl" class="vertBut" ></p>
-							<button onclick="getAdrdcLocation()">위치확인</button>
-						</div>
-					</div>
-					<div class="row">
-						<div class="cell1">
-								<span class="label">신청구분</span>
-						</div>
-						<div class="cell2">
-							<p id="reqstSeLbl" name="oldLbl" ></p>
-						</div>
-					</div>
-
-					<div class="setting row">
-						<h2>기초조사결과</h2>
-					</div>
-
-					<div class="row">
-						<div class="cell1">
-								<span class="label">조사자 직급</span>
-						</div>
-						<div class="cell2">
-							<input type="text" id="clsf" class='cell100'></input>
-						</div>
-					</div>
-					<div class="row">
-						<div class="cell1">
-								<span class="label">조사자 성명</span>
-						</div>
-						<div class="cell2">
-							<p id="opeNm" name="oldLbl" ></p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="cell1">
-								<span class="label">특이사항</span>
-						</div>
-						<div class="cell2">
-							<textarea id='docExmSpc' class='cell100' rows='3' placeholder='기타사항을 입력하세요' onchange="txtMaxlength('docExmSpc',50)"></textarea>
-						</div>
-					</div>
+				<!-- 위치조회용 -->
+				<input id="sigCd" type="hidden" value="" />
+				<input id="emdCd" type="hidden" value="" />
+				<input id="rnCd" type="hidden" value="" />
+				<input id="buldMnnm" type="hidden" value="" />
+				<input id="buldSlno" type="hidden" value="" />
+				<input id="buldSeCd" type="hidden" value="" />
+				
+				<div class="adrdcTitle">
+					<h2>부여대상정보</h2>
 				</div>
+
+				<div class="tableWrap">
+					<table class="dataTable" summary="신청내역">
+						<caption>신청내역</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">구분</th>
+								<td>
+									<p id="reqstSeLbl" name="oldLbl" ></p>
+								</td>
+								<th scope="row">접수번호</th>
+								<td>
+									<p id="reqstSn" name="oldLbl" ></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">접수일자</th>
+								<td>
+									<p id="reqstDe" name="oldLbl" ></p>
+								</td>
+								<th scope="row">기초조사일자</th>
+								<td>
+									<p id="bsiExmDe" name="oldLbl" ></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">신청인</th>
+								<td>
+									<p id="reqManNm" name="oldLbl" ></p>
+								</td>
+								<th scope="row">신청인 구분</th>
+								<td>
+									<p id="applcntCdLbl" name="oldLbl" ></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br/>
+				<div class="adrdcTitle">
+					<h2>기초조사결과</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="신청내역">
+						<caption>기초조사결과</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">조사자 직급</th>
+								<td>
+									<input type="text" id="clsf" class='cell100'></input>
+								</td>
+								<th scope="row">조사자 성명</th>
+								<td>
+									<input type="text" id="opeNm" class='cell100'></input>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">특이사항</th>
+								<td colspan="4">
+									<textarea id='docExmSpc' class='cell100' rows='3' placeholder='기타사항을 입력하세요' onchange="txtMaxlength('docExmSpc',50)"></textarea>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>	
+
 				<br/>
 				<div class="infoTable">
 					<div class="row selectRadioAll">

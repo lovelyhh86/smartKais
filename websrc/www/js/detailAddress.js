@@ -77,11 +77,11 @@ function detailAddressContent(){
             return;
         } else {
             for(var i in data) {
-                var rowHtml = '<tr class="adrdcRow" onclick=\"{0}\"><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>{7}</td></tr>';
+                var rowHtml = '<tr class="adrdcRow" onclick=\"{0}\"><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>';
                 var d = data[i];
                 
                 $("#detailAddressTable > tbody:last").append(
-                    rowHtml.format("goDetail('"+d.requestSn+"')", d.pos, d.buldLabel, d.opeSttCdLbl, d.reqstDe, d.competDe, d.reqstSeLbl, d.reqManNm));
+                    rowHtml.format("goDetail('"+d.requestSn+"')", d.reqstDe, d.buldLabel, d.competDe, d.reqstSeLbl, d.opeSttCdLbl));
             }
         }
         
@@ -135,8 +135,11 @@ function goDetail(sn){
                 //사진건수
                 $(".infoHeader .photo .photoNum").html(data.cntFiles);
                 //도로명
-                var title = "<span class='label'>{0}<span>".format(data.buldLabel);
+                var title = "<span class='label acrdc'>{0}</span>".format(data.buldLabel);
                 $(".title").append(title);
+
+                var but = "<button class='location' onclick='getAdrdcLocation()'>위치확인</button>";
+                $(".title").append(but);
                 
                 //작업상태
                 // $("#opeSttCd").val(data.opeSttCd);
@@ -155,6 +158,9 @@ function goDetail(sn){
                 $("#bsiExmDe").html(data.bsiExmDe);
                 //신청인
                 $("#reqManNm").html(data.reqManNm);
+                //신청인구분
+                // $("#reqManSeLbl").html(data.reqManSeLbl);
+                $("#applcntCdLbl").html(data.applcntCdLbl);
                 //신청구분
                 var reqstSe = data.reqstSe;
                 $("#reqstSe").val(reqstSe);
@@ -165,7 +171,11 @@ function goDetail(sn){
                 //직급
                 $("#clsf").val(data.clsf);
                 //조사자
-                $("#opeNm").html(app.info.opeNm);
+                var workID = data.workId;
+                if(workID == null){
+                    workID = app.info.opeNm;
+                }
+                $("#opeNm").val(workID);
                 
                 //기초조사특이사항
                 $("#docExmSpc").val(data.docExmSpc);
@@ -247,6 +257,7 @@ function insertBaseResearch(){
             var sn = $('#sn').val();
             var docExmSpc = $("#docExmSpc").val();
             var clsf = $("#clsf").val();
+            var opeNm = $("#opeNm").val();
         
             params ={
                     sn : sn
@@ -254,7 +265,7 @@ function insertBaseResearch(){
                     ,clsf : clsf
                     ,sigCd : app.info.sigCd
                     ,workId : app.info.opeId
-                    ,opeNm  : app.info.opeNm
+                    ,opeNm  : opeNm
                     ,docExmRes : docExmRes
                     ,docExmSpc : docExmSpc
                     }
@@ -397,6 +408,8 @@ function getLocationByFeature(layerNm, searchList){
             var point = features[0].getGeometry().getInteriorPoint();
 
             map.getView().setCenter(point.getCoordinates());
+
+            setPosition(point.getCoordinates());
 
             toggleDetailView();
 

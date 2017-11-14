@@ -36,7 +36,16 @@ $(function () {
         util.postAJAX("", url, true)
             .then(function (context, rcode, results) {
                 var data = results.returnData;
-                if (rcode != 0 || util.isEmpty(data) === true) {
+
+                //통신오류처리
+                if (rcode != 0 || results.resultMsg == "ERROR") {
+                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                    util.dismissProgress();
+                    util.goBack();
+                    return;
+                }
+
+                if (util.isEmpty(data) === true) {
                     navigator.notification.alert('새올 민원접수가 없습니다.\n(최근 15일 이내 건 기준)', function () {
                         util.goBack();
                     }, '새올 민원접수 조회', '확인');

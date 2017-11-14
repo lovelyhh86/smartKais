@@ -29,7 +29,7 @@ var app = {
         //사용자 기본정보 셋팅
 
         app.info = JSON.parse(localStorage["appInfo"]);
-        app.info.sigNm = localStorage["sigNm"];
+        // app.info.sigNm = localStorage["sigNm"];
     },
     onDeviceReady: function() {
         app.bindEvents();

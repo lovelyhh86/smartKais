@@ -131,6 +131,7 @@ var app = {
                         }
 
                         app.info = {
+                            sigNm: d.sigNm,
                             sigCd: d.sigCd,
                             opeId: "{1}".format(d.userId, d.machineNo),
                             opeNm: userNm,
@@ -171,7 +172,7 @@ var app = {
                     if (resultCode == 0 && !(util.isEmpty(results.data))) {
                         var d = results.data;
 
-                        localStorage["sigNm"] = d.admNm;
+                        // localStorage["sigNm"] = d.admNm;
                         localStorage["serviceProj"] = d.trgnptLbl;
                         if(d.trgnpt == "01") {
                             localStorage["sourceProj"] = "EPSG:5176";
