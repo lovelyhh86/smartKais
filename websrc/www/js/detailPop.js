@@ -221,7 +221,7 @@ function openDataIdPop(id){
 
             //라디오버튼 구성
             popColume = 'DEL_STT_CD';
-            createRadioButton();
+            createRadioButtonCustom(id);
             break;
 
 
@@ -686,37 +686,64 @@ function createRadioButtonCustom(id){
             $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
 
         break;
-    case'buldNmtPurpose':
-        //건물번호판 용도
-        var codeList = app.codeMaster[CODE_GROUP[popColume]];
+        case'buldNmtPurpose':
+            //건물번호판 용도
+            var codeList = app.codeMaster[CODE_GROUP[popColume]];
 
-        var buldNmtType = $("#buldNmtType").text();
+            var buldNmtType = $("#buldNmtType").text();
 
-        for(var c in codeList){
-                if(c != "GroupNm"){
-                    if(c.substr(1,4) != '000' && buldNmtType.substr(0,1) == c.substr(0,1)){
+            for(var c in codeList){
+                    if(c != "GroupNm"){
+                        if(c.substr(1,4) != '000' && buldNmtType.substr(0,1) == c.substr(0,1)){
 
-                        strText += InputRadio.format(id,c);
+                            strText += InputRadio.format(id,c);
+                            strText += radioSpen.format(codeList[c]);
+                            cellText += dataCell.format(strText);
+
+                            appendText = targetRow.format(cellText);
+                            dataForm.append(appendText)
+                            appendText = '';
+                            cellText = '';
+                            strText = '';
+
+                        }
+
+                    }
+                }
+
+                var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
+
+                $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
+
+        break;
+        case 'delStateCd':
+                var codeList = app.codeMaster[CODE_GROUP[popColume]];
+                
+                var delStateCd = $("#delStateCd").text();
+                for(var c in codeList){
+                    if(c != "GroupNm"){
+                        
+                        if(c == '05'){
+                            continue;
+                        }
+                        strText += InputRadio.format(popID,c);
                         strText += radioSpen.format(codeList[c]);
                         cellText += dataCell.format(strText);
-
+            
                         appendText = targetRow.format(cellText);
                         dataForm.append(appendText)
                         appendText = '';
                         cellText = '';
                         strText = '';
-
                     }
-
                 }
-            }
-
-            var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
-
-            $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
-
+            
+                var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
+            
+                if(values != ""){
+                    $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
+                }
         break;
-
     }
 
 }
@@ -843,9 +870,9 @@ function submit(type){
             sendParams = $.extend(sendParams, {checkComment: checkComment_new});
 
             //점검상태
-            var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
+            // var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
 
-            sendParams = $.extend(sendParams, {checkState: checkState});
+            // sendParams = $.extend(sendParams, {checkState: checkState});
 
             //점검타입
             var checkType = $("#checkType").text();
@@ -1453,7 +1480,7 @@ function saveImg(type){
             var sigCd = app.info.sigCd;
             var workId = app.info.opeId;
             var checkUserNm = app.info.opeNm;
-            var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
+            // var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
             var checkType = $("#checkType").text();
 
 
@@ -1477,7 +1504,7 @@ function saveImg(type){
                 checkDate: util.getToday(),
                 workId: workId,
                 checkUserNm : checkUserNm,
-                checkState : checkState,
+                // checkState : checkState,
                 checkType : checkType,
 
             });
@@ -1629,6 +1656,8 @@ function updateWorkDate(){
                     }
 
                     util.toast('점검일자가 갱신되었습니다.');
+
+                    $("p[name*='newLbl']").text('');
 
                     closeDetailView();
 

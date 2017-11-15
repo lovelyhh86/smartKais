@@ -282,7 +282,7 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.newPointControl, ol.control.Control);
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);
-            
+            ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);
 
         },
         /**
@@ -485,6 +485,40 @@ var MapUtil = {
 
             var element = document.createElement('div');
             element.className = 'returnZoom ol-unselectable ol-control';
+            element.appendChild(button);
+
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+        },
+        refreshMapControl: function(opt_options){
+            var refreshMap = function(){
+                var layerList = map.getLayers().getArray();
+                for (var i = 0; i < layerList.length; i++) {
+                    var title = layerList[i].get("title");
+                    if(title != "Mobile Kais Map"){
+
+                        getVectorSource(map , title).clear();
+
+                        // var source = layerList[i].getSource();
+                        // source.clear();    
+                    }
+
+                    // getVectorSource(map , "위치레이어").clear();
+                                
+                }
+                
+
+            }
+            var button = document.createElement('button');
+            button.innerHTML = '<img src="image/icon_base_scale.png" />';
+
+            button.addEventListener('click', refreshMap, false);
+            button.addEventListener('touchstart', refreshMap, false);
+
+            var element = document.createElement('div');
+            element.className = 'refreshMap ol-unselectable ol-control';
             element.appendChild(button);
 
             ol.control.Control.call(this, {
@@ -1596,6 +1630,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.newPointControl(),
             new MapUtil.controls.selectAdrdcControl(),
             new MapUtil.controls.returnZoomControl(),
+            new MapUtil.controls.refreshMapControl(),
             
             new ol.control.Rotate({
                 label: $("<IMG>", { src: 'image/icon_compass.png', alt: '지도회전 초기화' })[0],

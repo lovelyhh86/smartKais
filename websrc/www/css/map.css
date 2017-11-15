@@ -35,6 +35,8 @@
 .returnZoom { top: 10em; right: .5em; }
 .returnZoom button { background-color: transparent !important; }
 
+.refreshMap { top: 13em; right: .5em; }
+.returnZoom button { background-color: transparent !important; }
 
 
 /*HTML 추가*/
