@@ -498,8 +498,9 @@ var MapUtil = {
                 for (var i = 0; i < layerList.length; i++) {
                     var title = layerList[i].get("title");
                     if(title != "Mobile Kais Map"){
-
+                        util.showProgress();
                         getVectorSource(map , title).clear();
+                        util.dismissProgress();
 
                         // var source = layerList[i].getSource();
                         // source.clear();    
@@ -512,7 +513,7 @@ var MapUtil = {
 
             }
             var button = document.createElement('button');
-            button.innerHTML = '<img src="image/icon_base_scale.png" />';
+            button.innerHTML = '<img src="image/refreshMap.png" />';
 
             button.addEventListener('click', refreshMap, false);
             button.addEventListener('touchstart', refreshMap, false);
