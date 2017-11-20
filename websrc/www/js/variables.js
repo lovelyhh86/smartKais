@@ -15,7 +15,7 @@ var URLs = {
     "insertBaseResearch": { svcNm: "iBSEX" },
     //기초조사 end
     "roadsignlink": { svcNm: "vSPGF" },
-    "buildsignlink": { svcNm: "vSPBD" },
+    "buildsignlink": { svcNm: "vSPBD" },//사용안함
     "buildSelectlink": { svcNm: "vBULD" },
     "spotSelectlink": { svcNm: "vSPOT" },
     "entrclink": { svcNm: "vENTRC" },

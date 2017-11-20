@@ -201,12 +201,17 @@ function goDetail(sn){
 
                 }
 
-                //직권처리시 4 번 5번 항목은 해당없음 처리
+                //직권처리시 
                 if(reqstSe == "64" || reqstSe == "68" || reqstSe == "69"){
+                    //4 번 5번 항목은 해당없음 처리
                     $(":radio[name='radio-choice-h-3']:input[value='N']").attr("checked", true);
                     $(":radio[name='radio-choice-h-4']:input[value='N']").attr("checked", true);
                     $(":radio[name='radio-choice-h-3']").attr("disabled", true);
                     $(":radio[name='radio-choice-h-4']").attr("disabled", true);
+
+                    //신청인 및 신청인 구분 "-" 처리
+                    $("#reqManNm").html("-");
+                    $("#applcntCdLbl").html("-");
                 }
 
                 //사진이벤트
