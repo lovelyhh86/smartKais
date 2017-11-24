@@ -198,6 +198,8 @@ CODE_GROUP["DEL_STT_CD"] = "GFTY613";
 //****** 도로명판 *******
 //도로명판 규격
 CODE_GROUP["RDPQ_GD_SD"] = "GFTY110";
+CODE_GROUP["RDPQ_GD_SD_2"] = "GFTY112";
+
 //****** 지역안내판 *******
 //지역안내판 광고에따른분류
 CODE_GROUP["ADVRTS_CD"] = "CMMN131";

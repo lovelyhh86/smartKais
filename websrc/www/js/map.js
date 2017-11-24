@@ -856,7 +856,8 @@ var MapUtil = {
                         $("#bdrclAt").html(data.bdrclAt);
                         $("#bdrclAtLbl").html(data.bdrclAtLbl);
                         //제2외국어여부
-                        $("#scfggMkty").html(data.scfggMkty);
+                        var scfggMkty = data.scfggMkty;
+                        $("#scfggMkty").html(scfggMkty);
                         $("#scfggMktyLbl").html(data.scfggMktyLbl);
                         $("#scfggMktyLbl").addClass("edit");
                         //언어1
@@ -868,8 +869,15 @@ var MapUtil = {
                         $("#scfggUla2Lbl").html(data.scfggUla2Lbl);
                         $("#scfggUla2Lbl").addClass("edit");
                         //규격
-                        $("#rdpqGdSd").html(data.rdpqGdSd);
-                        $("#rdpqGdSdLbl").html(data.rdpqGdSdLbl);
+                        var rdpqGdSd = data.rdpqGdSd;
+                        $("#rdpqGdSd").html(rdpqGdSd);
+                        
+                        var rdpqGdSdLbl = data.rdpqGdSdLbl;
+                        if(scfggMkty != "1"){
+                            rdpqGdSdLbl = data.rdpqGdSdScfggMktyLbl;
+                        }
+                        
+                        $("#rdpqGdSdLbl").html(rdpqGdSdLbl);
                         $("#rdpqGdSdLbl").addClass("edit");
                         //가로*세로*두께
                         $("#gdftyWide").html(data.gdftyWide);
@@ -1986,8 +1994,16 @@ var mapInit = function(mapId, pos) {
                                         //명판방향
                                         var PLQ_DRC = resultList[i].plqDirectionLbl;
                                         var plqDrc = commonSpan.format("info", PLQ_DRC);
+
+                                        var scfggMkty = resultList[i].scfggMkty;
+
                                         //규격
                                         var RDPQ_GD_SD = resultList[i].rdpqGdSdLbl;
+                                        if(scfggMkty != "1"){
+                                            //규격(제2외국어용 규격)
+                                            RDPQ_GD_SD = resultList[i].rdpqGdSdScfggMktyLbl;
+                                        }
+                                        
                                         var rdpqGdSd = commonSpan.format("info", RDPQ_GD_SD);
                                         //양면여부
                                         var BDRCL_AT = resultList[i].bdrclAt == 0 ? "단면" : "양면";

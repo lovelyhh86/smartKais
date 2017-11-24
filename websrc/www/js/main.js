@@ -19,7 +19,13 @@ var msg = {
     selectAdrdc: "기초 조사 결과를 선택하십시오.",
     completeAuthAdrdc: "기초조사 결과를 등록하면 금일로부터 5일이내에 기초조사 결과 통보서를 출력해야합니다.\n등록 하시겠습니까?",
     completeAdrdc: "기초조사 결과를 등록 하시겠습니까?",
-    saveBuldNm: "건물군 내 건물명이 일괄로 변경됩니다. 저장 하시겠습니까? "
+    saveBuldNm: "건물군 내 건물명이 일괄로 변경됩니다. 저장 하시겠습니까?",
+    notScfggMkty: "제2외국어여부를 [단독언어]나 [2개언어]로 변경해주세요.",
+    notScfggMkty2: "제2외국어여부를 [2개언어]로 변경해주세요.",
+    checkRdpqGdSd : "규격을 선택해 주세요.",
+    checkZero : "{0}에 0 이나 빈칸을 넣을 수 없습니다.",
+    checkScfggMkty : "제2외국어 언어를 선택해 주세요.",
+    useTargetScfggMkty : "사용대상이 [보행자용]이 아닐경우 제2외국어를여부는 [미표기]만 가능합니다."
 };
 var app = {
     // Application Constructor

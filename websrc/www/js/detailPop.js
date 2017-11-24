@@ -80,6 +80,11 @@ function openDataIdPop(id){
             createRadioButton();
             break;
         case 'scfggUla1':
+            var scfggMkty = $("#scfggMkty_new").text() == "" ? $("#scfggMkty").text() : $("#scfggMkty_new").text();
+            if(scfggMkty == "1"){
+                navigator.notification.alert(msg.notScfggMkty, '', '알림', '확인');
+                return;
+            }
             //제목
             var titleText = '언어1';
             setTitle(titleText);
@@ -89,6 +94,11 @@ function openDataIdPop(id){
             createRadioButton();
             break;
         case 'scfggUla2':
+            var scfggMkty = $("#scfggMkty_new").text() == "" ? $("#scfggMkty").text() : $("#scfggMkty_new").text();
+            if(scfggMkty != "3"){
+                navigator.notification.alert(msg.notScfggMkty2, '', '알림', '확인');
+                return;
+            }
             //제목
             var titleText = '언어2';
             setTitle(titleText);
@@ -238,7 +248,7 @@ function radioDataSendParent(){
 
 
     //기존내용과 같을시 처리안함
-    if(oldCode == newRadioVal){
+    if(oldCode == newRadioVal && popID != "rdpqGdSd" && popID != "scfggUla1"){
         //새로운 데이터창 초기화
         $("#"+popID+"_new").text('');
 
@@ -272,6 +282,27 @@ function radioDataSendParent(){
     //건물정보 용도(대분류)일때 처리
     if(popID == "bdtypCd_main"){
         setbdtypCd();
+    }
+
+    //제2외국어 처리
+    if(popID == "scfggMkty"){
+        setScfggMkty();
+    }
+    
+    //사용대상 및 안내시설방향 변경시 규격을 필수 변경
+    if(popID == "useTarget" || popID == "plqDirection"){
+        var id = $("#detailView").children()[0].id;
+        //도로명판일때만 규격 초기화
+        if(id == "roadView_page"){
+            var plqDirectionLbl_new = $("#plqDirectionLbl_new").text();
+            var useTarget_new = $("#useTarget_new").text();
+
+            if(oldCode == newRadioVal && plqDirectionLbl_new == "" && useTarget_new == ""){
+                setGdSdReset();
+            }else{
+                setGdSd();
+            }
+        }
     }
 
     //팝업닫기
@@ -396,6 +427,12 @@ function textDataSendParent3(type){
         var gdftyVertical_fix = $("#gdftyVertical_fix").val();
         var gdftyThickness_fix = $("#gdftyThickness_fix").val();
 
+        //규격 0 입력 안됨
+        if(gdftyWide_fix == "0" || gdftyVertical_fix == "0" || gdftyThickness_fix == "0" || gdftyWide_fix == "" || gdftyVertical_fix == "" || gdftyThickness_fix == ""){
+            navigator.notification.alert(msg.checkZero.format("규격"), '', '알림', '확인');
+            return;
+        }
+
         //기존내용과 같을시 처리안함
         if(gdftyWide_old == gdftyWide_fix && gdftyVertical_old == gdftyVertical_fix && gdftyThickness_old == gdftyThickness_fix){
 
@@ -477,6 +514,11 @@ function textDataSendParent2(type, id1, id2){
 
     var baseMasterNo_fix = $("#"+id1+"_fix").val();
     var baseSlaveNo_fix = $("#"+id2+"_fix").val();
+
+    if(baseMasterNo_fix == "0" || baseMasterNo_fix == "0" || baseSlaveNo_fix == ""){
+        navigator.notification.alert(msg.checkZero.format("기초번호"), '', '알림', '확인');
+        return;
+    }
 
     //기존내용과 같을시 처리안함
     if(baseMasterNo_old == baseMasterNo_fix && baseSlaveNo_old == baseSlaveNo_fix){
@@ -563,14 +605,24 @@ function createRadioButtonCustom(id){
         case 'rdpqGdSd':
             //사용대상에 따른 분류 (도로명판)
             var useTarget = $("#useTarget_new").text() == "" ? $("#useTarget").text() : $("#useTarget_new").text();
+            //안내시설방향
+            var plqDirection = $("#plqDirection_new").text() == "" ? $("#plqDirection").text() : $("#plqDirection_new").text();
+            //제2외국어여부
+            var scfggMkty = $("#scfggMkty_new").text() == "" ? $("#scfggMkty").text() : $("#scfggMkty_new").text();
 
+            if(scfggMkty != "1"){
+                popColume = "RDPQ_GD_SD_2";
+            }
 
             var checkedValue = $("#"+id).text();
             var codeList = app.codeMaster[CODE_GROUP[popColume]];
 
+            var codeValue = useTarget.charAt(1) +  plqDirection.charAt(2);
+
+            var codeCnt = 0;
             for(var c in codeList){
                 if(c != "GroupNm"){
-                    if(c.charAt(1) == useTarget.charAt(1)){
+                    if(c.substr(1,2) == codeValue){
 
                         strText += InputRadio.format(id,c);
                         strText += radioSpen.format(codeList[c]);
@@ -581,9 +633,20 @@ function createRadioButtonCustom(id){
                         appendText = '';
                         cellText = '';
                         strText = '';
-
+                        codeCnt++;
                     }
                 }
+            }
+            //코드가 없을때 예) 사용대상 차량용 -> 제2외국어 단독
+            if(codeCnt == 0){
+                strText = radioSpen.format("항목이 없습니다.");
+                cellText += dataCell.format(strText);
+                
+                appendText = targetRow.format(cellText);
+                dataForm.append(appendText)
+                appendText = '';
+                cellText = '';
+                strText = '';
             }
 
             var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
@@ -592,16 +655,23 @@ function createRadioButtonCustom(id){
             }
         break;
         case'bsis_bsisGdSd':
-            //사용대상에 따른 분류 (기초번호판)
+            //설치 장소 및 사용대상에 따른 분류 (기초번호판)
+            var bsis_itlpcSe = $("#bsis_itlpcSe_new").text() == "" ? $("#bsis_itlpcSe").text() : $("#bsis_itlpcSe_new").text();
             var useTarget = $("#useTarget_new").text() == "" ? $("#useTarget").text() : $("#useTarget_new").text();
 
 
             var checkedValue = $("#"+id).text();
             var codeList = app.codeMaster[CODE_GROUP[popColume]];
 
+            var codeValue = useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
+            //승강장용 일경우 사용자여부와 상관없이 1970X 코드 사용
+            if(bsis_itlpcSe.charAt(2) == "7"){
+                codeValue = "97";
+            }
+
             for(var c in codeList){
                 if(c != "GroupNm"){
-                    if(c.charAt(1) == useTarget.charAt(1)){
+                    if(c.substr(1,2) == codeValue){
 
                         strText += InputRadio.format(id,c);
                         strText += radioSpen.format(codeList[c]);
@@ -794,6 +864,72 @@ function submit(type){
             msgText = msg.saveBuldNm;
         }
         
+    }
+
+    //제2외국어 변경
+    var scfggMkty = $("#scfggMkty").text();
+    var scfggMkty_new = $("#scfggMkty_new").text();
+    var scfggUla1 = $("#scfggUla1").text();
+    var scfggUla2 = $("#scfggUla2").text();
+    var scfggUla1_new = $("#scfggUla1_new").text();
+    var scfggUla2_new = $("#scfggUla2_new").text();
+    var useTarget = $("#useTarget").text();
+    var useTarget_new = $("#useTarget_new").text();
+
+    //도로명판일 경우의 외국어 및 규격 체크
+    if(type == DATA_TYPE.RDPQ){
+        //사용대상이 보행자용이 아닐떄 제2외국어 사용못함
+        if((useTarget != "01000" && useTarget_new != "01000")  ||  (useTarget == "01000" && useTarget_new != "")){
+            if((scfggMkty_new == "" && scfggMkty != "1") || scfggMkty_new == "2" || scfggMkty_new == "3"){
+                navigator.notification.alert(msg.useTargetScfggMkty,'','알림', '확인');
+                return;
+            }
+        }
+        //규격처리
+        if(scfggMkty_new != ""){
+            //미표기 -> 단독언어 또는 2개언어로 변경
+            if(scfggMkty == "1"){
+                //규격 필수 변경
+                var rdpqGdSd_new = $("#rdpqGdSd_new").text();
+                if(rdpqGdSd_new == ""){
+                    navigator.notification.alert(msg.checkRdpqGdSd,'','알림', '확인');
+                    return;
+                }
+            }else if(scfggMkty != "1" && scfggMkty_new == "1"){ // 단독언어 또는 2개언어 였는데 미표기로 변경
+                var rdpqGdSd_new = $("#rdpqGdSd_new").text();
+                if(rdpqGdSd_new == ""){
+                    navigator.notification.alert(msg.checkRdpqGdSd,'','알림', '확인');
+                    return;
+                }
+                
+            }
+        }
+
+        // 사용대상 안내시설방향 변경시 규격 수정 필수 (도로명판일 경우만)
+        var plqDirectionLbl_new = $("#plqDirectionLbl_new").text();
+        var useTarget_new = $("#useTarget_new").text();
+
+        if(plqDirectionLbl_new != "" || useTarget_new != ""){
+            var rdpqGdSd_new = $("#rdpqGdSd_new").text();
+            if(rdpqGdSd_new == ""){
+                navigator.notification.alert(msg.checkRdpqGdSd,'','알림', '확인');
+                return;
+            }
+        }
+
+    }
+
+    //언어선택체크
+    if(scfggMkty_new == "2"){
+        if(scfggUla1_new == ""){
+            navigator.notification.alert(msg.checkScfggMkty,'','알림', '확인');
+            return;
+        }
+    }else if(scfggMkty_new == "3"){
+        if(scfggUla1_new == "" || scfggUla2_new == ""){
+            navigator.notification.alert(msg.checkScfggMkty,'','알림', '확인');
+            return;
+        }
     }
 
     navigator.notification.confirm(msgText, function(btnIndex){
@@ -1284,9 +1420,12 @@ function closePopupAndClearMap(type){
 
 function setGdft(){
 
-    //새로운 규격 라벨이 빈칸일경우
-    var newLbl = $("#"+popID+"Lbl_new").text();
-    if(newLbl == ""){
+    
+    var oldCode = $("#"+popID).text();
+    var newCode = $("#"+popID+"_new").text();
+    
+    //새로운 규격이 빈칸일경우
+    if(newCode == ""){
         //새로운 데이터창 초기화
         $("#gdftyWide_new").text('');
         $("#gdftyVertical_new").text('');
@@ -1300,12 +1439,14 @@ function setGdft(){
         return;
     }
 
+    var newLbl = $("#"+popID+"Lbl_new").text();
 
     var rdpqGdSdLblList = newLbl.split('*');
 
     var gdftyWide_new = $("#gdftyWide_new").text(rdpqGdSdLblList[0]);
     var gdftyVertical_new = $("#gdftyVertical_new").text(rdpqGdSdLblList[1]);
     var gdftyThickness = $("#gdftyThickness_new").text() == ""? $("#gdftyThickness").text():$("#gdftyThickness_new").text();
+    $("#gdftyThickness_new").text(gdftyThickness);
     var gdftyWVT_new = "{0}*{1}*{2}".format(rdpqGdSdLblList[0],rdpqGdSdLblList[1],gdftyThickness);
     $("#gdftyWVT_new").text(gdftyWVT_new);
 
@@ -1334,6 +1475,124 @@ function setbdtypCd(){
    $("#bdtypCdLbl_new").show();
 
 
+}
+function scfggUlaNewClear(){
+    $("#scfggUla1_new").text("");
+    $("#scfggUla2_new").text("");
+    $("#scfggUla1Lbl_new").text("");
+    $("#scfggUla2Lbl_new").text("");
+}
+function setScfggMkty(){
+    var editText = "선택하세요";
+    var scfggMktOld = $("#scfggMkty").text();
+    var scfggMktNew = $("#scfggMkty_new").text();
+
+    var plqDirectionLbl_new = $("#plqDirectionLbl_new").text();
+    var useTarget_new = $("#useTarget_new").text();
+
+    if(scfggMktNew == ""){
+        scfggUlaNewClear();
+
+        $("#scfggUla1Lbl_new").hide();
+        $("#scfggUla2Lbl_new").hide();
+
+        $("#scfggUla1Lbl").show();
+        $("#scfggUla2Lbl").show();
+
+        // 사용대상이나 안내시설 방향이 변경되어 있는 상태 확인
+        if(plqDirectionLbl_new == "" && useTarget_new == ""){
+            setGdSdReset();
+            return;
+        }
+    }else if(scfggMktNew == "1"){
+        scfggUlaNewClear();
+        
+        $("#scfggUla1Lbl").hide();
+        $("#scfggUla2Lbl").hide();
+        $("#scfggUla1Lbl_new").show();
+        $("#scfggUla2Lbl_new").show();
+
+        
+    }else if(scfggMktNew == "2"){
+        $("#scfggUla1Lbl_new").text(editText);
+        $("#scfggUla2Lbl_new").text("");
+
+        $("#scfggUla1Lbl_new").addClass("edit");
+
+        $("#scfggUla1_new").text("");
+        $("#scfggUla2_new").text("");
+        
+        $("#scfggUla1Lbl").hide();
+        $("#scfggUla2Lbl").hide();
+
+        $("#scfggUla1Lbl_new").show();
+    }else if(scfggMktNew == "3"){
+        $("#scfggUla1Lbl_new").text(editText);
+        $("#scfggUla2Lbl_new").text(editText);
+
+        $("#scfggUla1Lbl_new").addClass("edit");
+        $("#scfggUla2Lbl_new").addClass("edit");
+
+        $("#scfggUla1_new").text("");
+        $("#scfggUla2_new").text("");
+
+        $("#scfggUla1Lbl").hide();
+        $("#scfggUla2Lbl").hide();
+
+        $("#scfggUla1Lbl_new").show();
+        $("#scfggUla2Lbl_new").show();
+    }
+    
+    
+    //규격처리
+    if(scfggMktNew != ""){
+        //미표기 -> 단독언어 ,2개언어  또는 단독언어, 2개언어 -> 미표기
+        if((scfggMktOld == "1" && scfggMktNew != "1") || (scfggMktOld != "1" && scfggMktNew == "1")){
+            var id = $("#detailView").children()[0].id;
+            //도로명판일때만 규격 초기화
+            if(id == "roadView_page"){
+                    setGdSd();
+            }
+        }
+    }
+    
+    
+}
+function setGdSd(){
+    var editText = "선택하세요";
+
+    $("#rdpqGdSdLbl_new").text(editText);
+    $("#gdftyWVT_new").text(editText);
+
+    $("#rdpqGdSd_new").text("");
+    $("#gdftyWide_new").text("");
+    $("#gdftyVertical_new").text("");
+    $("#gdftyThickness_new").text("");
+    
+    $("#rdpqGdSdLbl_new").addClass("edit");
+    $("#gdftyWVT_new").addClass("edit");
+
+    $("#rdpqGdSdLbl").hide();
+    $("#gdftyWVT").hide();
+    $("#rdpqGdSdLbl_new").show();
+    $("#gdftyWVT_new").show();
+}
+function setGdSdReset(){
+    
+    $("#rdpqGdSdLbl_new").text("");
+    $("#rdpqGdSd_new").text("");
+    
+    $("#rdpqGdSdLbl").show();
+    $("#rdpqGdSdLbl_new").hide();
+
+    $("#gdftyWVT_new").text("");
+
+    $("#gdftyWide_new").text("");
+    $("#gdftyVertical_new").text("");
+    $("#gdftyThickness_new").text("");
+
+    $("#gdftyWVT_new").hide();
+    $("#gdftyWVT").show();
 }
 
 function photoMode(){
