@@ -71,7 +71,7 @@ public class PushReceiver extends PushLibraryReceiver {
 
             sendPushNotification(context, strMessage);
         }catch (JSONException je){
-
+            Log.d(TAG, je.getMessage());
         }
 
         boolean isforground = Plugins.isIsForeground();
@@ -86,7 +86,9 @@ public class PushReceiver extends PushLibraryReceiver {
             PendingIntent pushTask = PendingIntent.getActivity(context,0,push,PendingIntent.FLAG_CANCEL_CURRENT);
             try {
                 pushTask.send();
-            } catch (Exception ex) {}
+            } catch (Exception ex) {
+                Log.d(TAG, ex.getMessage());
+            }
         }
 
     }
@@ -116,7 +118,7 @@ public class PushReceiver extends PushLibraryReceiver {
 
 
         } catch(JSONException ex) {
-
+            Log.d(TAG, ex.getMessage());
         }
 
         //Ticker & Notification List
@@ -153,9 +155,6 @@ public class PushReceiver extends PushLibraryReceiver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             isScreenon = pm.isScreenOn();
 
-        } else {
-         //   isScreenon = pm.isInteractive();
-
         }
 
         //잠금상태가 아니라면 토스트
@@ -189,7 +188,9 @@ public class PushReceiver extends PushLibraryReceiver {
             PendingIntent popupTask = PendingIntent.getActivity(context,0,popup,PendingIntent.FLAG_ONE_SHOT);
             try {
                 popupTask.send();
-            } catch (Exception ex) {}
+            } catch (Exception ex) {
+                Log.d(TAG, ex.getMessage());
+            }
         }
     }
 }

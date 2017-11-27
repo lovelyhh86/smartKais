@@ -9,8 +9,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
-	private SurfaceHolder mHolder;
-	private Camera mCamera;
+	private static final String TAG = "CameraPreview";
+	final private SurfaceHolder mHolder;
+	final private Camera mCamera;
 
 	public CameraPreview(Context context, Camera camera) {
 		super(context);
@@ -52,6 +53,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 			mCamera.stopPreview();
 		} catch (Exception e) {
 			// ignore: tried to stop a non-existent preview
+			Log.d(TAG, e.getMessage());
 		}
 
 		// make any resize, rotate or reformatting changes here

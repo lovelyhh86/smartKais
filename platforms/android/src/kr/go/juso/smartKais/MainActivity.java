@@ -36,7 +36,9 @@ public class MainActivity extends CordovaActivity {
             loadUrl("javascript:versionName = '" + versionName + "';");
             loadUrl("javascript:versionCode = '" + versionCode + "';");
 
-        } catch(PackageManager.NameNotFoundException e) { }
+        } catch(PackageManager.NameNotFoundException e) {
+            Log.d(TAG, e.getMessage());
+        }
 
 
 

@@ -18,6 +18,7 @@ import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,13 +43,13 @@ import java.util.List;
 import kr.go.juso.smartKais.R;
 
 public class CameraActivity extends Activity implements SensorEventListener {
+	private static final String TAG = "CameraActivity";
 	private Camera mCamera;
 	private CameraPreview mPreview;
 	private SensorManager sensorManager = null;
 	private int orientation;
-	private ExifInterface exif;
-	private int deviceHeight;
-	private int deviceWidth;
+	// private int deviceHeight;
+	// private int deviceWidth;
 	private DisplayMetrics deviceDm;
 
 	private Button ibRetake;
@@ -58,9 +59,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 	private FrameLayout flBtnContainer;
 	private LinearLayout pickBtnContainer;
-	private File sdRoot;
-	private String dir;
-	private String fileName;
+	File sdRoot;
+	String dir;
 	private ImageView rotatingImage;
 
 	private FrameLayout cameraPreview;
@@ -115,8 +115,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		// Selecting the resolution of the Android device so we can create a
 		// proportional preview
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		deviceHeight = display.getHeight();
-		deviceWidth = display.getWidth();
+		// deviceHeight = display.getHeight();
+		// deviceWidth = display.getWidth();
 
 		deviceDm = new DisplayMetrics();
 		display.getMetrics(deviceDm);
@@ -131,7 +131,9 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 						if(success){
 
-							mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() { } }, null, mPicture);
+							mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() {
+								Log.d(TAG, "onShutter");
+							} }, null, mPicture);
 
 						}
 
@@ -401,13 +403,14 @@ public class CameraActivity extends Activity implements SensorEventListener {
 			c = Camera.open();
 		} catch (Exception e) {
 			// Camera is not available (in use or does not exist)
+			Log.d(TAG, e.getMessage());
 		}
 
 		// returns null if camera is unavailable
 		return c;
 	}
 
-	private PictureCallback mPicture = new PictureCallback() {
+	final private PictureCallback mPicture = new PictureCallback() {
 
 		public void onPictureTaken(byte[] data, Camera camera) {
 
@@ -591,6 +594,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 	 * STUFF THAT WE DON'T NEED BUT MUST BE HEAR FOR THE COMPILER TO BE HAPPY.
 	 */
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		Log.d(TAG, "onAccuracyChanged");
 	}
 
     public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {

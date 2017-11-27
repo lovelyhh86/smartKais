@@ -93,7 +93,9 @@ public class IntroActivity extends Activity {
                     Log.d(TAG, "SSO information lookup failed");
                     try {
                         SSO.setSSOInfo(new JSONArray("[]"));
-                    } catch (JSONException e1) { }
+                    } catch (JSONException e1) {
+                        Log.d(TAG, e1.getMessage());
+                    }
                 } finally {
                     // 메인 액티비티로 진행 인텐트 설정
                     Intent intent = new Intent(IntroActivity.this, MainActivity.class);

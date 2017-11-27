@@ -14,23 +14,23 @@ import com.dkitec.PushLibrary.PushLibrary;
 class PushReceiverRegister implements PushAppRegistListener
 {
 
-    Context context_;
+    Context context;
     private static final String TAG = "SmartKais[PRR]";
     private static final String SVRADDR = "https://flpush.mcenter.go.kr:7001/pis/interface";
 
 
     public PushReceiverRegister(Context context)
     {
-        this.context_ = context;
+        this.context = context;
     }
 
     public void initialize(String userid){
-        PackageManager pm = context_.getPackageManager();
+        PackageManager pm = context.getPackageManager();
         String appId;
         String userId = userid;
 
         try {
-            PackageInfo pi = pm.getPackageInfo(context_.getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
+            PackageInfo pi = pm.getPackageInfo(context.getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
             ApplicationInfo appInfo = pi.applicationInfo;
 
             appId = "smartkais";
@@ -39,12 +39,12 @@ class PushReceiverRegister implements PushAppRegistListener
 
         }catch (PackageManager.NameNotFoundException ne)
         {
-            appId = context_.getApplicationContext().getPackageName();
+            appId = context.getApplicationContext().getPackageName();
         }
 
-        int res = PushLibrary.getInstance().setStart(context_, SVRADDR, appId);
+        int res = PushLibrary.getInstance().setStart(context, SVRADDR, appId);
         boolean regist = PushLibrary.getInstance().AppRegist(this, userId, null);
-        Log.d("-----------------------",String.valueOf(res) + "===" + String.valueOf(regist));
+        Log.d("-----------------------",res + "===" + regist);
     }
 
     @Override
@@ -52,9 +52,9 @@ class PushReceiverRegister implements PushAppRegistListener
     {
         Log.v(TAG, "PushAppRegistListener[didRegistResult]");
         String rt = bundle.getString("RT");
-        String rt_msg = bundle.getString("RT_MSG");
+        String rtMsg = bundle.getString("RT_MSG");
         Log.d(TAG, "RT=" + rt);
-        Log.d(TAG, "RT_MSG=" + rt_msg);
+        Log.d(TAG, "RT_MSG=" + rtMsg);
 
     }
 }

@@ -26,7 +26,9 @@ public class SSO {
             reqParam.put(SSO_KEY.OU_CODE.ordinal(), "gov:oucode");
             reqParam.put(SSO_KEY.CN.ordinal(), "gov:cn");
             reqParam.put(SSO_KEY.DN.ordinal(), "gov:dn");
-        } catch (JSONException e) { }
+        } catch (JSONException e) {
+            Log.d(TAG, e.getMessage());
+        }
     }
 
     /**
@@ -47,10 +49,12 @@ public class SSO {
         for(SSO_KEY key : SSO_KEY.values()) {
             try {
                 int index = key.ordinal();
-                String key_code = reqParam.getString(index);
+                String keyCode = reqParam.getString(index);
                 JSONObject obj = info.getJSONObject(index);
-                json.put(key.name(), obj.getString(key_code));
-            } catch (JSONException e) { }
+                json.put(key.name(), obj.getString(keyCode));
+            } catch (JSONException e) {
+                Log.d(TAG, e.getMessage());
+            }
         }
     }
 
@@ -60,20 +64,21 @@ public class SSO {
 
     public static void setSSOInfo(String sso) throws JSONException {
         Log.d(TAG, sso);
+        String ssoStr = sso;
 
-        sso = sso.replace("{", "");
-        sso = sso.replace("}", "");
-        sso = sso.replace("[", "{");
-        sso = sso.replace("]", "}");
+        ssoStr = ssoStr.replace("{", "");
+        ssoStr = ssoStr.replace("}", "");
+        ssoStr = ssoStr.replace("[", "{");
+        ssoStr = ssoStr.replace("]", "}");
 
-        setSSOInfo(new JSONObject(sso));
+        setSSOInfo(new JSONObject(ssoStr));
     }
 
     public static void setSSOInfo(JSONObject sso) throws JSONException {
         for(SSO_KEY key : SSO_KEY.values()) {
             int index = key.ordinal();
-            String key_code = reqParam.getString(index);
-            json.put(key.name(), sso.getString(key_code));
+            String keyCode = reqParam.getString(index);
+            json.put(key.name(), sso.getString(keyCode));
         }
     }
 }
