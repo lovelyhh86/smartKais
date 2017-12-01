@@ -622,6 +622,7 @@ function layerToggle(context){
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
             $(".selectAdrdc").toggle(false);
+            // $(".selectResearch").toggle(true);
             
             
             // map.addLayer(layers.rdpq);

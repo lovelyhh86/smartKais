@@ -283,7 +283,8 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);
-
+            // ol.inherits(MapUtil.controls.researchControl, ol.control.Control);
+            
         },
         /**
          * @constructor
@@ -526,6 +527,24 @@ var MapUtil = {
                 element: element,
                 target: options.target
             });
+        },
+        researchControl: function(opt_options){
+            var researchList = function(){
+                MapUtil.openDetail(DATA_TYPE.RESEARCH);
+            }
+            
+            var element = document.createElement('div');
+            element.className = 'legend selectResearch ol-unselectable ol-control';
+    
+            var newPosHtml = "<ul><li class='sRes'>시설물점검대상목록</li></ul>";
+            element.innerHTML = newPosHtml;
+    
+            element.addEventListener('click', researchList, false);
+    
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
         }
 
     },
@@ -608,6 +627,12 @@ var MapUtil = {
                 // url = pages.detail_adrdc;
                 url = pages.detail_adrdcList;
                 header = "기초조사";
+
+                break;
+            case DATA_TYPE.RESEARCH:
+                // url = pages.detail_adrdc;
+                url = pages.detail_researchList;
+                header = "점검대상";
 
                 break;
                 
@@ -717,6 +742,12 @@ var MapUtil = {
                 detailAddressContent();
 
                 break;
+            case DATA_TYPE.RESEARCH:
+
+                selectResearchContent();
+
+                break;
+
         }
 
     },
@@ -1549,8 +1580,8 @@ proj4.defs("SR-ORG:6640JEJU", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000
 
 
 var GIS_SERVICE_URL, baseProjection, sourceProjection, serviceProjection;
-var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms?FIXED=TRUE&rnd=" + Math.random();
-
+// var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms?FIXED=TRUE&rnd=" + Math.random();
+var BASE_GIS_SERVICE_URL = "http://m1.juso.go.kr/tms.do";
 
 switch (mode) {
     case MODE.RUNTIME:
@@ -1588,13 +1619,14 @@ var mapInit = function(mapId, pos) {
         source: new ol.source.TileWMS({
             url: BASE_GIS_SERVICE_URL,
             params: {
-                layers: 'ROOT',
-                format: 'image/png',
-                bgcolor: '0x5F93C3',
-                exceptions: 'BLANK',
-                text_anti: 'true',
-                label: 'HIDE_OVERLAP',
-                graphic_buffer: '64'
+                // layers: 'ROOT',
+                // format: 'image/png',
+                // bgcolor: '0x5F93C3',
+                // exceptions: 'BLANK',
+                // text_anti: 'true',
+                // label: 'HIDE_OVERLAP',
+                // graphic_buffer: '64'
+                TYPE:"KOR"
             },
             tileGrid: new ol.tilegrid.TileGrid({
                 extent: [213568, 1213568, 1786432, 2786432],
@@ -1640,7 +1672,8 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.selectAdrdcControl(),
             new MapUtil.controls.returnZoomControl(),
             new MapUtil.controls.refreshMapControl(),
-            
+            // new MapUtil.controls.researchControl(),
+
             new ol.control.Rotate({
                 label: $("<IMG>", { src: 'image/icon_compass.png', alt: '지도회전 초기화' })[0],
                 autoHide: false
@@ -1653,8 +1686,13 @@ var mapInit = function(mapId, pos) {
             zoom: 13,
             maxZoom: 15,
             minZoom: 6,
-            maxResolution: 2048
-        })
+            maxResolution: 2048,
+        }),
+        interactions: ol.interaction.defaults({}).extend([
+            new ol.interaction.PinchZoom({
+                constrainResolution: true
+            })
+        ])
     });
 
     // 도로안내시설물위치 레이어

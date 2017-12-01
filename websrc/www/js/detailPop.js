@@ -233,8 +233,16 @@ function openDataIdPop(id){
             popColume = 'DEL_STT_CD';
             createRadioButtonCustom(id);
             break;
+        case 'rcSttCd':
+            //제목
+            var titleText = '점검상태'; //점검상태
+            setTitle(titleText);
 
-
+            //라디오버튼 구성
+            popColume = 'RC_STT_CD';
+            createRadioButtonCustom(id);
+            break;
+            
 
     }
 
@@ -813,6 +821,32 @@ function createRadioButtonCustom(id){
                 if(values != ""){
                     $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
                 }
+        break;
+        case 'rcSttCd':
+                var codeList = app.codeMaster[CODE_GROUP[popColume]];
+
+                for(var c in codeList){
+                    if(c != "GroupNm"){
+                        
+                        strText += InputRadio.format(popID,c);
+                        strText += radioSpen.format(codeList[c]);
+                        cellText += dataCell.format(strText);
+            
+                        appendText = targetRow.format(cellText);
+                        dataForm.append(appendText)
+                        appendText = '';
+                        cellText = '';
+                        strText = '';
+                    }
+                }
+            
+                var values = $("#"+id+"_new").text() == "" ? $("#"+id).text() :$("#"+id+"_new").text();
+            
+                if(values != ""){
+                    $('input:radio[name='+id+']:input[value=' + values + ']').attr("checked", true);
+                }
+
+
         break;
     }
 

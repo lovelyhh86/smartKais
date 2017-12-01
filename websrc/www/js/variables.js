@@ -14,6 +14,9 @@ var URLs = {
     "addresslistlink": { svcNm: "sADRDC" },
     "insertBaseResearch": { svcNm: "iBSEX" },
     //기초조사 end
+    //점검
+    "researchListLink": { svcNm: "sResearch" },
+    //점검 end
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },//사용안함
     "buildSelectlink": { svcNm: "vBULD" },
@@ -80,6 +83,7 @@ var pages = {
     "detail_spot": { link: function () { return URLs.realPath() + "popSpot.html"; }, div: "#spotView_page" },
     "detail_adrdc": { link: function () { return URLs.realPath() + "popAdrdc.html"; }, div: "#baseResearch_page" },
     "detail_adrdcList": { link: function () { return URLs.realPath() + "popAdrdcList.html"; }, div: "#detailAddress_page" },
+    "detail_researchList": { link: function () { return URLs.realPath() + "researchList.html"; }, div: "#researchList_page" },
     "minwonListPage": { link: function () { return URLs.realPath() + "minwon.html"; }, div: "#minwonList_page" },
     "detailAddressListPage": { link: function () { return URLs.realPath() + "detailAddress.html"; }, div: "#detailAddress_page" },
     "baseResearchPage": { link: function () { return URLs.realPath() + "baseResearch.html"; }, div: "#baseResearch_page" },
@@ -194,6 +198,9 @@ CODE_GROUP["SCFGG_MKTY"] = "GFTY019";
 CODE_GROUP["SCFGG_ULA1"] = "GFTY020";
 //안내시설상태코드
 CODE_GROUP["DEL_STT_CD"] = "GFTY613";
+//점검상태코드
+CODE_GROUP["RC_STT_CD"] = "GFTY614";
+
 
 //****** 도로명판 *******
 //도로명판 규격

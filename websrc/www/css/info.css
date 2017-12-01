@@ -9,35 +9,38 @@
 
 /*legend*/
 .legend{display:none; top:40px; left:5px; color: #2c3538; }
-.legend ul{width:215px; border:1px solid #e5e5e5; border-radius:8px; box-shadow:2px 2px 3px rgba(0, 0 , 0, .1); padding:15px 10px;background-color:rgba(245, 247, 248, 0.6);}
-.legend ul li{ position:relative; display:inline-block; text-align: left; width: 170px; margin-top: 5px; padding:11px  0  11px 43px; list-style:none; background-color: #ffffff; text-shadow: none; font-size: 0.95em ;}
+.legend ul{width: 182px;border:1px solid #e5e5e5;border-radius:8px;box-shadow:2px 2px 3px rgba(0, 0 , 0, .1);padding: 6px 6px;background-color:rgba(245, 247, 248, 0.6);}
+.legend ul li{position:relative;display:inline-block;text-align: left;width: 150px;margin-top: 3px;padding: 5px  0px  5px 30px;list-style:none;background-color: #ffffff;text-shadow: none;font-size: 0.95em;}
 .legend ul li:FIRST-CHILD{margin-top: 0;}
-.legend ul li > .total{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/legendLine.png) 0 3px no-repeat; color: #666;}
+.legend ul li > .total{display:inline-block;position:absolute;right:0;width: 30px;padding-left: 20px;background: url(../image/legendLine.png) 0 3px no-repeat;color: #666;}
 
-.legend ul li.rdpq{background: #fff url(../image/roadIconS.png) 15px 9px no-repeat;}
+.legend ul li.rdpq{background: #fff url(../image/roadIconS.png) 6px 5px no-repeat;}
 .legend ul li.rdpq.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.rdpq.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;}
 
-.legend ul li.bsis{background: #fff url(../image/blocksIconS.png) 15px 9px no-repeat;}
+.legend ul li.bsis{background: #fff url(../image/blocksIconS.png) 6px 5px no-repeat;}
 .legend ul li.bsis.over{background: #f9745c url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.bsis.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/blocksLine.png) 0 3px no-repeat; color: #fff;}
 
-.legend ul li.area{background: #fff url(../image/localIconS.png) 15px 9px no-repeat;}
+.legend ul li.area{background: #fff url(../image/localIconS.png) 6px 5px no-repeat;}
 .legend ul li.area.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.area.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
-.legend ul li.spot{background: #fff url(../image/spotIconS.png) 15px 9px no-repeat;}
+.legend ul li.spot{background: #fff url(../image/spotIconS.png) 6px 5px no-repeat;}
 .legend ul li.spot.over{background: #58C428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.spot.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
 /*신규 위치등록*/
-.newPosition { top: 16em; width: 9em; height: 3em;}
+.newPosition { top: 11.5em; width: 9em; height: 3em;}
 
 .selectAdrdc { top: 2.5em; width: 9em; height: 3em;}
-.sAdr{background: #fff url(../image/baseAdrdc1.png) 6px 4px no-repeat;    background-size: 2em; width: 7.5em;}
+.selectResearch {top: 12em;width: 9em;height: 3em;}
+
+.sAdr{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;    background-size: 1.4em; width: 7.5em;}
+.sRes{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;background-size: 1.4em;width: 7.5em;}
 /* .newPosition button { background-color: transparent !important;position: relative;} */
 .newPosition ul {width: 9em;}
-.legend ul li.nPos{background: #fff url(../image/plusPos2.png) 6px 4px no-repeat;    background-size: 2em; width: 6.5em;}
+.legend ul li.nPos{background: #fff url(../image/plusPos2.png) 7px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
 /* .legend ul li.nPos.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.nPos.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;} */
 
@@ -102,6 +105,7 @@
 .infoHeader >.title > .label.acrdc{position: relative; top: -6px; padding-right: 10px;}
 .infoHeader >.title > .location{position: relative; top: -7px; font-size: 0.8em;}
 .infoHeader >.title > .listLabel{position: absolute;top:0px;left:179px}
+.infoHeader >.title > .listLabel2{position: absolute;top:0px;left:280px}
 .infoHeader >.photo{position:absolute; top:50px; right:40px; width:42px; height:37px; background:url(../image/photo.png) 100% 100% no-repeat;}
 .infoHeader >.photo>.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
 
