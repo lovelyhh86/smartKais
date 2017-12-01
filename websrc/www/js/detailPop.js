@@ -1920,7 +1920,7 @@ function updateWorkDate(){
             var sigCd = app.info.sigCd;
             var workId = app.info.opeId;
             var checkUserNm = app.info.opeNm;
-            var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
+            var delStateCd = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
             var checkType = $("#checkType").text(); //01 수시점검, 02 개별점검
             var checkComment = $("#checkComment_new").text() == ''? $("#checkComment").text() : $("#checkComment_new").text();
 
@@ -1929,7 +1929,7 @@ function updateWorkDate(){
                 sigCd: sigCd,
                 workId : workId,
                 checkUserNm: checkUserNm,
-                checkState : checkState,
+                delStateCd : delStateCd,
                 checkType : checkType,
                 checkComment : checkComment
 
