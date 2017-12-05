@@ -12,7 +12,7 @@
 .legend ul{width: 182px;border:1px solid #e5e5e5;border-radius:8px;box-shadow:2px 2px 3px rgba(0, 0 , 0, .1);padding: 6px 6px;background-color:rgba(245, 247, 248, 0.6);}
 .legend ul li{position:relative;display:inline-block;text-align: left;width: 150px;margin-top: 3px;padding: 5px  0px  5px 30px;list-style:none;background-color: #ffffff;text-shadow: none;font-size: 0.95em;}
 .legend ul li:FIRST-CHILD{margin-top: 0;}
-.legend ul li > .total{display:inline-block;position:absolute;right:0;width: 40px;padding-left: 20px;background: url(../image/legendLine.png) 0 3px no-repeat;color: #666;}
+.legend ul li > .total{display:inline-block;position:absolute;right:0;width: 48px;padding-left: 20px;background: url(../image/legendLine.png) 0 3px no-repeat;color: #666;}
 
 .legend ul li.rdpq{background: #fff url(../image/roadIconS.png) 6px 5px no-repeat;}
 .legend ul li.rdpq.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}

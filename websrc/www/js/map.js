@@ -449,7 +449,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectAdrdc ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sAdr'>기초조사대상목록</li></ul>";
+            var newPosHtml = "<ul><li class='sAdr'>상세주소 기초조사</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', selectAdrdc, false);
