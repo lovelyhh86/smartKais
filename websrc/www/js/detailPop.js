@@ -1867,20 +1867,56 @@ function saveImg(type){
                         }
 
                         util.toast('사진이 변경되었습니다.');
-                        //사진건수
-                        var photoNum = $(".infoHeader .photo .photoNum").html();
 
-                        var cnt = 0 ;
-                        for(var i = 0 ; i < files.length; i++ ){
-                            if(files[i].base64 != ''){
-                                cnt++;
-                            }
+                        //사진건수
+                        if(type == DATA_TYPE.RDPQ){
+                            var link = URLs.roadsignlink;
+                        }else if(type == DATA_TYPE.AREA){
+                            var link = URLs.roadsignlink;
+                        }else if(type == DATA_TYPE.BSIS){
+                            var link = URLs.roadsignlink;
+                        }else if(type == DATA_TYPE.ENTRC){
+                            var link = URLs.entrclink;
+                            
+                            sendParams = $.extend(sendParams, {
+                                sn : featureClone[0].get('BUL_MAN_NO')
+                            });
+                        }else if(type == DATA_TYPE.SPPN){
+                            var link = URLs.spotSelectlink;
+                        }else if(type == DATA_TYPE.ADRDC){
+                            var link = URLs.addresslink;
                         }
+            
+                        var url = URLs.postURL(link, sendParams);
+                        util.postAJAX({}, url).then(
+                            function (context, rCode, results) {
+                                //통신오류처리
+                                if (rCode != 0 || results.response.status < 0) {
+                                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                                    util.dismissProgress();
+                                    return;
+                                }
+                                
+                                var data = results.data;
+
+                                $(".infoHeader .photo .photoNum").html(data.cntFiles);
+
+                            })
+
+                        
+                        // var photoNum = $(".infoHeader .photo .photoNum").html();
+
+                        // var cnt = 0 ;
+                        // for(var i = 0 ; i < files.length; i++ ){
+                        //     if(files[i].base64 != ''){
+                        //         cnt++;
+                        //     }
+                        // }
 
                         // if(photoNum <= 2){
                         //     $(".infoHeader .photo .photoNum").html(cnt);
                         // }else{
-                            $(".infoHeader .photo .photoNum").html(parseInt(photoNum - 2) + cnt);
+                            // $(".infoHeader .photo .photoNum").html(parseInt(photoNum - 2) + cnt);
                         // }
 
                         MapUtil.state.photo[0].edited = false;
