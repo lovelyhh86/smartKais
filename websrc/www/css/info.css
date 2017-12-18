@@ -31,10 +31,10 @@
 .legend ul li.spot.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
 /*신규 위치등록*/
-.newPosition { top: 11.5em; width: 9em; height: 3em;}
+.newPosition { top: 14.2em; width: 9em; height: 3em;}
 
 .selectAdrdc { top: 2.5em; width: 9em; height: 3em;}
-.selectResearch {top: 12em;width: 9em;height: 3em;}
+.selectResearch {top: 11.3em;width: 9em;height: 3em;}
 
 .sAdr{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;    background-size: 1.4em; width: 7.5em;}
 .sRes{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;background-size: 1.4em;width: 7.5em;}

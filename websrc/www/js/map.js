@@ -283,7 +283,7 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);
-            // ol.inherits(MapUtil.controls.researchControl, ol.control.Control);
+            ol.inherits(MapUtil.controls.researchControl, ol.control.Control);
             
         },
         /**
@@ -1672,7 +1672,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.selectAdrdcControl(),
             new MapUtil.controls.returnZoomControl(),
             new MapUtil.controls.refreshMapControl(),
-            // new MapUtil.controls.researchControl(),
+            new MapUtil.controls.researchControl(),
 
             new ol.control.Rotate({
                 label: $("<IMG>", { src: 'image/icon_compass.png', alt: '지도회전 초기화' })[0],
