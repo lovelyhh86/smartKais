@@ -1943,8 +1943,67 @@ function saveImg(type){
     }, "알림", ["저장","취소"]);
 
 }
+//일제점검 점검일자 update  !!!!개발중!!!!
+function updateResearchWorkDate(){
+    navigator.notification.confirm(msg.updateWorkDate, function(btnindex){
 
-//점검날짜 update
+        if(btnindex == 1){
+            
+            var sendParams = {};
+
+            var sn = $("#sn").val();
+            //점검대상구분 (01: 도로명판, 02:건물번호판, 03:기초번호판, 04:지역안내판)
+            var rcGbn = $("#rcGbn").val();
+
+            // var sigCd = app.info.sigCd;
+            //구제시 때문에 해당 시설물 시설물코드 필요
+            var sigCd = featureClone.get('SIG_CD');
+            var workId = app.info.opeId;
+            var rcNm = app.info.opeNm;
+            var rcSttCd = $("#rcSttCd_new").text() == ''? $("#rcSttCd").text() : $("#rcSttCd_new").text();
+            var rcRslt = $("#rcRslt_new").text() == ''? $("#rcRslt").text() : $("#rcRslt_new").text();
+
+            sendParams = $.extend({}, {
+                sn: sn,
+                sigCd: sigCd,
+                workId : workId,
+                rcNm: rcNm,
+                rcSttCd : rcSttCd,
+                rcRslt : rcRslt
+            });
+
+            var link = URLs.updateWorkDate;
+
+            util.showProgress();
+            var url = URLs.postURL(link, sendParams);
+            util.postAJAX({}, url).then(
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    util.toast('점검일자가 갱신되었습니다.');
+
+                    $("p[name*='newLbl']").text('');
+
+                    closeDetailView();
+
+                    closePopupAndClearMap();
+
+                    util.dismissProgress();
+
+                },
+                util.dismissProgress
+            );
+        }
+    }, "알림", ["확인","취소"]);
+
+}
+
+//점검날짜 update(사용안 할 예정)
 function updateWorkDate(){
     navigator.notification.confirm(msg.updateWorkDate, function(btnindex){
 
