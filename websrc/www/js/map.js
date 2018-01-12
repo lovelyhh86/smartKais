@@ -789,17 +789,36 @@ var MapUtil = {
 
                 switch (layerID) {
                     case DATA_TYPE.RDPQ:
-
                         //제목창
-                        var title = "<span class='label'>[{0}] {1} {2}{3} {4} {5}{6}<span>".format(
-                            data.rdGdftySeLbl,
-                            (data.bsisRnLbl ? data.bsisRnLbl : '도로명없음'),
-                            (data.frontStartBaseMasterNo),
-                            (data.frontStartBaseSlaveNo != "0" ? '-' + data.frontStartBaseSlaveNo : ''),
-                            (data.plqDirection == '00100' ? '→' : (data.plqDirection == '00200' ? '↔' : (data.plqDirection == '00300' ? '↑' : '?'))),
-                            (data.frontEndBaseMasterNo),
-                            (data.frontEndBaseSlaveNo != "0" ? '-' + data.frontEndBaseSlaveNo : '')
-                        );
+                        var title = '';
+                        //명판방향
+                        var plqDirection = data.plqDirection;
+                        
+                        var frontStartBaseNo = "{0}{1}".format(data.frontStartBaseMasterNo, (data.frontStartBaseSlaveNo != "0" ? '-' + data.frontStartBaseSlaveNo : ''));
+                        var frontEndBaseNo = "{0}{1}".format(data.frontEndBaseMasterNo, (data.frontEndBaseSlaveNo != "0" ? '-' + data.frontEndBaseSlaveNo : ''));
+
+                        //도로명,시작번호,종료번호가 null 일경우 명판정보누락으로 표시
+                        if(data.frontKoreanRoadNm == null ||data.frontStartBaseMasterNo == null || data.frontEndBaseMasterNo == null || data.frontStartBaseSlaveNo == null || data.frontEndBaseSlaveNo == null){
+                            title = "명판정보누락";
+                        }else{
+                            if(plqDirection == '00200'){
+                                title = "<span class='label'>[{0}] {1} {2} {3}<span>".format(
+                                    data.rdGdftySeLbl,
+                                    frontStartBaseNo,
+                                    data.frontKoreanRoadNm ? data.frontKoreanRoadNm : '도로명없음',
+                                    frontEndBaseNo
+                                );
+                            }else{
+                                title = "<span class='label'>[{0}] {1} {2} {3} {4}<span>".format(
+                                    data.rdGdftySeLbl,
+                                    data.frontKoreanRoadNm ? data.frontKoreanRoadNm : '도로명없음',
+                                    frontStartBaseNo,
+                                    data.plqDirection == '00100' ? '→' : (data.plqDirection == '00300' ? '↑' : '?'),
+                                    frontEndBaseNo
+                                );
+                            }
+                        }
+                        
                         $(".title").append(title);
                         //최종점검일자
                         var lastCheckDate = data.lastCheckDate == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.lastCheckDate.substr(0, 4), data.lastCheckDate.substr(4, 2), data.lastCheckDate.substr(6, 2));
@@ -835,13 +854,13 @@ var MapUtil = {
                         //앞면시작기초번호(0-0)
                         $("#frontStartBaseMasterNo").html(data.frontStartBaseMasterNo);
                         $("#frontStartBaseSlaveNo").html(data.frontStartBaseSlaveNo);
-                        var frontStartBaseNo = "{0}{1}".format(data.frontStartBaseMasterNo, (data.frontStartBaseSlaveNo != "0" ? '-' + data.frontStartBaseSlaveNo : ''));
+                        
                         $("#frontStartBaseNo").html(frontStartBaseNo);
                         $("#frontStartBaseNo").addClass("edit");
                         //앞면종료기초번호(0-0)
                         $("#frontEndBaseMasterNo").html(data.frontEndBaseMasterNo);
                         $("#frontEndBaseSlaveNo").html(data.frontEndBaseSlaveNo);
-                        var frontEndBaseNo = "{0}{1}".format(data.frontEndBaseMasterNo, (data.frontEndBaseSlaveNo != "0" ? '-' + data.frontEndBaseSlaveNo : ''));
+                        
                         $("#frontEndBaseNo").html(frontEndBaseNo);
                         $("#frontEndBaseNo").addClass("edit");
                         if (data.bdrclAt == 1) {
@@ -931,12 +950,24 @@ var MapUtil = {
                         break;
                     case DATA_TYPE.AREA:
                         //제목창
-                        var title = "<span class='label'>[{0}] {1} {2}{3}<span>".format(
-                            data.rdGdftySeLbl,
-                            (data.bsisRnLbl ? data.bsisRnLbl : '도로명없음'),
-                            (data.bsisMnnm),
-                            (data.bsisSlno != "0" ? '-' + data.bsisSlno : '')
-                        );
+                        var title = '';
+
+                        //시작기초번호(0-0)]
+                        var area_stbsNo = "{0}{1}".format(data.area_stbsMn, (data.area_stbsSn != "0" ? '-' + data.area_stbsSn : ''));
+                        //종료기초번호(0-0)
+                        var area_edbsNo = "{0}{1}".format(data.area_edbsMn, (data.area_edbsSn != "0" ? '-' + data.area_edbsSn : ''));
+                        
+                        //도로명,시작번호,종료번호가 null 일경우 명판정보누락으로 표시
+                        if(data.area_areaKorRn == null ||data.area_stbsMn == null || data.area_stbsSn == null || data.area_edbsMn == null || data.area_edbsSn == null){
+                            title = "명판정보누락";
+                        }else{
+                            title = "<span class='label'>[{0}] ←{1} {2} {3}→<span>".format(
+                                data.rdGdftySeLbl,
+                                area_stbsNo,
+                                data.area_areaKorRn,
+                                area_edbsNo
+                            );
+                        }
                         $(".title").append(title);
                         //최종점검일자
                         var lastCheckDate = data.lastCheckDate == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.lastCheckDate.substr(0, 4), data.lastCheckDate.substr(4, 2), data.lastCheckDate.substr(6, 2));
@@ -1039,12 +1070,21 @@ var MapUtil = {
                         break;
                     case DATA_TYPE.BSIS:
                         //제목창
-                        var title = "<span class='label'>[{0}] {1} {2}{3}<span>".format(
-                            data.rdGdftySeLbl,
-                            (data.bsisRnLbl ? data.bsisRnLbl : '도로명없음'),
-                            (data.bsisMnnm),
-                            (data.bsisSlno != "0" ? '-' + data.bsisSlno : '')
-                        );
+                        var title = '';
+                        //기초번호(0-0)
+                        var bsis_ctbsNo = "{0}{1}".format(data.bsis_ctbsMn, (data.bsis_ctbsSn != "0" ? '-' + data.bsis_ctbsSn : ''));
+                        
+                        //도로명,시작번호,종료번호가 null 일경우 명판정보누락으로 표시
+                        if(data.bsis_korRn == null ||data.bsis_ctbsMn == null || data.bsis_ctbsSn == null){
+                            title = "명판정보누락";
+                        }else{  
+                            title = "<span class='label'>[{0}] {1} {2}<span>".format(
+                                data.rdGdftySeLbl,
+                                data.bsis_korRn ? data.bsis_korRn : '도로명없음',
+                                bsis_ctbsNo
+                            );
+                        }
+
                         $(".title").append(title);
                         //최종점검일자
                         var lastCheckDate = data.lastCheckDate == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.lastCheckDate.substr(0, 4), data.lastCheckDate.substr(4, 2), data.lastCheckDate.substr(6, 2));
@@ -1088,7 +1128,6 @@ var MapUtil = {
                         //로마자
                         $("#area_romRn").html(data.bsis_RomRn);
                         //기초번호(0-0)
-                        var bsis_ctbsNo = "{0}{1}".format(data.bsis_ctbsMn, (data.bsis_ctbsSn != "0" ? '-' + data.bsis_ctbsSn : ''));
                         $("#bsis_ctbsNo").html(bsis_ctbsNo);
                         //이전승강장번호
                         var bsis_bfbsNo = "{0}{1}".format(data.bsis_bfbsMn, (data.bsis_bfbsSn != "0" ? '-' + data.bsis_bfbsSn : ''));
@@ -1999,35 +2038,68 @@ var mapInit = function(mapId, pos) {
                                     if (rdGdftySe == "110") {
                                         layerID = DATA_TYPE.RDPQ;
                                         var gbn = commonP.format("gbn", "[{0}]".format("도로명판"));
-                                        var title = commonP.format("localTitle",
-                                            "{0} {1}{2} {3} {4}{5}".format(
-                                                resultList[i].frontKoreanRoadNm,
-                                                resultList[i].frontStartBaseMasterNo,
-                                                (resultList[i].frontStartBaseSlaveNo == "0" ? "" : "-" + resultList[i].frontStartBaseSlaveNo),
-                                                (resultList[i].plqDirection == '00100' ? '→' : (resultList[i].plqDirection == '00200' ? '↔' : (resultList[i].plqDirection == '00300' ? '↑' : '?'))),
-                                                resultList[i].frontEndBaseMasterNo,
-                                                (resultList[i].frontEndBaseSlaveNo == "0" ? "" : "-" + resultList[i].frontEndBaseSlaveNo)
-                                            )
-                                        );
+                                        //제목창
+                                        var title = '';
+                                        //명판방향
+                                        var plqDirection = resultList[i].plqDirection;
+                                        
+                                        var frontStartBaseNo = "{0}{1}".format(resultList[i].frontStartBaseMasterNo, (resultList[i].frontStartBaseSlaveNo != "0" ? '-' + resultList[i].frontStartBaseSlaveNo : ''));
+                                        var frontEndBaseNo = "{0}{1}".format(resultList[i].frontEndBaseMasterNo, (resultList[i].frontEndBaseSlaveNo != "0" ? '-' + resultList[i].frontEndBaseSlaveNo : ''));
 
-                                        //시점
-                                        var FT_STBS_MN = (resultList[i].frontStartBaseMasterNo ? resultList[i].frontStartBaseMasterNo : '');
+                                        //도로명,시작번호,종료번호가 null 일경우 명판정보누락으로 표시
+                                        if(resultList[i].frontKoreanRoadNm == null ||resultList[i].frontStartBaseMasterNo == null || resultList[i].frontEndBaseMasterNo == null || resultList[i].frontStartBaseSlaveNo == null || resultList[i].frontEndBaseSlaveNo == null){
+                                            title = "명판정보누락";
+                                        }else{
+                                            if(plqDirection == '00200'){
+                                                title = commonP.format("localTitle",
+                                                    "{0} {1} {2}".format(
+                                                        frontStartBaseNo,
+                                                        resultList[i].frontKoreanRoadNm ? resultList[i].frontKoreanRoadNm : '도로명없음',
+                                                        frontEndBaseNo
+                                                    )
+                                                );
+                                            }else{
+                                                title = commonP.format("localTitle",
+                                                    "{0} {1} {2} {3}".format(
+                                                        resultList[i].frontKoreanRoadNm ? resultList[i].frontKoreanRoadNm : '도로명없음',
+                                                        frontStartBaseNo,
+                                                        (resultList[i].plqDirection == '00100' ? '→' : (resultList[i].plqDirection == '00300' ? '↑' : '?')),
+                                                        frontEndBaseNo
+                                                    )
+                                                );
+                                            }
+                                        }
 
-                                        var FT_STBS_SN = (resultList[i].frontStartBaseSlaveNo ? resultList[i].frontStartBaseSlaveNo : '');
+                                        // var title = commonP.format("localTitle",
+                                        //     "{0} {1}{2} {3} {4}{5}".format(
+                                        //         resultList[i].frontKoreanRoadNm,
+                                        //         resultList[i].frontStartBaseMasterNo,
+                                        //         (resultList[i].frontStartBaseSlaveNo == "0" ? "" : "-" + resultList[i].frontStartBaseSlaveNo),
+                                        //         (resultList[i].plqDirection == '00100' ? '→' : (resultList[i].plqDirection == '00200' ? '↔' : (resultList[i].plqDirection == '00300' ? '↑' : '?'))),
+                                        //         resultList[i].frontEndBaseMasterNo,
+                                        //         (resultList[i].frontEndBaseSlaveNo == "0" ? "" : "-" + resultList[i].frontEndBaseSlaveNo)
+                                        //     )
+                                        // );
+                                        
 
-                                        var ftStbsStr = baseNumberMix(FT_STBS_MN, FT_STBS_SN); // 0 - 0
+                                        // //시점
+                                        // var FT_STBS_MN = (resultList[i].frontStartBaseMasterNo ? resultList[i].frontStartBaseMasterNo : '');
 
-                                        var ftStbs = popTableP.format("시작기초번호", ftStbsStr);
+                                        // var FT_STBS_SN = (resultList[i].frontStartBaseSlaveNo ? resultList[i].frontStartBaseSlaveNo : '');
 
-                                        //종점
+                                        // var ftStbsStr = baseNumberMix(FT_STBS_MN, FT_STBS_SN); // 0 - 0
 
-                                        var BK_STBS_MN = (resultList[i].backStartBaseMasterNo ? resultList[i].backStartBaseMasterNo : '');
+                                        // var ftStbs = popTableP.format("시작기초번호", ftStbsStr);
 
-                                        var BK_STBS_SN = (resultList[i].backStartBaseSlaveNo ? resultList[i].backStartBaseSlaveNo : '');
+                                        // //종점
 
-                                        var bkStbsStr = baseNumberMix(BK_STBS_MN, BK_STBS_SN); // 0 - 0
+                                        // var BK_STBS_MN = (resultList[i].backStartBaseMasterNo ? resultList[i].backStartBaseMasterNo : '');
 
-                                        var bkStbs = popTableP.format("종료기초번호", bkStbsStr);
+                                        // var BK_STBS_SN = (resultList[i].backStartBaseSlaveNo ? resultList[i].backStartBaseSlaveNo : '');
+
+                                        // var bkStbsStr = baseNumberMix(BK_STBS_MN, BK_STBS_SN); // 0 - 0
+
+                                        // var bkStbs = popTableP.format("종료기초번호", bkStbsStr);
 
                                         //명판방향
                                         var PLQ_DRC = resultList[i].plqDirectionLbl;
@@ -2041,7 +2113,9 @@ var mapInit = function(mapId, pos) {
                                             //규격(제2외국어용 규격)
                                             RDPQ_GD_SD = resultList[i].rdpqGdSdScfggMktyLbl;
                                         }
-                                        
+                                        if(RDPQ_GD_SD == null){
+                                            RDPQ_GD_SD = '규격정보없음';
+                                        }
                                         var rdpqGdSd = commonSpan.format("info", RDPQ_GD_SD);
                                         //양면여부
                                         var BDRCL_AT = resultList[i].bdrclAt == 0 ? "단면" : "양면";
@@ -2073,13 +2147,35 @@ var mapInit = function(mapId, pos) {
                                     } else if (rdGdftySe == "510") {
                                         layerID = DATA_TYPE.AREA;
                                         var gbn = commonP.format("gbn", "[{0}]".format("지역안내판"));
-                                        var title = commonP.format("localTitle",
-                                            "{0} {1}{2}".format(
-                                                resultList[i].area_areaKorRn,
-                                                resultList[i].area_stbsMn,
-                                                (resultList[i].area_stbsSn == "0" ? "" : "-" + resultList[i].area_stbsSn)
-                                            )
-                                        );
+
+                                        //제목창
+                                        var title = '';
+
+                                        //시작기초번호(0-0)]
+                                        var area_stbsNo = "{0}{1}".format(resultList[i].area_stbsMn, (resultList[i].area_stbsSn != "0" ? '-' + resultList[i].area_stbsSn : ''));
+                                        //종료기초번호(0-0)
+                                        var area_edbsNo = "{0}{1}".format(resultList[i].area_edbsMn, (resultList[i].area_edbsSn != "0" ? '-' + resultList[i].area_edbsSn : ''));
+                                        
+                                        //도로명,시작번호,종료번호가 null 일경우 명판정보누락으로 표시
+                                        if(resultList[i].area_areaKorRn == null ||resultList[i].area_stbsMn == null || resultList[i].area_stbsSn == null || resultList[i].area_edbsMn == null || resultList[i].area_edbsSn == null){
+                                            title = "명판정보누락";
+                                        }else{
+                                            title = commonP.format("localTitle",
+                                                "←{0} {1} {2}→".format(
+                                                    area_stbsNo,
+                                                    resultList[i].area_areaKorRn ? resultList[i].area_areaKorRn : '도로명없음',
+                                                    area_edbsNo
+                                                )
+                                            );
+                                        }
+
+                                        // var title = commonP.format("localTitle",
+                                        //     "{0} {1}{2}".format(
+                                        //         resultList[i].area_areaKorRn,
+                                        //         resultList[i].area_stbsMn,
+                                        //         (resultList[i].area_stbsSn == "0" ? "" : "-" + resultList[i].area_stbsSn)
+                                        //     )
+                                        // );
                                         //규격
                                         var AREA_GD_SD = resultList[i].area_areaGdSdLbl;
                                         var areaGdSd = commonSpan.format("info", AREA_GD_SD);
@@ -2114,13 +2210,31 @@ var mapInit = function(mapId, pos) {
                                     } else if (rdGdftySe == "610") {
                                         layerID = DATA_TYPE.BSIS;
                                         var gbn = commonP.format("gbn", "[{0}]".format("기초번호판"));
-                                        var title = commonP.format("localTitle",
-                                            "{0} {1}{2}".format(
-                                                resultList[i].bsis_korRn,
-                                                resultList[i].bsis_ctbsMn,
-                                                (resultList[i].bsis_ctbsSn == "0" ? "" : "-" + resultList[i].bsis_ctbsSn)
-                                            )
-                                        );
+
+                                        //제목창
+                                        var title = '';
+                                        //기초번호(0-0)
+                                        var bsis_ctbsNo = "{0}{1}".format(resultList[i].bsis_ctbsMn, (resultList[i].bsis_ctbsSn != "0" ? '-' + resultList[i].bsis_ctbsSn : ''));
+                                        
+                                        //도로명,시작번호,종료번호가 null 일경우 명판정보누락으로 표시
+                                        if(resultList[i].bsis_korRn == null ||resultList[i].bsis_ctbsMn == null || resultList[i].bsis_ctbsSn == null){
+                                            title = "명판정보누락";
+                                        }else{  
+                                            title = commonP.format("localTitle",
+                                                "{0} {1}".format(
+                                                    resultList[i].bsis_korRn ? resultList[i].bsis_korRn : '도로명없음',
+                                                    bsis_ctbsNo
+                                                )
+                                            );
+                                        }
+
+                                        // var title = commonP.format("localTitle",
+                                        //     "{0} {1}{2}".format(
+                                        //         resultList[i].bsis_korRn,
+                                        //         resultList[i].bsis_ctbsMn,
+                                        //         (resultList[i].bsis_ctbsSn == "0" ? "" : "-" + resultList[i].bsis_ctbsSn)
+                                        //     )
+                                        // );
 
                                         //시점
                                         var BFBS_MN = (resultList[i].bsis_bfbsMn ? resultList[i].bsis_bfbsMn : '');
