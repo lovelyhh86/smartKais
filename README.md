@@ -1,4 +1,4 @@
-# SmartKAIS
+# 스마트KAIS
 ## git 저장소 복사
 ```
 git clone http://git.2yaa.co.kr/maniayaa/smartKais.git
@@ -16,10 +16,14 @@ git checkout -b <name> origin/<name>
 ```
 
 ## branch 선택
-```git checkout <name>```
+git checkout <name>
+```
 
-
-## 각자 branch에서 알아서 작업 
+### 원격지 branch 체크아웃
+git checkout -t <remoteName>/<branchName>
+```
+### 원격지 branch clenaup
+git remote prune <remoteName>
 
 ## branch 커밋 & 푸시
 ```
