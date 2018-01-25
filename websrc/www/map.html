@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html LANG="ko">
 <div id="mapview_page" data-sn='' data-sigcd='' data-role="page" data-dom-cache="true">
+    <div id="map" style="height: 100%; background-color : #94AFD4"></div>
     <div id="newPos" class="newPos">
         <div class="newPosContent">
             <div class="location">
                 <img src="image/arrow.png" alt="신규위치" />
+                <span class="label">화면을 이동하여 신규 위치를 선택해 주세요.</span>
             </div>
             <!-- <div class="buttonDiv" onclick="showNewPosMemo()">
                 <img src="image/check.png"></img>
@@ -15,6 +17,7 @@
               
         </div>
     </div>
+    <div id="moveInfo" style="display:none;"><span class="label">화면을 선택하여 이동하고자 하는 위치를 지정해 주세요.</span></div>
     <div class="buttonDiv"> 
         <span class="btnNormal" onclick="cancleNewPos()">취소</span> 
         <span class="btnPoint" onclick="showNewPosMemo()">위치선택</span> 
@@ -37,8 +40,6 @@
         </div>
         <p onclick="closeNewPosMemo()" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
     </div>
-                
-    <div id="map" style="height: 100%; background-color : #94AFD4"></div>
     <div id="search">
         <form class="ui-filterable" >
             <input id="autocomplete-input" data-type="search" placeholder="도로명주소 검색(3글자 이상)">

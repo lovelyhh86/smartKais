@@ -189,10 +189,18 @@
       /*border: 5px dashed black;*/
       /*border: 5px double black;*/
       
-  }
+    }
 
-  /*.centerPosIn .location{border: 3px dotted black;}*/
-  .newPosContent {position: relative}
+    /*.centerPosIn .location{border: 3px dotted black;}*/
+    .newPosContent {position: relative}
+    .newPosContent .label, #moveInfo .label {
+        background: white;
+        border: solid 1px silver;
+        border-radius: 0.5em;
+        padding: 1em;
+    }
+    .newPosContent .label { position: fixed; width: 300px; margin-top: -2.2em; margin-left: -1.8em; }
+    #moveInfo .label { bottom: 1em; position: fixed; left: 12em; }
   
   .buttonDiv{    
       width: 100%;

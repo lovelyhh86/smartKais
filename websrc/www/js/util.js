@@ -663,6 +663,7 @@ function removeLayers(){
     // map.removeLayer(layers.area);
     map.removeLayer(layers.loc);
     map.removeLayer(layers.sppn);
+    $("#moveInfo").hide();
 }
 
 function appExitCallback(btnIndex){

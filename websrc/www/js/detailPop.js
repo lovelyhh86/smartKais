@@ -912,9 +912,9 @@ function submit(type){
 
     //도로명판일 경우의 외국어 및 규격 체크
     if(type == DATA_TYPE.RDPQ){
-        //사용대상이 보행자용이 아닐떄 제2외국어 사용못함
-        if((useTarget != "01000" && useTarget_new != "01000")  ||  (useTarget == "01000" && useTarget_new != "")){
-            if((scfggMkty_new == "" && scfggMkty != "1") || scfggMkty_new == "2" || scfggMkty_new == "3"){
+        //사용대상이 보행자용(보행자용:01000,차로용:04000,소로용:05000)이 아닐떄 제2외국어 사용못함
+        if((useTarget_new == "" && useTarget != "01000" && useTarget != "04000" && useTarget != "05000") || (useTarget_new != "" && useTarget_new != "01000" && useTarget_new != "04000" && useTarget_new != "05000")) {
+            if((scfggMkty_new == "" && scfggMkty != "1") || (scfggMkty_new != "" && scfggMkty_new != "1")) {
                 navigator.notification.alert(msg.useTargetScfggMkty,'','알림', '확인');
                 return;
             }
@@ -1640,62 +1640,47 @@ function photoMode(){
    }
 
    return photoModeGbn;
-
 }
 
-function closePhotoView(){
-   if(MapUtil.state.photo[0].edited || MapUtil.state.photo[1].edited){
-       navigator.notification.confirm(msg.lossPhotoClose, function(btnIndex){
-           if(btnIndex == 1){
-                $("#photoDialog").hide();
-                $("#mask").hide();
-           }
-       }, "알림", ["닫기","취소"]);
-   }else{
+function closePhotoView(force){
+    if(MapUtil.photo.isEdited() && !force){
+        navigator.notification.confirm(msg.lossPhotoClose, function(btnIndex){
+            switch(btnIndex) {
+                case 1: //닫기
+                    $("#photoDialog").hide();
+                    $("#mask").hide();
+
+                    break;
+                case 2: //취소
+                    break;
+            }
+        }, "알림", ["닫기","취소"]);
+    } else {
         $("#photoDialog").hide();
         $("#mask").hide();
-   }
+    }
 
 }
 
 function makeImg(){
+    var files = [];
+    var sn = $("#sn").val();
+    var date = util.getToday();
+    var title = $(".infoHeader .title .label").text();
 
-   var picImg = $(".picImg");
-
-   var files = [];
-
-   var imgParam = "{ base64 : {0}, name : {1} }";
-
-   var sn = $("#sn").val();
-   var date = util.getToday();
-   var title = $(".infoHeader .title .label").text();
-
-
-   for(var index = 0 ; index < picImg.length; index++){
-        var picImgTag = $(picImg[index]);
-        var src = '';
-        var imageFilesSn = '';
-        var tbGbn = '';
-        if(picImgTag[0].firstChild != null){
-            src = picImgTag[0].children[0].getAttribute("src").split('base64,')[1];
-            imageFilesSn = picImgTag[0].children[1].getAttribute("value");
-            tbGbn = picImgTag[0].children[2].getAttribute("value");
-        }
-        var imgtName = '{0}_{1}_{2}.jpg'.format(date,title,tbGbn);
-
+    $("#photoDialog .photoTable .picInfo .picImg img").each(function(i, o){
         var data = new Object() ;
+        var picInfo = $(o).parent().parent();
 
-        data.base64 = src;
-        data.name = imgtName;
-        data.imageFilesSn = imageFilesSn;
-        data.tbGbn = tbGbn;
-
+        data.base64 = $(o).attr("src").replace(/.+base64,/,'');
+        data.imageFilesSn = picInfo.data('picSn');
+        data.tbGbn = picInfo.data('picType');
+        data.name = '{0}_{1}_{2}.jpg'.format(date, title, data.tbGbn);
 
         files.push(data);
-    }
+    });
 
-   return files;
-
+    return files;
 }
 
 function wrapWindowByMask(id){
@@ -1729,140 +1714,75 @@ function clearMask(){
 }
 
 function saveImg(type){
-
-    if(!MapUtil.state.photo[0].edited && !MapUtil.state.photo[1].edited){
+    // 사진 변경(촬영) 여부 확인
+    if(!MapUtil.photo.isEdited()) {
         navigator.notification.alert(msg.noSave,'','알림', '확인');
         return;
     }
 
     //사진파일
     var files = makeImg();
+    var valid = true;
 
-    if(type != DATA_TYPE.SPPN && type != DATA_TYPE.ADRDC){
-        //사진이 없는데 촬영도 안한경우
-        for(var i = 0; i < MapUtil.state.photo.length; i ++){
-            if(!MapUtil.state.photo[i].edited && !MapUtil.state.photo[i].isPhoto ){
-                navigator.notification.alert(msg.noPhoto,'','알림', '확인');
-                return;
+    switch(files.length) {
+        case 0:
+            valid = false;
+            break;
+        case 1:
+            if(type != DATA_TYPE.SPPN && type != DATA_TYPE.ADRDC){
+                valid = false;
             }
-        }
-
-        
-        if(files[0].base64 != "" && files[1].base64 == ""){
-            navigator.notification.alert(msg.noPhoto,'','알림', '확인');
-            return;
-        }else if(files[0].base64 == "" && files[1].base64 != ""){
-            navigator.notification.alert(msg.noPhoto,'','알림', '확인');
-            return;
-        }
-    }else{
-        if(files[0].base64 == ""){
-            navigator.notification.alert(msg.noPhoto,'','알림', '확인');
-            return;
-        }
+            break;
     }
-    
+
+    if(!valid) {
+        navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+        return;
+    }
 
     navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
         if(btnindex == 1){
-            var commomParams = {};
-            var sendParams = {};
-            var buldParams = {};
-            var sn = $("#sn").val();
-            var rdFtyLcSn = $("#rdFtyLcSn").val();
-            var sigCd = app.info.sigCd;
-            var workId = app.info.opeId;
-            var checkUserNm = app.info.opeNm;
-            // var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
-            var checkType = $("#checkType").text();
-
-
-
-
-            commomParams = $.extend(commomParams, {files: files});
-
-            //사진파일
-            // if(files.length>0){
-            //     commomParams = $.extend(commomParams, {files: files});
-            // }else{
-            //     navigator.notification.alert(msg.noSave,'','알림', '확인');
-            //     return;
-            // }
-
-            commomParams = $.extend(commomParams, {
-                sn: sn,
-                rdFtyLcSn: rdFtyLcSn,
-                sigCd: sigCd,
-
+            var params = {
+                sn: $("#sn").val(),
+                rdFtyLcSn: $("#rdFtyLcSn").val(),
+                sigCd: app.info.sigCd,
                 checkDate: util.getToday(),
-                workId: workId,
-                checkUserNm : checkUserNm,
-                // checkState : checkState,
-                checkType : checkType,
+                workId: app.info.opeId,
+                opeNm : app.info.opeNm,
+                checkUserNm : app.info.opeNm,
+                checkType : $("#checkType").text(),
+                files: files
+            };
 
-            });
-
-            if(type == DATA_TYPE.RDPQ){
-                sendParams = $.extend(commomParams, {
-                    type :type
-                });
-
-                var link = URLs.updateSpgfImg;
-                var relink = URLs.roadsignlink;
-
-            }else if(type == DATA_TYPE.AREA){
-                sendParams = $.extend(commomParams, {
-                    type :type
-                });
-
-                var link = URLs.updateSpgfImg;
-                var relink = URLs.roadsignlink;
-
-            }else if(type == DATA_TYPE.BSIS){
-                sendParams = $.extend(commomParams, {
-                    type :type
-                });
-
-                var link = URLs.updateSpgfImg;
-                var relink = URLs.roadsignlink;
-
-            }else if(type == DATA_TYPE.ENTRC){
-                sendParams = $.extend(commomParams, {
-                });
-                sendParams = $.extend(commomParams, {
-                    imageFilesSn: $("#imaFilSn").val()
-                //     sn: sn,
-                //     sigCd: sigCd,
-                //     workId :app.info.opeId,
-                //     //사진파일
-                //     // files: files
-                });
-
-                var link = URLs.updateBuildNumberInfo;
-            }else if(type == DATA_TYPE.SPPN){
-                sendParams = $.extend(commomParams, {
-                    imaFilSn: $("#imaFilSn").val()
-                });
-
-                var link = URLs.updateSpotInfo;
-            }else if(type == DATA_TYPE.ADRDC){
-                sendParams = $.extend(commomParams, {
-                    opeNm : app.info.opeNm,
-                    imaFilSn: $("#imaFilSn").val()
-                });
-
-                var link = URLs.insertBaseResearch;
+            var link, relink;
+            switch(type) {
+                case DATA_TYPE.RDPQ:
+                case DATA_TYPE.AREA:
+                case DATA_TYPE.BSIS:
+                    link = URLs.updateSpgfImg;
+                    relink = URLs.roadsignlink;
+                    break;
+                case DATA_TYPE.ENTRC:
+                    link = URLs.updateBuildNumberInfo;
+                    break;
+                case DATA_TYPE.SPPN:
+                    link = URLs.updateSpotInfo;
+                    break;
+                case DATA_TYPE.ADRDC:
+                    link = URLs.insertBaseResearch;
+                    break;
             }
 
             util.showProgress();
-            var url = URLs.postURL(link, sendParams);
-            util.postAJAX({}, url).then(
+            var url = URLs.postURL(link, params);
+            util.postAJAX({}, url)
+            .then(
                 function (context, rCode, results) {
+                    util.dismissProgress();
                     try {
                         //통신오류처리
                         if (rCode != 0 || results.response.status < 0) {
                             navigator.notification.alert(msg.callCenter, '', '알림', '확인');
-                            util.dismissProgress();
                             return;
                         }
 
@@ -1877,8 +1797,8 @@ function saveImg(type){
                             var link = URLs.roadsignlink;
                         }else if(type == DATA_TYPE.ENTRC){
                             var link = URLs.entrclink;
-                            
-                            sendParams = $.extend(sendParams, {
+
+                            params = $.extend(params, {
                                 sn : featureClone[0].get('BUL_MAN_NO')
                             });
                         }else if(type == DATA_TYPE.SPPN){
@@ -1886,43 +1806,25 @@ function saveImg(type){
                         }else if(type == DATA_TYPE.ADRDC){
                             var link = URLs.addresslink;
                         }
-            
-                        var url = URLs.postURL(link, sendParams);
-                        util.postAJAX({}, url).then(
+
+                        // 사진 저장 후 전체 건 수 다시 조회
+                        var url = URLs.postURL(link, params);
+                        util.postAJAX({}, url)
+                        .then(
                             function (context, rCode, results) {
+                                util.dismissProgress();
                                 //통신오류처리
                                 if (rCode != 0 || results.response.status < 0) {
                                     navigator.notification.alert(msg.callCenter, '', '알림', '확인');
-                                    util.dismissProgress();
                                     return;
                                 }
-                                
+
                                 var data = results.data;
 
                                 $(".infoHeader .photo .photoNum").html(data.cntFiles);
-
-                            })
-
-                        
-                        // var photoNum = $(".infoHeader .photo .photoNum").html();
-
-                        // var cnt = 0 ;
-                        // for(var i = 0 ; i < files.length; i++ ){
-                        //     if(files[i].base64 != ''){
-                        //         cnt++;
-                        //     }
-                        // }
-
-                        // if(photoNum <= 2){
-                        //     $(".infoHeader .photo .photoNum").html(cnt);
-                        // }else{
-                            // $(".infoHeader .photo .photoNum").html(parseInt(photoNum - 2) + cnt);
-                        // }
-
-                        MapUtil.state.photo[0].edited = false;
-                        MapUtil.state.photo[1].edited = false;
-
-                        closePhotoView();
+                            }
+                        );
+                        closePhotoView(true);   // force
 
                         if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
                             MapUtil.setValues(layerID, relink, rdGdftySn);
@@ -1930,12 +1832,10 @@ function saveImg(type){
                             //지도 초기화
                             getVectorSource(map , "위치레이어").clear();
                         }
-
-                        util.dismissProgress();
                     }catch(e) {
-                        util.dismissProgress();
                         util.toast('데이터 처리에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요.');
                     }
+                    util.dismissProgress();
                 },
                 util.dismissProgress
             );
@@ -1975,7 +1875,8 @@ function updateWorkDate(){
 
             util.showProgress();
             var url = URLs.postURL(link, sendParams);
-            util.postAJAX({}, url).then(
+            util.postAJAX({}, url)
+            .then(
                 function (context, rCode, results) {
                     //통신오류처리
                     if (rCode != 0 || results.response.status < 0) {
