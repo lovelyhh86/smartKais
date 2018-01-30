@@ -31,7 +31,7 @@
 							<p id="lastCheckDate" name="oldLbl" >&nbsp;</p>
 						</div>
 					</div>
-					<div onclick="openCustomPop('checkComment');" class="row">
+					<!-- div onclick="openCustomPop('checkComment');" class="row">
                         <div  class="cell1">
                             <span class="label">메모</span>
                         </div>
@@ -39,7 +39,7 @@
                             <p id="checkComment" name="oldLbl">&nbsp;</p>
                             <p id="checkComment_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
-                    </div>
+                    </div -->
 					<!-- <div onclick="openDataIdPop('delStateCd');" class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
@@ -189,14 +189,12 @@
 			<!-- footer 시작 -->
 			<div class="infoFooter">
 				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
-				<span onclick="submit(DATA_TYPE.SPPN);" class="btnPoint">저장</span>
+				<!--<span onclick="submit(DATA_TYPE.SPPN);" class="btnPoint">저장</span>-->
 			</div>
 			<!-- footer 끝 -->
 		</div>
 	</div>
 </div>
-
-<input type="hidden" id="photoIsGgn" value="N" />
 <div id="photoDialog" class="photoWrap" >
 	<div id="" class="">
 		<div class="photoTitle">사진
@@ -206,16 +204,12 @@
 		<div class="photoTable" style="padding-left: 10em;">
 			<div class="row">
 				<div class="cell" style="width: 350px;">
-					<div class="picInfo M">
+					<div class="picInfo M" data-pic-type="M" data-pic-sn="">
 						<span class="photoSub">근거리</span>
-						<span class="picImg">
-							<img style='height: 220px; width: 100%; object-fit: contain' src=''/>
-							<input id='imaFilSn' type='hidden' value=''/>
-							<input id='tbGbn' type='hidden' value='M'/>
-						</span>
-						<div class="dataBtn short">
-							<span class="btnNormal">삭제</span>
-							<span class="btnPoint">촬영</span>
+						<span class="picImg"></span>
+						<div class="dataBtn">
+							<!--<span class="btnNormal">삭제</span>-->
+							<!--<span class="btnPoint">촬영</span>-->
 						</div>
 					</div>
 				</div>
@@ -224,7 +218,7 @@
 	</div>
 	<div class="infoFooter">
 		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
-		<span onclick="saveImg(DATA_TYPE.SPPN);" class="btnPoint">저장</span>
+		<!--<span onclick="saveImg(DATA_TYPE.SPPN);" class="btnPoint">저장</span>-->
 	</div>
 </div>
 <!-- 사진 끝-->
