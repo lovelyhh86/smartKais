@@ -5,7 +5,7 @@
 
 <div id="entrcView_page">
     <div class="detailView">
-        <p class="openImage"><span onclick="closeDetailView();">열림</span></p>
+        <p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
         <div class="infoWrap">
             <!-- header -->
             <div class="infoHeader">
@@ -23,8 +23,41 @@
                     <input id="sn" type="hidden" value="" />
                     <input id="entManNo" type="hidden" value="" />
                     <input id="imageFileSn" type="hidden" value="" />
-
-                    <div onclick="openDataIdPop('delStateCd');" class="row">
+                    <!--일제조사-->
+                    <h4>일제조사</h4>
+                    <div onclick="updateResearchWorkDate()" class="row">
+						<div  class="cell1">
+								<span class="label">최종점검일자</span>
+						</div>
+						<div class="cell2">
+							<p id="lastCheckDate" name="oldLbl" >&nbsp;</p>
+							<p id="rcGbn" name="oldLbl" style="display:none;">01</p>
+						</div>
+					</div>
+					<div onclick="openDataIdPop('rcSttCd');" class="row">
+						<div  class="cell1">
+								<span class="label">점검상태</span>
+						</div>
+						<div class="cell2">
+							<p id="rcSttCdLbl" name="oldLbl" class="edit" >&nbsp;</p>
+							<p id="rcSttCd" style="display:none;"></p>
+							<p id="rcSttCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+							<p id="rcSttCd_new" style="display:none"></p>
+						</div>
+					</div>
+					<div onclick="openCustomPop('rcRslt');" class="row">
+                        <div  class="cell1">
+                            <span class="label">점검결과</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="rcRslt" name="oldLbl"></p>
+                            <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p>
+                        </div>
+                    </div>
+                    <!--일제조사 end-->
+                    <h4>기본정보</h4>
+                    <!-- <div onclick="openDataIdPop('delStateCd');" class="row"> -->
+                    <div class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
 						</div>
@@ -131,7 +164,119 @@
 							<p id="gdftyUnitPrice" name="oldLbl"></p>
 							<p id="gdftyUnitPrice_new" name="newLbl" style="display:none; color:red"></p>
 						</div>
-					</div>
+                    </div>
+                    <div class = "row">
+                        <div class="cell2">
+                            <h4>건물정보</h4>
+                        </div>
+                        <div class="cell2">
+                            <button onclick="goPopBuild()">수정</button>
+                        </div>
+                    </div>
+                    <!-- 건물정보 -->
+                    <!-- <div onclick="openDataIdPop('bdtypCd_main');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">용도(대분류)</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="bdtypCd_mainLbl" name="oldLbl">&nbsp;</p>
+                                <p id="bdtypCd_main" style="display:none"></p>
+                                <p id="bdtypCd_mainLbl_new" style="display:none; color:red"></p>
+                                <p id="bdtypCd_main_new" style="display:none"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- <div onclick="openDataIdPop('bdtypCd');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">용도(소분류)</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="bdtypCdLbl" name="oldLbl">&nbsp;</p>
+                                <p id="bdtypCd" style="display:none"></p>
+                                <p id="bdtypCdLbl_new"  style="display:none; color:red"></p>
+                                <p id="bdtypCd_new" name="newLbl" style="display:none"></p>
+                            </div>
+                        </div>
+                        <!-- <div onclick="openDataIdPop('bulDpnSe');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">건물종속여부</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="bulDpnSeLbl" name="oldLbl">&nbsp;</p>
+                                <p id="bulDpnSe" style="display:none"></p>
+                                <p id="bulDpnSeLbl_new" name="newLbl" style="display:none; color:red"></p>
+                                <p id="bulDpnSe_new" style="display:none"></p>
+                            </div>
+                        </div>
+                        <!-- <div onclick="openCustomPop('posBulNm');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">건물명</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="posBulNm" name="oldLbl">&nbsp;</p>
+                                <p id="posBulNm_new" name="newLbl" style="display:none; color:red"></p>
+                            </div>
+                        </div>
+                        <!-- <div onclick="openCustomPop('bulEngNm');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">건물명(영)</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="bulEngNm" name="oldLbl">&nbsp;</p>
+                                <p id="bulEngNm_new" name="newLbl" style="display:none; color:red"></p>
+                            </div>
+                        </div>
+                        <!-- <div onclick="openCustomPop('buldNmDc');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">상세건물명</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="buldNmDc" name="oldLbl">&nbsp;</p>
+                                <p id="buldNmDc_new" name="newLbl" style="display:none; color:red"></p>
+                            </div>
+                        </div>
+                        <!-- <div onclick="openCustomPop2('floCo',['groFloCo','undFloCo']);" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">건물층수</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="floCo" name="oldLbl">&nbsp;</p>
+                                <p id="groFloCo" style="display:none"></p>
+                                <p id="undFloCo" style="display:none"></p>
+                                <p id="floCo_new" name="newLbl" style="display:none; color:red"></p>
+                                <p id="groFloCo_new" style="display:none"></p>
+                                <p id="undFloCo_new" style="display:none"></p>
+                            </div>
+                        </div>
+                        <!-- <div onclick="openCustomPop('buldSttus');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">건물상태</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="buldSttus" name="oldLbl">&nbsp;</p>
+                                <p id="buldSttus_new" name="newLbl" style="display:none; color:red"></p>
+                            </div>
+                        </div>
+                        <!-- <div onclick="openCustomPop('buldMemo');" class="row"> -->
+                        <div class="row">
+                            <div  class="cell1">
+                                <span class="label">메모</span>
+                            </div>
+                            <div class="cell2">
+                                <p id="buldMemo" name="oldLbl">&nbsp;</p>
+                                <p id="buldMemo_new" name="newLbl" style="display:none; color:red"></p>
+                            </div>
+                        </div>
+
+                        <!-- 건물정보 끝 -->
 					
                 </div>
                 <!-- 정보 끝 -->

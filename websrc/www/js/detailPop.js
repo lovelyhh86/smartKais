@@ -242,6 +242,35 @@ function openDataIdPop(id){
             popColume = 'RC_STT_CD';
             createRadioButtonCustom(id);
             break;
+        case 'prtTy':
+            //제목
+            var titleText = '인쇄방식'; //인쇄방식
+            setTitle(titleText);
+
+            //라디오버튼 구성
+            popColume = 'PRT_TY';
+            createRadioButton();
+            break;
+        case 'bsisMthd':
+            //제목
+            var titleText = '표기방법';//기초번호판
+            setTitle(titleText);
+
+            //라디오버튼 구성
+            popColume = 'BSIS_MTHD';
+            createRadioButton();
+            break;
+        case 'area_insPlc':
+            //제목
+            var titleText = '설치장소';//지역안내판
+            setTitle(titleText);
+
+            //라디오버튼 구성
+            popColume = 'INS_PLC';
+            createRadioButton();
+            break;
+            
+
             
 
     }
@@ -1029,31 +1058,34 @@ function submit(type){
             if(gdftyUnitPrice_new !=""){
                 sendParams = $.extend(sendParams, {gdftyUnitPrice: gdftyUnitPrice_new});
             }
-            //설치상태
-            var delStateCd_new = $("#delStateCd_new").text() == ''?$("#delStateCd").text():$("#delStateCd_new").text();
-            if(delStateCd_new !=""){
-                sendParams = $.extend(sendParams, {delStateCd: delStateCd_new});
+            // //설치상태
+            // var delStateCd_new = $("#delStateCd_new").text() == ''?$("#delStateCd").text():$("#delStateCd_new").text();
+            // if(delStateCd_new !=""){
+            //     sendParams = $.extend(sendParams, {delStateCd: delStateCd_new});
+            // }
+            //점검결과
+            var rcRslt_new = $("#rcRslt_new").text();
+            if(rcRslt_new !=""){
+                sendParams = $.extend(sendParams, {rcRslt: rcRslt_new});
             }
-            //점검내용
-            var checkComment_new = $("#checkComment_new").text() == ''? $("#checkComment").text() : $("#checkComment_new").text();
-
-            sendParams = $.extend(sendParams, {checkComment: checkComment_new});
-
             //점검상태
-            // var checkState = $("#delStateCd_new").text() == ''? $("#delStateCd").text() : $("#delStateCd_new").text();
-
-            // sendParams = $.extend(sendParams, {checkState: checkState});
-
+            var rcSttCd_new = $("#rcSttCd_new").text();
+            if(rcSttCd_new !=""){
+                sendParams = $.extend(sendParams, {rcSttCd: rcSttCd_new});
+            }
             //점검타입
-            var checkType = $("#checkType").text();
-
-            sendParams = $.extend(sendParams, {checkType: checkType});
+            // var checkType = $("#checkType").text();
+            // sendParams = $.extend(sendParams, {checkType: checkType});
 
             //점검자명
             var checkUserNm = app.info.opeNm;
 
             sendParams = $.extend(sendParams, {checkUserNm: checkUserNm});
 
+            var prtTy_new = $("#prtTy_new").text();
+            if(prtTy_new !=""){
+                sendParams = $.extend(sendParams, {prtTy: prtTy_new});
+            }
 
             sendParams = $.extend(sendParams, {
                 svcNm: 'uSPGF',
@@ -1175,6 +1207,11 @@ function submit(type){
                 if(area_areaGdSd_new !=""){
                     sendParams = $.extend(sendParams, {area_areaGdSd: area_areaGdSd_new});
                 }
+                //지역안내판 설치위치
+                var area_insPlc_new = $("#area_insPlc_new").text();
+                if(area_insPlc_new !=""){
+                    sendParams = $.extend(sendParams, {area_insPlc: area_insPlc_new});
+                }
 
 
                 commomParams = $.extend(sendParams, {
@@ -1202,6 +1239,17 @@ function submit(type){
                 if(bsis_bsisGdSdLbl_new !=""){
                     sendParams = $.extend(sendParams, {bsis_bsisGdSd: bsis_bsisGdSdLbl_new});
                 }
+                //표기방법
+                var bsisMthd_new = $("#bsisMthd_new").text();
+                if(bsisMthd_new !=""){
+                    sendParams = $.extend(sendParams, {bsisMthd: bsisMthd_new});
+                }
+                //설치시설물 기타 상세내용
+                var bsis_insFtyDc_new = $("#bsis_insFtyDc_new").text();
+                if(bsis_insFtyDc_new !=""){
+                    sendParams = $.extend(sendParams, {bsis_insFtyDc: bsis_insFtyDc_new});
+                }
+                
 
                 commomParams = $.extend(sendParams, {
                     type :type
@@ -1943,7 +1991,7 @@ function saveImg(type){
     }, "알림", ["저장","취소"]);
 
 }
-//일제점검 점검일자 update  !!!!개발중!!!!
+//일제점검 점검일자 update
 function updateResearchWorkDate(){
     navigator.notification.confirm(msg.updateWorkDate, function(btnindex){
 
@@ -1953,26 +2001,37 @@ function updateResearchWorkDate(){
 
             var sn = $("#sn").val();
             //점검대상구분 (01: 도로명판, 02:건물번호판, 03:기초번호판, 04:지역안내판)
-            var rcGbn = $("#rcGbn").val();
+            var rcGbn = $("#rcGbn").text();
 
             // var sigCd = app.info.sigCd;
             //구제시 때문에 해당 시설물 시설물코드 필요
-            var sigCd = featureClone.get('SIG_CD');
+            var sigCd = featureClone[0].get("SIG_CD");
             var workId = app.info.opeId;
             var rcNm = app.info.opeNm;
             var rcSttCd = $("#rcSttCd_new").text() == ''? $("#rcSttCd").text() : $("#rcSttCd_new").text();
-            var rcRslt = $("#rcRslt_new").text() == ''? $("#rcRslt").text() : $("#rcRslt_new").text();
 
-            sendParams = $.extend({}, {
+            if(rcSttCd == ''){
+                navigator.notification.alert('점검상태를 선택하세요.', '', '알림', '확인');
+                return;
+            }
+           
+            //필수사항
+            sendParams = $.extend(sendParams, {
                 sn: sn,
+                rcGbn: rcGbn,
                 sigCd: sigCd,
                 workId : workId,
                 rcNm: rcNm,
-                rcSttCd : rcSttCd,
-                rcRslt : rcRslt
+                rcSttCd : rcSttCd
             });
 
-            var link = URLs.updateWorkDate;
+            //점검결과
+            var rcRslt_new = $("#rcRslt_new").text();
+            if(rcRslt_new != ''){
+                sendParams = $.extend(sendParams, {rcRslt : rcRslt_new})
+            }
+
+            var link = URLs.updateResearchWorkDate;
 
             util.showProgress();
             var url = URLs.postURL(link, sendParams);
@@ -2084,4 +2143,8 @@ function checkPrice(type){
     }
     
 
+}
+
+function goPopBuild(){
+    MapUtil.openDetail(DATA_TYPE.BULD, featureClone[0]);
 }

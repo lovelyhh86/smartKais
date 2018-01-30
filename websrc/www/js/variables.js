@@ -16,6 +16,7 @@ var URLs = {
     //기초조사 end
     //점검
     "researchListLink": { svcNm: "sResearch" },
+    "updateResearchWorkDate": {svcNm: "uResearchWorkDate"},
     //점검 end
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },//사용안함
@@ -38,6 +39,9 @@ var URLs = {
     "sggInfo" : { svcNm: "vAdmInfo"},
     "updateWorkDate" : {svcNm: "uWorkDate"},
     "updateSpgfImg" : {svcNm: "uSPGFImg"},
+
+    //조사자정보 조회 (서비스명 변경해야됨)
+    "searchUserSelectLink" :{svcNm:"sKAISUR"},
 
     getURL: function (srcurl, jsondata) {
 
@@ -200,6 +204,8 @@ CODE_GROUP["SCFGG_ULA1"] = "GFTY020";
 CODE_GROUP["DEL_STT_CD"] = "GFTY613";
 //점검상태코드
 CODE_GROUP["RC_STT_CD"] = "GFTY614";
+//인쇄방식
+CODE_GROUP["PRT_TY"] = "GFTY005";
 
 
 //****** 도로명판 *******
@@ -212,6 +218,9 @@ CODE_GROUP["RDPQ_GD_SD_2"] = "GFTY112";
 CODE_GROUP["ADVRTS_CD"] = "CMMN131";
 //지역안내판 규격
 CODE_GROUP["AREA_GD_SD"] = "GFTY510";
+//지역안내판 설치장소
+CODE_GROUP["INS_PLC"] = "GFTY501";
+
 
 //****** 기초번호판 *******
 //설치장소 구분
@@ -220,6 +229,8 @@ CODE_GROUP["ITLPC_SE"] = "GFTY600";
 CODE_GROUP["PLANE_CD"] = "GFTY611";
 //기초번호판 규격
 CODE_GROUP["BSIS_GD_SD"] = "GFTY610";
+//기초번호판 표기방법
+CODE_GROUP["BSIS_MTHD"] = "GFTY602";
 
 //****** 건물번호판 *******
 //유형

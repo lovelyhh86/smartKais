@@ -408,13 +408,18 @@ function getLocationByFeature(layerNm, searchList){
             }
 
             var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
-            //모든점
-            // var point = features[0].getGeometry().getCoordinates();
-            var point = features[0].getGeometry().getInteriorPoint();
 
-            map.getView().setCenter(point.getCoordinates());
+            var geomType = features[0].getGeometry().getType();
+            if(geomType == "Point"){//일제조사용
+                var point = features[0].getGeometry().getCoordinates();
+            }else{//기초조사용
+                var gemoPoint = features[0].getGeometry().getInteriorPoint();
+                var point = gemoPoint.getCoordinates();
+                //위치마커
+                setPosition(point);
+            }
 
-            setPosition(point.getCoordinates());
+            map.getView().setCenter(point);
 
             toggleDetailView();
 

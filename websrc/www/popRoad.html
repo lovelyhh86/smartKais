@@ -5,7 +5,7 @@
 
 <div id="roadView_page">
 	<div class="detailView">
-		<p class="openImage"><span onclick="closeDetailView();">열림</span></p>
+		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
 		<div class="infoWrap">
 			<!-- header -->
 			<div class="infoHeader">
@@ -22,6 +22,8 @@
 				<div class="infoTable">
 					<input id="sn" type="hidden" value="" />
 					<input id="rdFtyLcSn" type="hidden" value="" />
+					<!--일제조사-->
+					<h4>일제조사</h4>
 					<div onclick="updateResearchWorkDate()" class="row">
 						<div  class="cell1">
 								<span class="label">최종점검일자</span>
@@ -31,27 +33,30 @@
 							<p id="rcGbn" name="oldLbl" style="display:none;">01</p>
 						</div>
 					</div>
-					<div onclick="openCustomPop('rcRslt');" class="row">
-                        <div  class="cell1">
-                            <span class="label">메모</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="rcRslt" name="oldLbl">&nbsp;</p>
-                            <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p>
-                        </div>
-					</div>
 					<div onclick="openDataIdPop('rcSttCd');" class="row">
 						<div  class="cell1">
 								<span class="label">점검상태</span>
 						</div>
 						<div class="cell2">
-							<p id="rcSttCdLbl" name="oldLbl" class="edit" >&nbsp;</p>
+							<p id="rcSttCdLbl" name="oldLbl" >&nbsp;</p>
 							<p id="rcSttCd" style="display:none;"></p>
 							<p id="rcSttCdLbl_new" name="newLbl" style="display:none; color:red"></p>
 							<p id="rcSttCd_new" style="display:none"></p>
 						</div>
 					</div>
-					<div onclick="openDataIdPop('delStateCd');" class="row">
+					<div onclick="openCustomPop('rcRslt');" class="row">
+                        <div  class="cell1">
+                            <span class="label">점검결과</span>
+                        </div>
+                        <div class="cell2">
+                            <p id="rcRslt" name="oldLbl"></p>
+                            <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p>
+                        </div>
+					</div>
+					<!--일제조사 end-->
+					<h4>기본정보</h4>
+					<!-- <div onclick="openDataIdPop('delStateCd');" class="row"> -->
+					<div class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
 						</div>
@@ -321,6 +326,17 @@
 							<p id="bsis">&nbsp;</p>
 						</div>
 					</div>
+					<div onclick="openDataIdPop('prtTy');" class="row">
+						<div  class="cell1">
+								<span class="label">인쇄방식</span>
+						</div>
+						<div class="cell2">
+							<p id="prtTyLbl" name="oldLbl" >&nbsp;</p>
+                            <p id="prtTy" style="display:none"></p>
+							<p id="prtTyLbl_new" name="newLbl" style="display:none; color:red"></p>
+							<p id="prtTy_new" style="display:none;"></p>
+						</div>
+					</div>
 				</div>
 				<!-- 정보 끝 -->
 				<!-- 공통 라디오 데이터 팝업 -->
@@ -499,23 +515,23 @@
 				</div>
 				<!-- 가로*세로*두께 데이터 팝업 끝 -->
 
-				<!-- 시설물 메모 데이터 팝업 -->
-                <div id="checkComment_pop" class="dataWrap" style="display: none">
-                    <div class="dataTItle">메모</div>
+				<!-- 일제조사 점검결과 데이터 팝업 -->
+                <div id="rcRslt_pop" class="dataWrap" style="display: none">
+                    <div class="dataTItle">점검결과</div>
                     <div class="dataForm">
                         <div class="row">
                             <div class="cell">
-                                <div class="inputText w75"><textarea id="checkComment_fix" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px"></textarea></div>
+                                <div class="inputText w75"><textarea id="rcRslt_fix" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px"></textarea></div>
                             </div>
                         </div>
                     </div>
                     <div class="dataBtn">
                         <span class="btnNormal dataPopCloser">닫기</span>
-                        <span onclick="textDataSendParent('checkComment')" class="btnPoint">저장</span>
+                        <span onclick="textDataSendParent('rcRslt')" class="btnPoint">저장</span>
                     </div>
                     <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
 				</div>
-				<!-- 시설물 메모 데이터 팝업 끝 -->
+				<!-- 일제조사 점검결과 데이터 팝업 끝 -->
 			</div>
 			<!-- content 끝  -->
 			<!-- footer 시작 -->

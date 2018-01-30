@@ -78,6 +78,13 @@
 
     <div id="work-header" data-role="header" data-position="fixed">
         <a href="#panel-menu" data-role="button" data-corners="false" data-shadow="false" data-icon="menu" data-iconpos="notext">MENU</a>
+        <div class='searchUserDiv'>
+            <select id="searchUserSel" onchange="changeUser()">
+                <!-- <option value="">조사자선택</option> -->
+                <!-- <option value="id2">김도로(아르바이트)</option> -->
+                <!-- <option value="id3">아무개(일용직)</option> -->
+            </select>
+        </div>
         <h1><img src="img/main/header_logo.png" /></h1>
         <a href="#panel-qna" data-role="button" data-corners="false" data-shadow="false" data-icon="qna" data-iconpos="notext" onclick="util.pushCount('qna', 0);">QNA</a>
         <div class="pushCnt head">

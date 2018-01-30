@@ -284,6 +284,8 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);
             ol.inherits(MapUtil.controls.researchControl, ol.control.Control);
+            // ol.inherits(MapUtil.controls.selectSearchUser, ol.control.Control);
+            
             
         },
         /**
@@ -536,7 +538,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearch ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>시설물점검대상목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>나의 배정목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -545,7 +547,24 @@ var MapUtil = {
                 element: element,
                 target: options.target
             });
-        }
+        },
+        // selectSearchUser:function(opt_options){
+        //     var searchUserList = function(){
+        //         MapUtil.openDetail(DATA_TYPE.searchUser);
+        //     }
+        //     var element = document.createElement('div');
+        //     element.className = 'legend selectSearchUser ol-unselectable ol-control';
+    
+        //     var searchUserListHtml = "<ul><li class='sUsr'>조사자 선택</li></ul>";
+        //     element.innerHTML = searchUserListHtml;
+    
+        //     element.addEventListener('click', searchUserList, false);
+    
+        //     ol.control.Control.call(this, {
+        //         element: element,
+        //         target: options.target
+        //     });
+        // }
 
     },
     openPopup: function(type, f) {
@@ -942,10 +961,18 @@ var MapUtil = {
                         //설치상태
                         $("#delStateCd").html(data.delStateCd);
                         $("#delStateCdLbl").html(data.delStateCdLbl);
-                        $("#delStateCdLbl").addClass("edit");
-                        //점검내용
-                        $("#checkComment").html(data.checkComment);
-                        $("#checkComment").addClass("edit");
+
+                        //점검상태
+                        $("#rcSttCd").html(data.rcSttCd);
+                        $("#rcSttCdLbl").html(data.rcSttCdLbl);
+                        $("#rcSttCd").addClass("edit");
+                        //점검결과
+                        $("#rcRslt").html(data.rcRslt);
+                        $("#rcRslt").addClass("edit");
+
+                        //인쇄방식
+                        $("#prtTy").html(data.prtTy);
+                        $("#prtTy").addClass("edit");
 
                         break;
                     case DATA_TYPE.AREA:
@@ -1062,9 +1089,19 @@ var MapUtil = {
                         //설치상태
                         $("#delStateCd").html(data.delStateCd);
                         $("#delStateCdLbl").html(data.delStateCdLbl);
-                        $("#delStateCdLbl").addClass("edit");
-                        //점검내용
-                        $("#checkComment").html(data.checkComment);
+                        // $("#delStateCdLbl").addClass("edit");
+
+                        //점검상태
+                        $("#rcSttCd").html(data.rcSttCd);
+                        $("#rcSttCdLbl").html(data.rcSttCdLbl);
+                        $("#rcSttCd").addClass("edit");
+                        //점검결과
+                        $("#rcRslt").html(data.rcRslt);
+                        $("#rcRslt").addClass("edit");
+
+                        //설치장소
+                        $("#area_insPlc").html(data.area_insPlc);
+                        $("#area_insPlc_lbl").html(data.area_insPlc_lbl);
                         $("#checkComment").addClass("edit");
 
                         break;
@@ -1118,6 +1155,12 @@ var MapUtil = {
                         //설치시설물
                         $("#bsis_instlFty").html(data.bsis_instlFty);
                         $("#bsis_instlFtyLbl").html(data.bsis_instlFtyLbl);
+                        if(data.bsis_instlFty == ""){
+
+                        }
+                        //설치시설물 기타 상세내용
+                        $("#bsis_insFtyDc").html(data.bsis_insFtyDc);
+                        $("#bsis_insFtyDc").addClass("edit");
                         //곡면분류
                         $("#bsis_planeCd").html(data.bsis_planeCd);
                         $("#bsis_planeCdLbl").html(data.bsis_planeCdLbl);
@@ -1181,10 +1224,20 @@ var MapUtil = {
                         //설치상태
                         $("#delStateCd").html(data.delStateCd);
                         $("#delStateCdLbl").html(data.delStateCdLbl);
-                        $("#delStateCdLbl").addClass("edit");
-                        //점검내용
-                        $("#checkComment").html(data.checkComment);
-                        $("#checkComment").addClass("edit");
+                        // $("#delStateCdLbl").addClass("edit");
+
+                        //점검상태
+                        $("#rcSttCd").html(data.rcSttCd);
+                        $("#rcSttCdLbl").html(data.rcSttCdLbl);
+                        $("#rcSttCd").addClass("edit");
+                        //점검결과
+                        $("#rcRslt").html(data.rcRslt);
+                        $("#rcRslt").addClass("edit");
+
+                        //표기방법
+                        $("#bsisMthd").html(data.bsisMthd);
+                        $("#bsisMthdLbl").html(data.bsisMthdLbl);
+                        $("#bsisMthd").addClass("edit");
                         break;
                     case DATA_TYPE.ENTRC:
                         //일련번호
@@ -1241,6 +1294,70 @@ var MapUtil = {
                         $("#delStateCd").html(data.delStateCd);
                         $("#delStateCdLbl").html(data.delStateCdLbl);
                         $("#delStateCdLbl").addClass("edit");
+
+                    //     break;
+                    // case DATA_TYPE.BULD:
+
+                        // var title = "[{0}] {1} {2}{3}".format(
+                        //     "건물정보",
+                        //     (data.rnCdLbl ? data.rnCdLbl : ""),
+                        //     (data.buldMnnm),
+                        //     (data.buldSlno == "0" ? "" : "-" + data.buldSlno)
+                        // );
+                        // $(".title").append(title);
+
+                        //건축물용도
+                        var bdtypCd = data.bdtypCd;
+
+                        if (bdtypCd.substr(2, 5) == 000) { //대분류
+
+                            $("#bdtypCd_main").html(data.bdtypCd);
+                            $("#bdtypCd_mainLbl").html(data.bdtypCdLbl);
+                            // $("#bdtypCd_mainLbl").addClass("edit");
+
+                        } else { //소분류일 경우
+                            var bdtypCd_main = bdtypCd.substr(0, 2) + "000";
+                            $("#bdtypCd_main").html(bdtypCd_main);
+                            var codeList = app.codeMaster[CODE_GROUP["BDTYP_CD"]];
+                            $("#bdtypCd_mainLbl").html(codeList[bdtypCd_main]);
+                            // $("#bdtypCd_mainLbl").addClass("edit");
+
+                            $("#bdtypCd").html(data.bdtypCd);
+                            $("#bdtypCdLbl").html(data.bdtypCdLbl);
+                            // $("#bdtypCdLbl").addClass("edit");
+
+                        }
+
+                        //건물종속여부
+                        $("#bulDpnSe").html(data.bulDpnSe);
+                        $("#bulDpnSeLbl").html(data.bulDpnSeLbl);
+                        // $("#bulDpnSeLbl").addClass("edit");
+                        //건물명
+                        $("#posBulNm").html(data.posBulNm);
+                        // $("#posBulNm").addClass("edit");
+                        //건물명(영)
+                        $("#bulEngNm").html(data.bulEngNm);
+                        // $("#bulEngNm").addClass("edit");
+                        //상세건물명
+                        $("#buldNmDc").html(data.buldNmDc);
+                        // $("#buldNmDc").addClass("edit");
+                        //건물층수
+                        //(지상)
+                        $("#groFloCo").html(data.groFloCo);
+                        //(지하)
+                        $("#undFloCo").html(data.undFloCo);
+                        var floCo = "지상층: {0} / 지하층: {1}".format(data.groFloCo, data.undFloCo);
+                        $("#floCo").html(floCo);
+                        // $("#floCo").addClass("edit");
+                        //건물상태
+                        $("#buldSttus").html(data.buldSttus);
+                        // $("#buldSttus").addClass("edit");
+                        //메모
+                        $("#buldMemo").html(data.buldMemo);
+                        // $("#buldMemo").addClass("edit");
+
+                        //건물군번호
+                        $("#eqbManSn").val(data.eqbManSn);
 
                         break;
                     case DATA_TYPE.BULD:
@@ -1712,6 +1829,8 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.returnZoomControl(),
             new MapUtil.controls.refreshMapControl(),
             new MapUtil.controls.researchControl(),
+            // new MapUtil.controls.selectSearchUser(),
+            
 
             new ol.control.Rotate({
                 label: $("<IMG>", { src: 'image/icon_compass.png', alt: '지도회전 초기화' })[0],
@@ -2335,8 +2454,10 @@ var mapInit = function(mapId, pos) {
 
                         popupDiv.append(resultHtml);
 
-                        $("#popup").show();
+                        // $("#popup").show();
                         overlay.setPosition(coordinate);
+
+                        openDetailPopupCall(1);
 
                         break;
 

@@ -22,6 +22,8 @@
 #work-header.ui-header .ui-panel-dismiss-open.ui-panel-dismiss-position-right { right: 90%; }
 
 /* #panel-menu .ui-content li:last-child { position: absolute; bottom: 1em; right: 1em; } */
+/* 사용자선택 */
+.searchUserDiv{position: absolute;top: 0px;left: 60px;color: white}
 
 #panel-qna { color: black }
 #panel-qna.ui-panel { width: 90%; }
