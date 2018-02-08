@@ -23,21 +23,21 @@ var LAST_CHECK_STATUS = {
 };
 
 var DATA_TYPE = {
-    LOC: "00", BULD: "01", RDPQ: "02", AREA: "03", BSIS: "04", ENTRC: "05", SPPN: "06", ADRDC:"07",
+    LOC: "00", RDPQ: "01", ENTRC: "02", AREA: "03", BSIS: "04", BULD: "05", SPPN: "06", ADRDC:"07",
     getStatusNameWithCode: function (code) {
         switch (code) {
             case "00":
                 return DATA_TYPE.LOC;
             case "01":
-                return DATA_TYPE.BULD;
-            case "02":
                 return DATA_TYPE.RDPQ;
+            case "02":
+                return DATA_TYPE.ENTRC;
             case "03":
                 return DATA_TYPE.AREA;
             case "04":
                 return DATA_TYPE.BSIS;
             case "05":
-                return DATA_TYPE.ENTRC;
+                return DATA_TYPE.BULD;
             case "06":
                 return DATA_TYPE.SPPN;
             case "07":
@@ -203,7 +203,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 src: 'image/mixPos4.png'
             }))
         };
-    }else if(rdGdftySe == "110"){
+    }else if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){
         if(ltChcYn == 0){
             opt = {
                 image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({

@@ -16,7 +16,8 @@ var URLs = {
     //기초조사 end
     //점검
     "researchListLink": { svcNm: "sResearch" },
-    "updateResearchWorkDate": {svcNm: "uResearchWorkDate"},
+    // "updateResearchWorkDate": {svcNm: "uResearchWorkDate"},
+    "insertResearchState": {svcNm: "iResearchState"},
     //점검 end
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },//사용안함
@@ -34,7 +35,7 @@ var URLs = {
 
     "photoFileInfo": { svcNm: "sPhoto"},
 
-    "moveingPoint":{svnNm: "iSPGF"},
+    
     "authLink": { svcNm: "auth" },
     "sggInfo" : { svcNm: "vAdmInfo"},
     "updateWorkDate" : {svcNm: "uWorkDate"},
@@ -42,6 +43,16 @@ var URLs = {
 
     //조사자정보 조회 (서비스명 변경해야됨)
     "searchUserSelectLink" :{svcNm:"sKAISUR"},
+    //안내시설물 위치이동 조회
+    "selectLocationMoveSpgfLink" :{svcNm:"sLocMoveSpgf"},
+    //건물번호판 위치이동 조회
+    "selectLocationMoveSpbdNmgtLink" :{svcNm:"sLocMoveSpbdNmgt"},
+    //안내시설물 위치 이동 및 신규 입력
+    "moveingPointSpgf":{svcNm: "iLocSpgf"},
+    //건물번호판 위치 이동 입력
+    "moveingPointSpbdNmtg":{svcNm: "iLocSpbdNmtg"},
+    //조사자 목록 조회
+    "selectResearcherInfo":{svcNm: "sResearcher"},
 
     getURL: function (srcurl, jsondata) {
 
@@ -87,7 +98,7 @@ var pages = {
     "detail_spot": { link: function () { return URLs.realPath() + "popSpot.html"; }, div: "#spotView_page" },
     "detail_adrdc": { link: function () { return URLs.realPath() + "popAdrdc.html"; }, div: "#baseResearch_page" },
     "detail_adrdcList": { link: function () { return URLs.realPath() + "popAdrdcList.html"; }, div: "#detailAddress_page" },
-    "detail_researchList": { link: function () { return URLs.realPath() + "researchList.html"; }, div: "#researchList_page" },
+    "detail_researchList": { link: function () { return URLs.realPath() + "popResearchList.html"; }, div: "#researchList_page" },
     "minwonListPage": { link: function () { return URLs.realPath() + "minwon.html"; }, div: "#minwonList_page" },
     "detailAddressListPage": { link: function () { return URLs.realPath() + "detailAddress.html"; }, div: "#detailAddress_page" },
     "baseResearchPage": { link: function () { return URLs.realPath() + "baseResearch.html"; }, div: "#baseResearch_page" },
@@ -96,7 +107,9 @@ var pages = {
     "imageviewer": { link: function () { return URLs.realPath() + "imageviewer.html"; }, div: "#imageviewer_page" },
     "writereplypage": { link: function () { return URLs.realPath() + "writereply.html"; }, div: "#write_reply_page" },
     "memolistpage": { link: function () { return URLs.realPath() + "memolist.html"; }, div: "#memolist_page" },
-    "baseConfigPage": { link: function () { return URLs.realPath() + "baseConfig.html"; }, div: "#baseConfig_page" }
+    "baseConfigPage": { link: function () { return URLs.realPath() + "baseConfig.html"; }, div: "#baseConfig_page" },
+    "locationManageSpgfPage": { link: function () { return URLs.realPath() + "popLocManageSpgfList.html"; }, div: "#locationManageSpgf_page" },
+    "locationManageSpbdNmtgPage": { link: function () { return URLs.realPath() + "popLocManageSpbdNmtgList.html"; }, div: "#locationManageSpbdNmtg_page" },
 };
 
 //var SSO = {
@@ -206,12 +219,16 @@ CODE_GROUP["DEL_STT_CD"] = "GFTY613";
 CODE_GROUP["RC_STT_CD"] = "GFTY614";
 //인쇄방식
 CODE_GROUP["PRT_TY"] = "GFTY005";
+//재질
+CODE_GROUP["GDFTY_QLT"] = "GFTY011";
 
 
 //****** 도로명판 *******
 //도로명판 규격
 CODE_GROUP["RDPQ_GD_SD"] = "GFTY110";
 CODE_GROUP["RDPQ_GD_SD_2"] = "GFTY112";
+
+
 
 //****** 지역안내판 *******
 //지역안내판 광고에따른분류
@@ -249,8 +266,8 @@ CODE_GROUP["BDTYP_CD"] = "CMMN038";
 //건물종속구분
 CODE_GROUP["BUL_DPN_SE"] = "CMMN046";
 
-
-
+//****** 점검 *******
+CODE_GROUP["TRG_GBN"] = "GFTY615";
 
 
 CODE_GROUP["BDRCL_AT"] = "GFTY017";

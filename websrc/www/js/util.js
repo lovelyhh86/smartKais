@@ -621,7 +621,11 @@ function layerToggle(context){
             $(".legend").toggle(true);
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
+            $(".returnZoom").toggle(true);
+            $(".refreshMap").toggle(true);
+            
             $(".selectAdrdc").toggle(false);
+            $(".locManageSpbd").toggle(false);
             // $(".selectResearch").toggle(true);
             
             
@@ -639,6 +643,7 @@ function layerToggle(context){
         } else {
             $(".legend").toggle(false);
             $(".selectAdrdc").toggle(true);
+            $(".locManageSpbd").toggle(true);
             
             map.addLayer(layers.buld);
             // map.addLayer(layers.entrc);

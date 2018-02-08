@@ -82,6 +82,10 @@ var MapUtil = {
         // 사진 조회 버튼
         photoToggleHandler: function(layerID, f) {
             $(".detailView .infoWrap .infoHeader .photo").click(function() {
+                //팝업창 최소화 되어있을 경우 대비 (무조건 켜기)
+                isPopState = "off";
+                toggleDetailView();
+
                 var photoNum = $(".infoHeader .photo .photoNum").text();
 
                 // 사진 조회 및 편집 상태 초기화
@@ -231,7 +235,8 @@ var MapUtil = {
         init: function() {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
-            ol.inherits(MapUtil.controls.newPointControl, ol.control.Control);      // 신규위치등록
+            ol.inherits(MapUtil.controls.locManageSpgfControl, ol.control.Control); // 안내시설물 위치관리
+            ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);   // 상세주소 기초조사
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);    // 기본 축척으로 변경
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);    // 지도 새로고침
@@ -303,91 +308,47 @@ var MapUtil = {
                 target: options.target
             });
         },
-        newPointControl: function(opt_options) {
-            // var button = document.createElement('button');
-            // button.innerHTML = '<img src="image/newPos_plus.png" />';
-            var layerStateGbn = "on";
-            var newPoint = function() {
+        locManageSpgfControl: function(opt_options) {
 
-                if (layerStateGbn == "on") {
-                    //마커지우기
-                    // clearSource('위치이동');
+            var potisionManage = function() {
+                MapUtil.openList('locationManageSpgf');
 
-                    //레이어 초기화
-                    removeLayers();
-
-                    //센터 포인트 찍기
-                    // var movingPoint_source = addMoveLayer();
-
-                    // var moveingPointFeature = new ol.Feature();
-                    //         moveingPointFeature.setStyle(new ol.style.Style({
-                    //             image: new ol.style.Circle({
-                    //                 radius: 10,
-                    //                 fill: new ol.style.Fill({
-                    //                     color: '#00004d'
-                    //                 }),
-                    //                 stroke: new ol.style.Stroke({
-                    //                     color: '#fff',
-                    //                     width: 2
-                    //                 })
-                    //             })
-                    //         }));
-
-                    // var centerPoint = new ol.geom.Point(map.getView().getCenter());
-                    // moveingPointFeature.setGeometry(centerPoint);
-                    // movingPoint_source.addFeature(moveingPointFeature);
-                    if (map.getView().getZoom() < 14) {
-                        map.getView().setZoom(14);
-                    }
-                    //범례숨김
-                    $(".legend").hide();
-                    //방위 숨김
-                    $(".ol-rotate").hide();
-                    //현위치 숨김
-                    $(".curPosition").hide();
-
-                    //심플팝업 초기화
-                    $("#popup-content").empty();
-                    $("#popup").hide();
-
-                    //위치마커 및 버튼 표시
-                    $("#newPos").show();
-                    //버튼영역 버튼 표시
-                    $(".buttonDiv").show();
-                    //메모초기화
-                    closeNewPosMemo();
-
-                    // $(".newPosition button img").attr("src","image/newPos_cancle.png");
-
-                    layerStateGbn = "off";
-                } else {
-
-                    //위치마커 및 버튼 표시
-                    $("#newPos").hide();
-                    //버튼영역 숨김
-                    $(".buttonDiv").hide();
-                    //메모초기화
-                    closeNewPosMemo();
-
-                    var context = app.context;
-
-                    layerToggle(context);
-
-                    // $(".newPosition button img").attr("src","image/newPos_plus.png");
-
-                    layerStateGbn = "on";
-                }
+                //심플팝업 초기화
+                $("#popup-content").empty();
+                $("#popup").hide();
             }
 
-            // button.addEventListener('click', newPoint, false);
+            var element = document.createElement('div');
+            element.className = 'legend locManageSpgf ol-unselectable ol-control';
+
+            var buttonHtml = "<ul><li class='nPos'>위치이동관리</li></ul>";
+            element.innerHTML = buttonHtml;
+
+            element.addEventListener('click', potisionManage, false);
+
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+
+        },
+        locManageSpbdNmtgControl: function(opt_options) {
+
+            var potisionManage = function() {
+                MapUtil.openList('locationManageSpbdNmtg');
+
+                //심플팝업 초기화
+                $("#popup-content").empty();
+                $("#popup").hide();
+            }
 
             var element = document.createElement('div');
-            element.className = 'legend newPosition ol-unselectable ol-control';
+            element.className = 'legend locManageSpbd ol-unselectable ol-control';
 
-            var newPosHtml = "<ul><li class='nPos'>신규위치등록</li></ul>";
-            element.innerHTML = newPosHtml;
+            var buttonHtml = "<ul><li class='nPos'>위치이동관리</li></ul>";
+            element.innerHTML = buttonHtml;
 
-            element.addEventListener('click', newPoint, false);
+            element.addEventListener('click', potisionManage, false);
 
             ol.control.Control.call(this, {
                 element: element,
@@ -494,11 +455,18 @@ var MapUtil = {
         },
         researchControl: function(opt_options){
             var researchList = function(){
-                MapUtil.openDetail(DATA_TYPE.RESEARCH);
-
-                //심플팝업 초기화
-                $("#popup-content").empty();
-                $("#popup").hide();
+                //조사자일련번호
+                if(util.isEmpty(app.info.rcrSn)){
+                    navigator.notification.alert(msg.noRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '조사자', '확인');
+                }else{
+                    MapUtil.openList('myResearch');
+                    //심플팝업 초기화
+                    $("#popup-content").empty();
+                    $("#popup").hide();
+                }
             }
             
             var element = document.createElement('div');
@@ -570,68 +538,94 @@ var MapUtil = {
             $("#common-pop").popup("open", { transition: "slideup" });
         })
     },
-    openDetail: function(layerID, f, rdGdftySn) {
+    openList:function(type){
         var detailTaget = '#detailView';
-
-        switch (layerID) {
-            case DATA_TYPE.RDPQ:
-                url = pages.detail_road;
-                // url = pages.detail_spot;
-                header = "도로명판";
-                // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
-
-                break;
-            case DATA_TYPE.AREA:
-                url = pages.detail_area;
-                header = "지역안내판";
-                // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
-
-                break;
-            case DATA_TYPE.BSIS:
-                url = pages.detail_base;
-                header = "기초번호판";
-                // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
-
-                break;
-            case DATA_TYPE.ENTRC:
-                url = pages.detail_entrc;
-                header = "건물번호판";
-
-                break;
-            case DATA_TYPE.BULD:
-                url = pages.detail_buld;
-                header = "건물정보";
-
-                break;
-            case DATA_TYPE.SPPN:
-                url = pages.detail_spot;
-                header = "지점번호판";
-
-                break;
-            case DATA_TYPE.ADRDC:
-                // url = pages.detail_adrdc;
-                url = pages.detail_adrdcList;
-                header = "기초조사";
-
-                break;
-            case DATA_TYPE.RESEARCH:
-                // url = pages.detail_adrdc;
+        switch (type) {
+            case "myResearch":
                 url = pages.detail_researchList;
-                header = "점검대상";
-
-                break;
-                
+            break;
+            case "locationManageSpgf":
+                url = pages.locationManageSpgfPage;
+            break;
+            case "locationManageSpbdNmtg":
+                url = pages.locationManageSpbdNmtgPage;
+            break;
+            
         }
-
         $(detailTaget).load(url.link(), function() {
-            MapUtil.setDetail(layerID, f);
-            MapUtil.handler.photoToggleHandler(layerID, f);
-            MapUtil.handler.takePhotoHandler();
-            MapUtil.handler.delPhotoHandler();
+            MapUtil.setList(type);
+            // MapUtil.handler.photoToggleHandler(layerID, f);
+            // MapUtil.handler.takePhotoHandler();
+            // MapUtil.handler.delPhotoHandler();
             MapUtil.handler.dataPopupCloserHandler();
 
             $("#detailView").popup("open", { transition: "slideup" });
         })
+    },
+    openDetail: function(layerID, f, rdGdftySn) {
+        //조사자일련번호
+        if(util.isEmpty(app.info.rcrSn)){
+            navigator.notification.alert(msg.noRearcher, function () {
+                // util.goBack();
+                // return;
+            }, '조사자', '확인');
+        }else{
+            var detailTaget = '#detailView';
+
+            switch (layerID) {
+                case DATA_TYPE.RDPQ:
+                    url = pages.detail_road;
+                    // url = pages.detail_spot;
+                    header = "도로명판";
+                    // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+
+                    break;
+                case DATA_TYPE.AREA:
+                    url = pages.detail_area;
+                    header = "지역안내판";
+                    // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+
+                    break;
+                case DATA_TYPE.BSIS:
+                    url = pages.detail_base;
+                    header = "기초번호판";
+                    // headerFunc = '<a href="javascript:util.camera()" id="camera" style="right: 0;float: right;margin: 0;padding: 0;color: white;">카메라</a>';
+
+                    break;
+                case DATA_TYPE.ENTRC:
+                    url = pages.detail_entrc;
+                    header = "건물번호판";
+
+                    break;
+                case DATA_TYPE.BULD:
+                    url = pages.detail_buld;
+                    header = "건물정보";
+
+                    break;
+                case DATA_TYPE.SPPN:
+                    url = pages.detail_spot;
+                    header = "지점번호판";
+
+                    break;
+                case DATA_TYPE.ADRDC:
+                    // url = pages.detail_adrdc;
+                    url = pages.detail_adrdcList;
+                    header = "기초조사";
+
+                    break;
+            }
+
+            $(detailTaget).load(url.link(), function() {
+                MapUtil.setDetail(layerID, f);
+                MapUtil.handler.photoToggleHandler(layerID, f);
+                MapUtil.handler.takePhotoHandler();
+                MapUtil.handler.delPhotoHandler();
+                MapUtil.handler.dataPopupCloserHandler();
+                
+                $("#detailView").popup("open", { transition: "slideup" });
+            })
+        }
+        
     },
     getPlateDir: function(f) {
         var ft_stbs_mn = parseInt(f.get("FT_STBS_MN"));
@@ -673,6 +667,27 @@ var MapUtil = {
             console.error("Equal's FT_STBS({0}) and FT_EDBS({1})".format(ft_stbs, ft_edbs));
         }
         return ret;
+    },
+    setList: function(type){
+        switch (type) {
+            case "myResearch":
+                
+                selectResearchContent();
+                /**검색조건 */
+                //시설구분
+                makeOptSelectBox("searchOptTrgGbn","TRG_GBN","02","전체");
+                //삭제상태코드
+                makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체");
+
+                
+            break;
+            case "locationManageSpgf":
+                selectLocationMoveSpgfContent();
+            break;
+            case "locationManageSpbdNmtg":
+                selectLocationMoveSpbdNmgtContent();
+            break;
+        }
     },
     setDetail: function(layerID, f) {
         var codeList
@@ -727,11 +742,11 @@ var MapUtil = {
                 detailAddressContent();
 
                 break;
-            case DATA_TYPE.RESEARCH:
+            // case DATA_TYPE.RESEARCH:
 
-                selectResearchContent();
+            //     selectResearchContent();
 
-                break;
+            //     break;
 
         }
 
@@ -761,15 +776,63 @@ var MapUtil = {
                     util.dismissProgress();
                     return;
                 }
-
+                //*****************공통*****************
                 //일련번호
-                $("#sn").val(sn);
+                $("#trgSn").val(sn);
                 //위치일련번호
-                $("#rdFtyLcSn").val(data.rdFtyLcSn);
-
-                
+                $("#trgLocSn").val(data.rdFtyLcSn);
+                //시군구코드
+                $("#sigCd").val(data.sigCd);
                 //사진건수
                 $(".infoHeader .photo .photoNum").html(data.cntFiles);
+                //*****************공통*****************
+
+                //*****************점검정보*****************
+                // //계획년도
+                // var plnYr = data.plnYr;
+                // if(plnYr != null){
+                //     $("#plnYr").html(data.plnYr);
+                // }else{
+                //     $("#plnYr").html("미배정");
+                // }
+                //시설물구분
+                // $("#trgGbn").val(data.trgGbn);
+                //계획차수
+                var plnOdr = data.plnOdr;
+                if(plnOdr != null){
+                    $("#plnOdrLbl").html("배정"); //계획차수로 배정여부 판단
+                    $("#plnOdr").html(data.plnOdr);
+                }else{
+                    $("#plnOdrLbl").html("미배정");
+                    $("#plnOdr").html("0"); // 배정이 없을땐 0으로 입력
+                }
+                
+                //점검일자
+                var rcDe = data.rcDe == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.rcDe.substr(0, 4), data.rcDe.substr(4, 2), data.rcDe.substr(6, 2));
+                $("#rcDe").html(rcDe);
+                
+                //점검자
+                var rcrNm = data.rcrNm;
+                var rcrSn = data.rcrSn;
+                if(rcrNm == null){//점검내역이 없을경우 현재 조사자로 셋팅
+                    rcrNm = "-"
+                }
+                $("#rcrNm").html(rcrNm);
+                $("#rcrcrSnrNm").html(rcrSn);
+
+                //점검상태 및 점검결과
+                var rcSttCd = data.rcSttCd; // 점검상태
+                var rcRslt = data.rcRslt; //점검결과
+                
+                makeOptSelectBox("rcSttCdSel","RC_STT_CD","","선택");
+                $("#rcSttCdSel").val(rcSttCd);
+                $("#rcSttCd").html(rcSttCd);
+
+                $("#rcRslt").val(rcRslt);
+                $("#rcRsltOld").text(rcRslt);
+                
+                
+                //*****************점검정보*****************
 
 
                 switch (layerID) {
@@ -805,10 +868,7 @@ var MapUtil = {
                         }
                         
                         $(".title").append(title);
-                        //최종점검일자
-                        var lastCheckDate = data.lastCheckDate == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.lastCheckDate.substr(0, 4), data.lastCheckDate.substr(4, 2), data.lastCheckDate.substr(6, 2));
-                        $("#lastCheckDate").html(lastCheckDate);
-                        $("#lastCheckDate").addClass("edit");
+                        
                         //도로시설물
                         $("#rdftySeLbl").html(data.rdftySeLbl);
                         $("#rdftySe").html(data.rdftySe);
@@ -928,13 +988,10 @@ var MapUtil = {
                         $("#delStateCd").html(data.delStateCd);
                         $("#delStateCdLbl").html(data.delStateCdLbl);
 
-                        //점검상태
-                        $("#rcSttCd").html(data.rcSttCd);
-                        $("#rcSttCdLbl").html(data.rcSttCdLbl);
-                        $("#rcSttCd").addClass("edit");
-                        //점검결과
-                        $("#rcRslt").html(data.rcRslt);
-                        $("#rcRslt").addClass("edit");
+                        //재질
+                        $("#gdftyQlt").html(data.gdftyQlt);
+                        $("#gdftyQltLbl").html(data.gdftyQltLbl);
+                        $("#gdftyQlt").addClass("edit");
 
                         //인쇄방식
                         $("#prtTy").html(data.prtTy);
@@ -1790,7 +1847,8 @@ var mapInit = function(mapId, pos) {
         }).extend([
             new MapUtil.controls.legendControl(),
             new MapUtil.controls.currentControl(),
-            new MapUtil.controls.newPointControl(),
+            new MapUtil.controls.locManageSpgfControl(),
+            new MapUtil.controls.locManageSpbdNmtgControl(),
             new MapUtil.controls.selectAdrdcControl(),
             new MapUtil.controls.returnZoomControl(),
             new MapUtil.controls.refreshMapControl(),
@@ -2156,37 +2214,6 @@ var mapInit = function(mapId, pos) {
                                                 );
                                             }
                                         }
-
-                                        // var title = commonP.format("localTitle",
-                                        //     "{0} {1}{2} {3} {4}{5}".format(
-                                        //         resultList[i].frontKoreanRoadNm,
-                                        //         resultList[i].frontStartBaseMasterNo,
-                                        //         (resultList[i].frontStartBaseSlaveNo == "0" ? "" : "-" + resultList[i].frontStartBaseSlaveNo),
-                                        //         (resultList[i].plqDirection == '00100' ? '→' : (resultList[i].plqDirection == '00200' ? '↔' : (resultList[i].plqDirection == '00300' ? '↑' : '?'))),
-                                        //         resultList[i].frontEndBaseMasterNo,
-                                        //         (resultList[i].frontEndBaseSlaveNo == "0" ? "" : "-" + resultList[i].frontEndBaseSlaveNo)
-                                        //     )
-                                        // );
-                                        
-
-                                        // //시점
-                                        // var FT_STBS_MN = (resultList[i].frontStartBaseMasterNo ? resultList[i].frontStartBaseMasterNo : '');
-
-                                        // var FT_STBS_SN = (resultList[i].frontStartBaseSlaveNo ? resultList[i].frontStartBaseSlaveNo : '');
-
-                                        // var ftStbsStr = baseNumberMix(FT_STBS_MN, FT_STBS_SN); // 0 - 0
-
-                                        // var ftStbs = popTableP.format("시작기초번호", ftStbsStr);
-
-                                        // //종점
-
-                                        // var BK_STBS_MN = (resultList[i].backStartBaseMasterNo ? resultList[i].backStartBaseMasterNo : '');
-
-                                        // var BK_STBS_SN = (resultList[i].backStartBaseSlaveNo ? resultList[i].backStartBaseSlaveNo : '');
-
-                                        // var bkStbsStr = baseNumberMix(BK_STBS_MN, BK_STBS_SN); // 0 - 0
-
-                                        // var bkStbs = popTableP.format("종료기초번호", bkStbsStr);
 
                                         //명판방향
                                         var PLQ_DRC = resultList[i].plqDirectionLbl;
@@ -2993,10 +3020,16 @@ function moveingPoint(sn, pointX, pointY, index) {
 }
 
 function insertMoveingPoint(param) {
-    var link = URLs.moveingPoint;
+    
+    var link = URLs.moveingPointSpgf;
+    if(insertPointType == "spgf"){
+        link = URLs.moveingPointSpgf;
+    }else if(insertPointType == "nmtg"){
+        link = URLs.moveingPointSpbdNmtg;
+    }
 
     var sendParam = $.extend(param, {
-        svcNm: 'iSPGF',
+        // svcNm: 'iSPGF',
         sigCd: app.info.sigCd,
         workId: app.info.opeId
     });;
@@ -3009,7 +3042,13 @@ function insertMoveingPoint(param) {
                 util.dismissProgress();
                 if (rCode == 0 && results.response.status > -1) {
                     util.toast('이동한 위치 정보가 저장되었습니다.');
-                    navigator.notification.alert('KAIS C/S\n (자료관리 → 도로안내시설 편집 → 도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.', '', '알림', '확인');
+                    var msg = "KAIS C/S\n (자료관리 → 도로안내시설 편집 → 도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.";
+                    
+                    if(insertPointType == "nmtg"){
+                        msg = "KAIS C/S\n (자료관리 → 도로안내시설 편집 → 건물번호판 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.";
+                    }
+                    
+                    navigator.notification.alert(msg, '', '알림', '확인');
 
                     clearSource('위치이동');
 
@@ -3402,7 +3441,7 @@ function closeNewPosMemo() {
 
 /** 새위치등록 입력 */
 function insertNewPos() {
-
+    
     navigator.notification.confirm(msg.insertPos, function(btnIndex) {
         if (btnIndex == 1) {
             var param = "";
@@ -3434,7 +3473,8 @@ function cancleNewPos() {
 
     layerToggle(context);
 
-    $(".newPosition").click();
+    // $(".newPosition").click();
+    newPoint(insertPointType);
 }
 
 /** 위치이동 마커 삭제 */

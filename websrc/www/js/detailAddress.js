@@ -77,7 +77,7 @@ function detailAddressContent(){
             return;
         } else {
             for(var i in data) {
-                var rowHtml = '<tr class="adrdcRow" onclick=\"{0}\"><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>';
+                var rowHtml = '<tr class="" onclick=\"{0}\"><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>';
                 var d = data[i];
                 
                 $("#detailAddressTable > tbody:last").append(
@@ -356,14 +356,28 @@ var isPopState = "on";
 function toggleDetailView(){
     
     if(isPopState == "on"){
-        $(".detailView").css("height","88px");
+        $(".detailView").css("height","148px");
+        //상세정보페이지
+        $(".infoContent").css("height","0%");
+        $(".infoContent").css("padding","0px");
+        //리스트페이지
+        $(".infoListContent").css("height","0%");
         $("#photoDialog").hide();
         $(".ui-popup-container.slideup.in.ui-popup-active").css("height","5%");
+        //컨트롤바
+        $(".detailView >p >span").css('background-image','url(./image/close_image.png)');
         isPopState = "off";
     }else{
         $(".detailView").css("height","830px");
+        //상세정보페이지
+        $(".infoContent").css("height","640px");
+        $(".infoContent").css("padding","20px");
+        //리스트페이지
+        $(".infoListContent").css("height","678px");
+        
         $("#photoDialog").show();
         $(".ui-popup-container.slideup.in.ui-popup-active").css("height","60%");
+        $(".detailView >p >span").css('background-image','url(./image/open_image.png)');
         isPopState = "on";
     }
 }

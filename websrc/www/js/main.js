@@ -26,7 +26,11 @@ var msg = {
     checkRdpqGdSd : "규격을 선택해 주세요.",
     checkZero : "{0}에 0 이나 빈칸을 넣을 수 없습니다.",
     checkScfggMkty : "제2외국어 언어를 선택해 주세요.",
-    useTargetScfggMkty : "사용대상이 [보행자용]이 아닐경우 제2외국어를여부는 [미표기]만 가능합니다."
+    useTargetScfggMkty : "사용대상이 [보행자용]이 아닐경우 제2외국어를여부는 [미표기]만 가능합니다.",
+    noRearcher: "조사자를 선택해 주세요.",
+    impossibleNormal: "정상처리 할 수 없는 시설물 입니다.\n정비를 통해 점검해 주십시요.",
+    updateResearch: "점검 하시겠습니까?",
+    successResearch: "정상적으로 점검되었습니다."
 };
 var app = {
     // Application Constructor

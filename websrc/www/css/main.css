@@ -228,15 +228,15 @@
   .baseConfigDiv{position: absolute; bottom: 10px; right: 10px; width:36px;}
   /* .addressDiv{position: absolute; bottom: 10px; right: 50px; width:36px;} */
 
-  /*기초조사*/
-  .adrdcTitle{padding: 0px 10px; line-height: 0em; overflow: hidden;}
-  .adrdcTitle h2{font-size: 1.25em; color:#0071bf ; font-weight: bold;}
+  
+  .blueTitle{padding: 0px 10px; line-height: 0em; overflow: hidden;}
+  .blueTitle h2{font-size: 1.25em; color:#0071bf ; font-weight: bold;}
   #addressview_contents label{top:-12px}
   /* #detailAddressDiv{width:100%} */
   /* .adrdcRow{text-align: center; height: 2em;} */
-  #detailAddressDiv table{width: 100% ; border-collapse: collapse;}
-  #detailAddressDiv table th{background: #adadad ;height: 1.2em; padding:15px 0 ;text-align: center; border:0 none; border-bottom:1px solid #e5e5e5; color:#ffffff; font-weight:bold;  }
-  #detailAddressDiv table td{background: #ffffff ;height: 1.2em; padding:15px 0 ;text-align: center; vertical-align: middle; border:0 none; border-bottom:1px solid #e5e5e5;}
+  .tableListDiv table{width: 100% ; border-collapse: collapse;}
+  .tableListDiv table th{background: #adadad ;height: 1.2em; padding:15px 0 ;text-align: center; border:0 none; border-bottom:1px solid #e5e5e5; color:#ffffff; font-weight:bold;  }
+  .tableListDiv table td{background: #ffffff ;height: 1.2em; padding:15px 0 ;text-align: center; vertical-align: middle; border:0 none; border-bottom:1px solid #e5e5e5;}
   /* .noLabel{    width: 16em;} */
  .ui-mobile label, .ui-controlgroup-label {display: inline !important;margin: 0;}
  .selectRadioAll{padding-top: 30px;}

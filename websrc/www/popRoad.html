@@ -18,43 +18,75 @@
 			<!-- content -->
 			<div class="infoContent">
 				<div id="mask"></div>
-			<!-- 정보  -->
+				
+				<input id="trgLocSn" type="hidden" value="" />
+				<input id="trgSn" type="hidden" value=""/>
+				<!-- 시설물 별로 확정 -->
+				<input id="trgGbn" type="hidden" value="01"/>
+				<input id="sigCd" type="hidden" value="" />
+				
+				<!--점검-->
+				<div class="blueTitle">
+					<h2>점검정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="점검정보">
+						<caption>점검정보</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">배정여부</th>
+								<td>
+									<p id="plnOdrLbl" name="oldRcLbl" >&nbsp;</p>
+									<p id="plnOdr" style="display:none;"></p>
+								</td>
+								<th scope="row">점검일자</th>
+								<td>
+									<p id="rcDeLbl_new" name="newRcLbl" style="display:none; color:red"></p>
+									<p id="rcDe" name="oldRcLbl" ></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">점검자</th>
+								<td>
+									<p id="rcrNm" name="oldRcLbl" ></p>
+									<p id="rcrSn" style="display:none;"></p>
+									<p id="rcrNm_new" name="newRcLbl" style="display:none; color:red"></p>
+									<p id="rcrSn_new" name="newRcLbl" style="display:none;"></p>
+								</td>
+								<th scope="row">점검상태</th>
+								<td id='rcSttCdTd'>
+									<p id="rcSttCd" style="display:none;"></p>
+									<p id="rcSttCd_new" name="newRcLbl" style="display:none"></p>
+									<select id='rcSttCdSel' onchange="checkRcSttCd()">
+										<!-- <option></option> -->
+									</select>
+								</td>
+							</tr>
+							
+							<tr>
+								<th scope="row">점검결과</th>
+								<td colspan='3'>
+									<textarea maxlength="100" id="rcRslt" onchange="checkRcRslt()"></textarea>
+									<p id="rcRsltOld" name="oldLbl" style="display:none"></p>
+                           			<!-- <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p> -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<button class="btnPossibleDetail" onclick="submitResearch()">점검</button>
+				<!--점검 end-->
+				<!-- 정보  -->
+				<div class="blueTitle">
+					<h2>기본정보</h2>
+				</div>
 				<div class="infoTable">
-					<input id="sn" type="hidden" value="" />
-					<input id="rdFtyLcSn" type="hidden" value="" />
-					<!--일제조사-->
-					<h4>일제조사</h4>
-					<div onclick="updateResearchWorkDate()" class="row">
-						<div  class="cell1">
-								<span class="label">최종점검일자</span>
-						</div>
-						<div class="cell2">
-							<p id="lastCheckDate" name="oldLbl" >&nbsp;</p>
-							<p id="rcGbn" name="oldLbl" style="display:none;">01</p>
-						</div>
-					</div>
-					<div onclick="openDataIdPop('rcSttCd');" class="row">
-						<div  class="cell1">
-								<span class="label">점검상태</span>
-						</div>
-						<div class="cell2">
-							<p id="rcSttCdLbl" name="oldLbl" >&nbsp;</p>
-							<p id="rcSttCd" style="display:none;"></p>
-							<p id="rcSttCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="rcSttCd_new" style="display:none"></p>
-						</div>
-					</div>
-					<div onclick="openCustomPop('rcRslt');" class="row">
-                        <div  class="cell1">
-                            <span class="label">점검결과</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="rcRslt" name="oldLbl"></p>
-                            <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p>
-                        </div>
-					</div>
-					<!--일제조사 end-->
-					<h4>기본정보</h4>
 					<!-- <div onclick="openDataIdPop('delStateCd');" class="row"> -->
 					<div class="row">
 						<div  class="cell1">
@@ -326,6 +358,17 @@
 							<p id="bsis">&nbsp;</p>
 						</div>
 					</div>
+					<div onclick="openDataIdPop('gdftyQlt');" class="row">
+						<div  class="cell1">
+							<span class="label">재질</span>
+						</div>
+						<div class="cell2">
+							<p id="gdftyQltLbl" name="oldLbl" ></p>
+							<p id="gdftyQlt" style="display:none"></p>
+							<p id="gdftyQltLbl_new" name="newLbl" style="display:none; color:red"></p>
+							<p id="gdftyQlt_new" style="display:none;"></p>
+						</div>
+					</div>
 					<div onclick="openDataIdPop('prtTy');" class="row">
 						<div  class="cell1">
 								<span class="label">인쇄방식</span>
@@ -338,6 +381,7 @@
 						</div>
 					</div>
 				</div>
+				<button class="btnPossibleDetail" onclick="submitResearch()">정비</button>
 				<!-- 정보 끝 -->
 				<!-- 공통 라디오 데이터 팝업 -->
                 <div id="radioDataPop" class="dataWrap" style="display: none">
@@ -537,7 +581,8 @@
 			<!-- footer 시작 -->
 			<div class="infoFooter">
 				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
-				<span onclick="submit(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+				<!-- <span onclick="submit(DATA_TYPE.RDPQ);" class="btnPoint">저장</span> -->
+				<span onclick="MapUtil.openList('myResearch');" class="btnNormal">배정목록</span>
 			</div>
 			<!-- footer 끝 -->
 		</div>

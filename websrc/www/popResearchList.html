@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html LANG="ko">
+<body class="intro">
+<div data-role="" id="researchList_page">
+    <div class="detailView">
+        <p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
+        <div class="infoWrap">
+            <div class="infoHeader">
+                <p class="listTitle">
+                    <span class="">나의 배정목록</span>
+                </p>
+            </div>
+            <div class="infoListContent">
+                <div class="tableWrap">
+                    <table class="dataTable" summary="신청내역">
+                            <caption>검색조건</caption>
+                            <colgroup>
+                                <col class="cell20">
+                                <col class="cell20">
+                                <col class="cell20">
+                                <col class="cell20">
+                            </colgroup>
+                            <tbody> 
+                                <tr>
+                                    <th scope="row">시설구분</th>
+                                    <td>
+                                        <select id="searchOptTrgGbn" onchange="selectResearchContent()" class="cell100">
+                                        </select>
+                                    </td>
+                                    <th scope="row">점검여부</th>
+                                    <td>
+                                        <select id="searchOptRcSttCd" onchange="selectResearchContent()" class="cell100">
+                                            <option value =''>전체</option>
+                                            <option value ='Y'>점검</option>
+                                            <option value ='N'>미점검</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">설치상태</th>
+                                    <td>
+                                        <select id="searchOptDelSttCd" onchange="selectResearchContent()" class="cell100">
+                                        </select>
+                                    </td>
+                                    <th scope="row">건수</th>
+                                    <td>
+                                        <p id='rowSize'>0</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+                <div class='tableListDiv'>
+                    <table id="myResearchTable">
+                        <colgroup>
+                            <col class="cell8"></col>
+                            <col class="cell20"></col>
+                            <col class="cell10"></col>
+                            <col class="auto"></col>
+                            <col class="cell10"></col>
+                            <col class="cell10"></col>
+                            <col class="cell10"></col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>위치</th>
+                                <th>구분</th>
+                                <th>설치위치</th>
+                                <th>명판내용</th>
+                                <th>설치상태</th>
+                                <th>점검상태</th>
+                                <th>점검</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- footer 시작 -->
+            <div class="infoFooter">
+                    <span onclick="closeDetailView();" class="btnNormal">닫기</span>
+            </div>
+            <!-- footer 끝 -->
+        </div>
+    </div>
+</div>
+</body>

@@ -30,26 +30,28 @@
 .legend ul li.spot.over{background: #58C428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.spot.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
-/*신규 위치등록*/
-.newPosition { top: 17.2em; width: 9em; height: 3em;}
+
+/*지도 위 버튼*/
+.selectResearch {top: 11.5em;width: 9em;height: 3em;}
+.locManageSpgf { top: 14.5em; width: 9em; height: 3em;}
+.selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
 
 .selectAdrdc { top: 2.5em; width: 9em; height: 3em;}
-.selectResearch {top: 14.2em;width: 9em;height: 3em;}
-.selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
+.locManageSpbd { top: 5.5em; width: 9em; height: 3em;}
 
 .sAdr{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;    background-size: 1.4em; width: 7.5em;}
 
-
-/* .newPosition button { background-color: transparent !important;position: relative;} */
-.newPosition ul {width: 9em;}
+.locManageSpgf ul {width: 9em;}
+.locManageSpbd ul {width: 9em;}
 .selectSearchUser ul {width: 9em;}
 .selectResearch ul {width: 9em;}
 
 .legend ul li.nPos{background: #fff url(../image/plusPos2.png) 7px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
-.legend ul li.sRes{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
+.legend ul li.sRes{background: #fff url(../image/checkList.png) 5px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
 .legend ul li.sUsr{background: #fff url(../image/man.png) 5px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
 /* .legend ul li.nPos.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.nPos.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;} */
+
 
 /*mapBox*/
 .mapWrap{width:300px;max-width: 400px; color: #2c3538; background-color: white; border-radius: 0.3em; }
@@ -96,12 +98,13 @@
 .detailView {position:fixed;bottom:0; width:100%; height:830px;left: 0px;}
 .detailView >p.openImage{display: block; text-align: center}
 .detailView >p >span{display:inline-block; width:76px; background:url(../image/open_image.png) 0 0 no-repeat;text-indent: -9999em;}
+.closeDetailSpanImg{display:inline-block; width:76px; background:url(../image/close_image.png) 0 0 no-repeat;text-indent: -9999em;}
 
 /*layout*/
 .infoWrap{ bottom:0; width:auto; height:100%; padding:20px; background-color:#3b3a40; overflow: hidden;}
 .infoHeader {height:28px; padding:15px 20px; background-color: #0071bf ;color:#fff;}
 .infoContent{width:auto; height: 640px ;padding:20px; overflow-y: scroll ;background-color:#f5f7f8}
-.infoListContent{width:auto; height: 695px ; overflow-y: scroll ;background-color:#f5f7f8}
+.infoListContent{width:auto; height: 678px ; overflow-y: scroll ;background-color:#f5f7f8}
 .infoFooter{padding:10px 20px 0 20px; text-align: center;}
 
 /*title photo*/
@@ -112,9 +115,11 @@
 .infoHeader >.title > .label.acrdc{position: relative; top: -6px; padding-right: 10px;}
 .infoHeader >.title > .location{position: relative; top: -7px; font-size: 0.8em;}
 .infoHeader >.title > .listLabel{position: absolute;top:0px;left:179px}
-.infoHeader >.title > .listLabel2{position: absolute;top:0px;left:280px}
 .infoHeader >.photo{position:absolute; top:50px; right:40px; width:42px; height:37px; background:url(../image/photo.png) 100% 100% no-repeat;}
 .infoHeader >.photo>.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
+
+.infoHeader >.listTitle {font-size: 1.5em; text-shadow: none; text-align: center; position:relative;}
+.infoHeader >.listTitle>.rowNum{display:inline-block;position: absolute; right: 0; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
 
 /*infoTable*/
 .infoTable { display: table; min-width:320px; width:100%; border:0; border-collapse: collapse; overflow-y: scroll; }
@@ -132,8 +137,11 @@
 .infoTable .cellNo{display: block;width:auto;border-bottom: 0 none;padding:0;background-color: #f5f7f8; vertical-align: middle;}
 
 /*button*/
-.btnPoint{display:inline-block; margin-left:10px; padding:10px 90px; background-color: #0071bf; color:#e6e6e6}
-.btnNormal{display:inline-block; margin-left:10px ; padding:10px 90px; background-color: #9d9ca1; color:#fff}
+.btnPoint{display:inline-block; margin-left:10px; padding:10px 80px; background-color: #0071bf; color:#e6e6e6}
+.btnNormal{display:inline-block; margin-left:10px ; padding:10px 80px; background-color: #9d9ca1; color:#fff}
+.btnPossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6}
+.btnImpossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #9d9ca1; color:#e6e6e6}
+.btnPossibleDetail{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6;width: 100%;}
 
 /*setting*/
 .dataWrap{display: inline-block; position:absolute; top:95px; right:20px; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
@@ -183,12 +191,12 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 /************* 사진(END) ****************/
 
 /*board table*/
-table{width:100%; border:0; border-collapse:collapse;}
+table{width:100%; border:0; border-collapse:collapse;text-align: center;}
 table caption{display: none}
 .tableWrap{border-top:1px solid #000 !important; margin-bottom: 0px; border-bottom:1px solid #000;}
 
 .titleTitle{}
-.dataTable {border-bottom:1px solid #bbb;}
+.dataTable {border-bottom:1px solid #bbb; }
 .dataTable  thead tr th{border-bottom: 1px solid #666;}
 .dataTable  tbody tr ~ tr td {border-top:1px solid #bbb;}
 /* .dataTable  tbody tr ~ tr th {border-top:1px solid #bbb; padding:15px 20px; background-color: #adadad; text-align:center; color:#ffffff} */
@@ -197,7 +205,9 @@ table caption{display: none}
 .dataTable  tr.selected {background: #fdfcce; color:#000;}
 .dataTable  td.noLine {border-left: none}
 .dataTable  td.sampleImage{padding:10px 30px 10px 0px; vertical-align: middle; text-align: center;}
+.dataTable  p.edit { border: 1px solid #c5c5c5 ;}
 
+#rcRslt{width:100%}
 /*map position*/
 .position{position: absolute;left: 20px; bottom: 0;}
 
@@ -398,7 +408,7 @@ table caption{display: none}
   position:absolute;
   left:0;
   top:0;
-  z-index:9000;
+  z-index:9;
   background-color:#000;
   display:none;
 }

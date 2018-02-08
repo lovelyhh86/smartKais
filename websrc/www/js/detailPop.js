@@ -4,11 +4,15 @@ function closeDetailView(){
         navigator.notification.confirm(msg.lossClose, function(btnindex){
             if(btnindex == 1){
                 $("#detailView").popup("close", { transition: "slideup" });
+                //팝업창 상태 초기화
+                isPopState = "on";
             }
         }, "알림", ["확인","취소"]);
 
     }else{
             $("#detailView").popup("close", { transition: "slideup" });
+            //팝업창 상태 초기화
+            isPopState = "on";
     }
 }
 
@@ -267,6 +271,15 @@ function openDataIdPop(id){
 
             //라디오버튼 구성
             popColume = 'INS_PLC';
+            createRadioButton();
+            break;
+        case 'gdftyQlt':
+            //제목
+            var titleText = '인쇄방식'; //도로명판
+            setTitle(titleText);
+
+            //라디오버튼 구성
+            popColume = 'GDFTY_QLT';
             createRadioButton();
             break;
             
@@ -1900,14 +1913,21 @@ function updateResearchWorkDate(){
             var sendParams = {};
 
             var sn = $("#sn").val();
+            var rdFtyLcSn = $('#rdFtyLcSn').val();
             //점검대상구분 (01: 도로명판, 02:건물번호판, 03:기초번호판, 04:지역안내판)
-            var rcGbn = $("#rcGbn").text();
+            var trgGbn = $("#trgGbn").text();
+            //일제조사 계획 미배정시 0 배정시 1
+            var plnOdr = 0;
 
             // var sigCd = app.info.sigCd;
             //구제시 때문에 해당 시설물 시설물코드 필요
-            var sigCd = featureClone[0].get("SIG_CD");
+            var sigCd = $("#sigCd").val();
+
+            if(sigCd == ''){
+                app.info.sigCd;
+            }
             var workId = app.info.opeId;
-            var rcNm = app.info.opeNm;
+            // var opeNm = app.info.opeNm;
             var rcSttCd = $("#rcSttCd_new").text() == ''? $("#rcSttCd").text() : $("#rcSttCd_new").text();
 
             if(rcSttCd == ''){
@@ -1918,10 +1938,12 @@ function updateResearchWorkDate(){
             //필수사항
             sendParams = $.extend(sendParams, {
                 sn: sn,
-                rcGbn: rcGbn,
+                trgLocSn :rdFtyLcSn,
+                plnOdr: plnOdr,
+                trgGbn: trgGbn,
                 sigCd: sigCd,
+                rcrSn: app.info.rcrSn,
                 workId : workId,
-                rcNm: rcNm,
                 rcSttCd : rcSttCd
             });
 
@@ -1950,7 +1972,7 @@ function updateResearchWorkDate(){
 
                     closeDetailView();
 
-                    closePopupAndClearMap();
+                    closePopupAndClearMap(trgGbn);
 
                     util.dismissProgress();
 

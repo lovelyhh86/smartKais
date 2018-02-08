@@ -3,14 +3,13 @@ var workPageReadyOK = $.Deferred();
 
 $( document ).on("pagecreate",pages.workpage.div,  function() {
     $( "[data-role='header']" ).toolbar();  //헤더 고정
-    addSearchUser();
     workPageReadyOK.resolve();
 });
 
 $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
     loadHelpdesk('#panel-qna .ui-content');  //헬프데스크 메뉴 로딩 menuhelpdesk.js
     //loadAppMenu('#mainMenu');       //앱 메뉴 로딩 menuapp.js
-
+    addSearchUser();
     util.on("notification",function(json,param){
 
         util.toast('push:' + json.message);
@@ -19,16 +18,18 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
 });
 
 //사용자 추가
-
 function addSearchUser(){
     // var param = {
     //     sigCd : app.info.sigCd
     // } ;
 
     $("#searchUserSel").empty();
-    $("#searchUserSel").append("<option>조사자선택</option>");
+    $("#searchUserSel").prepend('<option disabled value="">조사자선택</option>');
+    if(app.info.searchId == undefined){
+        $("#searchUserSel").val("").trigger('change');
+    }
 
-    var link = URLs.searchUserSelectLink;
+    var link = URLs.selectResearcherInfo;
     var url = URLs.postURL(link);
     util.postAJAX({}, url).then(
         function (context, rCode, results) {
@@ -40,37 +41,29 @@ function addSearchUser(){
             }
 
             var data = results.data;
-            
-            
 
             for(var i in data){
-                var userId = data[i].userId;
-                var userNm = data[i].userNm;
-                var psitnDept = data[i].psitnDept;
+                var rcrSn = data[i].rcrSn;
+                var rcrNm = data[i].rcrNm;
+                var rcrTypLbl = data[i].rcrTypLbl;
 
                 var optionForm = "<option value={0}>{1}</option>"; 
-                var userNmText = userNm + "(" + psitnDept +")";
-
+                var rcrNmText = rcrNm + "(" + rcrTypLbl +")";
                 
-                $("#searchUserSel").append(optionForm.format(userId,userNmText));
+                $("#searchUserSel").append(optionForm.format(rcrSn,rcrNmText));
+
             }
-            
 
         }
     );
 
-
-
-    // var optionForm = "<option value={0}>{1}</option>"; 
-
-    // $("#searchUserSel").append(optionForm.format());
 }
 
 //점검사용자 변경셋팅
 function changeUser(){
-    var searchId = $("#searchUserSel option:selected").val();
+    var rcrSn = $("#searchUserSel option:selected").val();
     var searchNm = $("#searchUserSel option:selected").text();
 
-    app.info.searchId = searchId;
+    app.info.rcrSn = rcrSn;
     app.info.searchNm = searchNm;
 }
