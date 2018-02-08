@@ -36,8 +36,9 @@
 .locManageSpgf { top: 14.5em; width: 9em; height: 3em;}
 .selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
 
-.selectAdrdc { top: 2.5em; width: 9em; height: 3em;}
-.locManageSpbd { top: 5.5em; width: 9em; height: 3em;}
+.selectResearchSpbd {top: 2.5em;width: 9em;height: 3em;}
+.selectAdrdc { top: 5.5em; width: 9em; height: 3em;}
+.locManageSpbd { top: 8.5em; width: 9em; height: 3em;}
 
 .sAdr{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;    background-size: 1.4em; width: 7.5em;}
 
@@ -45,6 +46,7 @@
 .locManageSpbd ul {width: 9em;}
 .selectSearchUser ul {width: 9em;}
 .selectResearch ul {width: 9em;}
+.selectResearchSpbd ul {width: 9em;}
 
 .legend ul li.nPos{background: #fff url(../image/plusPos2.png) 7px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
 .legend ul li.sRes{background: #fff url(../image/checkList.png) 5px 4px no-repeat;background-size: 1.2em;width: 7.5em;}

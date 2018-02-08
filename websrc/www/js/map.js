@@ -240,7 +240,8 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);   // 상세주소 기초조사
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);    // 기본 축척으로 변경
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);    // 지도 새로고침
-            ol.inherits(MapUtil.controls.researchControl, ol.control.Control);      // 나의배정목록
+            ol.inherits(MapUtil.controls.researchControl, ol.control.Control);      // 나의배정목록(안내시설물)
+            ol.inherits(MapUtil.controls.researchSpbdControl, ol.control.Control);  // 나의배정목록(건물번호판)
             // ol.inherits(MapUtil.controls.selectSearchUser, ol.control.Control);
         },
         /**
@@ -482,6 +483,35 @@ var MapUtil = {
                 target: options.target
             });
         },
+        researchSpbdControl: function(opt_options){
+            var researchList = function(){
+                //조사자일련번호
+                if(util.isEmpty(app.info.rcrSn)){
+                    navigator.notification.alert(msg.noRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '조사자', '확인');
+                }else{
+                    MapUtil.openList('myResearchSpbd');
+                    //심플팝업 초기화
+                    $("#popup-content").empty();
+                    $("#popup").hide();
+                }
+            }
+            
+            var element = document.createElement('div');
+            element.className = 'legend selectResearchSpbd ol-unselectable ol-control';
+    
+            var newPosHtml = "<ul><li class='sRes'>나의 배정목록</li></ul>";
+            element.innerHTML = newPosHtml;
+    
+            element.addEventListener('click', researchList, false);
+    
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+        },
         // selectSearchUser:function(opt_options){
         //     var searchUserList = function(){
         //         MapUtil.openDetail(DATA_TYPE.searchUser);
@@ -544,6 +574,9 @@ var MapUtil = {
             case "myResearch":
                 url = pages.detail_researchList;
             break;
+            case "myResearchSpbd":
+                url = pages.detail_researchList;
+            break;
             case "locationManageSpgf":
                 url = pages.locationManageSpgfPage;
             break;
@@ -562,7 +595,7 @@ var MapUtil = {
             $("#detailView").popup("open", { transition: "slideup" });
         })
     },
-    openDetail: function(layerID, f, rdGdftySn) {
+    openDetail: function(layerID, f, sn) {
         //조사자일련번호
         if(util.isEmpty(app.info.rcrSn)){
             navigator.notification.alert(msg.noRearcher, function () {
@@ -671,15 +704,23 @@ var MapUtil = {
     setList: function(type){
         switch (type) {
             case "myResearch":
-                
-                selectResearchContent();
+                //점검목록
+                selectResearchContent(null);
                 /**검색조건 */
                 //시설구분
-                makeOptSelectBox("searchOptTrgGbn","TRG_GBN","02","전체");
+                makeOptSelectBox("searchOptTrgGbn","TRG_GBN","02","전체","");
                 //삭제상태코드
-                makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체");
+                makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
 
-                
+            break;
+            case "myResearchSpbd":
+                //점검목록
+                selectResearchContent("02");
+                /**검색조건 */
+                //시설구분
+                makeOptSelectBox("searchOptTrgGbn","","","건물번호판","02");
+                //삭제상태코드
+                makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
             break;
             case "locationManageSpgf":
                 selectLocationMoveSpgfContent();
@@ -696,25 +737,29 @@ var MapUtil = {
             case DATA_TYPE.RDPQ:
                 // var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
-                MapUtil.setValues(layerID, link, rdGdftySn);
+                MapUtil.setValues(layerID, link, trgSnGlobal);
 
                 break;
             case DATA_TYPE.AREA:
                 // var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
-                MapUtil.setValues(layerID, link, rdGdftySn);
+                MapUtil.setValues(layerID, link, trgSnGlobal);
 
                 break;
             case DATA_TYPE.BSIS:
                 // var sn = f.get("RD_GDFTY_SN");
                 var link = URLs.roadsignlink;
 
-                MapUtil.setValues(layerID, link, rdGdftySn);
+                MapUtil.setValues(layerID, link, trgSnGlobal);
 
                 break;
             case DATA_TYPE.ENTRC:
-                var sn = f.get("BUL_MAN_NO");
+                if(f != null){
+                    var sn = f.get("BUL_MAN_NO");
+                }else{
+                    var sn = trgSnGlobal
+                }
                 var link = URLs.entrclink;
 
                 MapUtil.setValues(layerID, link, sn);
@@ -731,7 +776,7 @@ var MapUtil = {
             case DATA_TYPE.SPPN:
                 var link = URLs.spotSelectlink;
 
-                MapUtil.setValues(layerID, link, rdGdftySn);
+                MapUtil.setValues(layerID, link, trgSnGlobal);
 
                 break;
             case DATA_TYPE.ADRDC:
@@ -777,10 +822,21 @@ var MapUtil = {
                     return;
                 }
                 //*****************공통*****************
-                //일련번호
-                $("#trgSn").val(sn);
-                //위치일련번호
-                $("#trgLocSn").val(data.rdFtyLcSn);
+                
+                var rdGdftySe = data.rdGdftySe;
+                
+                if(rdGdftySe == null){
+                    //일련번호
+                    $("#trgSn").val(data.bulNmtNo);
+                    //위치일련번호
+                    $("#trgLocSn").val(data.bulManNo);
+                }else{
+                    //일련번호
+                    $("#trgSn").val(sn);
+                    //위치일련번호
+                    $("#trgLocSn").val(data.rdFtyLcSn);
+                }
+                
                 //시군구코드
                 $("#sigCd").val(data.sigCd);
                 //사진건수
@@ -824,7 +880,7 @@ var MapUtil = {
                 var rcSttCd = data.rcSttCd; // 점검상태
                 var rcRslt = data.rcRslt; //점검결과
                 
-                makeOptSelectBox("rcSttCdSel","RC_STT_CD","","선택");
+                makeOptSelectBox("rcSttCdSel","RC_STT_CD","","선택","");
                 $("#rcSttCdSel").val(rcSttCd);
                 $("#rcSttCd").html(rcSttCd);
 
@@ -1853,6 +1909,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.returnZoomControl(),
             new MapUtil.controls.refreshMapControl(),
             new MapUtil.controls.researchControl(),
+            new MapUtil.controls.researchSpbdControl(),
             // new MapUtil.controls.selectSearchUser(),
 
 
@@ -3131,10 +3188,10 @@ function layerClear() {
 
 
 //상세정보 열기
-var rdGdftySn;
+var trgSnGlobal;
 
 function openDetailPopupCall(index, layer, sn) {
-    rdGdftySn = sn;
+    trgSnGlobal = sn;
     // $("#popup").hide();
 
     if (layerID == DATA_TYPE.BULD) {

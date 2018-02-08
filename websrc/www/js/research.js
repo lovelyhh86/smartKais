@@ -59,13 +59,18 @@ $(function(){
 });
 
 //점검대상 조회
-function selectResearchContent(){
+function selectResearchContent(trgGbn){
     util.showProgress();
     
     //조사자일련번호
     var rcrSn = app.info.rcrSn;
 
-    var searchOptTrgGbn = $("#searchOptTrgGbn").val() == "" ? null : $("#searchOptTrgGbn").val();
+    if(trgGbn == null){
+        var searchOptTrgGbn = $("#searchOptTrgGbn").val() == "" ? null : $("#searchOptTrgGbn").val();
+    }else{
+        var searchOptTrgGbn = trgGbn;
+    }
+    
     var searchOptRcSttCd = $("#searchOptRcSttCd").val() == "" ? null : $("#searchOptRcSttCd").val();
     var searchOptDelSttCd = $("#searchOptDelSttCd").val() == "" ? null : $("#searchOptDelSttCd").val();
 
@@ -98,84 +103,126 @@ function selectResearchContent(){
                 var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>{7}{8}</td></tr>';
                 var d = data[i];
 
-                //설치 도로명
-                var rnLbl = "{0} {1}{2}".format(
-                    d.bsisRnLbl,
-                    d.bsisMnnm,
-                    d.bsisSlno == "0"? "" : "-" + d.bsisSlno
-                );
-                //시설물구분
-                var rdGdftySe = d.rdGdftySe;
-                //명판내용
-                var korRnLbl = createRnNm(rdGdftySe,d);
-                
-                var researchOkBtn = "<button class='{0}' onclick='{1}'>정상</button>";
-                
-                if(d.delStateCd == '01' && d.rcSttCd == null){
-                // if(d.rcSttCd != null){//임시로 열어둠
-                    researchOkBtn = researchOkBtn.format("btnPossible","insertResearchForList("+i+")");
+                if(d.trgGbn == "02"){
+                    //명판내용
+                    var korRnLbl = "{0} {1}{2}".format(
+                        d.rnCdLbl,
+                        d.buldMnnm,
+                        d.buldSlno == "0"? "" : "-" + d.buldSlno
+                    );
+
+                    var researchOkBtn = "<button class='{0}' onclick='{1}'>정상</button>";
+                    
+                    if(d.delStateCd == '01' && d.rcSttCd == null){
+                    // if(d.rcSttCd != null){//임시로 열어둠
+                        researchOkBtn = researchOkBtn.format("btnPossible","insertResearchForList("+i+")");
+                    }else{
+                        researchOkBtn = researchOkBtn.format("btnImpossible","impossibleAlert()");
+                    }
+
+                    var fixDetailBtn = "<button class='' onclick='goResearchDetail("+i+")'>정비</button>";
+                    var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/iconNumber.png'></img>";
+
+                    $("#myResearchTable > tbody:last").append(
+                        rowHtml.format(
+                            "row"+i
+                            ,locBtn
+                            ,d.trgGbnLbl
+                            ,"-"
+                            ,korRnLbl
+                            ,d.delStateCdLbl
+                            ,d.rcSttCdLbl
+                            // ,researchSelect
+                            ,researchOkBtn
+                            ,fixDetailBtn
+                            ));
+                            
+                    $("#row"+i).data("rnCd",d.rnCd);
+                    $("#row"+i).data("emdCd",d.emdCd);
+                    $("#row"+i).data("buldMnnm",d.buldMnnm);
+                    $("#row"+i).data("buldSlno",d.buldSlno);
+                    $("#row"+i).data("buldSeCd",d.buldSeCd);
+                        
                 }else{
-                    researchOkBtn = researchOkBtn.format("btnImpossible","impossibleAlert()");
+                    //설치 도로명
+                    var rnLbl = "{0} {1}{2}".format(
+                        d.bsisRnLbl,
+                        d.bsisMnnm,
+                        d.bsisSlno == "0"? "" : "-" + d.bsisSlno
+                    );
+                    //시설물구분
+                    var rdGdftySe = d.rdGdftySe;
+                    //명판내용
+                    var korRnLbl = createRnNm(rdGdftySe,d);
+                    
+                    var researchOkBtn = "<button class='{0}' onclick='{1}'>정상</button>";
+                    
+                    if(d.delStateCd == '01' && d.rcSttCd == null){
+                    // if(d.rcSttCd != null){//임시로 열어둠
+                        researchOkBtn = researchOkBtn.format("btnPossible","insertResearchForList("+i+")");
+                    }else{
+                        researchOkBtn = researchOkBtn.format("btnImpossible","impossibleAlert()");
+                    }
+
+                    var fixDetailBtn = "<button class='' onclick='goResearchDetail("+i+")'>정비</button>";
+                    var locBtn = "<button class='' onclick='getResearchLocation("+i+")'><img src='image/icon_curr.png'></img></button>";
+
+                    if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
+                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend01.png'></img>";
+                    }else if(rdGdftySe == '510'){
+                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend03.png'></img>";
+                    }else if(rdGdftySe == '610'){
+                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend02.png'></img>";
+                    }else{
+                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/iconNumber.png'></img>";
+                    }
+                    
+                    
+                    // var selectFormat = "<select id='sel{0}' onchange='insertResearchForList("+d.rdGdftySn+","+d.sigCd+")'>{1}</select>";
+                    // var optionFormat = "<option value='{0}'>{1}</option>";
+
+                    // var optionTxt = "<option disabled selected='selected' value=''>선택</option>"; 
+                    // var colume = "RC_STT_CD";
+                    // var codeList = app.codeMaster[CODE_GROUP[colume]];
+                    
+                    // for(var c in codeList){
+                    //     if(c != "GroupNm"){
+                    //         optionTxt += optionFormat.format(c,codeList[c]);
+                    //     }
+                    // }
+
+                    // var researchSelect = selectFormat.format(i,optionTxt);
+                    
+                    $("#myResearchTable > tbody:last").append(
+                        rowHtml.format(
+                            "row"+i
+                            ,locBtn
+                            ,d.trgGbnLbl
+                            ,rnLbl
+                            ,korRnLbl
+                            ,d.delStateCdLbl
+                            ,d.rcSttCdLbl
+                            // ,researchSelect
+                            ,researchOkBtn
+                            ,fixDetailBtn
+                            ));
+
+                    }
+
+                    //사용 데이터 셋팅    
+                    $("#row"+i).data("trgGbnLbl",d.trgGbnLbl);
+                    $("#row"+i).data("korRnLbl",korRnLbl);
+                    $("#row"+i).data("trgGbn",d.trgGbn);
+
+                    $("#row"+i).data("plnYr",d.plnYr);
+                    $("#row"+i).data("plnOdr",d.plnOdr);
+                    $("#row"+i).data("sigCd",d.sigCd);
+                    $("#row"+i).data("mtchSn",d.mtchSn);
+                    $("#row"+i).data("trgSn",d.trgSn);
+                    $("#row"+i).data("trgLocSn",d.trgLocSn);
+                    $("#row"+i).data("trgGbn",d.trgGbn);
                 }
-
-                var fixDetailBtn = "<button class='' onclick='goResearchDetail("+i+")'>정비</button>";
-                var locBtn = "<button class='' onclick='getResearchLocation("+d.rdFtyLcSn+")'><img src='image/icon_curr.png'></img></button>";
-
-                if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
-                    locBtn = "<img onclick='getResearchLocation("+d.rdFtyLcSn+")' src='./img/icon_legend01.png'></img>";
-                }else if(rdGdftySe == '510'){
-                    locBtn = "<img onclick='getResearchLocation("+d.rdFtyLcSn+")' src='./img/icon_legend03.png'></img>";
-                }else if(rdGdftySe == '610'){
-                    locBtn = "<img onclick='getResearchLocation("+d.rdFtyLcSn+")' src='./img/icon_legend02.png'></img>";
-                }
                 
-                
-                // var selectFormat = "<select id='sel{0}' onchange='insertResearchForList("+d.rdGdftySn+","+d.sigCd+")'>{1}</select>";
-                // var optionFormat = "<option value='{0}'>{1}</option>";
-
-                // var optionTxt = "<option disabled selected='selected' value=''>선택</option>"; 
-                // var colume = "RC_STT_CD";
-                // var codeList = app.codeMaster[CODE_GROUP[colume]];
-                
-                // for(var c in codeList){
-                //     if(c != "GroupNm"){
-                //         optionTxt += optionFormat.format(c,codeList[c]);
-                //     }
-                // }
-
-                // var researchSelect = selectFormat.format(i,optionTxt);
-                
-                $("#myResearchTable > tbody:last").append(
-                    rowHtml.format(
-                        "row"+i
-                        ,locBtn
-                        ,d.rdGdftySeLbl
-                        ,rnLbl
-                        ,korRnLbl
-                        ,d.delStateCdLbl
-                        ,d.rcSttCdLbl
-                        // ,researchSelect
-                        ,researchOkBtn
-                        ,fixDetailBtn
-                        ));
-
-                //사용 데이터 셋팅    
-                
-                $("#row"+i).data("rdGdftySeLbl",d.rdGdftySeLbl);
-                $("#row"+i).data("korRnLbl",korRnLbl);
-
-                $("#row"+i).data("plnYr",d.plnYr);
-                $("#row"+i).data("plnOdr",d.plnOdr);
-                $("#row"+i).data("sigCd",d.sigCd);
-                $("#row"+i).data("mtchSn",d.mtchSn);
-                $("#row"+i).data("trgSn",d.trgSn);
-                $("#row"+i).data("trgLocSn",d.trgLocSn);
-                $("#row"+i).data("trgGbn",d.trgGbn);
-                
-                $("#row"+i).data("rdGdftySe",d.rdGdftySe);
-                
-
-            }
             var size = $("#myResearchTable > tbody > tr").size();
 
             $("#rowSize").append(size);
@@ -198,26 +245,42 @@ function selectResearchContent(){
 function goResearchDetail(i){
     var targetE = $("#row"+i);
     //시설물 번호 전역변수
-    rdGdftySn = targetE.data("trgSn");
+    trgSnGlobal = targetE.data("trgSn");
 
-    var rdGdftySe = targetE.data("rdGdftySe");
-
-    var layer = "";
-    if(rdGdftySe == "110"){
-        layer = DATA_TYPE.RDPQ;
-    }else if(rdGdftySe == "510"){
-        layer = DATA_TYPE.AREA;
-    }else if(rdGdftySe == "610"){
-        layer = DATA_TYPE.BSIS;
+    var trgGbn = targetE.data("trgGbn");
+    if(trgGbn == "02"){
+        //시설물 번호 전역변수
+        trgSnGlobal = targetE.data("trgLocSn");
     }
-    MapUtil.openDetail(layer, null);
+    
+    MapUtil.openDetail(trgGbn, null);
 }
 //배정대상 위치찾기
-function getResearchLocation(sn){
+function getResearchLocation(i){
+
+    var targetID = $("#row" + i);
+
+    //대상일련번호
+    var trgLocSn = targetID.data('trgLocSn');
+    //대상구분
+    var trgGbn = targetID.data('trgGbn');
+
     var layerNm = "tlv_spgf_loc_skm";
+    var searchList = {rdftylc_sn: trgLocSn}
 
-    var searchList = {rdftylc_sn: sn}
+    if(trgGbn == "02"){
+        layerNm = "tlv_spbd_buld";
 
+        var sigCd = targetID.data('sigCd');
+        var emdCd = targetID.data('emdCd');
+        var rnCd  = targetID.data('rnCd');
+        var buldMnnm = targetID.data('buldMnnm');
+        var buldSlno = targetID.data('buldSlno');
+        var buldSeCd = targetID.data('buldSeCd');
+
+        searchList = {sig_cd: sigCd, emd_cd: emdCd, rn_cd: rnCd, buld_mnnm: buldMnnm, buld_slno: buldSlno, buld_se_cd:buldSeCd}
+    }
+    
     getLocationByFeature(layerNm, searchList);
 }
 
@@ -225,12 +288,12 @@ function getResearchLocation(sn){
 function insertResearchForList(i){
     var targetID = $("#row" + i);
 
-    var rdGdftySeLbl = targetID.data('rdGdftySeLbl');
+    var trgGbnLbl = targetID.data('trgGbnLbl');
     var korRnLbl = targetID.data('korRnLbl');
 
     var msgForm = "[{0}] {1} 을 정상으로 점검하시겠습니까?";
 
-    navigator.notification.confirm(msgForm.format(rdGdftySeLbl,korRnLbl), function(btnindex){
+    navigator.notification.confirm(msgForm.format(trgGbnLbl,korRnLbl), function(btnindex){
 
         if(btnindex == 1){
             // var targetID = $("#row" + i);
@@ -256,8 +319,6 @@ function insertResearchForList(i){
             var rcrSn = app.info.rcrSn;
             //작업자ID
             var workId = app.info.opeId;
-
-
 
             var sendParams = {
                 plnYr : plnYr,
@@ -366,13 +427,17 @@ function submitResearch(){
     
                     $("p[name*='newLbl']").text('');
 
-                    var index = '1';
+                    var index = 0;
                     var layer = trgGbn;
                     if(trgGbn == '02'){
                         layer = DATA_TYPE.BULD;
+                        index = 1;
+                        trgSn = trgLocSn;
                     }
-    
-                    openDetailPopupCall(index, layer, trgSn)
+                    
+                    //시설물 번호 전역변수
+                    trgSnGlobal = trgSn
+                    MapUtil.openDetail(trgGbn, null);
     
                     // closePopupAndClearMap(trgGbn);
     
@@ -388,13 +453,13 @@ function submitResearch(){
 }
 
 //검색 옵션 추가
-function makeOptSelectBox(target,colume,unUsed,defaultText){
+function makeOptSelectBox(target,colume,unUsed,defaultText,defaultValue){
 
     var targetId = $("#"+target);
     targetId.empty();
     
     if(defaultText != ""){
-        targetId.append("<option value=''>"+defaultText+"</option>");
+        targetId.append("<option value='"+defaultValue+"'>"+defaultText+"</option>");
     }
 
     var optionFormat = "<option value='{0}'>{1}</option>";
@@ -405,10 +470,12 @@ function makeOptSelectBox(target,colume,unUsed,defaultText){
     
     for(var c in codeList){
         if(c != "GroupNm"){
+
             if(c != unUsed){
                 optionTxt = optionFormat.format(c,codeList[c]);
                 targetId.append(optionTxt); 
             }
+        
         }
     }
 }
