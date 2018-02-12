@@ -9,7 +9,8 @@ var msg = {
     noItem: "조회된 정보가 없습니다.",
     noPhoto: "비어있는 사진이 있습니다.\n2장(근거리, 원거리) 모두 촬영해 주세요.",
     noSave: "변경한 항목이 없습니다.",
-    isSave: "변경한 항목이 있습니다. 저장 하시겠습니까?",
+    isSave: "저장 하시겠습니까?",
+    isSaveAgain : "저장 하시겠습니까? \n(기존 승인대기 상태의 정보는 현재 정보로 대체됩니다.) ",
     isSavePhoto: "변경한 사진이 있습니다. 저장 하시겠습니까?",
     lossClose: "변경한 항목이 있습니다. 닫기를 누르면 저장되지 않습니다.",
     lossPhotoClose: "변경한 사진이 있습니다.\n(단, 삭제된 사진 상태로 저장 불가)\n\n닫기를 누르면 저장되지 않습니다.",
@@ -30,10 +31,12 @@ var msg = {
     noRearcher: "조사자를 선택해 주세요.",
     notPubRearcher: "공무원만 이용할 수 있습니다.",
     impossibleNormal: "정상처리 할 수 없는 시설물 입니다.\n정비를 통해 점검해 주십시요.",
-    updateResearch: "점검 하시겠습니까?",
+    updateResearch: "해당 시설물을 점검하시겠습니까?",
     successResearch: "정상적으로 점검되었습니다.",
-    successModify: "정상적으로 저장 되었습니다. \n 해당 내용은 KAIS웹을 통한 승인 후 적용됩니다.",
-    loadUpdtData: "승인대기중인 데이터를 불러오시겠습니까?",
+    successModify: "정상적으로 저장 되었습니다. \n해당 내용은 KAIS웹을 통한 승인 후 적용됩니다.",
+    loadUpdtData: "승인 대기중인 데이터를 불러오시겠습니까?",
+    successLoadUpdt : "승인 대기 데이터 불러오기 완료.",
+    checkRcSttCd : "점검상태를 선택하세요.",
 };
 var app = {
     // Application Constructor

@@ -515,6 +515,11 @@ function impossibleAlert(){
 function checkRcSttCd(){
     //신규점검상태
     var rcSttCdSel = $("#rcSttCdSel").val();
+    if(rcSttCdSel == ""){
+        navigator.notification.alert(msg.checkRcSttCd, function(){
+            
+        }, '알림', '확인');
+    }
     //기존점검상태
     var rcSttCd =$("#rcSttCd").text();
     if(rcSttCdSel == "" || rcSttCd == rcSttCdSel){
@@ -531,6 +536,7 @@ function checkRcSttCd(){
     //설치상태가 설치가 아닌데 정상으로 하려고 할떄
     if(delStateCd != "01" && rcSttCdSel =="1000"){
         navigator.notification.alert(msg.impossibleNormal, function(){
+            $("#rcSttCdSel").val($("#rcSttCd").text());//기존상태로 변경
             
         }, '알림', '확인');
     }else{
