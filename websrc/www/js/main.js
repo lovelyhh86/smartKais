@@ -30,7 +30,9 @@ var msg = {
     noRearcher: "조사자를 선택해 주세요.",
     impossibleNormal: "정상처리 할 수 없는 시설물 입니다.\n정비를 통해 점검해 주십시요.",
     updateResearch: "점검 하시겠습니까?",
-    successResearch: "정상적으로 점검되었습니다."
+    successResearch: "정상적으로 점검되었습니다.",
+    successModify: "정상적으로 저장 되었습니다. \n 해당 내용은 KAIS웹을 통한 승인 후 적용됩니다.",
+    loadUpdtData: "승인대기중인 데이터를 불러오시겠습니까?",
 };
 var app = {
     // Application Constructor

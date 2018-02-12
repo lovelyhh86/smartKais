@@ -19,11 +19,15 @@
 			<div class="infoContent">
 				<div id="mask"></div>
 				
+				<input id="plnYr" type="hidden" value="" />
+				<input id="mtchSn" type="hidden" value="" />
 				<input id="trgLocSn" type="hidden" value="" />
 				<input id="trgSn" type="hidden" value=""/>
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="01"/>
 				<input id="sigCd" type="hidden" value="" />
+
+				<input id="isUpdtGbn" type="hidden" value="" />
 				
 				<!--점검-->
 				<div class="blueTitle">
@@ -63,16 +67,13 @@
 								<td id='rcSttCdTd'>
 									<p id="rcSttCd" style="display:none;"></p>
 									<p id="rcSttCd_new" name="newRcLbl" style="display:none"></p>
-									<select id='rcSttCdSel' onchange="checkRcSttCd()">
-										<!-- <option></option> -->
-									</select>
+									<select id='rcSttCdSel' class="cell100" onchange="checkRcSttCd()"/>
 								</td>
 							</tr>
-							
 							<tr>
 								<th scope="row">점검결과</th>
 								<td colspan='3'>
-									<textarea maxlength="100" id="rcRslt" onchange="checkRcRslt()"></textarea>
+									<textarea maxlength="100" id="rcRslt" oninput="checkRcRslt()" placeholder="점검결과를 입력하세요."></textarea>
 									<p id="rcRsltOld" name="oldLbl" style="display:none"></p>
                            			<!-- <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p> -->
 								</td>
@@ -80,23 +81,287 @@
 						</tbody>
 					</table>
 				</div>
-				<button class="btnPossibleDetail" onclick="submitResearch()">점검</button>
+				<button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
 				<!-- 정보  -->
 				<div class="blueTitle">
+					<h2>상태</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="상태">
+						<caption>상태</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">설치상태</th>
+								<td colspan="3">
+									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
+									<p id="delStateCd" style="display:none;"></p>
+									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="delStateCd_new" style="display:none"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>위치정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="위치정보">
+						<caption>위치정보</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">도로시설물</th>
+								<td colspan="3">
+									<p id="rdftySeLbl"></p>
+									<p id="rdftySe" style="display:none"></p>
+								</td>
+								
+							</tr>
+							<tr>
+								<th scope="row">설치도로명</th>
+								<td>
+									<p id="bsisRnLbl">&nbsp;</p>
+								</td>
+								<th scope="row">설치기초번호</th>
+								<td>
+									<p id="bsis">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+
+				<div class="blueTitle">
 					<h2>기본정보</h2>
 				</div>
-				<div class="infoTable">
-					<!-- <div onclick="openDataIdPop('delStateCd');" class="row"> -->
+				<div class="tableWrap">
+					<table class="dataTable" summary="기본정보">
+						<caption>기본정보</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">설치유형</th>
+								<td>
+									<p id="instSeLbl">&nbsp;</p>
+									<p id="instSe" style="display:none"></p>
+								</td>
+								<th scope="row">제작형식</th>
+								<td>
+									<p id="gdftyMnfLbl">&nbsp;</p>
+									<p id="gdftyMnf" style="display:none"></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">설치지점</th>
+								<td>
+									<select id="instSpotCd" class="cell100"/>
+								</td>
+								<th scope="row">조명여부</th>
+								<td>
+									<select id="lghtCd" class="cell100"/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">교차로 유형</th>
+								<td colspan="2">
+									<select id="instCrossCd" class="cell100"/>
+								</td>
+								<td/>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>내용</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="내용">
+						<caption>내용</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">앞면 도로명</th>
+								<td>
+									<input type='text' class="cell70" id="frontKoreanRoadNm" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'40')"/>
+								</td>
+								<th scope="row">로마자</th>
+								<td>
+									<p id="frontRomeRoadNm">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">시작기초번호</th>
+								<td>
+									<input type='number' class="cell30" id="frontStartBaseMasterNo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<span>-</span>
+									<input type='number' class="cell30" id="frontStartBaseSlaveNo"  readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+								</td>
+								<th scope="row">종료기초번호</th>
+								<td>
+									<input type='number' class="cell30" id="frontEndBaseMasterNo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<span>-</span>
+									<input type='number' class="cell30" id="frontEndBaseSlaveNo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+								</td>
+							</tr>
+							<tr class="bk">
+								<th scope="row">뒷면 도로명</th>
+								<td>
+									<p id="backKoreanRoadNm">&nbsp;</p>
+									<p id="backKoreanRoadNm_new" name="newLbl" style="display:none; color:red"></p>
+								</td>
+								<th scope="row">로마자</th>
+								<td>
+									<p id="backRomeRoadNm">&nbsp;</p>
+								</td>
+							</tr>
+							<tr class="bk">
+								<th scope="row">시작기초번호</th>
+								<td>
+									<p id="backStartBaseNo" name="oldLbl" >&nbsp;</p>
+									<p id="backStartBaseMasterNo" style="display:none"></p>
+									<p id="backStartBaseSlaveNo" style="display:none"></p>
+									<p id="backStartBaseNo_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="backStartBaseMasterNo_new" style="display:none;"></p>
+									<p id="backStartBaseSlaveNo_new" style="display:none;"></p>
+								</td>
+								<th scope="row">종료기초번호</th>
+								<td>
+									<p id="backEndBaseNo" name="oldLbl" >&nbsp;</p>
+									<p id="backEndBaseMasterNo" style="display:none"></p>
+									<p id="backEndBaseSlaveNo" style="display:none"></p>
+									<p id="backEndBaseNo_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="backEndBaseMasterNo_new" style="display:none;"></p>
+									<p id="backEndBaseSlaveNo_new" style="display:none;"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>속성</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="속성">
+						<caption>속성</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">안내시설형식</th>
+								<td>
+									<p id="gdftyFormLbl">&nbsp;</p>
+									<p id="gdftyForm" style="display:none"></p>
+								</td>
+								<th scope="row">사용대상</th>
+								<td>
+									<select id="useTarget" class="cell100" onchange="changeUseTarget()"/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">재질</th>
+								<td>
+									<select id="gdftyQlt" class="cell100"/>
+								</td>
+								<th scope="row">인쇄방식</th>
+								<td>
+									<select id="prtTy" class="cell100"/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">안내시설 방향</th>
+								<td>
+									<select id="plqDirection" class="cell100" onchange="changeRdpqGdSd()"/>
+								</td>
+								<th scope="row">양면여부</th>
+								<td>
+									<p id="bdrclAtLbl">&nbsp;</p>
+									<p id="bdrclAt" style="display:none"></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">제2외국어여부</th>
+								<td>
+									<select id="scfggMkty" class="cell100" onchange="changeScfggMkty()"/>
+								</td>
+								<td></td><td></td>
+							</tr>
+							<tr>
+								<th scope="row">언어1</th>
+								<td>
+									<select id="scfggUla1" class="cell100"/>
+								</td>
+								<th scope="row">언어2</th>
+								<td>
+									<select id="scfggUla2" class="cell100"/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">규격</th>
+								<td>
+									<select id="rdpqGdSd" class="cell100" onchange="setGdfyWide()"/>
+								</td>
+								<th scope="row">단가(원)</th>
+								<td >
+									<input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)"/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">가로세로두께</th>
+								<td colspan="3">
+									<input type='number' class="cell10" id="gdftyWide" readonly = "readonly" maxlength="5"/>
+									<span>mm *</span>
+									<input type='number' class="cell10" id="gdftyVertical" readonly = "readonly" maxlength="5"/>
+									<span>mm *</span>
+									<input type='number' class="cell10" id="gdftyThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<button class="btnPossibleDetail" onclick="modify()">정비</button>
+
+
+
+
+
+				<!-- <div class="infoTable">
 					<div class="row">
 						<div  class="cell1">
 								<span class="label">설치상태</span>
 						</div>
 						<div class="cell2">
-							<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
-							<p id="delStateCd" style="display:none;"></p>
-							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="delStateCd_new" style="display:none"></p>
+							
 						</div>
 					</div>
 					<div class="row">
@@ -153,8 +418,7 @@
 								<span class="label">양면여부</span>
 						</div>
 						<div class="cell2">
-							<p id="bdrclAtLbl">&nbsp;</p>
-                            <p id="bdrclAt" style="display:none"></p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop('frontKoreanRoadNm')" class="row">
@@ -162,8 +426,7 @@
 								<span class="label">앞면 도로명(국문)</span>
 						</div>
 						<div class="cell2">
-							<p id="frontKoreanRoadNm">&nbsp;</p>
-							<p id="frontKoreanRoadNm_new" name="newLbl" style="display:none; color:red"></p>
+							
 						</div>
 					</div>
 					<div class="row">
@@ -171,7 +434,7 @@
 								<span class="label">앞면 도로명(로마)</span>
 						</div>
 						<div class="cell2">
-							<p id="frontRomeRoadNm">&nbsp;</p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop2('frontStartBaseNo',['frontStartBaseMasterNo','frontStartBaseSlaveNo']);" class="row">
@@ -179,12 +442,7 @@
 								<span class="label">앞면 시작기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontStartBaseNo" name="oldLbl" >&nbsp;</p>
-							<p id="frontStartBaseMasterNo" style="display:none"></p>
-							<p id="frontStartBaseSlaveNo" style="display:none"></p>
-							<p id="frontStartBaseNo_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="frontStartBaseMasterNo_new" style="display:none;"></p>
-							<p id="frontStartBaseSlaveNo_new" style="display:none;"></p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop2('frontEndBaseNo',['frontEndBaseMasterNo','frontEndBaseSlaveNo']);" class="row">
@@ -192,12 +450,7 @@
 								<span class="label">앞면 종료기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="frontEndBaseNo" name="oldLbl" >&nbsp;</p>
-							<p id="frontEndBaseMasterNo" style="display:none"></p>
-							<p id="frontEndBaseSlaveNo" style="display:none"></p>
-							<p id="frontEndBaseNo_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="frontEndBaseMasterNo_new" style="display:none;"></p>
-							<p id="frontEndBaseSlaveNo_new" style="display:none;"></p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop('backKoreanRoadNm')" class="row bk">
@@ -205,8 +458,7 @@
 								<span class="label">뒷면 도로명(국문)</span>
 						</div>
 						<div class="cell2">
-							<p id="backKoreanRoadNm">&nbsp;</p>
-							<p id="backKoreanRoadNm_new" name="newLbl" style="display:none; color:red"></p>
+							
 						</div>
 					</div>
 					<div class="row bk">
@@ -214,7 +466,7 @@
 								<span class="label">뒷면 도로명(로마)</span>
 						</div>
 						<div class="cell2">
-							<p id="backRomeRoadNm">&nbsp;</p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop2('backStartBaseNo',['backStartBaseMasterNo','backStartBaseSlaveNo']);" class="row bk">
@@ -222,12 +474,7 @@
 								<span class="label">뒷면 시작기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="backStartBaseNo" name="oldLbl" >&nbsp;</p>
-							<p id="backStartBaseMasterNo" style="display:none"></p>
-							<p id="backStartBaseSlaveNo" style="display:none"></p>
-							<p id="backStartBaseNo_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="backStartBaseMasterNo_new" style="display:none;"></p>
-							<p id="backStartBaseSlaveNo_new" style="display:none;"></p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop2('backEndBaseNo',['backEndBaseMasterNo','backEndBaseSlaveNo']);" class="row bk">
@@ -235,12 +482,7 @@
 								<span class="label">뒷면 종료기초번호</span>
 						</div>
 						<div class="cell2">
-							<p id="backEndBaseNo" name="oldLbl" >&nbsp;</p>
-							<p id="backEndBaseMasterNo" style="display:none"></p>
-							<p id="backEndBaseSlaveNo" style="display:none"></p>
-							<p id="backEndBaseNo_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="backEndBaseMasterNo_new" style="display:none;"></p>
-							<p id="backEndBaseSlaveNo_new" style="display:none;"></p>
+							
 						</div>
 					</div>
 					<div class="row">
@@ -248,8 +490,7 @@
 								<span class="label">안내시설형식</span>
 						</div>
 						<div class="cell2">
-                            <p id="gdftyFormLbl">&nbsp;</p>
-							<p id="gdftyForm" style="display:none"></p>
+                            
 						</div>
 					</div>
 					<div onclick="openDataIdPop('useTarget');" class="row">
@@ -257,10 +498,7 @@
 								<span class="label">사용대상</span>
 						</div>
 						<div class="cell2">
-							<p id="useTargetLbl" name="oldLbl">&nbsp;</p>
-                            <p id="useTarget" style="display:none"></p>
-							<p id="useTargetLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="useTarget_new" style="display:none;"></p>
+							
 						</div>
 					</div>
 					<div onclick="openDataIdPop('plqDirection');" class="row">
@@ -268,10 +506,7 @@
 								<span class="label">안내시설방향</span>
 						</div>
 						<div class="cell2">
-							<p id="plqDirectionLbl" name="oldLbl" >&nbsp;</p>
-                            <p id="plqDirection" style="display:none"></p>
-							<p id="plqDirectionLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="plqDirection_new" style="display:none;"></p>
+							
 						</div>
 					</div>
 					<div onclick="openDataIdPop('scfggMkty');" class="row">
@@ -312,10 +547,7 @@
 								<span class="label">규격</span>
 						</div>
 						<div class="cell2">
-							<p id="rdpqGdSdLbl" name="oldLbl" >&nbsp;</p>
-                            <p id="rdpqGdSd" style="display:none"></p>
-							<p id="rdpqGdSdLbl_new" name="newLbl" onchange="setGdft()" style="display:none; color:red"></p>
-							<p id="rdpqGdSd_new" style="display:none;"></p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop2('gdftyWVT',['gdftyWide','gdftyVertical','gdftyThickness'])" class="row">
@@ -323,14 +555,7 @@
 							<span class="label">가로*세로*두께</span>
 						</div>
 						<div class="cell2">
-							<p id="gdftyWVT" name="oldLbl" >&nbsp;</p>
-							<p id="gdftyWide" style="display:none"></p>
-							<p id="gdftyVertical" style="display:none"></p>
-							<p id="gdftyThickness" style="display:none"></p>
-							<p id="gdftyWVT_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="gdftyWide_new" style="display:none"></p>
-							<p id="gdftyVertical_new" style="display:none"></p>
-							<p id="gdftyThickness_new" style="display:none"></p>
+							
 						</div>
 					</div>
 					<div onclick="openCustomPop('gdftyUnitPrice')" class="row">
@@ -347,7 +572,7 @@
 							<span class="label">설치도로명</span>
 						</div>
 						<div class="cell2">
-							<p id="bsisRnLbl">&nbsp;</p>
+							
 						</div>
 					</div>
 					<div class="row">
@@ -380,8 +605,8 @@
 							<p id="prtTy_new" style="display:none;"></p>
 						</div>
 					</div>
-				</div>
-				<button class="btnPossibleDetail" onclick="submitResearch()">정비</button>
+				</div> -->
+				
 				<!-- 정보 끝 -->
 				<!-- 공통 라디오 데이터 팝업 -->
                 <div id="radioDataPop" class="dataWrap" style="display: none">
@@ -404,7 +629,7 @@
 						<div class="row">
 							<div class="cell">
 								<span class="label w35">단가</span>
-								<div class="inputText w75"><input type="number" data-clear-btn="false" pattern="" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
+								<div class="inputText w75"><input type="number" data-clear-btn="false" pattern="" id="gdftyUnitPrice" name="" title="단가" maxlength="20" value=""></div> 원
 							</div>
 						</div>
 					</div>
@@ -588,6 +813,25 @@
 		</div>
 	</div>
 </div>
+
+<!-- 입력공통팝업 -->
+<div id="inputPop" class="dataWrap" style="display: none">
+	<input type="hidden" id="targetId"/>
+	<div class="dataTItle">입력</div>
+	<div class="dataForm">
+		<div class="row">
+			<div class="cell">
+				<div class="inputText"><input type="number" id="fixedValue" value=""></div>
+			</div>
+		</div>
+	</div>
+	<div class="dataBtn">
+		<!-- <span class="btnNormal dataPopCloser">닫기</span> -->
+		<!-- <span onclick="fixedValueChecked()" class="btnPoint">저장</span> -->
+	</div>
+	<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+</div>
+
 <div id="photoDialog" class="photoWrap" >
 	<!-- 사진 style="display: none"-->
 	<div id="" class="">
@@ -625,7 +869,9 @@
 	</div>
 	<div class="infoFooter">
 		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
-		<span onclick="saveImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+		<!-- <span onclick="saveImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span> -->
+		<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+		
 	</div>
 </div>
 <!-- 사진 끝-->

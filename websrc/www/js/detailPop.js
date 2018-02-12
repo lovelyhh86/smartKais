@@ -1725,7 +1725,7 @@ function closePhotoView(force){
 
 function makeImg(){
     var files = [];
-    var sn = $("#sn").val();
+    var trgSn = $("#trgSn").val();
     var date = util.getToday();
     var title = $(".infoHeader .title .label").text();
 
@@ -1736,7 +1736,8 @@ function makeImg(){
         data.base64 = $(o).attr("src").replace(/.+base64,/,'');
         data.imageFilesSn = picInfo.data('picSn');
         data.tbGbn = picInfo.data('picType');
-        data.name = '{0}_{1}_{2}.jpg'.format(date, title, data.tbGbn);
+        // data.name = '{0}_{1}_{2}.jpg'.format(date, title, data.tbGbn);
+        data.name = '{0}_{1}.jpg'.format(date, data.tbGbn);
 
         files.push(data);
     });
@@ -2064,10 +2065,397 @@ function checkPrice(type){
     }else{
         textDataSendParent('gdftyUnitPrice');
     }
-    
 
 }
 
 function goPopBuild(){
     MapUtil.openDetail(DATA_TYPE.BULD, featureClone[0]);
 }
+
+//정비내용 저장
+function modify(){
+    //** 도로명판 */
+    //설치지점
+    var instSpotCd = $("#instSpotCd").val();
+    //조명여부
+    var lghtCd = $("#lghtCd").val();
+
+    //교차로유형
+    var instCrossCd = $("#instCrossCd").val();
+
+    //앞면도로명
+    var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
+    //시작기초번호
+    var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
+    var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+    //종료기초번호
+    var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
+    var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+
+    //사용대상
+    var useTarget = $("#useTarget").val();
+    //재질
+    var gdftyQlt = $("#gdftyQlt").val();
+    //인쇄방식
+    var prtTy = $("#prtTy").val();
+    //안내시설방향
+    var plqDirection = $("#plqDirection").val();
+    //제2외국어여부
+    var scfggMkty = $("#scfggMkty").val();
+    //언어1
+    var scfggUla1 = $("#scfggUla1").val();
+    //언어2
+    var scfggUla2 = $("#scfggUla2").val();
+    //규격
+    var rdpqGdSd = $("#rdpqGdSd").val();
+    //단가
+    var gdftyUnitPrice = $("#gdftyUnitPrice").val();
+    //가로세로두께
+    var gdftyWide = $("#gdftyWide").val();
+    var gdftyVertical = $("#gdftyVertical").val();
+    var gdftyThickness = $("#gdftyThickness").val();
+
+    
+
+    navigator.notification.confirm(msg.isSave, function(btnIndex){
+        if(btnIndex == 1){
+            
+            var workId = app.info.opeId;
+            var rcrSn = app.info.rcrSn;
+            var mtchSn = $("#mtchSn").val();
+            var plnYr = $("#plnYr").val();
+            var plnOdr = $("#plnOdr").text();
+
+            var trgSn = $("#trgSn").val();
+            var trgLocSn = $("#trgLocSn").val();
+            var trgGbn = $("#trgGbn").val();
+            var sigCd = $("#sigCd").val();
+
+            var commomParams = {
+                sigCd : sigCd,
+                workId : workId,
+                rcrSn : rcrSn,
+                plnYr : plnYr,
+                plnOdr : plnOdr,
+                trgSn : trgSn,
+                trgLocSn : trgLocSn,
+                trgGbn : trgGbn,
+                mtchSn : mtchSn
+
+            };
+
+            if(trgGbn == DATA_TYPE.RDPQ){
+                commomParams = $.extend(commomParams,{
+                    instSpotCd : instSpotCd,
+                    lghtCd : lghtCd,
+                    instCrossCd : instCrossCd,
+                    frontKoreanRoadNm : frontKoreanRoadNm,
+                    frontStartBaseMasterNo : frontStartBaseMasterNo,
+                    frontStartBaseSlaveNo : frontStartBaseSlaveNo,
+                    frontEndBaseMasterNo : frontEndBaseMasterNo,
+                    frontEndBaseSlaveNo : frontEndBaseSlaveNo,
+                    useTarget : useTarget,
+                    gdftyQlt : gdftyQlt,
+                    prtTy : prtTy,
+                    plqDirection : plqDirection,
+                    scfggMkty : scfggMkty,
+                    scfggUla1 : scfggUla1,
+                    scfggUla2 : scfggUla2,
+                    rdpqGdSd : rdpqGdSd,
+                    gdftyUnitPrice : gdftyUnitPrice,
+                    gdftyWide : gdftyWide,
+                    gdftyVertical : gdftyVertical,
+                    gdftyThickness : gdftyThickness
+
+                })
+            }
+
+            var link = URLs.insertSpgfChange;
+            util.showProgress();
+            var url = URLs.postURL(link, commomParams);
+            util.postAJAX({}, url).then(
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    navigator.notification.alert(msg.successModify,
+                        function (){
+                            
+                            closeDetailView();
+
+                            closePopupAndClearMap(trgGbn);
+        
+                            util.dismissProgress();
+        
+                            
+                        },'알림', '확인');
+
+                    util.dismissProgress();
+
+                },
+                util.dismissProgress
+            );
+
+        }
+    }, "알림", ["확인","취소"]);
+}
+
+function loadUpdtData(){
+    
+    var plnYr = $("#plnYr").val();
+    var plnOdr = $("#plnOdr").text();
+    var trgLocSn = $("#trgLocSn").val();
+    var trgSn = $("#trgSn").val();
+    var trgGbn = $("#trgGbn").val();
+    var sigCd = $("#sigCd").val();
+    
+
+    var commomParams = {
+        plnYr : plnYr,
+        plnOdr : plnOdr,
+        trgLocSn : trgLocSn,
+        trgSn : trgSn,
+        trgGbn : trgGbn,
+        sigCd : sigCd
+
+    };
+
+    var link = URLs.selectSpgfChange;
+    var url = URLs.postURL(link, commomParams);
+    util.postAJAX({}, url).then(
+        function (context, rCode, results) {
+            //통신오류처리
+            if (rCode != 0 || results.response.status < 0) {
+                navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                util.dismissProgress();
+                return;
+            }
+
+            var data = results.data;
+
+            if (util.isEmpty(data) === true) {
+                navigator.notification.alert(msg.noItem,
+                    function() {
+                        util.goBack();
+                    }, '알림', '확인');
+                util.dismissProgress();
+                return;
+            }
+
+            for(var d in data){
+                if(data[d] != null){
+                    $("#"+d).val(data[d]);
+                    $("#"+d).attr("style","color:red")
+                }
+
+            }
+
+            // navigator.notification.alert(msg.successModify,
+            //     function (){
+                    
+                    
+            //     },'알림', '확인');
+
+            util.dismissProgress();
+
+        },
+        util.dismissProgress
+    );
+        
+}
+
+function modifyImg(type){
+    // 사진 변경(촬영) 여부 확인
+    if(!MapUtil.photo.isEdited()) {
+        navigator.notification.alert(msg.noSave,'','알림', '확인');
+        return;
+    }
+
+    //사진파일
+    var files = makeImg();
+    var valid = true;
+
+    switch(files.length) {
+        case 0:
+            valid = false;
+            break;
+        case 1:
+            if(type != DATA_TYPE.SPPN && type != DATA_TYPE.ADRDC){
+                valid = false;
+            }
+            break;
+    }
+
+    if(!valid) {
+        navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+        return;
+    }
+
+    navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
+        if(btnindex == 1){
+            var plnYr = $("#plnYr").val();
+            var plnOdr = $("#plnOdr").text();
+            var trgLocSn = $("#trgLocSn").val();
+            var trgSn = $("#trgSn").val();
+            var trgGbn = $("#trgGbn").val();
+            var sigCd = $("#sigCd").val();
+            var rcrSn = app.info.rcrSn;
+            var mtchSn = $("#mtchSn").val();
+            
+            var params = {
+                plnYr : plnYr,
+                plnOdr : plnOdr,
+                trgLocSn : trgLocSn,
+                trgSn : trgSn,
+                trgGbn : trgGbn,
+                sigCd : sigCd,
+                rcrSn : rcrSn,
+                mtchSn : mtchSn,
+                workId: app.info.opeId,
+                files: files,
+                isImages : "true"
+            };
+
+            var link, relink;
+            // switch(type) {
+            //     case DATA_TYPE.RDPQ:
+            //     case DATA_TYPE.AREA:
+            //     case DATA_TYPE.BSIS:
+            //         link = URLs.updateSpgfImg;
+            //         relink = URLs.roadsignlink;
+            //         break;
+            //     case DATA_TYPE.ENTRC:
+            //         link = URLs.updateBuildNumberInfo;
+            //         break;
+            //     case DATA_TYPE.SPPN:
+            //         link = URLs.updateSpotInfo;
+            //         break;
+            //     case DATA_TYPE.ADRDC:
+            //         link = URLs.insertBaseResearch;
+            //         break;
+            // }
+
+            var link = URLs.insertSpgfChange;
+
+            util.showProgress();
+            var url = URLs.postURL(link, params);
+            util.postAJAX({}, url)
+            .then(
+                function (context, rCode, results) {
+                    util.dismissProgress();
+                    try {
+                        //통신오류처리
+                        if (rCode != 0 || results.response.status < 0) {
+                            navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                            return;
+                        }
+
+                        navigator.notification.alert(msg.successModify,
+                            function (){
+                                
+                                closePhotoView(true);   // force
+            
+                            },'알림', '확인');
+
+                        // //사진건수
+                        // if(type == DATA_TYPE.RDPQ){
+                        //     var link = URLs.roadsignlink;
+                        // }else if(type == DATA_TYPE.AREA){
+                        //     var link = URLs.roadsignlink;
+                        // }else if(type == DATA_TYPE.BSIS){
+                        //     var link = URLs.roadsignlink;
+                        // }else if(type == DATA_TYPE.ENTRC){
+                        //     var link = URLs.entrclink;
+
+                        //     params = $.extend(params, {
+                        //         sn : featureClone[0].get('BUL_MAN_NO')
+                        //     });
+                        // }else if(type == DATA_TYPE.SPPN){
+                        //     var link = URLs.spotSelectlink;
+                        // }else if(type == DATA_TYPE.ADRDC){
+                        //     var link = URLs.addresslink;
+                        // }
+
+                        // // 사진 저장 후 전체 건 수 다시 조회
+                        // var url = URLs.postURL(link, params);
+                        // util.postAJAX({}, url)
+                        // .then(
+                        //     function (context, rCode, results) {
+                        //         util.dismissProgress();
+                        //         //통신오류처리
+                        //         if (rCode != 0 || results.response.status < 0) {
+                        //             navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        //             return;
+                        //         }
+
+                        //         var data = results.data;
+
+                        //         $(".infoHeader .photo .photoNum").html(data.cntFiles);
+                        //     }
+                        // );
+                        // closePhotoView(true);   // force
+
+                        // if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
+                        //     MapUtil.setValues(layerID, relink, rdGdftySn);
+
+                        //     //지도 초기화
+                        //     getVectorSource(map , "위치레이어").clear();
+                        // }
+                    }catch(e) {
+                        util.toast('데이터 처리에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요.');
+                    }
+                    util.dismissProgress();
+                },
+                util.dismissProgress
+            );
+        }
+    }, "알림", ["저장","취소"]);
+
+}
+//공통 입풋창 열기
+function openInputPop(id){
+    $("#inputPop").show();
+    $("#targetId").val(id);
+    var type = $("#"+id).attr("type");
+    var value = $("#"+id).val();
+    var onchange = $("#"+id).attr("onchange");
+    // var oninput = $("#"+id).attr("oninput");
+
+    $("#fixedValue").attr("type",type);
+    // if(onchange != null){
+        $("#fixedValue").attr("onchange",onchange);
+    // }else{
+        // $("#fixedValue").attr("oninput",oninput);
+    // }
+    
+    $("#fixedValue").val(value);
+
+    wrapWindowByMask('mask');
+
+}
+
+function fixedValueChecked(){
+    var targetId = $("#targetId").val();
+    $("#"+targetId).change();
+}
+
+function setInputPop(){
+    //변경된 값
+    var fixedValue = $("#fixedValue").val();
+    //원래 인풋에 셋팅
+    var targetId = $("#targetId").val();
+    $("#"+targetId).val(fixedValue);
+
+    $("#inputPop").hide();
+    clearMask();
+}
+
+// function close(){
+//     $(".dataWrap").hide()
+//     clearMask();
+// }
+

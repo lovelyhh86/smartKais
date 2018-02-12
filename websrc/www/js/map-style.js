@@ -203,7 +203,8 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 src: 'image/mixPos4.png'
             }))
         };
-    }else if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){
+    // }else if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){
+    }else if(rdGdftySe == "110"){
         if(ltChcYn == 0){
             opt = {
                 image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({

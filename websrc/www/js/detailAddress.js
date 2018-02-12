@@ -338,19 +338,7 @@ function controlRadioAll(){
     }
 }
 
-function txtMaxlength(id, size) {
-    var targetText = $("#"+id);
-    var textLength = targetText.val().length;
-    
-    
-    if (textLength > size) {
-        navigator.notification.alert("글자수는 " + size + "자 제한입니다.", function () {
-            targetText.val(targetText.val().substring(0, size));
-            // targetText.focus();
-        }, '글자수 제한', '확인');
-      
-    }
-}
+
 
 var isPopState = "on";
 function toggleDetailView(){
@@ -368,12 +356,12 @@ function toggleDetailView(){
         $(".detailView >p >span").css('background-image','url(./image/close_image.png)');
         isPopState = "off";
     }else{
-        $(".detailView").css("height","830px");
+        $(".detailView").css("height","955px");
         //상세정보페이지
-        $(".infoContent").css("height","640px");
-        $(".infoContent").css("padding","20px");
+        $(".infoContent").css("height","762px");
+        $(".infoContent").css("padding","18px");
         //리스트페이지
-        $(".infoListContent").css("height","678px");
+        $(".infoListContent").css("height","808px");
         
         $("#photoDialog").show();
         $(".ui-popup-container.slideup.in.ui-popup-active").css("height","60%");

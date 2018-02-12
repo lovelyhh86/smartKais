@@ -167,7 +167,8 @@ function selectResearchContent(trgGbn){
                     var fixDetailBtn = "<button class='' onclick='goResearchDetail("+i+")'>정비</button>";
                     var locBtn = "<button class='' onclick='getResearchLocation("+i+")'><img src='image/icon_curr.png'></img></button>";
 
-                    if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
+                    // if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
+                    if(rdGdftySe == '110'){
                         locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend01.png'></img>";
                     }else if(rdGdftySe == '510'){
                         locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend03.png'></img>";
@@ -350,6 +351,8 @@ function insertResearchForList(i){
 
                     selectResearchContent();
 
+                    closePopupAndClearMap(trgGbn);
+
                     util.dismissProgress();
 
                 },
@@ -439,7 +442,7 @@ function submitResearch(){
                     trgSnGlobal = trgSn
                     MapUtil.openDetail(trgGbn, null);
     
-                    // closePopupAndClearMap(trgGbn);
+                    closePopupAndClearMap(trgGbn);
     
                     util.dismissProgress();
     
@@ -472,6 +475,27 @@ function makeOptSelectBox(target,colume,unUsed,defaultText,defaultValue){
         if(c != "GroupNm"){
 
             if(c != unUsed){
+                optionTxt = optionFormat.format(c,codeList[c]);
+                targetId.append(optionTxt); 
+            }
+        
+        }
+    }
+}
+//커스텀 셀렉트박스 만들기
+function customSelectBox(target, colume, useCode, startIndex, endIndex){
+    var targetId = $("#"+target);
+    targetId.empty();
+
+    var optionFormat = "<option value='{0}'>{1}</option>";
+
+    var optionTxt = ""; 
+    var codeList = app.codeMaster[CODE_GROUP[colume]];
+    
+    for(var c in codeList){
+        if(c != "GroupNm"){
+
+            if(c.substr(startIndex,endIndex) == useCode){
                 optionTxt = optionFormat.format(c,codeList[c]);
                 targetId.append(optionTxt); 
             }
@@ -532,6 +556,8 @@ function checkRcRslt(){
     setResearcher();
     //점검일자 셋팅
     setResearchDate();
+    //글자수 체크
+    txtMaxlength('rcRslt',50);
 
 }
 

@@ -215,8 +215,8 @@
 
   /* .buttonDiv button:first-child{ position: relative; width: 50%; height: 100%}
   .buttonDiv button{ position: absolute; width: 50%; height: 100%; top: 0;right: 0;} */
-  .buttonDiv .btnNormal{width: 13em;position: absolute;bottom: 0;left: -1em;height: 2em; text-align: center;    padding-top: 1em;}
-  .buttonDiv .btnPoint{width: 13em;position: absolute;bottom: 0;right: 0em;height: 2em; text-align: center;    padding-top: 1em;}
+  .buttonDiv .btnNormal{width: 14.5em;position: absolute;bottom: 0;left: -1em;height: 2em; text-align: center;    padding-top: 1em;}
+  .buttonDiv .btnPoint{width: 14.5em;position: absolute;bottom: 0;right: 0em;height: 2em; text-align: center;    padding-top: 1em;}
 
   .newPosContent img{padding: 1em;}
   
@@ -229,7 +229,7 @@
   /* .addressDiv{position: absolute; bottom: 10px; right: 50px; width:36px;} */
 
   
-  .blueTitle{padding: 0px 10px; line-height: 0em; overflow: hidden;}
+  .blueTitle{padding: 5px 10px; line-height: 0em; overflow: hidden;}
   .blueTitle h2{font-size: 1.25em; color:#0071bf ; font-weight: bold;}
   #addressview_contents label{top:-12px}
   /* #detailAddressDiv{width:100%} */

@@ -54,6 +54,11 @@ var URLs = {
     //조사자 목록 조회
     "selectResearcherInfo":{svcNm: "sResearcher"},
 
+    //시설물 변경 내용 임시저장
+    "insertSpgfChange":{svcNm: "iSPGFChg"},
+    //시설물 변경 내용 조회
+    "selectSpgfChange":{svcNm: "vSPGFChg"},
+    
     getURL: function (srcurl, jsondata) {
 
         var hasparam = srcurl.search('=') > -1;

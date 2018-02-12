@@ -97,7 +97,7 @@
 
 /*top*/
 
-.detailView {position:fixed;bottom:0; width:100%; height:830px;left: 0px;}
+.detailView {position:fixed;bottom:0;height: 955px; width:100%; left: 0px;}
 .detailView >p.openImage{display: block; text-align: center}
 .detailView >p >span{display:inline-block; width:76px; background:url(../image/open_image.png) 0 0 no-repeat;text-indent: -9999em;}
 .closeDetailSpanImg{display:inline-block; width:76px; background:url(../image/close_image.png) 0 0 no-repeat;text-indent: -9999em;}
@@ -105,8 +105,8 @@
 /*layout*/
 .infoWrap{ bottom:0; width:auto; height:100%; padding:20px; background-color:#3b3a40; overflow: hidden;}
 .infoHeader {height:28px; padding:15px 20px; background-color: #0071bf ;color:#fff;}
-.infoContent{width:auto; height: 640px ;padding:20px; overflow-y: scroll ;background-color:#f5f7f8}
-.infoListContent{width:auto; height: 678px ; overflow-y: scroll ;background-color:#f5f7f8}
+.infoContent{width:auto; height: 762px ;padding:18px; overflow-y: scroll ;background-color:#f5f7f8}
+.infoListContent{width:auto; height: 808px ; overflow-y: scroll ;background-color:#f5f7f8}
 .infoFooter{padding:10px 20px 0 20px; text-align: center;}
 
 /*title photo*/
@@ -143,10 +143,10 @@
 .btnNormal{display:inline-block; margin-left:10px ; padding:10px 80px; background-color: #9d9ca1; color:#fff}
 .btnPossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6}
 .btnImpossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #9d9ca1; color:#e6e6e6}
-.btnPossibleDetail{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6;width: 100%;}
+.btnPossibleDetail{display:inline-block; margin-bottom:4px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6;width: 100%;}
 
 /*setting*/
-.dataWrap{display: inline-block; position:absolute; top:95px; right:20px; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
+.dataWrap{display: inline-block; position:absolute; right:256px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
 .dataTItle{display: block; margin-bottom:20px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
 
 
@@ -203,7 +203,7 @@ table caption{display: none}
 .dataTable  tbody tr ~ tr td {border-top:1px solid #bbb;}
 /* .dataTable  tbody tr ~ tr th {border-top:1px solid #bbb; padding:15px 20px; background-color: #adadad; text-align:center; color:#ffffff} */
 .dataTable  th{ border-top:1px solid #bbb; padding:2px 20px; background-color: #adadad; color:#ffffff; text-align:center; }
-.dataTable  td {border-top:1px solid #bbb; padding:2px 20px; line-height: 20px;}
+.dataTable  td {border-top:1px solid #bbb; padding:5px 20px; line-height: 20px;}
 .dataTable  tr.selected {background: #fdfcce; color:#000;}
 .dataTable  td.noLine {border-left: none}
 .dataTable  td.sampleImage{padding:10px 30px 10px 0px; vertical-align: middle; text-align: center;}
