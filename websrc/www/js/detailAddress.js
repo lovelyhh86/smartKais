@@ -173,7 +173,7 @@ function goDetail(sn){
                 //조사자
                 var workID = data.workId;
                 if(workID == null){
-                    workID = app.info.opeNm;
+                    workID = app.info.rcrNm;
                 }
                 $("#opeNm").val(workID);
                 

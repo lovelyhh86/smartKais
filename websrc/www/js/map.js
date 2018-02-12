@@ -161,10 +161,10 @@ var MapUtil = {
                         var isUpdtGbn = $("#isUpdtGbn").val();
                         if(isUpdtGbn != "0"){
                             // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
-                                // if(btnindex == 1){
+                            //     if(btnindex == 1){
 
                                     var plnYr = $("#plnYr").val();
-                                    var plnOdr = $("#plnOdr").text();
+                                    var plnOdr = $("#plnOdr").val();
                                     var trgLocSn = $("#trgLocSn").val();
                                     var trgSn = $("#trgSn").val();
                                     var trgGbn = $("#trgGbn").val();
@@ -185,8 +185,8 @@ var MapUtil = {
                                     var link = URLs.selectSpgfChange;
                                     url = URLs.postURL(link, commomParams);
 
-                                    // }
-                                // }, "알림", ["확인","취소"]);
+                            //     }
+                            // }, "알림", ["확인","취소"]);
                         }
 
                         util.showProgress();
@@ -345,11 +345,24 @@ var MapUtil = {
         locManageSpgfControl: function(opt_options) {
 
             var potisionManage = function() {
-                MapUtil.openList('locationManageSpgf');
+                if(util.isEmpty(app.info.rcrSn)){
+                    navigator.notification.alert(msg.noRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '조사자', '확인');
+                }else if(app.info.rcrTyp != "01"){
+                    navigator.notification.alert(msg.notPubRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '알림', '확인');
+                    
+                }else{
+                    MapUtil.openList('locationManageSpgf');
 
-                //심플팝업 초기화
-                $("#popup-content").empty();
-                $("#popup").hide();
+                    //심플팝업 초기화
+                    $("#popup-content").empty();
+                    $("#popup").hide();
+                }
             }
 
             var element = document.createElement('div');
@@ -369,11 +382,24 @@ var MapUtil = {
         locManageSpbdNmtgControl: function(opt_options) {
 
             var potisionManage = function() {
-                MapUtil.openList('locationManageSpbdNmtg');
+                if(util.isEmpty(app.info.rcrSn)){
+                    navigator.notification.alert(msg.noRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '조사자', '확인');
+                }else if(app.info.rcrTyp != "01"){
+                    navigator.notification.alert(msg.notPubRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '알림', '확인');
+                    
+                }else{
+                    MapUtil.openList('locationManageSpbdNmtg');
 
-                //심플팝업 초기화
-                $("#popup-content").empty();
-                $("#popup").hide();
+                    //심플팝업 초기화
+                    $("#popup-content").empty();
+                    $("#popup").hide();
+                }
             }
 
             var element = document.createElement('div');
@@ -392,11 +418,24 @@ var MapUtil = {
         },
         selectAdrdcControl: function(opt_options) {
             var selectAdrdc = function(){
-                MapUtil.openDetail(DATA_TYPE.ADRDC);
-
-                //심플팝업 초기화
-                $("#popup-content").empty();
-                $("#popup").hide();
+                if(util.isEmpty(app.info.rcrSn)){
+                    navigator.notification.alert(msg.noRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '조사자', '확인');
+                }else if(app.info.rcrTyp != "01"){
+                    navigator.notification.alert(msg.notPubRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '알림', '확인');
+                    
+                }else{
+                    MapUtil.openDetail(DATA_TYPE.ADRDC);
+                    //심플팝업 초기화
+                    $("#popup-content").empty();
+                    $("#popup").hide();
+                }
+                
             }
             
             var element = document.createElement('div');
@@ -885,10 +924,10 @@ var MapUtil = {
                 var plnOdr = data.plnOdr;
                 if(plnOdr != null){
                     $("#plnOdrLbl").html("배정"); //계획차수로 배정여부 판단
-                    $("#plnOdr").html(data.plnOdr);
+                    $("#plnOdr").val(data.plnOdr);
                 }else{
                     $("#plnOdrLbl").html("미배정");
-                    $("#plnOdr").html("0"); // 배정이 없을땐 0으로 입력
+                    $("#plnOdr").val("0"); // 배정이 없을땐 0으로 입력
                 }
                 //배정일련번호
                 $("#mtchSn").val(data.mtchSn);

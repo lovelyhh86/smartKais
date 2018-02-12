@@ -390,7 +390,7 @@ function submitResearch(){
     //시군구
     var sigCd = $("#sigCd").val();
     //배정차수
-    var plnOdr = $("#plnOdr").text();
+    var plnOdr = $("#plnOdr").val();
     //조사자일련번호
     var rcrSn = app.info.rcrSn;
     //작업자ID
@@ -563,7 +563,7 @@ function checkRcRslt(){
 
 //점검자 셋팅
 function setResearcher(){
-    var rcrNm = app.info.searchNm.split('(')[0];
+    var rcrNm = app.info.rcrNm;
     var rcrSn = app.info.rcrSn;
     
     $("#rcrSn_new").html(rcrSn);

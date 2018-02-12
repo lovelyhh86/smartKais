@@ -19,9 +19,9 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
 
 //사용자 추가
 function addSearchUser(){
-    // var param = {
-    //     sigCd : app.info.sigCd
-    // } ;
+    var param = {
+        trmnlId : app.info.opeId
+    } ;
 
     $("#searchUserSel").empty();
     $("#searchUserSel").prepend('<option disabled value="">조사자선택</option>');
@@ -30,7 +30,7 @@ function addSearchUser(){
     }
 
     var link = URLs.selectResearcherInfo;
-    var url = URLs.postURL(link);
+    var url = URLs.postURL(link,param);
     util.postAJAX({}, url).then(
         function (context, rCode, results) {
             //통신오류처리
@@ -45,12 +45,17 @@ function addSearchUser(){
             for(var i in data){
                 var rcrSn = data[i].rcrSn;
                 var rcrNm = data[i].rcrNm;
+                var rcrTyp = data[i].rcrTyp;
                 var rcrTypLbl = data[i].rcrTypLbl;
 
-                var optionForm = "<option value={0}>{1}</option>"; 
+                var optionForm = "<option id='row"+i+"' value={0}>{1}</option>"; 
                 var rcrNmText = rcrNm + "(" + rcrTypLbl +")";
-                
+
                 $("#searchUserSel").append(optionForm.format(rcrSn,rcrNmText));
+
+                $("#row"+i).data("rcrSn",rcrSn);
+                $("#row"+i).data("rcrNm",rcrNm);
+                $("#row"+i).data("rcrTyp",rcrTyp);
 
             }
 
@@ -62,8 +67,10 @@ function addSearchUser(){
 //점검사용자 변경셋팅
 function changeUser(){
     var rcrSn = $("#searchUserSel option:selected").val();
-    var searchNm = $("#searchUserSel option:selected").text();
+    var rcrNm = $("#searchUserSel option:selected").data("rcrNm");
+    var rcrTyp = $("#searchUserSel option:selected").data("rcrTyp");
 
     app.info.rcrSn = rcrSn;
-    app.info.searchNm = searchNm;
+    app.info.rcrNm = rcrNm;
+    app.info.rcrTyp = rcrTyp;
 }

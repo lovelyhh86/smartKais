@@ -2124,7 +2124,7 @@ function modify(){
             var rcrSn = app.info.rcrSn;
             var mtchSn = $("#mtchSn").val();
             var plnYr = $("#plnYr").val();
-            var plnOdr = $("#plnOdr").text();
+            var plnOdr = $("#plnOdr").val();
 
             var trgSn = $("#trgSn").val();
             var trgLocSn = $("#trgLocSn").val();
@@ -2203,11 +2203,11 @@ function modify(){
         }
     }, "알림", ["확인","취소"]);
 }
-
+//점검 된 임시 정보 조회
 function loadUpdtData(){
     
     var plnYr = $("#plnYr").val();
-    var plnOdr = $("#plnOdr").text();
+    var plnOdr = $("#plnOdr").val();
     var trgLocSn = $("#trgLocSn").val();
     var trgSn = $("#trgSn").val();
     var trgGbn = $("#trgGbn").val();
@@ -2237,10 +2237,10 @@ function loadUpdtData(){
 
             var data = results.data;
 
-            if (util.isEmpty(data) === true) {
+            if (util.isEmpty(data) == true) {
                 navigator.notification.alert(msg.noItem,
                     function() {
-                        util.goBack();
+                        // util.goBack();
                     }, '알림', '확인');
                 util.dismissProgress();
                 return;
@@ -2298,7 +2298,7 @@ function modifyImg(type){
     navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
         if(btnindex == 1){
             var plnYr = $("#plnYr").val();
-            var plnOdr = $("#plnOdr").text();
+            var plnOdr = $("#plnOdr").val();
             var trgLocSn = $("#trgLocSn").val();
             var trgSn = $("#trgSn").val();
             var trgGbn = $("#trgGbn").val();
