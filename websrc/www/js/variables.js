@@ -247,6 +247,8 @@ CODE_GROUP["INS_PLC"] = "GFTY501";
 //****** 기초번호판 *******
 //설치장소 구분
 CODE_GROUP["ITLPC_SE"] = "GFTY600";
+//설치시설물
+CODE_GROUP["INSTL_FTY"] = "GFTY601";
 //곡면분류
 CODE_GROUP["PLANE_CD"] = "GFTY611";
 //기초번호판 규격

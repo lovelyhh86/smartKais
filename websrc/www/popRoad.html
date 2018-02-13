@@ -23,12 +23,11 @@
 				<input id="mtchSn" type="hidden" value="" />
 				<input id="trgLocSn" type="hidden" value="" />
 				<input id="trgSn" type="hidden" value=""/>
+				<input id="sigCd" type="hidden" value="" />
+				<input id="isUpdtGbn" type="hidden" value="" />
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="01"/>
-				<input id="sigCd" type="hidden" value="" />
 
-				<input id="isUpdtGbn" type="hidden" value="" />
-				
 				<!--점검-->
 				<div class="blueTitle">
 					<h2>점검정보</h2>
@@ -73,7 +72,7 @@
 							<tr>
 								<th scope="row">점검결과</th>
 								<td colspan='3'>
-									<textarea maxlength="100" id="rcRslt" oninput="checkRcRslt()" placeholder="점검결과를 입력하세요."></textarea>
+									<textarea id="rcRslt" oninput="checkRcRslt()" placeholder="점검결과를 입력하세요."></textarea>
 									<p id="rcRsltOld" name="oldLbl" style="display:none"></p>
                            			<!-- <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p> -->
 								</td>
@@ -218,15 +217,15 @@
 							<tr>
 								<th scope="row">시작기초번호</th>
 								<td>
-									<input type='number' class="cell30" id="frontStartBaseMasterNo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<input type='number' class="cell30" id="frontStartBaseMasterNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
 									<span>-</span>
-									<input type='number' class="cell30" id="frontStartBaseSlaveNo"  readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<input type='number' class="cell30" id="frontStartBaseSlaveNo"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
 								</td>
 								<th scope="row">종료기초번호</th>
 								<td>
-									<input type='number' class="cell30" id="frontEndBaseMasterNo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<input type='number' class="cell30" id="frontEndBaseMasterNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
 									<span>-</span>
-									<input type='number' class="cell30" id="frontEndBaseSlaveNo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<input type='number' class="cell30" id="frontEndBaseSlaveNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
 								</td>
 							</tr>
 							<tr class="bk">

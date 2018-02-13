@@ -20,6 +20,17 @@ function txtMaxlength(id, size, min) {
     }
 
 }
+//바이트계산
+function getTextLength(str) {
+    var len = 0;
+    for (var i = 0; i < str.length; i++) {
+        if (escape(str.charAt(i)).length == 6) {
+            len++;
+        }
+        len++;
+    }
+    return len;
+}
 
 //제2외국어여부 변경
 function changeScfggMkty(){
@@ -59,8 +70,13 @@ function changeUseTarget(){
         $("#scfggMkty").val(scfggMkty);
         changeScfggMkty();
     }
-
-    changeRdpqGdSd();
+    var trgGbn = $("#trgGbn").val();
+    if(trgGbn == "01"){
+        changeRdpqGdSd();
+    }else if(trgGbn == "04"){
+        changeBsisGdSd();
+    }
+    
 }
 
 //도로명판 규격변경
@@ -116,4 +132,19 @@ function checkUnitPrice(id){
     }else{
         txtMaxlength(id,'10');
     }
+}
+//설치장소 및 사용대상에 따른 규격(기초번호판)
+function changeBsisGdSd(){
+    var bsis_itlpcSe = $("#bsis_itlpcSe").val();
+    var useTarget = $("#useTarget").val();
+    var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
+
+    var codeValue = useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
+
+    if(bsis_itlpcSe.charAt(2) == "7"){
+        codeValue = "97";
+    }
+
+    customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,1,2);
+    $("#bsis_bsisGdSd").val(bsis_bsisGdSd);
 }

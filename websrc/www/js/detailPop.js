@@ -2079,18 +2079,8 @@ function modify(){
     var instSpotCd = $("#instSpotCd").val();
     //조명여부
     var lghtCd = $("#lghtCd").val();
-
     //교차로유형
     var instCrossCd = $("#instCrossCd").val();
-
-    //앞면도로명
-    var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
-    //시작기초번호
-    var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
-    var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
-    //종료기초번호
-    var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
-    var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
 
     //사용대상
     var useTarget = $("#useTarget").val();
@@ -2098,16 +2088,14 @@ function modify(){
     var gdftyQlt = $("#gdftyQlt").val();
     //인쇄방식
     var prtTy = $("#prtTy").val();
-    //안내시설방향
-    var plqDirection = $("#plqDirection").val();
+    
     //제2외국어여부
     var scfggMkty = $("#scfggMkty").val();
     //언어1
     var scfggUla1 = $("#scfggUla1").val();
     //언어2
     var scfggUla2 = $("#scfggUla2").val();
-    //규격
-    var rdpqGdSd = $("#rdpqGdSd").val();
+    
     //단가
     var gdftyUnitPrice = $("#gdftyUnitPrice").val();
     //가로세로두께
@@ -2148,30 +2136,117 @@ function modify(){
 
             };
 
-            if(trgGbn == DATA_TYPE.RDPQ){
+            //건물번호판 외 나머지 시설물 공통
+            if(trgGbn != "02"){
                 commomParams = $.extend(commomParams,{
                     instSpotCd : instSpotCd,
                     lghtCd : lghtCd,
                     instCrossCd : instCrossCd,
+                    useTarget : useTarget,
+                    gdftyQlt : gdftyQlt,
+                    prtTy : prtTy,
+                    scfggMkty : scfggMkty,
+                    scfggUla1 : scfggUla1,
+                    scfggUla2 : scfggUla2,
+                    gdftyUnitPrice : gdftyUnitPrice,
+                    gdftyWide : gdftyWide,
+                    gdftyVertical : gdftyVertical,
+                    gdftyThickness : gdftyThickness
+                })
+            }
+
+            if(trgGbn == DATA_TYPE.RDPQ){
+                //안내시설방향
+                var plqDirection = $("#plqDirection").val();
+                 //앞면도로명
+                 var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
+                 //시작기초번호
+                 var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
+                 var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+                 //종료기초번호
+                 var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
+                 var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+                 //규격
+                var rdpqGdSd = $("#rdpqGdSd").val();
+
+                commomParams = $.extend(commomParams,{
+                    plqDirection : plqDirection,
                     frontKoreanRoadNm : frontKoreanRoadNm,
                     frontStartBaseMasterNo : frontStartBaseMasterNo,
                     frontStartBaseSlaveNo : frontStartBaseSlaveNo,
                     frontEndBaseMasterNo : frontEndBaseMasterNo,
                     frontEndBaseSlaveNo : frontEndBaseSlaveNo,
-                    useTarget : useTarget,
-                    gdftyQlt : gdftyQlt,
-                    prtTy : prtTy,
-                    plqDirection : plqDirection,
-                    scfggMkty : scfggMkty,
-                    scfggUla1 : scfggUla1,
-                    scfggUla2 : scfggUla2,
                     rdpqGdSd : rdpqGdSd,
-                    gdftyUnitPrice : gdftyUnitPrice,
-                    gdftyWide : gdftyWide,
-                    gdftyVertical : gdftyVertical,
-                    gdftyThickness : gdftyThickness
+                })
+            }else if(trgGbn == DATA_TYPE.AREA){
+                //한글도로명
+                var area_areaKorRn = $("#area_areaKorRn").val();
+                //시작기초번호
+                var area_stbsMn = $("#area_stbsMn").val();
+                var area_stbsSn = $("#area_stbsSn").val();
+                //종료기초번호
+                var area_edbsMn = $("#area_edbsMn").val();
+                var area_edbsSn = $("#area_edbsSn").val();
+                //광고에따른 분류
+                var area_advrtsCd = $("#area_advrtsCd").val();
+                //광고내용
+                var area_advCn = $("#area_advCn").val();
+                //기타내용
+                var area_etcCn = $("#area_etcCn").val();
+                //규격
+                var area_areaGdSd = $("#area_areaGdSd").val();
+
+                commomParams = $.extend(commomParams,{
+                    area_areaKorRn : area_areaKorRn,
+                    area_stbsMn : area_stbsMn,
+                    area_stbsSn : area_stbsSn,
+                    area_edbsMn : area_edbsMn,
+                    area_advrtsCd : area_advrtsCd,
+                    area_advCn : area_advCn,
+                    area_etcCn : area_etcCn,
+                    area_areaGdSd : area_areaGdSd,
 
                 })
+            }else if(trgGbn == DATA_TYPE.BSIS){
+                //설치장소구분
+                var bsis_itlpcSe = $("#bsis_itlpcSe").val();
+                //설치시설물
+                var bsis_instlFty = $("#bsis_instlFty").val();
+                //설치시설물 기타상세
+                var bsis_insFtyDc = $("#bsis_insFtyDc").val();
+                //곡면분류
+                var bsis_planeCd = $("#bsis_planeCd").val();
+                //한글 도로명
+                var bsis_korRn = $("#bsis_korRn").val();
+                //기초번호
+                var bsis_ctbsMn = $("#bsis_ctbsMn").val();
+                //이전승강장 번호
+                var bsis_bfbsMn = $("#bsis_bfbsMn").val();
+                var bsis_bfbsSn = $("#bsis_bfbsSn").val();
+                //다음승강장 번호
+                var bsis_ntbsMn = $("#bsis_ntbsMn").val();
+                var bsis_ntbsSn = $("#bsis_ntbsSn").val();
+                //표기방법
+                var bsisMthd = $("#bsisMthd").val();
+                //규격
+                var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
+
+                commomParams = $.extend(commomParams,{
+                    bsis_itlpcSe : bsis_itlpcSe,
+                    bsis_instlFty : bsis_instlFty,
+                    bsis_insFtyDc : bsis_insFtyDc,
+                    bsis_planeCd : bsis_planeCd,
+                    bsis_korRn : bsis_korRn,
+                    bsis_ctbsMn : bsis_ctbsMn,
+                    bsis_bfbsMn : bsis_bfbsMn,
+                    bsis_bfbsSn : bsis_bfbsSn,
+                    bsis_ntbsMn : bsis_ntbsMn,
+                    bsis_ntbsSn : bsis_ntbsSn,
+                    bsisMthd : bsisMthd,
+                    bsis_bsisGdSd : bsis_bsisGdSd,
+
+                })
+
             }
 
             var link = URLs.insertSpgfChange;
@@ -2191,7 +2266,8 @@ function modify(){
                             
                             closeDetailView();
 
-                            closePopupAndClearMap(trgGbn);
+                            //지도초기화
+                            // closePopupAndClearMap(trgGbn);
         
                             util.dismissProgress();
         
@@ -2272,9 +2348,10 @@ function loadUpdtData(isImages){
                         for(var d in data){
                             if(data[d] != null){
                                 $("#"+d).val(data[d]);
-                                $("#"+d).attr("style","color:red")
+                                $("#"+d).attr("style","color:red");
+                                //셀렉트박스 변경을 위한 적용
+                                $("#"+d).trigger('change');
                             }
-            
                         }
                     }
                     util.toast(msg.successLoadUpdt);
@@ -2374,7 +2451,9 @@ function modifyImg(type){
 
                         navigator.notification.alert(msg.successModify,
                             function (){
-                                
+
+                                //임시저장 후 사진건수 N으로 표시
+                                $(".infoHeader .photo .photoNum").html("N");
                                 closePhotoView(true);   // force
             
                             },'알림', '확인');
@@ -2559,5 +2638,10 @@ function selectOldImg(photoNum){
             }
         );
     }
+}
+
+//입력창 가림 방지를 위한 화면 스크롤
+function scrollDown(size){
+    $('.infoContent').scrollTop(size);
 }
 
