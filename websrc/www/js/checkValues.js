@@ -148,3 +148,7 @@ function changeBsisGdSd(){
     customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,1,2);
     $("#bsis_bsisGdSd").val(bsis_bsisGdSd);
 }
+//건축물용도변경
+function changeBdtypCd(){
+    
+}

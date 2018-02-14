@@ -2154,6 +2154,7 @@ function modify(){
                     gdftyThickness : gdftyThickness
                 })
             }
+            var link = URLs.insertSpgfChange;
 
             if(trgGbn == DATA_TYPE.RDPQ){
                 //안내시설방향
@@ -2247,9 +2248,79 @@ function modify(){
 
                 })
 
+            }else if(trgGbn == DATA_TYPE.ENTRC){
+                //유형
+                var buldNmtSe = $("#buldNmtSe").val();
+                //용도
+                var buldNmtPurpose = $("#buldNmtPurpose").val();
+                //제작유형
+                var buldMnfCd = $("#buldMnfCd").val();
+                //재질
+                var buldNmtMaterial = $("#buldNmtMaterial").val();
+                //규격
+                var buldNmtCd = $("#buldNmtCd").val();
+                //가로
+                var buldNmtWide = $("#buldNmtWide").val();
+                //세로
+                var buldNmtVertical = $("#buldNmtVertical").val();
+                //두께
+                var buldNmtThickness = $("#buldNmtThickness").val();
+                //단가
+                var buldNmtUnitPrice = $("#buldNmtUnitPrice").val();
+                //조명여부
+                var lghtCd = $("#lghtCd").val();
+
+                commomParams = $.extend(commomParams,{
+                    buldNmtSe : buldNmtSe,
+                    buldNmtPurpose : buldNmtPurpose,
+                    buldMnfCd : buldMnfCd,
+                    buldNmtMaterial : buldNmtMaterial,
+                    buldNmtCd : buldNmtCd,
+                    buldNmtWide : buldNmtWide,
+                    buldNmtVertical : buldNmtVertical,
+                    buldNmtThickness : buldNmtThickness,
+                    buldNmtUnitPrice : buldNmtUnitPrice,
+                    lghtCd : lghtCd,
+
+                })
+
+                link = URLs.insertSpbdChange;
+            }else if(trgGbn == DATA_TYPE.BULD){
+                //용도
+                var bdtypCd = $("#bdtypCd").val();
+                //건물종속여부
+                var bulDpnSe = $("#bulDpnSe").val();
+                //건물층수
+                var groFloCo = $("#groFloCo").val();
+                var undFloCo = $("#undFloCo").val();
+                //건물명
+                var posBulNm = $("#posBulNm").val();
+                //건물명(영)
+                var bulEngNm = $("#bulEngNm").val();
+                //건물상태
+                var buldSttus = $("#buldSttus").val();
+                //상세건물명
+                var buldNmDc = $("#buldNmDc").val();
+                //메모
+                var buldMemo = $("#buldMemo").val();
+
+                commomParams = $.extend(commomParams,{
+                    bdtypCd : bdtypCd,
+                    bulDpnSe : bulDpnSe,
+                    groFloCo : groFloCo,
+                    undFloCo : undFloCo,
+                    posBulNm : posBulNm,
+                    bulEngNm : bulEngNm,
+                    buldSttus : buldSttus,
+                    buldNmDc : buldNmDc,
+                    buldMemo : buldMemo,
+
+                })
+
+                link = URLs.insertSpbdChange;
             }
 
-            var link = URLs.insertSpgfChange;
+            
             util.showProgress();
             var url = URLs.postURL(link, commomParams);
             util.postAJAX({}, url).then(
@@ -2306,6 +2377,10 @@ function loadUpdtData(isImages){
             };
 
             var link = URLs.selectSpgfChange;
+            if(trgGbn == "02" || trgGbn == "99"){
+                link = URLs.selectSpbdChange;
+            }
+            
             var url = URLs.postURL(link, commomParams);
             util.showProgress();
             util.postAJAX({}, url).then(
@@ -2565,7 +2640,9 @@ function selectOldImg(photoNum){
         return;
     } else {
         var url="", param="";
-
+        if(layerID == ""){
+            layerID = $("#trgGbn").val();
+        }
         switch (layerID) {
             case DATA_TYPE.RDPQ:
                 // var sn = f.get("RD_GDFTY_SN");

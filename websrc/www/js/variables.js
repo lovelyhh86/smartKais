@@ -58,6 +58,10 @@ var URLs = {
     "insertSpgfChange":{svcNm: "iSPGFChg"},
     //시설물 변경 내용 조회
     "selectSpgfChange":{svcNm: "vSPGFChg"},
+    //시설물 변경 내용 임시저장
+    "insertSpbdChange":{svcNm: "iSPBDChg"},
+    //시설물 변경 내용 조회
+    "selectSpbdChange":{svcNm: "vSPBDChg"},
     
     getURL: function (srcurl, jsondata) {
 

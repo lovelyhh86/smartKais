@@ -111,16 +111,16 @@ function selectResearchContent(trgGbn){
                         d.buldSlno == "0"? "" : "-" + d.buldSlno
                     );
 
-                    var researchOkBtn = "<button class='{0}' onclick='{1}'>정상</button>";
+                    var researchOkBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='{0}' {1}>정상</button>";
                     
                     if(d.delStateCd == '01' && d.rcSttCd == null){
                     // if(d.rcSttCd != null){//임시로 열어둠
-                        researchOkBtn = researchOkBtn.format("btnPossible","insertResearchForList("+i+")");
+                        researchOkBtn = researchOkBtn.format("insertResearchForList("+i+")","");
                     }else{
-                        researchOkBtn = researchOkBtn.format("btnImpossible","impossibleAlert()");
+                        researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='' onclick='goResearchDetail("+i+")'>정비</button>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnImpossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
                     var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/iconNumber.png'></img>";
 
                     $("#myResearchTable > tbody:last").append(
@@ -155,16 +155,16 @@ function selectResearchContent(trgGbn){
                     //명판내용
                     var korRnLbl = createRnNm(rdGdftySe,d);
                     
-                    var researchOkBtn = "<button class='{0}' onclick='{1}'>정상</button>";
+                    var researchOkBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='{0}' {1}>정상</button>";
                     
                     if(d.delStateCd == '01' && d.rcSttCd == null){
                     // if(d.rcSttCd != null){//임시로 열어둠
-                        researchOkBtn = researchOkBtn.format("btnPossible","insertResearchForList("+i+")");
+                        researchOkBtn = researchOkBtn.format("insertResearchForList("+i+")","");
                     }else{
-                        researchOkBtn = researchOkBtn.format("btnImpossible","impossibleAlert()");
+                        researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='' onclick='goResearchDetail("+i+")'>정비</button>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnImpossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
                     var locBtn = "<button class='' onclick='getResearchLocation("+i+")'><img src='image/icon_curr.png'></img></button>";
 
                     // if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
@@ -256,6 +256,31 @@ function goResearchDetail(i){
     
     MapUtil.openDetail(trgGbn, null);
 }
+//상세정보 위치찾기
+function getDetailLocation(){
+    //대상일련번호
+    var trgLocSn = $("#trgLocSn").val();
+    //대상구분
+    var trgGbn = $("#trgGbn").val();
+
+    var layerNm = "tlv_spgf_loc_skm";
+    var searchList = {rdftylc_sn: trgLocSn}
+
+    if(trgGbn == "02"){
+        layerNm = "tlv_spbd_buld";
+
+        var sigCd = $("#sigCd").val();
+        var emdCd = $("#emdCd").val();
+        var rnCd  = $("#rnCd").val();
+        var buldMnnm = $("#buldMnnm").val();
+        var buldSlno = $("#buldSlno").val();
+        var buldSeCd = $("#buldSeCd").val();
+
+        searchList = {sig_cd: sigCd, emd_cd: emdCd, rn_cd: rnCd, buld_mnnm: buldMnnm, buld_slno: buldSlno, buld_se_cd:buldSeCd}
+    }
+
+    getLocationByFeature(layerNm, searchList);
+}
 //배정대상 위치찾기
 function getResearchLocation(i){
 
@@ -292,7 +317,7 @@ function insertResearchForList(i){
     var trgGbnLbl = targetID.data('trgGbnLbl');
     var korRnLbl = targetID.data('korRnLbl');
 
-    var msgForm = "[{0}] {1} 을 정상으로 점검하시겠습니까?";
+    var msgForm = "[{0}] {1}\n\n정상 상태로 점검하시겠습니까?";
 
     navigator.notification.confirm(msgForm.format(trgGbnLbl,korRnLbl), function(btnindex){
 
@@ -367,7 +392,7 @@ function insertResearchForList(i){
 function submitResearch(){
     
     //점검상태
-    var rcSttCdOld = $("#rcSttCd").text();
+    var rcSttCdOld = $("#rcSttCdOld").text();
     var rcSttCd = $("#rcSttCd_new").text();
     var rcSttCdSel = $("#rcSttCdSel").val();
     //점검결과
@@ -391,6 +416,8 @@ function submitResearch(){
     var sigCd = $("#sigCd").val();
     //배정차수
     var plnOdr = $("#plnOdr").val();
+    //배정일련번호
+    var mtchSn = $("#mtchSn").val();
     //조사자일련번호
     var rcrSn = app.info.rcrSn;
     //작업자ID
@@ -400,10 +427,10 @@ function submitResearch(){
 
         if(btnindex == 1){
             var sendParams = {
-                // plnYr : plnYr,
+                plnYr : util.getToday().substr(0,4),
                 plnOdr : plnOdr,
                 sigCd : sigCd,
-                // mtchSn : mtchSn,
+                mtchSn : mtchSn,
                 trgSn : trgSn,
                 trgLocSn : trgLocSn,
                 trgGbn : trgGbn,
@@ -496,6 +523,28 @@ function customSelectBox(target, colume, useCode, startIndex, endIndex){
         if(c != "GroupNm"){
 
             if(c.substr(startIndex,endIndex) == useCode){
+                optionTxt = optionFormat.format(c,codeList[c]);
+                targetId.append(optionTxt); 
+            }
+        
+        }
+    }
+}
+
+//커스텀 셀렉트박스 만들기2
+function customSelectBox2(target, colume, useCode, startIndex, endIndex){
+    var targetId = $("#"+target);
+    targetId.empty();
+
+    var optionFormat = "<option value='{0}'>{1}</option>";
+
+    var optionTxt = ""; 
+    var codeList = app.codeMaster[CODE_GROUP[colume]];
+    
+    for(var c in codeList){
+        if(c != "GroupNm"){
+
+            if(c.substr(startIndex,endIndex) == useCode && c.substr(2,5) != "000"){
                 optionTxt = optionFormat.format(c,codeList[c]);
                 targetId.append(optionTxt); 
             }

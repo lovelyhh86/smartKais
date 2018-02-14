@@ -747,7 +747,7 @@ var MapUtil = {
                 var sn = f.get("BUL_MAN_NO");
                 var link = URLs.buildSelectlink;
 
-                MapUtil.setValues(layerID, link, sn);
+                MapUtil.setValuesBuld(layerID, link, sn);
 
                 break;
             case DATA_TYPE.SPPN:
@@ -922,29 +922,39 @@ var MapUtil = {
 
                 //계획차수
                 var plnOdr = data.plnOdr;
-                if(plnOdr != null){
-                    $("#plnOdrLbl").html("배정"); //계획차수로 배정여부 판단
+                //점검자
+                var rcrNm = data.rcrNm;
+                var rcrSn = data.rcrSn;
+                $("#rcrSn").html(rcrSn);
+
+                //배정일련번호
+                $("#mtchSn").val(data.mtchSn);
+                if(data.mtchSn != null){
+                    $("#plnOdrLbl").html("배정" + "("+rcrNm+")");
                     $("#plnOdr").val(data.plnOdr);
+                    var researchSn = app.info.rcrSn;
+                    if(rcrSn != researchSn){
+                        //조사자와 배정자가 다를 경우 점검 못함
+                        $("#submitRcBnt").attr("disabled","disabled");
+                        $("#rcSttCdSel").attr("disabled","disabled");
+                        $("#rcRslt").attr("disabled","disabled");
+                        $("#modifyBtn").attr("disabled","disabled");
+                    }
                 }else{
                     $("#plnOdrLbl").html("미배정");
                     $("#plnOdr").val("0"); // 배정이 없을땐 0으로 입력
                 }
-                //배정일련번호
-                $("#mtchSn").val(data.mtchSn);
                 
                 //점검일자
                 var rcDe = data.rcDe == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.rcDe.substr(0, 4), data.rcDe.substr(4, 2), data.rcDe.substr(6, 2));
-                $("#rcDe").html(rcDe);
-                
-                //점검자
-                var rcrNm = data.rcrNm;
-                var rcrSn = data.rcrSn;
-                if(rcrNm == null){//점검내역이 없을경우 현재 조사자로 셋팅
-                    rcrNm = "-"
-                }
-                $("#rcrNm").html(rcrNm);
-                $("#rcrcrSnrNm").html(rcrSn);
 
+                $("#rcDe").html(rcDe);
+                if(data.rcDe == null){
+                    $("#rcrNm").html("-");
+                }else{
+                    $("#rcrNm").html(rcrNm);
+                }
+                
                 //설치상태
                 var delStateCd = data.delStateCd;
                 $("#delStateCd").html(data.delStateCd);
@@ -1014,15 +1024,15 @@ var MapUtil = {
                         $("#frontEndBaseSlaveNo").val(data.frontEndBaseSlaveNo);
                         if (data.bdrclAt == 1) {
                             //뒷면 도로명(국문)
-                            $("#backKoreanRoadNm").val(data.backKoreanRoadNm);
+                            $("#backKoreanRoadNm").html(data.backKoreanRoadNm);
                             //뒷면 도로명(로마자)
                             $("#backRomeRoadNm").html(data.backRomeRoadNm);
                             //뒷면시작기초번호(0-0)
-                            $("#backStartBaseMasterNo").val(data.backStartBaseMasterNo);
-                            $("#backStartBaseSlaveNo").val(data.backStartBaseSlaveNo);
+                            $("#backStartBaseMasterNo").html(data.backStartBaseMasterNo);
+                            $("#backStartBaseSlaveNo").html(data.backStartBaseSlaveNo);
                             //뒷면종료기초번호(0-0)
-                            $("#backEndBaseMasterNo").val(data.backEndBaseMasterNo);
-                            $("#backEndBaseSlaveNo").val(data.backEndBaseSlaveNo);
+                            $("#backEndBaseMasterNo").html(data.backEndBaseMasterNo);
+                            $("#backEndBaseSlaveNo").html(data.backEndBaseSlaveNo);
                         } else {
                             $(".bk").hide();
                         }
@@ -1037,6 +1047,18 @@ var MapUtil = {
                         }
                         customSelectBox("rdpqGdSd",colume,useCd,1,2);
                         $("#rdpqGdSd").val(rdpqGdSd);
+
+                        //임시데이터 존재 여부
+                        var isUpdtGbn = data.isUpdtGbn;
+                        $("#isUpdtGbn").val(isUpdtGbn);
+
+                        if(isUpdtGbn.indexOf("D") != -1){
+                            navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+                                if(btnindex == 1){
+                                    loadUpdtData();
+                                }
+                            }, "알림", ["확인","취소"]);
+                        }
 
                         break;
                     case DATA_TYPE.AREA:
@@ -1167,8 +1189,8 @@ var MapUtil = {
                         break;
                     case DATA_TYPE.ENTRC:
                         //일련번호
-                        $("#sn").val(data.bulNmtNo);
-                        $("#entManNo").val(data.entManNo);
+                        // $("#sn").val(data.bulNmtNo);
+                        // $("#entManNo").val(data.entManNo);
                         $("#imageFileSn").val(data.imageFilesSn);
 
                         //제목창
@@ -1179,48 +1201,55 @@ var MapUtil = {
                             (data.buldSlno == '0' ? '' : '-' + data.buldSlno)
                         );
                         $("#entrcView_page .title").append(title);
-                        //일련번호
-                        // $("#sn").html(sn);
+                        
+                        //위치찾기용
+                        $("#emdCd").val(data.emdCd);
+                        $("#rnCd").val(data.rnCd);
+                        $("#buldSeCd").val(data.buldSeCd);
+
+                        //설치도로명
+                        $("#rnCdLbl").html(data.rnCdLbl);
+                        //건물번호
+                        $("#buldMnnm").html(data.buldMnnm);
+                        $("#buldSlno").html(data.buldSlno);
                         //일련번호
                         $("#bulNmtNo").html(data.bulNmtNo);
-                        //유형
-                        $("#buldNmtSe").html(data.buldNmtSe);
-                        $("#buldNmtSeLbl").html(data.buldNmtSeLbl);
-                        $("#buldNmtSeLbl").addClass("edit");
-                        //형태
-                        $("#buldNmtType").html(data.buldNmtType);
-                        $("#buldNmtTypeLbl").html(data.buldNmtTypeLbl);
-                        //용도
-                        $("#buldNmtPurpose").html(data.buldNmtPurpose);
-                        $("#buldNmtPurposeLbl").html(data.buldNmtPurposeLbl);
-                        $("#buldNmtPurposeLbl").addClass("edit");
-                        //규격
-                        $("#buldNmtCd").html(data.buldNmtCd);
-                        $("#buldNmtCdLbl").html(data.buldNmtCdLbl);
-                        $("#buldNmtCdLbl").addClass("edit");
-                        //가로*세로*두께
-                        $("#gdftyWide").html(data.buldNmtWide);
-                        $("#gdftyVertical").html(data.buldNmtVertical);
-                        $("#gdftyThickness").html(data.buldNmtThickness);
-                        var gdftyWVT = "{0}*{1}*{2}".format(data.buldNmtWide, data.buldNmtVertical, data.buldNmtThickness);
-                        $("#gdftyWVT").html(gdftyWVT);
-                        $("#gdftyWVT").addClass("edit");
-                        //제작유형
-                        $("#buldMnfCd").html(data.buldMnfCd);
-                        $("#buldMnfCdLbl").html(data.buldMnfCdLbl);
-                        $("#buldMnfCdLbl").addClass("edit");
-                        //재질
-                        $("#buldNmtMaterial").html(data.buldNmtMaterial);
-                        $("#buldNmtMaterialLbl").html(data.buldNmtMaterialLbl);
-                        $("#buldNmtMaterialLbl").addClass("edit");
-                        //단가(원)
-                        $("#gdftyUnitPrice").html(data.buldNmtUnitPrice);
-                        $("#gdftyUnitPrice").addClass("edit");
-                        //설치상태
-                        $("#delStateCd").html(data.delStateCd);
-                        $("#delStateCdLbl").html(data.delStateCdLbl);
-                        $("#delStateCdLbl").addClass("edit");
 
+                        //설치일자
+                        $("#instDate").html(data.instDate);
+                        //유형
+                        makeOptSelectBox("buldNmtSe","BUL_NMT_SE","","","");
+                        $("#buldNmtSe").val(data.buldNmtSe);
+                        //조명여부
+                        makeOptSelectBox("lghtCd","LGHT_CD","","","");
+                        $("#lghtCd").val(data.lghtCd);
+
+                        //형태
+                        $("#buldNmtTypeLbl").html(data.buldNmtTypeLbl);
+                        $("#buldNmtType").val(data.buldNmtType);
+                        //용도
+                        makeOptSelectBox("buldNmtPurpose","BUL_NMT_PR","","","");
+                        $("#buldNmtPurpose").val(data.buldNmtPurpose);
+                        //규격
+                        makeOptSelectBox("buldNmtCd","BUL_NMT_CD","","","");
+                        $("#buldNmtCd").val(data.buldNmtCd);
+                        //단가(원)
+                        $("#buldNmtUnitPrice").val(data.buldNmtUnitPrice);
+
+                        //가로*세로*두께
+                        $("#buldNmtWide").val(data.buldNmtWide);
+                        $("#buldNmtVertical").val(data.buldNmtVertical);
+                        $("#buldNmtThickness").val(data.buldNmtThickness);
+
+                        //제작유형
+                        makeOptSelectBox("buldMnfCd","BUL_MNF_CD","","","");
+                        $("#buldMnfCd").val(data.buldMnfCd);
+
+                        //재질
+                        makeOptSelectBox("buldNmtMaterial","BUL_NMT_QL","","","");
+                        $("#buldNmtMaterial").val(data.buldNmtMaterial);
+                        
+                        
                         //*********건물정보 ******** */
                         //건축물용도
                         var bdtypCd = data.bdtypCd;
@@ -1275,78 +1304,132 @@ var MapUtil = {
                         //건물군번호
                         $("#eqbManSn").val(data.eqbManSn);
 
-                        break;
-                    case DATA_TYPE.BULD:
+                        //임시데이터 존재 여부
+                        var isUpdtGbn = data.isUpdtGbn;
+                        $("#isUpdtGbn").val(isUpdtGbn);
 
-                        var title = "[{0}] {1} {2}{3}".format(
-                            "건물정보",
-                            (data.rnCdLbl ? data.rnCdLbl : ""),
-                            (data.buldMnnm),
-                            (data.buldSlno == "0" ? "" : "-" + data.buldSlno)
-                        );
-                        $(".title").append(title);
-
-                        //건축물용도
-                        var bdtypCd = data.bdtypCd;
-
-                        if (bdtypCd.substr(2, 5) == 000) { //대분류
-
-                            $("#bdtypCd_main").html(data.bdtypCd);
-                            $("#bdtypCd_mainLbl").html(data.bdtypCdLbl);
-                            $("#bdtypCd_mainLbl").addClass("edit");
-
-                        } else { //소분류일 경우
-                            var bdtypCd_main = bdtypCd.substr(0, 2) + "000";
-                            $("#bdtypCd_main").html(bdtypCd_main);
-                            var codeList = app.codeMaster[CODE_GROUP["BDTYP_CD"]];
-                            $("#bdtypCd_mainLbl").html(codeList[bdtypCd_main]);
-                            $("#bdtypCd_mainLbl").addClass("edit");
-
-                            $("#bdtypCd").html(data.bdtypCd);
-                            $("#bdtypCdLbl").html(data.bdtypCdLbl);
-                            $("#bdtypCdLbl").addClass("edit");
-
+                        if(isUpdtGbn.indexOf("D") != -1){
+                            navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+                                if(btnindex == 1){
+                                    loadUpdtData();
+                                }
+                            }, "알림", ["확인","취소"]);
                         }
 
-                        //건물종속여부
-                        $("#bulDpnSe").html(data.bulDpnSe);
-                        $("#bulDpnSeLbl").html(data.bulDpnSeLbl);
-                        $("#bulDpnSeLbl").addClass("edit");
-                        //건물명
-                        $("#posBulNm").html(data.posBulNm);
-                        $("#posBulNm").addClass("edit");
-                        //건물명(영)
-                        $("#bulEngNm").html(data.bulEngNm);
-                        $("#bulEngNm").addClass("edit");
-                        //상세건물명
-                        $("#buldNmDc").html(data.buldNmDc);
-                        $("#buldNmDc").addClass("edit");
-                        //건물층수
-                        //(지상)
-                        $("#groFloCo").html(data.groFloCo);
-                        //(지하)
-                        $("#undFloCo").html(data.undFloCo);
-                        var floCo = "지상층: {0} / 지하층: {1}".format(data.groFloCo, data.undFloCo);
-                        $("#floCo").html(floCo);
-                        $("#floCo").addClass("edit");
-                        //건물상태
-                        $("#buldSttus").html(data.buldSttus);
-                        $("#buldSttus").addClass("edit");
-                        //메모
-                        $("#buldMemo").html(data.buldMemo);
-                        $("#buldMemo").addClass("edit");
-
-                        //건물군번호
-                        $("#eqbManSn").val(data.eqbManSn);
-
                         break;
-
                 }
                 util.dismissProgress();
 
             },
             util.dismissProgress
         );
+    },
+    setValuesBuld:function(layerID, link, sn) {
+        var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
+        util.showProgress();
+
+        util.postAJAX({}, url).then(
+            function(context, rCode, results) {
+                //통신오류처리
+                if (rCode != 0 || results.response.status < 0) {
+                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                    util.dismissProgress();
+                    return;
+                }
+
+                var data = results.data;
+
+                //데이터 오류 처리
+                if (data == null) {
+                    navigator.notification.alert(msg.noItem,
+                        function() {
+                            $("#detailView").popup("close", { transition: "slideup" });
+                        },
+                        '알림', '확인'
+                    );
+                    util.dismissProgress();
+                    return;
+                }
+
+                if(layerID == DATA_TYPE.BULD){
+                    var title = "[{0}] {1} {2}{3}".format(
+                        "건물정보",
+                        (data.rnCdLbl ? data.rnCdLbl : ""),
+                        (data.buldMnnm),
+                        (data.buldSlno == "0" ? "" : "-" + data.buldSlno)
+                    );
+                    $(".title").append(title);
+
+                    //일련번호
+                    $("#trgSn").val('0');
+                    //위치일련번호
+                    $("#trgLocSn").val(sn);
+                    //시군구코드
+                    $("#sigCd").val(data.sigCd);
+
+                    //건축물용도
+                    var bdtypCd = data.bdtypCd;
+                    var bdtypCdSub =bdtypCd.substr(2, 5);
+                    if (bdtypCd.substr(2, 5) == 000) { //대분류
+                        customSelectBox("bdtypCd_main","BDTYP_CD",bdtypCdSub,0,2);
+                        $("#bdtypCd_main").val(data.bdtypCd);
+
+                    } else { //소분류일 경우
+                        var bdtypCd_main = bdtypCd.substr(0, 2) + "000";
+                        customSelectBox("bdtypCd_main","BDTYP_CD","000",2,4);
+                        $("#bdtypCd_main").val(bdtypCd_main);
+                        customSelectBox2("bdtypCd","BDTYP_CD",bdtypCd.substr(0,2),0,2);
+                        $("#bdtypCd").val(data.bdtypCd);
+
+                    }
+                    //건축물용도
+                    // makeOptSelectBox("bdtypCd","BDTYP_CD","","","");
+                    // $("#bdtypCd").val(data.bdtypCd);
+
+                    //건물종속여부
+                    makeOptSelectBox("bulDpnSe","BUL_DPN_SE","","","");
+                    $("#bulDpnSe").val(data.bulDpnSe);
+                    //건물명
+                    $("#posBulNm").val(data.posBulNm);
+                    //건물명(영)
+                    $("#bulEngNm").val(data.bulEngNm);
+                    //상세건물명
+                    $("#buldNmDc").html(data.buldNmDc);
+                    //건물층수
+                    //(지상)
+                    $("#groFloCo").val(data.groFloCo);
+                    //(지하)
+                    $("#undFloCo").val(data.undFloCo);
+                    // var floCo = "지상층: {0} / 지하층: {1}".format(data.groFloCo, data.undFloCo);
+                    // $("#floCo").html(floCo);
+                    // $("#floCo").addClass("edit");
+                    //건물상태
+                    $("#buldSttus").val(data.buldSttus);
+                    //메모
+                    $("#buldMemo").val(data.buldMemo);
+
+                    //건물군번호
+                    $("#eqbManSn").val(data.eqbManSn);
+
+                    util.dismissProgress();
+
+                    //임시데이터 존재 여부
+                    var isUpdtGbn = data.isUpdtGbn;
+                    $("#isUpdtGbn").val(isUpdtGbn);
+                    
+                    if(isUpdtGbn.indexOf("D") != -1){
+                        navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+                            if(btnindex == 1){
+                                loadUpdtData();
+                            }
+                        }, "알림", ["확인","취소"]);
+                    }
+                    return;
+                }
+              
+            },
+            util.dismissProgress
+        )
     },
     setValuesSppn:function(layerID, link, sn) {
         var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });

@@ -5,21 +5,111 @@
 
 <div id="buildView_page">
     <div class="detailView">
-        <p class="openImage"><span onclick="closeDetailView();">열림</span></p>
+            <p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
         <div class="infoWrap">
             <!-- header -->
             <div class="infoHeader">
-
                 <!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
                 <p class="title"><span class="titleIcon"><img src="image/iconBuilding.png" title="건물정보"></span></p>
+                <p class="location" onclick="getDetailLocation()"></p>
                 <!--<p class="photo"><span class="photoNum">2</span></p>-->
             </div>
 
             <!-- content -->
             <div class="infoContent">
+
+                <div id="mask"></div>
+
+                <input id="plnYr" type="hidden" value="" />
+                <input id="mtchSn" type="hidden" value="" />
+                <input id="trgLocSn" type="hidden" value="" />
+                <input id="trgSn" type="hidden" value=""/>
+                <input id="sigCd" type="hidden" value="" />
+                <input id="isUpdtGbn" type="hidden" value="" />
+                <!-- 시설물 별로 확정 -->
+                <input id="trgGbn" type="hidden" value="99"/>
+                
+                <!--건물번호판 위치 찾기용 -->
+                <input id="emdCd" type="hidden"/>
+                <input id="rnCd" type="hidden"/>
+                <input id="buldSeCd" type="hidden"/>
+
+                <input id="plnOdr" type="hidden" value="0"/>
+
+
+                <div class="blueTitle">
+                    <h2>정보</h2>
+                </div>
+                <div class="tableWrap">
+                    <table class="dataTable" summary="상태">
+                        <caption>상태</caption>
+                        <colgroup>
+                            <col class="cell20">
+                            <col class="cell30">
+                            <col class="cell20">
+                            <col class="cell30">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th scope="row">용도(대분류)</th>
+                                <td>
+                                    <select id="bdtypCd_main" class="cell100"/>
+                                </td>
+                                <th scope="row">용도(소분류)</th>
+                                <td>
+                                    <select id="bdtypCd" class="cell100"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">건물종속여부</th>
+                                <td>
+                                    <select id="bulDpnSe" class="cell100"/>
+                                </td>
+                                <th scope="row">건물층수</th>
+                                <td>
+                                    <input type='number' class="cell30" id="groFloCo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+                                    <span>-</span>
+                                    <input type='number' class="cell30" id="undFloCo"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">건물명</th>
+                                <td>
+                                    <input type='text' class="cell70" id="posBulNm" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'20')"/>
+                                </td>
+                                <th scope="row">건물명(영)</th>
+                                <td>
+                                    <input type='text' class="cell70" id="bulEngNm" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'100')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">상세건물명</th>
+                                <td colspan="3">
+                                    <input type='text' class="cell70" id="buldNmDc" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'50')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">건물상태</th>
+                                <td colspan="3">
+                                    <input type='text' class="cell70" id="buldSttus" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'20')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">메모</th>
+                                <td colspan="3">
+                                    <input type='text' class="cell70" id="buldMemo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'200')"/>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <button class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="modify()">정비</button>
+
+
                 <!-- 정보  -->
                 <!-- 건물상태 데이터 팝업 -->
-                <div id="buldSttus_pop" class="dataWrap" style="display: none">
+                <!-- <div id="buldSttus_pop" class="dataWrap" style="display: none">
                     <div class="dataTItle">건물상태</div>
                     <div class="dataForm">
                         <div class="row">
@@ -34,10 +124,10 @@
                         <span onclick="textDataSendParent('buldSttus')" class="btnPoint">저장</span>
                     </div>
                     <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-                </div>
+                </div> -->
                 <!-- 건물상태 데이터 팝업 끝 -->
 
-                <div class="infoTable">
+                <!-- <div class="infoTable">
                     <input id="sn" type="hidden" value="" />
                     <input id="eqbManSn" type="hidden" value=""/>
 
@@ -131,7 +221,7 @@
                             <p id="buldMemo" name="oldLbl">&nbsp;</p>
                             <p id="buldMemo_new" name="newLbl" style="display:none; color:red"></p>
                         </div>
-                    </div>
+                    </div> -->
                     
                 </div>
                 <!-- 정보 끝 -->
@@ -297,6 +387,24 @@
         </div>
     </div>
 </div>
+
+<!-- 입력공통팝업 -->
+<div id="inputPop" class="dataWrap" style="display: none">
+        <input type="hidden" id="targetId"/>
+        <div class="dataTItle">입력</div>
+        <div class="dataForm">
+            <div class="row">
+                <div class="cell">
+                    <div class="inputText"><input type="number" id="fixedValue" value=""></div>
+                </div>
+            </div>
+        </div>
+        <div class="dataBtn">
+            <!-- <span class="btnNormal dataPopCloser">닫기</span> -->
+            <!-- <span onclick="fixedValueChecked()" class="btnPoint">저장</span> -->
+        </div>
+        <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+    </div>
 
 </body>
 </html>

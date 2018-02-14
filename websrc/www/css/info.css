@@ -93,6 +93,8 @@
 
 
 
+
+
 /************* 팝업 ****************/
 
 /*top*/
@@ -119,6 +121,8 @@
 .infoHeader >.title > .listLabel{position: absolute;top:0px;left:179px}
 .infoHeader >.photo{position:absolute; top:50px; right:40px; width:42px; height:37px; background:url(../image/photo.png) 100% 100% no-repeat;}
 .infoHeader >.photo>.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
+/*title location*/
+.infoHeader >.location{position:absolute; top:55px; right:55px; width:56px; height:40px;background:url(../image/icon_curr.png) no-repeat;background-size:64%}
 
 .infoHeader >.listTitle {font-size: 1.5em; text-shadow: none; text-align: center; position:relative;}
 .infoHeader >.listTitle>.rowNum{display:inline-block;position: absolute; right: 0; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
@@ -143,6 +147,9 @@
 .btnNormal{display:inline-block; margin-left:10px ; padding:10px 80px; background-color: #9d9ca1; color:#fff}
 .btnPossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6}
 .btnImpossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #9d9ca1; color:#e6e6e6}
+.blueBtn{background-color: blue; color: white;}
+.grayBtn{background-color: #9d9ca1; color: white;}
+.whiteBtn{background-color: white; color: black;}
 .btnPossibleDetail{display:inline-block; margin-bottom:4px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6;width: 100%;}
 
 /*setting*/
@@ -214,14 +221,14 @@ table caption{display: none}
 .position{position: absolute;left: 20px; bottom: 0;}
 
 /**************** width ****************/
-.cell10{ width:10%;} .cell15{ width:15%;}
+.cell10{ width:10%!important;} .cell15{ width:15%;}
 .cell20{ width:20%;} .cell25{ width:25%;}
 .cell30{ width:30%;} .cell33{ width:33%;} .cell35{ width:35%;}
 .cell40{ width:40%;} .cell45{ width:45%;}
 .cell50{ width:50%;} .cell55{ width:55%;}
 .cell60{ width:60%;} .cell65{ width:65%;}
-.cell70{ width:70%;} .cell75{ width:75%;}
-.cell80{ width:80%;} .cell85{ width:85%;}
+.cell70{ width:70%} .cell75{ width:75%;}
+.cell80{ width:80%!important;} .cell85{ width:85%;}
 .cell90{ width:90%;} .cell95{ width:95%;}
 .cell100{ width:100%;}
 .auto{ width:auto;}

@@ -12,6 +12,7 @@
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
 				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="location" onclick="getDetailLocation()"></p>
 				<p class="photo"><span class="photoNum">0</span></p>
 			</div>
 			
@@ -27,7 +28,7 @@
 				<input id="isUpdtGbn" type="hidden" value="" />
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="01"/>
-
+				
 				<!--점검-->
 				<div class="blueTitle">
 					<h2>점검정보</h2>
@@ -47,6 +48,8 @@
 								<td>
 									<p id="plnOdrLbl" name="oldRcLbl" >&nbsp;</p>
 									<input type="hidden" id="plnOdr"></input>
+									<input id="plnOdr" type="hidden" value=""/>
+									<p id="rcrSn" name="newRcLbl" style="display:none;"></p>
 								</td>
 								<th scope="row">점검일자</th>
 								<td>
@@ -58,13 +61,12 @@
 								<th scope="row">점검자</th>
 								<td>
 									<p id="rcrNm" name="oldRcLbl" ></p>
-									<p id="rcrSn" style="display:none;"></p>
 									<p id="rcrNm_new" name="newRcLbl" style="display:none; color:red"></p>
 									<p id="rcrSn_new" name="newRcLbl" style="display:none;"></p>
 								</td>
 								<th scope="row">점검상태</th>
 								<td id='rcSttCdTd'>
-									<p id="rcSttCd" style="display:none;"></p>
+									<p id="rcSttCdOld" style="display:none;"></p>
 									<p id="rcSttCd_new" name="newRcLbl" style="display:none"></p>
 									<select id='rcSttCdSel' class="cell100" onchange="checkRcSttCd()"/>
 								</td>
@@ -80,7 +82,7 @@
 						</tbody>
 					</table>
 				</div>
-				<button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" onclick="submitResearch()">점검</button>
+				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
 				<!-- 정보  -->
 				<div class="blueTitle">
@@ -112,6 +114,7 @@
 				<div class="blueTitle">
 					<h2>위치정보</h2>
 				</div>
+				
 				<div class="tableWrap">
 					<table class="dataTable" summary="위치정보">
 						<caption>위치정보</caption>
@@ -232,7 +235,6 @@
 								<th scope="row">뒷면 도로명</th>
 								<td>
 									<p id="backKoreanRoadNm">&nbsp;</p>
-									<p id="backKoreanRoadNm_new" name="newLbl" style="display:none; color:red"></p>
 								</td>
 								<th scope="row">로마자</th>
 								<td>
@@ -242,21 +244,15 @@
 							<tr class="bk">
 								<th scope="row">시작기초번호</th>
 								<td>
-									<p id="backStartBaseNo" name="oldLbl" >&nbsp;</p>
-									<p id="backStartBaseMasterNo" style="display:none"></p>
-									<p id="backStartBaseSlaveNo" style="display:none"></p>
-									<p id="backStartBaseNo_new" name="newLbl" style="display:none; color:red"></p>
-									<p id="backStartBaseMasterNo_new" style="display:none;"></p>
-									<p id="backStartBaseSlaveNo_new" style="display:none;"></p>
+									<span id="backStartBaseMasterNo"></span>
+									<span>-</span>
+									<span id="backStartBaseSlaveNo"></span>
 								</td>
 								<th scope="row">종료기초번호</th>
 								<td>
-									<p id="backEndBaseNo" name="oldLbl" >&nbsp;</p>
-									<p id="backEndBaseMasterNo" style="display:none"></p>
-									<p id="backEndBaseSlaveNo" style="display:none"></p>
-									<p id="backEndBaseNo_new" name="newLbl" style="display:none; color:red"></p>
-									<p id="backEndBaseMasterNo_new" style="display:none;"></p>
-									<p id="backEndBaseSlaveNo_new" style="display:none;"></p>
+									<span id="backEndBaseMasterNo"></span>
+									<span>-</span>
+									<span id="backEndBaseSlaveNo"></span>
 								</td>
 							</tr>
 						</tbody>
@@ -348,7 +344,7 @@
 						</tbody>
 					</table>
 				</div>
-				<button class="ui-btn ui-corner-all ui-shadow ui-btn-b" onclick="modify()">정비</button>
+				<button id="modifyBtn" class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="modify()">정비</button>
 
 
 
