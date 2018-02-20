@@ -79,7 +79,7 @@ var util = {
 
         //신규위치
         if($("#newPos").is(':visible')){
-            $(".newPosition").click();
+            cancleNewPos();
             return;
         }
         //위치이동

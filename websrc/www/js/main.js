@@ -12,6 +12,7 @@ var msg = {
     isSave: "저장 하시겠습니까?",
     isSaveAgain : "저장 하시겠습니까? \n(기존 승인대기 상태의 정보는 현재 정보로 대체됩니다.) ",
     isSavePhoto: "변경한 사진이 있습니다. 저장 하시겠습니까?",
+    // isSavePhotoUpdate : "변경한 사진이 있습니다. 저장 하시겠습니까?",
     lossClose: "변경한 항목이 있습니다. 닫기를 누르면 저장되지 않습니다.",
     lossPhotoClose: "변경한 사진이 있습니다.\n(단, 삭제된 사진 상태로 저장 불가)\n\n닫기를 누르면 저장되지 않습니다.",
     initInfo: "정보를 다시 조회 하시겠습니까?",
@@ -36,7 +37,13 @@ var msg = {
     successModify: "정상적으로 저장 되었습니다. \n해당 내용은 KAIS웹을 통한 승인 후 적용됩니다.",
     loadUpdtData: "승인 대기중인 데이터를 불러오시겠습니까?",
     successLoadUpdt : "승인 대기 데이터 불러오기 완료.",
+    notHaveLoadUpdt : "승인 대기중인 데이터가 없습니다.",
     checkRcSttCd : "점검상태를 선택하세요.",
+    researchCheckPhoto : "정상처리 이외의 점검상태는 사진 촬영이 필수 입니다.\n사진촬영으로 이동하시겠습니까?",
+    researchCheckPhotoCnt : "사진건수가 0 건입니다.\n사진촬영으로 이동하시겠습니까?",
+    loadOldImg : "원본 사진을 조회 하시겠습니까?",
+    successImg : "사진조회 완료",
+    
 };
 var app = {
     // Application Constructor

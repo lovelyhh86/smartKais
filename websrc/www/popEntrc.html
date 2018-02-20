@@ -10,7 +10,7 @@
             <!-- header -->
             <div class="infoHeader">
                 <!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-                <p class="title"><span class="titleIcon"><img src="image/iconNumber.png" title="호판"></span></p>
+                <p class="title"><span class="titleIcon"><img src="image/iconNumber.png" title="건물번호판"></span></p>
                 <p class="location" onclick="getDetailLocation()"></p>
                 <p class="photo"><span class="photoNum">0</span></p>
             </div>
@@ -19,8 +19,6 @@
             <div class="infoContent">
                 <div id="mask"></div>
 
-                <input id="plnYr" type="hidden" value="" />
-				<input id="mtchSn" type="hidden" value="" />
 				<input id="trgLocSn" type="hidden" value="" />
 				<input id="trgSn" type="hidden" value=""/>
 				<input id="sigCd" type="hidden" value="" />
@@ -33,61 +31,88 @@
                 <input id="rnCd" type="hidden"/>
                 <input id="buldSeCd" type="hidden"/>
 
-                <!--점검-->
+                <!-- 배정 -->
 				<div class="blueTitle">
-                    <h2>점검정보</h2>
-                </div>
-                <div class="tableWrap">
-                    <table class="dataTable" summary="점검정보">
-                        <caption>점검정보</caption>
-                        <colgroup>
-                            <col class="cell20">
-                            <col class="cell30">
-                            <col class="cell20">
-                            <col class="cell30">
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th scope="row">배정여부</th>
-                                <td>
-                                    <p id="plnOdrLbl" name="oldRcLbl" >&nbsp;</p>
-                                    <input type="hidden" id="plnOdr"></input>
-                                    <input id="plnOdr" type="hidden" value=""/>
+					<h2>배정정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="베정정보">
+						<caption>배정정보</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">배정여부</th>
+								<td>
+									<p id="plnOdrLbl" name="oldRcLbl" >&nbsp;</p>
+									<input id="plnYr" type="hidden" value="" />
+									<input id="plnOdr" type="hidden" value=""/>
+									<input id="mtchSn" type="hidden" value="" />
+								</td>
+								<th scope="row">배정자</th>
+								<td>
+									<p id="rcrNm" name="oldRcLbl" ></p>
 									<p id="rcrSn" name="newRcLbl" style="display:none;"></p>
-                                </td>
-                                <th scope="row">점검일자</th>
-                                <td>
-                                    <p id="rcDeLbl_new" name="newRcLbl" style="display:none; color:red"></p>
-                                    <p id="rcDe" name="oldRcLbl" ></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">점검자</th>
-                                <td>
-                                    <p id="rcrNm" name="oldRcLbl" ></p>
-                                    <p id="rcrNm_new" name="newRcLbl" style="display:none; color:red"></p>
-                                    <p id="rcrSn_new" name="newRcLbl" style="display:none;"></p>
-                                </td>
-                                <th scope="row">점검상태</th>
-                                <td id='rcSttCdTd'>
-                                    <p id="rcSttCdOld" style="display:none;"></p>
-                                    <p id="rcSttCd_new" name="newRcLbl" style="display:none"></p>
-                                    <select id='rcSttCdSel' class="cell100" onchange="checkRcSttCd()"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">점검결과</th>
-                                <td colspan='3'>
-                                    <textarea id="rcRslt" oninput="checkRcRslt()" placeholder="점검결과를 입력하세요."></textarea>
-                                    <p id="rcRsltOld" name="oldLbl" style="display:none"></p>
-                                        <!-- <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p> -->
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
-                <!--점검 end-->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+				<!--점검-->
+				<div class="blueTitle">
+					<h2>점검정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="점검정보">
+						<caption>점검정보</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">점검일자</th>
+								<td>
+									<p id="rcDeLbl_new" name="newRcLbl" style="display:none; color:red"></p>
+									<p id="rcDe" name="oldRcLbl" ></p>
+								</td>
+								<th scope="row">점검자</th>
+								<td>
+									<p id="reRcrNm" name="oldRcLbl" ></p>
+									<p id="rcrNm_new" name="newRcLbl" style="display:none; color:red"></p>
+									<p id="rcrSn_new" name="newRcLbl" style="display:none;"></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">점검상태</th>
+								<td id='rcSttCdTd'>
+									<p id="rcSttCdOld" style="display:none;"></p>
+									<p id="rcSttCd_new" name="newRcLbl" style="display:none"></p>
+									<select id='rcSttCdSel' class="cell100" onchange="checkRcSttCd()"/>
+								</td>
+								<td/><td/>
+							</tr>
+							<tr>
+								<th scope="row">점검결과</th>
+								<td colspan='3'>
+									<textarea id="rcRslt" oninput="checkRcRslt()" placeholder="점검결과를 입력하세요."></textarea>
+									<p id="rcRsltOld" name="oldLbl" style="display:none"></p>
+                           			<!-- <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p> -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
+				<!--점검 end-->
                 <!-- 정보  -->
                 <div class="blueTitle">
                     <h2>상태</h2>
@@ -168,16 +193,18 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th scope="row">제작유형</th>
+                                <td>
+                                    <select id="buldMnfCd" class="cell100" onchange="changeMnf(this.id)"/>
+                                </td>
                                 <th scope="row">조명여부</th>
                                 <td>
                                     <select id="lghtCd" class="cell100"/>
                                 </td>
-                                <td/><td/>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <button onclick="goPopBuild()">수정</button>
                 <div class="blueTitle">
                     <h2>세부입력정보</h2>
                 </div>
@@ -194,19 +221,16 @@
                             <tr>
                                 <th scope="row">형태</th>
                                 <td>
-                                    <p id="buldNmtTypeLbl">&nbsp;</p>
-                                    <input type="hidden" id="buldNmtType"></input>
+                                    <select id="buldNmtType" class="cell100" onchange="changeBuldNmtPurpose();"/>
+                                    <p id="buldNmtTypeLbl"></p>
                                 </td>
                                 <th scope="row">용도</th>
                                 <td>
-                                    <select id="buldNmtPurpose" class="cell100"/>
+                                    <select id="buldNmtPurpose" class="cell100" onchange="changeBuldNmtCd();"/>
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">제작유형</th>
-                                <td>
-                                    <select id="buldMnfCd" class="cell100"/>
-                                </td>
+                                <td/><td/>
                                 <th scope="row">재질</th>
                                 <td>
                                     <select id="buldNmtMaterial" class="cell100"/>
@@ -215,317 +239,49 @@
                             <tr>
                                 <th scope="row">규격</th>
                                 <td>
-                                    <select id="buldNmtCd" class="cell100"/>
+                                    <select id="buldNmtCd" class="cell100" onchange="setGdfyWide(this.id)"/>
                                 </td>
                                 <th scope="row">단가(원)</th>
                                 <td >
-                                    <input type='number' class="cell70" id="buldNmtUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)"/>
+                                    <input type='number' class="cell70" id="buldNmtUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">가로세로두께</th>
                                 <td colspan="3">
-                                    <input type='number' class="cell10" id="buldNmtWide" readonly = "readonly" maxlength="5"/>
+                                    <input type='number' class="cell10" id="buldNmtWide" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
                                     <span>mm *</span>
-                                    <input type='number' class="cell10" id="buldNmtVertical" readonly = "readonly" maxlength="5"/>
+                                    <input type='number' class="cell10" id="buldNmtVertical" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
                                     <span>mm *</span>
-                                    <input type='number' class="cell10" id="buldNmtThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')"/>
+                                    <input type='number' class="cell10" id="buldNmtThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')" oninput="firstTextZero(this.id)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">자율형 한글자 크기(가로)</th>
+                                <td>
+                                    <input type='number' class="cell30" id="bulNmtFtWi" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+                                </td>
+                                <th scope="row">자율형 한글자 크기(세로)</th>
+                                <td >
+                                    <input type='number' class="cell30" id="bulNmtFtVe" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <button class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="modify()">정비</button>
-
-
-
-                <!-- <div class="blueTitle">
-                    <h2>기본정보</h2>
-                </div>
-                <div class="infoTable">
-                    <input id="sn" type="hidden" value="" />
-                    <input id="entManNo" type="hidden" value="" />
-                    <input id="imageFileSn" type="hidden" value="" />
-                    
-                    <div class="row">
-						<div  class="cell1">
-								<span class="label">설치상태</span>
-						</div>
-						<div class="cell2">
-							<p id="delStateCdLbl" name="oldLbl"></p>
-							<p id="delStateCd" style="display:none;"></p>
-							<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="delStateCd_new" style="display:none"></p>
-						</div>
-					</div>
-                    <div class="row">
-                        <div class="cell1">
-                            <span class="label">일련번호</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="bulNmtNo"></p>
-                        </div>
-                    </div>
-                    <div onclick="openDataIdPop('buldNmtSe');" class="row">
-                        <div  class="cell1">
-                            <span class="label">유형</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="buldNmtSeLbl" name="oldLbl"></p>
-                            <p id="buldNmtSe" style="display:none"></p>
-                            <p id="buldNmtSeLbl_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="buldNmtSe_new" style="display:none;"></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div  class="cell1">
-                            <span class="label">형태</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="buldNmtTypeLbl"></p>
-                            <p id="buldNmtType" style="display:none"></p>
-                        </div>
-                    </div>
-                    <div onclick="openDataIdPop('buldNmtPurpose');" class="row">
-                        <div  class="cell1">
-                            <span class="label">용도</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="buldNmtPurposeLbl" name="oldLbl"></p>
-                            <p id="buldNmtPurpose" style="display:none"></p>
-                            <p id="buldNmtPurposeLbl_new" name="newLbl" style="display:none; color:red"></p>
-                            <p id="buldNmtPurpose_new" style="display:none"></p>
-                        </div>
-                    </div>
-
-                    <div onclick="openDataIdPop('buldNmtCd');" class="row">
-                        <div  class="cell1">
-                            <span class="label">규격</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="buldNmtCdLbl" name="oldLbl"></p>
-                            <p id="buldNmtCd" style="display:none"></p>
-                            <p id="buldNmtCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-                            <p id="buldNmtCd_new" style="display:none"></p>
-                        </div>
-                    </div>
-                    <div onclick="openCustomPop2('gdftyWVT',['gdftyWide','gdftyVertical','gdftyThickness'])" class="row">
-						<div  class="cell1">
-							<span class="label">가로*세로*두께</span>
-						</div>
-						<div class="cell2">
-							<p id="gdftyWVT" name="oldLbl"></p>
-							<p id="gdftyWide" style="display:none"></p>
-							<p id="gdftyVertical" style="display:none"></p>
-							<p id="gdftyThickness" style="display:none"></p>
-							<p id="gdftyWVT_new" name="newLbl" style="display:none; color:red"></p>
-							<p id="gdftyWide_new" style="display:none"></p>
-							<p id="gdftyVertical_new" style="display:none"></p>
-							<p id="gdftyThickness_new" style="display:none"></p>
-						</div>
-					</div>
-                    <div onclick="openDataIdPop('buldMnfCd');" class="row">
-                        <div  class="cell1">
-                            <span class="label">제작유형</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="buldMnfCdLbl" name="oldLbl"></p>
-                            <p id="buldMnfCd" style="display:none"></p>
-                            <p id="buldMnfCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-                            <p id="buldMnfCd_new" style="display:none"></p>
-                        </div>
-                    </div>
-                    <div onclick="openDataIdPop('buldNmtMaterial');" class="row">
-                        <div  class="cell1">
-                            <span class="label">재질</span>
-                        </div>
-                        <div class="cell2">
-                            <p id="buldNmtMaterialLbl" name="oldLbl"></p>
-                            <p id="buldNmtMaterial" style="display:none"></p>
-                            <p id="buldNmtMaterialLbl_new" name="newLbl" style="display:none; color:red"></p>
-                            <p id="buldNmtMaterial_new" style="display:none"></p>
-                        </div>
-                    </div>
-                   <div onclick="openCustomPop('gdftyUnitPrice')" class="row">
-						<div  class="cell1">
-								<span class="label">단가(원)</span>
-						</div>
-						<div class="cell2">
-							<p id="gdftyUnitPrice" name="oldLbl"></p>
-							<p id="gdftyUnitPrice_new" name="newLbl" style="display:none; color:red"></p>
-						</div>
-                    </div>
-                    <div class = "row">
-                        <div class="cell2">
-                            <h4>건물정보</h4>
-                        </div>
-                        <div class="cell2">
-                            <button onclick="goPopBuild()">수정</button>
-                        </div>
-                    </div> -->
-                    <!-- 건물정보 -->
-                        <!-- <div class="row">
-                            <div  class="cell1">
-                                <span class="label">용도(대분류)</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="bdtypCd_mainLbl" name="oldLbl">&nbsp;</p>
-                                <p id="bdtypCd_main" style="display:none"></p>
-                                <p id="bdtypCd_mainLbl_new" style="display:none; color:red"></p>
-                                <p id="bdtypCd_main_new" style="display:none"></p>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">용도(소분류)</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="bdtypCdLbl" name="oldLbl">&nbsp;</p>
-                                <p id="bdtypCd" style="display:none"></p>
-                                <p id="bdtypCdLbl_new"  style="display:none; color:red"></p>
-                                <p id="bdtypCd_new" name="newLbl" style="display:none"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">건물종속여부</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="bulDpnSeLbl" name="oldLbl">&nbsp;</p>
-                                <p id="bulDpnSe" style="display:none"></p>
-                                <p id="bulDpnSeLbl_new" name="newLbl" style="display:none; color:red"></p>
-                                <p id="bulDpnSe_new" style="display:none"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">건물명</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="posBulNm" name="oldLbl">&nbsp;</p>
-                                <p id="posBulNm_new" name="newLbl" style="display:none; color:red"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">건물명(영)</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="bulEngNm" name="oldLbl">&nbsp;</p>
-                                <p id="bulEngNm_new" name="newLbl" style="display:none; color:red"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">상세건물명</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="buldNmDc" name="oldLbl">&nbsp;</p>
-                                <p id="buldNmDc_new" name="newLbl" style="display:none; color:red"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">건물층수</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="floCo" name="oldLbl">&nbsp;</p>
-                                <p id="groFloCo" style="display:none"></p>
-                                <p id="undFloCo" style="display:none"></p>
-                                <p id="floCo_new" name="newLbl" style="display:none; color:red"></p>
-                                <p id="groFloCo_new" style="display:none"></p>
-                                <p id="undFloCo_new" style="display:none"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">건물상태</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="buldSttus" name="oldLbl">&nbsp;</p>
-                                <p id="buldSttus_new" name="newLbl" style="display:none; color:red"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="cell1">
-                                <span class="label">메모</span>
-                            </div>
-                            <div class="cell2">
-                                <p id="buldMemo" name="oldLbl">&nbsp;</p>
-                                <p id="buldMemo_new" name="newLbl" style="display:none; color:red"></p>
-                            </div>
-                        </div> -->
-
-                        <!-- 건물정보 끝 -->
-					
-                </div>
-                <!-- 정보 끝 -->
-
-                <!-- 공통 라디오 데이터 팝업 -->
-                <div id="radioDataPop" class="dataWrap" style="display: none">
-                    <div id="dataTitle" class="dataTItle"></div>
-                    <div id="dataForm" class="dataForm">
-
-                    </div>
-                    <div class="dataBtn">
-                        <span class="btnNormal dataPopCloser">닫기</span>
-                        <span onclick="radioDataSendParent()" class="btnPoint">저장</span>
-                    </div>
-                    <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-                </div>
-                <!-- 공통 라디오 데이터 팝업 끝 -->
-
-                <!-- 단가 데이터 팝업 -->
-				<div id="gdftyUnitPrice_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">단가</div>
-					<div class="dataForm">
-						<div class="row">
-							<div class="cell">
-								<span class="label w35">단가</span>
-								<div class="inputText w75"><input type="number" id="gdftyUnitPrice_fix" name="" title="단가" maxlength="20" value=""></div> 원
-							</div>
-						</div>
-					</div>
-					<div class="dataBtn">
-						<span class="btnNormal dataPopCloser">닫기</span>
-						<span onclick="checkPrice('ENTRC')" class="btnPoint">저장</span>
-					</div>
-					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-				</div>
-				<!-- 단가 데이터 팝업 끝 -->
-                <!-- 가로*세로*두께 데이터 팝업 -->
-				<div id="gdftyWVT_pop" class="dataWrap" style="display: none">
-					<div class="dataTItle">규격 (가로*세로*두께)</div>
-					<div class="dataForm">
-						<div class="row">
-							<div class="cell">
-								<span class="label w50">크기 </span>
-									<div class="inputText"><input readonly type="number" readonly id = "gdftyWide_fix" name="" title="가로" maxlength="20" value="" style="width:50px"></div>
-									<div class="inputText">*</div>
-									<div class="inputText"><input readonly type="number" id = "gdftyVertical_fix" name="" title="세로" maxlength="20" value="" style="width:50px"></div>
-									<div class="inputText">*</div>
-									<div class="inputText"><input type="number" id = "gdftyThickness_fix" name="" title="두께" maxlength="20" value="" style="width:50px"></div>
-							</div>
-						</div>
-					</div>
-					<div class="dataBtn">
-						<span class="btnNormal dataPopCloser">닫기</span>
-						<span onclick="textDataSendParent3('gdftyWVT')" class="btnPoint">저장</span>
-					</div>
-					<p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
-				</div>
-				<!-- 가로*세로*두께 데이터 팝업 끝 -->
+                <button id="modifyBtn" class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="modify()">정비</button>
             </div>
-            <!-- content 끝  -->
+            <!-- 정보 끝 -->
             <!-- footer 시작 -->
             <div class="infoFooter">
                 <span onclick="closeDetailView();" class="btnNormal">닫기</span>
                 <span onclick="loadUpdtData();" class="btnNormal">승인대기</span>
                 <span onclick="MapUtil.openList('myResearchSpbd');" class="btnNormal">배정목록</span>
+                <span onclick="goPopBuild();" class="btnPoint">건물정보</span>
             </div>
-            <!-- footer 끝 -->
+            <!-- footer 끝 -->    
         </div>
+        <!-- content 끝  -->
     </div>
 </div>
 
@@ -542,9 +298,9 @@
     </div>
     <div class="dataBtn">
         <!-- <span class="btnNormal dataPopCloser">닫기</span> -->
-        <!-- <span onclick="fixedValueChecked()" class="btnPoint">저장</span> -->
+        <span id="comInputBtn" onclick="" class="btnPoint">확인</span>
     </div>
-    <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+    <!-- <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p> -->
 </div>
 <div id="photoDialog" class="photoWrap" >
     <!-- 사진 style="display: none"-->
@@ -559,32 +315,40 @@
             <div class="row">
                 <div class="cell">
                     <div class="picInfo M" data-pic-type="M" data-pic-sn="">
-                        <span class="photoSub">근거리</span>
+                        <span class="photoSub"></span>
                         <span class="picImg"></span>
                         <div class="dataBtn">
-                            <span class="btnNormal">삭제</span>
+                            <!-- <span class="btnNormal">삭제</span> -->
                             <span class="btnPoint">촬영</span>
                         </div>
                     </div>
                 </div>
                 <div class="cell">
                     <div class="picInfo L" data-pic-type="L" data-pic-sn="">
-                        <span class="photoSub">원거리</span>
+                        <span class="photoSub"></span>
                         <span class="picImg"></span>
                         <div class="dataBtn">
-                            <span class="btnNormal">삭제</span>
+                            <!-- <span class="btnNormal">삭제</span> -->
                             <span class="btnPoint">촬영</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="photoNotice"><span>※ 조회된 사진은 각각(근거리, 원거리)의 최근사진 1장씩만 조회(사진건수는 시스템에 저장된 전체건수)</span></div>
-    </div>
-    <div class="infoFooter">
-        <span onclick="closePhotoView();" class="btnNormal">닫기</span>
-        <span onclick="saveImg(DATA_TYPE.ENTRC);" class="btnPoint">저장</span>
-    </div>
+        <div class="photoNotice">
+                <span>※ 조회된 사진은 최근사진 2장만 조회</span>
+                <br>
+			    <span>※ 왼쪽 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
+                <br>
+                <span>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
+            </div>
+        </div>
+        <div class="infoFooter">
+            <span onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
+            <span onclick="selectOldImg();" class="btnNormal">원본</span>
+            <span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+        </div>
+        <p class="dataClose" onclick="closePhotoView()"><img src="image/dataClose.png" title="닫기"></p>
 </div>
 <!-- 사진 끝-->
 </body>

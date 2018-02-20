@@ -55,7 +55,7 @@ function selectLocationMoveSpgfContent(){
                 var d = data[i];
 
                 var bsisRnLbl = d.bsisRnLbl;
-                var rnLbl = '';
+                var rnLbl = '-';
                 if(bsisRnLbl != null){
                     //설치 도로명
                     rnLbl = "{0} {1}{2}".format(
@@ -66,10 +66,11 @@ function selectLocationMoveSpgfContent(){
                 }
                 var rdGdftySe = d.rdGdftySe;
                 var korRnLbl = createRnNm(rdGdftySe,d);
+                
                 var memo = d.memo == null? '' : d.memo;
 
                 var rdFtyLcSn = d.rdFtyLcSn;
-                var locBtn = "<button class='location' onclick='moveToXyTranceProj("+d.posX+","+d.posY+")'>위치</button>";
+                var locBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='moveToXyTranceProj("+d.posX+","+d.posY+")'>위치</button>";
                 
                 // if(rdFtyLcSn != null){
                 //     locBtn = "<button class='location' onclick='getResearchLocation("+rdFtyLcSn+")'>위치</button>";    
@@ -171,7 +172,7 @@ function selectLocationMoveSpbdNmgtContent(){
                 var memo = d.memo == null? '' : d.memo;
 
                 var rdFtyLcSn = d.rdFtyLcSn;
-                var locBtn = "<button class='location' onclick='moveToXyTranceProj("+d.posX+","+d.posY+")'>위치</button>";
+                var locBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='moveToXyTranceProj("+d.posX+","+d.posY+")'>위치</button>";
                 
                 $("#locManageSpbdNmgtTable > tbody:last").append(
                     rowHtml.format(
@@ -253,6 +254,8 @@ function createRnNm(type ,d){
     }else if(type == "999"){
 
     }
+
+    rnLbl = rnLbl == ""? "-":rnLbl;
 
     return rnLbl;
 }

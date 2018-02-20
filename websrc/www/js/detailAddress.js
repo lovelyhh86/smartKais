@@ -138,8 +138,8 @@ function goDetail(sn){
                 var title = "<span class='label acrdc'>{0}</span>".format(data.buldLabel);
                 $(".title").append(title);
 
-                var but = "<button class='location' onclick='getAdrdcLocation()'>위치확인</button>";
-                $(".title").append(but);
+                // var but = "<button class='location' onclick='getAdrdcLocation()'>위치확인</button>";
+                // $(".title").append(but);
                 
                 //작업상태
                 // $("#opeSttCd").val(data.opeSttCd);

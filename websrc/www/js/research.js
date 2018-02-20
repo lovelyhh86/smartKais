@@ -120,7 +120,7 @@ function selectResearchContent(trgGbn){
                         researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnImpossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>점검</button>";
                     var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/iconNumber.png'></img>";
 
                     $("#myResearchTable > tbody:last").append(
@@ -132,8 +132,8 @@ function selectResearchContent(trgGbn){
                             ,korRnLbl
                             ,d.delStateCdLbl
                             ,d.rcSttCdLbl
-                            // ,researchSelect
-                            ,researchOkBtn
+                            // ,researchOkBtn
+                            ,""
                             ,fixDetailBtn
                             ));
                             
@@ -164,7 +164,7 @@ function selectResearchContent(trgGbn){
                         researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnImpossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>점검</button>";
                     var locBtn = "<button class='' onclick='getResearchLocation("+i+")'><img src='image/icon_curr.png'></img></button>";
 
                     // if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
@@ -203,8 +203,8 @@ function selectResearchContent(trgGbn){
                             ,korRnLbl
                             ,d.delStateCdLbl
                             ,d.rcSttCdLbl
-                            // ,researchSelect
-                            ,researchOkBtn
+                            // ,researchOkBtn
+                            ,""
                             ,fixDetailBtn
                             ));
 
@@ -390,7 +390,6 @@ function insertResearchForList(i){
 
 //점검상태저장
 function submitResearch(){
-    
     //점검상태
     var rcSttCdOld = $("#rcSttCdOld").text();
     var rcSttCd = $("#rcSttCd_new").text();
@@ -399,12 +398,42 @@ function submitResearch(){
     var rcRsltOld = $("#rcRsltOld").text();
     var rcRslt = $("#rcRslt").val();
 
-    if(rcSttCd != '' || rcRsltOld != rcRslt){
-        
-    }else{
-        navigator.notification.alert(msg.noSave, '', '알림', '확인');
+    //변경상태
+    var isUpdtGbn = $("#isUpdtGbn").val();
+
+    //점검상태가 없는 경우
+    if(rcSttCdSel == ""){
+        navigator.notification.alert(msg.checkRcSttCd,'','알림','확인');
         return;
     }
+    
+    //정상점검이 아닌경우 사진 필수
+    if(rcSttCdSel != "1000" && isUpdtGbn.indexOf("I") == -1){
+        
+        navigator.notification.confirm(msg.researchCheckPhoto, function(btnindex){
+
+            if(btnindex == 1){
+                $(".photo").click();
+            }
+        }, "알림", ["확인","취소"]);
+
+        return;
+    }
+
+    var photoNum = $(".infoHeader .photo .photoNum").html();
+    //정상이지만 사진건수가 0건
+    if(rcSttCdSel == "1000" && photoNum == "0"){
+
+        navigator.notification.confirm(msg.researchCheckPhotoCnt, function(btnindex){
+
+            if(btnindex == 1){
+                $(".photo").click();
+            }
+        }, "알림", ["확인","취소"]);
+        return;
+
+    }
+
     
     //시설물 일련번호
     var trgSn = $("#trgSn").val();
@@ -532,7 +561,7 @@ function customSelectBox(target, colume, useCode, startIndex, endIndex){
 }
 
 //커스텀 셀렉트박스 만들기2
-function customSelectBox2(target, colume, useCode, startIndex, endIndex){
+function customSelectBox2(target, colume, useCode, startIndex, endIndex,unUsedStr, unUsedEnd){
     var targetId = $("#"+target);
     targetId.empty();
 
@@ -544,7 +573,7 @@ function customSelectBox2(target, colume, useCode, startIndex, endIndex){
     for(var c in codeList){
         if(c != "GroupNm"){
 
-            if(c.substr(startIndex,endIndex) == useCode && c.substr(2,5) != "000"){
+            if(c.substr(startIndex,endIndex) == useCode && c.substr(unUsedStr,unUsedEnd) != "000"){
                 optionTxt = optionFormat.format(c,codeList[c]);
                 targetId.append(optionTxt); 
             }
@@ -623,7 +652,7 @@ function setResearcher(){
     
     $("#rcrSn_new").html(rcrSn);
     $("#rcrNm_new").html(rcrNm);
-    $("#rcrNm").hide();
+    $("#reRcrNm").hide();
     $("#rcrNm_new").show();
 }
 //점검일자 셋팅
@@ -649,4 +678,16 @@ function resetResearchInfo(){
 
     var rcRsltOld = $("#rcRsltOld").text();
     $("#rcRslt").val(rcRsltOld);
+}
+
+//화면 모든항목 막기
+function disabledAll(){
+    $("#submitRcBnt").attr("disabled","disabled");
+    $(".infoContent select").attr("disabled","disabled");
+    $(".infoContent input").attr("disabled","disabled");
+    $(".infoContent textarea").attr("disabled","disabled");
+    $("#modifyBtn").attr("disabled","disabled");
+
+    //사진
+    $("#photoDialog .btnPoint").hide();
 }

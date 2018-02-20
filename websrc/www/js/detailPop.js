@@ -1736,8 +1736,8 @@ function makeImg(){
         data.base64 = $(o).attr("src").replace(/.+base64,/,'');
         data.imageFilesSn = picInfo.data('picSn');
         data.tbGbn = picInfo.data('picType');
-        // data.name = '{0}_{1}_{2}.jpg'.format(date, title, data.tbGbn);
-        data.name = '{0}_{1}.jpg'.format(date, data.tbGbn);
+        data.name = '{0}_{1}_{2}.jpg'.format(date, title, data.tbGbn);
+        // data.name = '{0}_{1}.jpg'.format(date, data.tbGbn);
 
         files.push(data);
     });
@@ -1969,9 +1969,13 @@ function updateResearchWorkDate(){
 
                     util.toast('점검일자가 갱신되었습니다.');
 
-                    $("p[name*='newLbl']").text('');
+                    // $("p[name*='newLbl']").text('');
 
-                    closeDetailView();
+                    // closeDetailView();
+
+                    //시설물 번호 전역변수
+                    trgSnGlobal = trgSn
+                    MapUtil.openDetail(trgGbn, null);
 
                     closePopupAndClearMap(trgGbn);
 
@@ -2072,6 +2076,10 @@ function goPopBuild(){
     MapUtil.openDetail(DATA_TYPE.BULD, featureClone[0]);
 }
 
+function goPopNmtg(){
+    MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
+}
+
 //정비내용 저장
 function modify(){
     //** 도로명판 */
@@ -2136,24 +2144,22 @@ function modify(){
 
             };
 
-            //건물번호판 외 나머지 시설물 공통
-            if(trgGbn != "02"){
-                commomParams = $.extend(commomParams,{
-                    instSpotCd : instSpotCd,
-                    lghtCd : lghtCd,
-                    instCrossCd : instCrossCd,
-                    useTarget : useTarget,
-                    gdftyQlt : gdftyQlt,
-                    prtTy : prtTy,
-                    scfggMkty : scfggMkty,
-                    scfggUla1 : scfggUla1,
-                    scfggUla2 : scfggUla2,
-                    gdftyUnitPrice : gdftyUnitPrice,
-                    gdftyWide : gdftyWide,
-                    gdftyVertical : gdftyVertical,
-                    gdftyThickness : gdftyThickness
-                })
-            }
+            commomParams = $.extend(commomParams,{
+                instSpotCd : instSpotCd,
+                lghtCd : lghtCd,
+                instCrossCd : instCrossCd,
+                useTarget : useTarget,
+                gdftyQlt : gdftyQlt,
+                prtTy : prtTy,
+                scfggMkty : scfggMkty,
+                scfggUla1 : scfggUla1,
+                scfggUla2 : scfggUla2,
+                gdftyUnitPrice : gdftyUnitPrice,
+                gdftyWide : gdftyWide,
+                gdftyVertical : gdftyVertical,
+                gdftyThickness : gdftyThickness
+            })
+            
             var link = URLs.insertSpgfChange;
 
             if(trgGbn == DATA_TYPE.RDPQ){
@@ -2183,11 +2189,11 @@ function modify(){
                 //한글도로명
                 var area_areaKorRn = $("#area_areaKorRn").val();
                 //시작기초번호
-                var area_stbsMn = $("#area_stbsMn").val();
-                var area_stbsSn = $("#area_stbsSn").val();
+                // var area_stbsMn = $("#area_stbsMn").val();
+                // var area_stbsSn = $("#area_stbsSn").val();
                 //종료기초번호
-                var area_edbsMn = $("#area_edbsMn").val();
-                var area_edbsSn = $("#area_edbsSn").val();
+                // var area_edbsMn = $("#area_edbsMn").val();
+                // var area_edbsSn = $("#area_edbsSn").val();
                 //광고에따른 분류
                 var area_advrtsCd = $("#area_advrtsCd").val();
                 //광고내용
@@ -2199,9 +2205,10 @@ function modify(){
 
                 commomParams = $.extend(commomParams,{
                     area_areaKorRn : area_areaKorRn,
-                    area_stbsMn : area_stbsMn,
-                    area_stbsSn : area_stbsSn,
-                    area_edbsMn : area_edbsMn,
+                    // area_stbsMn : area_stbsMn,
+                    // area_stbsSn : area_stbsSn,
+                    // area_edbsMn : area_edbsMn,
+                    // area_edbsSn : area_edbsSn,
                     area_advrtsCd : area_advrtsCd,
                     area_advCn : area_advCn,
                     area_etcCn : area_etcCn,
@@ -2267,8 +2274,11 @@ function modify(){
                 var buldNmtThickness = $("#buldNmtThickness").val();
                 //단가
                 var buldNmtUnitPrice = $("#buldNmtUnitPrice").val();
-                //조명여부
-                var lghtCd = $("#lghtCd").val();
+                //자율형 한글자 크기(가로)
+                var bulNmtFtWi = $("#bulNmtFtWi").val();
+                //자율형 한글자 크기(세로)
+                var bulNmtFtVe = $("#bulNmtFtVe").val();
+                
 
                 commomParams = $.extend(commomParams,{
                     buldNmtSe : buldNmtSe,
@@ -2280,8 +2290,8 @@ function modify(){
                     buldNmtVertical : buldNmtVertical,
                     buldNmtThickness : buldNmtThickness,
                     buldNmtUnitPrice : buldNmtUnitPrice,
-                    lghtCd : lghtCd,
-
+                    bulNmtFtWi : bulNmtFtWi,
+                    bulNmtFtVe : bulNmtFtVe,
                 })
 
                 link = URLs.insertSpbdChange;
@@ -2335,10 +2345,19 @@ function modify(){
                     navigator.notification.alert(msg.successModify,
                         function (){
                             
-                            closeDetailView();
+                            // closeDetailView();
 
                             //지도초기화
                             // closePopupAndClearMap(trgGbn);
+
+                            //시설물 번호 전역변수
+                            if(trgGbn == "02" || trgGbn == "99"){
+                                trgSnGlobal = trgLocSn;
+                            }else{
+                                trgSnGlobal = trgSn;
+                            }
+                            
+                            MapUtil.openDetail(trgGbn, null);
         
                             util.dismissProgress();
         
@@ -2356,6 +2375,14 @@ function modify(){
 }
 //점검 된 임시 정보 조회
 function loadUpdtData(isImages){
+    navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+        if(btnindex == 1){
+            var isUpdtGbn = $("#isUpdtGbn").val();
+
+            if(isUpdtGbn == "0"){
+                navigator.notification.alert(msg.notHaveLoadUpdt, '', '알림', '확인');
+                return;
+            }
     
             var plnYr = $("#plnYr").val() == ""? util.getToday().substr(0,4) : $("#plnYr").val();
             var plnOdr = $("#plnOdr").val();
@@ -2412,6 +2439,7 @@ function loadUpdtData(isImages){
                                 obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
                                 obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
 
+                                $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                                 MapUtil.photo.doLoaded(true, image.tbGbn);
                             } else {
@@ -2435,6 +2463,14 @@ function loadUpdtData(isImages){
                 },
                 util.dismissProgress
             );
+        }else{
+            if(isImages == "true"){
+                var photoNum = $(".infoHeader .photo .photoNum").text();
+                selectOldImg(photoNum);
+            }
+        }
+    }, "알림", ["확인","취소"]);
+            
         
 }
 //사진 정비 저장
@@ -2465,7 +2501,13 @@ function modifyImg(type){
         return;
     }
 
-    navigator.notification.confirm(msg.isSavePhoto, function(btnindex){
+    var isUpdtGbn = $("#isUpdtGbn").val();
+    var msgText = msg.isSavePhoto;
+    if(isUpdtGbn.indexOf("I") != -1){
+        msgText = msg.isSaveAgain;
+    }
+    
+    navigator.notification.confirm(msgText, function(btnindex){
         if(btnindex == 1){
             var plnYr = $("#plnYr").val();
             var plnOdr = $("#plnOdr").val();
@@ -2526,12 +2568,21 @@ function modifyImg(type){
 
                         navigator.notification.alert(msg.successModify,
                             function (){
-
-                                //임시저장 후 사진건수 N으로 표시
+                                
+                                //점검 사진 저장 후 사진건수 N으로 표시
                                 $(".infoHeader .photo .photoNum").html("N");
+                                var oldIsUpdtGbn = $("#isUpdtGbn").val();
+                                $("#isUpdtGbn").val(oldIsUpdtGbn + "I");
                                 closePhotoView(true);   // force
-            
+
+                                var rcSttCd_new = $("#rcSttCd_new").text();
+                                if(rcSttCd_new != ""){
+                                    submitResearch();
+                                }
+                                
                             },'알림', '확인');
+
+                            
 
                         // //사진건수
                         // if(type == DATA_TYPE.RDPQ){
@@ -2588,133 +2639,103 @@ function modifyImg(type){
     }, "알림", ["저장","취소"]);
 
 }
-//공통 입풋창 열기
-function openInputPop(id){
-    $("#inputPop").show();
-    $("#targetId").val(id);
-    var type = $("#"+id).attr("type");
-    var value = $("#"+id).val();
-    var onchange = $("#"+id).attr("onchange");
-    // var oninput = $("#"+id).attr("oninput");
 
-    $("#fixedValue").attr("type",type);
-    // if(onchange != null){
-        $("#fixedValue").attr("onchange",onchange);
-    // }else{
-        // $("#fixedValue").attr("oninput",oninput);
-    // }
-    
-    $("#fixedValue").val(value);
+function selectOldImg(){
 
-    wrapWindowByMask('mask');
-
-    $("#fixedValue").focus();
-
-}
-
-function fixedValueChecked(){
-    var targetId = $("#targetId").val();
-    $("#"+targetId).change();
-}
-
-function setInputPop(){
-    //변경된 값
-    var fixedValue = $("#fixedValue").val();
-    //원래 인풋에 셋팅
-    var targetId = $("#targetId").val();
-    $("#"+targetId).val(fixedValue);
-
-    $("#inputPop").hide();
-    clearMask();
-}
-
-// function close(){
-//     $(".dataWrap").hide()
-//     clearMask();
-// }
-
-function selectOldImg(photoNum){
-    // 속성 조회 시 사진 건수가 없는 경우 서버로 부터 조회 하지 않음.
-    if(photoNum == 0){
-        util.toast("사진정보가 없습니다.");
-        return;
-    } else {
-        var url="", param="";
-        if(layerID == ""){
-            layerID = $("#trgGbn").val();
-        }
-        switch (layerID) {
-            case DATA_TYPE.RDPQ:
-                // var sn = f.get("RD_GDFTY_SN");
-                param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
-                url = URLs.postURL(URLs.roadsignlink, param);
-                break;
-            case DATA_TYPE.AREA:
-                // var sn = f.get("RD_GDFTY_SN");
-                param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
-                url = URLs.postURL(URLs.roadsignlink, param);
-                break;
-            case DATA_TYPE.BSIS:
-                // var sn = f.get("RD_GDFTY_SN");
-                param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
-                url = URLs.postURL(URLs.roadsignlink, param);
-                break;
-            case DATA_TYPE.ENTRC:
-                var sn = f.get("BUL_MAN_NO");
-                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
-                var url = URLs.postURL(URLs.entrclink, param);
-                break;
-            case DATA_TYPE.BULD:
-                var sn = f.get("BUL_MAN_NO");
-                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
-                url = URLs.postURL(URLs.buildSelectlink, param);
-                break;
-            case DATA_TYPE.SPPN:
-                var sn = f.get("SPO_FCL_SN");
-                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
-                url = URLs.postURL(URLs.spotSelectlink, param);
-                break;
-            case DATA_TYPE.ADRDC:
-                var sn = f
-                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
-                url = URLs.postURL(URLs.addresslink, param);
-                break;
-        }
-        
-
-        util.showProgress();
-        util.postAJAX({}, url).then(
-            function(context, rcode, results) {
-
-                var data = results.data;
-                // var emptyObj = "<img style='height: 220px; width: 100%; object-fit: contain' src=''/>";
-                // emptyObj+= "<input id='imaFilSn' type='hidden' value=''/>";
-                // emptyObj+= "<input id='tbGbn' type='hidden' value='{0}'/>";
-
-                if (rcode != 0 || util.isEmpty(data) || util.isEmpty(data.files)) {
-                    util.dismissProgress();
-                    util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
-                    return;
+    navigator.notification.confirm(msg.loadOldImg, function(btnindex){
+        if(btnindex == 1){
+            var photoNum = $(".infoHeader .photo .photoNum").text();
+            // 속성 조회 시 사진 건수가 없는 경우 서버로 부터 조회 하지 않음.
+            if(photoNum == 0){
+                util.toast("사진정보가 없습니다.");
+                return;
+            } else {
+                var url="", param="";
+                // if(layerID == ""){
+                layerID = $("#trgGbn").val();
+                // }
+                switch (layerID) {
+                    case DATA_TYPE.RDPQ:
+                        // var sn = f.get("RD_GDFTY_SN");
+                        param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
+                        url = URLs.postURL(URLs.roadsignlink, param);
+                        break;
+                    case DATA_TYPE.AREA:
+                        // var sn = f.get("RD_GDFTY_SN");
+                        param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
+                        url = URLs.postURL(URLs.roadsignlink, param);
+                        break;
+                    case DATA_TYPE.BSIS:
+                        // var sn = f.get("RD_GDFTY_SN");
+                        param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
+                        url = URLs.postURL(URLs.roadsignlink, param);
+                        break;
+                    case DATA_TYPE.ENTRC:
+                        var sn = $("#trgLocSn").val();
+                        param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                        var url = URLs.postURL(URLs.entrclink, param);
+                        break;
+                    case DATA_TYPE.BULD:
+                        var sn = $("#trgLocSn").val();
+                        param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                        url = URLs.postURL(URLs.buildSelectlink, param);
+                        break;
+                    case DATA_TYPE.SPPN:
+                        var sn = $("#trgSn").val();
+                        param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                        url = URLs.postURL(URLs.spotSelectlink, param);
+                        break;
+                    case DATA_TYPE.ADRDC:
+                        var sn = $("#trgSn").val();
+                        param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                        url = URLs.postURL(URLs.addresslink, param);
+                        break;
                 }
+                
+
+                util.showProgress();
+                util.postAJAX({}, url).then(
+                    function(context, rcode, results) {
+
+                        var data = results.data;
+                        // var emptyObj = "<img style='height: 220px; width: 100%; object-fit: contain' src=''/>";
+                        // emptyObj+= "<input id='imaFilSn' type='hidden' value=''/>";
+                        // emptyObj+= "<input id='tbGbn' type='hidden' value='{0}'/>";
+
+                        if (rcode != 0 || util.isEmpty(data) || util.isEmpty(data.files)) {
+                            util.dismissProgress();
+                            util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
+                            return;
+                        }
 
 
-                for (var index in data.files) {
-                    var image = data.files[index];
-                    if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                        var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
-                        obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
-                        obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+                        for (var index in data.files) {
+                            var image = data.files[index];
+                            if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
+                                obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
 
-                        $(".picInfo." + image.tbGbn + " .picImg").html(obj);
-                        MapUtil.photo.doLoaded(true, image.tbGbn);
-                    } else {
-                        util.toast(msg.wrongPhoto);
+                                $(".picInfo." + image.tbGbn + " .picImg").html('');
+                                $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                                MapUtil.photo.doLoaded(true, image.tbGbn);
+
+                                util.toast(msg.successImg);
+                            } else {
+                                util.toast(msg.wrongPhoto);
+                            }
+                        }
+                        util.dismissProgress();
                     }
-                }
-                util.dismissProgress();
+                );
             }
-        );
-    }
+
+
+        }else{
+            return;
+        }
+    }, "알림", ["확인","취소"]);
+    
 }
 
 //입력창 가림 방지를 위한 화면 스크롤

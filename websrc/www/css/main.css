@@ -215,8 +215,8 @@
 
   /* .buttonDiv button:first-child{ position: relative; width: 50%; height: 100%}
   .buttonDiv button{ position: absolute; width: 50%; height: 100%; top: 0;right: 0;} */
-  .buttonDiv .btnNormal{width: 14.5em;position: absolute;bottom: 0;left: -1em;height: 2em; text-align: center;    padding-top: 1em;}
-  .buttonDiv .btnPoint{width: 14.5em;position: absolute;bottom: 0;right: 0em;height: 2em; text-align: center;    padding-top: 1em;}
+  .buttonDiv .btnNormal{width: 18em;position: absolute;bottom: 0;left: -1em;height: 2em; text-align: center;    padding-top: 1em;}
+  .buttonDiv .btnPoint{width: 18em;position: absolute;bottom: 0;right: 0em;height: 2em; text-align: center;    padding-top: 1em;}
 
   .newPosContent img{padding: 1em;}
   

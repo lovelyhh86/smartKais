@@ -206,6 +206,8 @@ var pages = {
 
 var CODE_GROUP = [];
 //****** 도로안내시설물 *******
+//안내시설형식
+CODE_GROUP["GDFTY_FOM"] = "GFTY012";
 //도로시설물 구분
 CODE_GROUP["RDFTY_SE"] = "GFTY003";
 //설치유형
@@ -261,6 +263,8 @@ CODE_GROUP["BSIS_GD_SD"] = "GFTY610";
 CODE_GROUP["BSIS_MTHD"] = "GFTY602";
 
 //****** 건물번호판 *******
+//형태
+CODE_GROUP["BUL_NMT_TY"] = "CMMN056";
 //유형
 CODE_GROUP["BUL_NMT_SE"] = "CMMN036";
 //용도
@@ -282,7 +286,7 @@ CODE_GROUP["TRG_GBN"] = "GFTY615";
 
 
 CODE_GROUP["BDRCL_AT"] = "GFTY017";
-CODE_GROUP["GDFTY_FOM"] = "GFTY012";
+
 CODE_GROUP["ISLGN_YN"] = "GFTY016";
 
 
