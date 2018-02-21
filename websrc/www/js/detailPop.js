@@ -2186,24 +2186,30 @@ function modify(){
                         frontEndBaseMasterNo : frontEndBaseMasterNo,
                         frontEndBaseSlaveNo : frontEndBaseSlaveNo,
                         rdpqGdSd : rdpqGdSd,
+                        rdGdftySe : rdGdftySe,
                     })
                 }else if(rdGdftySe == "210"){//이면도로용
+                    //안내시설방향
+                    var rddr_plqDrc = $("#rddr_plqDrc").val();
                     //설치형태
                     var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
                     //이면도로갯수
                     var rddr_afRdCo = $("#rddr_afRdCo").val();
                     //규격
-                    var prntGdSd = $("#prntGdSd").val();
+                    var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
                     commomParams = $.extend(commomParams,{
+                        rddr_plqDrc : rddr_plqDrc,
                         rddr_afRdplqSe : rddr_afRdplqSe,
                         rddr_afRdCo : rddr_afRdCo,
-                        prntGdSd : prntGdSd,
+                        rddr_rddrGdSd : rddr_rddrGdSd,
+                        rdGdftySe : rdGdftySe,
                     })
                 }else if(rdGdftySe == "310"){//예고용
                     //규격
                     var prntGdSd = $("#prntGdSd").val();
                     commomParams = $.extend(commomParams,{
                         prntGdSd : prntGdSd,
+                        rdGdftySe : rdGdftySe,
                     })
                 }
                 
@@ -2412,7 +2418,7 @@ function loadUpdtData(isImages){
             var trgSn = $("#trgSn").val();
             var trgGbn = $("#trgGbn").val();
             var sigCd = $("#sigCd").val();
-            
+            var rdGdftySe = $("#rdGdftySe").val();
 
             var commomParams = {
                 plnYr : plnYr,
@@ -2421,7 +2427,8 @@ function loadUpdtData(isImages){
                 trgSn : trgSn,
                 trgGbn : trgGbn,
                 sigCd : sigCd,
-                isImages : isImages
+                isImages : isImages,
+                rdGdftySe : rdGdftySe
 
             };
 

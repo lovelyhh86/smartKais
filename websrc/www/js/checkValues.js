@@ -363,12 +363,12 @@ function changeGdftyForm(){
 function checkRddrRdsd(){
     var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
     var rddr_afRdCo = $("#rddr_afRdCo").val();
-    var rddrGdSd = $("#rddrGdSd").val();
+    var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
 
     var useCd = rddr_afRdplqSe.charAt(1) + rddr_afRdCo.charAt(2);
     
-    customSelectBox("rddrGdSd","RDDR_GD_SD",useCd,1,2);
-    $("#rddrGdSd").val(rddrGdSd);
+    customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
+    $("#rddr_rddrGdSd").val(rddr_rddrGdSd);
 
 }
 //예고용 도로명판 규격
@@ -376,7 +376,7 @@ function checkPrntRdsd(){
     var useTarget = data.useTarget;
     var useCd = useTarget.charAt(1);
 
-    customSelectBox("rddrGdSd","RDDR_GD_SD",useCd,1,1);
-    $("#rddrGdSd").val(rddrGdSd);
+    customSelectBox("prntGdSd","PRNT_GD_SD",useCd,1,1);
+    $("#prntGdSd").val(prntGdSd);
 
 }

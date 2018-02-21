@@ -1061,10 +1061,10 @@ var MapUtil = {
 
                             //규격
                             // var useTarget = data.useTarget;
-                            // var rddrGdSd = data.rddrGdSd;
+                            // var rddr_rddrGdSd = data.rddr_rddrGdSd;
                             var useCd = rddr_afRdplqSe.charAt(1) +  rddr_afRdCo.charAt(2);
-                            $("#rddrGdSd").val(data.rddrGdSd);
-                            customSelectBox("rddrGdSd","RDDR_GD_SD",useCd,1,2);
+                            $("#rddr_rddrGdSd").val(data.rddr_rddrGdSd);
+                            customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
                             
 
                         }else if(rdGdftySe == "310"){//예고용

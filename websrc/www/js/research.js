@@ -167,8 +167,8 @@ function selectResearchContent(trgGbn){
                     var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
                     var locBtn = "<button class='' onclick='getResearchLocation("+i+")'><img src='image/icon_curr.png'></img></button>";
 
-                    // if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
-                    if(rdGdftySe == '110'){
+                    if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
+                    // if(rdGdftySe == '110'){
                         locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend01.png'></img>";
                     }else if(rdGdftySe == '510'){
                         locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend03.png'></img>";
@@ -207,7 +207,8 @@ function selectResearchContent(trgGbn){
                             ,""
                             ,fixDetailBtn
                             ));
-
+                            
+                        $("#row"+i).data("rdGdftySe",rdGdftySe);
                     }
 
                     //사용 데이터 셋팅    
@@ -245,16 +246,19 @@ function selectResearchContent(trgGbn){
 //배정대상 상세보기
 function goResearchDetail(i){
     var targetE = $("#row"+i);
+    var rdGdftySe = targetE.data("rdGdftySe");
     //시설물 번호 전역변수
     trgSnGlobal = targetE.data("trgSn");
-
+    
     var trgGbn = targetE.data("trgGbn");
     if(trgGbn == "02"){
         //시설물 번호 전역변수
         trgSnGlobal = targetE.data("trgLocSn");
+    }else{
+        
     }
     
-    MapUtil.openDetail(trgGbn, null);
+    MapUtil.openDetail(trgGbn, null, rdGdftySe);
 }
 //상세정보 위치찾기
 function getDetailLocation(){
