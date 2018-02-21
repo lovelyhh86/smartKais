@@ -3,7 +3,7 @@
 
 <body class="intro">
 
-<div id="roadView_page">
+<div id="roadRddrView_page">
 	<div class="detailView">
 		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
 		<div class="infoWrap">
@@ -11,7 +11,7 @@
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="이면도로용 도로명판"></span></p>
 				<p class="location" onclick="getDetailLocation()"></p>
 				<p class="photo"><span class="photoNum">0</span></p>
 			</div>
@@ -27,6 +27,7 @@
 				<input id="rdGdftySe" type="hidden" value=""/>
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="01"/>
+				
 				
 				<!-- 배정 -->
 				<div class="blueTitle">
@@ -237,51 +238,31 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">앞면 도로명</th>
+								<th scope="row">도로명</th>
 								<td>
-									<input type='text' class="cell70" id="frontKoreanRoadNm" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'40')"/>
+									<p id="rddr_korRn">&nbsp;</p>
 								</td>
 								<th scope="row">로마자</th>
 								<td>
-									<p id="frontRomeRoadNm">&nbsp;</p>
+									<p id="rddr_romRn">&nbsp;</p>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">시작기초번호</th>
 								<td>
-									<input type='number' class="cell30" id="frontStartBaseMasterNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+									<span id="rddr_stbsMn"></span>
+									<!-- <input type='number' class="cell30" id="rddr_stbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
 									<span>-</span>
-									<input type='number' class="cell30" id="frontStartBaseSlaveNo"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+									<span id="rddr_stbsSn"></span>
+									<!-- <input type='number' class="cell30" id="rddr_stbsSn"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
 								</td>
 								<th scope="row">종료기초번호</th>
 								<td>
-									<input type='number' class="cell30" id="frontEndBaseMasterNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+									<span id="rddr_edbsMn"></span>
+									<!-- <input type='number' class="cell30" id="rddr_edbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
 									<span>-</span>
-									<input type='number' class="cell30" id="frontEndBaseSlaveNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
-								</td>
-							</tr>
-							<tr class="bk">
-								<th scope="row">뒷면 도로명</th>
-								<td>
-									<p id="backKoreanRoadNm">&nbsp;</p>
-								</td>
-								<th scope="row">로마자</th>
-								<td>
-									<p id="backRomeRoadNm">&nbsp;</p>
-								</td>
-							</tr>
-							<tr class="bk">
-								<th scope="row">시작기초번호</th>
-								<td>
-									<span id="backStartBaseMasterNo"></span>
-									<span>-</span>
-									<span id="backStartBaseSlaveNo"></span>
-								</td>
-								<th scope="row">종료기초번호</th>
-								<td>
-									<span id="backEndBaseMasterNo"></span>
-									<span>-</span>
-									<span id="backEndBaseSlaveNo"></span>
+									<span id="rddr_edbsSn"></span>
+									<!-- <input type='number' class="cell30" id="rddr_edbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
 								</td>
 							</tr>
 						</tbody>
@@ -306,11 +287,11 @@
 								<td>
 									<p id="gdftyFormLbl">&nbsp;</p>
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
-									<select id="gdftyForm" class="cell100" onchange="changeGdftyForm()"/>
+									<select id="gdftyForm" class="cell100" onchange=""/>
 								</td>
 								<th scope="row">사용대상</th>
 								<td>
-									<select id="useTarget" class="cell100" onchange="changeUseTarget()"/>
+									<select id="useTarget" class="cell100" onchange=""/>
 								</td>
 							</tr>
 							<tr>
@@ -326,7 +307,7 @@
 							<tr>
 								<th scope="row">안내시설 방향</th>
 								<td>
-									<select id="plqDirection" class="cell100" onchange="changeRdpqGdSd()"/>
+									<select id="rddr_plqDrc" class="cell100"/>
 								</td>
 								<th scope="row">양면여부</th>
 								<td>
@@ -335,11 +316,21 @@
 								</td>
 							</tr>
 							<tr>
+								<th scope="row">설치형태</th>
+								<td>
+									<select id="rddr_afRdplqSe" class="cell100" onchange="checkRddrRdsd()"/>
+								</td>
+								<th scope="row">이면도로갯수</th>
+								<td>
+									<select id="rddr_afRdCo" class="cell100" onchange="checkRddrRdsd()"/>
+								</td>
+							</tr>
+							<tr>
 								<th scope="row">제2외국어여부</th>
 								<td>
 									<select id="scfggMkty" class="cell100" onchange="changeScfggMkty()"/>
 								</td>
-								<td></td><td></td>
+								<td/><td/>
 							</tr>
 							<tr>
 								<th scope="row">언어1</th>
@@ -354,7 +345,7 @@
 							<tr>
 								<th scope="row">규격</th>
 								<td>
-									<select id="rdpqGdSd" class="cell100" onchange="setGdfyWide(this.id)"/>
+									<select id="rddrGdSd" class="cell100" onchange="setGdfyWide(this.id)"/>
 								</td>
 								<th scope="row">단가(원)</th>
 								<td >

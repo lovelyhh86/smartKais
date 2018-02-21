@@ -691,3 +691,9 @@ function disabledAll(){
     //사진
     $("#photoDialog .btnPoint").hide();
 }
+//점검항목 막기
+function disableResearch(){
+    $("#rcSttCdSel").attr("disabled","disabled");
+    $("#rcRslt").attr("disabled","disabled");
+    $("#submitRcBnt").attr("disabled","disabled");
+}

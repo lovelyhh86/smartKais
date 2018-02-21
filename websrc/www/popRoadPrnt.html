@@ -3,7 +3,7 @@
 
 <body class="intro">
 
-<div id="roadView_page">
+<div id="roadPrntView_page">
 	<div class="detailView">
 		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
 		<div class="infoWrap">
@@ -11,7 +11,7 @@
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="예고용 도로명판"></span></p>
 				<p class="location" onclick="getDetailLocation()"></p>
 				<p class="photo"><span class="photoNum">0</span></p>
 			</div>
@@ -239,50 +239,36 @@
 							<tr>
 								<th scope="row">앞면 도로명</th>
 								<td>
-									<input type='text' class="cell70" id="frontKoreanRoadNm" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'40')"/>
+									<span id="prnt_ftKorRn"></span>
 								</td>
 								<th scope="row">로마자</th>
 								<td>
-									<p id="frontRomeRoadNm">&nbsp;</p>
+									<p id="prnt_ftRomRn">&nbsp;</p>
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">시작기초번호</th>
+								<th scope="row">앞면 도로거리</th>
 								<td>
-									<input type='number' class="cell30" id="frontStartBaseMasterNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
-									<span>-</span>
-									<input type='number' class="cell30" id="frontStartBaseSlaveNo"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+									<span id="prnt_ftRdLt"></span>
 								</td>
-								<th scope="row">종료기초번호</th>
-								<td>
-									<input type='number' class="cell30" id="frontEndBaseMasterNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
-									<span>-</span>
-									<input type='number' class="cell30" id="frontEndBaseSlaveNo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
-								</td>
+								<td/><td/>
 							</tr>
 							<tr class="bk">
 								<th scope="row">뒷면 도로명</th>
 								<td>
-									<p id="backKoreanRoadNm">&nbsp;</p>
+									<p id="prnt_bkKorRn">&nbsp;</p>
 								</td>
 								<th scope="row">로마자</th>
 								<td>
-									<p id="backRomeRoadNm">&nbsp;</p>
+									<p id="prnt_bkRomRn">&nbsp;</p>
 								</td>
 							</tr>
 							<tr class="bk">
-								<th scope="row">시작기초번호</th>
+								<th scope="row">뒷면 도로거리</th>
 								<td>
-									<span id="backStartBaseMasterNo"></span>
-									<span>-</span>
-									<span id="backStartBaseSlaveNo"></span>
+									<span id="prnt_bkRdLt"></span>
 								</td>
-								<th scope="row">종료기초번호</th>
-								<td>
-									<span id="backEndBaseMasterNo"></span>
-									<span>-</span>
-									<span id="backEndBaseSlaveNo"></span>
-								</td>
+								<td/><td/>
 							</tr>
 						</tbody>
 					</table>
@@ -306,11 +292,11 @@
 								<td>
 									<p id="gdftyFormLbl">&nbsp;</p>
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
-									<select id="gdftyForm" class="cell100" onchange="changeGdftyForm()"/>
+									<select id="gdftyForm" class="cell100" onchange=""/>
 								</td>
 								<th scope="row">사용대상</th>
 								<td>
-									<select id="useTarget" class="cell100" onchange="changeUseTarget()"/>
+									<select id="useTarget" class="cell100" onchange="checkPrntRdsd()"/>
 								</td>
 							</tr>
 							<tr>
@@ -324,10 +310,11 @@
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">안내시설 방향</th>
+								<!-- <th scope="row">안내시설 방향</th>
 								<td>
 									<select id="plqDirection" class="cell100" onchange="changeRdpqGdSd()"/>
-								</td>
+								</td> -->
+								<td/><td/>
 								<th scope="row">양면여부</th>
 								<td>
 									<p id="bdrclAtLbl">&nbsp;</p>
@@ -354,7 +341,7 @@
 							<tr>
 								<th scope="row">규격</th>
 								<td>
-									<select id="rdpqGdSd" class="cell100" onchange="setGdfyWide(this.id)"/>
+									<select id="prntGdSd" class="cell100" onchange="setGdfyWide(this.id)"/>
 								</td>
 								<th scope="row">단가(원)</th>
 								<td >

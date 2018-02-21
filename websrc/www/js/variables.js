@@ -100,6 +100,8 @@ var pages = {
     "map": { link: function () { return URLs.realPath() + "map.html"; }, div: "#mapview_page" },
     "map2": { link: function () { return URLs.realPath() + "map2.html"; }, div: "#map2view_page" },
     "detail_road": { link: function () { return URLs.realPath() + "popRoad.html"; }, div: "#roadView_page" },
+    "detail_road_rddr": { link: function () { return URLs.realPath() + "popRoadRddr.html"; }, div: "#roadRddrView_page" },
+    "detail_road_prnt": { link: function () { return URLs.realPath() + "popRoadPrnt.html"; }, div: "#roadPrntView_page" },
     "detail_area": { link: function () { return URLs.realPath() + "popArea.html"; }, div: "#areaView_page" },
     "detail_base": { link: function () { return URLs.realPath() + "popBase.html"; }, div: "#baseView_page" },
     "detail_buld": { link: function () { return URLs.realPath() + "popBuild.html"; }, div: "#buildView_page" },
@@ -238,8 +240,16 @@ CODE_GROUP["GDFTY_QLT"] = "GFTY011";
 //도로명판 규격
 CODE_GROUP["RDPQ_GD_SD"] = "GFTY110";
 CODE_GROUP["RDPQ_GD_SD_2"] = "GFTY112";
-
-
+//****** 이면도로용 도로명판 *******
+//이면도로용 도로명판 유형
+CODE_GROUP["AF_RDPLQ_SE"] = "GFTY200";
+//이면도로갯수
+CODE_GROUP["AF_RD_CD"] = "GFTY201";
+//규격
+CODE_GROUP["RDDR_GD_SD"] = "GFTY210";
+//****** 예고용 도로명판 *******
+//규격
+CODE_GROUP["PRNT_GD_SD"] = "GFTY310";
 
 //****** 지역안내판 *******
 //지역안내판 광고에따른분류

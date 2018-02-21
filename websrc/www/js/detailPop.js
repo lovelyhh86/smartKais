@@ -2163,28 +2163,50 @@ function modify(){
             var link = URLs.insertSpgfChange;
 
             if(trgGbn == DATA_TYPE.RDPQ){
-                //안내시설방향
-                var plqDirection = $("#plqDirection").val();
-                 //앞면도로명
-                 var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
-                 //시작기초번호
-                 var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
-                 var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
-                 //종료기초번호
-                 var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
-                 var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
-                 //규격
-                var rdpqGdSd = $("#rdpqGdSd").val();
+                var rdGdftySe = $("#rdGdftySe").val();
+                if(rdGdftySe == "110"){
+                    //안내시설방향
+                    var plqDirection = $("#plqDirection").val();
+                    //앞면도로명
+                    var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
+                    //시작기초번호
+                    var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
+                    var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+                    //종료기초번호
+                    var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
+                    var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+                    //규격
+                    var rdpqGdSd = $("#rdpqGdSd").val();
 
-                commomParams = $.extend(commomParams,{
-                    plqDirection : plqDirection,
-                    frontKoreanRoadNm : frontKoreanRoadNm,
-                    frontStartBaseMasterNo : frontStartBaseMasterNo,
-                    frontStartBaseSlaveNo : frontStartBaseSlaveNo,
-                    frontEndBaseMasterNo : frontEndBaseMasterNo,
-                    frontEndBaseSlaveNo : frontEndBaseSlaveNo,
-                    rdpqGdSd : rdpqGdSd,
-                })
+                    commomParams = $.extend(commomParams,{
+                        plqDirection : plqDirection,
+                        frontKoreanRoadNm : frontKoreanRoadNm,
+                        frontStartBaseMasterNo : frontStartBaseMasterNo,
+                        frontStartBaseSlaveNo : frontStartBaseSlaveNo,
+                        frontEndBaseMasterNo : frontEndBaseMasterNo,
+                        frontEndBaseSlaveNo : frontEndBaseSlaveNo,
+                        rdpqGdSd : rdpqGdSd,
+                    })
+                }else if(rdGdftySe == "210"){//이면도로용
+                    //설치형태
+                    var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
+                    //이면도로갯수
+                    var rddr_afRdCo = $("#rddr_afRdCo").val();
+                    //규격
+                    var prntGdSd = $("#prntGdSd").val();
+                    commomParams = $.extend(commomParams,{
+                        rddr_afRdplqSe : rddr_afRdplqSe,
+                        rddr_afRdCo : rddr_afRdCo,
+                        prntGdSd : prntGdSd,
+                    })
+                }else if(rdGdftySe == "310"){//예고용
+                    //규격
+                    var prntGdSd = $("#prntGdSd").val();
+                    commomParams = $.extend(commomParams,{
+                        prntGdSd : prntGdSd,
+                    })
+                }
+                
             }else if(trgGbn == DATA_TYPE.AREA){
                 //한글도로명
                 var area_areaKorRn = $("#area_areaKorRn").val();
