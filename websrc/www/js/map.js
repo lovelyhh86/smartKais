@@ -1514,6 +1514,10 @@ var MapUtil = {
         );
     },
     setValuesBuld:function(layerID, link, sn) {
+        var rcrType = app.info.rcrType;
+        if(rcrType != 01){
+            disabledAll();
+        }
         var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
         util.showProgress();
 
