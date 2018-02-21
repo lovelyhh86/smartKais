@@ -120,7 +120,7 @@ function selectResearchContent(trgGbn){
                         researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>점검</button>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
                     var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/iconNumber.png'></img>";
 
                     $("#myResearchTable > tbody:last").append(
@@ -164,7 +164,7 @@ function selectResearchContent(trgGbn){
                         researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>점검</button>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
                     var locBtn = "<button class='' onclick='getResearchLocation("+i+")'><img src='image/icon_curr.png'></img></button>";
 
                     // if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
