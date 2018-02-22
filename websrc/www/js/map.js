@@ -1420,9 +1420,9 @@ var MapUtil = {
                     $("#rcrNm").html('-');
 
                     //공무원이 아니면 점검 정비정보 수정안됨
-                    if(rcrType != 01){
-                        disabledAll();
-                    }
+                    // if(rcrType != 01){
+                        // disabledAll();
+                    // }
                 }else{
                     $("#plnOdrLbl").html('배정');
 
@@ -1436,13 +1436,13 @@ var MapUtil = {
                     
                     if(rcrSn != researchSn){
                         disabledAll();
-                    }else if(rcrSn == researchSn && rcrType != 01){
-                        disabledAll();
-                        $("#rcSttCdSel").removeAttr("disabled");
-                        $("#rcRslt").removeAttr("disabled");
-                        $("#submitRcBnt").removeAttr("disabled");
-                        //사진
-                        $("#photoDialog .btnPoint").show();
+                    }else if(rcrSn == researchSn){
+                        // disabledAll();
+                        // $("#rcSttCdSel").removeAttr("disabled");
+                        // $("#rcRslt").removeAttr("disabled");
+                        // $("#submitRcBnt").removeAttr("disabled");
+                        // //사진
+                        // $("#photoDialog .btnPoint").show();
                     }
                 }
 
