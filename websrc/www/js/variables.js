@@ -62,6 +62,8 @@ var URLs = {
     "insertSpbdChange":{svcNm: "iSPBDChg"},
     //시설물 변경 내용 조회
     "selectSpbdChange":{svcNm: "vSPBDChg"},
+    //시설물 변경 내용 삭제
+    "deleteUpdtChange":{svcNm: "dUpdtChg"},
     
     getURL: function (srcurl, jsondata) {
 
@@ -234,6 +236,8 @@ CODE_GROUP["RC_STT_CD"] = "GFTY614";
 CODE_GROUP["PRT_TY"] = "GFTY005";
 //재질
 CODE_GROUP["GDFTY_QLT"] = "GFTY011";
+//앙면여부
+CODE_GROUP["BDRCL_AT"] = "GFTY017";
 
 
 //****** 도로명판 *******
@@ -295,7 +299,6 @@ CODE_GROUP["BUL_DPN_SE"] = "CMMN046";
 CODE_GROUP["TRG_GBN"] = "GFTY615";
 
 
-CODE_GROUP["BDRCL_AT"] = "GFTY017";
 
 CODE_GROUP["ISLGN_YN"] = "GFTY016";
 

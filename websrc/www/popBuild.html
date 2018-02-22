@@ -10,7 +10,7 @@
             <!-- header -->
             <div class="infoHeader">
                 <!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-                <p class="title"><span class="titleIcon"><img src="image/iconBuilding.png" title="건물정보"></span></p>
+                <p class="title" onclick="toggleDetailView();"><span class="titleIcon"><img src="image/iconBuilding.png" title="건물정보"></span></p>
                 <p class="location" onclick="getDetailLocation()"></p>
                 <!--<p class="photo"><span class="photoNum">2</span></p>-->
             </div>
@@ -34,9 +34,11 @@
                 <input id="rnCd" type="hidden"/>
                 <input id="buldSeCd" type="hidden"/>
 
-                <input id="plnOdr" type="hidden" value="0"/>
+                <input id="plnOdr" type="hidden" value="1"/>
 
-
+                <div class = "redNotice">
+                    <span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
+                </div>
                 <div class="blueTitle">
                     <h2>정보</h2>
                 </div>
@@ -67,37 +69,37 @@
                                 </td>
                                 <th scope="row">건물층수</th>
                                 <td>
-                                    <input type='number' class="cell30" id="groFloCo" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+                                    <input type='number' class="cell30" id="groFloCo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
                                     <span>-</span>
-                                    <input type='number' class="cell30" id="undFloCo"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+                                    <input type='number' class="cell30" id="undFloCo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">건물명</th>
                                 <td>
-                                    <input type='text' class="cell70" id="posBulNm" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'20')"/>
+                                    <input type='text' class="cell70" id="posBulNm" onchange="txtMaxlength(this.id,'20')"/>
                                 </td>
                                 <th scope="row">건물명(영)</th>
                                 <td>
-                                    <input type='text' class="cell70" id="bulEngNm" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'100')"/>
+                                    <input type='text' class="cell70" id="bulEngNm" onchange="txtMaxlength(this.id,'100')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">상세건물명</th>
                                 <td colspan="3">
-                                    <input type='text' class="cell70" id="buldNmDc" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'50')"/>
+                                    <input type='text' class="cell70" id="buldNmDc" onchange="txtMaxlength(this.id,'50')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">건물상태</th>
                                 <td colspan="3">
-                                    <input type='text' class="cell70" id="buldSttus" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'20')"/>
+                                    <input type='text' class="cell70" id="buldSttus" onchange="txtMaxlength(this.id,'20')"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">메모</th>
                                 <td colspan="3">
-                                    <input type='text' class="cell70" id="buldMemo" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'200')"/>
+                                    <input type='text' class="cell70" id="buldMemo" onchange="txtMaxlength(this.id,'200')"/>
                                 </td>
                             </tr>
                             
@@ -112,6 +114,7 @@
             <!-- footer 시작 -->
             <div class="infoFooter">
                 <span onclick="closeDetailView();" class="btnNormal dataPopCloser">닫기</span>
+                <span id="delUpdtBtn" onclick="deleteUpdtData();" class="btnNormal">임시정보 삭제</span>
                 <span onclick="goPopNmtg();" class="btnPoint">건물번호판</span>
                 <!-- <span onclick="submit(DATA_TYPE.BULD);" class="btnPoint">저장</span> -->
             </div>
@@ -137,7 +140,7 @@
         <!-- <span class="btnNormal dataPopCloser">닫기</span> -->
         <!-- <span onclick="fixedValueChecked()" class="btnPoint">저장</span> -->
     </div>
-    <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p>
+    <!-- <p class="dataClose dataPopCloser"><img src="image/dataClose.png" title="닫기"></p> -->
 </div>
 
 </body>

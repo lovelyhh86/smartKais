@@ -875,8 +875,13 @@ var MapUtil = {
                     $("#useTarget").val(useTarget);
                     
                     //양면여부
-                    $("#bdrclAt").html(data.bdrclAt);
+                    // $("#bdrclAtLbl").html(data.bdrclAtLbl);
+                    makeOptSelectBox("bdrclAt","BDRCL_AT","","","");
+                    
                     $("#bdrclAtLbl").html(data.bdrclAtLbl);
+                    $("#bdrclAt").val(data.bdrclAt);
+
+                    // changeBdrclAt();
                     //제2외국어여부
                     var scfggMkty = data.scfggMkty;
                     makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
@@ -1007,20 +1012,23 @@ var MapUtil = {
                             //앞면종료기초번호(0-0)
                             $("#frontEndBaseMasterNo").val(data.frontEndBaseMasterNo);
                             $("#frontEndBaseSlaveNo").val(data.frontEndBaseSlaveNo);
-                            if (data.bdrclAt == 1) {
-                                //뒷면 도로명(국문)
-                                $("#backKoreanRoadNm").html(data.backKoreanRoadNm);
-                                //뒷면 도로명(로마자)
-                                $("#backRomeRoadNm").html(data.backRomeRoadNm);
-                                //뒷면시작기초번호(0-0)
-                                $("#backStartBaseMasterNo").html(data.backStartBaseMasterNo);
-                                $("#backStartBaseSlaveNo").html(data.backStartBaseSlaveNo);
-                                //뒷면종료기초번호(0-0)
-                                $("#backEndBaseMasterNo").html(data.backEndBaseMasterNo);
-                                $("#backEndBaseSlaveNo").html(data.backEndBaseSlaveNo);
-                            } else {
-                                $(".bk").hide();
-                            }
+                            
+                            // if (data.bdrclAt == 1) {
+                            //뒷면 도로명(국문)
+                            $("#backKoreanRoadNm").html(data.backKoreanRoadNm);
+                            //뒷면 도로명(로마자)
+                            $("#backRomeRoadNm").html(data.backRomeRoadNm);
+                            //뒷면시작기초번호(0-0)
+                            $("#backStartBaseMasterNo").html(data.backStartBaseMasterNo);
+                            $("#backStartBaseSlaveNo").html(data.backStartBaseSlaveNo);
+                            //뒷면종료기초번호(0-0)
+                            $("#backEndBaseMasterNo").html(data.backEndBaseMasterNo);
+                            $("#backEndBaseSlaveNo").html(data.backEndBaseSlaveNo);
+                            // } else {
+                                // $(".bk").hide();
+                            // }
+                            $("#bdrclAt").show();
+                            changeBdrclAt();
                             //안내시설방향
                             var plqDirection = data.plqDirection;
                             makeOptSelectBox("plqDirection","PLQ_DRC","","","");
@@ -1035,6 +1043,7 @@ var MapUtil = {
                             }
                             customSelectBox("rdpqGdSd",colume,useCd,1,2);
                             $("#rdpqGdSd").val(rdpqGdSd);
+                            changeUseTarget();
                         }else if(rdGdftySe == "210"){//이면도로용
                            
                             //도로명(국문)
@@ -1092,17 +1101,17 @@ var MapUtil = {
                             $("#prntGdSd").val(data.prntGdSd);
                         }
 
-                        //임시데이터 존재 여부
-                        var isUpdtGbn = data.isUpdtGbn;
-                        $("#isUpdtGbn").val(isUpdtGbn);
+                        // //임시데이터 존재 여부
+                        // var isUpdtGbn = data.isUpdtGbn;
+                        // $("#isUpdtGbn").val(isUpdtGbn);
 
-                        if(isUpdtGbn.indexOf("D") != -1){
-                            // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
-                                // if(btnindex == 1){
-                                    loadUpdtData();
-                                // }
-                            // }, "알림", ["확인","취소"]);
-                        }
+                        // if(isUpdtGbn.indexOf("D") != -1){
+                        //     // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+                        //         // if(btnindex == 1){
+                        //             loadUpdtData();
+                        //         // }
+                        //     // }, "알림", ["확인","취소"]);
+                        // }
 
                         break;
                     case DATA_TYPE.AREA:
@@ -1157,13 +1166,13 @@ var MapUtil = {
                         var isUpdtGbn = data.isUpdtGbn;
                         $("#isUpdtGbn").val(isUpdtGbn);
 
-                        if(isUpdtGbn.indexOf("D") != -1){
-                            // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
-                                // if(btnindex == 1){
-                                    loadUpdtData();
-                                // }
-                            // }, "알림", ["확인","취소"]);
-                        }
+                        // if(isUpdtGbn.indexOf("D") != -1){
+                        //     // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+                        //         // if(btnindex == 1){
+                        //             loadUpdtData();
+                        //         // }
+                        //     // }, "알림", ["확인","취소"]);
+                        // }
 
                         //설치장소
                         // $("#area_insPlc").html(data.area_insPlc);
@@ -1211,7 +1220,7 @@ var MapUtil = {
                         //한글도로명
                         $("#bsis_korRn").val((data.bsis_korRn ? data.bsis_korRn : '도로명없음'));
                         //로마자
-                        $("#bsis_romRn").html(data.bsis_RomRn);
+                        $("#bsis_romRn").html(data.bsis_romRn);
                         //기초번호(0-0)
                         $("#bsis_ctbsNo").html(bsis_ctbsNo);
                         // $("#bsis_ctbsMn").val(data.bsis_ctbsMn);
@@ -1238,13 +1247,13 @@ var MapUtil = {
                         var isUpdtGbn = data.isUpdtGbn;
                         $("#isUpdtGbn").val(isUpdtGbn);
 
-                        if(isUpdtGbn.indexOf("D") != -1){
-                            // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
-                                // if(btnindex == 1){
-                                    loadUpdtData();
-                                // }
-                            // }, "알림", ["확인","취소"]);
-                        }
+                        // if(isUpdtGbn.indexOf("D") != -1){
+                        //     // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+                        //         // if(btnindex == 1){
+                        //             loadUpdtData();
+                        //         // }
+                        //     // }, "알림", ["확인","취소"]);
+                        // }
                         break;
                     case DATA_TYPE.ENTRC:
                         //일련번호
@@ -1299,7 +1308,10 @@ var MapUtil = {
                         $("#buldNmtTypeLbl").html(data.buldNmtTypeLbl);
                         customSelectBox("buldNmtType","BUL_NMT_TY","000",1,3);
                         $("#buldNmtType").val(data.buldNmtType);
-                        // $("#buldNmtType").hide();
+                        $("#buldNmtType").hide();
+                        if(buldNmtType == '1000'){
+                            $("#bulNmtFt").hide();
+                        }
                         //용도
                         changeBuldNmtPurpose();
                         $("#buldNmtPurpose").val(data.buldNmtPurpose);
@@ -1379,17 +1391,7 @@ var MapUtil = {
                         //건물군번호
                         $("#eqbManSn").val(data.eqbManSn);
 
-                        //임시데이터 존재 여부
-                        var isUpdtGbn = data.isUpdtGbn;
-                        $("#isUpdtGbn").val(isUpdtGbn);
-
-                        if(isUpdtGbn.indexOf("D") != -1){
-                            // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
-                                // if(btnindex == 1){
-                                    loadUpdtData();
-                                // }
-                            // }, "알림", ["확인","취소"]);
-                        }
+                        
 
                         break;
                 }
@@ -1412,7 +1414,7 @@ var MapUtil = {
                 if(plnYr == null || plnOdr == null || mtchSn == null){
                     $("#plnOdrLbl").html('미배정');
                     $("#plnYr").val(util.getToday().substr(0,4));
-                    $("#plnOdr").val('0');
+                    $("#plnOdr").val('1');
                     $("#mtchSn").val(data.mtchSn);
 
                     $("#rcrNm").html('-');
@@ -1502,10 +1504,22 @@ var MapUtil = {
                     $("#rcRsltOld").text(rcRslt);
                 }
 
-                
-
-
                 //*****************점검정보*****************
+
+                //임시데이터 존재 여부
+                var isUpdtGbn = data.isUpdtGbn;
+                $("#isUpdtGbn").val(isUpdtGbn);
+
+                if(isUpdtGbn.indexOf("D") != -1){
+                    // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+                        // if(btnindex == 1){
+                            loadUpdtData();
+                            $(".redNotice").show();
+                        // }
+                    // }, "알림", ["확인","취소"]);
+                }else{
+                    $("#delUpdtBtn").hide();
+                }
                 
                 util.dismissProgress();
 
@@ -1514,7 +1528,7 @@ var MapUtil = {
         );
     },
     setValuesBuld:function(layerID, link, sn) {
-        var rcrType = app.info.rcrType;
+        var rcrType = app.info.rcrTyp;
         if(rcrType != 01){
             disabledAll();
         }
@@ -1618,8 +1632,11 @@ var MapUtil = {
                         // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
                             // if(btnindex == 1){
                                 loadUpdtData();
+                                $(".redNotice").show();
                             // }
                         // }, "알림", ["확인","취소"]);
+                    }else{
+                        $("#delUpdtBtn").hide();
                     }
                     return;
                 }
@@ -2091,7 +2108,8 @@ var mapInit = function(mapId, pos) {
     // 건물 레이어
     var lyr_tl_spbd_buld = getFeatureLayer({
         title: "건물",
-        typeName: "tlv_spbd_buld",
+        // typeName: "tlv_spbd_buld",
+        typeName: "tlv_spbd_buld_skm",
         dataType: DATA_TYPE.BULD,
         style: {
             label: {
@@ -3306,13 +3324,13 @@ function insertMoveingPoint(param) {
                 util.dismissProgress();
                 if (rCode == 0 && results.response.status > -1) {
                     util.toast('이동한 위치 정보가 저장되었습니다.');
-                    var msg = "KAIS C/S\n (자료관리 → 도로안내시설 편집 → 도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.";
+                    var msgText = msg.successSpgfInsertPoint;
                     
                     if(insertPointType == "nmtg"){
-                        msg = "KAIS C/S\n (자료관리 → 도로안내시설 편집 → 건물번호판 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.";
+                        msgText = msg.successNmtgInsertPoint;
                     }
                     
-                    navigator.notification.alert(msg, '', '알림', '확인');
+                    navigator.notification.alert(msgText, '', '알림', '확인');
 
                     clearSource('위치이동');
 

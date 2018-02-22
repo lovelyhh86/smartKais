@@ -271,14 +271,14 @@ function getDetailLocation(){
     var searchList = {rdftylc_sn: trgLocSn}
 
     if(trgGbn == "02"){
-        layerNm = "tlv_spbd_buld";
+        layerNm = "tlv_spbd_buld_skm";
 
         var sigCd = $("#sigCd").val();
         var emdCd = $("#emdCd").val();
         var rnCd  = $("#rnCd").val();
-        var buldMnnm = $("#buldMnnm").val();
-        var buldSlno = $("#buldSlno").val();
-        var buldSeCd = $("#buldSeCd").val();
+        var buldMnnm = $("#buldMnnm").val() == "" ?$("#buldMnnm").html() : $("#buldMnnm").val();
+        var buldSlno = $("#buldSlno").val() == "" ?$("#buldSlno").html() : $("#buldSlno").val();
+        var buldSeCd = $("#buldSeCd").val() == "" ?$("#buldSeCd").html() : $("#buldSeCd").val();
 
         searchList = {sig_cd: sigCd, emd_cd: emdCd, rn_cd: rnCd, buld_mnnm: buldMnnm, buld_slno: buldSlno, buld_se_cd:buldSeCd}
     }
@@ -299,7 +299,7 @@ function getResearchLocation(i){
     var searchList = {rdftylc_sn: trgLocSn}
 
     if(trgGbn == "02"){
-        layerNm = "tlv_spbd_buld";
+        layerNm = "tlv_spbd_buld_skm";
 
         var sigCd = targetID.data('sigCd');
         var emdCd = targetID.data('emdCd');
@@ -499,10 +499,11 @@ function submitResearch(){
                     }
                     
                     //시설물 번호 전역변수
-                    trgSnGlobal = trgSn
-                    MapUtil.openDetail(trgGbn, null);
-    
+                    // trgSnGlobal = trgSn
+                    // MapUtil.openDetail(trgGbn, null);
                     closePopupAndClearMap(trgGbn);
+
+                    closeDetailView();
     
                     util.dismissProgress();
     
@@ -691,6 +692,7 @@ function disabledAll(){
     $(".infoContent input").attr("disabled","disabled");
     $(".infoContent textarea").attr("disabled","disabled");
     $("#modifyBtn").attr("disabled","disabled");
+    $("#delUpdtBtn").hide();
 
     //사진
     $("#photoDialog .btnPoint").hide();

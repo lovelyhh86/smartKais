@@ -10,9 +10,10 @@ function closeDetailView(){
         }, "알림", ["확인","취소"]);
 
     }else{
-            $("#detailView").popup("close", { transition: "slideup" });
-            //팝업창 상태 초기화
-            isPopState = "on";
+        $("#viewMapInfo").hide();    
+        $("#detailView").popup("close", { transition: "slideup" });
+        //팝업창 상태 초기화
+        isPopState = "on";
     }
 }
 
@@ -1502,7 +1503,7 @@ function closePopupAndClearMap(type){
         if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
             //지도 초기화
             getVectorSource(map , "위치레이어").clear();
-        }else if(type == DATA_TYPE.BULD){
+        }else if(type == DATA_TYPE.ENTRC){
             getVectorSource(map , "건물").clear();
         }
     }catch(e) {
@@ -2073,15 +2074,32 @@ function checkPrice(type){
 }
 
 function goPopBuild(){
-    MapUtil.openDetail(DATA_TYPE.BULD, featureClone[0]);
+    var sn = $("#trgLocSn").val();
+    trgSnGlobal = sn;
+    MapUtil.openDetail(DATA_TYPE.BULD, null);
 }
 
 function goPopNmtg(){
-    MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
+    var sn = $("#trgLocSn").val();
+    trgSnGlobal = sn;
+    MapUtil.openDetail(DATA_TYPE.ENTRC, null);
 }
 
 //정비내용 저장
 function modify(){
+
+    var notNull = $(".notNull");
+    var notNullLength = $(".notNull").length;
+    for(i in notNull){
+        var value = $(".notNull")[i].value;
+        if(value == ""){
+            navigator.notification.alert(msg.notNullData, '', '알림', '확인');
+            var id = $(".notNull")[i].id;
+            $("#"+id).focus();
+            return;
+        }
+    }
+
     //** 도로명판 */
     //설치지점
     var instSpotCd = $("#instSpotCd").val();
@@ -2177,6 +2195,8 @@ function modify(){
                     var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
                     //규격
                     var rdpqGdSd = $("#rdpqGdSd").val();
+                    //양면여부
+                    var bdrclAt = $("#bdrclAt").val();
 
                     commomParams = $.extend(commomParams,{
                         plqDirection : plqDirection,
@@ -2187,6 +2207,7 @@ function modify(){
                         frontEndBaseSlaveNo : frontEndBaseSlaveNo,
                         rdpqGdSd : rdpqGdSd,
                         rdGdftySe : rdGdftySe,
+                        bdrclAt : bdrclAt,
                     })
                 }else if(rdGdftySe == "210"){//이면도로용
                     //안내시설방향
@@ -2403,12 +2424,13 @@ function modify(){
 }
 //점검 된 임시 정보 조회
 function loadUpdtData(isImages){
-    navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
-        if(btnindex == 1){
+    // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
+    //     if(btnindex == 1){
+            util.showProgress();
             var isUpdtGbn = $("#isUpdtGbn").val();
 
             if(isUpdtGbn == "0"){
-                navigator.notification.alert(msg.notHaveLoadUpdt, '', '알림', '확인');
+                // navigator.notification.alert(msg.notHaveLoadUpdt, '', '알림', '확인');
                 return;
             }
     
@@ -2492,21 +2514,99 @@ function loadUpdtData(isImages){
                 },
                 util.dismissProgress
             );
-        }else{
-            if(isImages == "true"){
-                var photoNum = $(".infoHeader .photo .photoNum").text();
-                selectOldImg(photoNum);
-            }
-        }
-    }, "알림", ["확인","취소"]);
+        // }else{
+        //     if(isImages == "true"){
+        //         var photoNum = $(".infoHeader .photo .photoNum").text();
+        //         selectOldImg(photoNum);
+        //     }
+        // }
+    // }, "알림", ["확인","취소"]);
             
         
 }
+
+function deleteUpdtData(isImages){
+    var isUpdtGbn = $("#isUpdtGbn").val();
+
+    if(isUpdtGbn.indexOf("D") == -1){
+        navigator.notification.alert(msg.notHaveLoadUpdt, '', '알림', '확인');
+        return;
+    }
+
+    navigator.notification.confirm(msg.deleteUpdtData, function(btnindex){
+        if(btnindex == 1){
+
+            var plnYr = $("#plnYr").val() == ""? util.getToday().substr(0,4) : $("#plnYr").val();
+            var plnOdr = $("#plnOdr").val();
+            var trgLocSn = $("#trgLocSn").val();
+            var trgSn = $("#trgSn").val();
+            var trgGbn = $("#trgGbn").val();
+            var sigCd = $("#sigCd").val();
+            var rdGdftySe = $("#rdGdftySe").val();
+
+            var commomParams = {
+                plnYr : plnYr,
+                plnOdr : plnOdr,
+                trgLocSn : trgLocSn,
+                trgSn : trgSn,
+                trgGbn : trgGbn,
+                sigCd : sigCd,
+                isImages : isImages,
+                rdGdftySe : rdGdftySe
+
+            };
+
+            var link = URLs.deleteUpdtChange;
+            
+            var url = URLs.postURL(link, commomParams);
+            util.showProgress();
+            util.postAJAX({}, url).then(
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    // var data = results.data;
+
+                    // if (util.isEmpty(data) == true) {
+                    //     navigator.notification.alert(msg.noItem,
+                    //         function() {
+                    //             // util.goBack();
+                    //         }, '알림', '확인');
+                    //     util.dismissProgress();
+                    //     return;
+                    // }
+                    
+                    util.toast(msg.successDeleteUpdt);
+                    util.dismissProgress();
+
+                    //시설물 번호 전역변수
+                    if(trgGbn == "02" || trgGbn == "99"){
+                        trgSnGlobal = trgLocSn;
+                    }else{
+                        trgSnGlobal = trgSn;
+                    }
+                    
+                    MapUtil.openDetail(trgGbn, null);
+
+
+
+                },
+                util.dismissProgress
+            );
+        }
+    },"알림", ["확인","취소"]);
+        
+}
+
 //사진 정비 저장
 function modifyImg(type){
     // 사진 변경(촬영) 여부 확인
     if(!MapUtil.photo.isEdited()) {
-        navigator.notification.alert(msg.noSave,'','알림', '확인');
+        navigator.notification.alert(msg.noPhotoSave,'','알림', '확인');
         return;
     }
 

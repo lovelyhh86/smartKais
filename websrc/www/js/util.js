@@ -71,10 +71,16 @@ var util = {
     //뒤로가기
     goBack: function () {
         util.dismissProgress();
-
+        //사진창이 열려있을때
+        var photo = $("#photoDialog").css("display");
+        if(photo == "block"){
+            closePhotoView();
+            return;
+        }
         //팝업창이 내려가 있을때
         if(isPopState == "off"){
             toggleDetailView();
+            return;
         }
 
         //신규위치
@@ -93,13 +99,6 @@ var util = {
                 }
             }
         }
-        //사진창이 열려있을때
-        var photo = $("#photoDialog").css("display");
-        if(photo == "block"){
-            closePhotoView();
-            return;
-        }
-        
 
         if ($( "[data-role='panel']" ).hasClass("ui-panel-open")) {
             $( "[data-role='panel']" ).panel("close");

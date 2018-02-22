@@ -10,7 +10,7 @@
             <!-- header -->
             <div class="infoHeader">
                 <!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-                <p class="title"><span class="titleIcon"><img src="image/iconNumber.png" title="건물번호판"></span></p>
+                <p class="title" onclick="toggleDetailView();"><span class="titleIcon"><img src="image/iconNumber.png" title="건물번호판"></span></p>
                 <p class="location" onclick="getDetailLocation()"></p>
                 <p class="photo"><span class="photoNum">0</span></p>
             </div>
@@ -168,7 +168,9 @@
                         </tbody>
                     </table>
                 </div>
-
+                <div class = "redNotice">
+                    <span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
+                </div>
                 <div class="blueTitle">
                     <h2>설치정보</h2>
                 </div>
@@ -226,14 +228,14 @@
                                 </td>
                                 <th scope="row">용도</th>
                                 <td>
-                                    <select id="buldNmtPurpose" class="cell100" onchange="changeBuldNmtCd();"/>
+                                    <select id="buldNmtPurpose" class="cell100 notNull" onchange="changeBuldNmtCd();"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td/><td/>
                                 <th scope="row">재질</th>
                                 <td>
-                                    <select id="buldNmtMaterial" class="cell100"/>
+                                    <select id="buldNmtMaterial" class="cell100 notNull"/>
                                 </td>
                             </tr>
                             <tr>
@@ -256,7 +258,7 @@
                                     <input type='number' class="cell10" id="buldNmtThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')" oninput="firstTextZero(this.id)"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="bulNmtFt">
                                 <th scope="row">자율형 한글자 크기(가로)</th>
                                 <td>
                                     <input type='number' class="cell30" id="bulNmtFtWi" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
@@ -275,7 +277,8 @@
             <!-- footer 시작 -->
             <div class="infoFooter">
                 <span onclick="closeDetailView();" class="btnNormal">닫기</span>
-                <span onclick="loadUpdtData();" class="btnNormal">승인대기</span>
+                <!-- <span onclick="loadUpdtData();" class="btnNormal">승인대기</span> -->
+                <span id="delUpdtBtn" onclick="deleteUpdtData();" class="btnNormal">임시정보 삭제</span>
                 <span onclick="MapUtil.openList('myResearchSpbd');" class="btnNormal">배정목록</span>
                 <span onclick="goPopBuild();" class="btnPoint">건물정보</span>
             </div>
@@ -338,7 +341,7 @@
         <div class="photoNotice">
                 <span>※ 조회된 사진은 최근사진 2장만 조회</span>
                 <br>
-			    <span>※ 왼쪽 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
+			    <span>※ 우측 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
                 <br>
                 <span>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
             </div>
@@ -346,9 +349,9 @@
         <div class="infoFooter">
             <span onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
             <span onclick="selectOldImg();" class="btnNormal">원본</span>
+            <span onclick="closePhotoView();" class="btnNormal">닫기</span>
             <span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
         </div>
-        <p class="dataClose" onclick="closePhotoView()"><img src="image/dataClose.png" title="닫기"></p>
 </div>
 <!-- 사진 끝-->
 </body>

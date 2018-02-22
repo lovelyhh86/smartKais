@@ -57,12 +57,13 @@ function txtMaxlength(id, size, min) {
         navigator.notification.alert("" + size + "자 제한입니다.", function () {
             targetText.val(targetText.val().substring(0, size));
             // openInputPop(id);
+            $("#"+id).focus();
         }, '알림', '확인');
       
     }else if(textLength <= min){
         navigator.notification.alert("빈칸을 넣을 수 없습니다.", function () {
             targetText.val(targetText.val().substring(0, size));
-            // openInputPop(id);
+            $("#"+id).focus();
         }, '알림', '확인');
     }else{
         setInputPop();
@@ -271,6 +272,9 @@ function changeBsisInstlFty(){
 
     if(bsis_instlFty != "99"){
         $("#bsis_insFtyDc").attr("disabled","disabled")
+        $("#insFtyDc").hide();
+    }else{
+        $("#insFtyDc").show();
     }
 }
 //광고에따른 분류변경(지역안내판)
@@ -379,4 +383,25 @@ function checkPrntRdsd(){
     customSelectBox("prntGdSd","PRNT_GD_SD",useCd,1,1);
     $("#prntGdSd").val(prntGdSd);
 
+}
+
+function checkScfggUla2(){
+
+    var scfggUla1 = $("#scfggUla1").val();
+    var scfggUla2 = $("#scfggUla2").val();
+
+    if((scfggUla1 != "99" && scfggUla2 != "99") && scfggUla1 == scfggUla2){
+        navigator.notification.alert(msg.notSameScfggMkty, '', '알림', '확인');
+        $("#scfggUla2").val("99");
+    }
+}
+//양면여부 변경
+function changeBdrclAt(){
+    var bdrclAt = $("#bdrclAt").val();
+
+    if(bdrclAt == '0'){//단면
+        $(".bk").hide();
+    }else{
+        $(".bk").show();
+    }
 }

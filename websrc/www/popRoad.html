@@ -5,13 +5,14 @@
 
 <div id="roadView_page">
 	<div class="detailView">
+		
 		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
 		<div class="infoWrap">
 			<!-- header -->
 			<div class="infoHeader">
 			
 			<!-- 도로명아이콘 교체됩니다.  localIcon.png 지역번호판아이콘 , baseIcon 기초번호판 아이콘 -->
-				<p class="title"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
+				<p class="title" onclick="toggleDetailView();"><span class="titleIcon"><img src="image/roadIcon.png" title="도로명판"></span></p>
 				<p class="location" onclick="getDetailLocation()"></p>
 				<p class="photo"><span class="photoNum">0</span></p>
 			</div>
@@ -173,7 +174,9 @@
 
 					</table>
 				</div>
-
+				<div class = "redNotice">
+					<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
+				</div>
 				<div class="blueTitle">
 					<h2>기본정보</h2>
 				</div>
@@ -202,17 +205,17 @@
 							<tr>
 								<th scope="row">설치지점</th>
 								<td>
-									<select id="instSpotCd" class="cell100"/>
+									<select id="instSpotCd" class="cell100 notNull"/>
 								</td>
 								<th scope="row">조명여부</th>
 								<td>
-									<select id="lghtCd" class="cell100"/>
+									<select id="lghtCd" class="cell100 notNull"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">교차로 유형</th>
 								<td>
-									<select id="instCrossCd" class="cell100"/>
+									<select id="instCrossCd" class="cell100 notNull"/>
 								</td>
 								<th scope="row">설치일자</th>
                                 <td>
@@ -306,38 +309,39 @@
 								<td>
 									<p id="gdftyFormLbl">&nbsp;</p>
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
-									<select id="gdftyForm" class="cell100" onchange="changeGdftyForm()"/>
+									<select id="gdftyForm" class="cell100 notNull" onchange="changeGdftyForm()"/>
 								</td>
 								<th scope="row">사용대상</th>
 								<td>
-									<select id="useTarget" class="cell100" onchange="changeUseTarget()"/>
+									<select id="useTarget" class="cell100 notNull" onchange="changeUseTarget()"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">재질</th>
 								<td>
-									<select id="gdftyQlt" class="cell100"/>
+									<select id="gdftyQlt" class="cell100 notNull"/>
 								</td>
 								<th scope="row">인쇄방식</th>
 								<td>
-									<select id="prtTy" class="cell100"/>
+									<select id="prtTy" class="cell100 notNull"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">안내시설 방향</th>
 								<td>
-									<select id="plqDirection" class="cell100" onchange="changeRdpqGdSd()"/>
+									<select id="plqDirection" class="cell100 notNull" onchange="changeRdpqGdSd()"/>
 								</td>
 								<th scope="row">양면여부</th>
 								<td>
-									<p id="bdrclAtLbl">&nbsp;</p>
-									<p id="bdrclAt" style="display:none"></p>
+									<!-- <p id="bdrclAtLbl">&nbsp;</p> -->
+									<!-- <p id="bdrclAt" style="display:none"></p> -->
+									<select id="bdrclAt" class="cell100 notNull" onchange="changeBdrclAt()"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">제2외국어여부</th>
 								<td>
-									<select id="scfggMkty" class="cell100" onchange="changeScfggMkty()"/>
+									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty()"/>
 								</td>
 								<td></td><td></td>
 							</tr>
@@ -348,7 +352,7 @@
 								</td>
 								<th scope="row">언어2</th>
 								<td>
-									<select id="scfggUla2" class="cell100"/>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2()"/>
 								</td>
 							</tr>
 							<tr>
@@ -380,7 +384,8 @@
 			<!-- footer 시작 -->
 			<div class="infoFooter">
 				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
-				<span onclick="loadUpdtData();" class="btnNormal">승인대기</span>
+				<!-- <span onclick="loadUpdtData();" class="btnNormal">승인대기</span> -->
+				<span id="delUpdtBtn" onclick="deleteUpdtData();" class="btnNormal">임시정보 삭제</span>
 				<span onclick="MapUtil.openList('myResearch');" class="btnNormal">배정목록</span>
 			</div>
 			<!-- footer 끝 -->
@@ -443,7 +448,7 @@
 		<div class="photoNotice">
 			<span>※ 근거리(안내시설물) ,원거리(설치시설물) 사진은 최근사진 1장씩만 조회</span>
 			<br>
-			<span>※ 왼쪽 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
+			<span>※ 우측 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
 			<br>
 			<span>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
 		</div>
@@ -451,9 +456,9 @@
 	<div class="infoFooter">
 		<span onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
 		<span onclick="selectOldImg();" class="btnNormal">원본</span>
+		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
 		<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
 	</div>
-	<p class="dataClose" onclick="closePhotoView()"><img src="image/dataClose.png" title="닫기"></p>
 </div>
 <!-- 사진 끝-->
 </body>

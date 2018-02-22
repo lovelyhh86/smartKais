@@ -167,7 +167,7 @@ var getStyle = function(dataType, styleOptions, feature, mixStyle) {
             retStyle = locStyle(styleOptions, feature, mixStyle);
             break;
         case DATA_TYPE.BULD:
-            retStyle = buildStyle(styleOptions);
+            retStyle = buildStyle(styleOptions, feature);
             break;
         case DATA_TYPE.SPPN:
             retStyle = sppnStyle(styleOptions, feature, mixStyle);
@@ -323,26 +323,44 @@ var sppnStyle = function (styleOptions, feature, mixStyle) {
 };
 
 // 건물 스타일
-var buildStyle = function (styleOptions) {
-    var opt = {
-        // image: new ol.style.Circle({
-        //     radius: 7,
-        //     fill: new ol.style.Fill({
-        //         color: 'orange'
-        //     }),
-        //     stroke: new ol.style.Stroke({
-        //         color: 'white',
-        //         width: 1
-        //     })
-        // })
-        stroke: new ol.style.Stroke({
-            color: 'blue',
-            width: 3
-          }),
-        fill: new ol.style.Fill({
-            color: 'rgba(0, 0, 255, 0.1)'
-          })
-    };
+var buildStyle = function (styleOptions, feature) {
+    
+    var ltChcYn = feature.get('LT_CHC_YN');
+    var eqbManSn = feature.get('EQB_MAN_SN');
+    var opt;
+    if(ltChcYn == "1"){
+        opt = {
+            stroke: new ol.style.Stroke({
+                color: 'red',
+                width: 4
+              }),
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 0, 0, 0.1)'
+              })
+        };
+    }else{
+        opt = {
+            // image: new ol.style.Circle({
+            //     radius: 7,
+            //     fill: new ol.style.Fill({
+            //         color: 'orange'
+            //     }),
+            //     stroke: new ol.style.Stroke({
+            //         color: 'white',
+            //         width: 1
+            //     })
+            // })
+            stroke: new ol.style.Stroke({
+                color: 'blue',
+                width: 3
+              }),
+            fill: new ol.style.Fill({
+                color: 'rgba(0, 0, 255, 0.1)'
+              })
+        };
+    }
+
+    
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);
     

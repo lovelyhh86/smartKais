@@ -195,7 +195,7 @@
 
     /*.centerPosIn .location{border: 3px dotted black;}*/
     .newPosContent {position: relative}
-    .newPosContent .label, #moveInfo .label {
+    .newPosContent .label, #moveInfo .label, #viewMapInfo .label {
         background: white;
         border: solid 1px silver;
         border-radius: 0.5em;
@@ -203,6 +203,7 @@
     }
     .newPosContent .label { position: fixed; width: 300px; margin-top: -2.2em; margin-left: -1.8em; }
     #moveInfo .label { bottom: 1em; position: fixed; left: 12em; }
+    #viewMapInfo .label { bottom: 11em; position: fixed; left: 17em; }
   
   .buttonDiv{    
       width: 100%;
@@ -240,3 +241,5 @@
   /* .noLabel{    width: 16em;} */
  .ui-mobile label, .ui-controlgroup-label {display: inline !important;margin: 0;}
  .selectRadioAll{padding-top: 30px;}
+
+ .redNotice{color: red; padding: 10px;display: none}

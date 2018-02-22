@@ -354,6 +354,7 @@ function toggleDetailView(){
         $(".ui-popup-container.slideup.in.ui-popup-active").css("height","5%");
         //컨트롤바
         $(".detailView >p >span").css('background-image','url(./image/close_image.png)');
+        $("#viewMapInfo").show();
         isPopState = "off";
     }else{
         $(".detailView").css("height","955px");
@@ -363,9 +364,10 @@ function toggleDetailView(){
         //리스트페이지
         $(".infoListContent").css("height","808px");
         
-        $("#photoDialog").show();
+        // $("#photoDialog").show();
         $(".ui-popup-container.slideup.in.ui-popup-active").css("height","60%");
         $(".detailView >p >span").css('background-image','url(./image/open_image.png)');
+        $("#viewMapInfo").hide();
         isPopState = "on";
     }
 }
@@ -422,6 +424,7 @@ function getLocationByFeature(layerNm, searchList){
             }
 
             map.getView().setCenter(point);
+            map.getView().setZoom(14);
 
             toggleDetailView();
 
@@ -435,7 +438,7 @@ function getLocationByFeature(layerNm, searchList){
 
 function getAdrdcLocation(){
     
-    var layerNm = "tlv_spbd_buld";
+    var layerNm = "tlv_spbd_buld_skm";
 
     var sigCd = $("#sigCd").val();
     var emdCd = $("#emdCd").val();
