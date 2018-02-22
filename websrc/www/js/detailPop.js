@@ -14,6 +14,7 @@ function closeDetailView(){
         $("#detailView").popup("close", { transition: "slideup" });
         //팝업창 상태 초기화
         isPopState = "on";
+        currentPositionLayerCheck();
     }
 }
 
