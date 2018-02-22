@@ -2729,10 +2729,10 @@ var mapInit = function(mapId, pos) {
 
                         resultHtml = commonDiv.format("mapInfo", resultHtml);
 
-                        popupDiv.append(resultHtml);
+                        // popupDiv.append(resultHtml);
 
                         // $("#popup").show();
-                        overlay.setPosition(coordinate);
+                        // overlay.setPosition(coordinate);
 
                         openDetailPopupCall(1);
 
