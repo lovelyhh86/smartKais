@@ -44,7 +44,7 @@ var msg = {
     notHaveLoadUpdt : "승인 대기중인 데이터가 없습니다.",
     checkRcSttCd : "점검상태를 선택하세요.",
     researchCheckPhoto : "정상처리 이외의 점검상태는 사진 촬영이 필수 입니다.\n사진촬영으로 이동하시겠습니까?",
-    researchCheckPhotoCnt : "사진건수가 0 건입니다.\n사진촬영으로 이동하시겠습니까?",
+    researchCheckPhotoCnt : "저장된 사진이 없습니다.\n사진촬영으로 이동하시겠습니까?",
     loadOldImg : "원본 사진을 조회 하시겠습니까?",
     successImg : "사진조회 완료",
     notNullData : "빈 값을 넣을 수 없습니다.\n항목을 선택해 주세요.",
