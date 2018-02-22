@@ -2219,19 +2219,25 @@ function modify(){
                     var rddr_afRdCo = $("#rddr_afRdCo").val();
                     //규격
                     var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
+                    //양면여부
+                    var bdrclAt = $("#bdrclAt").val();
                     commomParams = $.extend(commomParams,{
                         rddr_plqDrc : rddr_plqDrc,
                         rddr_afRdplqSe : rddr_afRdplqSe,
                         rddr_afRdCo : rddr_afRdCo,
                         rddr_rddrGdSd : rddr_rddrGdSd,
                         rdGdftySe : rdGdftySe,
+                        bdrclAt : bdrclAt
                     })
                 }else if(rdGdftySe == "310"){//예고용
+                    //양면여부
+                    var bdrclAt = $("#bdrclAt").val();
                     //규격
                     var prntGdSd = $("#prntGdSd").val();
                     commomParams = $.extend(commomParams,{
                         prntGdSd : prntGdSd,
                         rdGdftySe : rdGdftySe,
+                        bdrclAt : bdrclAt
                     })
                 }
                 

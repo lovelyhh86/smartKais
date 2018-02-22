@@ -137,7 +137,8 @@ function changeScfggMkty(){
     }
 
     var trgGbn = $("#trgGbn").val();
-    if(trgGbn == "01"){
+    var rdGdftySe = $("#rdGdftySe").val();
+    if(trgGbn == "01" && rdGdftySe =="110"){
         changeRdpqGdSd();
     }else if(trgGbn == "03"){
         changeBsisGdSd();
@@ -377,7 +378,7 @@ function checkRddrRdsd(){
 }
 //예고용 도로명판 규격
 function checkPrntRdsd(){
-    var useTarget = data.useTarget;
+    var useTarget = $("#useTarget").val();
     var useCd = useTarget.charAt(1);
 
     customSelectBox("prntGdSd","PRNT_GD_SD",useCd,1,1);
