@@ -2356,6 +2356,11 @@ var mapInit = function(mapId, pos) {
         var firstClick = true;
         map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
 
+            if(layer == null){
+                currentPositionLayerCheck();
+                return;
+            }
+
             var sn, features, rdGdftySe;
 
             if (feature.getKeys().indexOf('features') >= 0)
