@@ -409,7 +409,7 @@ function submitResearch(){
     var isUpdtGbn = $("#isUpdtGbn").val();
 
     //점검상태가 없는 경우
-    if(rcSttCdSel == ""){
+    if(rcSttCdSel == "" || rcSttCdSel == null){
         navigator.notification.alert(msg.checkRcSttCd,'','알림','확인');
         return;
     }

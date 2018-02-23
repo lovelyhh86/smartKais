@@ -1471,7 +1471,7 @@ var MapUtil = {
                 if(delStateCd == "01"){
                     makeOptSelectBox("rcSttCdSel","RC_STT_CD","","선택","");
                 }else if(delStateCd == "04"){//망실일 경우 망실만
-                    customSelectBox("rcSttCdSel","RC_STT_CD","1201","","");
+                    customSelectBox("rcSttCdSel","RC_STT_CD","1201",0,4);
                 }else{
                     //설치상태가 정상이 아닐경우 정상으로 변경 불가
                     makeOptSelectBox("rcSttCdSel","RC_STT_CD","1000","선택","");
