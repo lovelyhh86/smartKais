@@ -2332,7 +2332,7 @@ var mapInit = function(mapId, pos) {
                     // rdftySe : RDFTY_SE,
                     posX: newCoodi[0],
                     posY: newCoodi[1],
-                    jobSeCd: 'M'
+                    jobSeCd: 'C'
                 });
 
                 //버튼처리
@@ -3737,7 +3737,7 @@ function insertNewPos() {
                 posX: centerPoint[0],
                 posY: centerPoint[1],
                 memo: $("#newPosMemoText").val(),
-                jobSeCd: 'C'
+                jobSeCd: 'N'
             });
 
             insertMoveingPoint(param);
