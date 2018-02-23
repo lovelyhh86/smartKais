@@ -303,18 +303,27 @@ var app = {
             var def = $.Deferred();
             app.showProgress("환경구성 > DB 로딩");
 
-            util.postAJAX('', URLs.postURL(URLs.updateCodeLink, null))
-            .then(function (context, resultCode, results) {
-                var loading = false;
-                if (resultCode == 0 && !(util.isEmpty(results) || util.isEmpty(results))) {
-                    var d = results.data;
-                    var res = results.response;
-                    if(res.status == 1) {
-                        datasource.setCodeMaster(d);
-                        loading = true;
-                    }
-                }
+            var sendParams = {
+                sigCd : app.info.sigCd
+            }
+            var link = URLs.updateCodeLink;
+            var url = URLs.postURL(link, sendParams);
 
+            util.postAJAX('', url)
+            .then(function (context, rCode, results) {
+                var loading = false;
+
+                //통신오류처리
+                if (rCode != 0 || results.response.status < 0) {
+                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                    util.dismissProgress();
+                    return;
+                }else{
+                    var d = results.data;
+                    datasource.setCodeMaster(d);
+                    loading = true;
+                }
+                
                 if (!loading) {
                     navigator.notification.alert("DB 로딩 중에 장애가 발생하였습니다\n" + msg.callCenter + msg.exit, util.appExit, '알림', '확인');
                 } else {

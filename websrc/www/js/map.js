@@ -246,7 +246,7 @@ var MapUtil = {
                     navigator.notification.alert(msg.noRearcher, function () {
                         // util.goBack();
                         // return;
-                    }, '조사자', '확인');
+                    }, '알림', '확인');
                 }else if(app.info.rcrTyp != "01"){
                     navigator.notification.alert(msg.notPubRearcher, function () {
                         // util.goBack();
@@ -283,7 +283,7 @@ var MapUtil = {
                     navigator.notification.alert(msg.noRearcher, function () {
                         // util.goBack();
                         // return;
-                    }, '조사자', '확인');
+                    }, '알림', '확인');
                 }else if(app.info.rcrTyp != "01"){
                     navigator.notification.alert(msg.notPubRearcher, function () {
                         // util.goBack();
@@ -689,7 +689,7 @@ var MapUtil = {
                 //시설구분
                 makeOptSelectBox("searchOptTrgGbn","TRG_GBN","02","전체","");
                 //삭제상태코드
-                makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
+                // makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
 
             break;
             case "myResearchSpbd":
@@ -699,7 +699,7 @@ var MapUtil = {
                 //시설구분
                 makeOptSelectBox("searchOptTrgGbn","","","건물번호판","02");
                 //삭제상태코드
-                makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
+                // makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
             break;
             case "locationManageSpgf":
                 selectLocationMoveSpgfContent();
@@ -3244,8 +3244,8 @@ var featureIndex;
 var layerID = "";
 //좌표이동
 function moveingPoint(sn, pointX, pointY, index) {
-    console.log(sn);
-    console.log(pointX + " , " + pointY);
+    // console.log(sn);
+    // console.log(pointX + " , " + pointY);
 
     $("#moveInfo").show();
 
@@ -3304,7 +3304,7 @@ function moveingPoint(sn, pointX, pointY, index) {
 function insertMoveingPoint(param) {
     
     var link = URLs.moveingPointSpgf;
-    if(insertPointType == "spgf"){
+    if(insertPointType == "spgf" || param.sn != null){
         link = URLs.moveingPointSpgf;
     }else if(insertPointType == "nmtg"){
         link = URLs.moveingPointSpbdNmtg;

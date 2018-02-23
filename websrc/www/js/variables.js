@@ -7,6 +7,7 @@ var PUSH_TYPE = {
 var URLs = {
     "versionLink": { svcNm: "qVersion" },
     "updateCodeLink": { svcNm: "sCmCd" },
+    "selectCodeLink": { svcNm: "sCmCode" },
     "helpDeskListLink": { svcNm: "sQnABoard" },
     "helpdeskReplylink": { svcNm: "replyQnABoard" },
     //기초조사

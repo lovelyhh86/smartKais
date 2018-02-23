@@ -203,7 +203,7 @@
     }
     .newPosContent .label { position: fixed; width: 300px; margin-top: -2.2em; margin-left: -1.8em; }
     #moveInfo .label { bottom: 1em; position: fixed; left: 12em; }
-    #viewMapInfo .label { bottom: 11em; position: fixed; left: 17em; }
+    #viewMapInfo .label { bottom: 11em; position: fixed; left: 14em; }
   
   .buttonDiv{    
       width: 100%;
@@ -221,7 +221,7 @@
 
   .newPosContent img{padding: 1em;}
   
-  .newPosMemo{display: none; position:absolute; top:9em; right:13em; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff;z-index: 9001; }
+  .newPosMemo{display: none; position:absolute; top:23em; right:12em; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff;z-index: 9001; }
   /* .newPosMemoText{min-height: 50px} */
 
   #newPosMemoText {-webkit-box-shadow: inset 0 0px 3px rgba(0,0,0,.2);box-shadow:'';    min-height: 100px;}

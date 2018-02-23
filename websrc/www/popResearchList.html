@@ -5,7 +5,7 @@
     <div class="detailView">
         <p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
         <div class="infoWrap">
-            <div class="infoHeader">
+            <div class="infoHeader" onclick="toggleDetailView();">
                 <p class="listTitle">
                     <span class="">나의 배정목록</span>
                 </p>
@@ -40,6 +40,10 @@
                                     <th scope="row">설치상태</th>
                                     <td>
                                         <select id="searchOptDelSttCd" onchange="selectResearchContent()" class="cell100">
+                                            <option value =''>전체</option>
+                                            <option value ='01'>정상</option>
+                                            <option value ='03'>비정상</option>
+                                            <option value ='04'>망실</option>
                                         </select>
                                     </td>
                                     <th scope="row">건수</th>

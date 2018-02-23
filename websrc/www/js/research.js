@@ -111,6 +111,9 @@ function selectResearchContent(trgGbn){
                         d.buldSlno == "0"? "" : "-" + d.buldSlno
                     );
 
+                    //건물명
+                    var posBulNm = d.posBulNm == null ? '-' : d.posBulNm;
+
                     var researchOkBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='{0}' {1}>정상</button>";
                     
                     if(d.delStateCd == '01' && d.rcSttCd == null){
@@ -128,7 +131,7 @@ function selectResearchContent(trgGbn){
                             "row"+i
                             ,locBtn
                             ,d.trgGbnLbl
-                            ,"-"
+                            ,posBulNm
                             ,korRnLbl
                             ,d.delStateCdLbl
                             ,d.rcSttCdLbl

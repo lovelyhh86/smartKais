@@ -17,7 +17,7 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
 
 });
 
-//사용자 추가
+//사용자 조회 및 셋팅
 function addSearchUser(){
     var param = {
         trmnlId : app.info.opeId
@@ -58,6 +58,8 @@ function addSearchUser(){
                 $("#row"+i).data("rcrTyp",rcrTyp);
 
             }
+
+            util.toast('조사자 조회 완료');
 
         }
     );

@@ -416,3 +416,12 @@ function changeBdrclAt(){
         $(".bk").show();
     }
 }
+
+//건물용도 변경
+function changeBdtypCd(){
+    var bdtypCd_main = $("#bdtypCd_main").val();
+
+    customSelectBox2("bdtypCd","BDTYP_CD",bdtypCd_main.substr(0,2),0,2,2,5);
+
+    $("#bdtypCd").val(bdtypCd_main);
+}

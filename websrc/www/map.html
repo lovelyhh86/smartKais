@@ -17,8 +17,8 @@
               
         </div>
     </div>
-    <div id="moveInfo" style="display:none;"><span class="label">화면을 선택하여 이동하고자 하는 위치를 지정해 주세요.</span></div>
-    <div id="viewMapInfo" style="display:none;"><span class="label">아래 팝업버튼을 클릭해 주세요.</span></div>
+    <div id="moveInfo" style="display:none;"><span class="label">화면을 선택하여 이동하고자 하는 위치를 터치해 주세요.</span></div>
+    <div id="viewMapInfo" style="display:none;"><span class="label">위치 확인만 가능합니다. 제목창을 클릭해 주세요.</span></div>
     <div class="buttonDiv"> 
         <span class="btnNormal" onclick="cancleNewPos()">취소</span> 
         <span class="btnPoint" onclick="showNewPosMemo()">위치선택</span> 
@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="cell">
                     <div class="inputText w75">
-                        <textarea id="newPosMemoText" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px" oninput="txtMaxlength(this.id,'50','')"></textarea>
+                        <textarea id="newPosMemoText" name="" title="메모" maxlength="100" value="" style="height:100px;width:335px" oninput="txtMaxlength(this.id,'50','')" placeholder="메모를 입력하세요.(필수아님)"></textarea>
                     </div>
                 </div>
             </div>
