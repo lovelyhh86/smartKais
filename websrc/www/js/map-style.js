@@ -322,13 +322,28 @@ var sppnStyle = function (styleOptions, feature, mixStyle) {
     return new ol.style.Style(opt);
 };
 
+var styleEqbManSnList = new Array();
 // 건물 스타일
 var buildStyle = function (styleOptions, feature) {
     
     var ltChcYn = feature.get('LT_CHC_YN');
     var eqbManSn = feature.get('EQB_MAN_SN');
+    
     var opt;
     if(ltChcYn == "1"){
+        
+        if(eqbManSn != 0){
+            if(styleEqbManSnList.length != 0){
+                $.each(styleEqbManSnList,function( index, element ) {
+                    if(eqbManSn != element){
+                        styleEqbManSnList.push(eqbManSn);
+                    }
+                })
+            }else{
+                styleEqbManSnList.push(eqbManSn);
+            }
+        }
+        
         opt = {
             stroke: new ol.style.Stroke({
                 color: 'red',
@@ -339,25 +354,55 @@ var buildStyle = function (styleOptions, feature) {
               })
         };
     }else{
-        opt = {
-            // image: new ol.style.Circle({
-            //     radius: 7,
-            //     fill: new ol.style.Fill({
-            //         color: 'orange'
-            //     }),
-            //     stroke: new ol.style.Stroke({
-            //         color: 'white',
-            //         width: 1
-            //     })
-            // })
-            stroke: new ol.style.Stroke({
-                color: 'blue',
-                width: 3
-              }),
-            fill: new ol.style.Fill({
-                color: 'rgba(0, 0, 255, 0.1)'
-              })
-        };
+        if(styleEqbManSnList.length != 0){
+            $.each(styleEqbManSnList,function( index, element ) {
+                // console.log(index + ">>" +element);
+    
+                if(eqbManSn == element){
+                    opt = {
+                        stroke: new ol.style.Stroke({
+                            color: 'red',
+                            width: 4
+                          }),
+                        fill: new ol.style.Fill({
+                            color: 'rgba(255, 0, 0, 0.1)'
+                          })
+                    };
+                }else{
+                    opt = {
+                        // image: new ol.style.Circle({
+                        //     radius: 7,
+                        //     fill: new ol.style.Fill({
+                        //         color: 'orange'
+                        //     }),
+                        //     stroke: new ol.style.Stroke({
+                        //         color: 'white',
+                        //         width: 1
+                        //     })
+                        // })
+                        stroke: new ol.style.Stroke({
+                            color: 'blue',
+                            width: 3
+                          }),
+                        fill: new ol.style.Fill({
+                            color: 'rgba(0, 0, 255, 0.1)'
+                          })
+                    };
+                }
+    
+            })
+        }else{
+            opt = {
+                stroke: new ol.style.Stroke({
+                    color: 'blue',
+                    width: 3
+                  }),
+                fill: new ol.style.Fill({
+                    color: 'rgba(0, 0, 255, 0.1)'
+                  })
+            };
+        }
+        
     }
 
     
