@@ -84,10 +84,12 @@ function firstTextZero(id){
     if(targetlength > 1 && firstText == "0"){
         targetText.val(targetVal.substring(1, targetlength));
     }
-    
+
     if(targetVal.indexOf(".") != -1){
         targetText.val(targetVal.substring(0,targetVal.indexOf("."))+targetVal.substring(targetVal.indexOf(".")+1,targetlength));
     }
+
+    $("#"+id).val(parseInt(targetVal));
     // checkDot(id);
 }
 
@@ -251,12 +253,19 @@ function changeBsisGdSd(){
     var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
 
     var codeValue = gdftyForm.charAt(0) + useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
-
+    var lastNum = 3;
     if(bsis_itlpcSe.charAt(2) == "7"){
         codeValue = gdftyForm.charAt(0) +"97";
+        lastNum = 3;
+    }else if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){
+        codeValue = "12"
+        lastNum = 2;
+    }else if(useTarget == "02000" || useTarget == "03000" || useTarget == "06000"){
+        codeValue = "13"
+        lastNum = 2;
     }
 
-    customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,3);
+    customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,lastNum);
     $("#bsis_bsisGdSd").val(bsis_bsisGdSd);
 }
 //설치시설물_메인 변경(기초번호판)
@@ -272,9 +281,10 @@ function changeBsisInstlFty(){
     var bsis_instlFty = $("#bsis_instlFty").val();
 
     if(bsis_instlFty != "99"){
-        $("#bsis_insFtyDc").attr("disabled","disabled")
+        $("#bsis_insFtyDc").attr("disabled","disabled");
         $("#insFtyDc").hide();
     }else{
+        $("#bsis_insFtyDc").removeAttr("disabled");
         $("#insFtyDc").show();
     }
 }

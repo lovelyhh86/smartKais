@@ -1200,17 +1200,17 @@ var MapUtil = {
                         $(".title").append(title);
 
                         //설치장소 구분
-                        $("#bsis_itlpcSeLbl").html(data.bsis_itlpcSeLbl);
+                        // $("#bsis_itlpcSeLbl").html(data.bsis_itlpcSeLbl);
                         
                         makeOptSelectBox("bsis_itlpcSe","ITLPC_SE","","","");
                         $("#bsis_itlpcSe").val(data.bsis_itlpcSe);
-                        $("#bsis_itlpcSe").hide();
+                        // $("#bsis_itlpcSe").hide();
                         //설치시설물
-                        $("#bsis_instlFtyLbl").html(data.bsis_instlFtyLbl);
+                        // $("#bsis_instlFtyLbl").html(data.bsis_instlFtyLbl);
                         
                         makeOptSelectBox("bsis_instlFty","INSTL_FTY","","","");
                         $("#bsis_instlFty").val(data.bsis_instlFty);
-                        $("#bsis_instlFty").hide();
+                        // $("#bsis_instlFty").hide();
                         changeBsisInstlFty();
                         //설치시설물 기타 상세내용
                         $("#bsis_insFtyDc").val(data.bsis_insFtyDc);
