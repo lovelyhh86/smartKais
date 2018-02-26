@@ -1201,15 +1201,35 @@ var MapUtil = {
 
                         //설치장소 구분
                         // $("#bsis_itlpcSeLbl").html(data.bsis_itlpcSeLbl);
-                        
                         makeOptSelectBox("bsis_itlpcSe","ITLPC_SE","","","");
                         $("#bsis_itlpcSe").val(data.bsis_itlpcSe);
                         // $("#bsis_itlpcSe").hide();
                         //설치시설물
-                        // $("#bsis_instlFtyLbl").html(data.bsis_instlFtyLbl);
+
+                        var bsis_instlFty = data.bsis_instlFty;
                         
-                        makeOptSelectBox("bsis_instlFty","INSTL_FTY","","","");
-                        $("#bsis_instlFty").val(data.bsis_instlFty);
+                        if(bsis_instlFty.charAt(0) == '0'){
+                            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+                            // $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+                            $("#bsis_instlFty_main").val(bsis_instlFty);
+                            
+                            // changeBsisInstlFty();
+                            $("#bsis_instlFty_sub").hide();
+                        }else{
+                            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+                            // $("#bsis_instlFty_main").append("<option value='00' selected>기타</option>");
+
+                            // customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
+                            // $("#bsis_instlFty_main").val("00");
+                            
+                            // $("#bsis_instlFty").val(data.bsis_instlFty);
+                            // changeBsisInstlFty();
+                            $("#bsis_instlFty_main").val('00');
+                            changeBsisInstlFty();
+                            $("#bsis_instlFty").val(bsis_instlFty);
+                        }
+
+                        
                         // $("#bsis_instlFty").hide();
                         changeBsisInstlFty();
                         //설치시설물 기타 상세내용

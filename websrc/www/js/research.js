@@ -590,6 +590,32 @@ function customSelectBox2(target, colume, useCode, startIndex, endIndex,unUsedSt
     }
 }
 
+//커스텀 셀렉트박스 만들기3
+function customSelectBox3(target, colume, unUseCode, startIndex, endIndex ,defaultValue ,defaultText){
+    var targetId = $("#"+target);
+    targetId.empty();
+
+    var optionFormat = "<option value='{0}'>{1}</option>";
+
+    var optionTxt = ""; 
+    var codeList = app.codeMaster[CODE_GROUP[colume]];
+    
+    for(var c in codeList){
+        if(c != "GroupNm"){
+
+            if(c.substr(startIndex,endIndex) != unUseCode){
+                optionTxt = optionFormat.format(c,codeList[c]);
+                targetId.append(optionTxt); 
+            }
+        
+        }
+    }
+    if(defaultText != null){
+        optionTxt = optionFormat.format(defaultValue, defaultText);
+        targetId.append(optionTxt);
+    }
+}
+
 function impossibleAlert(){
     navigator.notification.alert(msg.impossibleNormal,
         function(){

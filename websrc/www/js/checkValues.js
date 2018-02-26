@@ -274,11 +274,52 @@ function changeBsisInstlFtyMain(){
 
     if(bsis_instlFty_main == "00"){ //메인의 기타 코드없음;;
 
+        customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+        $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+        $("#bsis_instlFty_main").val(bsis_instlFty_main);
+
+        customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
+        changeBsisInstlFty();
+
+        $("#bsis_instlFty_sub").show();
+    }else{
+        customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+        $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+
+        //서브 초기화
+        $("#bsis_instlFty").val('');
+        changeBsisInstlFty();
+
+        $("#bsis_instlFty_sub").hide();
     }
 }
 //설치시설물 변경(기초번호판)
 function changeBsisInstlFty(){
+    // var bsis_instlFty_main = $("#bsis_instlFty_main").val();
     var bsis_instlFty = $("#bsis_instlFty").val();
+
+    if(bsis_instlFty.charAt(0) == "0"){
+
+        customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+        $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+        // $("#bsis_instlFty_main").val(bsis_instlFty_main);
+
+        customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
+        // $("#bsis_instlFty").val(bsis_instlFty);
+        // changeBsisInstlFty();
+
+        $("#bsis_instlFty_sub").show();
+    }else{
+        customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+        $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+        // $("#bsis_instlFty_main").val(bsis_instlFty_main);
+
+        //서브 초기화
+        $("#bsis_instlFty").val('');
+        // changeBsisInstlFty();
+
+        $("#bsis_instlFty_sub").hide();
+    }
 
     if(bsis_instlFty != "99"){
         $("#bsis_insFtyDc").attr("disabled","disabled");
@@ -287,6 +328,7 @@ function changeBsisInstlFty(){
         $("#bsis_insFtyDc").removeAttr("disabled");
         $("#insFtyDc").show();
     }
+    
 }
 //광고에따른 분류변경(지역안내판)
 function changeAdvrtsCd(){

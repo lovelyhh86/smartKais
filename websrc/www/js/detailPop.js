@@ -2275,7 +2275,7 @@ function modify(){
                 //설치장소구분
                 var bsis_itlpcSe = $("#bsis_itlpcSe").val();
                 //설치시설물
-                var bsis_instlFty = $("#bsis_instlFty").val();
+                var bsis_instlFty = $("#bsis_instlFty_main").val() == '00'?$("#bsis_instlFty").val() : $("#bsis_instlFty_main").val();
                 //설치시설물 기타상세
                 var bsis_insFtyDc = $("#bsis_insFtyDc").val();
                 //곡면분류
@@ -2509,7 +2509,13 @@ function loadUpdtData(isImages){
                         for(var d in data){
                             if(data[d] != null){
                                 $("#"+d).val(data[d]);
-                                $("#"+d).attr("style","color:red");
+
+                                if(d == "bsis_instlFty" && data[d].charAt(0) == 0){
+                                    $("#"+d+"_main").attr("style","color:red");
+                                }else{
+                                    $("#"+d).attr("style","color:red");
+                                }
+                                
                                 //셀렉트박스 변경을 위한 적용
                                 $("#"+d).trigger('change');
                             }
