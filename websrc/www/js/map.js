@@ -1209,24 +1209,21 @@ var MapUtil = {
                         var bsis_instlFty = data.bsis_instlFty;
                         
                         if(bsis_instlFty.charAt(0) == '0'){
-                            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
-                            // $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+                            customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+                            $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
                             $("#bsis_instlFty_main").val(bsis_instlFty);
                             
                             // changeBsisInstlFty();
-                            $("#bsis_instlFty_sub").hide();
+                            $("#bsis_instlFty").attr("disabled","disabled");
                         }else{
-                            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
-                            // $("#bsis_instlFty_main").append("<option value='00' selected>기타</option>");
-
-                            // customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
-                            // $("#bsis_instlFty_main").val("00");
-                            
-                            // $("#bsis_instlFty").val(data.bsis_instlFty);
+                            customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+                            $("#bsis_instlFty_main").append("<option value='00' selected>기타</option>");
+                            $("#bsis_instlFty_main").val("00");
                             // changeBsisInstlFty();
-                            $("#bsis_instlFty_main").val('00');
-                            changeBsisInstlFty();
-                            $("#bsis_instlFty").val(bsis_instlFty);
+
+                            customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
+                            $("#bsis_instlFty").val(data.bsis_instlFty);
+                            
                         }
 
                         

@@ -281,7 +281,7 @@ function changeBsisInstlFtyMain(){
         customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
         changeBsisInstlFty();
 
-        $("#bsis_instlFty_sub").show();
+        $("#bsis_instlFty_td").show();
     }else{
         customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
         $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
@@ -290,38 +290,40 @@ function changeBsisInstlFtyMain(){
         $("#bsis_instlFty").val('');
         changeBsisInstlFty();
 
-        $("#bsis_instlFty_sub").hide();
+        $("#bsis_instlFty_td").hide();
     }
 }
 //설치시설물 변경(기초번호판)
 function changeBsisInstlFty(){
-    // var bsis_instlFty_main = $("#bsis_instlFty_main").val();
+    var bsis_instlFty_main = $("#bsis_instlFty_main").val();
     var bsis_instlFty = $("#bsis_instlFty").val();
 
-    if(bsis_instlFty.charAt(0) == "0"){
+    if(bsis_instlFty_main == "00"){
 
         customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
         $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
-        // $("#bsis_instlFty_main").val(bsis_instlFty_main);
+        $("#bsis_instlFty_main").val(bsis_instlFty_main);
 
         customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
-        // $("#bsis_instlFty").val(bsis_instlFty);
-        // changeBsisInstlFty();
+        if(bsis_instlFty != null){
+            $("#bsis_instlFty").val(bsis_instlFty);
+        }
 
-        $("#bsis_instlFty_sub").show();
+        // $("#bsis_instlFty").removeAttr("disabled");
+        $("#bsis_instlFty").show();
     }else{
         customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
         $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
-        // $("#bsis_instlFty_main").val(bsis_instlFty_main);
+        $("#bsis_instlFty_main").val(bsis_instlFty_main);
 
         //서브 초기화
-        $("#bsis_instlFty").val('');
-        // changeBsisInstlFty();
+        // $("#bsis_instlFty").val('');
 
-        $("#bsis_instlFty_sub").hide();
+        // $("#bsis_instlFty").attr("disabled","disabled");
+        $("#bsis_instlFty").hide();
     }
 
-    if(bsis_instlFty != "99"){
+    if($("#bsis_instlFty").val() != "99"){
         $("#bsis_insFtyDc").attr("disabled","disabled");
         $("#insFtyDc").hide();
     }else{

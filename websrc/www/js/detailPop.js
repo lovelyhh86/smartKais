@@ -2508,13 +2508,16 @@ function loadUpdtData(isImages){
                     }else{
                         for(var d in data){
                             if(data[d] != null){
-                                $("#"+d).val(data[d]);
+                                
 
                                 if(d == "bsis_instlFty" && data[d].charAt(0) == 0){
                                     $("#"+d+"_main").attr("style","color:red");
-                                }else{
-                                    $("#"+d).attr("style","color:red");
+                                    $("#"+d+"_main").val(data[d]);
+                                    changeBsisInstlFty();
                                 }
+
+                                $("#"+d).val(data[d]);
+                                $("#"+d).attr("style","color:red");
                                 
                                 //셀렉트박스 변경을 위한 적용
                                 $("#"+d).trigger('change');
