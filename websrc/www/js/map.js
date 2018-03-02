@@ -1068,6 +1068,30 @@ var MapUtil = {
                             makeOptSelectBox("rddr_afRdCo","AF_RD_CD","","","");
                             $("#rddr_afRdCo").val(rddr_afRdCo);
 
+                            //이면도로명판 내용
+                            var rddrCnList = data.rddrCn;
+                            if(rddrCnList.length > 0){
+                                for(i in rddrCnList){
+                                    //위치구분
+                                    var plqLcSe =rddrCnList[i].plqLcSe;
+                                    //한글도로명
+                                    var drcKorRn =rddrCnList[i].drcKorRn;
+                                    //로마자도로명
+                                    var drcRomRn =rddrCnList[i].drcRomRn;
+                                    //이면도로거리
+                                    var drcRdLt =rddrCnList[i].drcRdLt;
+                                    //방향
+                                    var drcRdDrc =rddrCnList[i].drcRdDrc;
+
+                                    $("#rddrCn_korRn_"+i).val(drcKorRn);
+                                    $("#rddrCn_drcRomRn_"+i).val(drcRomRn);
+                                    $("#rddrCn_drcRdLt_"+i).val(drcRdLt);
+
+                                    makeOptSelectBox("rddrCn_drcRdDrc_"+i,"DRC_RD_DRC","","","");
+                                    $("#rddrCn_drcRdDrc_"+i).val(drcRdDrc);
+                                }
+                            }
+
                             //규격
                             // var useTarget = data.useTarget;
                             // var rddr_rddrGdSd = data.rddr_rddrGdSd;

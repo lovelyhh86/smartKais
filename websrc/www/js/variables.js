@@ -250,6 +250,10 @@ CODE_GROUP["RDPQ_GD_SD_2"] = "GFTY112";
 CODE_GROUP["AF_RDPLQ_SE"] = "GFTY200";
 //이면도로갯수
 CODE_GROUP["AF_RD_CD"] = "GFTY201";
+//이면도로 도로명판 방향표시
+CODE_GROUP["DRC_RD_DRC"] = "GFTY202";
+//이면도로 도로명판 위치구분
+CODE_GROUP["PLQ_LC_SE"] = "GFTY203";
 //규격
 CODE_GROUP["RDDR_GD_SD"] = "GFTY210";
 //****** 예고용 도로명판 *******

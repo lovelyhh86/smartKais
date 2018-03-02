@@ -190,6 +190,19 @@ function changeRdpqGdSd(){
     customSelectBox("rdpqGdSd",colume,useCd,0,3);
 
     setGdfyWide('rdpqGdSd');
+
+
+    var korRnView = $("#frontKoreanRoadNm").val();
+    var romRnView = $("#frontRomeRoadNm").html();
+    var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
+    var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+    var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
+    var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+
+    var strarNum = "{0}{1}".format(frontStartBaseMasterNo, (frontStartBaseSlaveNo != "0" ? '-' + frontStartBaseSlaveNo : ''));
+    var endNum = "{0}{1}".format(frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
+
+    setNameplateView(korRnView, romRnView, strarNum, endNum, plqDirection);
 }
 
 //규격정보 셋팅

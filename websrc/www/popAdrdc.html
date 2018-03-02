@@ -22,6 +22,8 @@
 			<!-- 정보  -->
 				
 				<input id="sn" type="hidden" value="" />
+				<input id="trgGbn" type="hidden" value="07"/>
+				
 				<input id="reqstSe" type="hidden" value="" />
 				<input id="opeSttCd" type="hidden" value="" />
 				<input id="competReqst" type="hidden" value="" />
@@ -302,17 +304,22 @@
 						<span class="photoSub">근거리</span>
 						<span class="picImg"></span>
 						<div class="dataBtn">
-							<span class="btnNormal">삭제</span>
+							<!-- <span class="btnNormal">삭제</span> -->
 							<span class="btnPoint">촬영</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="photoNotice"><span>※ 조회된 사진은 최근사진 1장씩만 조회(사진건수는 시스템에 저장된 전체건수)</span></div>
+		<div class="photoNotice">
+			<span>※ 조회된 사진은 최근사진 1장씩만 조회(사진건수는 시스템에 저장된 전체건수)</span>
+			<br>
+			<span>※ 기존 등록 된 사진을 조회 하시려면 [원본] 버튼을 클릭하세요.</span>
+		</div>
 	</div>
 	<div class="infoFooter">
 		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
+		<span onclick="selectOldImg();" class="btnNormal">원본</span>
 		<span onclick="saveImg(DATA_TYPE.ADRDC);" class="btnPoint">저장</span>
 	</div>
 </div>

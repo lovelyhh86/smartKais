@@ -2831,7 +2831,7 @@ function selectOldImg(){
                         url = URLs.postURL(URLs.spotSelectlink, param);
                         break;
                     case DATA_TYPE.ADRDC:
-                        var sn = $("#trgSn").val();
+                        var sn = $("#sn").val();
                         param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
                         url = URLs.postURL(URLs.addresslink, param);
                         break;
@@ -2886,5 +2886,76 @@ function selectOldImg(){
 //입력창 가림 방지를 위한 화면 스크롤
 function scrollDown(size){
     $('.infoContent').scrollTop(size);
+}
+
+function setNameplateView(korRnView, romRnView, strarNum, endNum, plqDirection){
+    
+    $(".namePlateTable td>h1").empty();
+    $(".namePlateTable td>h2").empty();
+    $(".namePlateTable td>h3").empty();
+
+    $(".korRnTd1").removeAttr("colspan");
+    $(".korRnTd1").removeAttr("rowspan");
+    
+    $(".korRnTd2").removeAttr("colspan");
+    $(".korRnTd2").removeAttr("rowspan");
+
+    $(".romRnTd1").removeAttr("colspan");
+    $(".romRnTd2").removeAttr("colspan");
+    
+    var plqDirText = "";
+
+    if(plqDirection == '00100'){
+        $("#korRnView1").html(korRnView);
+        $(".korRnTd1").attr("colspan","4");
+        $(".korRnTd1").attr("rowspan","2");
+
+        $(".romRnTd1").attr("colspan","4");
+
+        $("#romRnView1").html(romRnView);
+
+        plqDirText = "→";
+        $("#plqDir").html(plqDirText);
+
+        $("#num1").html(strarNum);
+        $("#num2").html(endNum);
+
+        $(".namePlateTable").css("background-image","url('./img/main/img_road_plate_1.png')")
+    }else if(plqDirection == '00200'){
+        $(".korRnTd2").attr("colspan","2");
+        $(".korRnTd2").attr("rowspan","2");
+
+        $(".romRnTd2").attr("colspan","2");
+
+        $("#korRnView2").html(korRnView);
+        $("#romRnView2").html(romRnView);
+
+        $("#num1").html(strarNum);
+        $("#num6").html(endNum);
+
+        $(".namePlateTable").css("background-image","url('./img/main/img_road_plate_m.png')")
+    }else if(plqDirection == '00300'){
+        $(".korRnTd1").attr("colspan","4");
+        $(".korRnTd1").attr("rowspan","2");
+
+        $(".romRnTd1").attr("colspan","4");
+
+        $("#korRnView1").html(korRnView);
+        $("#romRnView1").html(romRnView);
+
+        plqDirText = "↑";
+        $("#num2").html(plqDirText);
+
+        $("#num7").html(strarNum);
+        $("#num9").html(endNum);
+
+        
+        $(".namePlateTable").css("background-image","url('./img/main/img_road_plate_f.png')")
+    }else{
+
+    }
+
+    
+    
 }
 
