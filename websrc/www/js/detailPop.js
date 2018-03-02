@@ -2828,7 +2828,7 @@ function selectOldImg(){
                         url = URLs.postURL(URLs.spotSelectlink, param);
                         break;
                     case DATA_TYPE.ADRDC:
-                        var sn = $("#trgSn").val();
+                        var sn = $("#sn").val();
                         param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
                         url = URLs.postURL(URLs.addresslink, param);
                         break;
