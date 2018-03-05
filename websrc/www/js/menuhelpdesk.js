@@ -155,8 +155,8 @@ function loadHelpdesk(container) {
         util.postAJAX([start, count], helpDeskUrl)
             .then(function(context, rCode, results) {
                 var data = results.data;
-
-                if (rCode != 0 && util.isEmpty(data) === false) {
+                //통신오류처리
+                if (rCode != 0 || util.isEmpty(data) == true) {
                     scroll.updateData(context[0], []);
                     return;
                 }

@@ -306,7 +306,9 @@ var app = {
             var sendParams = {
                 sigCd : app.info.sigCd
             }
-            var link = URLs.updateCodeLink;
+            // var link = URLs.updateCodeLink;
+            var link = URLs.selectCodeLink;//시범배포지역용
+            
             var url = URLs.postURL(link, sendParams);
 
             util.postAJAX('', url)
