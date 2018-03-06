@@ -306,7 +306,9 @@ var app = {
             var sendParams = {
                 sigCd : app.info.sigCd
             }
-            var link = URLs.updateCodeLink;
+            // var link = URLs.updateCodeLink;//중앙
+            var link = URLs.selectCodeLink;//시군구
+            
             var url = URLs.postURL(link, sendParams);
 
             util.postAJAX('', url)
