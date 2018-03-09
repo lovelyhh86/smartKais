@@ -477,6 +477,21 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
 	/* background: url("../img/main/img_road_plate_1.png") 0 0 no-repeat; */
     background-size: 100% 100%;
 }
+
+.rddrNamePlateTable{
+	color: white;
+	background: url("../img/main/img_road_plate_f.png") 0 0 no-repeat;
+    background-size: 100% 100%;
+}
+
+#rdpqInfo{
+	color: white;
+	/* background: url("../img/main/img_road_plate_1.png") 0 0 no-repeat; */
+    background-size: 100% 100%;
+}
 .namePlateCenter{
 	background-color: blue;
+}
+.leftText{
+	text-align: left;
 }

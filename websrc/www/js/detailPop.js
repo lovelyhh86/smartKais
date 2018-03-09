@@ -1,21 +1,45 @@
 function closeDetailView(){
-    var newLbl = $("p[name*='newLbl']").text();
-    if(newLbl != ""){
+    if(changedIdList.length != 0){
         navigator.notification.confirm(msg.lossClose, function(btnindex){
             if(btnindex == 1){
                 $("#detailView").popup("close", { transition: "slideup" });
                 //팝업창 상태 초기화
                 isPopState = "on";
+                //리스트초기화
+                changedIdList = new Array();
+                //원본데이터 초기화
+                $("#originDiv").empty();
             }
         }, "알림", ["확인","취소"]);
-
     }else{
         $("#viewMapInfo").hide();    
         $("#detailView").popup("close", { transition: "slideup" });
         //팝업창 상태 초기화
         isPopState = "on";
         currentPositionLayerCheck();
+        //리스트초기화
+        changedIdList = new Array();
+        //원본데이터 초기화
+        $("#originDiv").empty();
     }
+
+    // var newLbl = $("p[name*='newLbl']").text();
+    // if(newLbl != ""){
+    //     navigator.notification.confirm(msg.lossClose, function(btnindex){
+    //         if(btnindex == 1){
+    //             $("#detailView").popup("close", { transition: "slideup" });
+    //             //팝업창 상태 초기화
+    //             isPopState = "on";
+    //         }
+    //     }, "알림", ["확인","취소"]);
+
+    // }else{
+    //     $("#viewMapInfo").hide();    
+    //     $("#detailView").popup("close", { transition: "slideup" });
+    //     //팝업창 상태 초기화
+    //     isPopState = "on";
+    //     currentPositionLayerCheck();
+    // }
 }
 
 var popID;
@@ -1717,7 +1741,7 @@ function closePhotoView(force){
                 case 2: //취소
                     break;
             }
-        }, "알림", ["닫기","취소"]);
+        }, "알림", ["확인","취소"]);
     } else {
         $("#photoDialog").hide();
         $("#mask").hide();
@@ -2124,7 +2148,7 @@ function modify(){
     var scfggUla2 = $("#scfggUla2").val();
     
     //단가
-    var gdftyUnitPrice = $("#gdftyUnitPrice").val();
+    var gdftyUnitPrice = $("#gdftyUnitPrice").text();
     //가로세로두께
     var gdftyWide = $("#gdftyWide").val();
     var gdftyVertical = $("#gdftyVertical").val();
@@ -2188,12 +2212,24 @@ function modify(){
                     var plqDirection = $("#plqDirection").val();
                     //앞면도로명
                     var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
+                    var frontRomeRoadNm = $("#frontRomeRoadNm").val();
                     //시작기초번호
                     var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
                     var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
                     //종료기초번호
                     var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
                     var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+
+                    //뒷면도로명
+                    var backKoreanRoadNm = $("#backKoreanRoadNm").val();
+                    var backRomeRoadNm = $("#backRomeRoadNm").val();
+                    //시작기초번호
+                    var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
+                    var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
+                    //종료기초번호
+                    var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();
+                    var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val();
+
                     //규격
                     var rdpqGdSd = $("#rdpqGdSd").val();
                     //양면여부
@@ -2202,10 +2238,17 @@ function modify(){
                     commomParams = $.extend(commomParams,{
                         plqDirection : plqDirection,
                         frontKoreanRoadNm : frontKoreanRoadNm,
+                        frontRomeRoadNm: frontRomeRoadNm,
                         frontStartBaseMasterNo : frontStartBaseMasterNo,
                         frontStartBaseSlaveNo : frontStartBaseSlaveNo,
                         frontEndBaseMasterNo : frontEndBaseMasterNo,
                         frontEndBaseSlaveNo : frontEndBaseSlaveNo,
+                        backKoreanRoadNm : backKoreanRoadNm,
+                        backRomeRoadNm : backRomeRoadNm,
+                        backStartBaseMasterNo : backStartBaseMasterNo,
+                        backStartBaseSlaveNo : backStartBaseSlaveNo,
+                        backEndBaseMasterNo : backEndBaseMasterNo,
+                        backEndBaseSlaveNo : backEndBaseSlaveNo,
                         rdpqGdSd : rdpqGdSd,
                         rdGdftySe : rdGdftySe,
                         bdrclAt : bdrclAt,
@@ -2221,13 +2264,78 @@ function modify(){
                     var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
                     //양면여부
                     var bdrclAt = $("#bdrclAt").val();
+
+                    //이면도로 도로내용
+                    //앞면1
+                    var drcKorRn11 = $("#drcKorRn11").val();
+                    var drcRomRn11 = $("#drcRomRn11").val();
+                    var drcRdLt11 = $("#drcRdLt11").val();
+                    var drcRdDrc11 = $("#drcRdDrc11").val();
+                    //뒷면1
+                    var drcKorRn21 = $("#drcKorRn21").val();
+                    var drcRomRn21 = $("#drcRomRn21").val();
+                    var drcRdLt21 = $("#drcRdLt21").val();
+                    var drcRdDrc21 = $("#drcRdDrc21").val();
+                    //앞면2
+                    var drcKorRn12 = $("#drcKorRn12").val();
+                    var drcRomRn12 = $("#drcRomRn12").val();
+                    var drcRdLt12 = $("#drcRdLt12").val();
+                    var drcRdDrc12 = $("#drcRdDrc12").val();
+                    //뒷면2
+                    var drcKorRn22 = $("#drcKorRn22").val();
+                    var drcRomRn22 = $("#drcRomRn22").val();
+                    var drcRdLt22 = $("#drcRdLt22").val();
+                    var drcRdDrc22 = $("#drcRdDrc22").val();
+                    //앞면3
+                    var drcKorRn13 = $("#drcKorRn13").val();
+                    var drcRomRn13 = $("#drcRomRn13").val();
+                    var drcRdLt13 = $("#drcRdLt13").val();
+                    var drcRdDrc13 = $("#drcRdDrc13").val();
+                    //뒷면3
+                    var drcKorRn23 = $("#drcKorRn23").val();
+                    var drcRomRn23 = $("#drcRomRn23").val();
+                    var drcRdLt23 = $("#drcRdLt23").val();
+                    var drcRdDrc23 = $("#drcRdDrc23").val();
+
+
                     commomParams = $.extend(commomParams,{
                         rddr_plqDrc : rddr_plqDrc,
                         rddr_afRdplqSe : rddr_afRdplqSe,
                         rddr_afRdCo : rddr_afRdCo,
                         rddr_rddrGdSd : rddr_rddrGdSd,
                         rdGdftySe : rdGdftySe,
-                        bdrclAt : bdrclAt
+                        bdrclAt : bdrclAt,
+
+                        drcKorRn11 : drcKorRn11,
+                        drcRomRn11 : drcRomRn11,
+                        drcRdLt11 : drcRdLt11,
+                        drcRdDrc11 : drcRdDrc11,
+
+                        drcKorRn21 : drcKorRn21,
+                        drcRomRn21 : drcRomRn21,
+                        drcRdLt21 : drcRdLt21,
+                        drcRdDrc21 : drcRdDrc21,
+
+                        drcKorRn12 : drcKorRn12,
+                        drcRomRn12 : drcRomRn12,
+                        drcRdLt12 : drcRdLt12,
+                        drcRdDrc12 : drcRdDrc12,
+
+                        drcKorRn22 : drcKorRn22,
+                        drcRomRn22 : drcRomRn22,
+                        drcRdLt22 : drcRdLt22,
+                        drcRdDrc22 : drcRdDrc22,
+
+                        drcKorRn13 : drcKorRn13,
+                        drcRomRn13 : drcRomRn13,
+                        drcRdLt13 : drcRdLt13,
+                        drcRdDrc13 : drcRdDrc13,
+
+                        drcKorRn23 : drcKorRn23,
+                        drcRomRn23 : drcRomRn23,
+                        drcRdLt23 : drcRdLt23,
+                        drcRdDrc23 : drcRdDrc23
+
                     })
                 }else if(rdGdftySe == "310"){//예고용
                     //양면여부
@@ -2437,7 +2545,11 @@ function loadUpdtData(isImages){
             var isUpdtGbn = $("#isUpdtGbn").val();
 
             if(isUpdtGbn == "0"){
-                // navigator.notification.alert(msg.notHaveLoadUpdt, '', '알림', '확인');
+                if(isImages == "true"){
+                    navigator.notification.alert(msg.notHaveLoadUpdt, '', '알림', '확인');
+                }
+                
+                util.dismissProgress();
                 return;
             }
     
@@ -2489,7 +2601,7 @@ function loadUpdtData(isImages){
                     }
 
                     if(isImages == "true"){
-
+                    
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
@@ -2508,19 +2620,36 @@ function loadUpdtData(isImages){
                     }else{
                         for(var d in data){
                             if(data[d] != null){
-                                
 
-                                if(d == "bsis_instlFty" && data[d].charAt(0) == 0){
-                                    $("#"+d+"_main").attr("style","color:red");
-                                    $("#"+d+"_main").val(data[d]);
-                                    changeBsisInstlFty();
+                                if(d == "bsis_instlFty"){
+                                    if(data[d].charAt(0) == 0){
+                                        $("#"+d+"_main").attr("style","color:red");
+                                        $("#"+d+"_main").val(data[d]);
+                                        // changeBsisInstlFtyMain();
+                                    }else{
+                                        $("#"+d+"_main").val('00');
+                                        $("#"+d+"_main").attr("style","color:red");
+                                        
+                                        $("#"+d).val(data[d]);
+                                        $("#"+d).attr("style","color:red");
+
+                                        changeBsisInstlFty();
+                                    }
+                                        
+                                }else{
+                                    $("#"+d).val(data[d]);
+                                    $("#"+d).attr("style","color:red");
                                 }
-
-                                $("#"+d).val(data[d]);
-                                $("#"+d).attr("style","color:red");
                                 
                                 //셀렉트박스 변경을 위한 적용
                                 $("#"+d).trigger('change');
+                                $("#"+d).trigger('input');
+                                
+                                //변경 체크를 위한 셋팅
+                                $("#"+d+"_origin").val(data[d]);
+                                changedIdList = jQuery.grep(changedIdList, function(value) {
+                                    return value != d;
+                                });
                             }
                         }
                     }
@@ -2719,6 +2848,8 @@ function modifyImg(type){
                                 var oldIsUpdtGbn = $("#isUpdtGbn").val();
                                 $("#isUpdtGbn").val(oldIsUpdtGbn + "I");
                                 closePhotoView(true);   // force
+                                //승인대기 사진조회 버튼 보이기
+                                $("#updtPhotoBtn").show();
 
                                 var rcSttCd_new = $("#rcSttCd_new").text();
                                 if(rcSttCd_new != ""){
@@ -2888,12 +3019,69 @@ function scrollDown(size){
     $('.infoContent').scrollTop(size);
 }
 
-function setNameplateView(korRnView, romRnView, strarNum, endNum, plqDirection){
+//명판모양 변경
+function setNameplateView(){
+    var plqDirection = $("#plqDirection").val();
+
+    var korRnView = $("#frontKoreanRoadNm").val();
+    var romRnView = $("#frontRomeRoadNm").val();
+    var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
+    var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+    var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
+    var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+
+    
+    var rdGdftySe = $("#rdGdftySe").val();
+    //이면도로용
+    if(rdGdftySe == "210"){
+        plqDirection = $("#rddr_plqDrc").val();
+        korRnView = $("#rddr_korRn").text();
+        romRnView = $("#rddr_romRn").text();
+        frontStartBaseMasterNo = $("#rddr_stbsMn").text();
+        frontStartBaseSlaveNo = $("#rddr_stbsSn").text();
+        frontEndBaseMasterNo = $("#rddr_edbsMn").text();
+        frontEndBaseSlaveNo = $("#rddr_edbsSn").text();
+
+        var rddrCn_drcKorRn_11 = $("#rddrCn_drcKorRn_11").val();
+        var rddrCn_drcRomRn_11 = $("#rddrCn_drcRomRn_11").val();
+        var rddrCn_drcRdLt_11 = $("#rddrCn_drcRdLt_11").val();
+        var rddrCn_drcRdDrc_11 = $("#rddrCn_drcRdDrc_11").val();
+
+        $("#korRn_11").text(rddrCn_drcKorRn_11);
+        $("#romRn11").text(rddrCn_drcRomRn_11);
+        $("#drcRdLt_11").text(rddrCn_drcRdLt_11 + "M");
+        $("#drcRdDrc_11").text(rddrCn_drcRdDrc_11);
+
+        var rddrCn_drcKorRn_12 = $("#rddrCn_drcKorRn_12").val();
+        var rddrCn_drcRomRn_12 = $("#rddrCn_drcRomRn_12").val();
+        var rddrCn_drcRdLt_12 = $("#rddrCn_drcRdLt_12").val();
+        var rddrCn_drcRdDrc_12 = $("#rddrCn_drcRdDrc_12").val();
+
+        $("#korRn_12").text(rddrCn_drcKorRn_12);
+        $("#romRn12").text(rddrCn_drcRomRn_12);
+        $("#drcRdLt_12").text(rddrCn_drcRdLt_12 + "M");
+        $("#drcRdDrc_12").text(rddrCn_drcRdDrc_12);
+
+        var rddrCn_drcKorRn_13 = $("#rddrCn_drcKorRn_13").val();
+        var rddrCn_drcRomRn_13 = $("#rddrCn_drcRomRn_13").val();
+        var rddrCn_drcRdLt_13 = $("#rddrCn_drcRdLt_13").val();
+        var rddrCn_drcRdDrc_13 = $("#rddrCn_drcRdDrc_13").val();
+
+        $("#korRn_13").text(rddrCn_drcKorRn_13);
+        $("#romRn13").text(rddrCn_drcRomRn_13);
+        $("#drcRdLt_13").text(rddrCn_drcRdLt_13 + "M");
+        $("#drcRdDrc_13").text(rddrCn_drcRdDrc_13);
+
+    }
+
+    var strarNum = "{0}{1}".format(frontStartBaseMasterNo, (frontStartBaseSlaveNo != "0" ? '-' + frontStartBaseSlaveNo : ''));
+    var endNum = "{0}{1}".format(frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
     
     $(".namePlateTable td>h1").empty();
     $(".namePlateTable td>h2").empty();
     $(".namePlateTable td>h3").empty();
 
+    // 앞면
     $(".korRnTd1").removeAttr("colspan");
     $(".korRnTd1").removeAttr("rowspan");
     
@@ -2902,6 +3090,15 @@ function setNameplateView(korRnView, romRnView, strarNum, endNum, plqDirection){
 
     $(".romRnTd1").removeAttr("colspan");
     $(".romRnTd2").removeAttr("colspan");
+    // 뒷면
+    $(".bk_korRnTd1").removeAttr("colspan");
+    $(".bk_korRnTd1").removeAttr("rowspan");
+    
+    $(".bk_korRnTd2").removeAttr("colspan");
+    $(".bk_korRnTd2").removeAttr("rowspan");
+
+    $(".bk_romRnTd1").removeAttr("colspan");
+    $(".bk_romRnTd2").removeAttr("colspan");
     
     var plqDirText = "";
 
@@ -2935,26 +3132,88 @@ function setNameplateView(korRnView, romRnView, strarNum, endNum, plqDirection){
 
         $(".namePlateTable").css("background-image","url('./img/main/img_road_plate_m.png')")
     }else if(plqDirection == '00300'){
-        $(".korRnTd1").attr("colspan","4");
+        $(".korRnTd1").attr("colspan","5");
         $(".korRnTd1").attr("rowspan","2");
 
-        $(".romRnTd1").attr("colspan","4");
+        $(".romRnTd1").attr("colspan","5");
 
         $("#korRnView1").html(korRnView);
         $("#romRnView1").html(romRnView);
 
         plqDirText = "↑";
-        $("#num2").html(plqDirText);
+        $("#plqDir").html(plqDirText);
 
         $("#num7").html(strarNum);
         $("#num9").html(endNum);
-
         
         $(".namePlateTable").css("background-image","url('./img/main/img_road_plate_f.png')")
     }else{
 
     }
 
+    //양면여부
+    var bdrclAt = $("#bdrclAt").val();
+    if(bdrclAt == "1"){
+        var korRnView = $("#backKoreanRoadNm").val();
+        var romRnView = $("#backRomeRoadNm").val();
+        var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
+        var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
+        var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();
+        var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val();
+
+        var strarNum = "{0}{1}".format(backStartBaseMasterNo, (backStartBaseSlaveNo != "0" ? '-' + backStartBaseSlaveNo : ''));
+        var endNum = "{0}{1}".format(backEndBaseMasterNo, (backEndBaseSlaveNo != "0" ? '-' + backEndBaseSlaveNo : ''));
+
+        if(plqDirection == '00100'){
+            $("#bk_korRnView1").html(korRnView);
+            $(".bk_korRnTd1").attr("colspan","4");
+            $(".bk_korRnTd1").attr("rowspan","2");
+    
+            $(".bk_romRnTd1").attr("colspan","4");
+    
+            $("#bk_romRnView1").html(romRnView);
+    
+            plqDirText = "→";
+            $("#bk_plqDir").html(plqDirText);
+    
+            $("#bk_num1").html(strarNum);
+            $("#bk_num2").html(endNum);
+    
+            // $(".namePlateTable").css("background-image","url('./img/main/img_road_plate_1.png')")
+        }else if(plqDirection == '00200'){
+            $(".bk_korRnTd2").attr("colspan","2");
+            $(".bk_korRnTd2").attr("rowspan","2");
+    
+            $(".bk_romRnTd2").attr("colspan","2");
+    
+            $("#bk_korRnView2").html(korRnView);
+            $("#bk_romRnView2").html(romRnView);
+    
+            $("#bk_num1").html(strarNum);
+            $("#bk_num6").html(endNum);
+    
+            // $(".namePlateTable").css("background-image","url('./img/main/img_road_plate_m.png')")
+        }else if(plqDirection == '00300'){
+            $(".bk_korRnTd1").attr("colspan","5");
+            $(".bk_korRnTd1").attr("rowspan","2");
+    
+            $(".bk_romRnTd1").attr("colspan","5");
+    
+            $("#bk_korRnView1").html(korRnView);
+            $("#bk_romRnView1").html(romRnView);
+    
+            plqDirText = "↑";
+            $("#bk_plqDir").html(plqDirText);
+    
+            $("#bk_num7").html(strarNum);
+            $("#bk_num9").html(endNum);
+    
+            
+            // $(".bk_namePlateTable").css("background-image","url('./img/main/img_road_plate_f.png')")
+        }else{
+    
+        }
+    }
     
     
 }

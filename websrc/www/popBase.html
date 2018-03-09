@@ -27,6 +27,31 @@
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="03"/>
 
+				<div class="blueTitle">
+					<h2>상태</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="상태">
+						<caption>상태</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">설치상태</th>
+								<td colspan="3">
+									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
+									<p id="delStateCd" style="display:none;"></p>
+									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="delStateCd_new" style="display:none"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<!-- 배정 -->
 				<div class="blueTitle">
 					<h2>배정정보</h2>
@@ -110,12 +135,15 @@
 				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
 				<!-- 정보  -->
+				<div class = "redNotice">
+					<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
+				</div>
 				<div class="blueTitle">
-					<h2>상태</h2>
+					<h2>내용</h2>
 				</div>
 				<div class="tableWrap">
-					<table class="dataTable" summary="상태">
-						<caption>상태</caption>
+					<table class="dataTable" summary="내용">
+						<caption>내용</caption>
 						<colgroup>
 							<col class="cell20">
 							<col class="cell30">
@@ -124,18 +152,78 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">설치상태</th>
+								<th scope="row">설치장소 구분</th>
+								<td>
+									<!-- <p id="bsis_itlpcSeLbl"></p> -->
+									<select id="bsis_itlpcSe" class="cell100 notNull" onchange="changeBsisGdSd()"></select>
+								</td>
+								<td/><td/>
+							</tr>
+							<tr>
+								<th scope="row">설치시설물</th>
+								<td>
+									<!-- <input type="hidden" id="bsis_instlFty"></input> -->
+									<select id="bsis_instlFty_main" class="cell100 notNull" onchange="changeBsisInstlFty()"></select>
+								</td>
+								<td><select id="bsis_instlFty" class="cell100" onchange="changeBsisInstlFty()"></select></td>
+								<td/>
+							</tr>
+							<tr id="insFtyDc">
+								<th scope="row">설치시설물<br>기타상세</th>
 								<td colspan="3">
-									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
-									<p id="delStateCd" style="display:none;"></p>
-									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-									<p id="delStateCd_new" style="display:none"></p>
+									<textarea class="cell100" id="bsis_insFtyDc" onclick="scrollDown(999)" onchange="txtMaxlength(this.id,'50','0')"/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">곡면분류</th>
+								<td>
+									<select id="bsis_planeCd" class="cell100 notNull"></select>
+								</td>
+								<th scope="row">표기방법</th>
+								<td>
+									<select id="bsisMthd" class="cell100 notNull"></select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">한글 도로명</th>
+								<td onclick="scrollDown(999)">
+									<input type='text' class="cell70" id="bsis_korRn" onchange="txtMaxlength(this.id,'40')"/>
+								</td>
+								<th scope="row">로마자</th>
+								<td>
+									<p id="bsis_romRn">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">기초번호</th>
+								<td>
+									<p id="bsis_ctbsNo">&nbsp;</p>
+									<!-- <input type='number' class="cell30" id="bsis_ctbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<span>-</span>
+									<input type='number' class="cell30" id="bsis_ctbsSn"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
+								</td>
+								<td/><td/>
+							</tr>
+							<tr>
+								<th scope="row">이전승강장<br>번호</th>
+								<td>
+									<p id="bsis_bfbsNo">&nbsp;</p>
+									<!-- <input type='number' class="cell30" id="bsis_bfbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<span>-</span>
+									<input type='number' class="cell30" id="bsis_bfbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
+								</td>
+								<th scope="row">다음승강장<br>번호</th>
+								<td>
+									<p id="bsis_ntbsNo">&nbsp;</p>
+									<!-- <input type='number' class="cell30" id="bsis_ntbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
+									<span>-</span>
+									<input type='number' class="cell30" id="bsis_ntbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-
+				
 				<div class="blueTitle">
 					<h2>위치정보</h2>
 				</div>
@@ -171,9 +259,7 @@
 
 					</table>
 				</div>
-				<div class = "redNotice">
-						<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
-					</div>
+				
 				<div class="blueTitle">
 					<h2>기본정보</h2>
 				</div>
@@ -223,91 +309,7 @@
 					</table>
 				</div>
 
-				<div class="blueTitle">
-					<h2>내용</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="내용">
-						<caption>내용</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">설치장소 구분</th>
-								<td>
-									<!-- <p id="bsis_itlpcSeLbl"></p> -->
-									<select id="bsis_itlpcSe" class="cell100 notNull" onchange="changeBsisGdSd()"></select>
-								</td>
-								<td/><td/>
-							</tr>
-							<tr>
-								<th scope="row">설치시설물</th>
-								<td>
-									<!-- <input type="hidden" id="bsis_instlFty"></input> -->
-									<select id="bsis_instlFty_main" class="cell100 notNull" onchange="changeBsisInstlFty()"></select>
-								</td>
-								<td><select id="bsis_instlFty" class="cell100" onchange="changeBsisInstlFty()"></select></td>
-								<td/>
-							</tr>
-							<tr id="insFtyDc">
-								<th scope="row">설치시설물<br>기타상세</th>
-								<td colspan="3">
-									<textarea class="cell100" id="bsis_insFtyDc" onclick="scrollDown(999)" onchange="txtMaxlength(this.id,'50','0')"/>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">곡면분류</th>
-								<td>
-									<select id="bsis_planeCd" class="cell100 notNull"></select>
-								</td>
-								<th scope="row">표기방법</th>
-								<td>
-									<select id="bsisMthd" class="cell100 notNull"></select>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">한글 도로명</th>
-								<td>
-									<input type='text' class="cell70" id="bsis_korRn" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'40')"/>
-								</td>
-								<th scope="row">로마자</th>
-								<td>
-									<p id="bsis_romRn">&nbsp;</p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">기초번호</th>
-								<td>
-									<p id="bsis_ctbsNo">&nbsp;</p>
-									<!-- <input type='number' class="cell30" id="bsis_ctbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
-									<span>-</span>
-									<input type='number' class="cell30" id="bsis_ctbsSn"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
-								</td>
-								<td/><td/>
-							</tr>
-							<tr>
-								<th scope="row">이전승강장<br>번호</th>
-								<td>
-									<p id="bsis_bfbsNo">&nbsp;</p>
-									<!-- <input type='number' class="cell30" id="bsis_bfbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
-									<span>-</span>
-									<input type='number' class="cell30" id="bsis_bfbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
-								</td>
-								<th scope="row">다음승강장<br>번호</th>
-								<td>
-									<p id="bsis_ntbsNo">&nbsp;</p>
-									<!-- <input type='number' class="cell30" id="bsis_ntbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
-									<span>-</span>
-									<input type='number' class="cell30" id="bsis_ntbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				
 
 				<div class="blueTitle">
 					<h2>속성</h2>
@@ -369,7 +371,8 @@
 								</td>
 								<th scope="row">단가(원)</th>
 								<td >
-									<input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)"/>
+									<!-- <input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)"> -->
+									<span id="gdftyUnitPrice"></span><span>원</span>
 								</td>
 							</tr>
 							<tr>
@@ -460,8 +463,8 @@
 			<span>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
 		</div>
 		<div class="infoFooter">
-			<span onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
-			<span onclick="selectOldImg();" class="btnNormal">원본</span>
+			<span id="updtPhotoBtn" onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
+			<span id="orginPhotoBtn" onclick="selectOldImg();" class="btnNormal">원본</span>
 			<span onclick="closePhotoView();" class="btnNormal">닫기</span>
 			<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
 		</div>

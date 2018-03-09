@@ -28,7 +28,31 @@
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="01"/>
 				
-				
+				<div class="blueTitle">
+					<h2>상태</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="상태">
+						<caption>상태</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">설치상태</th>
+								<td colspan="3">
+									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
+									<p id="delStateCd" style="display:none;"></p>
+									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="delStateCd_new" style="display:none"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<!-- 배정 -->
 				<div class="blueTitle">
 					<h2>배정정보</h2>
@@ -112,31 +136,422 @@
 				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
 				<!-- 정보  -->
-				<div class="blueTitle">
-					<h2>상태</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="상태">
-						<caption>상태</caption>
-						<colgroup>
+				<!-- 명판모양 -->
+				<br/>
+				<div class="namePlateTable" onclick="scrollDown(380)">
+					<table class="" summary="명판모양">
+						<caption>명판모양</caption>
+						<!-- <colgroup>
+							<col class="cell4">
+							<col class="cell11">
+							<col class="cell5">
+							<col class="cell14">
 							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
+							<col class="cell11">
+							<col class="cell11">
+							<col class="cell11">
+							<col class="cell11">
+						</colgroup> -->
 						<tbody>
 							<tr>
-								<th scope="row">설치상태</th>
-								<td colspan="3">
-									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
-									<p id="delStateCd" style="display:none;"></p>
-									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-									<p id="delStateCd_new" style="display:none"></p>
+								<td></td>
+								<td class="korRnTd1">
+									<h1 id="korRnView1"></h1>
 								</td>
+								<td></td>
+
+								<td>
+									<h3 id="num7"></h3>
+								</td>
+								<td class="korRnTd2">
+									<h1 id="korRnView2"></h1>
+								</td>
+								<td></td>
+
+								<td></td>
+								<td><h3 id="num4"></h3></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<h3 id="num1"></h3>
+								</td>
+								<td>
+									<h3 id="plqDir"></h3>
+								</td>
+								<td>
+									<h3 id="num2"></h3>
+								</td>
+								<td></td>
+								<td></td>
+
+								<td><h3 id="num6"></h3></td>
+								<td>
+									<h3 id="num3"></h3>
+								</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="romRnTd1">
+									<h3 id="romRnView1"></h3>
+								</td>
+								<td></td>
+
+								<td>
+									<h3 id="num9"></h3>
+								</td>
+								<td class="romRnTd2">
+									<h3 id="romRnView2"></h3>
+								</td>
+								<td></td>
+
+								<td></td>
+								<td>
+									<h3 id="num5"></h3>
+								</td>
+								<td></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
+
+				<!-- <div class="rddrNamePlateTable" onclick="scrollDown(380)">
+						<table class="" summary="명판모양">
+							<caption>명판모양</caption>
+							<colgroup>
+								<col style="width:10%">
+								<col style="width:40%">
+								<col style="width:5%">
+								<col style="width:10%">
+								<col style="width:10%">
+								<col style="width:5%">
+								<col style="width:5%">
+								<col style="width:5%">
+								<col style="width:10%">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td></td>
+									<td class="leftText">
+										<h2 id="korRn_11"></h2>
+										<h3 id="romRn11"></h3>
+									</td>
+									<td></td>
+									<td></td>
+									<td rowspan="2">
+										<h2 id="drcRdLt_11"></h2>
+									</td>
+									<td></td>
+	
+									<td></td>
+									<td rowspan="2">
+										<h3 id="drcRdDrc_11"></h3>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										
+									</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td class="leftText">
+										<h2 id="korRn_12"></h2>
+										<h3 id="romRn12"></h3>
+									</td>
+									<td></td>
+									<td></td>
+									<td rowspan="2">
+										<h2 id="drcRdLt_12"></h2>
+									</td>
+									<td></td>
+	
+									<td></td>
+									<td rowspan="2">
+										<h3 id="drcRdDrc_12"></h3>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										
+									</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td class="leftText">
+										<h2 id="korRn_13"></h2>
+										<h3 id="romRn13"></h3>
+									</td>
+									<td></td>
+									<td></td>
+									<td rowspan="2">
+										<h2 id="drcRdLt_13"></h2>
+									</td>
+									<td></td>
+	
+									<td></td>
+									<td rowspan="2">
+										<h3 id="drcRdDrc_13"></h3>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										
+									</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div> -->
+
+				<div class="blueTitle">
+						<h2>내용</h2>
+					</div>
+					<div class="tableWrap">
+						<table class="dataTable" summary="내용">
+							<caption>내용</caption>
+							<colgroup>
+								<col class="cell20">
+								<col class="cell30">
+								<col class="cell20">
+								<col class="cell30">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">안내시설 방향</th>
+									<td>
+										<select id="rddr_plqDrc" class="cell100 notNull" onchange="setNameplateView()"/>
+									</td>
+									<th scope="row">양면여부</th>
+									<td>
+										<p id="bdrclAtLbl">&nbsp;</p>
+										<!-- <select id="bdrclAt" class="cell100 notNull" onchange="changeBdrclAt()"/> -->
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">도로명</th>
+									<td>
+										<p id="rddr_korRn">&nbsp;</p>
+									</td>
+									<th scope="row">로마자</th>
+									<td>
+										<p id="rddr_romRn">&nbsp;</p>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">시작기초번호</th>
+									<td>
+										<span id="rddr_stbsMn"></span>
+										<!-- <input type='number' class="cell30" id="rddr_stbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
+										<span>-</span>
+										<span id="rddr_stbsSn"></span>
+										<!-- <input type='number' class="cell30" id="rddr_stbsSn"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
+									</td>
+									<th scope="row">종료기초번호</th>
+									<td>
+										<span id="rddr_edbsMn"></span>
+										<!-- <input type='number' class="cell30" id="rddr_edbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
+										<span>-</span>
+										<span id="rddr_edbsSn"></span>
+										<!-- <input type='number' class="cell30" id="rddr_edbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">설치형태</th>
+									<td>
+										<select id="rddr_afRdplqSe" class="cell100 notNull" onchange="changeAfRdplqSe()"/>
+									</td>
+									<th scope="row">이면도로갯수</th>
+									<td>
+										<select id="rddr_afRdCo" class="cell100 notNull" onchange="changeAfrdCo()"/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+	
+					<div class="blueTitle">
+						<h2>이면도로 내용</h2>
+					</div>
+					<div class="tableWrap">
+						<table class="dataTable" summary="이면도로 내용" onclick="scrollDown('380')">
+							<caption>이면도로 내용</caption>
+							<colgroup>
+								<col class="cell15">
+								<col class="cell30">
+								<col class="cell20">
+								<col class="cell15">
+								<col class="cell20">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td><spen>위치구분</spen></td>
+									<td><spen>도로명</spen></td>
+									<td><spen>로마자</spen></td>
+									<td><spen>도로거리</spen></td>
+									<td><spen>도로방향</spen></td>
+								</tr>
+								<tr class="rddrCn_1">
+									<td>
+										<p>앞면1</p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcKorRn11" name = "rddrCn_11" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcKorRn11"></p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcRomRn11" name = "rddrCn_11" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcRomRn11"></p>
+									</td>
+									<td>
+										<!-- <input type="number" id="drcRdLt11" name = "rddrCn_11" class="cell100" maxlength="10" onchange="txtMaxlength(this.id,'10')" oninput="setNameplateView()"></input> -->
+										<p id="drcRdLt11"></p>
+									</td>
+									<td>
+										<!-- <select id="drcRdDrc11" name = "rddrCn_11" class="cell100" oninput="setNameplateView()"></select> -->
+										<p id="drcRdDrcLbl11"></p>
+									</td>
+								</tr>
+								<tr class="rddrCn_1">
+									<td>
+										<p>뒷면1</p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcKorRn21" name = "rddrCn_21" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcKorRn21"></p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcRomRn21" name = "rddrCn_21" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcRomRn21"></p>
+									</td>
+									<td>
+										<!-- <input type="number" id="drcRdLt21" name = "rddrCn_21" class="cell100" maxlength="10" onchange="txtMaxlength(this.id,'10')" oninput="setNameplateView()"></input> -->
+										<p id="drcRdLt21"></p>
+									</td>
+									<td>
+										<!-- <select id="drcRdDrc21" name = "rddrCn_21" class="cell100" oninput="setNameplateView()"></select> -->
+										<p id="drcRdDrcLbl21"></p>
+									</td>
+								</tr>
+
+								<tr class="rddrCn_2">
+									<td>
+										<p>앞면2</p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcKorRn12" name = "rddrCn_12" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcKorRn12"></p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcRomRn12" name = "rddrCn_12" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcRomRn12"></p>
+									</td>
+									<td>
+										<!-- <input type="number" id="drcRdLt12" name = "rddrCn_12" class="cell100" maxlength="10" onchange="txtMaxlength(this.id,'10')" oninput="setNameplateView()"></input> -->
+										<p id="drcRdLt12"></p>
+									</td>
+									<td>
+										<!-- <select id="drcRdDrc12" name = "rddrCn_12" class="cell100" oninput="setNameplateView()"></select> -->
+										<p id="drcRdDrcLbl12"></p>
+									</td>
+								</tr>
+								<tr class="rddrCn_2">
+									<td>
+										<p>뒷면2</p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcKorRn22" name = "rddrCn_22" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcKorRn22"></p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcRomRn22" name = "rddrCn_22" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcRomRn22"></p>
+									</td>
+									<td>
+										<!-- <input type="number" id="drcRdLt22" name = "rddrCn_22" class="cell100" maxlength="10" onchange="txtMaxlength(this.id,'10')" oninput="setNameplateView()"></input> -->
+										<p id="drcRdLt22"></p>
+									</td>
+									<td>
+										<!-- <select id="drcRdDrc22" name = "rddrCn_22" class="cell100" oninput="setNameplateView()"></select> -->
+										<p id="drcRdDrcLbl22"></p>
+									</td>
+								</tr>
+
+								<tr class="rddrCn_3">
+									<td>
+										<p>앞면3</p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcKorRn13" name = "rddrCn_13" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcKorRn13"></p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcRomRn13" name = "rddrCn_13" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcRomRn13"></p>
+									</td>
+									<td>
+										<!-- <input type="number" id="drcRdLt13" name = "rddrCn_13" class="cell100" maxlength="10" onchange="txtMaxlength(this.id,'10')" oninput="setNameplateView()"></input> -->
+										<p id="drcRdLt13"></p>
+									</td>
+									<td>
+										<!-- <select id="drcRdDrc13" name = "rddrCn_13" class="cell100" oninput="setNameplateView()"></select> -->
+										<p id="drcRdDrcLbl13"></p>
+									</td>
+								</tr>
+								<tr class="rddrCn_3">
+									<td>
+										<p>뒷면3</p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcKorRn23" name = "rddrCn_23" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcKorRn23"></p>
+									</td>
+									<td>
+										<!-- <input type="text" id="drcRomRn23" name = "rddrCn_23" class="cell100" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"></input> -->
+										<p id="drcRomRn23"></p>
+									</td>
+									<td>
+										<!-- <input type="number" id="drcRdLt23" name = "rddrCn_23" class="cell100" maxlength="10" onchange="txtMaxlength(this.id,'10')" oninput="setNameplateView()"></input> -->
+										<p id="drcRdLt23"></p>
+									</td>
+									<td>
+										<!-- <select id="drcRdDrc23" name = "rddrCn_23" class="cell100" oninput="setNameplateView()"></select> -->
+										<p id="drcRdDrcLbl23"></p>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+				
 
 				<div class="blueTitle">
 					<h2>위치정보</h2>
@@ -226,122 +641,7 @@
 					</table>
 				</div>
 
-				<div class="blueTitle">
-					<h2>내용</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="내용">
-						<caption>내용</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">도로명</th>
-								<td>
-									<p id="rddr_korRn">&nbsp;</p>
-								</td>
-								<th scope="row">로마자</th>
-								<td>
-									<p id="rddr_romRn">&nbsp;</p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">시작기초번호</th>
-								<td>
-									<span id="rddr_stbsMn"></span>
-									<!-- <input type='number' class="cell30" id="rddr_stbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
-									<span>-</span>
-									<span id="rddr_stbsSn"></span>
-									<!-- <input type='number' class="cell30" id="rddr_stbsSn"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
-								</td>
-								<th scope="row">종료기초번호</th>
-								<td>
-									<span id="rddr_edbsMn"></span>
-									<!-- <input type='number' class="cell30" id="rddr_edbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
-									<span>-</span>
-									<span id="rddr_edbsSn"></span>
-									<!-- <input type='number' class="cell30" id="rddr_edbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<div class="blueTitle">
-					<h2>이면도로 내용</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="이면도로 내용">
-						<caption>이면도로 내용</caption>
-						<colgroup>
-							<col class="cell30">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell20">
-						</colgroup>
-						<tbody>
-							<tr>
-								<td><spen>도로명</spen></td>
-								<td><spen>로마자</spen></td>
-								<td><spen>도로거리</spen></td>
-								<td><spen>도로방향</spen></td>
-							</tr>
-							<tr>
-								<td>
-									<!-- <p id="rddr_korRn">&nbsp;</p> -->
-									<input id="rddrCn_korRn_0" name = "rddrCn_korRn" class="cell100"></input>
-								</td>
-								<td>
-									<!-- <p id="rddr_romRn">&nbsp;</p> -->
-									<input id="rddr_romRn_0" name = "rddrCn_romRn" class="cell100"></input>
-								</td>
-								<td>
-									<input id="rddrCn_drcRdLt_0" name = "rddrCn_drcRdLt" class="cell100"></input>
-								</td>
-								<td>
-									<select id="rddrCn_drcRdDrc_0" name = "rddrCn_drcRdDrc" class="cell100"></select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<!-- <p id="rddr_korRn">&nbsp;</p> -->
-									<input id="rddrCn_korRn_1" name = "rddrCn_korRn" class="cell100"></input>
-								</td>
-								<td>
-									<!-- <p id="rddr_romRn">&nbsp;</p> -->
-									<input id="rddr_romRn_1" name = "rddrCn_romRn" class="cell100"></input>
-								</td>
-								<td>
-									<input id="rddrCn_drcRdLt_1" name = "rddrCn_drcRdLt" class="cell100"></input>
-								</td>
-								<td>
-									<select id="rddrCn_drcRdDrc_1" name = "rddrCn_drcRdDrc" class="cell100"></select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<!-- <p id="rddr_korRn">&nbsp;</p> -->
-									<input id="rddrCn_korRn_2" name = "rddrCn_korRn" class="cell100"></input>
-								</td>
-								<td>
-									<!-- <p id="rddr_romRn">&nbsp;</p> -->
-									<input id="rddr_romRn_2" name = "rddrCn_romRn" class="cell100"></input>
-								</td>
-								<td>
-									<input id="rddrCn_drcRdLt_2" name = "rddrCn_drcRdLt" class="cell100"></input>
-								</td>
-								<td>
-									<select id="rddrCn_drcRdDrc_2" name = "rddrCn_drcRdDrc" class="cell100"></select>
-								</td>
-							</tr>
-							
-						</tbody>
-					</table>
-				</div>
+				
 
 				<div class="blueTitle">
 					<h2>속성</h2>
@@ -379,27 +679,6 @@
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">안내시설 방향</th>
-								<td>
-									<select id="rddr_plqDrc" class="cell100 notNull"/>
-								</td>
-								<th scope="row">양면여부</th>
-								<td>
-									<p id="bdrclAtLbl">&nbsp;</p>
-									<select id="bdrclAt" style="display:none"></select>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">설치형태</th>
-								<td>
-									<select id="rddr_afRdplqSe" class="cell100 notNull" onchange="checkRddrRdsd()"/>
-								</td>
-								<th scope="row">이면도로갯수</th>
-								<td>
-									<select id="rddr_afRdCo" class="cell100 notNull" onchange="checkRddrRdsd()"/>
-								</td>
-							</tr>
-							<tr>
 								<th scope="row">제2외국어여부</th>
 								<td>
 									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty()"/>
@@ -423,7 +702,8 @@
 								</td>
 								<th scope="row">단가(원)</th>
 								<td >
-									<input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)">
+									<!-- <input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)"> -->
+									<span id="gdftyUnitPrice"></span><span>원</span>
 								</td>
 							</tr>
 							<tr>
@@ -515,8 +795,8 @@
 		</div>
 	</div>
 	<div class="infoFooter">
-		<span onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
-		<span onclick="selectOldImg();" class="btnNormal">원본</span>
+		<span id="updtPhotoBtn" onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
+		<span id="orginPhotoBtn" onclick="selectOldImg();" class="btnNormal">원본</span>
 		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
 		<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
 	</div>

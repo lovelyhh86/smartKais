@@ -58,7 +58,31 @@
 					</table>
 				</div>
 
-
+				<div class="blueTitle">
+					<h2>상태</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="상태">
+						<caption>상태</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">설치상태</th>
+								<td colspan="3">
+									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
+									<p id="delStateCd" style="display:none;"></p>
+									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="delStateCd_new" style="display:none"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<!--점검-->
 				<div class="blueTitle">
 					<h2>점검정보</h2>
@@ -109,31 +133,6 @@
 				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
 				<!-- 정보  -->
-				<div class="blueTitle">
-					<h2>상태</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="상태">
-						<caption>상태</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">설치상태</th>
-								<td colspan="3">
-									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
-									<p id="delStateCd" style="display:none;"></p>
-									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-									<p id="delStateCd_new" style="display:none"></p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
 
 				<div class="blueTitle">
 					<h2>위치정보</h2>
@@ -237,8 +236,8 @@
 						<tbody>
 							<tr>
 								<th scope="row">한글 도로명</th>
-								<td>
-									<input type='text' class="cell70" id="area_areaKorRn" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'40')"/>
+								<td onclick="scrollDown(999)">
+									<input type='text' class="cell70" id="area_areaKorRn" onchange="txtMaxlength(this.id,'40')"/>
 								</td>
 								<th scope="row">로마자</th>
 								<td>
@@ -344,7 +343,8 @@
 								</td>
 								<th scope="row">단가(원)</th>
 								<td >
-									<input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)"/>
+									<!-- <input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)"> -->
+									<span id="gdftyUnitPrice"></span><span>원</span>
 								</td>
 							</tr>
 							<tr>
@@ -436,8 +436,8 @@
 			<span>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
 		</div>
 		<div class="infoFooter">
-			<span onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
-			<span onclick="selectOldImg();" class="btnNormal">원본</span>
+			<span id="updtPhotoBtn" onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
+			<span id="orginPhotoBtn" onclick="selectOldImg();" class="btnNormal">원본</span>
 			<span onclick="closePhotoView();" class="btnNormal">닫기</span>
 			<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
 		</div>

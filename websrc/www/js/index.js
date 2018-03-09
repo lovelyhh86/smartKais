@@ -306,8 +306,8 @@ var app = {
             var sendParams = {
                 sigCd : app.info.sigCd
             }
-            // var link = URLs.updateCodeLink;//중앙
-            var link = URLs.selectCodeLink;//시군구
+            var link = URLs.updateCodeLink;//중앙(없어짐) 둘다 시군구
+            // var link = URLs.selectCodeLink;//시군구
             
             var url = URLs.postURL(link, sendParams);
 

@@ -28,6 +28,31 @@
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="01"/>
 				
+				<div class="blueTitle">
+					<h2>상태</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="상태">
+						<caption>상태</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">설치상태</th>
+								<td colspan="3">
+									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
+									<p id="delStateCd" style="display:none;"></p>
+									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="delStateCd_new" style="display:none"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<!-- 배정 -->
 				<div class="blueTitle">
 					<h2>배정정보</h2>
@@ -110,13 +135,14 @@
 				</div>
 				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
+				
 				<!-- 정보  -->
 				<div class="blueTitle">
-					<h2>상태</h2>
+					<h2>내용</h2>
 				</div>
 				<div class="tableWrap">
-					<table class="dataTable" summary="상태">
-						<caption>상태</caption>
+					<table class="dataTable" summary="내용">
+						<caption>내용</caption>
 						<colgroup>
 							<col class="cell20">
 							<col class="cell30">
@@ -125,18 +151,60 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">설치상태</th>
-								<td colspan="3">
-									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
-									<p id="delStateCd" style="display:none;"></p>
-									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-									<p id="delStateCd_new" style="display:none"></p>
+								<th scope="row">안내시설 방향</th>
+								<td>
+									<p>앞쪽방향용</p>
 								</td>
+								<th scope="row">양면여부</th>
+								<td>
+									<!-- <p id="bdrclAtLbl">&nbsp;</p> -->
+									<!-- <p id="bdrclAt" style="display:none"></p> -->
+									<select id="bdrclAt" class="cell100 notNull" onchange="changeBdrclAtPrnt(this.id)"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan='4'>앞면</td>
+							</tr>
+							<tr>
+								<th scope="row">앞면 도로명</th>
+								<td>
+									<span id="prnt_ftKorRn"></span>
+								</td>
+								<th scope="row">로마자</th>
+								<td>
+									<p id="prnt_ftRomRn">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">앞면 도로거리</th>
+								<td>
+									<span id="prnt_ftRdLt"></span>
+								</td>
+								<td/><td/>
+							</tr>
+							<tr class="bk">
+								<td colspan='4'>뒷면</td>
+							</tr>
+							<tr class="bk">
+								<th scope="row">뒷면 도로명</th>
+								<td>
+									<p id="prnt_bkKorRn">&nbsp;</p>
+								</td>
+								<th scope="row">로마자</th>
+								<td>
+									<p id="prnt_bkRomRn">&nbsp;</p>
+								</td>
+							</tr>
+							<tr class="bk">
+								<th scope="row">뒷면 도로거리</th>
+								<td>
+									<span id="prnt_bkRdLt"></span>
+								</td>
+								<td/><td/>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-
 				<div class="blueTitle">
 					<h2>위치정보</h2>
 				</div>
@@ -225,56 +293,7 @@
 					</table>
 				</div>
 
-				<div class="blueTitle">
-					<h2>내용</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="내용">
-						<caption>내용</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">앞면 도로명</th>
-								<td>
-									<span id="prnt_ftKorRn"></span>
-								</td>
-								<th scope="row">로마자</th>
-								<td>
-									<p id="prnt_ftRomRn">&nbsp;</p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">앞면 도로거리</th>
-								<td>
-									<span id="prnt_ftRdLt"></span>
-								</td>
-								<td/><td/>
-							</tr>
-							<tr class="bk">
-								<th scope="row">뒷면 도로명</th>
-								<td>
-									<p id="prnt_bkKorRn">&nbsp;</p>
-								</td>
-								<th scope="row">로마자</th>
-								<td>
-									<p id="prnt_bkRomRn">&nbsp;</p>
-								</td>
-							</tr>
-							<tr class="bk">
-								<th scope="row">뒷면 도로거리</th>
-								<td>
-									<span id="prnt_bkRdLt"></span>
-								</td>
-								<td/><td/>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				
 
 				<div class="blueTitle">
 					<h2>속성</h2>
@@ -312,19 +331,6 @@
 								</td>
 							</tr>
 							<tr>
-								<!-- <th scope="row">안내시설 방향</th>
-								<td>
-									<select id="plqDirection" class="cell100" onchange="changeRdpqGdSd()"/>
-								</td> -->
-								<td/><td/>
-								<th scope="row">양면여부</th>
-								<td>
-									<!-- <p id="bdrclAtLbl">&nbsp;</p> -->
-									<!-- <p id="bdrclAt" style="display:none"></p> -->
-									<select id="bdrclAt" class="cell100 notNull" onchange=""/>
-								</td>
-							</tr>
-							<tr>
 								<th scope="row">제2외국어여부</th>
 								<td>
 									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty()"/>
@@ -348,7 +354,8 @@
 								</td>
 								<th scope="row">단가(원)</th>
 								<td >
-									<input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)">
+									<!-- <input type='number' class="cell70" id="gdftyUnitPrice" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkUnitPrice(this.id)" oninput="firstTextZero(this.id)"> -->
+									<span id="gdftyUnitPrice"></span><span>원</span>
 								</td>
 							</tr>
 							<tr>
@@ -440,8 +447,8 @@
 		</div>
 	</div>
 	<div class="infoFooter">
-		<span onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
-		<span onclick="selectOldImg();" class="btnNormal">원본</span>
+		<span id="updtPhotoBtn" onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
+		<span id="orginPhotoBtn" onclick="selectOldImg();" class="btnNormal">원본</span>
 		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
 		<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
 	</div>
