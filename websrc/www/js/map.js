@@ -1013,7 +1013,8 @@ var MapUtil = {
                             //앞면 도로명(국문)
                             $("#frontKoreanRoadNm").val(data.frontKoreanRoadNm);
                             //앞면 도로명(로마자)
-                            $("#frontRomeRoadNm").val(data.frontRomeRoadNm);
+                            // $("#frontRomeRoadNm").val(data.frontRomeRoadNm);
+                            $("#frontRomeRoadNm").text(data.frontRomeRoadNm);
                             //앞면시작기초번호(0-0)
                             $("#frontStartBaseMasterNo").val(data.frontStartBaseMasterNo);
                             $("#frontStartBaseSlaveNo").val(data.frontStartBaseSlaveNo);
@@ -1025,7 +1026,8 @@ var MapUtil = {
                             //뒷면 도로명(국문)
                             $("#backKoreanRoadNm").val(data.backKoreanRoadNm);
                             //뒷면 도로명(로마자)
-                            $("#backRomeRoadNm").val(data.backRomeRoadNm);
+                            // $("#backRomeRoadNm").val(data.backRomeRoadNm);
+                            $("#backRomeRoadNm").text(data.backRomeRoadNm);
                             //뒷면시작기초번호(0-0)
                             $("#backStartBaseMasterNo").val(data.backStartBaseMasterNo);
                             $("#backStartBaseSlaveNo").val(data.backStartBaseSlaveNo);
@@ -1099,7 +1101,7 @@ var MapUtil = {
                                     // $("#drcRdLt"+plqLcSe).val(drcRdLt);
                                     $("#drcKorRn"+plqLcSe).text(drcKorRn);
                                     $("#drcRomRn"+plqLcSe).text(drcRomRn);
-                                    $("#drcRdLt"+plqLcSe).text(drcRdLt);
+                                    $("#drcRdLt"+plqLcSe).text(drcRdLt + "M");
                                     
                                     // makeOptSelectBox("drcRdDrc"+plqLcSe,"DRC_RD_DRC","","","");
                                     // $("#drcRdDrc"+plqLcSe).val(drcRdDrc);
@@ -1365,7 +1367,7 @@ var MapUtil = {
                             $("#bulNmtFt").hide();
                         }
                         //용도
-                        changeBuldNmtPurpose();
+                        changeBuldNmtPurpose("buldNmtType");
                         $("#buldNmtPurpose").val(data.buldNmtPurpose);
                         //규격
                         changeBuldNmtCd();
@@ -2163,85 +2165,87 @@ var mapInit = function(mapId, pos) {
         // typeName: "tlv_spbd_buld",
         typeName: "tlv_spbd_buld_skm",
         dataType: DATA_TYPE.BULD,
-        style: {
-            label: {
-                chkCondition: function(f, o) { return (parseInt(f.get(o.data[2])) == 0) },
-                format: ["{1}-{2}({0})", "{1}({0})"],
-                data: ["BUL_MAN_NO", "BULD_MNNM", "BULD_SLNO"],
-                textOffsetY: 0,
-                width: 3
-            }
-        },
-        maxResolution: MapUtil.setting.maxResolution
+        // style: {
+        //     label: {
+        //         chkCondition: function(f, o) { return (parseInt(f.get(o.data[2])) == 0) },
+        //         format: ["{1}-{2}({0})", "{1}({0})"],
+        //         data: ["BUL_MAN_NO", "BULD_MNNM", "BULD_SLNO"],
+        //         textOffsetY: 0,
+        //         width: 3
+        //     }
+        // },
+        maxResolution: MapUtil.setting.maxResolution,
+        viewProgress: false,
+        renderMode: 'image',
     });
     // 출입구 레이어
-    var lyr_tl_spbd_entrc = getFeatureLayer({
-        title: "건물번호판",
-        typeName: "tl_spbd_entrc",
-        dataType: DATA_TYPE.ENTRC,
-        style: {
-            radius: 15,
-            label: {
-                format: ["{0}({1}-{2})"],
-                data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-                textOffsetY: -20
-            }
-        },
-        maxResolution: .25
-    });
+    // var lyr_tl_spbd_entrc = getFeatureLayer({
+    //     title: "건물번호판",
+    //     typeName: "tl_spbd_entrc",
+    //     dataType: DATA_TYPE.ENTRC,
+    //     style: {
+    //         radius: 15,
+    //         label: {
+    //             format: ["{0}({1}-{2})"],
+    //             data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+    //             textOffsetY: -20
+    //         }
+    //     },
+    //     maxResolution: .25
+    // });
     // 도로명판 레이어
-    var lyr_tl_spgf_rdpq = getFeatureLayer({
-        title: "도로명판",
-        typeName: "tlv_spgf_rdpq",
-        dataType: DATA_TYPE.RDPQ,
-        style: {
-            label: {
-                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-                textOffsetX: -1,
-                textOffsetY: -18,
-                width: 1
-            },
-            radius: 12
-        },
-        cluster: { distance: 30 },
-        maxResolution: 2
-    });
+    // var lyr_tl_spgf_rdpq = getFeatureLayer({
+    //     title: "도로명판",
+    //     typeName: "tlv_spgf_rdpq",
+    //     dataType: DATA_TYPE.RDPQ,
+    //     style: {
+    //         label: {
+    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
+    //             textOffsetX: -1,
+    //             textOffsetY: -18,
+    //             width: 1
+    //         },
+    //         radius: 12
+    //     },
+    //     cluster: { distance: 30 },
+    //     maxResolution: 2
+    // });
     // 지역안내판 레이어
-    var lyr_tl_spgf_area = getFeatureLayer({
-        title: "지역안내판",
-        typeName: "tlv_spgf_area",
-        dataType: DATA_TYPE.AREA,
-        style: {
-            label: {
-                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-                textOffsetX: -1,
-                textOffsetY: -18,
-                width: 1
-            },
-            radius: 12
-        },
-        cluster: { distance: 30 },
-        maxResolution: 4,
-        viewProgress: false
-    });
+    // var lyr_tl_spgf_area = getFeatureLayer({
+    //     title: "지역안내판",
+    //     typeName: "tlv_spgf_area",
+    //     dataType: DATA_TYPE.AREA,
+    //     style: {
+    //         label: {
+    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
+    //             textOffsetX: -1,
+    //             textOffsetY: -18,
+    //             width: 1
+    //         },
+    //         radius: 12
+    //     },
+    //     cluster: { distance: 30 },
+    //     maxResolution: 4,
+    //     viewProgress: false
+    // });
     // 기초번호판 레이어
-    var lyr_tl_spgf_bsis = getFeatureLayer({
-        title: "기초번호판",
-        typeName: "tlv_spgf_bsis",
-        dataType: DATA_TYPE.BSIS,
-        style: {
-            label: {
-                text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-                textOffsetX: -1,
-                textOffsetY: -18,
-                width: 1
-            },
-            radius: 12
-        },
-        cluster: { distance: 30 },
-        maxResolution: 4,
-        viewProgress: false
-    });
+    // var lyr_tl_spgf_bsis = getFeatureLayer({
+    //     title: "기초번호판",
+    //     typeName: "tlv_spgf_bsis",
+    //     dataType: DATA_TYPE.BSIS,
+    //     style: {
+    //         label: {
+    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
+    //             textOffsetX: -1,
+    //             textOffsetY: -18,
+    //             width: 1
+    //         },
+    //         radius: 12
+    //     },
+    //     cluster: { distance: 30 },
+    //     maxResolution: 4,
+    //     viewProgress: false
+    // });
     // 위치레이어
     var lyr_tlv_spgf_loc_skm = getFeatureLayer({
         title: "위치레이어",
@@ -2258,7 +2262,8 @@ var mapInit = function(mapId, pos) {
         },
         cluster: { distance: 50 },
         maxResolution: MapUtil.setting.maxResolution,
-        viewProgress: false
+        viewProgress: false,
+        renderMode: 'vector'
     });
     //지점번호판 레이어
     var lyr_tl_sppn_paninfo = getFeatureLayer({
@@ -2276,15 +2281,16 @@ var mapInit = function(mapId, pos) {
         },
         cluster: { distance: 50 },
         // maxResolution: MapUtil.setting.maxResolution,
-        viewProgress: false
+        viewProgress: false,
+        renderMode: 'vector'
     });
 
     layers = {
         "loc": lyr_tlv_spgf_loc_skm,
-        "rdpq": lyr_tl_spgf_rdpq,
-        "area": lyr_tl_spgf_area,
-        "bsis": lyr_tl_spgf_bsis,
-        //        "entrc": lyr_tl_spbd_entrc
+        // "rdpq": lyr_tl_spgf_rdpq,
+        // "area": lyr_tl_spgf_area,
+        // "bsis": lyr_tl_spgf_bsis,
+        // "entrc": lyr_tl_spbd_entrc
         "buld": lyr_tl_spbd_buld,
         "sppn": lyr_tl_sppn_paninfo
     };
@@ -3113,7 +3119,7 @@ var getFeatureLayer = function(options) {
             if (options.viewProgress != undefined && !options.viewProgress)
                 util.dismissProgress();
         },
-        strategy: ol.loadingstrategy.bbox
+        strategy: ol.loadingstrategy.bbox,
     });
 
     var source;
@@ -3139,7 +3145,9 @@ var getFeatureLayer = function(options) {
         id: options.dataType,
         title: options.title,
         maxResolution: options.maxResolution,
-        source: source
+        source: source,
+        renderMode: options.renderMode,
+        // renderBuffer: 50
     }
     vectorOptions.style = function(feature, resolution) {
         return defaultStyle(feature, resolution, options);

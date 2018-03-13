@@ -55,7 +55,7 @@ cordova.define("kr.go.juso.smartKais.plugins", function(require, exports, module
     };
 
     SmartKaisPlugins.prototype.callServiceBroker = function(data, successFn, errorFn, direct) {
-        var param = $.extend({}, { scode: 'MF_MOI_SMART_KAIS', timeout: 20000 }, data);
+        var param = $.extend({}, { scode: 'MF_MOI_SMART_KAIS', timeout: 30000 }, data);
 
         var svcNm = data.svcNm;
         var mode = data.mode;

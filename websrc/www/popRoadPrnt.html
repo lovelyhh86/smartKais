@@ -135,8 +135,10 @@
 				</div>
 				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
-				
 				<!-- 정보  -->
+				<div class = "redNotice">
+					<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
+				</div>
 				<div class="blueTitle">
 					<h2>내용</h2>
 				</div>
@@ -241,9 +243,7 @@
 
 					</table>
 				</div>
-				<div class = "redNotice">
-					<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
-				</div>
+				
 				<div class="blueTitle">
 					<h2>기본정보</h2>
 				</div>
@@ -272,17 +272,17 @@
 							<tr>
 								<th scope="row">설치지점</th>
 								<td>
-									<select id="instSpotCd" class="cell100 notNull"/>
+									<select id="instSpotCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">조명여부</th>
 								<td>
-									<select id="lghtCd" class="cell100 notNull"/>
+									<select id="lghtCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">교차로 유형</th>
 								<td>
-									<select id="instCrossCd" class="cell100 notNull"/>
+									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">설치일자</th>
                                 <td>
@@ -292,8 +292,6 @@
 						</tbody>
 					</table>
 				</div>
-
-				
 
 				<div class="blueTitle">
 					<h2>속성</h2>
@@ -317,34 +315,34 @@
 								</td>
 								<th scope="row">사용대상</th>
 								<td>
-									<select id="useTarget" class="cell100 notNull" onchange="checkPrntRdsd()"/>
+									<select id="useTarget" class="cell100 notNull" onchange="checkPrntRdsd(this.id)"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">재질</th>
 								<td>
-									<select id="gdftyQlt" class="cell100 notNull"/>
+									<select id="gdftyQlt" class="cell100 notNull" onchange="checkChangeOrigin(this.id)" />
 								</td>
 								<th scope="row">인쇄방식</th>
 								<td>
-									<select id="prtTy" class="cell100 notNull"/>
+									<select id="prtTy" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">제2외국어여부</th>
 								<td>
-									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty()"/>
+									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
 								</td>
 								<td></td><td></td>
 							</tr>
 							<tr>
 								<th scope="row">언어1</th>
 								<td>
-									<select id="scfggUla1" class="cell100"/>
+									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">언어2</th>
 								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2()"/>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
 							</tr>
 							<tr>

@@ -77,9 +77,14 @@ var util = {
             closePhotoView();
             return;
         }
+            
+        var detailPopClass = $("#detailView-popup").attr("class");
         //팝업창이 내려가 있을때
         if(isPopState == "off"){
             toggleDetailView();
+            return;
+        }else if(isPopState == "on" && detailPopClass.indexOf("ui-popup-hidden") == -1){
+            closeDetailView();
             return;
         }
 
@@ -643,6 +648,11 @@ function layerToggle(context){
             // }
         } else {
             $(".legend").toggle(false);
+            $(".ol-rotate").toggle(true);
+            $(".curPosition").toggle(true);
+            $(".returnZoom").toggle(true);
+            $(".refreshMap").toggle(true);
+
             $(".selectResearchSpbd").toggle(true);
             $(".selectAdrdc").toggle(true);
             $(".locManageSpbd").toggle(true);

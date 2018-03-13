@@ -2212,7 +2212,7 @@ function modify(){
                     var plqDirection = $("#plqDirection").val();
                     //앞면도로명
                     var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
-                    var frontRomeRoadNm = $("#frontRomeRoadNm").val();
+                    // var frontRomeRoadNm = $("#frontRomeRoadNm").val();
                     //시작기초번호
                     var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
                     var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
@@ -2222,7 +2222,7 @@ function modify(){
 
                     //뒷면도로명
                     var backKoreanRoadNm = $("#backKoreanRoadNm").val();
-                    var backRomeRoadNm = $("#backRomeRoadNm").val();
+                    // var backRomeRoadNm = $("#backRomeRoadNm").val();
                     //시작기초번호
                     var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
                     var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
@@ -2238,13 +2238,13 @@ function modify(){
                     commomParams = $.extend(commomParams,{
                         plqDirection : plqDirection,
                         frontKoreanRoadNm : frontKoreanRoadNm,
-                        frontRomeRoadNm: frontRomeRoadNm,
+                        // frontRomeRoadNm: frontRomeRoadNm,
                         frontStartBaseMasterNo : frontStartBaseMasterNo,
                         frontStartBaseSlaveNo : frontStartBaseSlaveNo,
                         frontEndBaseMasterNo : frontEndBaseMasterNo,
                         frontEndBaseSlaveNo : frontEndBaseSlaveNo,
                         backKoreanRoadNm : backKoreanRoadNm,
-                        backRomeRoadNm : backRomeRoadNm,
+                        // backRomeRoadNm : backRomeRoadNm,
                         backStartBaseMasterNo : backStartBaseMasterNo,
                         backStartBaseSlaveNo : backStartBaseSlaveNo,
                         backEndBaseMasterNo : backEndBaseMasterNo,
@@ -3024,7 +3024,8 @@ function setNameplateView(){
     var plqDirection = $("#plqDirection").val();
 
     var korRnView = $("#frontKoreanRoadNm").val();
-    var romRnView = $("#frontRomeRoadNm").val();
+    // var romRnView = $("#frontRomeRoadNm").val();
+    var romRnView = $("#frontRomeRoadNm").text();
     var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
     var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
     var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
@@ -3155,7 +3156,8 @@ function setNameplateView(){
     var bdrclAt = $("#bdrclAt").val();
     if(bdrclAt == "1"){
         var korRnView = $("#backKoreanRoadNm").val();
-        var romRnView = $("#backRomeRoadNm").val();
+        // var romRnView = $("#backRomeRoadNm").val();
+        var romRnView = $("#backRomeRoadNm").text();
         var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
         var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
         var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();

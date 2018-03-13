@@ -155,7 +155,7 @@
 								<th scope="row">설치장소 구분</th>
 								<td>
 									<!-- <p id="bsis_itlpcSeLbl"></p> -->
-									<select id="bsis_itlpcSe" class="cell100 notNull" onchange="changeBsisGdSd()"></select>
+									<select id="bsis_itlpcSe" class="cell100 notNull" onchange="changeBsisGdSd(this.id)"></select>
 								</td>
 								<td/><td/>
 							</tr>
@@ -163,9 +163,9 @@
 								<th scope="row">설치시설물</th>
 								<td>
 									<!-- <input type="hidden" id="bsis_instlFty"></input> -->
-									<select id="bsis_instlFty_main" class="cell100 notNull" onchange="changeBsisInstlFty()"></select>
+									<select id="bsis_instlFty_main" class="cell100 notNull" onchange="changeBsisInstlFty(this.id)"></select>
 								</td>
-								<td><select id="bsis_instlFty" class="cell100" onchange="changeBsisInstlFty()"></select></td>
+								<td><select id="bsis_instlFty" class="cell100" onchange="changeBsisInstlFty(this.id)"></select></td>
 								<td/>
 							</tr>
 							<tr id="insFtyDc">
@@ -177,11 +177,11 @@
 							<tr>
 								<th scope="row">곡면분류</th>
 								<td>
-									<select id="bsis_planeCd" class="cell100 notNull"></select>
+									<select id="bsis_planeCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"></select>
 								</td>
 								<th scope="row">표기방법</th>
 								<td>
-									<select id="bsisMthd" class="cell100 notNull"></select>
+									<select id="bsisMthd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"></select>
 								</td>
 							</tr>
 							<tr>
@@ -288,17 +288,17 @@
 							<tr>
 								<th scope="row">설치지점</th>
 								<td>
-									<select id="instSpotCd" class="cell100 notNull"/>
+									<select id="instSpotCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">조명여부</th>
 								<td>
-									<select id="lghtCd" class="cell100 notNull"/>
+									<select id="lghtCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">교차로 유형</th>
 								<td>
-									<select id="instCrossCd" class="cell100 notNull"/>
+									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">설치일자</th>
                                 <td>
@@ -329,17 +329,17 @@
 								<td>
 									<p id="gdftyFormLbl">&nbsp;</p>
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
-									<select id="gdftyForm" class="cell100 notNull" onchange="changeGdftyForm()"/>
+									<select id="gdftyForm" class="cell100 notNull" onchange="changeGdftyForm(this.id)"/>
 								</td>
 								<th scope="row">사용대상</th>
 								<td>
-									<select id="useTarget" class="cell100 notNull" onchange="changeUseTarget()"/>
+									<select id="useTarget" class="cell100 notNull" onchange="changeUseTarget(this.id)"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">재질</th>
 								<td>
-									<select id="gdftyQlt" class="cell100 notNull"/>
+									<select id="gdftyQlt" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">양면여부</th>
 								<td>
@@ -350,18 +350,18 @@
 							<tr>
 								<th scope="row">제2외국어여부</th>
 								<td>
-									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty()"/>
+									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
 								</td>
 								<td></td><td></td>
 							</tr>
 							<tr>
 								<th scope="row">언어1</th>
 								<td>
-									<select id="scfggUla1" class="cell100"/>
+									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">언어2</th>
 								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2()"/>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
 							</tr>
 							<tr>

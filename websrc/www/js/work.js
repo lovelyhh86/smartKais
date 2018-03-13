@@ -11,8 +11,9 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
     loadHelpdesk('#panel-qna .ui-content');  //헬프데스크 메뉴 로딩 menuhelpdesk.js
     //loadAppMenu('#mainMenu');       //앱 메뉴 로딩 menuapp.js
     addSearchUser();
-    //접속유지를 위한 호출 1000m -> 1초
-    setInterval(function(){ sendMois(); }, 600000);
+    // 조사자정보 최신화 1000m -> 1초 현재 5분으로 설정
+    // setInterval(function(){ sendMois(); }, 600000);
+    setInterval(function(){ addSearchUser(); }, 300000);
     util.on("notification",function(json,param){
 
         util.toast('push:' + json.message);
@@ -22,15 +23,17 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
 
 //사용자 조회 및 셋팅
 function addSearchUser(){
+    //폰번호
     var param = {
         trmnlId : app.info.opeId
     } ;
+    var searchUserSel = $("#searchUserSel").val();
 
     $("#searchUserSel").empty();
     $("#searchUserSel").prepend('<option disabled value="">조사자선택</option>');
-    if(app.info.searchId == undefined){
-        $("#searchUserSel").val("").trigger('change');
-    }
+    // if(app.info.searchId == undefined){
+    //     $("#searchUserSel").val("").trigger('change');
+    // }
 
     var link = URLs.selectResearcherInfo;
     var url = URLs.postURL(link,param);
@@ -60,9 +63,16 @@ function addSearchUser(){
                 $("#row"+i).data("rcrNm",rcrNm);
                 $("#row"+i).data("rcrTyp",rcrTyp);
 
-            }
+                if(!util.isEmpty(searchUserSel)){
+                    $("#searchUserSel").val(searchUserSel).trigger('change');
+                }else{
+                    $("#searchUserSel").val("").trigger('change');
+                }
 
-            util.toast('조사자 조회 완료');
+            }
+            util.dismissProgress();
+            console.log("조사자 조회.."+util.getToday(true));
+            // util.toast('조사자 조회 완료');
 
         }
     );

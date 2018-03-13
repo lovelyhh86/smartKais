@@ -200,17 +200,17 @@
 							<tr>
 								<th scope="row">설치지점</th>
 								<td>
-									<select id="instSpotCd" class="cell100 notNull"/>
+									<select id="instSpotCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">조명여부</th>
 								<td>
-									<select id="lghtCd" class="cell100 notNull"/>
+									<select id="lghtCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">교차로 유형</th>
 								<td>
-									<select id="instCrossCd" class="cell100 notNull"/>
+									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">설치일자</th>
 								<td>
@@ -263,7 +263,7 @@
 							<tr>
 								<th scope="row">광고에따른<br>분류</th>
 								<td>
-									<select id="area_advrtsCd" class="cell100 notNull" onchange="changeAdvrtsCd()"/>
+									<select id="area_advrtsCd" class="cell100 notNull" onchange="changeAdvrtsCd(this.id)"/>
 								</td>
 								<td/><td/>
 							</tr>
@@ -301,17 +301,17 @@
 								<td>
 									<p id="gdftyFormLbl">&nbsp;</p>
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
-									<select id="gdftyForm" class="cell100 notNull" onchange="changeGdftyForm()"/>
+									<select id="gdftyForm" class="cell100 notNull" onchange="changeGdftyForm(this.id)"/>
 								</td>
 								<th scope="row">사용대상</th>
 								<td>
-									<select id="useTarget" class="cell100 notNull" onchange="changeUseTarget()"/>
+									<select id="useTarget" class="cell100 notNull" onchange="changeUseTarget(this.id)"/>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">재질</th>
 								<td>
-									<select id="gdftyQlt" class="cell100 notNull"/>
+									<select id="gdftyQlt" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">양면여부</th>
 								<td>
@@ -322,18 +322,18 @@
 							<tr>
 								<th scope="row">제2외국어여부</th>
 								<td>
-									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty()"/>
+									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
 								</td>
 								<td></td><td></td>
 							</tr>
 							<tr>
 								<th scope="row">언어1</th>
 								<td>
-									<select id="scfggUla1" class="cell100"/>
+									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">언어2</th>
 								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2()"/>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
 							</tr>
 							<tr>

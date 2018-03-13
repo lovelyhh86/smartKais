@@ -268,7 +268,8 @@
 								</td>
 								<th scope="row">로마자</th>
 								<td>
-									<input type='text' class="cell100" id="frontRomeRoadNm" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"/>
+									<!-- <input type='text' class="cell100" id="frontRomeRoadNm" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"/> -->
+									<p id="frontRomeRoadNm"></p>
 								</td>
 							</tr>
 							<tr>
@@ -388,7 +389,8 @@
 									</td>
 									<th scope="row">로마자</th>
 									<td>
-										<input type='text' class="cell100" id="backRomeRoadNm" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"/>
+										<!-- <input type='text' class="cell100" id="backRomeRoadNm" onchange="txtMaxlength(this.id,'40')" oninput="setNameplateView()"/> -->
+										<p id="backRomeRoadNm"></p>
 									</td>
 								</tr>
 								<tr class="bk">
@@ -550,7 +552,7 @@
 								</td>
 								<th scope="row">언어2</th>
 								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2()"/>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
 							</tr>
 							<tr>
