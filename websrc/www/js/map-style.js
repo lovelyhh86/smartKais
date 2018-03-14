@@ -87,6 +87,8 @@ var defaultStyle = function (feature, resolution, options) {
     var index = 0;
     var styleOptions = $.extend(true, {}, defaultStyleOptions, options.style);
 
+    var dataType = options.dataType; //건물 : 99
+
     // feature 정보 이용 시 다중 건 단일 건 통일
     if (options.cluster) {
         features = feature.get("features");
@@ -95,67 +97,97 @@ var defaultStyle = function (feature, resolution, options) {
     }
     size = features.length;
 
-    var oldRdGdftySe;
-    var newRdGdftySe;
-    for(var i = 0 ; size > i; i++){
-        var LT_CHC_YN = features[i].get("LT_CHC_YN");
-        if(LT_CHC_YN == 0 && size >= 2){
-            // console.log(features[i].get("RDFTYLC_SN"));
-            index = i;
-        }
+    if(dataType != "99"){
+        var oldRdGdftySe;
+        var newRdGdftySe;
+        for(var i = 0 ; size > i; i++){
+            var LT_CHC_YN = features[i].get("LT_CHC_YN");
+            if(LT_CHC_YN == 0 && size >= 2){
+                // console.log(features[i].get("RDFTYLC_SN"));
+                index = i;
+            }
 
-        if(i==0){
-            oldRdGdftySe = features[i].get("RD_GDFTY_SE");
-        }
-        
-        if(oldRdGdftySe == "999"){
-            mixStyle = true ;
-            break;
-        }else{
-            newRdGdftySe = features[i].get("RD_GDFTY_SE");
+            if(i==0){
+                oldRdGdftySe = features[i].get("RD_GDFTY_SE");
+            }
             
-            if(oldRdGdftySe != newRdGdftySe){
+            if(oldRdGdftySe == "999"){
                 mixStyle = true ;
                 break;
+            }else{
+                newRdGdftySe = features[i].get("RD_GDFTY_SE");
+                
+                if(oldRdGdftySe != newRdGdftySe){
+                    mixStyle = true ;
+                    break;
+                }
             }
         }
-    }
-    
-
-    // 스타일 캐쉬 처리
-    var key = "";
-    var _text = styleOptions.label.text;
-    var clusterCnt = size;
-    if( size == 1 ) {
-        if(_text) {
-            if( typeof(_text) === "object" ) {
-                key = _text.func(features[index].get(_text.key));
+        
+        var key = "";
+        var _text = styleOptions.label.text;
+        var clusterCnt = size;
+        if( size == 1 ) {
+            if(_text) {
+                if( typeof(_text) === "object" ) {
+                    key = _text.func(features[index].get(_text.key));
+                } else {
+                    key = _text;
+                }
             } else {
-                key = _text;
+                    // key = getStyleLabel(features[0], styleOptions.label);
+                    key = '';
             }
+            styleOptions.label._text = key;
         } else {
-                // key = getStyleLabel(features[0], styleOptions.label);
+            if(_text) {
+                for(var i = 0 ; size > i ; i++){
+                    var label = _text.func(features[i].get(_text.key));
+                    var cnt = parseInt(label);
+                    if(!isNaN(cnt)){
+                        clusterCnt += cnt - 1;
+                    }
+                }
+            }else{
                 key = '';
+            }
+            styleOptions.label._text = key = String(clusterCnt);
         }
-        styleOptions.label._text = key;
-    } else {
-        if(_text) {
-            for(var i = 0 ; size > i ; i++){
-                var label = _text.func(features[i].get(_text.key));
-                var cnt = parseInt(label);
-                if(!isNaN(cnt)){
-                    clusterCnt += cnt - 1;
+        style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
+    }else{
+        key = features[0].get("LT_CHC_YN");
+        var eqbManSn = feature.get('EQB_MAN_SN');
+
+        if(key == 1){
+            if(eqbManSn != 0){
+                if(styleEqbManSnList.length != 0){
+                    var gbn = true;
+                    $.each(styleEqbManSnList,function( index, element ) {
+                        if(eqbManSn == element){
+                            gbn = false;
+                        }
+                    })
+                    if(gbn){
+                        styleEqbManSnList.push(eqbManSn);
+                    }
+                }else{
+                    styleEqbManSnList.push(eqbManSn);
                 }
             }
         }else{
-            key = '';
+            if(styleEqbManSnList.length != 0){
+                $.each(styleEqbManSnList,function( index, element ) {
+                    if(eqbManSn == element){
+                        key = 1;
+                    }
+                })
+            }
+
         }
-        styleOptions.label._text = key = String(clusterCnt);
+        // 스타일 캐쉬 처리
+        style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
+        styleCache[options.dataType][key] = style;
     }
-    // style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
-    // styleCache[options.dataType][key] = style;
-    
-    style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
 
     return style;
 };
@@ -327,23 +359,9 @@ var styleEqbManSnList = new Array();
 var buildStyle = function (styleOptions, feature) {
     
     var ltChcYn = feature.get('LT_CHC_YN');
-    var eqbManSn = feature.get('EQB_MAN_SN');
     
     var opt;
     if(ltChcYn == "1"){
-        
-        if(eqbManSn != 0){
-            if(styleEqbManSnList.length != 0){
-                $.each(styleEqbManSnList,function( index, element ) {
-                    if(eqbManSn != element){
-                        styleEqbManSnList.push(eqbManSn);
-                    }
-                })
-            }else{
-                styleEqbManSnList.push(eqbManSn);
-            }
-        }
-        
         opt = {
             stroke: new ol.style.Stroke({
                 color: 'red',
@@ -354,54 +372,15 @@ var buildStyle = function (styleOptions, feature) {
               })
         };
     }else{
-        if(styleEqbManSnList.length != 0){
-            $.each(styleEqbManSnList,function( index, element ) {
-                // console.log(index + ">>" +element);
-    
-                if(eqbManSn == element){
-                    opt = {
-                        stroke: new ol.style.Stroke({
-                            color: 'red',
-                            width: 4
-                          }),
-                        fill: new ol.style.Fill({
-                            color: 'rgba(255, 0, 0, 0.1)'
-                          })
-                    };
-                }else{
-                    opt = {
-                        // image: new ol.style.Circle({
-                        //     radius: 7,
-                        //     fill: new ol.style.Fill({
-                        //         color: 'orange'
-                        //     }),
-                        //     stroke: new ol.style.Stroke({
-                        //         color: 'white',
-                        //         width: 1
-                        //     })
-                        // })
-                        stroke: new ol.style.Stroke({
-                            color: 'blue',
-                            width: 3
-                          }),
-                        fill: new ol.style.Fill({
-                            color: 'rgba(0, 0, 255, 0.1)'
-                          })
-                    };
-                }
-    
-            })
-        }else{
-            opt = {
-                stroke: new ol.style.Stroke({
-                    color: 'blue',
-                    width: 3
-                  }),
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 0, 255, 0.1)'
-                  })
-            };
-        }
+        opt = {
+            stroke: new ol.style.Stroke({
+                color: 'blue',
+                width: 3
+                }),
+            fill: new ol.style.Fill({
+                color: 'rgba(0, 0, 255, 0.1)'
+                })
+        };
         
     }
 

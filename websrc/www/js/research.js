@@ -499,15 +499,18 @@ function submitResearch(){
                         layer = DATA_TYPE.BULD;
                         index = 1;
                         trgSn = trgLocSn;
+
+                        changeOneFeatherStyle();
+                    }else{
+                        closePopupAndClearMap(trgGbn);
                     }
                     
                     //시설물 번호 전역변수
                     // trgSnGlobal = trgSn
                     // MapUtil.openDetail(trgGbn, null);
-                    closePopupAndClearMap(trgGbn);
-
+                    
                     closeDetailView();
-    
+                    
                     util.dismissProgress();
     
                 },
@@ -731,4 +734,25 @@ function disableResearch(){
     $("#rcSttCdSel").attr("disabled","disabled");
     $("#rcRslt").attr("disabled","disabled");
     $("#submitRcBnt").attr("disabled","disabled");
+}
+
+//건물 한건만 점검 업데이트
+function changeOneFeatherStyle(){
+    var featureId = featureClone[0].id_;
+    var eqbManSn = featureClone[0].get("EQB_MAN_SN");
+
+    var layerList = map.getLayers().getArray();
+
+    for(var layer in layerList){
+        var title = layerList[layer].get('title');
+        if(title == "건물"){
+            if(eqbManSn == 0){
+                featureClone[0].set("LT_CHC_YN",1);
+                layerList[layer].get("source").getFeatureById(featureId).setStyle(buildStyle(defaultStyleOptions, featureClone[0])); //단건 스타일 변경
+            }else{
+                layerList[layer].get("source").clear(); //전체 초기화
+            }
+            return;
+        }
+    }
 }

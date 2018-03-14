@@ -62,14 +62,14 @@ function addSearchUser(){
                 $("#row"+i).data("rcrSn",rcrSn);
                 $("#row"+i).data("rcrNm",rcrNm);
                 $("#row"+i).data("rcrTyp",rcrTyp);
-
-                if(!util.isEmpty(searchUserSel)){
-                    $("#searchUserSel").val(searchUserSel).trigger('change');
-                }else{
-                    $("#searchUserSel").val("").trigger('change');
-                }
-
             }
+            
+            if(!util.isEmpty(searchUserSel)){
+                $("#searchUserSel").val(searchUserSel).trigger('change');
+            }else{
+                $("#searchUserSel").val("").trigger('change');
+            }
+            
             util.dismissProgress();
             console.log("조사자 조회.."+util.getToday(true));
             // util.toast('조사자 조회 완료');
