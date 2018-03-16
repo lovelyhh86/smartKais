@@ -1082,7 +1082,7 @@ var MapUtil = {
 
                             //이면도로명판 내용
                             var rddrCnList = data.rddrCn;
-                            if(rddrCnList.length > 0){
+                            if(rddrCnList != null && rddrCnList.length > 0){
                                 for(i in rddrCnList){
                                     //위치구분
                                     var plqLcSe =rddrCnList[i].plqLcSe;
