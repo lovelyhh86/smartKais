@@ -2980,11 +2980,13 @@ function selectOldImg(){
 
                         if (rcode != 0 || util.isEmpty(data) || util.isEmpty(data.files)) {
                             util.dismissProgress();
-                            util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
+                            // util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
+                            util.toast(msg.wrongPhoto);
                             return;
+                        }else{
+                            util.toast(msg.successImg);
                         }
-
-
+                        
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
@@ -2995,12 +2997,12 @@ function selectOldImg(){
                                 $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                                 MapUtil.photo.doLoaded(true, image.tbGbn);
-
-                                util.toast(msg.successImg);
+                                
                             } else {
                                 util.toast(msg.wrongPhoto);
                             }
                         }
+                        
                         util.dismissProgress();
                     }
                 );
