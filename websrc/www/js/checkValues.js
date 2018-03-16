@@ -729,14 +729,14 @@ function changeBdrclAt(id){
         $("#backEndBaseSlaveNo").val("");
     }else{
         var korRnView = $("#frontKoreanRoadNm").val();
-        var romRnView = $("#frontRomeRoadNm").val();
+        var romRnView = $("#frontRomeRoadNm").text();
         var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
         var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
         var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
         var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
 
         $("#backKoreanRoadNm").val(korRnView);
-        $("#backRomeRoadNm").val(romRnView);
+        $("#backRomeRoadNm").text(romRnView);
         $("#backStartBaseMasterNo").val(frontStartBaseMasterNo);
         $("#backStartBaseSlaveNo").val(frontStartBaseSlaveNo);
         $("#backEndBaseMasterNo").val(frontEndBaseMasterNo);
