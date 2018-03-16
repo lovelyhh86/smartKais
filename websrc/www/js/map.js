@@ -1373,7 +1373,7 @@ var MapUtil = {
                         changeBuldNmtCd();
                         $("#buldNmtCd").val(data.buldNmtCd);
                         //단가(원)
-                        $("#buldNmtUnitPrice").val(data.buldNmtUnitPrice);
+                        $("#buldNmtUnitPrice").text(data.buldNmtUnitPrice);
 
                         //가로*세로*두께
                         $("#buldNmtWide").val(data.buldNmtWide);
