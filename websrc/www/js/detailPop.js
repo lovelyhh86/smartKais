@@ -2437,7 +2437,7 @@ function modify(){
                 //두께
                 var buldNmtThickness = $("#buldNmtThickness").val();
                 //단가
-                var buldNmtUnitPrice = $("#buldNmtUnitPrice").val();
+                var buldNmtUnitPrice = $("#buldNmtUnitPrice").text();
                 //자율형 한글자 크기(가로)
                 var bulNmtFtWi = $("#bulNmtFtWi").val();
                 //자율형 한글자 크기(세로)
@@ -2986,7 +2986,7 @@ function selectOldImg(){
                         }else{
                             util.toast(msg.successImg);
                         }
-                        
+
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
