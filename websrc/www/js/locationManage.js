@@ -209,27 +209,57 @@ function selectLocationMoveSpbdNmgtContent(){
 function createRnNm(type ,d){
     var rnLbl = "";
 
-    if (type == "110") {
+    if (type == "110" || type == "210" || type == "310") {
         //명판방향
         var plqDirection = d.plqDirection;
+        //도로명
+        var frontKoreanRoadNm = d.frontKoreanRoadNm;
+        //시작기초번호
+        var frontStartBaseMasterNo = d.frontStartBaseMasterNo;
+        var frontStartBaseSlaveNo = d.frontStartBaseSlaveNo;
+        //종료기초번호
+        var frontEndBaseMasterNo = d.frontEndBaseMasterNo;
+        var frontEndBaseSlaveNo = d.frontEndBaseSlaveNo;
+        //명판방향라벨
+        var PLQ_DRC = d.plqDirectionLbl;
 
-        var frontStartBaseNo = "{0}{1}".format(d.frontStartBaseMasterNo, (d.frontStartBaseSlaveNo != "0" ? '-' + d.frontStartBaseSlaveNo : ''));
-        var frontEndBaseNo = "{0}{1}".format(d.frontEndBaseMasterNo, (d.frontEndBaseSlaveNo != "0" ? '-' + d.frontEndBaseSlaveNo : ''));
+        //이면도로용
+        if(type == "210"){
+            plqDirection = d.rddr_plqDrc;
+            frontKoreanRoadNm = d.rddr_korRn;
+            frontStartBaseMasterNo = d.rddr_stbsMn;
+            frontStartBaseSlaveNo = d.rddr_stbsSn;
+            frontEndBaseMasterNo = d.rddr_edbsMn;
+            frontEndBaseSlaveNo = d.rddr_edbsSn;
+            PLQ_DRC = d.rddr_plqDrcLbl;
+
+        }else if(type == "310"){
+            // plqDirection = data.rddr_plqDrc;
+            frontKoreanRoadNm = d.prnt_ftKorRn;
+            frontStartBaseMasterNo = "";
+            frontStartBaseSlaveNo = "";
+            frontEndBaseMasterNo = "";
+            frontEndBaseSlaveNo = "";
+        }
+
+        var frontStartBaseNo = "{0}{1}".format(frontStartBaseMasterNo, (frontStartBaseSlaveNo != "0" ? '-' + frontStartBaseSlaveNo : ''));
+        var frontEndBaseNo = "{0}{1}".format(frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
 
         if(plqDirection == '00200'){
             rnLbl = "{0} {1} {2}".format(
                     frontStartBaseNo,
-                    d.frontKoreanRoadNm ? d.frontKoreanRoadNm : '도로명없음',
+                    frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',
                     frontEndBaseNo
                 )
         }else{
             rnLbl = "{0} {1} {2} {3}".format(
-                    d.frontKoreanRoadNm ? d.frontKoreanRoadNm : '도로명없음',
+                    frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',
                     frontStartBaseNo,
                     (plqDirection == '00100' ? '→' : (plqDirection == '00300' ? '↑' : '?')),
                     frontEndBaseNo
                 )
         }
+
     }else if(type == "510"){
         //시작기초번호(0-0)
         var area_stbsNo = "{0}{1}".format(d.area_stbsMn, (d.area_stbsSn != "0" ? '-' + d.area_stbsSn : ''));

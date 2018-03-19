@@ -71,7 +71,7 @@ function addSearchUser(){
             }
             
             util.dismissProgress();
-            console.log("조사자 조회.."+util.getToday(true));
+            // console.log("조사자 조회.."+util.getToday(true));
             // util.toast('조사자 조회 완료');
 
         }

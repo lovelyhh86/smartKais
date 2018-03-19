@@ -2113,17 +2113,22 @@ function goPopNmtg(){
 //정비내용 저장
 function modify(){
 
-    var notNull = $(".notNull");
-    var notNullLength = $(".notNull").length;
-    for(i in notNull){
-        var value = $(".notNull")[i].value;
-        if(value == ""){
-            navigator.notification.alert(msg.notNullData, '', '알림', '확인');
-            var id = $(".notNull")[i].id;
-            $("#"+id).focus();
-            return;
-        }
-    }
+    // var notNull = $(".notNull");
+    // var notNullLength = $(".notNull").length;
+    // for(i in notNull){
+    //     var value = $(".notNull")[i].value;
+    //     if(value == ""){
+    //         navigator.notification.alert(msg.notNullData, '', '알림', '확인');
+    //         var id = $(".notNull")[i].id;
+    //         $("#"+id).focus();
+    //         return;
+    //     }
+    // }
+
+    // if(changedIdList.length == 0){
+    //     navigator.notification.alert(msg.noSave, '', '알림', '확인');
+    //     return;
+    // }
 
     //** 도로명판 */
     //설치지점
@@ -2212,7 +2217,7 @@ function modify(){
                     var plqDirection = $("#plqDirection").val();
                     //앞면도로명
                     var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
-                    // var frontRomeRoadNm = $("#frontRomeRoadNm").val();
+                    var frontRomeRoadNm = $("#frontRomeRoadNm").text();
                     //시작기초번호
                     var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
                     var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
@@ -2222,7 +2227,7 @@ function modify(){
 
                     //뒷면도로명
                     var backKoreanRoadNm = $("#backKoreanRoadNm").val();
-                    // var backRomeRoadNm = $("#backRomeRoadNm").val();
+                    var backRomeRoadNm = $("#backRomeRoadNm").text();
                     //시작기초번호
                     var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
                     var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
@@ -2238,13 +2243,13 @@ function modify(){
                     commomParams = $.extend(commomParams,{
                         plqDirection : plqDirection,
                         frontKoreanRoadNm : frontKoreanRoadNm,
-                        // frontRomeRoadNm: frontRomeRoadNm,
+                        frontRomeRoadNm: frontRomeRoadNm,
                         frontStartBaseMasterNo : frontStartBaseMasterNo,
                         frontStartBaseSlaveNo : frontStartBaseSlaveNo,
                         frontEndBaseMasterNo : frontEndBaseMasterNo,
                         frontEndBaseSlaveNo : frontEndBaseSlaveNo,
                         backKoreanRoadNm : backKoreanRoadNm,
-                        // backRomeRoadNm : backRomeRoadNm,
+                        backRomeRoadNm : backRomeRoadNm,
                         backStartBaseMasterNo : backStartBaseMasterNo,
                         backStartBaseSlaveNo : backStartBaseSlaveNo,
                         backEndBaseMasterNo : backEndBaseMasterNo,
@@ -2267,35 +2272,35 @@ function modify(){
 
                     //이면도로 도로내용
                     //앞면1
-                    var drcKorRn11 = $("#drcKorRn11").val();
-                    var drcRomRn11 = $("#drcRomRn11").val();
-                    var drcRdLt11 = $("#drcRdLt11").val();
-                    var drcRdDrc11 = $("#drcRdDrc11").val();
-                    //뒷면1
-                    var drcKorRn21 = $("#drcKorRn21").val();
-                    var drcRomRn21 = $("#drcRomRn21").val();
-                    var drcRdLt21 = $("#drcRdLt21").val();
-                    var drcRdDrc21 = $("#drcRdDrc21").val();
-                    //앞면2
-                    var drcKorRn12 = $("#drcKorRn12").val();
-                    var drcRomRn12 = $("#drcRomRn12").val();
-                    var drcRdLt12 = $("#drcRdLt12").val();
-                    var drcRdDrc12 = $("#drcRdDrc12").val();
-                    //뒷면2
-                    var drcKorRn22 = $("#drcKorRn22").val();
-                    var drcRomRn22 = $("#drcRomRn22").val();
-                    var drcRdLt22 = $("#drcRdLt22").val();
-                    var drcRdDrc22 = $("#drcRdDrc22").val();
-                    //앞면3
-                    var drcKorRn13 = $("#drcKorRn13").val();
-                    var drcRomRn13 = $("#drcRomRn13").val();
-                    var drcRdLt13 = $("#drcRdLt13").val();
-                    var drcRdDrc13 = $("#drcRdDrc13").val();
-                    //뒷면3
-                    var drcKorRn23 = $("#drcKorRn23").val();
-                    var drcRomRn23 = $("#drcRomRn23").val();
-                    var drcRdLt23 = $("#drcRdLt23").val();
-                    var drcRdDrc23 = $("#drcRdDrc23").val();
+                    // var drcKorRn11 = $("#drcKorRn11").val();
+                    // var drcRomRn11 = $("#drcRomRn11").val();
+                    // var drcRdLt11 = $("#drcRdLt11").val();
+                    // var drcRdDrc11 = $("#drcRdDrc11").val();
+                    // //뒷면1
+                    // var drcKorRn21 = $("#drcKorRn21").val();
+                    // var drcRomRn21 = $("#drcRomRn21").val();
+                    // var drcRdLt21 = $("#drcRdLt21").val();
+                    // var drcRdDrc21 = $("#drcRdDrc21").val();
+                    // //앞면2
+                    // var drcKorRn12 = $("#drcKorRn12").val();
+                    // var drcRomRn12 = $("#drcRomRn12").val();
+                    // var drcRdLt12 = $("#drcRdLt12").val();
+                    // var drcRdDrc12 = $("#drcRdDrc12").val();
+                    // //뒷면2
+                    // var drcKorRn22 = $("#drcKorRn22").val();
+                    // var drcRomRn22 = $("#drcRomRn22").val();
+                    // var drcRdLt22 = $("#drcRdLt22").val();
+                    // var drcRdDrc22 = $("#drcRdDrc22").val();
+                    // //앞면3
+                    // var drcKorRn13 = $("#drcKorRn13").val();
+                    // var drcRomRn13 = $("#drcRomRn13").val();
+                    // var drcRdLt13 = $("#drcRdLt13").val();
+                    // var drcRdDrc13 = $("#drcRdDrc13").val();
+                    // //뒷면3
+                    // var drcKorRn23 = $("#drcKorRn23").val();
+                    // var drcRomRn23 = $("#drcRomRn23").val();
+                    // var drcRdLt23 = $("#drcRdLt23").val();
+                    // var drcRdDrc23 = $("#drcRdDrc23").val();
 
 
                     commomParams = $.extend(commomParams,{
@@ -2306,35 +2311,35 @@ function modify(){
                         rdGdftySe : rdGdftySe,
                         bdrclAt : bdrclAt,
 
-                        drcKorRn11 : drcKorRn11,
-                        drcRomRn11 : drcRomRn11,
-                        drcRdLt11 : drcRdLt11,
-                        drcRdDrc11 : drcRdDrc11,
+                        // drcKorRn11 : drcKorRn11,
+                        // drcRomRn11 : drcRomRn11,
+                        // drcRdLt11 : drcRdLt11,
+                        // drcRdDrc11 : drcRdDrc11,
 
-                        drcKorRn21 : drcKorRn21,
-                        drcRomRn21 : drcRomRn21,
-                        drcRdLt21 : drcRdLt21,
-                        drcRdDrc21 : drcRdDrc21,
+                        // drcKorRn21 : drcKorRn21,
+                        // drcRomRn21 : drcRomRn21,
+                        // drcRdLt21 : drcRdLt21,
+                        // drcRdDrc21 : drcRdDrc21,
 
-                        drcKorRn12 : drcKorRn12,
-                        drcRomRn12 : drcRomRn12,
-                        drcRdLt12 : drcRdLt12,
-                        drcRdDrc12 : drcRdDrc12,
+                        // drcKorRn12 : drcKorRn12,
+                        // drcRomRn12 : drcRomRn12,
+                        // drcRdLt12 : drcRdLt12,
+                        // drcRdDrc12 : drcRdDrc12,
 
-                        drcKorRn22 : drcKorRn22,
-                        drcRomRn22 : drcRomRn22,
-                        drcRdLt22 : drcRdLt22,
-                        drcRdDrc22 : drcRdDrc22,
+                        // drcKorRn22 : drcKorRn22,
+                        // drcRomRn22 : drcRomRn22,
+                        // drcRdLt22 : drcRdLt22,
+                        // drcRdDrc22 : drcRdDrc22,
 
-                        drcKorRn13 : drcKorRn13,
-                        drcRomRn13 : drcRomRn13,
-                        drcRdLt13 : drcRdLt13,
-                        drcRdDrc13 : drcRdDrc13,
+                        // drcKorRn13 : drcKorRn13,
+                        // drcRomRn13 : drcRomRn13,
+                        // drcRdLt13 : drcRdLt13,
+                        // drcRdDrc13 : drcRdDrc13,
 
-                        drcKorRn23 : drcKorRn23,
-                        drcRomRn23 : drcRomRn23,
-                        drcRdLt23 : drcRdLt23,
-                        drcRdDrc23 : drcRdDrc23
+                        // drcKorRn23 : drcKorRn23,
+                        // drcRomRn23 : drcRomRn23,
+                        // drcRdLt23 : drcRdLt23,
+                        // drcRdDrc23 : drcRdDrc23
 
                     })
                 }else if(rdGdftySe == "310"){//예고용

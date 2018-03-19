@@ -1342,7 +1342,9 @@ var MapUtil = {
                         var instDateText = "{0}년{1}월{2}일".format(instDate.substr(0, 4), instDate.substr(4, 2), instDate.substr(6, 2));
                         $("#instDate").html(instDateText);
                         if(instDate.substr(0, 4) == util.getToday().substr(0, 4)){
+                            //올해설치건은 점검불가
                             disableResearch();
+                            $("#rcRslt").attr("placeholder","올해에 설치한 시설물은 점검 불가")
                         }
                         
                         //조명여부
