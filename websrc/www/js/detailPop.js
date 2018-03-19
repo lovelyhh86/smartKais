@@ -2125,10 +2125,10 @@ function modify(){
     //     }
     // }
 
-    // if(changedIdList.length == 0){
-    //     navigator.notification.alert(msg.noSave, '', '알림', '확인');
-    //     return;
-    // }
+    if(changedIdList.length == 0){
+        navigator.notification.alert(msg.noSave, '', '알림', '확인');
+        return;
+    }
 
     //** 도로명판 */
     //설치지점
@@ -2229,11 +2229,11 @@ function modify(){
                     var backKoreanRoadNm = $("#backKoreanRoadNm").val();
                     var backRomeRoadNm = $("#backRomeRoadNm").text();
                     //시작기초번호
-                    var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
-                    var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
+                    var backStartBaseMasterNo = $("#backStartBaseMasterNo").val() == ""? 0 : $("#backStartBaseMasterNo").val();
+                    var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val() == ""? 0 : $("#backStartBaseSlaveNo").val();
                     //종료기초번호
-                    var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();
-                    var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val();
+                    var backEndBaseMasterNo = $("#backEndBaseMasterNo").val() == ""? 0 : $("#backEndBaseMasterNo").val();
+                    var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val() == ""? 0 : $("#backEndBaseSlaveNo").val();
 
                     //규격
                     var rdpqGdSd = $("#rdpqGdSd").val();
