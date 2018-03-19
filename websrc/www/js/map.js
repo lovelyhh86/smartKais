@@ -2506,17 +2506,17 @@ var mapInit = function(mapId, pos) {
                                         }else if(rdGdftySe == "310"){
                                             // plqDirection = data.rddr_plqDrc;
                                             frontKoreanRoadNm = resultList[i].prnt_ftKorRn;
-                                            frontStartBaseMasterNo = "";
-                                            frontStartBaseSlaveNo = "";
-                                            frontEndBaseMasterNo = "";
-                                            frontEndBaseSlaveNo = "";
+                                            frontStartBaseMasterNo = "0";
+                                            frontStartBaseSlaveNo = "0";
+                                            frontEndBaseMasterNo = "0";
+                                            frontEndBaseSlaveNo = "0";
                                         }
 
 
                                         //시작기초번호
-                                        var frontStartBaseNo = "{0}{1}".format(frontStartBaseMasterNo, (frontStartBaseSlaveNo != "0" ? '-' + frontStartBaseSlaveNo : ''));
+                                        var frontStartBaseNo = "{0}{1}".format(frontStartBaseMasterNo == "0"? "" : frontStartBaseMasterNo, (frontStartBaseSlaveNo != "0" ? '-' + frontStartBaseSlaveNo : ''));
                                         //종료기초번호
-                                        var frontEndBaseNo = "{0}{1}".format(frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
+                                        var frontEndBaseNo = "{0}{1}".format(frontEndBaseMasterNo == "0"? "" : frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
                                         
 
                                         //도로명,시작번호,종료번호가 null 일경우 명판정보없음으로 표시
@@ -2536,7 +2536,7 @@ var mapInit = function(mapId, pos) {
                                                     "{0} {1} {2} {3}".format(
                                                         frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',
                                                         frontStartBaseNo,
-                                                        (plqDirection == '00100' ? '→' : (plqDirection == '00300' ? '↑' : '?')),
+                                                        (plqDirection == '00100' ? '→' : (plqDirection == '00300' ? '↑' : '')),
                                                         frontEndBaseNo
                                                     )
                                                 );
