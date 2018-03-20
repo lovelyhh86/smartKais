@@ -2371,6 +2371,8 @@ function modify(){
                 var area_etcCn = $("#area_etcCn").val();
                 //규격
                 var area_areaGdSd = $("#area_areaGdSd").val();
+                //양면여부
+                var bdrclAt = $("#bdrclAt").val();
 
                 commomParams = $.extend(commomParams,{
                     area_areaKorRn : area_areaKorRn,
@@ -2382,6 +2384,7 @@ function modify(){
                     area_advCn : area_advCn,
                     area_etcCn : area_etcCn,
                     area_areaGdSd : area_areaGdSd,
+                    bdrclAt : bdrclAt
 
                 })
             }else if(trgGbn == DATA_TYPE.BSIS){
@@ -2407,6 +2410,9 @@ function modify(){
                 var bsisMthd = $("#bsisMthd").val();
                 //규격
                 var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
+                //양면여부
+                var bdrclAt = $("#bdrclAt").val();
+                
 
                 commomParams = $.extend(commomParams,{
                     bsis_itlpcSe : bsis_itlpcSe,
@@ -2421,6 +2427,7 @@ function modify(){
                     bsis_ntbsSn : bsis_ntbsSn,
                     bsisMthd : bsisMthd,
                     bsis_bsisGdSd : bsis_bsisGdSd,
+                    bdrclAt : bdrclAt
 
                 })
 
