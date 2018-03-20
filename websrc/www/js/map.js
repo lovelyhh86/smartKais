@@ -711,7 +711,8 @@ var MapUtil = {
     },
     setDetail: function(layerID, f) {
         var codeList
-        isPopState = "on";
+        isPopState = "off";
+        toggleDetailView();
         switch (layerID) {
             case DATA_TYPE.RDPQ:
                 // var sn = f.get("RD_GDFTY_SN");
