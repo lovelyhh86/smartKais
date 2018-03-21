@@ -2633,7 +2633,7 @@ function loadUpdtData(isImages){
                         for(var d in data){
                             if(data[d] != null){
 
-                                if(d == "bsis_instlFty"){
+                                if(d == "bsis_instlFty"){//기초번호판 설치위치
                                     if(data[d].charAt(0) == 0){
                                         $("#"+d+"_main").attr("style","color:red");
                                         $("#"+d+"_main").val(data[d]);
@@ -2648,6 +2648,16 @@ function loadUpdtData(isImages){
                                         changeBsisInstlFty();
                                     }
                                         
+                                }else if(d == "bdtypCd"){//건물용도
+                                    var bdtypCd_main = data[d].substr(0, 2) + "000";
+                                    // customSelectBox("bdtypCd_main","BDTYP_CD","000",2,4);
+                                    $("#bdtypCd_main").val(bdtypCd_main);
+                                    customSelectBox2("bdtypCd","BDTYP_CD",data[d].substr(0,2),0,2,2,5);
+                                    $("#bdtypCd").val(data[d]);
+
+                                    $("#"+d+"_main").attr("style","color:red");
+                                    $("#"+d).attr("style","color:red");
+                                    
                                 }else{
                                     $("#"+d).val(data[d]);
                                     $("#"+d).attr("style","color:red");

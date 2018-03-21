@@ -738,6 +738,9 @@ function disableResearch(){
 
 //건물 한건만 점검 업데이트
 function changeOneFeatherStyle(){
+    if(featureClone == null){
+        return;
+    }
     var featureId = featureClone[0].id_;
     var eqbManSn = featureClone[0].get("EQB_MAN_SN");
 
