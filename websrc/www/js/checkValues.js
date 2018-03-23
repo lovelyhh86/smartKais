@@ -678,6 +678,10 @@ function checkRddrRdsd(){
     customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
     $("#rddr_rddrGdSd").val(rddr_rddrGdSd);
 
+    if($("#rddr_rddrGdSd").val() == null){
+        $("#rddr_rddrGdSd").val($("#rddr_rddrGdSd option:first").val());
+    }
+
 }
 //예고용 도로명판 규격
 function checkPrntRdsd(id){

@@ -881,7 +881,7 @@ var MapUtil = {
                     //양면여부
                     makeOptSelectBox("bdrclAt","BDRCL_AT","","","");
                     
-                    $("#bdrclAtLbl").html(data.bdrclAtLbl);
+                    // $("#bdrclAtLbl").html(data.bdrclAtLbl);
                     $("#bdrclAt").val(data.bdrclAt);
 
                     // changeBdrclAt();
@@ -1073,8 +1073,6 @@ var MapUtil = {
                             //명판방향
                             makeOptSelectBox("rddr_plqDrc","PLQ_DRC","","","");
                             $("#rddr_plqDrc").val(data.rddr_plqDrc);
-                            //양면여부
-                            $("#bdrclAtLbl").html(data.bdrclAtLbl);
                             //이면도로용 도로명판 유형
                             var rddr_afRdplqSe = data.rddr_afRdplqSe;
                             makeOptSelectBox("rddr_afRdplqSe","AF_RDPLQ_SE","","","");
