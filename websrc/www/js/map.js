@@ -879,7 +879,6 @@ var MapUtil = {
                     $("#useTarget").val(useTarget);
                     
                     //양면여부
-                    // $("#bdrclAtLbl").html(data.bdrclAtLbl);
                     makeOptSelectBox("bdrclAt","BDRCL_AT","","","");
                     
                     $("#bdrclAtLbl").html(data.bdrclAtLbl);
@@ -1011,6 +1010,9 @@ var MapUtil = {
                         
                         if(rdGdftySe == "110"){
 
+                            //양면여부 체크
+                            changeBdrclAt();
+
                             //앞면 도로명(국문)
                             $("#frontKoreanRoadNm").val(data.frontKoreanRoadNm);
                             //앞면 도로명(로마자)
@@ -1039,7 +1041,7 @@ var MapUtil = {
                                 // $(".bk").hide();
                             // }
                             $("#bdrclAt").show();
-                            changeBdrclAt();
+                            
                             //안내시설방향
                             var plqDirection = data.plqDirection;
                             makeOptSelectBox("plqDirection","PLQ_DRC","","","");
@@ -1071,6 +1073,8 @@ var MapUtil = {
                             //명판방향
                             makeOptSelectBox("rddr_plqDrc","PLQ_DRC","","","");
                             $("#rddr_plqDrc").val(data.rddr_plqDrc);
+                            //양면여부
+                            $("#bdrclAtLbl").html(data.bdrclAtLbl);
                             //이면도로용 도로명판 유형
                             var rddr_afRdplqSe = data.rddr_afRdplqSe;
                             makeOptSelectBox("rddr_afRdplqSe","AF_RDPLQ_SE","","","");

@@ -866,6 +866,23 @@ function checkChangeOrigin(id){
         changedIdList = jQuery.grep(changedIdList, function(value) {
             return value != id;
         });
+
+        //양면여부 원복시 뒷면정보 다시 셋팅
+        if(id == "bdrclAt"){
+            var backKoreanRoadNm_origin = $("#backKoreanRoadNm_origin").val();
+            var backRomeRoadNm_origin = $("#backRomeRoadNm_origin").val();
+            var backStartBaseMasterNo_origin = $("#backStartBaseMasterNo_origin").val();
+            var backStartBaseSlaveNo_origin = $("#backStartBaseSlaveNo_origin").val();
+            var backEndBaseMasterNo_origin = $("#backEndBaseMasterNo_origin").val();
+            var backEndBaseSlaveNo_origin = $("#backEndBaseSlaveNo_origin").val();
+
+            $("#backKoreanRoadNm").val(backKoreanRoadNm_origin);
+            $("#backRomeRoadNm").text(backRomeRoadNm_origin);
+            $("#backStartBaseMasterNo").val(backStartBaseMasterNo_origin);
+            $("#backStartBaseSlaveNo").val(backStartBaseSlaveNo_origin);
+            $("#backEndBaseMasterNo").val(backEndBaseMasterNo_origin);
+            $("#backEndBaseSlaveNo").val(backEndBaseSlaveNo_origin);
+        }
     }
 
 }
