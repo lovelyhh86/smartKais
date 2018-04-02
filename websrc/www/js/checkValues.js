@@ -657,18 +657,18 @@ function changeAfrdCo(id){
 //이면도로용 설치형태 변경
 function changeAfRdplqSe(id){
     var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
-    if(rddr_afRdplqSe == "01000"){
-        $(".namePlateTable").hide();
-    }else if(rddr_afRdplqSe == "02000"){
-        $(".namePlateTable").show();
-    }
+    // if(rddr_afRdplqSe == "01000"){
+    //     $(".namePlateTable").hide();
+    // }else if(rddr_afRdplqSe == "02000"){
+    //     $(".namePlateTable").show();
+    // }
  
-    checkRddrRdsd();
+    checkRddrRdsd('rddr_rddrGdSd');
 
     checkChangeOrigin(id);
 }
 //이면도로용 도로명판 규격
-function checkRddrRdsd(){
+function checkRddrRdsd(id){
     var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
     var rddr_afRdCo = $("#rddr_afRdCo").val();
     var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
@@ -681,6 +681,10 @@ function checkRddrRdsd(){
     if($("#rddr_rddrGdSd").val() == null){
         $("#rddr_rddrGdSd").val($("#rddr_rddrGdSd option:first").val());
     }
+
+    setGdfyWide(id);
+
+    checkChangeOrigin(id);
 
 }
 //예고용 도로명판 규격
@@ -727,6 +731,7 @@ function changeBdrclAt(id){
         $(".bk").hide();
         
         $("#backKoreanRoadNm").val("");
+        $("#backRomeRoadNm").text("");
         $("#backStartBaseMasterNo").val("");
         $("#backStartBaseSlaveNo").val("");
         $("#backEndBaseMasterNo").val("");
@@ -749,7 +754,7 @@ function changeBdrclAt(id){
         $(".bk").show();
     }
 
-    setNameplateView();
+    // setNameplateView();
     checkChangeOrigin(id);
 }
 //예고용 도로명판 양면여부 변경
@@ -770,11 +775,11 @@ function changeBdtypCd(id){
 
     customSelectBox2("bdtypCd","BDTYP_CD",bdtypCd_main.substr(0,2),0,2,2,5);
 
-    if(!util.isEmpty(bdtypCd)){
-        $("#bdtypCd").val(bdtypCd);
-    }else{
+    // if(!util.isEmpty(bdtypCd)){
+    //     $("#bdtypCd").val(bdtypCd);
+    // }else{
         $("#bdtypCd").val($("#bdtypCd option:first").val());
-    }
+    // }
 
     checkChangeOrigin(id);
 }
@@ -847,6 +852,7 @@ function inputBaseNum(id){
 function setOriginData(data){
     var inputText = "<input type='hidden' id='{0}' value='{1}'></input>";
     var originDiv = $("#originDiv");
+    originDiv.empty();
     for(d in data){
         if(data[d] != null){
             $("#originDiv").append(inputText.format(d+"_origin", data[d]));

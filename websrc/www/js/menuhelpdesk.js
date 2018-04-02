@@ -69,13 +69,21 @@ function loadHelpdesk(container) {
             });
 
             $('#helpdesk').on("click", "a.ans_btn", function() {
-                var sn = $(this).data('sn');
-                $("#write_reply").data('sn', sn);
-                // var page = pages.writereplypage;
-                // util.slide_page('left', page, { sn : sn });
 
-                $('#write_reply_a').click();
-                // $('#replyDiv').load('writereply.html', { sn : sn });
+                if(app.info.rcrTyp != "01"){
+                    navigator.notification.alert(msg.notPubRearcher, function () {
+                        // util.goBack();
+                        // return;
+                    }, '알림', '확인');
+                }else{
+                    var sn = $(this).data('sn');
+                    $("#write_reply").data('sn', sn);
+                    // var page = pages.writereplypage;
+                    // util.slide_page('left', page, { sn : sn });
+
+                    $('#write_reply_a').click();
+                    // $('#replyDiv').load('writereply.html', { sn : sn });
+                }
             });
 
         });

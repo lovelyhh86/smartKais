@@ -210,7 +210,7 @@ var MapUtil = {
                 tracking: true,
                 projection: baseProjection,
                 trackingOptions: {
-                    maximumAge: 10000,
+                    maximumAge: 0,
                     enableHighAccuracy: true,
                     timeout: 600000
                 }
