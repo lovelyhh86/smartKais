@@ -3635,6 +3635,7 @@ function currentPositionLayerCheck() {
 }
 
 $(document).on("pagecreate", pages.map.div, function() {
+    
     $("#autocomplete").on("filterablebeforefilter", function(e, data) {        
         var $ul = $(this),
                       $input = $(data.input),
@@ -3688,7 +3689,8 @@ $(document).on("pagecreate", pages.map.div, function() {
                     });            
                     $ul.html(html);            
                     $ul.listview("refresh");            
-                    $ul.trigger("updatelayout");            
+                    $ul.trigger("updatelayout");
+
                 }else{
                     var label = "<span id='rnAddr' class='noResult'>결과가 없습니다.</span>";
                     html += "<li class='noIcon'>" + label + "</li>";
@@ -3697,7 +3699,7 @@ $(document).on("pagecreate", pages.map.div, function() {
                     $ul.listview("refresh");            
                     $ul.trigger("updatelayout");            
                     $("#autocomplete .noIcon").removeClass("ui-screen-hidden");
-                }   
+                }  
                      
             });        
         }    
@@ -3730,7 +3732,7 @@ function autocompleteRd(){
                             data: {
                     countPerPage: 4,
                     currentPage: 1,
-                    keyword: app.info.sigNm + " " + value // 해당지역 검색을 위하여 시군구명 포함
+                    keyword: app.info.sigNm + " " + regExpCheckJuso(value) // 해당지역 검색을 위하여 시군구명 포함
                                    
                 }          
             })          .then(function(xml) {
@@ -3756,7 +3758,8 @@ function autocompleteRd(){
                     });            
                     $ul.html(html);            
                     $ul.listview("refresh");            
-                    $ul.trigger("updatelayout");            
+                    $ul.trigger("updatelayout");       
+                    
                 }else{
                     var label = "<span id='rnAddr' class='noResult'>결과가 없습니다.</span>";
                     html += "<li class='noIcon'>" + label + "</li>";
@@ -3768,7 +3771,8 @@ function autocompleteRd(){
                 }   
                      
             });        
-        }    
+        }
+        $("#autocomplete-input").val(regExpCheckJuso(value));    
     // });
 }
 
