@@ -3659,7 +3659,7 @@ $(document).on("pagecreate", pages.map.div, function() {
                             url: "http://www.juso.go.kr/link/mobileSearch.do",
                             dataType: "xml",
                             data: {
-                    countPerPage: 4,
+                    countPerPage: 7,
                     currentPage: 1,
                     keyword: app.info.sigNm + " " + value // 해당지역 검색을 위하여 시군구명 포함
                                    
@@ -3730,7 +3730,7 @@ function autocompleteRd(){
                             url: "http://www.juso.go.kr/link/mobileSearch.do",
                             dataType: "xml",
                             data: {
-                    countPerPage: 4,
+                    countPerPage: 7,
                     currentPage: 1,
                     keyword: app.info.sigNm + " " + regExpCheckJuso(value) // 해당지역 검색을 위하여 시군구명 포함
                                    
