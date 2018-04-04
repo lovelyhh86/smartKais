@@ -2672,6 +2672,11 @@ function loadUpdtData(isImages){
                                 changedIdList = jQuery.grep(changedIdList, function(value) {
                                     return value != d;
                                 });
+                            }else{
+                                if(d == "buldMemo"){//건물메모
+                                    $("#"+d).val(data[d]);
+                                    $("#"+d).attr("style","color:red");
+                                }
                             }
                         }
                     }

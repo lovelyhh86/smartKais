@@ -2268,7 +2268,8 @@ var mapInit = function(mapId, pos) {
             radius: 12
         },
         cluster: { distance: 50 },
-        maxResolution: MapUtil.setting.maxResolution,
+        // maxResolution: MapUtil.setting.maxResolution,
+        maxResolution: 1,
         viewProgress: false,
         renderMode: 'vector'
     });
