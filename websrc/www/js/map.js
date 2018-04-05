@@ -2562,15 +2562,15 @@ var mapInit = function(mapId, pos) {
                                             //규격(제2외국어용 규격)
                                             RDPQ_GD_SD = resultList[i].rdpqGdSdScfggMktyLbl;
                                         }
-                                        if(RDPQ_GD_SD == null){
-                                            RDPQ_GD_SD = '규격정보없음';
-                                        }
                                         //이면도로용
                                         if(rdGdftySe == "210"){
                                             RDPQ_GD_SD = resultList[i].rddrGdSdLbl;
 
                                         }else if(rdGdftySe == "310"){
                                             RDPQ_GD_SD = resultList[i].prntGdSdLbl;
+                                        }
+                                        if(RDPQ_GD_SD == null){
+                                            RDPQ_GD_SD = '규격정보없음';
                                         }
                                         var rdpqGdSd = commonSpan.format("info", RDPQ_GD_SD);
                                         //양면여부
