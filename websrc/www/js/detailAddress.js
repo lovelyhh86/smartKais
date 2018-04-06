@@ -410,25 +410,30 @@ function getLocationByFeature(layerNm, searchList){
                 util.dismissProgress();
                 return;
             }
+            try {
+                var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
 
-            var features = new ol.format.WFS().readFeatures(results, { featureProjection: baseProjection.getCode(), dataProjection: sourceProjection.getCode() });
+                var geomType = features[0].getGeometry().getType();
+                if(geomType == "Point"){//일제조사용
+                    var point = features[0].getGeometry().getCoordinates();
+                }else{//기초조사용
+                    var gemoPoint = features[0].getGeometry().getInteriorPoint();
+                    var point = gemoPoint.getCoordinates();
+                    //위치마커
+                    setPosition(point);
+                }
 
-            var geomType = features[0].getGeometry().getType();
-            if(geomType == "Point"){//일제조사용
-                var point = features[0].getGeometry().getCoordinates();
-            }else{//기초조사용
-                var gemoPoint = features[0].getGeometry().getInteriorPoint();
-                var point = gemoPoint.getCoordinates();
-                //위치마커
-                setPosition(point);
+                map.getView().setCenter(point);
+                map.getView().setZoom(14);
+
+                toggleDetailView();
+
+                util.dismissProgress();
+            } catch (error) {
+                util.dismissProgress();
+                navigator.notification.alert(msg.errorFeather, '', '알림', '확인');
             }
-
-            map.getView().setCenter(point);
-            map.getView().setZoom(14);
-
-            toggleDetailView();
-
-            util.dismissProgress();
+            
 
         },function(context, xhr, error) {
             console.log("조회 error >> " + error + '   ' + xhr);

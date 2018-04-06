@@ -49,8 +49,9 @@ var msg = {
     loadOldImg : "원본 사진을 조회 하시겠습니까?",
     successImg : "사진조회 완료",
     notNullData : "빈 값을 넣을 수 없습니다.\n항목을 선택해 주세요.",
-    successSpgfInsertPoint : "KAIS C/S\n(자료관리>도로안내시설 편집>도로시설물 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.",
+    successSpgfInsertPoint : "KAIS C/S\n(자료관리>도로안내시설 편집>도로시설물 치이동)\n에서 저장된 위치 이동정보를 확인하세요.",
     successNmtgInsertPoint : "KAIS C/S\n(자료관리>도로안내시설 편집>건물번호판 위치이동)\n에서 저장된 위치 이동정보를 확인하세요.",
+    errorFeather : "위치 찾기를 실패했습니다."
     
 };
 var app = {
