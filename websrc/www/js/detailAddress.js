@@ -438,7 +438,9 @@ function getLocationByFeature(layerNm, searchList){
         },function(context, xhr, error) {
             console.log("조회 error >> " + error + '   ' + xhr);
             util.dismissProgress();
-        });
+        },
+        util.dismissProgress
+    );
 }
 
 function getAdrdcLocation(){

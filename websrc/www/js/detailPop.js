@@ -2595,11 +2595,18 @@ function loadUpdtData(isImages){
             util.postAJAX({}, url).then(
                 function (context, rCode, results) {
                     //통신오류처리
-                    if (rCode != 0 || results.response.status < 0) {
+                    try {
+                        if (rCode != 0 || results.response.status < 0) {
+                            navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                            util.dismissProgress();
+                            return;
+                        }    
+                    } catch (error) {
                         navigator.notification.alert(msg.callCenter, '', '알림', '확인');
                         util.dismissProgress();
                         return;
                     }
+                    
 
                     var data = results.data;
 
