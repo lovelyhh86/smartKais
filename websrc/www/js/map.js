@@ -3400,49 +3400,55 @@ function insertMoveingPoint(param) {
     util.postAJAX({}, url)
         .then(function(context, rCode, results) {
                 util.dismissProgress();
-                if (rCode == 0 && results.response.status > -1) {
-                    util.toast('이동한 위치 정보가 저장되었습니다.');
-                    var msgText = msg.successSpgfInsertPoint;
-                    
-                    if(insertPointType == "nmtg"){
-                        msgText = msg.successNmtgInsertPoint;
+                try {
+                    if (rCode == 0 && results.response.status > -1) {
+                        util.toast('이동한 위치 정보가 저장되었습니다.');
+                        var msgText = msg.successSpgfInsertPoint;
+                        
+                        if(insertPointType == "nmtg"){
+                            msgText = msg.successNmtgInsertPoint;
+                        }
+                        
+                        navigator.notification.alert(msgText, '', '알림', '확인');
+    
+                        clearSource('위치이동');
+    
+                        map.removeLayer(layers.move);
+                        $("#popup").hide();
+    
+                        var context = app.context;
+    
+                        // if (util.isEmpty(context)){
+                        //     map.updateSize();
+                        //     return;
+                        // }
+    
+                        layerToggle(context);
+                        // if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
+                        //     $(".legend").toggle(true);
+                        //     map.removeLayer(layers.buld);
+                        //     // map.removeLayer(layers.entrc);
+                        //     map.addLayer(layers.rdpq);
+                        //     map.addLayer(layers.bsis);
+                        //     map.addLayer(layers.area);
+                        // } else {
+                        //     $(".legend").toggle(false);
+                        //     map.removeLayer(layers.rdpq);
+                        //     map.removeLayer(layers.bsis);
+                        //     map.removeLayer(layers.area);
+                        //     map.addLayer(layers.buld);
+                        //     // map.addLayer(layers.entrc);
+                        // }
+                    } else {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
                     }
-                    
-                    navigator.notification.alert(msgText, '', '알림', '확인');
-
-                    clearSource('위치이동');
-
-                    map.removeLayer(layers.move);
-                    $("#popup").hide();
-
-                    var context = app.context;
-
-                    // if (util.isEmpty(context)){
-                    //     map.updateSize();
-                    //     return;
-                    // }
-
-                    layerToggle(context);
-                    // if (layerID != DATA_TYPE.BULD || layerID != DATA_TYPE.ENTRC) {
-                    //     $(".legend").toggle(true);
-                    //     map.removeLayer(layers.buld);
-                    //     // map.removeLayer(layers.entrc);
-                    //     map.addLayer(layers.rdpq);
-                    //     map.addLayer(layers.bsis);
-                    //     map.addLayer(layers.area);
-                    // } else {
-                    //     $(".legend").toggle(false);
-                    //     map.removeLayer(layers.rdpq);
-                    //     map.removeLayer(layers.bsis);
-                    //     map.removeLayer(layers.area);
-                    //     map.addLayer(layers.buld);
-                    //     // map.addLayer(layers.entrc);
-                    // }
-                } else {
+                } catch (error) {
                     navigator.notification.alert(msg.callCenter, '', '알림', '확인');
                     util.dismissProgress();
-                    return;
                 }
+                
 
             },
             msg.alert
