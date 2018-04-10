@@ -3070,7 +3070,7 @@ var getFeatureLayer = function(options) {
                     //엔진오류시 메세지 처리
                     if(results.indexOf("Can not connect to server") != -1){
                         // navigator.notification.alert(msg.errorGeoEngine, '', '알림', '확인');
-                        util.toast(msg.errorGeoEngine);
+                        util.toast(msg.errorGeoEngine, "error");
                         util.dismissProgress();
                         return;
                     }
@@ -3078,7 +3078,7 @@ var getFeatureLayer = function(options) {
                     //레이어서비스 에러
                     if(results.indexOf("Not Service Table") != -1){
                         // navigator.notification.alert(msg.errorLoadLayer, '', '알림', '확인');
-                        util.toast(msg.errorLoadLayer);
+                        util.toast(msg.errorLoadLayer, "error");
                         util.dismissProgress();
                         return;
                     }
