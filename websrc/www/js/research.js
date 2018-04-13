@@ -456,6 +456,31 @@ function submitResearch(){
     var mtchSn = $("#mtchSn").val();
     //조사자일련번호
     var rcrSn = app.info.rcrSn;
+    try {
+        if(util.isEmpty(rcrSn)){
+
+            //조사자 재 셋팅
+            rcrSn = $("#searchUserSel").val();
+    
+            changeUser();
+    
+            if(util.isEmpty(rcrSn)){
+                rcrSn = $("#rcrSn_new").html();
+                if(util.isEmpty(rcrSn)){
+                    navigator.notification.alert(msg.noRearcher, function(){
+                        closeDetailView();
+                    }, '알림', '확인');
+                    return;
+                }
+            }
+        }
+    } catch (error) {
+        navigator.notification.alert(msg.noRearcher, function(){
+            closeDetailView();
+        }, '알림', '확인');
+        return;
+    }
+    
     //작업자ID
     var workId = app.info.opeId;
 

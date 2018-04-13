@@ -27,7 +27,7 @@ function addSearchUser(){
     var param = {
         trmnlId : app.info.opeId
     } ;
-    var searchUserSel = $("#searchUserSel").val();
+    var oldRcrSn = app.info.rcrSn;
 
     $("#searchUserSel").empty();
     $("#searchUserSel").prepend('<option disabled value="">조사자선택</option>');
@@ -64,8 +64,8 @@ function addSearchUser(){
                 $("#row"+i).data("rcrTyp",rcrTyp);
             }
             
-            if(!util.isEmpty(searchUserSel)){
-                $("#searchUserSel").val(searchUserSel).trigger('change');
+            if(!util.isEmpty(oldRcrSn)){
+                $("#searchUserSel").val(oldRcrSn).trigger('change');
             }else{
                 $("#searchUserSel").val("").trigger('change');
             }

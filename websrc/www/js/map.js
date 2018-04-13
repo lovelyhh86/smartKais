@@ -933,7 +933,12 @@ var MapUtil = {
                 //임시데이터 여부
                 var isUpdtGbn = data.isUpdtGbn;
                 
-                var cntFiles = data.cntFiles;
+                //사진건수
+                var cntMFiles = data.cntMFiles;//근거리
+                var cntLFiles = data.cntLFiles;//원거리
+
+                var cntFiles = cntMFiles + cntLFiles;
+
                 if(cntFiles == 0){
                     $("#orginPhotoBtn").hide();
                 }
