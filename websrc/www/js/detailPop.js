@@ -1758,14 +1758,26 @@ function makeImg(){
     $("#photoDialog .photoTable .picInfo .picImg img").each(function(i, o){
         var data = new Object() ;
         var picInfo = $(o).parent().parent();
+        var picType = picInfo.data('picType');
+        var state;
+        if(picType == "L"){
+            state = MapUtil.photo.state.L;
+        }else if(picType == "M"){
+            state = MapUtil.photo.state.M;
+        }else{
+            //사진 생성 에러
+        }
 
-        data.base64 = $(o).attr("src").replace(/.+base64,/,'');
-        data.imageFilesSn = picInfo.data('picSn');
-        data.tbGbn = picInfo.data('picType');
-        data.name = '{0}_{1}_{2}.jpg'.format(date, title, data.tbGbn);
-        // data.name = '{0}_{1}.jpg'.format(date, data.tbGbn);
+        if(state.edited == true){
+            data.base64 = $(o).attr("src").replace(/.+base64,/,'');
+            data.imageFilesSn = picInfo.data('picSn');
+            data.tbGbn = picInfo.data('picType');
+            data.name = '{0}_{1}_{2}.jpg'.format(date, title, data.tbGbn);
+            // data.name = '{0}_{1}.jpg'.format(date, data.tbGbn);
 
-        files.push(data);
+            files.push(data);
+        }
+        
     });
 
     return files;
@@ -2620,7 +2632,9 @@ function loadUpdtData(isImages){
                     }
 
                     if(isImages == "true"){
-                    
+                        // 사진 조회 및 편집 상태 초기화
+                        MapUtil.photo.state.init();
+
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
@@ -2630,7 +2644,7 @@ function loadUpdtData(isImages){
 
                                 $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
-                                MapUtil.photo.doLoaded(true, image.tbGbn);
+                                MapUtil.photo.doEdit(true, image.tbGbn);
                             } else {
                                 util.toast(msg.wrongPhoto);
                             }
@@ -2789,25 +2803,50 @@ function modifyImg(type){
         return;
     }
 
+    //현재 선택한 점검상태
+    var rcSttCd_new = $("#rcSttCd_new").text();
+    if(util.isEmpty(rcSttCd_new) || rcSttCd_new == "1000"){
+        //원본사진 건수에 따른 촬영 체크
+        if(MapUtil.photo.isEdited("M") && !MapUtil.photo.isEdited("L")){ //근거리만 수정 
+            var cntLphoto = $("#cntLphoto").text(); //원거리건수
+            if(cntLphoto == "0"){
+                navigator.notification.alert(msg.checkOtherPhoto.format("원거리"),'','알림', '확인');
+                return;
+            }
+
+        }else if(!MapUtil.photo.isEdited("M") && MapUtil.photo.isEdited("L")){ // 원거리만 수정
+            var cntMphoto = $("#cntMphoto").text(); //근거리건수
+            if(cntMphoto == "0"){
+                navigator.notification.alert(msg.checkOtherPhoto.format("근거리"),'','알림', '확인');
+                return;
+            }
+        }
+    }else{
+        if(!MapUtil.photo.isEdited("M") || !MapUtil.photo.isEdited("L")){
+            navigator.notification.alert(msg.checkOtherPhoto.format("두장의"),'','알림', '확인');
+            return;
+        }
+    }
+
     //사진파일
     var files = makeImg();
-    var valid = true;
+    // var valid = true;
 
-    switch(files.length) {
-        case 0:
-            valid = false;
-            break;
-        case 1:
-            if(type != DATA_TYPE.SPPN && type != DATA_TYPE.ADRDC){
-                valid = false;
-            }
-            break;
-    }
+    // switch(files.length) {
+    //     case 0:
+    //         valid = false;
+    //         break;
+    //     case 1:
+    //         if(type != DATA_TYPE.SPPN && type != DATA_TYPE.ADRDC){
+    //             valid = false;
+    //         }
+    //         break;
+    // }
 
-    if(!valid) {
-        navigator.notification.alert(msg.noPhoto,'','알림', '확인');
-        return;
-    }
+    // if(!valid) {
+    //     navigator.notification.alert(msg.noPhoto,'','알림', '확인');
+    //     return;
+    // }
 
     var isUpdtGbn = $("#isUpdtGbn").val();
     var msgText = msg.isSavePhoto;
@@ -3019,6 +3058,8 @@ function selectOldImg(){
                             return;
                         }else{
                             util.toast(msg.successImg);
+                            // 사진 조회 및 편집 상태 초기화
+                            MapUtil.photo.state.init();
                         }
 
                         for (var index in data.files) {

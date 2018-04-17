@@ -30,8 +30,12 @@ var MapUtil = {
                 }
             }
         },
-        isEdited: function() {
-            return MapUtil.photo.state.L.edited || MapUtil.photo.state.M.edited;
+        isEdited: function(type) {
+            if(type) {
+                return Function("return MapUtil.photo.state.{0}.edited".format(type))();
+            } else {
+                return MapUtil.photo.state.L.edited || MapUtil.photo.state.M.edited;
+            }
         },
         isPhoto: function(type) {
             if(type) {
@@ -934,14 +938,18 @@ var MapUtil = {
                 var isUpdtGbn = data.isUpdtGbn;
                 
                 //사진건수
-                var cntMFiles = data.cntMFiles;//근거리
-                var cntLFiles = data.cntLFiles;//원거리
+                var cntMphoto = data.cntMFiles;//근거리
+                var cntLphoto = data.cntLFiles;//원거리
 
-                var cntFiles = cntMFiles + cntLFiles;
+                var cntFiles = cntMphoto + cntLphoto;
 
                 if(cntFiles == 0){
                     $("#orginPhotoBtn").hide();
                 }
+
+                $("#cntMphoto").text(cntMphoto);
+                $("#cntLphoto").text(cntLphoto);
+
                 //임시사진 있을경우 N으로 표시
                 if(isUpdtGbn.indexOf("I") != -1){
                     cntFiles = "N";

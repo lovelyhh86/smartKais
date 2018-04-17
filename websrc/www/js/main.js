@@ -12,7 +12,7 @@ var msg = {
     noSave: "변경한 항목이 없습니다.",
     isSave: "저장 하시겠습니까?",
     isSaveAgain : "저장 하시겠습니까? \n(기존 승인대기 상태의 정보는 현재 정보로 대체됩니다.) ",
-    isSavePhoto: "변경한 사진이 있습니다. 저장 하시겠습니까?",
+    isSavePhoto: "사진을 저장 하시겠습니까?",
     // isSavePhotoUpdate : "변경한 사진이 있습니다. 저장 하시겠습니까?",
     lossClose: "변경한 항목이 있습니다.\n저장하지 않고 창을 닫으시겠습니까?",
     lossPhotoClose: "변경한 사진이 있습니다.\n저장하지 않고 창을 닫으시겠습니까?",
@@ -45,7 +45,7 @@ var msg = {
     notHaveLoadUpdt : "승인 대기중인 데이터가 없습니다.",
     checkRcSttCd : "점검상태를 선택하세요.",
     researchCheckPhoto : "정상처리 이외의 점검상태는 사진 촬영이 필수 입니다.\n사진촬영으로 이동하시겠습니까?",
-    researchCheckPhotoCnt : "저장된 사진이 없습니다.\n사진촬영으로 이동하시겠습니까?",
+    researchCheckPhotoCnt : "저장된 {0} 사진이 없습니다.\n사진을 촬영해야 점검이 가능합니다. 이동하시겠습니까?",
     loadOldImg : "원본 사진을 조회 하시겠습니까?",
     successImg : "사진조회 완료",
     notNullData : "빈 값을 넣을 수 없습니다.\n항목을 선택해 주세요.",
@@ -54,7 +54,8 @@ var msg = {
     errorFeather : "위치 찾기를 실패했습니다.",
     errorGeoEngine : "공간정보 엔진 접속을 실패했습니다.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
     errorLoadLayer : "레이어 정보 조회를 실패 했습니다.\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
-    noItemSpbdNmtg : "등록된 건물번호판이 없습니다.\n점검 및 정보조회가 불가합니다."
+    noItemSpbdNmtg : "등록된 건물번호판이 없습니다.\n점검 및 정보조회가 불가합니다.",
+    checkOtherPhoto : "{0} 사진을 촬영 하셔야 저장하실 수 있습니다."
     
 };
 var app = {

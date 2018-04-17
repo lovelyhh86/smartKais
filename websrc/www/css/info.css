@@ -120,7 +120,7 @@
 .infoHeader >.title > .location{position: relative; top: -7px; font-size: 0.8em;}
 .infoHeader >.title > .listLabel{position: absolute;top:0px;left:179px}
 .infoHeader >.photo{position:absolute; top:50px; right:80px; width:42px; height:37px; background:url(../image/photo.png) 100% 100% no-repeat;}
-.infoHeader >.photo>.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
+.photoNum{display:inline-block; width:26px; height:26px;padding:4px 0 2px 0; background:url(../image/num.png) 0 0 no-repeat;text-align:center; font-size: 0.8em;}
 /*title location*/
 .infoHeader >.location{position:absolute; top:58px; right:15px; width:56px; height:40px;background:url(../image/icon_curr.png) no-repeat;background-size:57%}
 

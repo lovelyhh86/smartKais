@@ -225,20 +225,13 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		// Create our Preview view and set it as the content of our activity.
 		mPreview = new CameraPreview(this, mCamera);
 
-
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-				(int)(deviceDm.widthPixels), (int)(deviceDm.heightPixels)
-		);
-//		cameraPreview.setLayoutParams(layoutParams);
-
-
 		LinearLayout btnview = (LinearLayout) findViewById(R.id.linearLayout1);
 		btnview.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 
 		btnview.getMeasuredHeight();
 
 		LinearLayout dummyview = (LinearLayout) findViewById(R.id.linearLayoutDummy);
-		layoutParams = new LinearLayout.LayoutParams(
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 				(int)(deviceDm.widthPixels) - btnview.getMeasuredWidth() - 100, (int)(deviceDm.heightPixels));
 		dummyview.setLayoutParams(layoutParams);
 

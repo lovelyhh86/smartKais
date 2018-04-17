@@ -415,11 +415,12 @@ function submitResearch(){
     }
     
     //정상점검이 아닌경우 사진 필수
-    if(rcSttCdSel != "1000" && isUpdtGbn.indexOf("I") == -1){
+    if(rcSttCdSel !="1000" && rcSttCd != "1000" && isUpdtGbn.indexOf("I") == -1){
         
         navigator.notification.confirm(msg.researchCheckPhoto, function(btnindex){
 
             if(btnindex == 1){
+                $("#rcSttCd_new").text(rcSttCdSel);//재점검시 누락되는 점검값 떄문
                 $(".photo").click();
             }
         }, "알림", ["확인","취소"]);
@@ -428,12 +429,24 @@ function submitResearch(){
     }
 
     var photoNum = $(".infoHeader .photo .photoNum").html();
-    //정상이지만 사진건수가 0건
-    if(rcSttCdSel == "1000" && photoNum == "0"){
+    var cntMphoto = $("#cntMphoto").text();
+    var cntLphoto = $("#cntLphoto").text();
 
-        navigator.notification.confirm(msg.researchCheckPhotoCnt, function(btnindex){
+    //정상이지만 사진건수가 0건 (원근 하나라도 0 인경우 사진 필수)
+    if(rcSttCdSel == "1000" && (photoNum == "0" || cntMphoto == "0" || cntLphoto == "0") && isUpdtGbn.indexOf("I") == -1){
+        var msgText = msg.researchCheckPhotoCnt.format("원본");
+
+        
+        if(cntMphoto == "0" && cntLphoto != "0"){
+            msgText = msg.researchCheckPhotoCnt.format("근거리");
+        }else if(cntMphoto != "0" && cntLphoto == "0"){
+            msgText = msg.researchCheckPhotoCnt.format("원거리");
+        }
+
+        navigator.notification.confirm(msgText , function(btnindex){
 
             if(btnindex == 1){
+                $("#rcSttCd_new").text(rcSttCdSel);//재점검시 누락되는 점검값 떄문
                 $(".photo").click();
             }
         }, "알림", ["확인","취소"]);
