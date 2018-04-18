@@ -61,6 +61,21 @@ $(function(){
 //점검대상 조회
 function selectResearchContent(trgGbn){
     util.showProgress();
+
+    //스크롤처리
+    // var option = {
+    //     cache: 90,
+    //     buffer: 40,
+    //     context: { boardSe: '01', boardType: 'ALL', pos: '0' },
+    //     setStyleCallback: stylesheetCallback,
+    //     requestCallback: requestDatasource,
+    //     completCallback: scrollAppended,
+    //     updateCallback: updateCallback,
+    //     noitemCallback: noitemCallback,
+    //     pulldownCallback: scrollPulldown
+    // };
+
+    // skScrollBind('#researchList_page','#myResearchTable',option);
     
     //조사자일련번호
     var rcrSn = app.info.rcrSn;
@@ -758,14 +773,20 @@ function resetResearchInfo(){
 //화면 모든항목 막기
 function disabledAll(){
     $("#submitRcBnt").attr("disabled","disabled");
+    $("#submitRcBnt").attr("style","background-color: gray;");
+
     $(".infoContent select").attr("disabled","disabled");
     $(".infoContent input").attr("disabled","disabled");
     $(".infoContent textarea").attr("disabled","disabled");
     $("#modifyBtn").attr("disabled","disabled");
+    $("#modifyBtn").attr("style","background-color: gray;");
     $("#delUpdtBtn").hide();
-
+    
     //사진
     $("#photoDialog .btnPoint").hide();
+
+    //점검 안됨 안내 글씨
+    $("#rcrNotice").show();
 }
 //점검항목 막기
 function disableResearch(){

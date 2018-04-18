@@ -1599,7 +1599,7 @@ var MapUtil = {
                     // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
                         // if(btnindex == 1){
                             loadUpdtData();
-                            $(".redNotice").show();
+                            $("#updtNotice").show();
                         // }
                     // }, "알림", ["확인","취소"]);
                 }else{
@@ -1717,7 +1717,7 @@ var MapUtil = {
                         // navigator.notification.confirm(msg.loadUpdtData, function(btnindex){
                             // if(btnindex == 1){
                                 loadUpdtData();
-                                $(".redNotice").show();
+                                $("#updtNotice").show();
                             // }
                         // }, "알림", ["확인","취소"]);
                     }else{
