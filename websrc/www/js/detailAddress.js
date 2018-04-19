@@ -349,7 +349,7 @@ function toggleDetailView(){
         $(".infoContent").css("height","0%");
         $(".infoContent").css("padding","0px");
         //리스트페이지
-        $(".infoListContent").css("height","0%");
+        $(".infoListContent").hide();
         $("#photoDialog").hide();
         $(".ui-popup-container.slideup.in.ui-popup-active").css("height","5%");
         //컨트롤바
@@ -362,7 +362,7 @@ function toggleDetailView(){
         $(".infoContent").css("height","762px");
         $(".infoContent").css("padding","18px");
         //리스트페이지
-        $(".infoListContent").css("height","808px");
+        $(".infoListContent").show();
         
         // $("#photoDialog").show();
         $(".ui-popup-container.slideup.in.ui-popup-active").css("height","60%");

@@ -688,7 +688,8 @@ var MapUtil = {
         switch (type) {
             case "myResearch":
                 //점검목록
-                selectResearchContent(null);
+                pos = 0;
+                selectResearchContent(null,0,9);
                 /**검색조건 */
                 //시설구분
                 makeOptSelectBox("searchOptTrgGbn","TRG_GBN","02","전체","");
@@ -698,7 +699,8 @@ var MapUtil = {
             break;
             case "myResearchSpbd":
                 //점검목록
-                selectResearchContent("02");
+                pos = 0;
+                selectResearchContent("02",0,9);
                 /**검색조건 */
                 //시설구분
                 makeOptSelectBox("searchOptTrgGbn","","","건물번호판","02");

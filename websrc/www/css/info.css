@@ -108,7 +108,12 @@
 .infoWrap{ bottom:0; width:auto; height:100%; padding:20px; background-color:#3b3a40; overflow: hidden;}
 .infoHeader {height:28px; padding:15px 20px; background-color: #0071bf ;color:#fff;}
 .infoContent{width:auto; height: 762px ;padding:18px; overflow-y: scroll ;background-color:#f5f7f8}
-.infoListContent{width:auto; height: 808px ; overflow-y: scroll ;background-color:#f5f7f8}
+.infoListContent{width:auto; 
+	/* height: 808px ; overflow-y: scroll ; */
+	background-color:#f5f7f8}
+.tableListDiv{width:auto; height: 735px ; overflow-y: scroll ;background-color:#f5f7f8}
+#detailAddressDiv{width:auto; height: 807px ; overflow-y: scroll ;background-color:#f5f7f8}
+
 .infoFooter{padding:10px 20px 0 20px; text-align: center;}
 
 /*title photo*/
@@ -297,6 +302,25 @@ table caption{display: none}
 	background-color: #adadad;
 }
 
+.tableListDiv::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.tableListDiv::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.tableListDiv::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #adadad;
+}
 
 
 #scrollDiv::-webkit-scrollbar-track

@@ -5,10 +5,29 @@ $(function(){
     // var itemSize = 15;
 
     //목록페이지
-    // $(document).on("pagecreate",pages.detail_researchList.div,  function() {
+    $(document).on("pagecreate",pages.detail_researchList.div,function() {
+        var pos = 0;
+        var size = 9;
+        console.log("pos : "+ pos + "size : " +size);
+        $(".tableListDiv").scroll(function() {
+            var scrollTop = $('.tableListDiv').scrollTop();
+            var tableHeight = $(".tableListDiv").height();
+            var resultHeight = $('#myResearchTable').height();
+
+            if(scrollTop == resultHeight - tableHeight){
+                pos = size;
+
+                console.log("pos : "+ pos + " size : " +size);
+
+                selectResearchContent(null,pos,size);
+            }else{
+                console.log("scrollTop : "+ scrollTop);
+                console.log("tableHeight : "+ tableHeight);
+                console.log("resultHeight : "+ resultHeight);
+            }
+        }); 
         
-        
-    // });
+    });
 
     // $( document ).on("pagebeforeshow",pages.detailAddressListPage.div,  function(event,data) {
     //     detailAddressContent();
@@ -58,24 +77,56 @@ $(function(){
 
 });
 
+function tableListDivScroll(){
+    // $(".tableListDiv").scroll(function() {
+        var scrollTop = $('.tableListDiv').scrollTop();
+        var tableHeight = $(".tableListDiv").height();
+        var resultHeight = $('#myResearchTable').height();
+        var rowSize = parseInt($("#rowSize").text());
+        var resultSize = $("#myResearchTable > tbody > tr").size();
+        var mod = rowSize - (pos + size);
+
+        //초기화
+        // if(scrollTop == 0){
+        //     pos = 0;
+        //     selectResearchContent(null,pos,size);
+        // }
+
+        if(mod > 0 && rowSize >= resultSize){
+            if(scrollTop == resultHeight - tableHeight){
+                var paramPos = pos;
+                var paramSize = size;
+                if(pos < rowSize){
+                    pos += size;
+                    paramPos = pos;
+                    
+                }else{
+                    paramPos = pos - size;
+                    paramSize = mod;
+                }
+                console.log("paramPos : "+ paramPos + " paramSize : " +paramSize);
+    
+                selectResearchContent(null,paramPos,paramSize);
+            }else{
+                console.log("scrollTop : "+ scrollTop);
+                console.log("tableHeight : "+ tableHeight);
+                console.log("resultHeight : "+ resultHeight);
+            }
+        }
+    // }); 
+}
+var pos = 0;
+var size = 9;
 //점검대상 조회
-function selectResearchContent(trgGbn){
+function selectResearchContent(trgGbn,posParam,sizeParam){
     util.showProgress();
-
-    //스크롤처리
-    // var option = {
-    //     cache: 90,
-    //     buffer: 40,
-    //     context: { boardSe: '01', boardType: 'ALL', pos: '0' },
-    //     setStyleCallback: stylesheetCallback,
-    //     requestCallback: requestDatasource,
-    //     completCallback: scrollAppended,
-    //     updateCallback: updateCallback,
-    //     noitemCallback: noitemCallback,
-    //     pulldownCallback: scrollPulldown
-    // };
-
-    // skScrollBind('#researchList_page','#myResearchTable',option);
+    if(posParam == null){
+        $("#myResearchTable > tbody").empty();
+        $("#rowSize").text(0);
+        pos = 0;
+        posParam = 0;
+        sizeParam = 9;
+    }
     
     //조사자일련번호
     var rcrSn = app.info.rcrSn;
@@ -95,6 +146,8 @@ function selectResearchContent(trgGbn){
         ,trgGbn : searchOptTrgGbn
         ,rcSttCd : searchOptRcSttCd
         ,delStateCd : searchOptDelSttCd
+        ,pos : posParam
+        ,size : sizeParam
     } ;
 
     var url = URLs.postURL(URLs.researchListLink, param);
@@ -102,14 +155,15 @@ function selectResearchContent(trgGbn){
     util.postAJAX("", url)
     .then(function (context, rcode, results) {
         
-        $("#myResearchTable > tbody").empty();
-        $("#rowSize").empty();
+        // $("#myResearchTable > tbody").empty();
+        // $("#rowSize").empty();
         var data = results.data;
         
         if (rcode != 0 || util.isEmpty(data) === true) {
+            $("#myResearchTable > tbody").empty();
             var rowHtml = '<tr class=""><td colspan="7">검색된 목록이 없습니다.</td></tr>';
             $("#myResearchTable > tbody:last").append(rowHtml);
-            $("#rowSize").append('0');
+            $("#rowSize").text('0');
             util.dismissProgress();
             return;
         } else {
@@ -133,17 +187,17 @@ function selectResearchContent(trgGbn){
                     
                     if(d.delStateCd == '01' && d.rcSttCd == null){
                     // if(d.rcSttCd != null){//임시로 열어둠
-                        researchOkBtn = researchOkBtn.format("insertResearchForList("+i+")","");
+                        researchOkBtn = researchOkBtn.format("insertResearchForList("+d.pos+")","");
                     }else{
                         researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
-                    var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/iconNumber.png'></img>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+d.pos+")'>정비</button>";
+                    var locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/iconNumber.png'></img>";
 
                     $("#myResearchTable > tbody:last").append(
                         rowHtml.format(
-                            "row"+i
+                            "row"+d.pos
                             ,locBtn
                             ,d.trgGbnLbl
                             ,posBulNm
@@ -155,11 +209,11 @@ function selectResearchContent(trgGbn){
                             ,fixDetailBtn
                             ));
                             
-                    $("#row"+i).data("rnCd",d.rnCd);
-                    $("#row"+i).data("emdCd",d.emdCd);
-                    $("#row"+i).data("buldMnnm",d.buldMnnm);
-                    $("#row"+i).data("buldSlno",d.buldSlno);
-                    $("#row"+i).data("buldSeCd",d.buldSeCd);
+                    $("#row"+d.pos).data("rnCd",d.rnCd);
+                    $("#row"+d.pos).data("emdCd",d.emdCd);
+                    $("#row"+d.pos).data("buldMnnm",d.buldMnnm);
+                    $("#row"+d.pos).data("buldSlno",d.buldSlno);
+                    $("#row"+d.pos).data("buldSeCd",d.buldSeCd);
                         
                 }else{
                     //설치 도로명
@@ -177,23 +231,23 @@ function selectResearchContent(trgGbn){
                     
                     if(d.delStateCd == '01' && d.rcSttCd == null){
                     // if(d.rcSttCd != null){//임시로 열어둠
-                        researchOkBtn = researchOkBtn.format("insertResearchForList("+i+")","");
+                        researchOkBtn = researchOkBtn.format("insertResearchForList("+d.pos+")","");
                     }else{
                         researchOkBtn = researchOkBtn.format("impossibleAlert()","disabled");
                     }
 
-                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
-                    var locBtn = "<button class='' onclick='getResearchLocation("+i+")'><img src='image/icon_curr.png'></img></button>";
+                    var fixDetailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+d.pos+")'>정비</button>";
+                    var locBtn = "<button class='' onclick='getResearchLocation("+d.pos+")'><img src='image/icon_curr.png'></img></button>";
 
                     if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
                     // if(rdGdftySe == '110'){
-                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend01.png'></img>";
+                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./img/icon_legend01.png'></img>";
                     }else if(rdGdftySe == '510'){
-                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend03.png'></img>";
+                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./img/icon_legend03.png'></img>";
                     }else if(rdGdftySe == '610'){
-                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./img/icon_legend02.png'></img>";
+                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./img/icon_legend02.png'></img>";
                     }else{
-                        locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/iconNumber.png'></img>";
+                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/iconNumber.png'></img>";
                     }
                     
                     
@@ -214,7 +268,7 @@ function selectResearchContent(trgGbn){
                     
                     $("#myResearchTable > tbody:last").append(
                         rowHtml.format(
-                            "row"+i
+                            "row"+d.pos
                             ,locBtn
                             ,d.trgGbnLbl
                             ,rnLbl
@@ -226,26 +280,27 @@ function selectResearchContent(trgGbn){
                             ,fixDetailBtn
                             ));
                             
-                        $("#row"+i).data("rdGdftySe",rdGdftySe);
+                        $("#row"+d.pos).data("rdGdftySe",rdGdftySe);
                     }
 
                     //사용 데이터 셋팅    
-                    $("#row"+i).data("trgGbnLbl",d.trgGbnLbl);
-                    $("#row"+i).data("korRnLbl",korRnLbl);
-                    $("#row"+i).data("trgGbn",d.trgGbn);
+                    $("#row"+d.pos).data("trgGbnLbl",d.trgGbnLbl);
+                    $("#row"+d.pos).data("korRnLbl",korRnLbl);
+                    $("#row"+d.pos).data("trgGbn",d.trgGbn);
 
-                    $("#row"+i).data("plnYr",d.plnYr);
-                    $("#row"+i).data("plnOdr",d.plnOdr);
-                    $("#row"+i).data("sigCd",d.sigCd);
-                    $("#row"+i).data("mtchSn",d.mtchSn);
-                    $("#row"+i).data("trgSn",d.trgSn);
-                    $("#row"+i).data("trgLocSn",d.trgLocSn);
-                    $("#row"+i).data("trgGbn",d.trgGbn);
+                    $("#row"+d.pos).data("plnYr",d.plnYr);
+                    $("#row"+d.pos).data("plnOdr",d.plnOdr);
+                    $("#row"+d.pos).data("sigCd",d.sigCd);
+                    $("#row"+d.pos).data("mtchSn",d.mtchSn);
+                    $("#row"+d.pos).data("trgSn",d.trgSn);
+                    $("#row"+d.pos).data("trgLocSn",d.trgLocSn);
+                    $("#row"+d.pos).data("trgGbn",d.trgGbn);
+
+                    var totalCnt = d.cntMFiles;    
+                    $("#rowSize").text(totalCnt);
                 }
                 
-            var size = $("#myResearchTable > tbody > tr").size();
-
-            $("#rowSize").append(size);
+            // var size = $("#myResearchTable > tbody > tr").size();
             
         }
         

@@ -132,6 +132,28 @@ var app = {
         $(document).on('touchstart', '.helpdeskitem-b', function(e) {
             $(this).addClass('button_hover');
         });
+        $(document).on('touchend', '#myResearchTable', function(e) {
+            tableListDivScroll();
+        });
+        
+        // $(document).on('touchmove', '#myResearchTable', function(e) {
+        //     // e.preventDefault(); 
+        //     var event = e.originalEvent; 
+        //     // startTouchX = event.targetTouches[0].pageX; 
+        //     startTouchY = event.targetTouches[0].pageY;
+
+        //     if(event.targetTouches[0].pageY > startTouchY){
+        //         var scrollTop = $('.tableListDiv').scrollTop();
+        //         //초기화
+        //         if(scrollTop == 0){
+        //             pos = 0;
+        //             $("#myResearchTable > tbody").empty();
+        //             selectResearchContent(null,pos,size);
+        //         }
+        //     }
+
+        //     console.log(event.targetTouches[0].pageY + " , " + startTouchY);
+        // });
 
         clearTimeout();
         //    $.mobile.loadPage(pages.addressview.link(),{ showLoadMsg:false});
