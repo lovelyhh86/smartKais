@@ -190,8 +190,11 @@ var MapUtil = {
             legend.className = "legend ol-unselectable ol-control";
             var legendHtml = '<ul>';
             legendHtml += '<li class="rdpq">도로명판<span class="total">0건</span></li>';
-            legendHtml += '<li class="bsis">기초번호판<span class="total">0건</span></li>';
+            legendHtml += '<li class="rdpqW">도로명판(벽)<span class="total">0건</span></li>';
+            legendHtml += '<li class="bsis">기초번호판<span class="total">0건</span></li>'
+            legendHtml += '<li class="bsisW">기초번호판(벽)<span class="total">0건</span></li>';
             legendHtml += '<li class="area">지역안내판<span class="total">0건</span></li>';
+            legendHtml += '<li class="areaW">지역안내판(벽)<span class="total">0건</span></li>';
             legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
@@ -872,11 +875,11 @@ var MapUtil = {
                     var instDate = data.instDate;
                     var instDateText = "{0}년{1}월{2}일".format(instDate.substr(0, 4), instDate.substr(4, 2), instDate.substr(6, 2));
                     $("#instDate").html(instDateText);
-                    if(instDate.substr(0, 4) == util.getToday().substr(0, 4)){
-                        //올해설치건은 점검불가
-                        disableResearch();
-                        $("#rcRslt").attr("placeholder","올해에 설치한 시설물은 점검 불가")
-                    }
+                    // if(instDate.substr(0, 4) == util.getToday().substr(0, 4)){
+                    //     //올해설치건은 점검불가
+                    //     disableResearch();
+                    //     $("#rcRslt").attr("placeholder","올해에 설치한 시설물은 점검 불가")
+                    // }
 
                     //****도로안내시설 속성****
                     //안내시설형식
@@ -1025,6 +1028,13 @@ var MapUtil = {
                                 );
                             }
                         }
+                        var imgNm = 'icon_legend01.png';
+                        if(data.instSe == '00002'){
+                            imgNm = 'icon_w_legend01.png'
+                        }
+                        var titleIcon = '<span class="titleIcon"><img src="image/'+imgNm+'" title="도로명판"></span>';
+                        $(".title").empty();
+                        $(".title").append(titleIcon);
                         $(".title").append(title);
 
                         
@@ -1200,6 +1210,13 @@ var MapUtil = {
                                 area_edbsNo
                             );
                         }
+                        var imgNm = 'icon_legend03.png';
+                        if(data.instSe == '00002'){
+                            imgNm = 'icon_w_legend03.png'
+                        }
+                        var titleIcon = '<span class="titleIcon"><img src="image/'+imgNm+'" title="지역안내판"></span>';
+                        $(".title").empty();
+                        $(".title").append(titleIcon);
                         $(".title").append(title);
                         
                         //한글도로명
@@ -1262,7 +1279,13 @@ var MapUtil = {
                                 bsis_ctbsNo
                             );
                         }
-
+                        var imgNm = 'icon_legend02.png';
+                        if(data.instSe == '00002'){
+                            imgNm = 'icon_w_legend02.png'
+                        }
+                        var titleIcon = '<span class="titleIcon"><img src="image/'+imgNm+'" title="기초번호판"></span>';
+                        $(".title").empty();
+                        $(".title").append(titleIcon);
                         $(".title").append(title);
 
                         //설치장소 구분
@@ -1372,11 +1395,11 @@ var MapUtil = {
                         var instDate = data.instDate;
                         var instDateText = "{0}년{1}월{2}일".format(instDate.substr(0, 4), instDate.substr(4, 2), instDate.substr(6, 2));
                         $("#instDate").html(instDateText);
-                        if(instDate.substr(0, 4) == util.getToday().substr(0, 4)){
-                            //올해설치건은 점검불가
-                            disableResearch();
-                            $("#rcRslt").attr("placeholder","올해에 설치한 시설물은 점검 불가")
-                        }
+                        // if(instDate.substr(0, 4) == util.getToday().substr(0, 4)){
+                        //     //올해설치건은 점검불가
+                        //     disableResearch();
+                        //     $("#rcRslt").attr("placeholder","올해에 설치한 시설물은 점검 불가")
+                        // }
                         
                         //조명여부
                         makeOptSelectBox("lghtCd","LGHT_CD","","","");
@@ -2908,6 +2931,9 @@ var mapInit = function(mapId, pos) {
                             $('.legend .area .total').text('0건');
                             $('.legend .bsis .total').text('0건');
                             $('.legend .spot .total').text('0건');
+                            $('.legend .rdpqW .total').text('0건');
+                            $('.legend .areaW .total').text('0건');
+                            $('.legend .bsisW .total').text('0건');
                             util.toast('시설물을 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
                         }
                         if (id == DATA_TYPE.BULD) {
@@ -3117,6 +3143,9 @@ var getFeatureLayer = function(options) {
                     var areaCnt = 0;
                     var bsisCnt = 0;
                     var spotCnt = 0;
+                    var rdpqWCnt = 0;
+                    var areaWCnt = 0;
+                    var bsisWCnt = 0;
 
                     var layerType = options.typeName;
                     for (var i = 0; features.length > i; i++) {
@@ -3131,18 +3160,35 @@ var getFeatureLayer = function(options) {
                         }else{
                             for (var i = 0; features.length > i; i++) {
                                 var rdGdftySe = features[i].get("RD_GDFTY_SE");
+                                //설치유형(벽면형 : 00002)
+                                var instlSe = features[i].get('INSTL_SE');
                                 if (rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310") {
-                                    rdpqCnt++;
+                                    if(instlSe == "00002"){
+                                        rdpqWCnt++;
+                                    }else{
+                                        rdpqCnt++;
+                                    }
                                 } else if (rdGdftySe == "510") {
-                                    areaCnt++;
+                                    if(instlSe == "00002"){
+                                        areaWCnt++;
+                                    }else{
+                                        areaCnt++;
+                                    }
                                 } else if (rdGdftySe == "610") {
-                                    bsisCnt++;
+                                    if(instlSe == "00002"){
+                                        bsisWCnt++;
+                                    }else{
+                                        bsisCnt++;
+                                    }
                                 }
                             }
 
                             $('.legend .rdpq .total').text(rdpqCnt + '건');
                             $('.legend .area .total').text(areaCnt + '건');
                             $('.legend .bsis .total').text(bsisCnt + '건');
+                            $('.legend .rdpqW .total').text(rdpqWCnt + '건');
+                            $('.legend .areaW .total').text(areaWCnt + '건');
+                            $('.legend .bsisW .total').text(bsisWCnt + '건');
                         }
                     }
 

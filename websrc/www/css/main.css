@@ -79,9 +79,9 @@
 .ui-icon-menu { background-image: url('../img/icon_menu.png'); }
 .ui-icon-qna { background-image: url('../img/icon_qna_no.png'); }
 .ui-icon-closer { background-image: url('../img/icon_closer.png'); }
-.ui-icon-rdpq { background-image: url('../img/icon_legend01.png'); }
-.ui-icon-bsis { background-image: url('../img/icon_legend02.png'); }
-.ui-icon-area { background-image: url('../img/icon_legend03.png'); }
+.ui-icon-rdpq { background-image: url('../image/icon_legend01.png'); }
+.ui-icon-bsis { background-image: url('../image/icon_legend02.png'); }
+.ui-icon-area { background-image: url('../image/icon_legend03.png'); }
 
 .pushCnt { position: absolute; z-index: 10; }
 .pushCnt div {

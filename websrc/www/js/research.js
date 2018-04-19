@@ -224,6 +224,8 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     );
                     //시설물구분
                     var rdGdftySe = d.rdGdftySe;
+                    //설치유형(벽면형 : 00002)
+                    var instSe = d.instSe;
                     //명판내용
                     var korRnLbl = createRnNm(rdGdftySe,d);
                     
@@ -241,11 +243,23 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
 
                     if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
                     // if(rdGdftySe == '110'){
-                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./img/icon_legend01.png'></img>";
+                        var imgNm = 'icon_legend01.png';
+                        if(instSe == "00002"){
+                            imgNm = 'icon_w_legend01.png';
+                        }
+                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
                     }else if(rdGdftySe == '510'){
-                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./img/icon_legend03.png'></img>";
+                        var imgNm = 'icon_legend03.png';
+                        if(instSe == "00002"){
+                            imgNm = 'icon_w_legend03.png';
+                        }
+                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
                     }else if(rdGdftySe == '610'){
-                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./img/icon_legend02.png'></img>";
+                        var imgNm = 'icon_legend02.png';
+                        if(instSe == "00002"){
+                            imgNm = 'icon_w_legend02.png';
+                        }
+                        locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
                     }else{
                         locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/iconNumber.png'></img>";
                     }
