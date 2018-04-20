@@ -233,6 +233,8 @@ var locStyle = function (styleOptions, feature, mixStyle) {
     var instlDe = feature.get('INSTL_DE');
     var instlDeYear = instlDe.substr(0,4);
     var newYear = util.getToday().substr(0,4);
+    
+    var anchorY = 44;
 
     var opt;
     if(mixStyle == true){
@@ -268,7 +270,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 35],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_nw_legend01.png'
@@ -277,7 +279,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 35],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_ncw_legend01.png'
@@ -307,7 +309,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_n_legend01.png'
@@ -316,7 +318,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_nc_legend01.png'
@@ -349,7 +351,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_nw_legend03.png'
@@ -358,7 +360,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_ncw_legend03.png'
@@ -388,7 +390,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_n_legend03.png'
@@ -397,7 +399,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_nc_legend03.png'
@@ -430,7 +432,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_nw_legend02.png'
@@ -439,7 +441,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_ncw_legend02.png'
@@ -469,7 +471,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_n_legend02.png'
@@ -478,7 +480,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
                     opt = {
                         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                            anchor: [0.45, 43],
+                            anchor: [0.45, anchorY],
                             anchorXUnits: 'fraction',
                             anchorYUnits: 'pixels',
                             src: 'image/icon_nc_legend02.png'
