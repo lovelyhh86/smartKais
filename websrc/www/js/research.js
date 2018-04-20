@@ -314,7 +314,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     $("#row"+d.pos).data("sigCd",d.sigCd);
                     $("#row"+d.pos).data("mtchSn",d.mtchSn);
                     $("#row"+d.pos).data("rdGdftySn",d.rdGdftySn);
-                    // $("#row"+d.pos).data("trgLocSn",d.trgLocSn);
+                    $("#row"+d.pos).data("rdFtyLcSn",d.rdFtyLcSn);
                     // $("#row"+d.pos).data("trgGbn",d.trgGbn);
 
                     var totalCnt = d.cntMFiles;    
@@ -403,15 +403,15 @@ function getResearchLocation(i){
 
     var targetID = $("#row" + i);
 
-    //대상일련번호
-    var trgLocSn = targetID.data('trgLocSn');
+    //위치일련번호
+    var rdFtyLcSn = targetID.data('rdFtyLcSn');
     //대상구분
-    var trgGbn = targetID.data('trgGbn');
+    var rdGdftySe = targetID.data('rdGdftySe');
 
     var layerNm = "tlv_spgf_loc_skm";
-    var searchList = {rdftylc_sn: trgLocSn}
+    var searchList = {rdftylc_sn: rdFtyLcSn}
 
-    if(trgGbn == "02"){
+    if(rdGdftySe == null){
         layerNm = "tlv_spbd_buld_skm";
 
         var sigCd = targetID.data('sigCd');
