@@ -449,7 +449,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearch ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>나의 배정목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>목록관리</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -478,7 +478,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearchSpbd ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>나의 배정목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>목록관리</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -694,8 +694,14 @@ var MapUtil = {
                 pos = 0;
                 selectResearchContent(null,0,9);
                 /**검색조건 */
+                $("#searchOptTrgGbn").empty();
+                $("#searchOptTrgGbn").append('<option value="">전체</option>');
+                $("#searchOptTrgGbn").append('<option value="110">도로명판</option>');
+                $("#searchOptTrgGbn").append('<option value="310">도로명판(예고)</option>');
+                $("#searchOptTrgGbn").append('<option value="510">지역안내판</option>');
+                $("#searchOptTrgGbn").append('<option value="610">기초번호판</option>');
                 //시설구분
-                makeOptSelectBox("searchOptTrgGbn","TRG_GBN","02","전체","");
+                // makeOptSelectBox("searchOptTrgGbn","TRG_GBN","02","전체","");
                 //삭제상태코드
                 // makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
 
@@ -705,6 +711,12 @@ var MapUtil = {
                 pos = 0;
                 selectResearchContent("02",0,9);
                 /**검색조건 */
+                $("#searchOptTrgGbn").empty();
+                // $("#searchOptTrgGbn").append('<option value="">전체</option>');
+                // $("#searchOptTrgGbn").append('<option value="110">건물번호판</option>');
+                // $("#searchOptTrgGbn").append('<option value="310">도로명판(예고)</option>');
+                // $("#searchOptTrgGbn").append('<option value="510">지역안내판</option>');
+                // $("#searchOptTrgGbn").append('<option value="610">기초번호판</option>');
                 //시설구분
                 makeOptSelectBox("searchOptTrgGbn","","","건물번호판","02");
                 //삭제상태코드

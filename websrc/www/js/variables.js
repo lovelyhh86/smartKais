@@ -239,6 +239,8 @@ CODE_GROUP["PRT_TY"] = "GFTY005";
 CODE_GROUP["GDFTY_QLT"] = "GFTY011";
 //앙면여부
 CODE_GROUP["BDRCL_AT"] = "GFTY017";
+//도로안내시설 구분
+CODE_GROUP["RD_GDFTY_SE"] = "GFTY002";
 
 
 //****** 도로명판 *******

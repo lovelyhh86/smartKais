@@ -104,13 +104,13 @@ function tableListDivScroll(){
                     paramPos = pos - size;
                     paramSize = mod;
                 }
-                console.log("paramPos : "+ paramPos + " paramSize : " +paramSize);
+                // console.log("paramPos : "+ paramPos + " paramSize : " +paramSize);
     
                 selectResearchContent(null,paramPos,paramSize);
             }else{
-                console.log("scrollTop : "+ scrollTop);
-                console.log("tableHeight : "+ tableHeight);
-                console.log("resultHeight : "+ resultHeight);
+                // console.log("scrollTop : "+ scrollTop);
+                // console.log("tableHeight : "+ tableHeight);
+                // console.log("resultHeight : "+ resultHeight);
             }
         }
     // }); 
@@ -130,6 +130,10 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     
     //조사자일련번호
     var rcrSn = app.info.rcrSn;
+    var searchOptRcrSn = $("#searchOptRcrSn").val();
+    if(searchOptRcrSn == ""){
+        rcrSn = null;
+    }
 
     if(trgGbn == null){
         var searchOptTrgGbn = $("#searchOptTrgGbn").val() == "" ? null : $("#searchOptTrgGbn").val();
@@ -143,7 +147,8 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     var param = {
         sigCd : app.info.sigCd
         ,rcrSn : rcrSn
-        ,trgGbn : searchOptTrgGbn
+        ,rdGdftySe : searchOptTrgGbn
+        ,trgGbn : trgGbn
         ,rcSttCd : searchOptRcSttCd
         ,delStateCd : searchOptDelSttCd
         ,pos : posParam
@@ -208,12 +213,14 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                             ,""
                             ,fixDetailBtn
                             ));
-                            
+                        
                     $("#row"+d.pos).data("rnCd",d.rnCd);
                     $("#row"+d.pos).data("emdCd",d.emdCd);
                     $("#row"+d.pos).data("buldMnnm",d.buldMnnm);
                     $("#row"+d.pos).data("buldSlno",d.buldSlno);
                     $("#row"+d.pos).data("buldSeCd",d.buldSeCd);
+
+                    $("#row"+d.pos).data("bulNmtNo",d.bulNmtNo);
                         
                 }else{
                     //설치 도로명
@@ -284,7 +291,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                         rowHtml.format(
                             "row"+d.pos
                             ,locBtn
-                            ,d.trgGbnLbl
+                            ,d.rdGdftySeLbl
                             ,rnLbl
                             ,korRnLbl
                             ,d.delStateCdLbl
@@ -298,17 +305,17 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     }
 
                     //사용 데이터 셋팅    
-                    $("#row"+d.pos).data("trgGbnLbl",d.trgGbnLbl);
+                    // $("#row"+d.pos).data("trgGbnLbl",d.trgGbnLbl);
                     $("#row"+d.pos).data("korRnLbl",korRnLbl);
-                    $("#row"+d.pos).data("trgGbn",d.trgGbn);
+                    // $("#row"+d.pos).data("trgGbn",d.trgGbn);
 
                     $("#row"+d.pos).data("plnYr",d.plnYr);
                     $("#row"+d.pos).data("plnOdr",d.plnOdr);
                     $("#row"+d.pos).data("sigCd",d.sigCd);
                     $("#row"+d.pos).data("mtchSn",d.mtchSn);
-                    $("#row"+d.pos).data("trgSn",d.trgSn);
-                    $("#row"+d.pos).data("trgLocSn",d.trgLocSn);
-                    $("#row"+d.pos).data("trgGbn",d.trgGbn);
+                    $("#row"+d.pos).data("rdGdftySn",d.rdGdftySn);
+                    // $("#row"+d.pos).data("trgLocSn",d.trgLocSn);
+                    // $("#row"+d.pos).data("trgGbn",d.trgGbn);
 
                     var totalCnt = d.cntMFiles;    
                     $("#rowSize").text(totalCnt);
@@ -334,13 +341,32 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
 function goResearchDetail(i){
     var targetE = $("#row"+i);
     var rdGdftySe = targetE.data("rdGdftySe");
+    var trgGbn;
+    switch(rdGdftySe){
+        case "110":
+        case "210":
+        case "310":
+        trgGbn = "01";
+        break;
+        case "510":
+        trgGbn = "03";
+        break;
+        case "610":
+        trgGbn = "04";
+        break;
+        default :
+        trgGbn = "02";
+        break;
+    }
+
     //시설물 번호 전역변수
-    trgSnGlobal = targetE.data("trgSn");
+    trgSnGlobal = targetE.data("rdGdftySn");
     
-    var trgGbn = targetE.data("trgGbn");
-    if(trgGbn == "02"){
+    var bulNmtNo = targetE.data("bulNmtNo");
+    if(bulNmtNo != null){
         //시설물 번호 전역변수
-        trgSnGlobal = targetE.data("trgLocSn");
+        trgSnGlobal = targetE.data("bulNmtNo");
+        // trgGbn = "02"
     }else{
         
     }

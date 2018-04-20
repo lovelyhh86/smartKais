@@ -7,7 +7,7 @@
         <div class="infoWrap">
             <div class="infoHeader" onclick="toggleDetailView();">
                 <p class="listTitle">
-                    <span class="">나의 배정목록</span>
+                    <span class="">목록관리</span>
                 </p>
             </div>
             <div class="infoListContent">
@@ -46,8 +46,17 @@
                                             <option value ='04'>망실</option>
                                         </select>
                                     </td>
-                                    <th scope="row">건수</th>
+                                    <th scope="row">배정여부</th>
                                     <td>
+                                        <select id="searchOptRcrSn" onchange="selectResearchContent()" class="cell100">
+                                            <option value =''>전체</option>
+                                            <option value ='Y' selected="selected">배정</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">건수</th>
+                                    <td colspan="3">
                                         <p id='rowSize'>0</p>
                                     </td>
                                 </tr>
@@ -58,7 +67,7 @@
                     <table id="myResearchTable">
                         <colgroup>
                             <col style="width:8%;"></col>
-                            <col style="width:12%;"></col>
+                            <col style="width:19%;"></col>
                             <col class="cell20"></col>
                             <col class="auto"></col>
                             <col class="cell10"></col>
