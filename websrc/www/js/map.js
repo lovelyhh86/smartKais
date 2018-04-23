@@ -697,6 +697,7 @@ var MapUtil = {
                 $("#searchOptTrgGbn").empty();
                 $("#searchOptTrgGbn").append('<option value="">전체</option>');
                 $("#searchOptTrgGbn").append('<option value="110">도로명판</option>');
+                $("#searchOptTrgGbn").append('<option value="210">도로명판(이면)</option>');
                 $("#searchOptTrgGbn").append('<option value="310">도로명판(예고)</option>');
                 $("#searchOptTrgGbn").append('<option value="510">지역안내판</option>');
                 $("#searchOptTrgGbn").append('<option value="610">기초번호판</option>');

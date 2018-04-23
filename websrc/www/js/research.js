@@ -148,7 +148,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
         sigCd : app.info.sigCd
         ,rcrSn : rcrSn
         ,rdGdftySe : searchOptTrgGbn
-        ,trgGbn : trgGbn
+        ,trgGbn : searchOptTrgGbn
         ,rcSttCd : searchOptRcSttCd
         ,delStateCd : searchOptDelSttCd
         ,pos : posParam
@@ -177,7 +177,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                 var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>{7}{8}</td></tr>';
                 var d = data[i];
 
-                if(d.trgGbn == "02"){
+                if(d.rdGdftySe == null){
                     //명판내용
                     var korRnLbl = "{0} {1}{2}".format(
                         d.rnCdLbl,
@@ -204,7 +204,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                         rowHtml.format(
                             "row"+d.pos
                             ,locBtn
-                            ,d.trgGbnLbl
+                            ,'건물번호판'
                             ,posBulNm
                             ,korRnLbl
                             ,d.delStateCdLbl
@@ -221,6 +221,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     $("#row"+d.pos).data("buldSeCd",d.buldSeCd);
 
                     $("#row"+d.pos).data("bulNmtNo",d.bulNmtNo);
+                    $("#row"+d.pos).data("bulManNo",d.bulManNo);
                         
                 }else{
                     //설치 도로명
@@ -363,10 +364,11 @@ function goResearchDetail(i){
     trgSnGlobal = targetE.data("rdGdftySn");
     
     var bulNmtNo = targetE.data("bulNmtNo");
-    if(bulNmtNo != null){
+    var bulManNo = targetE.data("bulManNo");
+    if(bulManNo != null){
         //시설물 번호 전역변수
-        trgSnGlobal = targetE.data("bulNmtNo");
-        // trgGbn = "02"
+        trgSnGlobal = bulManNo;
+        trgGbn = "02"
     }else{
         
     }

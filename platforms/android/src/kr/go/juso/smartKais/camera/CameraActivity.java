@@ -129,13 +129,13 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 					public void onAutoFocus(boolean success, Camera camera) {
 
-						if(success){
+//						if(success){
 
 							mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() {
 								Log.d(TAG, "onShutter");
 							} }, null, mPicture);
 
-						}
+//						}
 
 					}
 
