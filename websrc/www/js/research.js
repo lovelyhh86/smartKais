@@ -173,10 +173,10 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
             return;
         } else {
             for(var i in data) {
-
                 var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>{7}{8}</td></tr>';
                 var d = data[i];
-
+                $("#row"+d.pos).removeData();
+                $("#row"+d.pos).data("rnCd",d.rnCd);
                 if(d.rdGdftySe == null){
                     //명판내용
                     var korRnLbl = "{0} {1}{2}".format(
@@ -213,7 +213,8 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                             ,""
                             ,fixDetailBtn
                             ));
-                        
+
+                    
                     $("#row"+d.pos).data("rnCd",d.rnCd);
                     $("#row"+d.pos).data("emdCd",d.emdCd);
                     $("#row"+d.pos).data("buldMnnm",d.buldMnnm);
@@ -302,14 +303,14 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                             ,fixDetailBtn
                             ));
                             
-                        $("#row"+d.pos).data("rdGdftySe",rdGdftySe);
+                        
                     }
 
-                    //사용 데이터 셋팅    
+                    //사용 데이터 셋팅
                     // $("#row"+d.pos).data("trgGbnLbl",d.trgGbnLbl);
                     $("#row"+d.pos).data("korRnLbl",korRnLbl);
                     // $("#row"+d.pos).data("trgGbn",d.trgGbn);
-
+                    $("#row"+d.pos).data("rdGdftySe",rdGdftySe);
                     $("#row"+d.pos).data("plnYr",d.plnYr);
                     $("#row"+d.pos).data("plnOdr",d.plnOdr);
                     $("#row"+d.pos).data("sigCd",d.sigCd);
