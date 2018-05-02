@@ -412,7 +412,7 @@ function changeBuldNmtPurpose(id){
 
     // customSelectBox("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1);
     customSelectBox2("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1,1,3);
-    changeBuldNmtCd();
+    changeBuldNmtCd('buldNmtPurpose');
 
     checkChangeOrigin(id);
 
@@ -424,7 +424,8 @@ function changeBuldNmtCd(id){
     if(usedCode.substr(0,1) == "1"){
         customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
         $("#buldNmtCd").removeAttr("disabled");
-
+        setGdfyWide('buldNmtCd');
+        
         $("#buldNmtWide").attr("disabled","disabled");
         $("#buldNmtVertical").attr("disabled","disabled");
     }else{
