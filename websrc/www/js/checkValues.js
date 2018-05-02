@@ -649,7 +649,7 @@ function changeAfrdCo(id){
         $("#drcRdDrc23").val(drcRdDrc23);
     }
 
-    checkRddrRdsd();
+    checkRddrRdsd('rddr_rddrGdSd');
 
     checkChangeOrigin(id);
 }
