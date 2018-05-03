@@ -1436,10 +1436,13 @@ var MapUtil = {
                             $("#bulNmtFt").hide();
                         }
                         //용도
-                        changeBuldNmtPurpose("buldNmtType");
-                        $("#buldNmtPurpose").val(data.buldNmtPurpose);
+                        customSelectBox2("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1,1,3);
+                        var buldNmtPurpose = data.buldNmtPurpose;
+                        $("#buldNmtPurpose").val(buldNmtPurpose);
+                        // changeBuldNmtPurpose("buldNmtPurpose");
                         //규격
-                        changeBuldNmtCd();
+                        customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
+                        // changeBuldNmtCd();
                         $("#buldNmtCd").val(data.buldNmtCd);
                         //단가(원)
                         $("#buldNmtUnitPrice").text(data.buldNmtUnitPrice);

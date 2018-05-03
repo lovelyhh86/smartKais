@@ -406,13 +406,13 @@ function changeMnf(id){
     }
     checkChangeOrigin(id);
 }
-//건물번호판 용도
+//건물번호판 형태에 따른 용도변경
 function changeBuldNmtPurpose(id){
     var buldNmtType = $("#buldNmtType").val();
 
     // customSelectBox("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1);
     customSelectBox2("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1,1,3);
-    changeBuldNmtCd('buldNmtPurpose');
+    changeBuldNmtCd('buldNmtCd');
 
     checkChangeOrigin(id);
 
@@ -421,15 +421,15 @@ function changeBuldNmtPurpose(id){
 function changeBuldNmtCd(id){
     var buldNmtPurpose = $("#buldNmtPurpose").val();
     var usedCode = buldNmtPurpose.substr(0,2);
+    customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
+
     if(usedCode.substr(0,1) == "1"){
-        customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
         $("#buldNmtCd").removeAttr("disabled");
         setGdfyWide('buldNmtCd');
         
         $("#buldNmtWide").attr("disabled","disabled");
         $("#buldNmtVertical").attr("disabled","disabled");
     }else{
-        customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
         $("#buldNmtCd").attr("disabled","disabled");
         setGdfyWide('buldNmtCd');
 
