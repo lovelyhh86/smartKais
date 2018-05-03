@@ -179,19 +179,19 @@ function changeScfggMkty(id){
 //사용대상 변경
 function changeUseTarget(id){
     var useTarget = $("#useTarget").val();
-
-    if(useTarget != "01000"){//보행자가 아닐때 제2외국어 선택못함
-        customSelectBox("scfggMkty","SCFGG_MKTY","1",0,1);
-        $("#scfggMkty").val("1");
-        changeScfggMkty();
-    }else{
-        var scfggMkty = $("#scfggMkty").val();
-        makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
-        $("#scfggMkty").val(scfggMkty);
-        changeScfggMkty();
-    }
     var trgGbn = $("#trgGbn").val();
+
     if(trgGbn == "01"){
+        if(useTarget != "01000"){//보행자가 아닐때 제2외국어 선택못함
+            customSelectBox("scfggMkty","SCFGG_MKTY","1",0,1);
+            $("#scfggMkty").val("1");
+            changeScfggMkty();
+        }else{
+            var scfggMkty = $("#scfggMkty").val();
+            makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
+            $("#scfggMkty").val(scfggMkty);
+            changeScfggMkty();
+        }
         changeRdpqGdSd();
     }else if(trgGbn == "03"){
         changeBsisGdSd();
@@ -296,26 +296,42 @@ function checkUnitPrice(id){
 }
 //설치장소 및 사용대상에 따른 규격(기초번호판)
 function changeBsisGdSd(id){
+    //안내시설형식
     var gdftyForm = $("#gdftyForm").val();
+    //설치장소구분
     var bsis_itlpcSe = $("#bsis_itlpcSe").val();
+    //사용대상
     var useTarget = $("#useTarget").val();
+    //제2외국어
+    var scfggMkty = $("#scfggMkty").val();
     var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
-
-    var codeValue = gdftyForm.charAt(0) + useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
-    var lastNum = 3;
-    if(bsis_itlpcSe.charAt(2) == "7"){
-        codeValue = gdftyForm.charAt(0) +"97";
-        lastNum = 3;
-    }else if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){
-        codeValue = "12"
-        lastNum = 2;
-    }else if(useTarget == "02000" || useTarget == "03000" || useTarget == "06000"){
-        codeValue = "13"
-        lastNum = 2;
+    
+    //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
+    if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
+        makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
+        return;
     }
 
-    customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,lastNum);
+    var codeValue = gdftyForm.charAt(0) + useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
+    // var lastNum = 3;
+    if(bsis_itlpcSe.charAt(2) == "7"){
+        codeValue = gdftyForm.charAt(0) +"97";
+        // lastNum = 3;
+    // }else if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){
+    //     codeValue = "12"
+    //     lastNum = 2;
+    // }else if(useTarget == "02000" || useTarget == "03000" || useTarget == "06000"){
+    //     codeValue = "13"
+    //     lastNum = 2;
+    }
+
+    customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,3);
     $("#bsis_bsisGdSd").val(bsis_bsisGdSd);
+
+    if($("#bsis_bsisGdSd").val() == null){
+        $("#bsis_bsisGdSd").val($("#bsis_bsisGdSd option:first").val());
+    }
+    setGdfyWide('bsis_bsisGdSd');
 
     checkChangeOrigin(id);
 }
@@ -870,10 +886,10 @@ function checkChangeOrigin(id){
     var newData = $("#"+id).val();
 
     if(origin != newData){
-        // $("#"+id).attr("style","color:red");
+        $("#"+id).attr("style","color:blue");
         changedIdList.push(id);
     }else{
-        // $("#"+id).removeAttr("style","color:red");
+        $("#"+id).removeAttr("style","color:blue");
         changedIdList = jQuery.grep(changedIdList, function(value) {
             return value != id;
         });

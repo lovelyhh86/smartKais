@@ -2687,6 +2687,7 @@ function loadUpdtData(isImages){
                                 //셀렉트박스 변경을 위한 적용
                                 $("#"+d).trigger('change');
                                 $("#"+d).trigger('input');
+                                $("#"+d).attr("style","color:red");
                                 
                                 //변경 체크를 위한 셋팅
                                 $("#"+d+"_origin").val(data[d]);
