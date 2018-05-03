@@ -11,9 +11,11 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
     loadHelpdesk('#panel-qna .ui-content');  //헬프데스크 메뉴 로딩 menuhelpdesk.js
     //loadAppMenu('#mainMenu');       //앱 메뉴 로딩 menuapp.js
     addSearchUser();
-    // 조사자정보 최신화 1000m -> 1초 현재 5분으로 설정
+
+    //1000m -> 1초 
     // setInterval(function(){ sendMois(); }, 600000);
-    setInterval(function(){ addSearchUser(); }, 300000);
+    // setInterval(function(){ addSearchUser(); }, 300000);// 조사자정보 최신화 5분단위
+    setInterval(function(){ checkVersion(); }, 600000); //버전조회 10분단위
     util.on("notification",function(json,param){
 
         util.toast('push:' + json.message);
@@ -88,4 +90,29 @@ function changeUser(){
     app.info.rcrSn = rcrSn;
     app.info.rcrNm = rcrNm;
     app.info.rcrTyp = rcrTyp;
+}
+
+//버전정보 확인
+function checkVersion(){
+    var params = URLs.postURL(URLs.versionLink, null);
+
+    util.postAJAX('', params)
+            .then(function (context, resultCode, results) {
+                //통신오류처리
+                // if (rCode != 0) {
+                //     navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                //     util.dismissProgress();
+                //     return;
+                // }
+
+                var newVersion = false;
+                var d = results.data;
+                console.log(d);
+            },function(context, xhr, error) {
+                console.log("조회 error >> " + error + '   ' + xhr);
+                util.dismissProgress();
+            },
+            util.dismissProgress
+        )
+                
 }
