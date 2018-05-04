@@ -108,6 +108,7 @@ function checkVersion(){
                 var newVersion = false;
                 var d = results.data;
                 console.log(d);
+                util.dismissProgress();
             },function(context, xhr, error) {
                 console.log("조회 error >> " + error + '   ' + xhr);
                 util.dismissProgress();
