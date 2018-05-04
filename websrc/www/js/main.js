@@ -58,6 +58,8 @@ var msg = {
     checkOtherPhoto : "{0} 사진을 촬영 하셔야 저장하실 수 있습니다.",
     checkNullObject : "{0} 항목값 오류입니다.",
     checkSetObjectError : "항목 셋팅 중 오류가 발생했습니다.\n도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
+    dontInsertNull : "{0} 에 빈값을 넣을 수 없습니다.",
+    checkGdSd : "규격정보가 없습니다. 그래도 저장 하시겠습니까?"
     
 };
 var app = {

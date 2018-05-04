@@ -209,6 +209,8 @@ function changePlqDir(id){
         $("#bdrclAt").val("0"); //양면 아니오
     }
     $("#bdrclAt").trigger("change");
+
+    changeRdpqGdSd('rdpqGdSd');
     checkChangeOrigin(id);
 }
 
@@ -229,10 +231,9 @@ function changeRdpqGdSd(){
     }
     
     customSelectBox("rdpqGdSd",colume,useCd,0,3);
-
-    if(!util.isEmpty(rdpqGdSd)){
-        $("#rdpqGdSd").val(rdpqGdSd);
-    }else{
+    $("#rdpqGdSd").val(rdpqGdSd);
+    
+    if($("#rdpqGdSd").val() == null){
         $("#rdpqGdSd").val($("#rdpqGdSd option:first").val());
     }
 
@@ -247,30 +248,43 @@ function setGdfyWide(id){
     var buldNmtType = $("#buldNmtType").val();
     var gdfyWide = $("#"+id+" option:selected").text();
 
-    if(trgGbn == "02"){
-        if(buldNmtType == "1000"){
-            $("#buldNmtWide").val(gdfyWide.split("*")[0]);
-            $("#buldNmtVertical").val(gdfyWide.split("*")[1]);
-    
-            $("#buldNmtWide").attr("disabled","disabled");
-            $("#buldNmtVertical").attr("disabled","disabled");
-        }else{
+    if(util.isEmpty(gdfyWide)){
+        if(trgGbn == "02"){
             $("#buldNmtWide").removeAttr("disabled");
             $("#buldNmtVertical").removeAttr("disabled");
-        }  
-    }else{
-        if(gdftyForm == "10000"){
-            $("#gdftyWide").val(gdfyWide.split("*")[0]);
-            $("#gdftyVertical").val(gdfyWide.split("*")[1]);
-    
-            $("#gdftyWide").attr("disabled","disabled");
-            $("#gdftyVertical").attr("disabled","disabled");
         }else{
             $("#gdftyWide").removeAttr("disabled");
             $("#gdftyVertical").removeAttr("disabled");
-        }    
+        }
+    }else{
+        if(trgGbn == "02"){
+            if(buldNmtType == "1000"){
+                $("#buldNmtWide").val(gdfyWide.split("*")[0]);
+                $("#buldNmtVertical").val(gdfyWide.split("*")[1]);
+        
+                $("#buldNmtWide").attr("disabled","disabled");
+                $("#buldNmtVertical").attr("disabled","disabled");
+            }else{
+                $("#buldNmtWide").removeAttr("disabled");
+                $("#buldNmtVertical").removeAttr("disabled");
+            }  
+        }else{
+            if(gdftyForm == "10000"){
+                $("#gdftyWide").val(gdfyWide.split("*")[0]);
+                $("#gdftyVertical").val(gdfyWide.split("*")[1]);
+        
+                $("#gdftyWide").attr("disabled","disabled");
+                $("#gdftyVertical").attr("disabled","disabled");
+            }else{
+                $("#gdftyWide").removeAttr("disabled");
+                $("#gdftyVertical").removeAttr("disabled");
+            }    
+        }
     }
+    
     checkChangeOrigin(id);
+    checkChangeOrigin("gdftyWide");
+    checkChangeOrigin("gdftyVertical");
 
 }
 
