@@ -2142,513 +2142,741 @@ function modify(){
         return;
     }
 
+    //재 저장 메시지(규격 정보 없는 경우 메시지 변경됨)
     var isUpdtGbn = $("#isUpdtGbn").val();
     var msgText = msg.isSave;
     if(isUpdtGbn.indexOf("D") != -1){
         msgText = msg.isSaveAgain;
     }
+        
+    //점검정보
+    var workId = app.info.opeId;
+    var rcrSn = app.info.rcrSn;
+    var mtchSn = $("#mtchSn").val();
+    var plnYr = util.getToday().substr(0,4);
+    var plnOdr = $("#plnOdr").val();
+
+    var trgSn = $("#trgSn").val();
+    var trgLocSn = $("#trgLocSn").val();
+    var trgGbn = $("#trgGbn").val();
+    var sigCd = $("#sigCd").val();
+
+    var commomParams = {
+        sigCd : sigCd,
+        workId : workId,
+        rcrSn : rcrSn,
+        plnYr : plnYr,
+        plnOdr : plnOdr,
+        trgSn : trgSn,
+        trgLocSn : trgLocSn,
+        trgGbn : trgGbn,
+        mtchSn : mtchSn
+
+    };
+
+    //** 안내시설물 */
+    if(trgGbn != "02"){
+
+        //설치지점
+        var instSpotCd = $("#instSpotCd").val();
+        if(instSpotCd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("설치지점"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //조명여부
+        var lghtCd = $("#lghtCd").val();
+        if(lghtCd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("조명여부"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //교차로유형
+        var instCrossCd = $("#instCrossCd").val();
+        if(instCrossCd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("교차로유형"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+
+        //안내시설형식(규격참고용)
+        var gdftyForm = $("#gdftyForm").val();
+
+        //사용대상
+        var useTarget = $("#useTarget").val();
+        if(useTarget == null){
+            navigator.notification.alert(msg.dontInsertNull.format("사용대상"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //재질
+        var gdftyQlt = $("#gdftyQlt").val();
+        if(gdftyQlt == null){
+            navigator.notification.alert(msg.dontInsertNull.format("재질"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //인쇄방식
+        var prtTy = $("#prtTy").val();
+        if(prtTy == null){
+            navigator.notification.alert(msg.dontInsertNull.format("인쇄방식"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //제2외국어여부
+        var scfggMkty = $("#scfggMkty").val();
+        if(scfggMkty == null){
+            navigator.notification.alert(msg.dontInsertNull.format("제2외국어여부"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //언어1
+        var scfggUla1 = $("#scfggUla1").val();
+        //단독언어
+        if((scfggMkty == "2" || scfggMkty == "3") && scfggUla1 == null){
+            navigator.notification.alert(msg.dontInsertNull.format("언어1"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //언어2
+        var scfggUla2 = $("#scfggUla2").val();
+        //2개언어
+        if(scfggMkty == "3" && scfggUla2 == null){
+            navigator.notification.alert(msg.dontInsertNull.format("언어2"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        
+        //단가
+        var gdftyUnitPrice = $("#gdftyUnitPrice").text();
+        //가로세로두께
+        var gdftyWide = $("#gdftyWide").val();
+        //가로
+        if(gdftyWide == null){
+            navigator.notification.alert(msg.dontInsertNull.format("가로"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        var gdftyVertical = $("#gdftyVertical").val();
+        if(gdftyVertical == null){
+            navigator.notification.alert(msg.dontInsertNull.format("세로"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        var gdftyThickness = $("#gdftyThickness").val();
+        if(gdftyThickness == null){
+            navigator.notification.alert(msg.dontInsertNull.format("두께"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+
+        commomParams = $.extend(commomParams,{
+            instSpotCd : instSpotCd,
+            lghtCd : lghtCd,
+            instCrossCd : instCrossCd,
+            useTarget : useTarget,
+            gdftyQlt : gdftyQlt,
+            prtTy : prtTy,
+            scfggMkty : scfggMkty,
+            scfggUla1 : scfggUla1,
+            scfggUla2 : scfggUla2,
+            gdftyUnitPrice : gdftyUnitPrice,
+            gdftyWide : gdftyWide,
+            gdftyVertical : gdftyVertical,
+            gdftyThickness : gdftyThickness
+        })
+    }
+    
+    var link = URLs.insertSpgfChange;
+
+    if(trgGbn == DATA_TYPE.RDPQ){
+        var rdGdftySe = $("#rdGdftySe").val();
+        if(rdGdftySe == "110"){
+            //안내시설방향
+            var plqDirection = $("#plqDirection").val();
+            if(plqDirection == null){
+                navigator.notification.alert(msg.dontInsertNull.format("안내시설방향"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            //양면여부
+            var bdrclAt = $("#bdrclAt").val();
+            if(bdrclAt == null){
+                navigator.notification.alert(msg.dontInsertNull.format("양면여부"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            //앞면도로명
+            var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
+            if(frontKoreanRoadNm == null){
+                navigator.notification.alert(msg.dontInsertNull.format("앞면 도로명"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            var frontRomeRoadNm = $("#frontRomeRoadNm").text();
+            //시작기초번호
+            var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
+            var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+            if(frontStartBaseMasterNo == null || frontStartBaseSlaveNo == null){
+                navigator.notification.alert(msg.dontInsertNull.format("앞면 시작기초번호"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            //종료기초번호
+            var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
+            var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+            if(frontEndBaseMasterNo == null || frontEndBaseSlaveNo == null){
+                navigator.notification.alert(msg.dontInsertNull.format("앞면 종료기초번호"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+
+            //뒷면도로명
+            var backKoreanRoadNm = $("#backKoreanRoadNm").val();
+            if(bdrclAt == "1" && backKoreanRoadNm == null){
+                navigator.notification.alert(msg.dontInsertNull.format("뒷면도로명"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            var backRomeRoadNm = $("#backRomeRoadNm").text();
+            //시작기초번호
+            var backStartBaseMasterNo = $("#backStartBaseMasterNo").val() == ""? 0 : $("#backStartBaseMasterNo").val();
+            var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val() == ""? 0 : $("#backStartBaseSlaveNo").val();
+            if(backStartBaseMasterNo == null || backStartBaseSlaveNo == null){
+                navigator.notification.alert(msg.dontInsertNull.format("뒷면 시작기초번호"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            //종료기초번호
+            var backEndBaseMasterNo = $("#backEndBaseMasterNo").val() == ""? 0 : $("#backEndBaseMasterNo").val();
+            var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val() == ""? 0 : $("#backEndBaseSlaveNo").val();
+            if(backEndBaseMasterNo == null || backEndBaseSlaveNo == null){
+                navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+
+            //규격
+            var rdpqGdSd = $("#rdpqGdSd").val();
+            
+            //규격 없을 경우에 저장 할 것인지 메시지
+            if(rdpqGdSd == null && gdftyForm == "10000"){
+                msgText = msg.checkGdSd;
+            }
+            
+            commomParams = $.extend(commomParams,{
+                plqDirection : plqDirection,
+                frontKoreanRoadNm : frontKoreanRoadNm,
+                frontRomeRoadNm: frontRomeRoadNm,
+                frontStartBaseMasterNo : frontStartBaseMasterNo,
+                frontStartBaseSlaveNo : frontStartBaseSlaveNo,
+                frontEndBaseMasterNo : frontEndBaseMasterNo,
+                frontEndBaseSlaveNo : frontEndBaseSlaveNo,
+                backKoreanRoadNm : backKoreanRoadNm,
+                backRomeRoadNm : backRomeRoadNm,
+                backStartBaseMasterNo : backStartBaseMasterNo,
+                backStartBaseSlaveNo : backStartBaseSlaveNo,
+                backEndBaseMasterNo : backEndBaseMasterNo,
+                backEndBaseSlaveNo : backEndBaseSlaveNo,
+                rdpqGdSd : rdpqGdSd,
+                rdGdftySe : rdGdftySe,
+                bdrclAt : bdrclAt,
+            })
+
+        }else if(rdGdftySe == "210"){//이면도로용
+            //안내시설방향
+            var rddr_plqDrc = $("#rddr_plqDrc").val();
+            if(rddr_plqDrc == null){
+                navigator.notification.alert(msg.dontInsertNull.format("안내시설방향"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            //설치형태
+            var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
+            if(rddr_afRdplqSe == null){
+                navigator.notification.alert(msg.dontInsertNull.format("설치형태"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            //이면도로갯수
+            var rddr_afRdCo = $("#rddr_afRdCo").val();
+            if(rddr_afRdCo == null){
+                navigator.notification.alert(msg.dontInsertNull.format("이면도로갯수"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+            //규격
+            var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
+            if(rddr_rddrGdSd == null && gdftyForm == "10000"){
+                msgText = msg.checkGdSd;
+            }
+            //양면여부
+            var bdrclAt = $("#bdrclAt").val();
+            if(bdrclAt == null){
+                navigator.notification.alert(msg.dontInsertNull.format("양면여부"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+
+            //이면도로 도로내용
+            //앞면1
+            // var drcKorRn11 = $("#drcKorRn11").val();
+            // var drcRomRn11 = $("#drcRomRn11").val();
+            // var drcRdLt11 = $("#drcRdLt11").val();
+            // var drcRdDrc11 = $("#drcRdDrc11").val();
+            // //뒷면1
+            // var drcKorRn21 = $("#drcKorRn21").val();
+            // var drcRomRn21 = $("#drcRomRn21").val();
+            // var drcRdLt21 = $("#drcRdLt21").val();
+            // var drcRdDrc21 = $("#drcRdDrc21").val();
+            // //앞면2
+            // var drcKorRn12 = $("#drcKorRn12").val();
+            // var drcRomRn12 = $("#drcRomRn12").val();
+            // var drcRdLt12 = $("#drcRdLt12").val();
+            // var drcRdDrc12 = $("#drcRdDrc12").val();
+            // //뒷면2
+            // var drcKorRn22 = $("#drcKorRn22").val();
+            // var drcRomRn22 = $("#drcRomRn22").val();
+            // var drcRdLt22 = $("#drcRdLt22").val();
+            // var drcRdDrc22 = $("#drcRdDrc22").val();
+            // //앞면3
+            // var drcKorRn13 = $("#drcKorRn13").val();
+            // var drcRomRn13 = $("#drcRomRn13").val();
+            // var drcRdLt13 = $("#drcRdLt13").val();
+            // var drcRdDrc13 = $("#drcRdDrc13").val();
+            // //뒷면3
+            // var drcKorRn23 = $("#drcKorRn23").val();
+            // var drcRomRn23 = $("#drcRomRn23").val();
+            // var drcRdLt23 = $("#drcRdLt23").val();
+            // var drcRdDrc23 = $("#drcRdDrc23").val();
+
+
+            commomParams = $.extend(commomParams,{
+                rddr_plqDrc : rddr_plqDrc,
+                rddr_afRdplqSe : rddr_afRdplqSe,
+                rddr_afRdCo : rddr_afRdCo,
+                rddr_rddrGdSd : rddr_rddrGdSd,
+                rdGdftySe : rdGdftySe,
+                bdrclAt : bdrclAt,
+
+                // drcKorRn11 : drcKorRn11,
+                // drcRomRn11 : drcRomRn11,
+                // drcRdLt11 : drcRdLt11,
+                // drcRdDrc11 : drcRdDrc11,
+
+                // drcKorRn21 : drcKorRn21,
+                // drcRomRn21 : drcRomRn21,
+                // drcRdLt21 : drcRdLt21,
+                // drcRdDrc21 : drcRdDrc21,
+
+                // drcKorRn12 : drcKorRn12,
+                // drcRomRn12 : drcRomRn12,
+                // drcRdLt12 : drcRdLt12,
+                // drcRdDrc12 : drcRdDrc12,
+
+                // drcKorRn22 : drcKorRn22,
+                // drcRomRn22 : drcRomRn22,
+                // drcRdLt22 : drcRdLt22,
+                // drcRdDrc22 : drcRdDrc22,
+
+                // drcKorRn13 : drcKorRn13,
+                // drcRomRn13 : drcRomRn13,
+                // drcRdLt13 : drcRdLt13,
+                // drcRdDrc13 : drcRdDrc13,
+
+                // drcKorRn23 : drcKorRn23,
+                // drcRomRn23 : drcRomRn23,
+                // drcRdLt23 : drcRdLt23,
+                // drcRdDrc23 : drcRdDrc23
+
+            })
+        }else if(rdGdftySe == "310"){//예고용
+            
+            //규격
+            var prntGdSd = $("#prntGdSd").val();
+            
+            //규격 없을 경우에 저장 할 것인지 메시지
+            if(prntGdSd == null && gdftyForm == "10000"){
+                msgText = msg.checkGdSd;
+            }
+
+            commomParams = $.extend(commomParams,{
+                prntGdSd : prntGdSd,
+                rdGdftySe : rdGdftySe,
+                bdrclAt : bdrclAt
+            })
+        }
+        
+    }else if(trgGbn == DATA_TYPE.AREA){
+        //한글도로명
+        var area_areaKorRn = $("#area_areaKorRn").val();
+        if(area_areaKorRn == null){
+            navigator.notification.alert(msg.dontInsertNull.format("한글도로명"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //시작기초번호
+        // var area_stbsMn = $("#area_stbsMn").val();
+        // var area_stbsSn = $("#area_stbsSn").val();
+        //종료기초번호
+        // var area_edbsMn = $("#area_edbsMn").val();
+        // var area_edbsSn = $("#area_edbsSn").val();
+        //광고에따른 분류
+        var area_advrtsCd = $("#area_advrtsCd").val();
+        if(area_advrtsCd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("광고에따른 분류"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //광고내용
+        var area_advCn = $("#area_advCn").val();
+        //기타내용
+        var area_etcCn = $("#area_etcCn").val();
+        //규격
+        var area_areaGdSd = $("#area_areaGdSd").val();
+
+        //규격 없을 경우에 저장 할 것인지 메시지
+        if(area_areaGdSd == null && gdftyForm == "10000"){
+            msgText = msg.checkGdSd;
+        }
+        
+        //양면여부
+        var bdrclAt = $("#bdrclAt").val();
+        if(bdrclAt == null){
+            navigator.notification.alert(msg.dontInsertNull.format("양면여부"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+
+        commomParams = $.extend(commomParams,{
+            area_areaKorRn : area_areaKorRn,
+            // area_stbsMn : area_stbsMn,
+            // area_stbsSn : area_stbsSn,
+            // area_edbsMn : area_edbsMn,
+            // area_edbsSn : area_edbsSn,
+            area_advrtsCd : area_advrtsCd,
+            area_advCn : area_advCn,
+            area_etcCn : area_etcCn,
+            area_areaGdSd : area_areaGdSd,
+            bdrclAt : bdrclAt
+
+        })
+    }else if(trgGbn == DATA_TYPE.BSIS){
+        //설치장소구분
+        var bsis_itlpcSe = $("#bsis_itlpcSe").val();
+        if(bsis_itlpcSe == null){
+            navigator.notification.alert(msg.dontInsertNull.format("설치장소구분"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //설치시설물
+        var bsis_instlFty = $("#bsis_instlFty_main").val() == '00'?$("#bsis_instlFty").val() : $("#bsis_instlFty_main").val();
+        if(bsis_instlFty == null){
+            navigator.notification.alert(msg.dontInsertNull.format("설치시설물"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //설치시설물 기타상세
+        var bsis_insFtyDc = $("#bsis_insFtyDc").val();
+        //곡면분류
+        var bsis_planeCd = $("#bsis_planeCd").val();
+        if(bsis_planeCd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("곡면분류"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //한글 도로명
+        var bsis_korRn = $("#bsis_korRn").val();
+        if(bsis_korRn == null){
+            navigator.notification.alert(msg.dontInsertNull.format("한글 도로명"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //기초번호
+        var bsis_ctbsMn = $("#bsis_ctbsMn").val();
+        //이전승강장 번호
+        var bsis_bfbsMn = $("#bsis_bfbsMn").val();
+        var bsis_bfbsSn = $("#bsis_bfbsSn").val();
+        //다음승강장 번호
+        var bsis_ntbsMn = $("#bsis_ntbsMn").val();
+        var bsis_ntbsSn = $("#bsis_ntbsSn").val();
+        //표기방법
+        var bsisMthd = $("#bsisMthd").val();
+        if(bsisMthd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("표기방법"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //규격
+        var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
+
+        //규격 없을 경우에 저장 할 것인지 메시지
+        if(bsis_bsisGdSd == null && gdftyForm == "10000"){
+            msgText = msg.checkGdSd;
+        }
+
+        //양면여부
+        var bdrclAt = $("#bdrclAt").val();
+        if(bdrclAt == null){
+            navigator.notification.alert(msg.dontInsertNull.format("양면여부"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+
+        commomParams = $.extend(commomParams,{
+            bsis_itlpcSe : bsis_itlpcSe,
+            bsis_instlFty : bsis_instlFty,
+            bsis_insFtyDc : bsis_insFtyDc,
+            bsis_planeCd : bsis_planeCd,
+            bsis_korRn : bsis_korRn,
+            bsis_ctbsMn : bsis_ctbsMn,
+            bsis_bfbsMn : bsis_bfbsMn,
+            bsis_bfbsSn : bsis_bfbsSn,
+            bsis_ntbsMn : bsis_ntbsMn,
+            bsis_ntbsSn : bsis_ntbsSn,
+            bsisMthd : bsisMthd,
+            bsis_bsisGdSd : bsis_bsisGdSd,
+            bdrclAt : bdrclAt
+
+        })
+
+    }else if(trgGbn == DATA_TYPE.ENTRC){
+        //조명여부
+        var lghtCd = $("#lghtCd").val();
+        if(lghtCd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("조명여부"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //유형
+        var buldNmtSe = $("#buldNmtSe").val();
+        if(buldNmtSe == null){
+            navigator.notification.alert(msg.dontInsertNull.format("유형"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //용도
+        var buldNmtPurpose = $("#buldNmtPurpose").val();
+        if(buldNmtPurpose == null){
+            navigator.notification.alert(msg.dontInsertNull.format("용도"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //제작유형
+        var buldMnfCd = $("#buldMnfCd").val();
+        if(buldMnfCd == null){
+            navigator.notification.alert(msg.dontInsertNull.format("제작유형"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //재질
+        var buldNmtMaterial = $("#buldNmtMaterial").val();
+        if(buldNmtMaterial == null){
+            navigator.notification.alert(msg.dontInsertNull.format("재질"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //형태
+        var buldNmtType = $("#buldNmtType").val();
+
+        //규격
+        var buldNmtCd = $("#buldNmtCd").val();
+        
+        //규격 없을 경우에 저장 할 것인지 메시지
+        if(buldNmtCd == null && buldNmtType == "1000"){
+            msgText = msg.checkGdSd;
+        }
+
+        //가로
+        var buldNmtWide = $("#buldNmtWide").val();
+        if(buldNmtWide == null){
+            navigator.notification.alert(msg.dontInsertNull.format("가로"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //세로
+        var buldNmtVertical = $("#buldNmtVertical").val();
+        if(buldNmtVertical == null){
+            navigator.notification.alert(msg.dontInsertNull.format("세로"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //두께
+        var buldNmtThickness = $("#buldNmtThickness").val();
+        if(buldNmtThickness == null){
+            navigator.notification.alert(msg.dontInsertNull.format("두께"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //단가
+        var buldNmtUnitPrice = $("#buldNmtUnitPrice").text();
+        //자율형 한글자 크기(가로)
+        var bulNmtFtWi = $("#bulNmtFtWi").val();
+        if(buldNmtType == '2000' && bulNmtFtWi == null){
+            navigator.notification.alert(msg.dontInsertNull.format("자율형 한글자 크기(가로)"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+        //자율형 한글자 크기(세로)
+        var bulNmtFtVe = $("#bulNmtFtVe").val();
+        if(buldNmtType == '2000' && bulNmtFtVe == null){
+            navigator.notification.alert(msg.dontInsertNull.format("자율형 한글자 크기(세로)"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+
+        commomParams = $.extend(commomParams,{
+            lghtCd : lghtCd,
+            buldNmtSe : buldNmtSe,
+            buldNmtPurpose : buldNmtPurpose,
+            buldMnfCd : buldMnfCd,
+            buldNmtMaterial : buldNmtMaterial,
+            buldNmtCd : buldNmtCd,
+            buldNmtWide : buldNmtWide,
+            buldNmtVertical : buldNmtVertical,
+            buldNmtThickness : buldNmtThickness,
+            buldNmtUnitPrice : buldNmtUnitPrice,
+            bulNmtFtWi : bulNmtFtWi,
+            bulNmtFtVe : bulNmtFtVe,
+        })
+
+        link = URLs.insertSpbdChange;
+    }else if(trgGbn == DATA_TYPE.BULD){
+        //용도
+        var bdtypCd = $("#bdtypCd").val();
+        //건물종속여부
+        var bulDpnSe = $("#bulDpnSe").val();
+        //건물층수
+        var groFloCo = $("#groFloCo").val();
+        var undFloCo = $("#undFloCo").val();
+        //건물명
+        var posBulNm = $("#posBulNm").val();
+        //건물명(영)
+        var bulEngNm = $("#bulEngNm").val();
+        //건물상태
+        var buldSttus = $("#buldSttus").val();
+        //상세건물명
+        var buldNmDc = $("#buldNmDc").val();
+        //메모
+        var buldMemo = $("#buldMemo").val();
+
+        commomParams = $.extend(commomParams,{
+            bdtypCd : bdtypCd,
+            bulDpnSe : bulDpnSe,
+            groFloCo : groFloCo,
+            undFloCo : undFloCo,
+            posBulNm : posBulNm,
+            bulEngNm : bulEngNm,
+            buldSttus : buldSttus,
+            buldNmDc : buldNmDc,
+            buldMemo : buldMemo,
+
+        })
+
+        link = URLs.insertSpbdChange;
+    }
     
     navigator.notification.confirm(msgText, function(btnIndex){
         if(btnIndex == 1){
             
-            var workId = app.info.opeId;
-            var rcrSn = app.info.rcrSn;
-            var mtchSn = $("#mtchSn").val();
-            var plnYr = util.getToday().substr(0,4);
-            var plnOdr = $("#plnOdr").val();
-
-            var trgSn = $("#trgSn").val();
-            var trgLocSn = $("#trgLocSn").val();
-            var trgGbn = $("#trgGbn").val();
-            var sigCd = $("#sigCd").val();
-
-            var commomParams = {
-                sigCd : sigCd,
-                workId : workId,
-                rcrSn : rcrSn,
-                plnYr : plnYr,
-                plnOdr : plnOdr,
-                trgSn : trgSn,
-                trgLocSn : trgLocSn,
-                trgGbn : trgGbn,
-                mtchSn : mtchSn
-
-            };
-
-            //** 도로명판 */
-            //설치지점
-            var instSpotCd = $("#instSpotCd").val();
-            if(util.isEmpty(instSpotCd)){
-                navigator.notification.alert(msg.dontInsertNull.format("설치지점"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            //조명여부
-            var lghtCd = $("#lghtCd").val();
-            if(util.isEmpty(lghtCd)){
-                navigator.notification.alert(msg.dontInsertNull.format("조명여부"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            //교차로유형
-            var instCrossCd = $("#instCrossCd").val();
-            if(util.isEmpty(instCrossCd)){
-                navigator.notification.alert(msg.dontInsertNull.format("교차로유형"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-
-            //사용대상
-            var useTarget = $("#useTarget").val();
-            if(util.isEmpty(useTarget)){
-                navigator.notification.alert(msg.dontInsertNull.format("사용대상"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            //재질
-            var gdftyQlt = $("#gdftyQlt").val();
-            if(util.isEmpty(gdftyQlt)){
-                navigator.notification.alert(msg.dontInsertNull.format("재질"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            //인쇄방식
-            var prtTy = $("#prtTy").val();
-            if(util.isEmpty(prtTy)){
-                navigator.notification.alert(msg.dontInsertNull.format("인쇄방식"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            //제2외국어여부
-            var scfggMkty = $("#scfggMkty").val();
-            if(util.isEmpty(scfggMkty)){
-                navigator.notification.alert(msg.dontInsertNull.format("제2외국어여부"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            //언어1
-            var scfggUla1 = $("#scfggUla1").val();
-            //단독언어
-            if(scfggMkty == "2" || scfggMkty == "3" && util.isEmpty(scfggUla1)){
-                navigator.notification.alert(msg.dontInsertNull.format("언어1"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            //언어2
-            var scfggUla2 = $("#scfggUla2").val();
-            //2개언어
-            if(scfggMkty == "3" && util.isEmpty(scfggUla2)){
-                navigator.notification.alert(msg.dontInsertNull.format("언어2"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            
-            //단가
-            var gdftyUnitPrice = $("#gdftyUnitPrice").text();
-            //가로세로두께
-            var gdftyWide = $("#gdftyWide").val();
-            //가로
-            if(util.isEmpty(gdftyWide)){
-                navigator.notification.alert(msg.dontInsertNull.format("가로"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            var gdftyVertical = $("#gdftyVertical").val();
-            if(util.isEmpty(gdftyVertical)){
-                navigator.notification.alert(msg.dontInsertNull.format("세로"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-            var gdftyThickness = $("#gdftyThickness").val();
-            if(util.isEmpty(gdftyThickness)){
-                navigator.notification.alert(msg.dontInsertNull.format("두께"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
-
-            commomParams = $.extend(commomParams,{
-                instSpotCd : instSpotCd,
-                lghtCd : lghtCd,
-                instCrossCd : instCrossCd,
-                useTarget : useTarget,
-                gdftyQlt : gdftyQlt,
-                prtTy : prtTy,
-                scfggMkty : scfggMkty,
-                scfggUla1 : scfggUla1,
-                scfggUla2 : scfggUla2,
-                gdftyUnitPrice : gdftyUnitPrice,
-                gdftyWide : gdftyWide,
-                gdftyVertical : gdftyVertical,
-                gdftyThickness : gdftyThickness
-            })
-            
-            var link = URLs.insertSpgfChange;
-
-            if(trgGbn == DATA_TYPE.RDPQ){
-                var rdGdftySe = $("#rdGdftySe").val();
-                if(rdGdftySe == "110"){
-                    //안내시설방향
-                    var plqDirection = $("#plqDirection").val();
-                    if(util.isEmpty(plqDirection)){
-                        navigator.notification.alert(msg.dontInsertNull.format("안내시설방향"), function(){
-                            util.dismissProgress();
-                        }, '알림', '확인');
-                        return;
-                    }
-                    //양면여부
-                    var bdrclAt = $("#bdrclAt").val();
-                    if(util.isEmpty(bdrclAt)){
-                        navigator.notification.alert(msg.dontInsertNull.format("양면여부"), function(){
-                            util.dismissProgress();
-                        }, '알림', '확인');
-                        return;
-                    }
-                    //앞면도로명
-                    var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
-                    if(util.isEmpty(frontKoreanRoadNm)){
-                        navigator.notification.alert(msg.dontInsertNull.format("앞면 도로명"), function(){
-                            util.dismissProgress();
-                        }, '알림', '확인');
-                        return;
-                    }
-                    var frontRomeRoadNm = $("#frontRomeRoadNm").text();
-                    //시작기초번호
-                    var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
-                    var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
-                    if(frontStartBaseMasterNo == null || frontStartBaseSlaveNo == null){
-                        navigator.notification.alert(msg.dontInsertNull.format("앞면 시작기초번호"), function(){
-                            util.dismissProgress();
-                        }, '알림', '확인');
-                        return;
-                    }
-                    //종료기초번호
-                    var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
-                    var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
-                    if(frontEndBaseMasterNo == null || frontEndBaseSlaveNo == null){
-                        navigator.notification.alert(msg.dontInsertNull.format("앞면 종료기초번호"), function(){
-                            util.dismissProgress();
-                        }, '알림', '확인');
+            util.showProgress();
+            var url = URLs.postURL(link, commomParams);
+            util.postAJAX({}, url).then(
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
                         return;
                     }
 
-                    //뒷면도로명
-                    var backKoreanRoadNm = $("#backKoreanRoadNm").val();
-                    if(bdrclAt == "1" && util.isEmpty(backKoreanRoadNm)){
-                        navigator.notification.alert(msg.dontInsertNull.format("뒷면도로명"), function(){
+                    navigator.notification.alert(msg.successModify,
+                        function (){
+                            
+                            // closeDetailView();
+
+                            //지도초기화
+                            // closePopupAndClearMap(trgGbn);
+
+                            //시설물 번호 전역변수
+                            if(trgGbn == "02" || trgGbn == "99"){
+                                trgSnGlobal = trgLocSn;
+                            }else{
+                                trgSnGlobal = trgSn;
+                            }
+                            
+                            MapUtil.openDetail(trgGbn, null);
+        
                             util.dismissProgress();
-                        }, '알림', '확인');
-                        return;
-                    }
-                    var backRomeRoadNm = $("#backRomeRoadNm").text();
-                    //시작기초번호
-                    var backStartBaseMasterNo = $("#backStartBaseMasterNo").val() == ""? 0 : $("#backStartBaseMasterNo").val();
-                    var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val() == ""? 0 : $("#backStartBaseSlaveNo").val();
-                    if(backStartBaseMasterNo == null || backStartBaseSlaveNo == null){
-                        navigator.notification.alert(msg.dontInsertNull.format("뒷면 시작기초번호"), function(){
-                            util.dismissProgress();
-                        }, '알림', '확인');
-                        return;
-                    }
-                    //종료기초번호
-                    var backEndBaseMasterNo = $("#backEndBaseMasterNo").val() == ""? 0 : $("#backEndBaseMasterNo").val();
-                    var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val() == ""? 0 : $("#backEndBaseSlaveNo").val();
-                    if(backEndBaseMasterNo == null || backEndBaseSlaveNo == null){
-                        navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호"), function(){
-                            util.dismissProgress();
-                        }, '알림', '확인');
-                        return;
-                    }
+        
+                            
+                        },'알림', '확인');
 
-                    //규격
-                    var rdpqGdSd = $("#rdpqGdSd").val();
-                    //규격널처리...
-                    // if(util.isEmpty(rdpqGdSd)){
-                    //     navigator.notification.confirm(msg.checkGdSd, function(btnIndex){
-                    //         if(btnIndex == 1){
+                    util.dismissProgress();
 
-                    //         }else{
-                    //             return;
-                    //         }
-                    //     }, "알림", ["확인","취소"]);
-                    // }
+                },
+                util.dismissProgress
+            );
 
-                    commomParams = $.extend(commomParams,{
-                        plqDirection : plqDirection,
-                        frontKoreanRoadNm : frontKoreanRoadNm,
-                        frontRomeRoadNm: frontRomeRoadNm,
-                        frontStartBaseMasterNo : frontStartBaseMasterNo,
-                        frontStartBaseSlaveNo : frontStartBaseSlaveNo,
-                        frontEndBaseMasterNo : frontEndBaseMasterNo,
-                        frontEndBaseSlaveNo : frontEndBaseSlaveNo,
-                        backKoreanRoadNm : backKoreanRoadNm,
-                        backRomeRoadNm : backRomeRoadNm,
-                        backStartBaseMasterNo : backStartBaseMasterNo,
-                        backStartBaseSlaveNo : backStartBaseSlaveNo,
-                        backEndBaseMasterNo : backEndBaseMasterNo,
-                        backEndBaseSlaveNo : backEndBaseSlaveNo,
-                        rdpqGdSd : rdpqGdSd,
-                        rdGdftySe : rdGdftySe,
-                        bdrclAt : bdrclAt,
-                    })
-                }else if(rdGdftySe == "210"){//이면도로용
-                    //안내시설방향
-                    var rddr_plqDrc = $("#rddr_plqDrc").val();
-                    //설치형태
-                    var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
-                    //이면도로갯수
-                    var rddr_afRdCo = $("#rddr_afRdCo").val();
-                    //규격
-                    var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
-                    //양면여부
-                    var bdrclAt = $("#bdrclAt").val();
+        }
+    }, "알림", ["확인","취소"]);
+}
 
-                    //이면도로 도로내용
-                    //앞면1
-                    // var drcKorRn11 = $("#drcKorRn11").val();
-                    // var drcRomRn11 = $("#drcRomRn11").val();
-                    // var drcRdLt11 = $("#drcRdLt11").val();
-                    // var drcRdDrc11 = $("#drcRdDrc11").val();
-                    // //뒷면1
-                    // var drcKorRn21 = $("#drcKorRn21").val();
-                    // var drcRomRn21 = $("#drcRomRn21").val();
-                    // var drcRdLt21 = $("#drcRdLt21").val();
-                    // var drcRdDrc21 = $("#drcRdDrc21").val();
-                    // //앞면2
-                    // var drcKorRn12 = $("#drcKorRn12").val();
-                    // var drcRomRn12 = $("#drcRomRn12").val();
-                    // var drcRdLt12 = $("#drcRdLt12").val();
-                    // var drcRdDrc12 = $("#drcRdDrc12").val();
-                    // //뒷면2
-                    // var drcKorRn22 = $("#drcKorRn22").val();
-                    // var drcRomRn22 = $("#drcRomRn22").val();
-                    // var drcRdLt22 = $("#drcRdLt22").val();
-                    // var drcRdDrc22 = $("#drcRdDrc22").val();
-                    // //앞면3
-                    // var drcKorRn13 = $("#drcKorRn13").val();
-                    // var drcRomRn13 = $("#drcRomRn13").val();
-                    // var drcRdLt13 = $("#drcRdLt13").val();
-                    // var drcRdDrc13 = $("#drcRdDrc13").val();
-                    // //뒷면3
-                    // var drcKorRn23 = $("#drcKorRn23").val();
-                    // var drcRomRn23 = $("#drcRomRn23").val();
-                    // var drcRdLt23 = $("#drcRdLt23").val();
-                    // var drcRdDrc23 = $("#drcRdDrc23").val();
-
-
-                    commomParams = $.extend(commomParams,{
-                        rddr_plqDrc : rddr_plqDrc,
-                        rddr_afRdplqSe : rddr_afRdplqSe,
-                        rddr_afRdCo : rddr_afRdCo,
-                        rddr_rddrGdSd : rddr_rddrGdSd,
-                        rdGdftySe : rdGdftySe,
-                        bdrclAt : bdrclAt,
-
-                        // drcKorRn11 : drcKorRn11,
-                        // drcRomRn11 : drcRomRn11,
-                        // drcRdLt11 : drcRdLt11,
-                        // drcRdDrc11 : drcRdDrc11,
-
-                        // drcKorRn21 : drcKorRn21,
-                        // drcRomRn21 : drcRomRn21,
-                        // drcRdLt21 : drcRdLt21,
-                        // drcRdDrc21 : drcRdDrc21,
-
-                        // drcKorRn12 : drcKorRn12,
-                        // drcRomRn12 : drcRomRn12,
-                        // drcRdLt12 : drcRdLt12,
-                        // drcRdDrc12 : drcRdDrc12,
-
-                        // drcKorRn22 : drcKorRn22,
-                        // drcRomRn22 : drcRomRn22,
-                        // drcRdLt22 : drcRdLt22,
-                        // drcRdDrc22 : drcRdDrc22,
-
-                        // drcKorRn13 : drcKorRn13,
-                        // drcRomRn13 : drcRomRn13,
-                        // drcRdLt13 : drcRdLt13,
-                        // drcRdDrc13 : drcRdDrc13,
-
-                        // drcKorRn23 : drcKorRn23,
-                        // drcRomRn23 : drcRomRn23,
-                        // drcRdLt23 : drcRdLt23,
-                        // drcRdDrc23 : drcRdDrc23
-
-                    })
-                }else if(rdGdftySe == "310"){//예고용
-                    
-                    //규격
-                    var prntGdSd = $("#prntGdSd").val();
-                    commomParams = $.extend(commomParams,{
-                        prntGdSd : prntGdSd,
-                        rdGdftySe : rdGdftySe,
-                        bdrclAt : bdrclAt
-                    })
-                }
-                
-            }else if(trgGbn == DATA_TYPE.AREA){
-                //한글도로명
-                var area_areaKorRn = $("#area_areaKorRn").val();
-                //시작기초번호
-                // var area_stbsMn = $("#area_stbsMn").val();
-                // var area_stbsSn = $("#area_stbsSn").val();
-                //종료기초번호
-                // var area_edbsMn = $("#area_edbsMn").val();
-                // var area_edbsSn = $("#area_edbsSn").val();
-                //광고에따른 분류
-                var area_advrtsCd = $("#area_advrtsCd").val();
-                //광고내용
-                var area_advCn = $("#area_advCn").val();
-                //기타내용
-                var area_etcCn = $("#area_etcCn").val();
-                //규격
-                var area_areaGdSd = $("#area_areaGdSd").val();
-                //양면여부
-                var bdrclAt = $("#bdrclAt").val();
-
-                commomParams = $.extend(commomParams,{
-                    area_areaKorRn : area_areaKorRn,
-                    // area_stbsMn : area_stbsMn,
-                    // area_stbsSn : area_stbsSn,
-                    // area_edbsMn : area_edbsMn,
-                    // area_edbsSn : area_edbsSn,
-                    area_advrtsCd : area_advrtsCd,
-                    area_advCn : area_advCn,
-                    area_etcCn : area_etcCn,
-                    area_areaGdSd : area_areaGdSd,
-                    bdrclAt : bdrclAt
-
-                })
-            }else if(trgGbn == DATA_TYPE.BSIS){
-                //설치장소구분
-                var bsis_itlpcSe = $("#bsis_itlpcSe").val();
-                //설치시설물
-                var bsis_instlFty = $("#bsis_instlFty_main").val() == '00'?$("#bsis_instlFty").val() : $("#bsis_instlFty_main").val();
-                //설치시설물 기타상세
-                var bsis_insFtyDc = $("#bsis_insFtyDc").val();
-                //곡면분류
-                var bsis_planeCd = $("#bsis_planeCd").val();
-                //한글 도로명
-                var bsis_korRn = $("#bsis_korRn").val();
-                //기초번호
-                var bsis_ctbsMn = $("#bsis_ctbsMn").val();
-                //이전승강장 번호
-                var bsis_bfbsMn = $("#bsis_bfbsMn").val();
-                var bsis_bfbsSn = $("#bsis_bfbsSn").val();
-                //다음승강장 번호
-                var bsis_ntbsMn = $("#bsis_ntbsMn").val();
-                var bsis_ntbsSn = $("#bsis_ntbsSn").val();
-                //표기방법
-                var bsisMthd = $("#bsisMthd").val();
-                //규격
-                var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
-                //양면여부
-                var bdrclAt = $("#bdrclAt").val();
-                
-
-                commomParams = $.extend(commomParams,{
-                    bsis_itlpcSe : bsis_itlpcSe,
-                    bsis_instlFty : bsis_instlFty,
-                    bsis_insFtyDc : bsis_insFtyDc,
-                    bsis_planeCd : bsis_planeCd,
-                    bsis_korRn : bsis_korRn,
-                    bsis_ctbsMn : bsis_ctbsMn,
-                    bsis_bfbsMn : bsis_bfbsMn,
-                    bsis_bfbsSn : bsis_bfbsSn,
-                    bsis_ntbsMn : bsis_ntbsMn,
-                    bsis_ntbsSn : bsis_ntbsSn,
-                    bsisMthd : bsisMthd,
-                    bsis_bsisGdSd : bsis_bsisGdSd,
-                    bdrclAt : bdrclAt
-
-                })
-
-            }else if(trgGbn == DATA_TYPE.ENTRC){
-                //유형
-                var buldNmtSe = $("#buldNmtSe").val();
-                //용도
-                var buldNmtPurpose = $("#buldNmtPurpose").val();
-                //제작유형
-                var buldMnfCd = $("#buldMnfCd").val();
-                //재질
-                var buldNmtMaterial = $("#buldNmtMaterial").val();
-                //규격
-                var buldNmtCd = $("#buldNmtCd").val();
-                //가로
-                var buldNmtWide = $("#buldNmtWide").val();
-                //세로
-                var buldNmtVertical = $("#buldNmtVertical").val();
-                //두께
-                var buldNmtThickness = $("#buldNmtThickness").val();
-                //단가
-                var buldNmtUnitPrice = $("#buldNmtUnitPrice").text();
-                //자율형 한글자 크기(가로)
-                var bulNmtFtWi = $("#bulNmtFtWi").val();
-                //자율형 한글자 크기(세로)
-                var bulNmtFtVe = $("#bulNmtFtVe").val();
-                
-
-                commomParams = $.extend(commomParams,{
-                    buldNmtSe : buldNmtSe,
-                    buldNmtPurpose : buldNmtPurpose,
-                    buldMnfCd : buldMnfCd,
-                    buldNmtMaterial : buldNmtMaterial,
-                    buldNmtCd : buldNmtCd,
-                    buldNmtWide : buldNmtWide,
-                    buldNmtVertical : buldNmtVertical,
-                    buldNmtThickness : buldNmtThickness,
-                    buldNmtUnitPrice : buldNmtUnitPrice,
-                    bulNmtFtWi : bulNmtFtWi,
-                    bulNmtFtVe : bulNmtFtVe,
-                })
-
-                link = URLs.insertSpbdChange;
-            }else if(trgGbn == DATA_TYPE.BULD){
-                //용도
-                var bdtypCd = $("#bdtypCd").val();
-                //건물종속여부
-                var bulDpnSe = $("#bulDpnSe").val();
-                //건물층수
-                var groFloCo = $("#groFloCo").val();
-                var undFloCo = $("#undFloCo").val();
-                //건물명
-                var posBulNm = $("#posBulNm").val();
-                //건물명(영)
-                var bulEngNm = $("#bulEngNm").val();
-                //건물상태
-                var buldSttus = $("#buldSttus").val();
-                //상세건물명
-                var buldNmDc = $("#buldNmDc").val();
-                //메모
-                var buldMemo = $("#buldMemo").val();
-
-                commomParams = $.extend(commomParams,{
-                    bdtypCd : bdtypCd,
-                    bulDpnSe : bulDpnSe,
-                    groFloCo : groFloCo,
-                    undFloCo : undFloCo,
-                    posBulNm : posBulNm,
-                    bulEngNm : bulEngNm,
-                    buldSttus : buldSttus,
-                    buldNmDc : buldNmDc,
-                    buldMemo : buldMemo,
-
-                })
-
-                link = URLs.insertSpbdChange;
-            }
-
+function submitFitUpdt(commomParams){
+    var isUpdtGbn = $("#isUpdtGbn").val();
+    var msgText = msg.isSave;
+    if(isUpdtGbn.indexOf("D") != -1){
+        msgText = msg.isSaveAgain;
+    }
+    var trgGbn = commomParams.trgGbn;
+    var trgLocSn = commomParams.trgLocSn;
+    var trgSn = commomParams.trgSn;
+    
+    navigator.notification.confirm(msgText, function(btnIndex){
+        if(btnIndex == 1){
             
             util.showProgress();
             var url = URLs.postURL(link, commomParams);

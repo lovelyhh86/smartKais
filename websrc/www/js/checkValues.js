@@ -167,8 +167,12 @@ function changeScfggMkty(id){
 
     var trgGbn = $("#trgGbn").val();
     var rdGdftySe = $("#rdGdftySe").val();
-    if(trgGbn == "01" && rdGdftySe =="110"){
-        changeRdpqGdSd();
+    if(trgGbn == "01"){
+        if(rdGdftySe =="110"){
+            changeRdpqGdSd("rdpqGdSd");
+        }else if(rdGdftySe =="210"){
+            checkRddrRdsd("rddr_rddrGdSd");
+        }
     }else if(trgGbn == "03"){
         changeBsisGdSd();
     }
@@ -215,7 +219,7 @@ function changePlqDir(id){
 }
 
 //도로명판 규격
-function changeRdpqGdSd(){
+function changeRdpqGdSd(id){
     var gdftyForm = $("#gdftyForm").val();
     var useTarget = $("#useTarget").val();
     var plqDirection = $("#plqDirection").val();
@@ -238,6 +242,7 @@ function changeRdpqGdSd(){
     }
 
     setGdfyWide('rdpqGdSd');
+    checkChangeOrigin(id);
 
 }
 
@@ -703,6 +708,18 @@ function checkRddrRdsd(id){
     var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
     var rddr_afRdCo = $("#rddr_afRdCo").val();
     var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
+
+    //안내시설형식
+    var gdftyForm = $("#gdftyForm").val();
+    //제2외국어
+    var scfggMkty = $("#scfggMkty").val();
+    
+    //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
+    if(scfggMkty != "1" ||  gdftyForm == "20000"){
+        makeOptSelectBox("rddr_rddrGdSd","","","규격없음","");
+        checkChangeOrigin(id);
+        return;
+    }
 
     var useCd = rddr_afRdplqSe.charAt(1) + rddr_afRdCo.charAt(2);
     
