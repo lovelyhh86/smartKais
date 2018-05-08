@@ -2221,14 +2221,7 @@ function modify(){
             }, '알림', '확인');
             return;
         }
-        //인쇄방식
-        var prtTy = $("#prtTy").val();
-        if(prtTy == null){
-            navigator.notification.alert(msg.dontInsertNull.format("인쇄방식"), function(){
-                util.dismissProgress();
-            }, '알림', '확인');
-            return;
-        }
+        
         //제2외국어여부
         var scfggMkty = $("#scfggMkty").val();
         if(scfggMkty == null){
@@ -2288,7 +2281,6 @@ function modify(){
             instCrossCd : instCrossCd,
             useTarget : useTarget,
             gdftyQlt : gdftyQlt,
-            prtTy : prtTy,
             scfggMkty : scfggMkty,
             scfggUla1 : scfggUla1,
             scfggUla2 : scfggUla2,
@@ -2302,6 +2294,19 @@ function modify(){
     var link = URLs.insertSpgfChange;
 
     if(trgGbn == DATA_TYPE.RDPQ){
+        //인쇄방식
+        var prtTy = $("#prtTy").val();
+        if(prtTy == null){
+            navigator.notification.alert(msg.dontInsertNull.format("인쇄방식"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+
+        commomParams = $.extend(commomParams,{
+            prtTy : prtTy,
+        })
+        
         var rdGdftySe = $("#rdGdftySe").val();
         if(rdGdftySe == "110"){
             //안내시설방향

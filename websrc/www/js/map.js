@@ -915,7 +915,7 @@ var MapUtil = {
                         $("#gdftyFormLbl").html(data.gdftyFormLbl);
                         makeOptSelectBox("gdftyForm","GDFTY_FOM","","","");
                         $("#gdftyForm").val(data.gdftyForm);
-                        $("#gdftyForm").hide();
+                        // $("#gdftyForm").hide();
                         //사용대상
                         var useTarget = data.useTarget;
                         makeOptSelectBox("useTarget","USE_TRGET","","","");
@@ -1385,11 +1385,14 @@ var MapUtil = {
                             //규격
                             try{
                                  var codeValue = data.gdftyForm.charAt(0) + data.useTarget.charAt(1) +  data.bsis_itlpcSe.charAt(2);
+                                 if(data.bsis_itlpcSe.charAt(2) == "7"){
+                                    codeValue = data.gdftyForm.charAt(0) +"97";
+                                 }
                                  customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,3);
                             } catch (error) {
                                 util.toast(msg.checkObject.format("안내시설형식 및 사용대상 및 설치장소구분"),"error");
                             }
-                            changeBsisGdSd("bsis_bsisGdSd");
+                            // changeBsisGdSd("bsis_bsisGdSd");
                             $("#bsis_bsisGdSd").val(data.bsis_bsisGdSd);
 
                             //표기방법
