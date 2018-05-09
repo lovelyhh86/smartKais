@@ -312,13 +312,13 @@
 							<tr>
 								<th scope="row">안내시설형식</th>
 								<td>
-									<p id="gdftyFormLbl">&nbsp;</p>
+									<!-- <p id="gdftyFormLbl">&nbsp;</p> -->
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
-									<select id="gdftyForm" class="cell100 notNull" onchange=""/>
+									<select id="gdftyForm" disabled="disabled" class="cell100 notNull" onchange=""/>
 								</td>
 								<th scope="row">사용대상</th>
 								<td>
-									<select id="useTarget" class="cell100 notNull" onchange="checkPrntRdsd(this.id)"/>
+									<select id="useTarget" class="cell100 notNull" onchange="changeUseTarget(this.id)"/>
 								</td>
 							</tr>
 							<tr>

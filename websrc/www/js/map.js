@@ -912,7 +912,7 @@ var MapUtil = {
 
                         //****도로안내시설 속성****
                         //안내시설형식
-                        $("#gdftyFormLbl").html(data.gdftyFormLbl);
+                        // $("#gdftyFormLbl").html(data.gdftyFormLbl);
                         makeOptSelectBox("gdftyForm","GDFTY_FOM","","","");
                         $("#gdftyForm").val(data.gdftyForm);
                         // $("#gdftyForm").hide();
@@ -1475,12 +1475,14 @@ var MapUtil = {
 
                             //형태
                             var buldNmtType = data.buldNmtType;
-                            $("#buldNmtTypeLbl").html(data.buldNmtTypeLbl);
+                            // $("#buldNmtTypeLbl").html(data.buldNmtTypeLbl);
                             customSelectBox("buldNmtType","BUL_NMT_TY","000",1,3);
                             $("#buldNmtType").val(data.buldNmtType);
-                            $("#buldNmtType").hide();
+                            // $("#buldNmtType").hide();
                             if(buldNmtType == '1000'){
                                 $("#bulNmtFt").hide();
+                                $("#buldNmtWide").attr("disabled","disabled");
+                                $("#buldNmtVertical").attr("disabled","disabled");
                             }
                             //용도
                             try{
