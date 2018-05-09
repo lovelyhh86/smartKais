@@ -259,9 +259,9 @@ function setGdfyWide(id){
         var trgGbn = $("#trgGbn").val();
         var gdftyForm = $("#gdftyForm").val();
         var buldNmtType = $("#buldNmtType").val();
-        var gdfyWide = $("#"+id+" option:selected").val();
+        var gdfyWide = $("#"+id+" option:selected").text();
 
-        if(util.isEmpty(gdfyWide)){
+        if(util.isEmpty(gdfyWide) || gdfyWide == "규격없음"){
             if(trgGbn == "02"){
                 $("#buldNmtWide").removeAttr("disabled");
                 $("#buldNmtVertical").removeAttr("disabled");
