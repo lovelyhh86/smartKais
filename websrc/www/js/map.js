@@ -692,7 +692,7 @@ var MapUtil = {
             case "myResearch":
                 //점검목록
                 pos = 0;
-                selectResearchContent(null,0,9);
+                // selectResearchContent(null,0,9);
                 /**검색조건 */
                 $("#searchOptTrgGbn").empty();
                 $("#searchOptTrgGbn").append('<option value="">전체</option>');
@@ -710,7 +710,7 @@ var MapUtil = {
             case "myResearchSpbd":
                 //점검목록
                 pos = 0;
-                selectResearchContent("02",0,9);
+                // selectResearchContent("02",0,9);
                 /**검색조건 */
                 $("#searchOptTrgGbn").empty();
                 // $("#searchOptTrgGbn").append('<option value="">전체</option>');

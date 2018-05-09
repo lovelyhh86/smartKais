@@ -24,12 +24,12 @@
                                 <tr>
                                     <th scope="row">시설구분</th>
                                     <td>
-                                        <select id="searchOptTrgGbn" onchange="selectResearchContent()" class="cell100">
+                                        <select id="searchOptTrgGbn" onchange="" class="cell100">
                                         </select>
                                     </td>
                                     <th scope="row">점검여부</th>
                                     <td>
-                                        <select id="searchOptRcSttCd" onchange="selectResearchContent()" class="cell100">
+                                        <select id="searchOptRcSttCd" onchange="" class="cell100">
                                             <option value =''>전체</option>
                                             <option value ='Y'>점검</option>
                                             <option value ='N'>미점검</option>
@@ -39,7 +39,7 @@
                                 <tr>
                                     <th scope="row">설치상태</th>
                                     <td>
-                                        <select id="searchOptDelSttCd" onchange="selectResearchContent()" class="cell100">
+                                        <select id="searchOptDelSttCd" onchange="" class="cell100">
                                             <option value =''>전체</option>
                                             <option value ='01'>정상</option>
                                             <option value ='03'>비정상</option>
@@ -48,9 +48,9 @@
                                     </td>
                                     <th scope="row">배정여부</th>
                                     <td>
-                                        <select id="searchOptRcrSn" onchange="selectResearchContent()" class="cell100">
+                                        <select id="searchOptRcrSn" onchange="" class="cell100">
                                             <option value =''>전체</option>
-                                            <option value ='Y' selected="selected">배정</option>
+                                            <option value ='Y'>배정</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -58,6 +58,11 @@
                                     <th scope="row">건수</th>
                                     <td colspan="3">
                                         <p id='rowSize'>0</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="selectResearchContent()">검색</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -86,6 +91,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr class="">
+                                <td colspan="7">검색 조건을 선택하고 검색 버튼을 눌러주세요.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
