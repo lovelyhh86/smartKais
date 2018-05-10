@@ -658,8 +658,8 @@ function layerToggle(context){
             $(".locManageSpbd").toggle(true);
             
             
-            map.addLayer(layers.buld);
-            // map.addLayer(layers.entrc);
+            // map.addLayer(layers.buld);
+            map.addLayer(layers.entrc);
             
             map.getView().setZoom(mapBaseConfig.zoom.buld);
 
@@ -676,6 +676,7 @@ function removeLayers(){
     clearSource('위치이동');
     map.removeLayer(layers.move);
     map.removeLayer(layers.buld);
+    map.removeLayer(layers.entrc);
     // map.removeLayer(layers.rdpq);
     // map.removeLayer(layers.bsis);
     // map.removeLayer(layers.area);

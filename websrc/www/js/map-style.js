@@ -671,17 +671,24 @@ var bsisStyle = function (styleOptions) {
 
 // 건물번호판(출입구) 스타일
 var entrcStyle = function (styleOptions) {
+    var anchorY = 44;
     var opt = {
-         image: new ol.style.Circle({
-             radius: styleOptions.radius,
-             fill: new ol.style.Fill({
-                 color: 'blue'
-             }),
-             stroke: new ol.style.Stroke({
-                 color: 'white',
-                 width: 1
-             })
-         })
+        //  image: new ol.style.Circle({
+        //      radius: styleOptions.radius,
+        //      fill: new ol.style.Fill({
+        //          color: 'blue'
+        //      }),
+        //      stroke: new ol.style.Stroke({
+        //          color: 'white',
+        //          width: 1
+        //      })
+        //  })
+         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            // anchor: [0.45, anchorY],
+            // anchorXUnits: 'fraction',
+            // anchorYUnits: 'pixels',
+            src: 'image/iconNumber.png'
+        }))
     };
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);

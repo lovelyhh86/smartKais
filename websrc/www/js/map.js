@@ -2289,22 +2289,23 @@ var mapInit = function(mapId, pos) {
         renderMode: 'image',
     });
     // 출입구 레이어
-    // var lyr_tl_spbd_entrc = getFeatureLayer({
-    //     title: "출입구",
-    //     typeName: "tl_spbd_entrc",
-    //     dataType: DATA_TYPE.ENTRC,
-    //     // style: {
-    //     //     radius: 15,
-    //     //     label: {
-    //     //         format: ["{0}({1}-{2})"],
-    //     //         data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-    //     //         textOffsetY: -20
-    //     //     }
-    //     // },
-    //     maxResolution: MapUtil.setting.maxResolution,
-    //     viewProgress: false,
-    //     renderMode: 'vector'
-    // });
+    var lyr_tl_spbd_entrc = getFeatureLayer({
+        title: "출입구",
+        typeName: "tl_spbd_entrc",
+        dataType: DATA_TYPE.ENTRC,
+        style: {
+            radius: 15,
+            label: {
+                // format: ["{0}({1}-{2})"],
+                // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+                text: { key: "ENTRC_SE", func: function(text) { return text } },
+                // textOffsetY: -20
+            }
+        },
+        maxResolution: MapUtil.setting.maxResolution,
+        viewProgress: false,
+        renderMode: 'vector'
+    });
     // 도로명판 레이어
     // var lyr_tl_spgf_rdpq = getFeatureLayer({
     //     title: "도로명판",
@@ -2403,7 +2404,7 @@ var mapInit = function(mapId, pos) {
         // "rdpq": lyr_tl_spgf_rdpq,
         // "area": lyr_tl_spgf_area,
         // "bsis": lyr_tl_spgf_bsis,
-        // "entrc": lyr_tl_spbd_entrc,
+        "entrc": lyr_tl_spbd_entrc,
         "buld": lyr_tl_spbd_buld,
         "sppn": lyr_tl_sppn_paninfo
     };
@@ -2913,11 +2914,11 @@ var mapInit = function(mapId, pos) {
                         openDetailPopupCall(1);
 
                         break;
-                    // case DATA_TYPE.ENTRC:
+                    case DATA_TYPE.ENTRC:
 
-                    //     openDetailPopupCall(0);
+                        openDetailPopupCall(0);
 
-                    //     break;
+                        break;
 
                     case DATA_TYPE.SPPN:
                         resultHtml = "";
@@ -3656,8 +3657,8 @@ function openDetailPopupCall(index, layer, sn, rdGdftySe) {
             MapUtil.openDetail(DATA_TYPE.ADRDC, featureClone[0]);
         }
 
-    // }else if(layerID == DATA_TYPE.ENTRC){
-    //     MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
+    }else if(layerID == DATA_TYPE.ENTRC){
+        MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
     }else {
         MapUtil.openDetail(layer, featureClone[index], rdGdftySe);
 
