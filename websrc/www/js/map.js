@@ -168,6 +168,7 @@ var MapUtil = {
     controls: {
         init: function() {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
+            ol.inherits(MapUtil.controls.legendEntrcControl, ol.control.Control);   // 범례(건물번호판)
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
             ol.inherits(MapUtil.controls.locManageSpgfControl, ol.control.Control); // 안내시설물 위치관리
             ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
@@ -187,7 +188,7 @@ var MapUtil = {
             var options = opt_options || {};
 
             var legend = document.createElement('div');
-            legend.className = "legend ol-unselectable ol-control";
+            legend.className = "legend spgf ol-unselectable ol-control";
             var legendHtml = '<ul>';
             legendHtml += '<li class="rdpq">도로명판<span class="total">0건</span></li>';
             legendHtml += '<li class="rdpqW">도로명판(벽)<span class="total">0건</span></li>';
@@ -196,6 +197,24 @@ var MapUtil = {
             legendHtml += '<li class="area">지역안내판<span class="total">0건</span></li>';
             legendHtml += '<li class="areaW">지역안내판(벽)<span class="total">0건</span></li>';
             legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
+            legendHtml += '</ul>';
+            legend.innerHTML = legendHtml;
+
+            var this_ = this;
+
+            ol.control.Control.call(this, {
+                element: legend,
+                target: options.target
+            });
+
+        },
+        legendEntrcControl: function(opt_options) {
+            var options = opt_options || {};
+
+            var legend = document.createElement('div');
+            legend.className = "legend spbd ol-unselectable ol-control";
+            var legendHtml = '<ul>';
+            legendHtml += '<li class="entrc">건물번호판<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
 
@@ -2235,6 +2254,7 @@ var mapInit = function(mapId, pos) {
             })
         }).extend([
             new MapUtil.controls.legendControl(),
+            new MapUtil.controls.legendEntrcControl(),
             new MapUtil.controls.currentControl(),
             new MapUtil.controls.locManageSpgfControl(),
             new MapUtil.controls.locManageSpbdNmtgControl(),
@@ -2289,22 +2309,24 @@ var mapInit = function(mapId, pos) {
         renderMode: 'image',
     });
     // 출입구 레이어
-    // var lyr_tl_spbd_entrc = getFeatureLayer({
-    //     title: "출입구",
-    //     typeName: "tl_spbd_entrc",
-    //     dataType: DATA_TYPE.ENTRC,
-    //     // style: {
-    //     //     radius: 15,
-    //     //     label: {
-    //     //         format: ["{0}({1}-{2})"],
-    //     //         data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-    //     //         textOffsetY: -20
-    //     //     }
-    //     // },
-    //     maxResolution: MapUtil.setting.maxResolution,
-    //     viewProgress: false,
-    //     renderMode: 'vector'
-    // });
+    var lyr_tl_spbd_entrc = getFeatureLayer({
+        title: "출입구",
+        typeName: "tl_spbd_entrc",
+        dataType: DATA_TYPE.ENTRC,
+        style: {
+            radius: 15,
+            // label: {
+                // format: ["{0}({1}-{2})"],
+                // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+                // text: { key: "ENTRC_SE", func: function(text) { return text } },
+                // textOffsetY: -20
+            // }
+        },
+        cluster: { distance: 50 },
+        maxResolution: MapUtil.setting.maxResolution,
+        viewProgress: false,
+        renderMode: 'vector'
+    });
     // 도로명판 레이어
     // var lyr_tl_spgf_rdpq = getFeatureLayer({
     //     title: "도로명판",
@@ -2403,7 +2425,7 @@ var mapInit = function(mapId, pos) {
         // "rdpq": lyr_tl_spgf_rdpq,
         // "area": lyr_tl_spgf_area,
         // "bsis": lyr_tl_spgf_bsis,
-        // "entrc": lyr_tl_spbd_entrc,
+        "entrc": lyr_tl_spbd_entrc,
         "buld": lyr_tl_spbd_buld,
         "sppn": lyr_tl_sppn_paninfo
     };
@@ -2428,6 +2450,7 @@ var mapInit = function(mapId, pos) {
         var commonDiv = "<div class='{0}'>{1}</div>";
         var commonP = "<p class='{0}'>{1}</p>";
         var commonSpan = "<span class='{0}'>{1}</span>";
+        var commonButton = "<button class='{0}'onclick='{1}'>{2}</button>"
 
 
         var popDiv = "<div class='{0}' onclick =\"{1}\">{2}</div>"
@@ -2913,11 +2936,41 @@ var mapInit = function(mapId, pos) {
                         openDetailPopupCall(1);
 
                         break;
-                    // case DATA_TYPE.ENTRC:
+                    case DATA_TYPE.ENTRC:
+                        var gbn = commonP.format("gbn", "[{0}]".format("건물번호판"));
+                        
+                        //제목창
+                        var title = '';
+                        title = commonP.format("localTitle","내용채우기");
 
-                    //     openDetailPopupCall(0);
+                        var text1 = commonSpan.format("info", "항목1");
+                        var text2 = commonSpan.format("info", "항목2");
+                        var button1 = commonButton.format("",'alert("클릭")',"버튼" + index);
+                        
+                        
+                        strHtml = gbn
+                        strHtml += title
+                        strHtml += commonP.format("", text1 + text2);
+                        strHtml += commonP.format("", button1);
 
-                    //     break;
+                        resultHtml = popDiv.format("", "", strHtml);
+
+                        buttonHtml = buttonForm.format("more", "openDetailPopupCall("+index+")", "image/more.png", "더보기");
+
+                        resultHtml += commonDiv.format("mapAdd", buttonHtml);
+                        resultHtml = commonDiv.format("mapInfo", resultHtml);
+
+                        popupDiv.append(resultHtml);
+
+                        $("#popup").show();
+                        overlay.setPosition(coordinate);
+
+                        resultHtml = commonP.format("infoLine", "");
+                        popupDiv.append(resultHtml);
+
+                        // openDetailPopupCall(0);
+
+                        break;
 
                     case DATA_TYPE.SPPN:
                         resultHtml = "";
@@ -3201,6 +3254,8 @@ var getFeatureLayer = function(options) {
                     var areaWCnt = 0;
                     var bsisWCnt = 0;
 
+                    var entrcCnt = 0;
+
                     var layerType = options.typeName;
                     for (var i = 0; features.length > i; i++) {
                         if(layerType == "tl_sppn_paninfo"){
@@ -3211,6 +3266,9 @@ var getFeatureLayer = function(options) {
                             }
 
                             $('.legend .spot .total').text(spotCnt + '건');
+                        }else if(layerType == "tl_spbd_entrc"){
+                            entrcCnt++;
+                            $('.legend .entrc .total').text(entrcCnt + '건');
                         }else{
                             for (var i = 0; features.length > i; i++) {
                                 var rdGdftySe = features[i].get("RD_GDFTY_SE");
@@ -3656,8 +3714,8 @@ function openDetailPopupCall(index, layer, sn, rdGdftySe) {
             MapUtil.openDetail(DATA_TYPE.ADRDC, featureClone[0]);
         }
 
-    // }else if(layerID == DATA_TYPE.ENTRC){
-    //     MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[0]);
+    }else if(layerID == DATA_TYPE.ENTRC){
+        MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[index]);
     }else {
         MapUtil.openDetail(layer, featureClone[index], rdGdftySe);
 

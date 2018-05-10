@@ -622,7 +622,9 @@ function layerToggle(context){
         removeLayers();
 
         if (context.type == "map") {
-            $(".legend").toggle(true);
+            $(".legend.spgf").toggle(true);
+            $(".legend.spbd").toggle(false);
+
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
             $(".returnZoom").toggle(true);
@@ -647,7 +649,9 @@ function layerToggle(context){
             //     map.getView().setZoom(13);
             // }
         } else {
-            $(".legend").toggle(false);
+            $(".legend.spgf").toggle(false);
+            $(".legend.spbd").toggle(true);
+
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
             $(".returnZoom").toggle(true);
@@ -658,8 +662,8 @@ function layerToggle(context){
             $(".locManageSpbd").toggle(true);
             
             
-            map.addLayer(layers.buld);
-            // map.addLayer(layers.entrc);
+            // map.addLayer(layers.buld);
+            map.addLayer(layers.entrc);
             
             map.getView().setZoom(mapBaseConfig.zoom.buld);
 
@@ -676,6 +680,7 @@ function removeLayers(){
     clearSource('위치이동');
     map.removeLayer(layers.move);
     map.removeLayer(layers.buld);
+    map.removeLayer(layers.entrc);
     // map.removeLayer(layers.rdpq);
     // map.removeLayer(layers.bsis);
     // map.removeLayer(layers.area);

@@ -42,14 +42,18 @@
 .legend ul li.spot.over{background: #58C428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.spot.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
+.legend ul li.entrc{background: #fff url(../image/icon_legend04.png) 6px 5px no-repeat;background-size: 20px;}
+.legend ul li.entrc.over{background: rgb(0, 0, 255) url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.entrc.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
+
 
 /*지도 위 버튼*/
 .selectResearch {top: 17.5em;width: 9em;height: 3em;}
 .locManageSpgf { top: 20.5em; width: 9em; height: 3em;}
 .selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
 
-.selectResearchSpbd {top: 2.5em;width: 9em;height: 3em;}
-.selectAdrdc { top: 5.5em; width: 9em; height: 3em;}
+.selectResearchSpbd {top: 5.5em;width: 9em;height: 3em;}
+.selectAdrdc { top: 11.5em; width: 9em; height: 3em;}
 .locManageSpbd { top: 8.5em; width: 9em; height: 3em;}
 
 .locManageSpgf ul {width: 9em;}
