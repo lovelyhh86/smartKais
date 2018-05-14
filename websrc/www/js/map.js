@@ -2938,57 +2938,107 @@ var mapInit = function(mapId, pos) {
 
                         break;
                     case DATA_TYPE.ENTRC:
-                        var gbn = commonP.format("gbn", "[{0}]".format("건물번호판"));
-                        //건물번호판 일련번호
-                        var BUL_NMT_NO = feature.get("BUL_NMT_NO");
-                        //건물일련번호
+                        var link = URLs.selectEntrcLink;
+                        //도로시설물위치일련번호
                         var BUL_MAN_NO = feature.get("BUL_MAN_NO");
 
-                        //근거리 사진건수
-                        var CNT_M_FILES = feature.get("CNT_M_FILES");
-                        //원거리 사진건수
-                        var CNT_L_FILES = feature.get("CNT_L_FILES");
+                        var sendParam = {
+                            // svcNm: 'sEntrc',
+                            // mode : "11",
+                            sn: BUL_MAN_NO,
+                            sigCd: app.info.sigCd,
+                            workId: app.info.opeId
+                        };
 
-                        //설치상태
-                        var DEL_STT_CD = feature.get("DEL_STT_CD");
+                        var url = URLs.postURL(link, sendParam);
 
-                        //제목창
-                        var title = '';
-                        title = commonP.format("localTitle","사진건수");
+                        util.showProgress();
+                        util.postAJAX({}, url)
+                            .then(function(context, rCode, results) {
+                                util.dismissProgress();
 
-                        var text1 = commonSpan.format("info", "근거리 : " + CNT_M_FILES);
-                        var text2 = commonSpan.format("info", "원거리 : " + CNT_L_FILES);
-                        
-                        var button1 = "" ;
+                                //통신오류처리
+                                if (rCode != 0 || results.response.status < 0) {
+                                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                                    util.dismissProgress();
+                                    return;
+                                }
 
-                        //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
-                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
-                            button1 = commonButton.format("",'insertResearchForPopup('+index+')',"정상점검");
-                        }
-                        
-                        
-                        strHtml = gbn
-                        strHtml += title
-                        strHtml += commonP.format("", text1 + text2);
-                        strHtml += commonP.format("", button1);
+                                var data = results.data;
 
-                        resultHtml = popDiv.format("", "", strHtml);
+                                var gbn = commonP.format("gbn", "[{0}]".format("건물번호판"));
+                                //건물번호판 일련번호
+                                var BUL_NMT_NO = feature.get("BUL_NMT_NO");
+                                //건물일련번호
+                                var BUL_MAN_NO = feature.get("BUL_MAN_NO");
 
-                        buttonHtml = buttonForm.format("more", "openDetailPopupCall("+index+")", "image/more.png", "더보기");
+                                //근거리 사진건수
+                                // var CNT_M_FILES = feature.get("CNT_M_FILES");
+                                var CNT_M_FILES = data.cntMFiles;
+                                //원거리 사진건수
+                                // var CNT_L_FILES = feature.get("CNT_L_FILES");
+                                var CNT_L_FILES = data.cntLFiles;
 
-                        resultHtml += commonDiv.format("mapAdd", buttonHtml);
-                        resultHtml = commonDiv.format("mapInfo", resultHtml);
+                                //설치상태
+                                // var DEL_STT_CD = feature.get("DEL_STT_CD");
+                                var DEL_STT_CD = data.delStateCd;
+                                var delStateCdLbl = data.delStateCdLbl;
 
-                        popupDiv.append(resultHtml);
+                                //설치 건물명
+                                var rnCdLbl = data.rnCdLbl;
+                                //설치 건물본번
+                                var buldMnnm = data.buldMnnm;
+                                //설치 건물부번
+                                var buldSlno = data.buldSlno;
+                                
+                                var titleTxt = "{0} {1}{2}".format(
+                                    (data.rnCdLbl ? data.rnCdLbl : ''),
+                                    (data.buldMnnm ? data.buldMnnm : ''),
+                                    (data.buldSlno == '0' ? '' : '-' + data.buldSlno)
+                                )
 
-                        $("#popup").show();
-                        overlay.setPosition(coordinate);
+                                if(rnCdLbl == null && rnCdLbl == ""){
+                                    titleTxt = "설치건물명 없음";
+                                }
+                                //제목창
+                                var title = '';
+                                
+                                title = commonP.format("localTitle",titleTxt);
+                                
+                                var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
+                                var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                
+                                var button1 = "" ;
 
-                        resultHtml = commonP.format("infoLine", "");
-                        popupDiv.append(resultHtml);
+                                //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
+                                if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                    button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+')',"정상점검");
+                                }
+                                
+                                
+                                strHtml = gbn
+                                strHtml += title
+                                strHtml += commonP.format("", text0);
+                                strHtml += commonP.format("", text1 + text2);
+                                strHtml += commonP.format("", button1);
 
-                        // openDetailPopupCall(0);
+                                resultHtml = popDiv.format("", "", strHtml);
 
+                                buttonHtml = buttonForm.format("more", "openDetailPopupCall("+index+")", "image/more.png", "더보기");
+
+                                resultHtml += commonDiv.format("mapAdd", buttonHtml);
+                                resultHtml = commonDiv.format("mapInfo", resultHtml);
+
+                                popupDiv.append(resultHtml);
+
+                                $("#popup").show();
+                                overlay.setPosition(coordinate);
+
+                                resultHtml = commonP.format("infoLine", "");
+                                popupDiv.append(resultHtml);
+
+                            }, msg.alert);
                         break;
 
                     case DATA_TYPE.SPPN:

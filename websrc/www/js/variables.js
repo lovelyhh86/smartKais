@@ -30,6 +30,7 @@ var URLs = {
     "updateBuilingInfo": { svcNm: "uBULD" },
     "updateSpotInfo": { svcNm: "uSPOT" },
     "selectLocLink":{svcNm : "sLOC"},
+    "selectEntrcLink":{svcNm : "sEntrc"},
     
     "mapServiceLink": { svcNm: "mapService" },
     "minwonServiceLink": { svcNm: "eaiService" },

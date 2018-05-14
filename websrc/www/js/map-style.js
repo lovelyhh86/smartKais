@@ -97,7 +97,7 @@ var defaultStyle = function (feature, resolution, options) {
     }
     size = features.length;
 
-    if(dataType == "01"){
+    if(dataType == DATA_TYPE.LOC){
         var oldRdGdftySe;
         var newRdGdftySe;
         for(var i = 0 ; size > i; i++){
@@ -154,7 +154,7 @@ var defaultStyle = function (feature, resolution, options) {
             styleOptions.label._text = key = String(clusterCnt);
         }
         style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
-    }else if(dataType == "02"){
+    }else if(dataType == DATA_TYPE.ENTRC){
         key = features[0].get("LT_CHC_YN");
         for(var i = 0 ; size > i; i++){
             var LT_CHC_YN = features[i].get("LT_CHC_YN");

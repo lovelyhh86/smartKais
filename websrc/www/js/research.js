@@ -646,15 +646,15 @@ function submitResearch(){
 
                     var index = 0;
                     var layer = trgGbn;
-                    if(trgGbn == '02'){
-                        layer = DATA_TYPE.BULD;
-                        index = 1;
-                        trgSn = trgLocSn;
+                    // if(trgGbn == '02'){
+                    //     layer = DATA_TYPE.BULD;
+                    //     index = 1;
+                    //     trgSn = trgLocSn;
 
-                        changeOneFeatherStyle();
-                    }else{
+                    //     changeOneFeatherStyle();
+                    // }else{
                         closePopupAndClearMap(trgGbn);
-                    }
+                    // }
                     
                     //시설물 번호 전역변수
                     // trgSnGlobal = trgSn
