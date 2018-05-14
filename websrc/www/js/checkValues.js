@@ -49,32 +49,37 @@ function fixedValueChecked(){
 
 //글자수 제한
 function txtMaxlength(id, size, min) {
-    var targetText = $("#"+id);
-    var textLength = targetText.val().length;
-    
-    
-    if (textLength > size) {
-        navigator.notification.alert("" + size + "자 제한입니다.", function () {
-            targetText.val(targetText.val().substring(0, size));
-            // openInputPop(id);
-            $("#"+id).focus();
-            setNameplateView();
-        }, '알림', '확인');
-      
-    }else if(textLength <= min){
-        navigator.notification.alert("빈칸을 넣을 수 없습니다.", function () {
-            targetText.val(targetText.val().substring(0, size));
-            $("#"+id).focus();
-            setNameplateView();
-        }, '알림', '확인');
-    }else{
-        setInputPop();
-    }
-    if(id == "fixedValue"){
-        var targetId = $("#targetId").val();
-        checkChangeOrigin(targetId);
-    }else if(id != "newPosMemoText" && id != "rcRslt"){
-        checkChangeOrigin(id);
+    try {
+        var targetText = $("#"+id);
+        var textLength = targetText.val().length;
+        
+        
+        if (textLength > size) {
+            navigator.notification.alert("" + size + "자 제한입니다.", function () {
+                targetText.val(targetText.val().substring(0, size));
+                // openInputPop(id);
+                $("#"+id).focus();
+                setNameplateView();
+            }, '알림', '확인');
+          
+        }else if(textLength <= min){
+            navigator.notification.alert("빈칸을 넣을 수 없습니다.", function () {
+                targetText.val(targetText.val().substring(0, size));
+                $("#"+id).focus();
+                setNameplateView();
+            }, '알림', '확인');
+        }else{
+            setInputPop();
+        }
+        if(id == "fixedValue"){
+            var targetId = $("#targetId").val();
+            checkChangeOrigin(targetId);
+        }else if(id != "newPosMemoText" && id != "rcRslt"){
+            checkChangeOrigin(id);
+        }
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("글자수 제한"),"error");
     }
     
 
@@ -86,33 +91,43 @@ function closeInput(){
 
 //첫글자 0 제거
 function firstTextZero(id){
-    var targetText = $("#"+id);
-    var targetVal = targetText.val();
-    var targetlength = targetVal.length;
-    var firstText = targetVal.charAt(0);
-    if(targetlength > 1 && firstText == "0"){
-        targetText.val(targetVal.substring(1, targetlength));
+    try {
+        var targetText = $("#"+id);
+        var targetVal = targetText.val();
+        var targetlength = targetVal.length;
+        var firstText = targetVal.charAt(0);
+        if(targetlength > 1 && firstText == "0"){
+            targetText.val(targetVal.substring(1, targetlength));
+        }
+    
+        if(targetVal.indexOf(".") != -1){
+            targetText.val(targetVal.substring(0,targetVal.indexOf("."))+targetVal.substring(targetVal.indexOf(".")+1,targetlength));
+        }
+    
+        $("#"+id).val(parseInt(targetVal));
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("0 제거"),"error");
     }
-
-    if(targetVal.indexOf(".") != -1){
-        targetText.val(targetVal.substring(0,targetVal.indexOf("."))+targetVal.substring(targetVal.indexOf(".")+1,targetlength));
-    }
-
-    $("#"+id).val(parseInt(targetVal));
     // checkDot(id);
 }
 
 function checkDot(id){
-    var targetText = $("#"+id);
-    var targetVal = targetText.val();
-    var targetlength = targetVal.length;
-
-    for(i in targetVal){
-        if(targetVal[i] == "."){
-            targetText.val(targetVal.substring(0,targetVal.indexOf("."))+targetVal.substring(targetVal.indexOf(".")+1,targetlength));
-            checkDot(id);
-            return;
+    try {
+        var targetText = $("#"+id);
+        var targetVal = targetText.val();
+        var targetlength = targetVal.length;
+    
+        for(i in targetVal){
+            if(targetVal[i] == "."){
+                targetText.val(targetVal.substring(0,targetVal.indexOf("."))+targetVal.substring(targetVal.indexOf(".")+1,targetlength));
+                checkDot(id);
+                return;
+            }
         }
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("도트체크"),"error");
     }
 }
 //바이트계산
@@ -129,127 +144,147 @@ function getTextLength(str) {
 
 //제2외국어여부 변경
 function changeScfggMkty(id){
-    var scfggMkty = $("#scfggMkty").val();
-    var scfggUla1 = $("#scfggUla1").val();
-    var scfggUla2 = $("#scfggUla2").val();
-
-    $("#scfggUla1").empty();
-    $("#scfggUla2").empty();
-
-    if(scfggMkty == "1"){
-        $("#scfggUla1").attr("disabled","disabled")
-        $("#scfggUla2").attr("disabled","disabled")
-    }else if(scfggMkty == "2"){
-        makeOptSelectBox("scfggUla1","SCFGG_ULA1","","","");
-        $("#scfggUla1").removeAttr("disabled");
-        if(!util.isEmpty(scfggUla1)){
-            $("#scfggUla1").val(scfggUla1);
+    try {
+        var scfggMkty = $("#scfggMkty").val();
+        var scfggUla1 = $("#scfggUla1").val();
+        var scfggUla2 = $("#scfggUla2").val();
+    
+        $("#scfggUla1").empty();
+        $("#scfggUla2").empty();
+    
+        if(scfggMkty == "1"){
+            $("#scfggUla1").attr("disabled","disabled")
+            $("#scfggUla2").attr("disabled","disabled")
+        }else if(scfggMkty == "2"){
+            makeOptSelectBox("scfggUla1","SCFGG_ULA1","","","");
+            $("#scfggUla1").removeAttr("disabled");
+            if(!util.isEmpty(scfggUla1)){
+                $("#scfggUla1").val(scfggUla1);
+            }else{
+                $("#scfggUla1").val($("#scfggUla1 option:first").val());
+            }
+            $("#scfggUla2").attr("disabled","disabled");
         }else{
-            $("#scfggUla1").val($("#scfggUla1 option:first").val());
+            makeOptSelectBox("scfggUla1","SCFGG_ULA1","","","");
+            makeOptSelectBox("scfggUla2","SCFGG_ULA1","","","");
+            $("#scfggUla1").removeAttr("disabled");
+            $("#scfggUla2").removeAttr("disabled");
+            if(!util.isEmpty(scfggUla1)){
+                $("#scfggUla1").val(scfggUla1);
+            }else{
+                $("#scfggUla1").val($("#scfggUla1 option:first").val());
+            }
+            if(!util.isEmpty(scfggUla2)){
+                $("#scfggUla2").val(scfggUla2);
+            }else{
+                $("#scfggUla2").val($("#scfggUla2 option:first").val());
+            }
         }
-        $("#scfggUla2").attr("disabled","disabled");
-    }else{
-        makeOptSelectBox("scfggUla1","SCFGG_ULA1","","","");
-        makeOptSelectBox("scfggUla2","SCFGG_ULA1","","","");
-        $("#scfggUla1").removeAttr("disabled");
-        $("#scfggUla2").removeAttr("disabled");
-        if(!util.isEmpty(scfggUla1)){
-            $("#scfggUla1").val(scfggUla1);
-        }else{
-            $("#scfggUla1").val($("#scfggUla1 option:first").val());
+    
+        var trgGbn = $("#trgGbn").val();
+        var rdGdftySe = $("#rdGdftySe").val();
+        if(trgGbn == "01"){
+            if(rdGdftySe =="110"){
+                changeRdpqGdSd("rdpqGdSd");
+            }else if(rdGdftySe =="210"){
+                checkRddrRdsd("rddr_rddrGdSd");
+            }else if(rdGdftySe =="310"){
+                checkPrntRdsd("prntGdSd");
+            }
+        }else if(trgGbn == "03"){
+            changeBsisGdSd();
         }
-        if(!util.isEmpty(scfggUla2)){
-            $("#scfggUla2").val(scfggUla2);
-        }else{
-            $("#scfggUla2").val($("#scfggUla2 option:first").val());
-        }
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("제2외국어"),"error");
     }
-
-    var trgGbn = $("#trgGbn").val();
-    var rdGdftySe = $("#rdGdftySe").val();
-    if(trgGbn == "01"){
-        if(rdGdftySe =="110"){
-            changeRdpqGdSd("rdpqGdSd");
-        }else if(rdGdftySe =="210"){
-            checkRddrRdsd("rddr_rddrGdSd");
-        }else if(rdGdftySe =="310"){
-            checkPrntRdsd("prntGdSd");
-        }
-    }else if(trgGbn == "03"){
-        changeBsisGdSd();
-    }
-    checkChangeOrigin(id);
 
 }
 
 //사용대상 변경
 function changeUseTarget(id){
-    var useTarget = $("#useTarget").val();
-    var trgGbn = $("#trgGbn").val();
-    var rdGdftySe = $("#rdGdftySe").val();
-
-    if(trgGbn == "01"){
-        if(rdGdftySe == "310"){
-            checkPrntRdsd("prntGdSd");
-        }else if(rdGdftySe == "110"){
-            if(useTarget != "01000"){//보행자가 아닐때 제2외국어 선택못함
-                customSelectBox("scfggMkty","SCFGG_MKTY","1",0,1);
-                $("#scfggMkty").val("1");
-                changeScfggMkty();
-            }else{
-                var scfggMkty = $("#scfggMkty").val();
-                makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
-                $("#scfggMkty").val(scfggMkty);
-                changeScfggMkty();
+    try {
+        var useTarget = $("#useTarget").val();
+        var trgGbn = $("#trgGbn").val();
+        var rdGdftySe = $("#rdGdftySe").val();
+    
+        if(trgGbn == "01"){
+            if(rdGdftySe == "310"){
+                checkPrntRdsd("prntGdSd");
+            }else if(rdGdftySe == "110"){
+                if(useTarget != "01000"){//보행자가 아닐때 제2외국어 선택못함
+                    customSelectBox("scfggMkty","SCFGG_MKTY","1",0,1);
+                    $("#scfggMkty").val("1");
+                    changeScfggMkty();
+                }else{
+                    var scfggMkty = $("#scfggMkty").val();
+                    makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
+                    $("#scfggMkty").val(scfggMkty);
+                    changeScfggMkty();
+                }
+                changeRdpqGdSd();
             }
-            changeRdpqGdSd();
+        }else if(trgGbn == "03"){
+            changeBsisGdSd();
         }
-    }else if(trgGbn == "03"){
-        changeBsisGdSd();
+    
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("사용대상"),"error");
     }
-
-    checkChangeOrigin(id);
     
 }
 //도로명판 안내시설 방향
 function changePlqDir(id){
-    var plqDirection = $("#plqDirection").val();
-    if(plqDirection == "00300"){//앞쪽방향용 일 경우
-        $("#bdrclAt").val("1"); //양면 예
-    }else{
-        $("#bdrclAt").val("0"); //양면 아니오
+    try {
+        var plqDirection = $("#plqDirection").val();
+        if(plqDirection == "00300"){//앞쪽방향용 일 경우
+            $("#bdrclAt").val("1"); //양면 예
+        }else{
+            $("#bdrclAt").val("0"); //양면 아니오
+        }
+        $("#bdrclAt").trigger("change");
+    
+        changeRdpqGdSd('rdpqGdSd');
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("안내시설방향"),"error");
     }
-    $("#bdrclAt").trigger("change");
-
-    changeRdpqGdSd('rdpqGdSd');
-    checkChangeOrigin(id);
 }
 
 //도로명판 규격
 function changeRdpqGdSd(id){
-    var gdftyForm = $("#gdftyForm").val();
-    var useTarget = $("#useTarget").val();
-    var plqDirection = $("#plqDirection").val();
-    var rdpqGdSd = $("#rdpqGdSd").val();
-    var scfggMkty = $("#scfggMkty").val();
-
-    var colume = "RDPQ_GD_SD";
+    try {
+        var gdftyForm = $("#gdftyForm").val();
+        var useTarget = $("#useTarget").val();
+        var plqDirection = $("#plqDirection").val();
+        var rdpqGdSd = $("#rdpqGdSd").val();
+        var scfggMkty = $("#scfggMkty").val();
     
-    var useCd = gdftyForm.charAt(0) + useTarget.charAt(1) +  plqDirection.charAt(2);
-
-    if(scfggMkty != "1"){
-        colume = "RDPQ_GD_SD_2";
+        var colume = "RDPQ_GD_SD";
+        
+        var useCd = gdftyForm.charAt(0) + useTarget.charAt(1) +  plqDirection.charAt(2);
+    
+        if(scfggMkty != "1"){
+            colume = "RDPQ_GD_SD_2";
+        }
+        
+        customSelectBox("rdpqGdSd",colume,useCd,0,3);
+        $("#rdpqGdSd").val(rdpqGdSd);
+        
+        if($("#rdpqGdSd").val() == null){
+            $("#rdpqGdSd").val($("#rdpqGdSd option:first").val());
+        }
+    
+        setGdfyWide('rdpqGdSd');
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("규격"),"error");
     }
-    
-    customSelectBox("rdpqGdSd",colume,useCd,0,3);
-    $("#rdpqGdSd").val(rdpqGdSd);
-    
-    if($("#rdpqGdSd").val() == null){
-        $("#rdpqGdSd").val($("#rdpqGdSd option:first").val());
-    }
-
-    setGdfyWide('rdpqGdSd');
-    checkChangeOrigin(id);
 
 }
 
@@ -326,425 +361,477 @@ function checkUnitPrice(id){
 }
 //설치장소 및 사용대상에 따른 규격(기초번호판)
 function changeBsisGdSd(id){
-    //안내시설형식
-    var gdftyForm = $("#gdftyForm").val();
-    //설치장소구분
-    var bsis_itlpcSe = $("#bsis_itlpcSe").val();
-    //사용대상
-    var useTarget = $("#useTarget").val();
-    //제2외국어
-    var scfggMkty = $("#scfggMkty").val();
-    var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
+    try {
     
-    //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
-    if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
-        makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
+        //안내시설형식
+        var gdftyForm = $("#gdftyForm").val();
+        //설치장소구분
+        var bsis_itlpcSe = $("#bsis_itlpcSe").val();
+        //사용대상
+        var useTarget = $("#useTarget").val();
+        //제2외국어
+        var scfggMkty = $("#scfggMkty").val();
+        var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
+        
+        //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
+        if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
+            makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
+            checkChangeOrigin(id);
+            return;
+        }
+
+        var codeValue = gdftyForm.charAt(0) + useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
+        // var lastNum = 3;
+        if(bsis_itlpcSe.charAt(2) == "7"){
+            codeValue = gdftyForm.charAt(0) +"97";
+            // lastNum = 3;
+        // }else if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){
+        //     codeValue = "12"
+        //     lastNum = 2;
+        // }else if(useTarget == "02000" || useTarget == "03000" || useTarget == "06000"){
+        //     codeValue = "13"
+        //     lastNum = 2;
+        }
+
+        customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,3);
+        $("#bsis_bsisGdSd").val(bsis_bsisGdSd);
+
+        if($("#bsis_bsisGdSd").val() == null){
+            $("#bsis_bsisGdSd").val($("#bsis_bsisGdSd option:first").val());
+        }
+        setGdfyWide('bsis_bsisGdSd');
+
         checkChangeOrigin(id);
-        return;
+    } catch (error) {
+        
     }
-
-    var codeValue = gdftyForm.charAt(0) + useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
-    // var lastNum = 3;
-    if(bsis_itlpcSe.charAt(2) == "7"){
-        codeValue = gdftyForm.charAt(0) +"97";
-        // lastNum = 3;
-    // }else if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){
-    //     codeValue = "12"
-    //     lastNum = 2;
-    // }else if(useTarget == "02000" || useTarget == "03000" || useTarget == "06000"){
-    //     codeValue = "13"
-    //     lastNum = 2;
-    }
-
-    customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,3);
-    $("#bsis_bsisGdSd").val(bsis_bsisGdSd);
-
-    if($("#bsis_bsisGdSd").val() == null){
-        $("#bsis_bsisGdSd").val($("#bsis_bsisGdSd option:first").val());
-    }
-    setGdfyWide('bsis_bsisGdSd');
-
-    checkChangeOrigin(id);
 }
 //설치시설물_메인 변경(기초번호판)
 function changeBsisInstlFtyMain(){
-    var bsis_instlFty_main = $("#bsis_instlFty_main").val();
-
-    if(bsis_instlFty_main == "00"){ //메인의 기타 코드없음;;
-
+    try {
+        var bsis_instlFty_main = $("#bsis_instlFty_main").val();
+    
+        if(bsis_instlFty_main == "00"){ //메인의 기타 코드없음;;
+    
+            
+            $("#bsis_instlFty_main").val(bsis_instlFty_main);
+    
+            customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
+            changeBsisInstlFty();
+    
+            $("#bsis_instlFty_td").show();
+        }else{
+            customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+            $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+    
+            //서브 초기화
+            $("#bsis_instlFty").val('');
+            changeBsisInstlFty();
+    
+            $("#bsis_instlFty_main").val(bsis_instlFty_main);
+    
+            $("#bsis_instlFty_td").hide();
+        }
         
-        $("#bsis_instlFty_main").val(bsis_instlFty_main);
-
-        customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
-        changeBsisInstlFty();
-
-        $("#bsis_instlFty_td").show();
-    }else{
-        customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
-        $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
-
-        //서브 초기화
-        $("#bsis_instlFty").val('');
-        changeBsisInstlFty();
-
-        $("#bsis_instlFty_main").val(bsis_instlFty_main);
-
-        $("#bsis_instlFty_td").hide();
+    } catch (error) {
+        util.toast(msg.checkObject.format("설치시설물"),"error");
     }
+    
 }
 //설치시설물 변경(기초번호판)
 function changeBsisInstlFty(id){
-    var bsis_instlFty_main = $("#bsis_instlFty_main").val();
-    var bsis_instlFty = $("#bsis_instlFty").val();
-
-    if(bsis_instlFty_main == "00"){
-
-        // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
-        // $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
-        $("#bsis_instlFty_main").val(bsis_instlFty_main);
-
-        if(bsis_instlFty != null){
-            $("#bsis_instlFty").val(bsis_instlFty);
+    try {
+        var bsis_instlFty_main = $("#bsis_instlFty_main").val();
+        var bsis_instlFty = $("#bsis_instlFty").val();
+    
+        if(bsis_instlFty_main == "00"){
+    
+            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+            // $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+            $("#bsis_instlFty_main").val(bsis_instlFty_main);
+    
+            if(bsis_instlFty != null){
+                $("#bsis_instlFty").val(bsis_instlFty);
+            }
+    
+            // $("#bsis_instlFty").removeAttr("disabled");
+            $("#bsis_instlFty").show();
+        }else{
+            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+            // $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
+            $("#bsis_instlFty_main").val(bsis_instlFty_main);
+    
+            //서브 초기화
+            // $("#bsis_instlFty").val('');
+    
+            // $("#bsis_instlFty").attr("disabled","disabled");
+            $("#bsis_instlFty").hide();
         }
-
-        // $("#bsis_instlFty").removeAttr("disabled");
-        $("#bsis_instlFty").show();
-    }else{
-        // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
-        // $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
-        $("#bsis_instlFty_main").val(bsis_instlFty_main);
-
-        //서브 초기화
-        // $("#bsis_instlFty").val('');
-
-        // $("#bsis_instlFty").attr("disabled","disabled");
-        $("#bsis_instlFty").hide();
+    
+        if($("#bsis_instlFty").val() != "99"){
+            $("#bsis_insFtyDc").attr("disabled","disabled");
+            $("#insFtyDc").hide();
+        }else{
+            $("#bsis_insFtyDc").removeAttr("disabled");
+            $("#insFtyDc").show();
+        }
+    
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("설치시설물"),"error");
     }
-
-    if($("#bsis_instlFty").val() != "99"){
-        $("#bsis_insFtyDc").attr("disabled","disabled");
-        $("#insFtyDc").hide();
-    }else{
-        $("#bsis_insFtyDc").removeAttr("disabled");
-        $("#insFtyDc").show();
-    }
-
-    checkChangeOrigin(id);
     
 }
 //광고에따른 분류변경(지역안내판)
 function changeAdvrtsCd(id){
-    var area_advrtsCd = $("#area_advrtsCd").val();
-
-    if(area_advrtsCd == "9"){
-        $("#area_advCn").attr("disabled","disabled");
-    }else{
-        $("#area_advCn").removeAttr("disabled");
+    try {
+        var area_advrtsCd = $("#area_advrtsCd").val();
+    
+        if(area_advrtsCd == "9"){
+            $("#area_advCn").attr("disabled","disabled");
+        }else{
+            $("#area_advCn").removeAttr("disabled");
+        }
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("광고에따른 분류"),"error");
     }
-    checkChangeOrigin(id);
 }
 //제작형식에 따른 조명
 function changeMnf(id){
-    var thisValue = $("#"+id).val();
-    if(thisValue == "1"){//판자형
-        customSelectBox("lghtCd","LGHT_CD","2",0,1);
-    }else{
-        makeOptSelectBox("lghtCd","LGHT_CD","2","","");
+    try {
+        var thisValue = $("#"+id).val();
+        if(thisValue == "1"){//판자형
+            customSelectBox("lghtCd","LGHT_CD","2",0,1);
+        }else{
+            makeOptSelectBox("lghtCd","LGHT_CD","2","","");
+        }
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("제작형식"),"error");
     }
-    checkChangeOrigin(id);
 }
 //건물번호판 형태에 따른 용도변경
 function changeBuldNmtPurpose(id){
-    var buldNmtType = $("#buldNmtType").val();
+    try {
+        var buldNmtType = $("#buldNmtType").val();
 
-    // customSelectBox("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1);
-    customSelectBox2("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1,1,3);
-    changeBuldNmtCd('buldNmtCd');
+        // customSelectBox("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1);
+        customSelectBox2("buldNmtPurpose","BUL_NMT_PR",buldNmtType.substr(0,1),0,1,1,3);
+        changeBuldNmtCd('buldNmtCd');
 
-    checkChangeOrigin(id);
+        checkChangeOrigin(id);
+    } catch (error) {
+        util.toast(msg.checkObject.format("용도"),"error");
+    }
 
 }
 //건물번호판 규격
 function changeBuldNmtCd(id){
-    var buldNmtPurpose = $("#buldNmtPurpose").val();
-    var usedCode = buldNmtPurpose.substr(0,2);
-    customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
-
-    if(usedCode.substr(0,1) == "1"){
-        $("#buldNmtCd").removeAttr("disabled");
-        setGdfyWide('buldNmtCd');
-        
-        $("#buldNmtWide").attr("disabled","disabled");
-        $("#buldNmtVertical").attr("disabled","disabled");
-    }else{
-        $("#buldNmtCd").attr("disabled","disabled");
-        setGdfyWide('buldNmtCd');
-
-        $("#buldNmtWide").removeAttr("disabled");
-        $("#buldNmtVertical").removeAttr("disabled");
+    try {
+        var buldNmtPurpose = $("#buldNmtPurpose").val();
+        var usedCode = buldNmtPurpose.substr(0,2);
+        customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
+    
+        if(usedCode.substr(0,1) == "1"){
+            $("#buldNmtCd").removeAttr("disabled");
+            setGdfyWide('buldNmtCd');
+            
+            $("#buldNmtWide").attr("disabled","disabled");
+            $("#buldNmtVertical").attr("disabled","disabled");
+        }else{
+            $("#buldNmtCd").attr("disabled","disabled");
+            setGdfyWide('buldNmtCd');
+    
+            $("#buldNmtWide").removeAttr("disabled");
+            $("#buldNmtVertical").removeAttr("disabled");
+        }
+        checkChangeOrigin(id);
+    } catch (error) {
+        util.toast(msg.checkObject.format("규격"),"error");
     }
-    checkChangeOrigin(id);
     
 }
 
 //안내시설형식변경
 function changeGdftyForm(id){
-    var gdftyForm = $("#gdftyForm").val();
-    var trgGbn = $("#trgGbn").val();
-
-    if(gdftyForm == "10000"){
-        
-        if(trgGbn == "01"){
-            changeRdpqGdSd();
-            $("#rdpqGdSd").removeAttr("disabled");
-        }else if(trgGbn == "03"){
-            changeBsisGdSd();
-            $("#bsis_bsisGdSd").removeAttr("disabled");
-        }else if(trgGbn == "04"){
-            makeOptSelectBox("area_areaGdSd","AREA_GD_SD","","","");
-            $("#area_areaGdSd").removeAttr("disabled");
-        }
-        
-        $("#gdftyWide").attr("disabled","disabled");
-        $("#gdftyVertical").attr("disabled","disabled");
-    }else{
-        if(trgGbn == "01"){
-            changeRdpqGdSd();
-            
-            $("#rdpqGdSd").attr("disabled","disabled");
-        }else if(trgGbn == "03"){
-            changeBsisGdSd();
-            $("#bsis_bsisGdSd").attr("disabled","disabled");
-        }else if(trgGbn == "04"){
-            customSelectBox("area_areaGdSd","AREA_GD_SD","",0,5);
-            $("#area_areaGdSd").attr("disabled","disabled");
-        }
-        
-        $("#gdftyWide").removeAttr("disabled");
-        $("#gdftyVertical").removeAttr("disabled");
-    }
+    try {
+        var gdftyForm = $("#gdftyForm").val();
+        var trgGbn = $("#trgGbn").val();
     
-    checkChangeOrigin(id);
+        if(gdftyForm == "10000"){
+            
+            if(trgGbn == "01"){
+                changeRdpqGdSd();
+                $("#rdpqGdSd").removeAttr("disabled");
+            }else if(trgGbn == "03"){
+                changeBsisGdSd();
+                $("#bsis_bsisGdSd").removeAttr("disabled");
+            }else if(trgGbn == "04"){
+                makeOptSelectBox("area_areaGdSd","AREA_GD_SD","","","");
+                $("#area_areaGdSd").removeAttr("disabled");
+            }
+            
+            $("#gdftyWide").attr("disabled","disabled");
+            $("#gdftyVertical").attr("disabled","disabled");
+        }else{
+            if(trgGbn == "01"){
+                changeRdpqGdSd();
+                
+                $("#rdpqGdSd").attr("disabled","disabled");
+            }else if(trgGbn == "03"){
+                changeBsisGdSd();
+                $("#bsis_bsisGdSd").attr("disabled","disabled");
+            }else if(trgGbn == "04"){
+                customSelectBox("area_areaGdSd","AREA_GD_SD","",0,5);
+                $("#area_areaGdSd").attr("disabled","disabled");
+            }
+            
+            $("#gdftyWide").removeAttr("disabled");
+            $("#gdftyVertical").removeAttr("disabled");
+        }
+        
+        checkChangeOrigin(id);
+    } catch (error) {
+        util.toast(msg.checkObject.format("안내시설형식"),"error");
+    }
 }
 //이면도로 갯수변경
 function changeAfrdCo(id){
-    var rddr_afRdCo = $("#rddr_afRdCo").val();
-
-    //이면도로 도로내용
-    //앞면1
-    var drcKorRn11 = $("#drcKorRn11").val();
-    var drcRomRn11 = $("#drcRomRn11").val();
-    var drcRdLt11 = $("#drcRdLt11").val();
-    var drcRdDrc11 = $("#drcRdDrc11").val();
-    //뒷면1
-    var drcKorRn21 = $("#drcKorRn21").val();
-    var drcRomRn21 = $("#drcRomRn21").val();
-    var drcRdLt21 = $("#drcRdLt21").val();
-    var drcRdDrc21 = $("#drcRdDrc21").val();
-    //앞면2
-    var drcKorRn12 = $("#drcKorRn12").val();
-    var drcRomRn12 = $("#drcRomRn12").val();
-    var drcRdLt12 = $("#drcRdLt12").val();
-    var drcRdDrc12 = $("#drcRdDrc12").val();
-    //뒷면2
-    var drcKorRn22 = $("#drcKorRn22").val();
-    var drcRomRn22 = $("#drcRomRn22").val();
-    var drcRdLt22 = $("#drcRdLt22").val();
-    var drcRdDrc22 = $("#drcRdDrc22").val();
-    //앞면3
-    var drcKorRn13 = $("#drcKorRn13").val();
-    var drcRomRn13 = $("#drcRomRn13").val();
-    var drcRdLt13 = $("#drcRdLt13").val();
-    var drcRdDrc13 = $("#drcRdDrc13").val();
-    //뒷면3
-    var drcKorRn23 = $("#drcKorRn23").val();
-    var drcRomRn23 = $("#drcRomRn23").val();
-    var drcRdLt23 = $("#drcRdLt23").val();
-    var drcRdDrc23 = $("#drcRdDrc23").val();
-
-    if(rddr_afRdCo == "00100"){
-        $(".rddrCn_1").show();
-        $(".rddrCn_2").hide();
-        $(".rddrCn_3").hide();
-
-        makeOptSelectBox("drcRdDrc11","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc21","DRC_RD_DRC","","","");
-        $("#drcRdDrc12").val('');
-        $("#drcRdDrc22").val('');
-        $("#drcRdDrc13").val('');
-        $("#drcRdDrc23").val('');
-
+    try {
+        var rddr_afRdCo = $("#rddr_afRdCo").val();
+    
+        //이면도로 도로내용
         //앞면1
-        $("#drcKorRn11").val(drcKorRn11);
-        $("#drcRomRn11").val(drcRomRn11);
-        $("#drcRdLt11").val(drcRdLt11);
-        $("#drcRdDrc11").val(drcRdDrc11);
+        var drcKorRn11 = $("#drcKorRn11").val();
+        var drcRomRn11 = $("#drcRomRn11").val();
+        var drcRdLt11 = $("#drcRdLt11").val();
+        var drcRdDrc11 = $("#drcRdDrc11").val();
         //뒷면1
-        $("#drcKorRn21").val(drcKorRn21);
-        $("#drcRomRn21").val(drcRomRn21);
-        $("#drcRdLt21").val(drcRdLt21);
-        $("#drcRdDrc21").val(drcRdDrc21);
-
+        var drcKorRn21 = $("#drcKorRn21").val();
+        var drcRomRn21 = $("#drcRomRn21").val();
+        var drcRdLt21 = $("#drcRdLt21").val();
+        var drcRdDrc21 = $("#drcRdDrc21").val();
         //앞면2
-        // $("#drcKorRn12").val('');
-        // $("#drcRomRn12").val('');
-        // $("#drcRdLt12").val('');
-        // $("#drcRdDrc12").val('');
-        // //뒷면2
-        // $("#drcKorRn22").val('');
-        // $("#drcRomRn22").val('');
-        // $("#drcRdLt22").val('');
-        // $("#drcRdDrc22").val('');
-
-        // //앞면3
-        // $("#drcKorRn13").val('');
-        // $("#drcRomRn13").val('');
-        // $("#drcRdLt13").val('');
-        // $("#drcRdDrc13").val('');
-        // //뒷면3
-        // $("#drcKorRn23").val('');
-        // $("#drcRomRn23").val('');
-        // $("#drcRdLt23").val('');
-        // $("#drcRdDrc23").val('');
-
-    }else if(rddr_afRdCo == "00200"){
-        $(".rddrCn_1").show();
-        $(".rddrCn_2").show();
-        $(".rddrCn_3").hide();
-
-        makeOptSelectBox("drcRdDrc11","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc21","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc12","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc22","DRC_RD_DRC","","","");
-        $("#drcRdDrc13").val('');
-        $("#drcRdDrc23").val('');
-
-        //앞면1
-        $("#drcKorRn11").val(drcKorRn11);
-        $("#drcRomRn11").val(drcRomRn11);
-        $("#drcRdLt11").val(drcRdLt11);
-        $("#drcRdDrc11").val(drcRdDrc11);
-        //뒷면1
-        $("#drcKorRn21").val(drcKorRn21);
-        $("#drcRomRn21").val(drcRomRn21);
-        $("#drcRdLt21").val(drcRdLt21);
-        $("#drcRdDrc21").val(drcRdDrc21);
-
-        //앞면2
-        $("#drcKorRn12").val(drcKorRn12);
-        $("#drcRomRn12").val(drcRomRn12);
-        $("#drcRdLt12").val(drcRdLt12);
-        $("#drcRdDrc12").val(drcRdDrc12);
+        var drcKorRn12 = $("#drcKorRn12").val();
+        var drcRomRn12 = $("#drcRomRn12").val();
+        var drcRdLt12 = $("#drcRdLt12").val();
+        var drcRdDrc12 = $("#drcRdDrc12").val();
         //뒷면2
-        $("#drcKorRn22").val(drcKorRn22);
-        $("#drcRomRn22").val(drcRomRn22);
-        $("#drcRdLt22").val(drcRdLt22);
-        $("#drcRdDrc22").val(drcRdDrc22);
-
+        var drcKorRn22 = $("#drcKorRn22").val();
+        var drcRomRn22 = $("#drcRomRn22").val();
+        var drcRdLt22 = $("#drcRdLt22").val();
+        var drcRdDrc22 = $("#drcRdDrc22").val();
         //앞면3
-        // $("#drcKorRn13").val('');
-        // $("#drcRomRn13").val('');
-        // $("#drcRdLt13").val('');
-        // $("#drcRdDrc13").val('');
-        // //뒷면3
-        // $("#drcKorRn23").val('');
-        // $("#drcRomRn23").val('');
-        // $("#drcRdLt23").val('');
-        // $("#drcRdDrc23").val('');
-    }else if(rddr_afRdCo == "00300"){
-        $(".rddrCn_1").show();
-        $(".rddrCn_2").show();
-        $(".rddrCn_3").show();
-
-        makeOptSelectBox("drcRdDrc11","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc21","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc12","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc22","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc13","DRC_RD_DRC","","","");
-        makeOptSelectBox("drcRdDrc23","DRC_RD_DRC","","","");
-
-        //앞면1
-        $("#drcKorRn11").val(drcKorRn11);
-        $("#drcRomRn11").val(drcRomRn11);
-        $("#drcRdLt11").val(drcRdLt11);
-        $("#drcRdDrc11").val(drcRdDrc11);
-        //뒷면1
-        $("#drcKorRn21").val(drcKorRn21);
-        $("#drcRomRn21").val(drcRomRn21);
-        $("#drcRdLt21").val(drcRdLt21);
-        $("#drcRdDrc21").val(drcRdDrc21);
-
-        //앞면2
-        $("#drcKorRn12").val(drcKorRn12);
-        $("#drcRomRn12").val(drcRomRn12);
-        $("#drcRdLt12").val(drcRdLt12);
-        $("#drcRdDrc12").val(drcRdDrc12);
-        //뒷면2
-        $("#drcKorRn22").val(drcKorRn22);
-        $("#drcRomRn22").val(drcRomRn22);
-        $("#drcRdLt22").val(drcRdLt22);
-        $("#drcRdDrc22").val(drcRdDrc22);
-
-        //앞면3
-        $("#drcKorRn13").val(drcKorRn13);
-        $("#drcRomRn13").val(drcRomRn13);
-        $("#drcRdLt13").val(drcRdLt13);
-        $("#drcRdDrc13").val(drcRdDrc13);
+        var drcKorRn13 = $("#drcKorRn13").val();
+        var drcRomRn13 = $("#drcRomRn13").val();
+        var drcRdLt13 = $("#drcRdLt13").val();
+        var drcRdDrc13 = $("#drcRdDrc13").val();
         //뒷면3
-        $("#drcKorRn23").val(drcKorRn23);
-        $("#drcRomRn23").val(drcRomRn23);
-        $("#drcRdLt23").val(drcRdLt23);
-        $("#drcRdDrc23").val(drcRdDrc23);
+        var drcKorRn23 = $("#drcKorRn23").val();
+        var drcRomRn23 = $("#drcRomRn23").val();
+        var drcRdLt23 = $("#drcRdLt23").val();
+        var drcRdDrc23 = $("#drcRdDrc23").val();
+    
+        if(rddr_afRdCo == "00100"){
+            $(".rddrCn_1").show();
+            $(".rddrCn_2").hide();
+            $(".rddrCn_3").hide();
+    
+            makeOptSelectBox("drcRdDrc11","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc21","DRC_RD_DRC","","","");
+            $("#drcRdDrc12").val('');
+            $("#drcRdDrc22").val('');
+            $("#drcRdDrc13").val('');
+            $("#drcRdDrc23").val('');
+    
+            //앞면1
+            $("#drcKorRn11").val(drcKorRn11);
+            $("#drcRomRn11").val(drcRomRn11);
+            $("#drcRdLt11").val(drcRdLt11);
+            $("#drcRdDrc11").val(drcRdDrc11);
+            //뒷면1
+            $("#drcKorRn21").val(drcKorRn21);
+            $("#drcRomRn21").val(drcRomRn21);
+            $("#drcRdLt21").val(drcRdLt21);
+            $("#drcRdDrc21").val(drcRdDrc21);
+    
+            //앞면2
+            // $("#drcKorRn12").val('');
+            // $("#drcRomRn12").val('');
+            // $("#drcRdLt12").val('');
+            // $("#drcRdDrc12").val('');
+            // //뒷면2
+            // $("#drcKorRn22").val('');
+            // $("#drcRomRn22").val('');
+            // $("#drcRdLt22").val('');
+            // $("#drcRdDrc22").val('');
+    
+            // //앞면3
+            // $("#drcKorRn13").val('');
+            // $("#drcRomRn13").val('');
+            // $("#drcRdLt13").val('');
+            // $("#drcRdDrc13").val('');
+            // //뒷면3
+            // $("#drcKorRn23").val('');
+            // $("#drcRomRn23").val('');
+            // $("#drcRdLt23").val('');
+            // $("#drcRdDrc23").val('');
+    
+        }else if(rddr_afRdCo == "00200"){
+            $(".rddrCn_1").show();
+            $(".rddrCn_2").show();
+            $(".rddrCn_3").hide();
+    
+            makeOptSelectBox("drcRdDrc11","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc21","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc12","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc22","DRC_RD_DRC","","","");
+            $("#drcRdDrc13").val('');
+            $("#drcRdDrc23").val('');
+    
+            //앞면1
+            $("#drcKorRn11").val(drcKorRn11);
+            $("#drcRomRn11").val(drcRomRn11);
+            $("#drcRdLt11").val(drcRdLt11);
+            $("#drcRdDrc11").val(drcRdDrc11);
+            //뒷면1
+            $("#drcKorRn21").val(drcKorRn21);
+            $("#drcRomRn21").val(drcRomRn21);
+            $("#drcRdLt21").val(drcRdLt21);
+            $("#drcRdDrc21").val(drcRdDrc21);
+    
+            //앞면2
+            $("#drcKorRn12").val(drcKorRn12);
+            $("#drcRomRn12").val(drcRomRn12);
+            $("#drcRdLt12").val(drcRdLt12);
+            $("#drcRdDrc12").val(drcRdDrc12);
+            //뒷면2
+            $("#drcKorRn22").val(drcKorRn22);
+            $("#drcRomRn22").val(drcRomRn22);
+            $("#drcRdLt22").val(drcRdLt22);
+            $("#drcRdDrc22").val(drcRdDrc22);
+    
+            //앞면3
+            // $("#drcKorRn13").val('');
+            // $("#drcRomRn13").val('');
+            // $("#drcRdLt13").val('');
+            // $("#drcRdDrc13").val('');
+            // //뒷면3
+            // $("#drcKorRn23").val('');
+            // $("#drcRomRn23").val('');
+            // $("#drcRdLt23").val('');
+            // $("#drcRdDrc23").val('');
+        }else if(rddr_afRdCo == "00300"){
+            $(".rddrCn_1").show();
+            $(".rddrCn_2").show();
+            $(".rddrCn_3").show();
+    
+            makeOptSelectBox("drcRdDrc11","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc21","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc12","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc22","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc13","DRC_RD_DRC","","","");
+            makeOptSelectBox("drcRdDrc23","DRC_RD_DRC","","","");
+    
+            //앞면1
+            $("#drcKorRn11").val(drcKorRn11);
+            $("#drcRomRn11").val(drcRomRn11);
+            $("#drcRdLt11").val(drcRdLt11);
+            $("#drcRdDrc11").val(drcRdDrc11);
+            //뒷면1
+            $("#drcKorRn21").val(drcKorRn21);
+            $("#drcRomRn21").val(drcRomRn21);
+            $("#drcRdLt21").val(drcRdLt21);
+            $("#drcRdDrc21").val(drcRdDrc21);
+    
+            //앞면2
+            $("#drcKorRn12").val(drcKorRn12);
+            $("#drcRomRn12").val(drcRomRn12);
+            $("#drcRdLt12").val(drcRdLt12);
+            $("#drcRdDrc12").val(drcRdDrc12);
+            //뒷면2
+            $("#drcKorRn22").val(drcKorRn22);
+            $("#drcRomRn22").val(drcRomRn22);
+            $("#drcRdLt22").val(drcRdLt22);
+            $("#drcRdDrc22").val(drcRdDrc22);
+    
+            //앞면3
+            $("#drcKorRn13").val(drcKorRn13);
+            $("#drcRomRn13").val(drcRomRn13);
+            $("#drcRdLt13").val(drcRdLt13);
+            $("#drcRdDrc13").val(drcRdDrc13);
+            //뒷면3
+            $("#drcKorRn23").val(drcKorRn23);
+            $("#drcRomRn23").val(drcRomRn23);
+            $("#drcRdLt23").val(drcRdLt23);
+            $("#drcRdDrc23").val(drcRdDrc23);
+        }
+    
+        checkRddrRdsd('rddr_rddrGdSd');
+    
+        checkChangeOrigin(id);
+    } catch (error) {
+        util.toast(msg.checkObject.format("이면도로갯수"),"error");
     }
-
-    checkRddrRdsd('rddr_rddrGdSd');
-
-    checkChangeOrigin(id);
 }
 
 //이면도로용 설치형태 변경
 function changeAfRdplqSe(id){
-    var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
-    // if(rddr_afRdplqSe == "01000"){
-    //     $(".namePlateTable").hide();
-    // }else if(rddr_afRdplqSe == "02000"){
-    //     $(".namePlateTable").show();
-    // }
- 
-    checkRddrRdsd('rddr_rddrGdSd');
+    try {
+        var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
+        // if(rddr_afRdplqSe == "01000"){
+        //     $(".namePlateTable").hide();
+        // }else if(rddr_afRdplqSe == "02000"){
+        //     $(".namePlateTable").show();
+        // }
+    
+        checkRddrRdsd('rddr_rddrGdSd');
 
-    checkChangeOrigin(id);
+        checkChangeOrigin(id);
+    } catch (error) {
+        util.toast(msg.checkObject.format("설치형태"),"error");
+    }
+    
 }
 //이면도로용 도로명판 규격
 function checkRddrRdsd(id){
-    var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
-    var rddr_afRdCo = $("#rddr_afRdCo").val();
-    var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
-
-    //안내시설형식
-    var gdftyForm = $("#gdftyForm").val();
-    //제2외국어
-    var scfggMkty = $("#scfggMkty").val();
+    try {
+        
+        var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
+        var rddr_afRdCo = $("#rddr_afRdCo").val();
+        var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
     
-    //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
-    if(scfggMkty != "1" ||  gdftyForm == "20000"){
-        makeOptSelectBox("rddr_rddrGdSd","","","규격없음","");
+        //안내시설형식
+        var gdftyForm = $("#gdftyForm").val();
+        //제2외국어
+        var scfggMkty = $("#scfggMkty").val();
+        
+        //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
+        if(scfggMkty != "1" ||  gdftyForm == "20000"){
+            makeOptSelectBox("rddr_rddrGdSd","","","규격없음","");
+            checkChangeOrigin(id);
+            return;
+        }
+    
+        var useCd = rddr_afRdplqSe.charAt(1) + rddr_afRdCo.charAt(2);
+        
+        customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
+        $("#rddr_rddrGdSd").val(rddr_rddrGdSd);
+    
+        if($("#rddr_rddrGdSd").val() == null){
+            $("#rddr_rddrGdSd").val($("#rddr_rddrGdSd option:first").val());
+        }
+    
+        setGdfyWide(id);
+    
         checkChangeOrigin(id);
-        return;
+    } catch (error) {
+        util.toast(msg.checkObject.format("규격"),"error");
     }
-
-    var useCd = rddr_afRdplqSe.charAt(1) + rddr_afRdCo.charAt(2);
-    
-    customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
-    $("#rddr_rddrGdSd").val(rddr_rddrGdSd);
-
-    if($("#rddr_rddrGdSd").val() == null){
-        $("#rddr_rddrGdSd").val($("#rddr_rddrGdSd option:first").val());
-    }
-
-    setGdfyWide(id);
-
-    checkChangeOrigin(id);
 
 }
 //예고용 도로명판 규격
@@ -789,76 +876,96 @@ function checkPrntRdsd(id){
 }
 
 function checkScfggUla2(id){
-
-    var scfggUla1 = $("#scfggUla1").val();
-    var scfggUla2 = $("#scfggUla2").val();
-
-    if((scfggUla1 != "99" && scfggUla2 != "99") && scfggUla1 == scfggUla2){
-        navigator.notification.alert(msg.notSameScfggMkty, '', '알림', '확인');
-        $("#scfggUla2").val("99");
+    try {
+        var scfggUla1 = $("#scfggUla1").val();
+        var scfggUla2 = $("#scfggUla2").val();
+    
+        if((scfggUla1 != "99" && scfggUla2 != "99") && scfggUla1 == scfggUla2){
+            navigator.notification.alert(msg.notSameScfggMkty, '', '알림', '확인');
+            $("#scfggUla2").val("99");
+        }
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("언어2"),"error");
     }
-    checkChangeOrigin(id);
+
 }
 //도로명판 양면여부 변경
 function changeBdrclAt(id){
-    
-    var bdrclAt = $("#bdrclAt").val();
-
-    if(bdrclAt == '0'){//단면
-        $(".bk").hide();
+    try {
         
-        $("#backKoreanRoadNm").val("");
-        $("#backRomeRoadNm").text("");
-        $("#backStartBaseMasterNo").val("");
-        $("#backStartBaseSlaveNo").val("");
-        $("#backEndBaseMasterNo").val("");
-        $("#backEndBaseSlaveNo").val("");
-    }else{
-        var korRnView = $("#frontKoreanRoadNm").val();
-        var romRnView = $("#frontRomeRoadNm").text();
-        var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
-        var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
-        var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
-        var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
-
-        $("#backKoreanRoadNm").val(korRnView);
-        $("#backRomeRoadNm").text(romRnView);
-        $("#backStartBaseMasterNo").val(frontStartBaseMasterNo);
-        $("#backStartBaseSlaveNo").val(frontStartBaseSlaveNo);
-        $("#backEndBaseMasterNo").val(frontEndBaseMasterNo);
-        $("#backEndBaseSlaveNo").val(frontEndBaseSlaveNo);
-
-        $(".bk").show();
+        var bdrclAt = $("#bdrclAt").val();
+    
+        if(bdrclAt == '0'){//단면
+            $(".bk").hide();
+            
+            $("#backKoreanRoadNm").val("");
+            $("#backRomeRoadNm").text("");
+            $("#backStartBaseMasterNo").val("");
+            $("#backStartBaseSlaveNo").val("");
+            $("#backEndBaseMasterNo").val("");
+            $("#backEndBaseSlaveNo").val("");
+        }else{
+            var korRnView = $("#frontKoreanRoadNm").val();
+            var romRnView = $("#frontRomeRoadNm").text();
+            var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
+            var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+            var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
+            var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
+    
+            $("#backKoreanRoadNm").val(korRnView);
+            $("#backRomeRoadNm").text(romRnView);
+            $("#backStartBaseMasterNo").val(frontStartBaseMasterNo);
+            $("#backStartBaseSlaveNo").val(frontStartBaseSlaveNo);
+            $("#backEndBaseMasterNo").val(frontEndBaseMasterNo);
+            $("#backEndBaseSlaveNo").val(frontEndBaseSlaveNo);
+    
+            $(".bk").show();
+        }
+    
+        // setNameplateView();
+        checkChangeOrigin(id);
+    } catch (error) {
+        util.toast(msg.checkObject.format("양면여부"),"error");
     }
-
-    // setNameplateView();
-    checkChangeOrigin(id);
+    
 }
 //예고용 도로명판 양면여부 변경
 function changeBdrclAtPrnt(id){
-    var bdrclAt = $("#bdrclAt").val();
-    if(bdrclAt == '0'){//단면
-        $(".bk").hide();
-    }else{
-        $(".bk").show();
-    }   
-    checkChangeOrigin(id);
+    try {
+        var bdrclAt = $("#bdrclAt").val();
+        if(bdrclAt == '0'){//단면
+            $(".bk").hide();
+        }else{
+            $(".bk").show();
+        }   
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("양면여부"),"error");
+    }
 }
 
 //건물용도 변경
 function changeBdtypCd(id){
-    var bdtypCd_main = $("#bdtypCd_main").val();
-    var bdtypCd = $("#bdtypCd").val();
-
-    customSelectBox2("bdtypCd","BDTYP_CD",bdtypCd_main.substr(0,2),0,2,2,5);
-
-    // if(!util.isEmpty(bdtypCd)){
-    //     $("#bdtypCd").val(bdtypCd);
-    // }else{
-        $("#bdtypCd").val($("#bdtypCd option:first").val());
-    // }
-
-    checkChangeOrigin(id);
+    try {
+        var bdtypCd_main = $("#bdtypCd_main").val();
+        var bdtypCd = $("#bdtypCd").val();
+    
+        customSelectBox2("bdtypCd","BDTYP_CD",bdtypCd_main.substr(0,2),0,2,2,5);
+    
+        // if(!util.isEmpty(bdtypCd)){
+        //     $("#bdtypCd").val(bdtypCd);
+        // }else{
+            $("#bdtypCd").val($("#bdtypCd option:first").val());
+        // }
+    
+        checkChangeOrigin(id);
+        
+    } catch (error) {
+        util.toast(msg.checkObject.format("건물용도"),"error");
+    }
 }
 
 // //명판모양 변경

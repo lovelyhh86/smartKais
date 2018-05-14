@@ -920,3 +920,93 @@ function changeOneFeatherStyle(){
     }
     
 }
+
+//팝업상태 정상점검
+function insertResearchForPopup(index){
+    try {
+        //조사자일련번호
+        var rcrSn = app.info.rcrSn;
+        if(rcrSn == null || rcrSn == ""){
+            util.toast("조사자를 선택해 주세요","error");
+            return;
+        }
+
+        var msgForm = "정상 상태로 점검하시겠습니까?";
+    
+        navigator.notification.confirm(msgForm, function(btnindex){
+    
+            if(btnindex == 1){
+                // var targetID = $("#row" + i);
+    
+                //배정년도
+                var plnYr = util.getToday().substr(0,4);
+                //배정차수
+                var plnOdr = "1";
+                //시군구
+                var sigCd = featureClone[index].get("SIG_CD");
+                //배정일련번호
+                var mtchSn = "";
+                //대상일련번호
+                var trgSn = featureClone[index].get("BUL_NMT_NO");
+                //대상위치일련번호
+                var trgLocSn = featureClone[index].get("BUL_MAN_NO");
+                //대상구분
+                var trgGbn = "02";
+                //점검상태(무조건 정상)
+                var rcSttCd = '1000';
+                
+                //조사자일련번호
+                var rcrSn = app.info.rcrSn;
+                if(rcrSn == null){
+                    util.toast("조사자를 선택해 주세요","error");
+                    return;
+                }
+
+                //작업자ID
+                var workId = app.info.opeId;
+    
+                var sendParams = {
+                    plnYr : plnYr,
+                    plnOdr : plnOdr,
+                    sigCd : sigCd,
+                    mtchSn : mtchSn,
+                    trgSn : trgSn,
+                    trgLocSn : trgLocSn,
+                    trgGbn : trgGbn,
+                    rcSttCd : rcSttCd,
+                    rcrSn : rcrSn,
+                    workId : workId,
+                };
+    
+                var link = URLs.insertResearchState;
+    
+                util.showProgress();
+                var url = URLs.postURL(link, sendParams);
+                util.postAJAX({}, url).then(
+                    function (context, rCode, results) {
+                        //통신오류처리
+                        if (rCode != 0 || results.response.status < 0) {
+                            navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                            util.dismissProgress();
+                            return;
+                        }
+    
+                        util.toast(msg.successResearch);
+    
+                        // selectResearchContent();
+    
+                        closePopupAndClearMap(trgGbn);
+    
+                        util.dismissProgress();
+    
+                    },
+                    util.dismissProgress
+                );
+                
+            }
+        }, "알림", ["확인","취소"]);
+        
+    } catch (error) {
+        util.toast("점검실패","error");
+    }
+}

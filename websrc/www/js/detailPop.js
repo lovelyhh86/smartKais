@@ -1529,7 +1529,8 @@ function closePopupAndClearMap(type){
             //지도 초기화
             getVectorSource(map , "위치레이어").clear();
         }else if(type == DATA_TYPE.ENTRC){
-            getVectorSource(map , "건물").clear();
+            // getVectorSource(map , "건물").clear();
+            getVectorSource(map , "출입구").clear();
         }
     }catch(e) {
         util.dismissProgress();
@@ -2982,8 +2983,6 @@ function loadUpdtData(isImages){
                         util.dismissProgress();
                         return;
                     }
-                    
-
                     var data = results.data;
 
                     if (util.isEmpty(data) == true) {
@@ -3072,6 +3071,8 @@ function loadUpdtData(isImages){
                 },
                 util.dismissProgress
             );
+                    
+
         // }else{
         //     if(isImages == "true"){
         //         var photoNum = $(".infoHeader .photo .photoNum").text();

@@ -1,6 +1,6 @@
 var defaultStyleOptions = {
     label: {
-        textOffsetX: 0,
+        textOffsetX: -1,
         textOffsetY: -17
     },
     radius: 5
@@ -97,7 +97,7 @@ var defaultStyle = function (feature, resolution, options) {
     }
     size = features.length;
 
-    if(dataType != "99"){
+    if(dataType == "01"){
         var oldRdGdftySe;
         var newRdGdftySe;
         for(var i = 0 ; size > i; i++){
@@ -154,6 +154,21 @@ var defaultStyle = function (feature, resolution, options) {
             styleOptions.label._text = key = String(clusterCnt);
         }
         style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
+    }else if(dataType == "02"){
+        key = features[0].get("LT_CHC_YN");
+        for(var i = 0 ; size > i; i++){
+            var LT_CHC_YN = features[i].get("LT_CHC_YN");
+            if(LT_CHC_YN == 0 && size >= 2){
+                // console.log(features[i].get("RDFTYLC_SN"));
+                index = i;
+            }
+        }
+        var clusterCnt = size;
+        if(clusterCnt > 1){
+            styleOptions.label._text = key = String(clusterCnt);
+        }
+        
+        style = getStyle(options.dataType, styleOptions, features[index]);
     }else{
         key = features[0].get("LT_CHC_YN");
         var eqbManSn = feature.get('EQB_MAN_SN');
@@ -214,7 +229,7 @@ var getStyle = function(dataType, styleOptions, feature, mixStyle) {
             retStyle = bsisStyle(styleOptions);
             break;
         case DATA_TYPE.ENTRC:
-            retStyle = entrcStyle(styleOptions);
+            retStyle = entrcStyle(styleOptions,feature);
             break;
 
     }
@@ -523,7 +538,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
 
         return new ol.style.Style(opt);
     } catch (error) {
-        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+        navigator.notification.alert(msg.errorLoadLayer, '', '알림', '확인');
         util.dismissProgress();
         return;
     }
@@ -670,30 +685,73 @@ var bsisStyle = function (styleOptions) {
 };
 
 // 건물번호판(출입구) 스타일
-var entrcStyle = function (styleOptions) {
-    var anchorY = 44;
-    var opt = {
-        //  image: new ol.style.Circle({
-        //      radius: styleOptions.radius,
-        //      fill: new ol.style.Fill({
-        //          color: 'blue'
-        //      }),
-        //      stroke: new ol.style.Stroke({
-        //          color: 'white',
-        //          width: 1
-        //      })
-        //  })
-         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.45, 35],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'pixels',
-            src: 'image/icon_legend04.png'
-        }))
-    };
-    if( styleOptions.label._text)
-        opt.text = createTextStyle(styleOptions);
+var entrcStyle = function (styleOptions,feature) {
 
-    return new ol.style.Style(opt);
+    try {
+        //점검여부
+        var ltChcYn = feature.get('LT_CHC_YN');
+        //설치일자
+        var instlDe = feature.get('INSTL_DE');
+        var instlDeYear = instlDe.substr(0,4);
+        var newYear = util.getToday().substr(0,4);    
+        
+        var anchorY = 44;
+        var opt;
+        
+        
+        if(instlDeYear != newYear){//올해설치 X
+            if(ltChcYn != 0){ //점검 O
+                opt= {
+                    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                       anchor: [0.45, 35],
+                       anchorXUnits: 'fraction',
+                       anchorYUnits: 'pixels',
+                       src: 'image/icon_c_legend04.png'
+                   }))
+               };
+            }else{ // 점검 X
+                opt= {
+                    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                       anchor: [0.45, 35],
+                       anchorXUnits: 'fraction',
+                       anchorYUnits: 'pixels',
+                       src: 'image/icon_legend04.png'
+                   }))
+               };
+            }
+            
+        }else{ // 올해설치 O
+            if(ltChcYn != 0){ //점검 O
+                opt= {
+                    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                       anchor: [0.45, anchorY],
+                       anchorXUnits: 'fraction',
+                       anchorYUnits: 'pixels',
+                       src: 'image/icon_nc_legend04.png'
+                   }))
+               };
+            }else{ // 점검 X
+                opt= {
+                    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                       anchor: [0.45, anchorY],
+                       anchorXUnits: 'fraction',
+                       anchorYUnits: 'pixels',
+                       src: 'image/icon_n_legend04.png'
+                   }))
+               };
+            }
+
+        }
+        
+        if( styleOptions.label._text)
+            opt.text = createTextStyle(styleOptions);
+    
+        return new ol.style.Style(opt);
+    } catch (error) {
+        navigator.notification.alert(msg.errorLoadLayer, '', '알림', '확인');
+        util.dismissProgress();
+        return;
+    }
 };
 
 // 시설물 상태(정상)

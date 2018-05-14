@@ -2311,7 +2311,8 @@ var mapInit = function(mapId, pos) {
     // 출입구 레이어
     var lyr_tl_spbd_entrc = getFeatureLayer({
         title: "출입구",
-        typeName: "tl_spbd_entrc",
+        // typeName: "tl_spbd_entrc",
+        typeName: "tlv_spbd_entrc_skm",
         dataType: DATA_TYPE.ENTRC,
         style: {
             radius: 15,
@@ -2938,14 +2939,32 @@ var mapInit = function(mapId, pos) {
                         break;
                     case DATA_TYPE.ENTRC:
                         var gbn = commonP.format("gbn", "[{0}]".format("건물번호판"));
-                        
+                        //건물번호판 일련번호
+                        var BUL_NMT_NO = feature.get("BUL_NMT_NO");
+                        //건물일련번호
+                        var BUL_MAN_NO = feature.get("BUL_MAN_NO");
+
+                        //근거리 사진건수
+                        var CNT_M_FILES = feature.get("CNT_M_FILES");
+                        //원거리 사진건수
+                        var CNT_L_FILES = feature.get("CNT_L_FILES");
+
+                        //설치상태
+                        var DEL_STT_CD = feature.get("DEL_STT_CD");
+
                         //제목창
                         var title = '';
-                        title = commonP.format("localTitle","내용채우기");
+                        title = commonP.format("localTitle","사진건수");
 
-                        var text1 = commonSpan.format("info", "항목1");
-                        var text2 = commonSpan.format("info", "항목2");
-                        var button1 = commonButton.format("",'alert("클릭")',"버튼" + index);
+                        var text1 = commonSpan.format("info", "근거리 : " + CNT_M_FILES);
+                        var text2 = commonSpan.format("info", "원거리 : " + CNT_L_FILES);
+                        
+                        var button1 = "" ;
+
+                        //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
+                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                            button1 = commonButton.format("",'insertResearchForPopup('+index+')',"정상점검");
+                        }
                         
                         
                         strHtml = gbn
@@ -3266,7 +3285,7 @@ var getFeatureLayer = function(options) {
                             }
 
                             $('.legend .spot .total').text(spotCnt + '건');
-                        }else if(layerType == "tl_spbd_entrc"){
+                        }else if(layerType == "tlv_spbd_entrc_skm"){
                             entrcCnt++;
                             $('.legend .entrc .total').text(entrcCnt + '건');
                         }else{

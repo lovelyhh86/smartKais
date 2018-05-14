@@ -624,6 +624,9 @@ function layerToggle(context){
         if (context.type == "map") {
             $(".legend.spgf").toggle(true);
             $(".legend.spbd").toggle(false);
+            
+            $(".selectResearch").toggle(true);
+            $(".locManageSpgf").toggle(true);
 
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
@@ -634,7 +637,6 @@ function layerToggle(context){
             $(".selectAdrdc").toggle(false);
             $(".locManageSpbd").toggle(false);
             
-            // $(".selectResearch").toggle(true);
             
             
             // map.addLayer(layers.rdpq);
@@ -651,6 +653,9 @@ function layerToggle(context){
         } else {
             $(".legend.spgf").toggle(false);
             $(".legend.spbd").toggle(true);
+
+            $(".selectResearch").toggle(false);
+            $(".locManageSpgf").toggle(false);
 
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
