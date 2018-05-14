@@ -3111,6 +3111,9 @@ var mapInit = function(mapId, pos) {
                             $('.legend .areaW .total').text('0건');
                             $('.legend .bsisW .total').text('0건');
                             util.toast('시설물을 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
+                        }else if(id == DATA_TYPE.ENTRC){
+                            $('.legend .entrc .total').text('0건');
+                            util.toast('건물번호판 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
                         }
                         if (id == DATA_TYPE.BULD) {
                             util.toast('건물정보를 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');

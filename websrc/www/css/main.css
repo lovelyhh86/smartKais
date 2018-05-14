@@ -86,7 +86,7 @@
 .pushCnt { position: absolute; z-index: 10; }
 .pushCnt div {
     background-color: #ff0000;
-    border-radius: 1.8em;
+    border-radius: 50%;
     color: white;
     line-height: 1.6em;
     padding: 0;
