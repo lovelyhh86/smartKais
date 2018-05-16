@@ -215,6 +215,7 @@ var MapUtil = {
             legend.className = "legend spbd ol-unselectable ol-control";
             var legendHtml = '<ul>';
             legendHtml += '<li class="entrc">건물번호판<span class="total">0건</span></li>';
+            // legendHtml += '<li class="entrc" onclick = "removeLayers('+"'intrvl'"+')">기초구간<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
 
@@ -2326,7 +2327,8 @@ var mapInit = function(mapId, pos) {
         cluster: { distance: 50 },
         maxResolution: MapUtil.setting.maxResolution,
         viewProgress: false,
-        renderMode: 'vector'
+        renderMode: 'vector',
+        zIndex : 1
     });
     // 도로명판 레이어
     // var lyr_tl_spgf_rdpq = getFeatureLayer({
@@ -2399,7 +2401,8 @@ var mapInit = function(mapId, pos) {
         // maxResolution: MapUtil.setting.maxResolution,
         maxResolution: 1,
         viewProgress: false,
-        renderMode: 'vector'
+        renderMode: 'vector',
+        zIndex : 1
     });
     //지점번호판 레이어
     var lyr_tl_sppn_paninfo = getFeatureLayer({
@@ -2418,7 +2421,28 @@ var mapInit = function(mapId, pos) {
         cluster: { distance: 50 },
         // maxResolution: MapUtil.setting.maxResolution,
         viewProgress: false,
-        renderMode: 'vector'
+        renderMode: 'vector',
+        zIndex : 1
+    });
+    //기초구간
+    var lyr_tl_sprd_intrvl = getFeatureLayer({
+        title: "기초구간",
+        typeName: "tl_sprd_intrvl",
+        dataType: DATA_TYPE.INTRVL,
+        style: {
+            label: {
+                // format: ["{1}-{2}"],
+                // data: ["ODD_BSI_MN", "ODD_BSI_SL"],
+                // text: { key: "ODD_BSI_MN", func: function(text) { return text } },
+                // textOffsetY: -20
+            },
+            radius: 12
+        },
+        // cluster: { distance: 50 },
+        maxResolution: 0.25,
+        viewProgress: false,
+        renderMode: 'image',
+        zIndex : 2
     });
 
     layers = {
@@ -2428,7 +2452,8 @@ var mapInit = function(mapId, pos) {
         // "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc,
         "buld": lyr_tl_spbd_buld,
-        "sppn": lyr_tl_sppn_paninfo
+        "sppn": lyr_tl_sppn_paninfo,
+        "intrvl":lyr_tl_sprd_intrvl
     };
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
@@ -3341,7 +3366,7 @@ var getFeatureLayer = function(options) {
                         }else if(layerType == "tlv_spbd_entrc_skm"){
                             entrcCnt++;
                             $('.legend .entrc .total').text(entrcCnt + '건');
-                        }else{
+                        }else if(layerType == "tlv_spgf_loc_skm"){
                             for (var i = 0; features.length > i; i++) {
                                 var rdGdftySe = features[i].get("RD_GDFTY_SE");
                                 //설치유형(벽면형 : 00002)
@@ -3416,7 +3441,7 @@ var getFeatureLayer = function(options) {
             new ol.source.Cluster({
                 distance: options.cluster.distance,
                 geometryFunction: function(feature) {
-                    if (feature.getGeometry().getType() != "Point")
+                    if (feature.getGeometry().getType() == "Polygon")
                         return feature.getGeometry().getInteriorPoint();
                     else
                         return feature.getGeometry();

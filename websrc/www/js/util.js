@@ -620,6 +620,7 @@ function layerToggle(context){
         var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
         
         removeLayers();
+        map.addLayer(layers.intrvl);
 
         if (context.type == "map") {
             $(".legend.spgf").toggle(true);
@@ -644,6 +645,7 @@ function layerToggle(context){
             // map.addLayer(layers.area);
             map.addLayer(layers.loc);
             map.addLayer(layers.sppn);
+            
 
             map.getView().setZoom(mapBaseConfig.zoom.spgf);
 
@@ -680,18 +682,22 @@ function layerToggle(context){
     });
 }
 
-function removeLayers(){
-    clearSource('현위치');
-    clearSource('위치이동');
-    map.removeLayer(layers.move);
-    map.removeLayer(layers.buld);
-    map.removeLayer(layers.entrc);
-    // map.removeLayer(layers.rdpq);
-    // map.removeLayer(layers.bsis);
-    // map.removeLayer(layers.area);
-    map.removeLayer(layers.loc);
-    map.removeLayer(layers.sppn);
-    $("#moveInfo").hide();
+function removeLayers(type){
+    // if(type == "intrvl"){
+        map.removeLayer(layers.intrvl);
+    // }else{
+        clearSource('현위치');
+        clearSource('위치이동');
+        map.removeLayer(layers.move);
+        map.removeLayer(layers.buld);
+        map.removeLayer(layers.entrc);
+        // map.removeLayer(layers.rdpq);
+        // map.removeLayer(layers.bsis);
+        // map.removeLayer(layers.area);
+        map.removeLayer(layers.loc);
+        map.removeLayer(layers.sppn);
+        $("#moveInfo").hide();
+    // }
 }
 
 function appExitCallback(btnIndex){

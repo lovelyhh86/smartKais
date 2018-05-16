@@ -23,7 +23,7 @@ var LAST_CHECK_STATUS = {
 };
 
 var DATA_TYPE = {
-    LOC: "00", RDPQ: "01", ENTRC: "02", BSIS: "03", AREA: "04",  BULD: "99", SPPN: "06", ADRDC:"07",
+    LOC: "00", RDPQ: "01", ENTRC: "02", BSIS: "03", AREA: "04",  BULD: "99", SPPN: "06", ADRDC:"07",INTRVL:"08",
     getStatusNameWithCode: function (code) {
         switch (code) {
             case "00":
@@ -42,6 +42,8 @@ var DATA_TYPE = {
                 return DATA_TYPE.SPPN;
             case "07":
                 return DATA_TYPE.ADRDC;
+            case "08":
+                return DATA_TYPE.INTRVL;
             default:
                 return;
         }
@@ -169,7 +171,7 @@ var defaultStyle = function (feature, resolution, options) {
         }
         
         style = getStyle(options.dataType, styleOptions, features[index]);
-    }else{
+    }else if(dataType == DATA_TYPE.BULD){
         key = features[0].get("LT_CHC_YN");
         var eqbManSn = feature.get('EQB_MAN_SN');
 
@@ -202,6 +204,15 @@ var defaultStyle = function (feature, resolution, options) {
         // 스타일 캐쉬 처리
         style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
         styleCache[options.dataType][key] = style;
+    }else if(dataType == DATA_TYPE.INTRVL){
+        var format = options.style.label.format;
+        var text = options.style.label.text;
+        
+        key = text;
+
+        styleOptions.label._text = text;
+        
+        style = getStyle(options.dataType, styleOptions, features[index]);
     }
 
     return style;
@@ -230,6 +241,9 @@ var getStyle = function(dataType, styleOptions, feature, mixStyle) {
             break;
         case DATA_TYPE.ENTRC:
             retStyle = entrcStyle(styleOptions,feature);
+            break;
+        case DATA_TYPE.INTRVL:
+            retStyle = intrvlStyle(styleOptions,feature);
             break;
 
     }
@@ -753,6 +767,56 @@ var entrcStyle = function (styleOptions,feature) {
         return;
     }
 };
+
+//기초구역
+var intrvlStyle = function(styleOptions,feature){
+
+    var startX = feature.getGeometry().getCoordinateAt(0)[0];
+    var startY = feature.getGeometry().getCoordinateAt(0)[1];
+    var endX = feature.getGeometry().getCoordinateAt(1)[0];
+    var endY = feature.getGeometry().getCoordinateAt(1)[1];
+
+    var offsetX = 0;
+    var offsetY = 0;
+    //왼쪽이 홀수
+    if(startX - endX > 0){
+        offsetY = 10;
+    }else{
+        offsetY = -10;
+    }
+
+
+    var text = "{0}{1}".format(feature.get("ODD_BSI_MN") , feature.get("ODD_BSI_SL") == "0"?"":"-"+feature.get("ODD_BSI_SL"));
+    var opt = {
+        
+        stroke: new ol.style.Stroke({
+            color: 'green',
+            width: 2
+          }),
+        text: new ol.style.Text({
+            textAlign: "center",
+            textBaseline: "hanging",
+            // font: font,
+            text: text,
+            fill: new ol.style.Fill({color: "red"}),
+            // stroke: new ol.style.Stroke({color: outlineColor, width: outlineWidth}),
+            offsetX: offsetX,
+            offsetY: offsetY,
+            placement: "line",
+            // maxAngle: maxAngle,
+            // overflow: overflow,
+            // rotation: rotation
+            scale : 1.3
+            })
+    };
+
+    var ODD_BSI_MN = feature.get("ODD_BSI_MN");
+    var ODD_BSI_SL = feature.get("ODD_BSI_SL");
+    
+
+    // opt.text = createTextStyle(styleOptions);
+    return new ol.style.Style(opt);
+}
 
 // 시설물 상태(정상)
 var normalStatusStyle = function (styleOptions) {
