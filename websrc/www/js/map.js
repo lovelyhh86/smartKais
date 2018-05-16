@@ -1171,6 +1171,9 @@ var MapUtil = {
                                 makeOptSelectBox("rddr_afRdCo","AF_RD_CD","","","");
                                 $("#rddr_afRdCo").val(rddr_afRdCo);
 
+                                changeAfRdplqSe('rddr_afRdplqSe');
+                                changeAfrdCo('rddr_afRdCo');
+
                                 //이면도로명판 내용
                                 var rddrCnList = data.rddrCn;
                                 try {
@@ -1213,10 +1216,9 @@ var MapUtil = {
                                     util.toast(msg.checkObject.format("도로명판 유형 및 이면도로갯수"),"error");
                                 }
                                 
-                                $("#rddr_rddrGdSd").val(data.rddr_rddrGdSd);
                                 customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
-                                changeAfRdplqSe('rddr_afRdplqSe');
-                                changeAfrdCo('rddr_afRdCo');
+                                $("#rddr_rddrGdSd").val(data.rddr_rddrGdSd);
+                                
                                 // setNameplateView();
 
                             }else if(rdGdftySe == "310"){//예고용

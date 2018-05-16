@@ -213,15 +213,15 @@ function changeUseTarget(id){
             if(rdGdftySe == "310"){
                 checkPrntRdsd("prntGdSd");
             }else if(rdGdftySe == "110"){
-                if(useTarget != "01000"){//보행자가 아닐때 제2외국어 선택못함
-                    customSelectBox("scfggMkty","SCFGG_MKTY","1",0,1);
-                    $("#scfggMkty").val("1");
-                    changeScfggMkty();
-                }else{
+                if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){//보행자 차로용 소로용
                     var scfggMkty = $("#scfggMkty").val();
                     makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
                     $("#scfggMkty").val(scfggMkty);
-                    changeScfggMkty();
+                    changeScfggMkty('scfggMkty');
+                }else{
+                    customSelectBox("scfggMkty","SCFGG_MKTY","1",0,1);
+                    $("#scfggMkty").val("1");
+                    changeScfggMkty('scfggMkty');
                 }
                 changeRdpqGdSd();
             }
@@ -241,9 +241,11 @@ function changePlqDir(id){
     try {
         var plqDirection = $("#plqDirection").val();
         if(plqDirection == "00300"){//앞쪽방향용 일 경우
-            $("#bdrclAt").val("1"); //양면 예
+            // $("#bdrclAt").val("1"); //양면 예
+            $("#bdrclAt").removeAttr("disabled");
         }else{
-            $("#bdrclAt").val("0"); //양면 아니오
+            // $("#bdrclAt").val("0"); //양면 아니오
+            $("#bdrclAt").attr("disabled","disabled");
         }
         $("#bdrclAt").trigger("change");
     
@@ -276,7 +278,7 @@ function changeRdpqGdSd(id){
         $("#rdpqGdSd").val(rdpqGdSd);
         
         if($("#rdpqGdSd").val() == null){
-            $("#rdpqGdSd").val($("#rdpqGdSd option:first").val());
+            // $("#rdpqGdSd").val($("#rdpqGdSd option:first").val());
         }
     
         setGdfyWide('rdpqGdSd');
@@ -295,14 +297,25 @@ function setGdfyWide(id){
         var gdftyForm = $("#gdftyForm").val();
         var buldNmtType = $("#buldNmtType").val();
         var gdfyWide = $("#"+id+" option:selected").text();
+        var gdsdCnt = $("#"+id+" option").length;
 
         if(util.isEmpty(gdfyWide) || gdfyWide == "규격없음"){
             if(trgGbn == "02"){
-                $("#buldNmtWide").removeAttr("disabled");
-                $("#buldNmtVertical").removeAttr("disabled");
+                if(gdsdCnt == 0){
+                    $("#buldNmtWide").removeAttr("disabled");
+                    $("#buldNmtVertical").removeAttr("disabled");
+                }
+
+                $("#buldNmtWide").val($("#buldNmtWide").val());
+                $("#buldNmtVertical").val($("#buldNmtWide").val());
             }else{
-                $("#gdftyWide").removeAttr("disabled");
-                $("#gdftyVertical").removeAttr("disabled");
+                if(gdsdCnt == 0){
+                    $("#gdftyWide").removeAttr("disabled");
+                    $("#gdftyVertical").removeAttr("disabled");
+                }
+
+                $("#gdftyWide").val($("#gdftyWide_origin").val());
+                $("#gdftyVertical").val($("#gdftyVertical_origin").val());
             }
         }else{
             if(trgGbn == "02"){
@@ -375,7 +388,8 @@ function changeBsisGdSd(id){
         
         //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
         if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
-            makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
+            // makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
+            $("#bsis_bsisGdSd").empty();
             checkChangeOrigin(id);
             return;
         }
@@ -397,7 +411,7 @@ function changeBsisGdSd(id){
         $("#bsis_bsisGdSd").val(bsis_bsisGdSd);
 
         if($("#bsis_bsisGdSd").val() == null){
-            $("#bsis_bsisGdSd").val($("#bsis_bsisGdSd option:first").val());
+            // $("#bsis_bsisGdSd").val($("#bsis_bsisGdSd option:first").val());
         }
         setGdfyWide('bsis_bsisGdSd');
 
@@ -812,7 +826,8 @@ function checkRddrRdsd(id){
         
         //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
         if(scfggMkty != "1" ||  gdftyForm == "20000"){
-            makeOptSelectBox("rddr_rddrGdSd","","","규격없음","");
+            // makeOptSelectBox("rddr_rddrGdSd","","","규격없음","");
+            $("#rddr_rddrGdSd").empty();
             checkChangeOrigin(id);
             return;
         }
@@ -823,7 +838,7 @@ function checkRddrRdsd(id){
         $("#rddr_rddrGdSd").val(rddr_rddrGdSd);
     
         if($("#rddr_rddrGdSd").val() == null){
-            $("#rddr_rddrGdSd").val($("#rddr_rddrGdSd option:first").val());
+            // $("#rddr_rddrGdSd").val($("#rddr_rddrGdSd option:first").val());
         }
     
         setGdfyWide(id);
@@ -855,7 +870,8 @@ function checkPrntRdsd(id){
 
         //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
         if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
-            makeOptSelectBox("prntGdSd","","","규격없음","");
+            // makeOptSelectBox("prntGdSd","","","규격없음","");
+            $("#prntGdSd").empty();
             checkChangeOrigin(id);
             setGdfyWide(id);
             return;
@@ -864,7 +880,7 @@ function checkPrntRdsd(id){
         customSelectBox("prntGdSd","PRNT_GD_SD",useCd,0,2);
         $("#prntGdSd").val(prntGdSd);
         if($("#prntGdSd").val() == null){
-            $("#prntGdSd").val($("#prntGdSd option:first").val());
+            // $("#prntGdSd").val($("#prntGdSd option:first").val());
         }
         setGdfyWide('prntGdSd');
 
@@ -1087,4 +1103,12 @@ function changePlqDrc(id){
     checkChangeOrigin(id);
 
     setNameplateView();
+}
+
+//코드목록 갯수 체크
+function checkSelectBoxLength(id){
+
+    var cnt = $("#"+id+" option").length
+    
+    return cnt;
 }

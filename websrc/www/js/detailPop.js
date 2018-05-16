@@ -2384,10 +2384,16 @@ function modify(){
 
             //규격
             var rdpqGdSd = $("#rdpqGdSd").val();
+            var gdsdCnt = checkSelectBoxLength(rdpqGdSd);
             
             //규격 없을 경우에 저장 할 것인지 메시지
-            if(rdpqGdSd == null && gdftyForm == "10000"){
+            if(rdpqGdSd == null && gdftyForm == "10000" &&  gdsdCnt == 0 ){
                 msgText = msg.checkGdSd;
+            }else if(gdsdCnt > 0 && rdpqGdSd == null){
+                navigator.notification.alert(msg.dontInsertNull.format("규격"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
             }
             
             commomParams = $.extend(commomParams,{
@@ -2436,8 +2442,15 @@ function modify(){
             }
             //규격
             var rddr_rddrGdSd = $("#rddr_rddrGdSd").val();
-            if(rddr_rddrGdSd == null && gdftyForm == "10000"){
+            var gdsdCnt = checkSelectBoxLength("rddr_rddrGdSd");
+
+            if(rddr_rddrGdSd == null && gdftyForm == "10000" && gdsdCnt == 0){
                 msgText = msg.checkGdSd;
+            }else if(rddr_rddrGdSd == null && gdsdCnt > 0){
+                navigator.notification.alert(msg.dontInsertNull.format("규격"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
             }
             //양면여부
             var bdrclAt = $("#bdrclAt").val();
@@ -2524,10 +2537,15 @@ function modify(){
             
             //규격
             var prntGdSd = $("#prntGdSd").val();
-            
+            var gdsdCnt = checkSelectBoxLength("prntGdSd");
             //규격 없을 경우에 저장 할 것인지 메시지
-            if(prntGdSd == null && gdftyForm == "10000"){
+            if(prntGdSd == null && gdftyForm == "10000" && gdsdCnt == 0){
                 msgText = msg.checkGdSd;
+            }else if(prntGdSd == null && gdsdCnt > 0){
+                navigator.notification.alert(msg.dontInsertNull.format("규격"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
             }
 
             commomParams = $.extend(commomParams,{
@@ -2566,10 +2584,15 @@ function modify(){
         var area_etcCn = $("#area_etcCn").val();
         //규격
         var area_areaGdSd = $("#area_areaGdSd").val();
-
+        var gdsdCnt = checkSelectBoxLength("area_areaGdSd");
         //규격 없을 경우에 저장 할 것인지 메시지
-        if(area_areaGdSd == null && gdftyForm == "10000"){
+        if(area_areaGdSd == null && gdftyForm == "10000" && gdsdCnt == 0){
             msgText = msg.checkGdSd;
+        }else if(area_areaGdSd == null && gdsdCnt > 0){
+            navigator.notification.alert(msg.dontInsertNull.format("규격"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
         }
         
         //양면여부
@@ -2647,10 +2670,15 @@ function modify(){
         }
         //규격
         var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
-
+        var gdsdCnt = checkSelectBoxLength("bsis_bsisGdSd");
         //규격 없을 경우에 저장 할 것인지 메시지
-        if(bsis_bsisGdSd == null && gdftyForm == "10000"){
+        if(bsis_bsisGdSd == null && gdftyForm == "10000" && gdsdCnt == 0){
             msgText = msg.checkGdSd;
+        }else if(bsis_bsisGdSd == null && gdsdCnt > 0){
+            navigator.notification.alert(msg.dontInsertNull.format("규격"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
         }
 
         //양면여부
@@ -2725,10 +2753,16 @@ function modify(){
 
         //규격
         var buldNmtCd = $("#buldNmtCd").val();
-        
+        var gdsdCnt = checkSelectBoxLength("buldNmtCd");
+
         //규격 없을 경우에 저장 할 것인지 메시지
-        if(buldNmtCd == null && buldNmtType == "1000"){
+        if(buldNmtCd == null && buldNmtType == "1000" && gdsdCnt == 0){
             msgText = msg.checkGdSd;
+        }else if(buldNmtCd == null && gdsdCnt > 0){
+            navigator.notification.alert(msg.dontInsertNull.format("규격"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
         }
 
         //가로
