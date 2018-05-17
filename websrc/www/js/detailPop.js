@@ -2344,7 +2344,7 @@ function modify(){
             }
             //앞면도로명
             var frontKoreanRoadNm = $("#frontKoreanRoadNm").val();
-            if(frontKoreanRoadNm == null){
+            if(util.isEmpty(frontKoreanRoadNm)){
                 navigator.notification.alert(msg.dontInsertNull.format("앞면 도로명"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
@@ -2354,7 +2354,7 @@ function modify(){
             //시작기초번호
             var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
             var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
-            if(frontStartBaseMasterNo == null || frontStartBaseSlaveNo == null){
+            if(frontStartBaseMasterNo == "" || frontStartBaseSlaveNo == ""){
                 navigator.notification.alert(msg.dontInsertNull.format("앞면 시작기초번호"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
@@ -2363,7 +2363,7 @@ function modify(){
             //종료기초번호
             var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
             var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
-            if(frontEndBaseMasterNo == null || frontEndBaseSlaveNo == null){
+            if(frontEndBaseMasterNo == "" || frontEndBaseSlaveNo == ""){
                 navigator.notification.alert(msg.dontInsertNull.format("앞면 종료기초번호"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
@@ -2372,7 +2372,7 @@ function modify(){
 
             //뒷면도로명
             var backKoreanRoadNm = $("#backKoreanRoadNm").val();
-            if(bdrclAt == "1" && backKoreanRoadNm == null){
+            if(bdrclAt == "1" && util.isEmpty(backKoreanRoadNm)){
                 navigator.notification.alert(msg.dontInsertNull.format("뒷면도로명"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
@@ -2382,7 +2382,7 @@ function modify(){
             //시작기초번호
             var backStartBaseMasterNo = $("#backStartBaseMasterNo").val() == ""? 0 : $("#backStartBaseMasterNo").val();
             var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val() == ""? 0 : $("#backStartBaseSlaveNo").val();
-            if(backStartBaseMasterNo == null || backStartBaseSlaveNo == null){
+            if(backStartBaseMasterNo == "" || backStartBaseSlaveNo == ""){
                 navigator.notification.alert(msg.dontInsertNull.format("뒷면 시작기초번호"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
@@ -2391,7 +2391,7 @@ function modify(){
             //종료기초번호
             var backEndBaseMasterNo = $("#backEndBaseMasterNo").val() == ""? 0 : $("#backEndBaseMasterNo").val();
             var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val() == ""? 0 : $("#backEndBaseSlaveNo").val();
-            if(backEndBaseMasterNo == null || backEndBaseSlaveNo == null){
+            if(backEndBaseMasterNo == "" || backEndBaseSlaveNo == ""){
                 navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
@@ -2400,7 +2400,7 @@ function modify(){
 
             //규격
             var rdpqGdSd = $("#rdpqGdSd").val();
-            var gdsdCnt = checkSelectBoxLength(rdpqGdSd);
+            var gdsdCnt = checkSelectBoxLength("rdpqGdSd");
             
             //규격 없을 경우에 저장 할 것인지 메시지
             if(rdpqGdSd == null && gdftyForm == "10000" &&  gdsdCnt == 0 ){

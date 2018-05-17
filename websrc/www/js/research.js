@@ -359,10 +359,10 @@ function goResearchDetail(i){
         trgGbn = "01";
         break;
         case "510":
-        trgGbn = "03";
+        trgGbn = "04";
         break;
         case "610":
-        trgGbn = "04";
+        trgGbn = "03";
         break;
         default :
         trgGbn = "02";
@@ -401,11 +401,17 @@ function goResearchList(type){
                 $("#listView").popup("open", { transition: "slideup" });
             }
         });
-        $("#detailView").popup("close");
     }else{
-        MapUtil.openList(type);
+        $("#detailView").popup({
+            afterclose: function( event, ui ) {
+                MapUtil.openList(type);
+            }
+        });
+        
     }
     
+    changedIdList = new Array();
+    $("#detailView").popup("close");
 }
 
 //상세정보 위치찾기

@@ -930,14 +930,15 @@ function changeBdrclAt(id){
             var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
             var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
     
-            $("#backKoreanRoadNm").val(korRnView);
+            // $("#backKoreanRoadNm").val(korRnView);
             $("#backRomeRoadNm").text(romRnView);
-            $("#backStartBaseMasterNo").val(frontStartBaseMasterNo);
-            $("#backStartBaseSlaveNo").val(frontStartBaseSlaveNo);
-            $("#backEndBaseMasterNo").val(frontEndBaseMasterNo);
-            $("#backEndBaseSlaveNo").val(frontEndBaseSlaveNo);
+            // $("#backStartBaseMasterNo").val(frontStartBaseMasterNo);
+            // $("#backStartBaseSlaveNo").val(frontStartBaseSlaveNo);
+            // $("#backEndBaseMasterNo").val(frontEndBaseMasterNo);
+            // $("#backEndBaseSlaveNo").val(frontEndBaseSlaveNo);
     
             $(".bk").show();
+            util.toast("뒷면입력은 C/S를 통하여 입력하시길 권장합니다.","error");
         }
     
         // setNameplateView();
