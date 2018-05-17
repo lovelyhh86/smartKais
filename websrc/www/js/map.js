@@ -2764,9 +2764,35 @@ var mapInit = function(mapId, pos) {
                                         //     popupDiv.append(commonP.format("infoLine",""));
                                         // }
 
+                                        //근거리 사진건수
+                                        // var CNT_M_FILES = feature.get("CNT_M_FILES");
+                                        var CNT_M_FILES = resultList[i].cntMFiles;
+                                        //원거리 사진건수
+                                        // var CNT_L_FILES = feature.get("CNT_L_FILES");
+                                        var CNT_L_FILES = resultList[i].cntLFiles;
+
+                                        //설치상태
+                                        // var DEL_STT_CD = feature.get("DEL_STT_CD");
+                                        var DEL_STT_CD = resultList[i].delStateCd;
+                                        var delStateCdLbl = resultList[i].delStateCdLbl;
+
+                                        var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
+                                        var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+
+                                        var button1 = "" ;
+
+                                        //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
+                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                            button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+','+resultList[i].rdGdftySn+','+resultList[i].rdFtyLcSn+','+rdGdftySe+')',"정상점검");
+                                        }
+        
+
                                         strHtml += gbn
                                         strHtml += title
-                                        strHtml += commonP.format("", bdrclAt + rdpqGdSd);
+                                        // strHtml += commonP.format("", bdrclAt + rdpqGdSd);
+                                        strHtml += commonP.format("", text0);
+                                        strHtml += commonP.format("", text1 + text2);
 
                                         resultHtml += popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + "," +rdGdftySe +")", strHtml);
 
@@ -2774,9 +2800,10 @@ var mapInit = function(mapId, pos) {
                                         var geom = feature.getGeometry().getCoordinates();
 
                                         buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + "," + rdGdftySe +")", "image/more.png", "더보기");
-                                        buttonHtml += buttonForm.format("addition", "moveingPoint(" + RDFTYLC_SN + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
+                                        buttonHtml += buttonForm.format("addition", "moveingPoint(" + resultList[i].rdFtyLcSn + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
 
                                         resultHtml += commonDiv.format("mapAdd", buttonHtml);
+                                        resultHtml += button1;
                                         resultHtml = commonDiv.format("mapInfo", resultHtml);
 
                                         popupDiv.append(resultHtml);
@@ -2830,9 +2857,36 @@ var mapInit = function(mapId, pos) {
                                         var BDRCL_AT = resultList[i].bdrclAt == 0 ? "단면" : "양면";
                                         var bdrclAt = commonSpan.format("info", BDRCL_AT);
 
+                                        //근거리 사진건수
+                                        // var CNT_M_FILES = feature.get("CNT_M_FILES");
+                                        var CNT_M_FILES = resultList[i].cntMFiles;
+                                        //원거리 사진건수
+                                        // var CNT_L_FILES = feature.get("CNT_L_FILES");
+                                        var CNT_L_FILES = resultList[i].cntLFiles;
+
+                                        //설치상태
+                                        // var DEL_STT_CD = feature.get("DEL_STT_CD");
+                                        var DEL_STT_CD = resultList[i].delStateCd;
+                                        var delStateCdLbl = resultList[i].delStateCdLbl;
+
+                                        var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
+                                        var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+
+                                        var button1 = "" ;
+
+                                        //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
+                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                            button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+','+resultList[i].rdGdftySn+','+resultList[i].rdFtyLcSn+','+rdGdftySe+')',"정상점검");
+                                        }
+
                                         strHtml += gbn
                                         strHtml += title
-                                        strHtml += commonP.format("", bdrclAt + areaGdSd);
+                                        // strHtml += commonP.format("", bdrclAt + areaGdSd);
+                                        strHtml += commonP.format("", text0);
+                                        strHtml += commonP.format("", text1 + text2);
+
+
 
                                         // if(features.length > 1 && index == 1){
                                         //     resultHtml += commonP.format("infoLine","");
@@ -2844,9 +2898,10 @@ var mapInit = function(mapId, pos) {
                                         var geom = feature.getGeometry().getCoordinates();
 
                                         buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
-                                        buttonHtml += buttonForm.format("addition", "moveingPoint(" + RDFTYLC_SN + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
+                                        buttonHtml += buttonForm.format("addition", "moveingPoint(" + resultList[i].rdFtyLcSn + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
 
                                         resultHtml += commonDiv.format("mapAdd", buttonHtml);
+                                        resultHtml += button1;
                                         resultHtml = commonDiv.format("mapInfo", resultHtml);
 
                                         popupDiv.append(resultHtml);
@@ -2904,10 +2959,34 @@ var mapInit = function(mapId, pos) {
 
                                         var ntbs = popTableP.format("다음승강장기초번호", ntbsStr);
 
+                                        //근거리 사진건수
+                                        // var CNT_M_FILES = feature.get("CNT_M_FILES");
+                                        var CNT_M_FILES = resultList[i].cntMFiles;
+                                        //원거리 사진건수
+                                        // var CNT_L_FILES = feature.get("CNT_L_FILES");
+                                        var CNT_L_FILES = resultList[i].cntLFiles;
+
+                                        //설치상태
+                                        // var DEL_STT_CD = feature.get("DEL_STT_CD");
+                                        var DEL_STT_CD = resultList[i].delStateCd;
+                                        var delStateCdLbl = resultList[i].delStateCdLbl;
+
+                                        var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
+                                        var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var button1 = "" ;
+
+                                        //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
+                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                            button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+','+resultList[i].rdGdftySn+','+resultList[i].rdFtyLcSn+','+rdGdftySe+')',"정상점검");
+                                        }
+
                                         strHtml += gbn
                                         strHtml += title
-                                        strHtml += commonP.format("", bfbs);
-                                        strHtml += commonP.format("", ntbs);
+                                        // strHtml += commonP.format("", bfbs);
+                                        // strHtml += commonP.format("", ntbs);
+                                        strHtml += commonP.format("", text0);
+                                        strHtml += commonP.format("", text1 + text2);
 
                                         // if(features.length > 1 && index == 1){
                                         //     resultHtml += commonP.format("infoLine","");
@@ -2919,9 +2998,10 @@ var mapInit = function(mapId, pos) {
                                         var geom = feature.getGeometry().getCoordinates();
 
                                         buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + ")", "image/more.png", "더보기");
-                                        buttonHtml += buttonForm.format("addition", "moveingPoint(" + RDFTYLC_SN + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
+                                        buttonHtml += buttonForm.format("addition", "moveingPoint(" + resultList[i].rdFtyLcSn + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
 
                                         resultHtml += commonDiv.format("mapAdd", buttonHtml);
+                                        resultHtml += button1;
                                         resultHtml = commonDiv.format("mapInfo", resultHtml);
 
                                         popupDiv.append(resultHtml);
@@ -3062,7 +3142,6 @@ var mapInit = function(mapId, pos) {
                                 var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
                                 var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
                                 var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
-                                
                                 var button1 = "" ;
 
                                 //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
@@ -3070,18 +3149,19 @@ var mapInit = function(mapId, pos) {
                                     button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+')',"정상점검");
                                 }
                                 
-                                
                                 strHtml = gbn
                                 strHtml += title
                                 strHtml += commonP.format("", text0);
                                 strHtml += commonP.format("", text1 + text2);
-                                strHtml += commonP.format("", button1);
 
-                                resultHtml = popDiv.format("", "", strHtml);
+                                resultHtml = popDiv.format("", "openDetailPopupCall("+index+")", strHtml);
 
                                 buttonHtml = buttonForm.format("more", "openDetailPopupCall("+index+")", "image/more.png", "더보기");
 
                                 resultHtml += commonDiv.format("mapAdd", buttonHtml);
+                                
+                                resultHtml += button1;
+
                                 resultHtml = commonDiv.format("mapInfo", resultHtml);
 
                                 popupDiv.append(resultHtml);

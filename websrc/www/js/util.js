@@ -620,7 +620,7 @@ function layerToggle(context){
         var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
         
         removeLayers();
-        map.addLayer(layers.intrvl);
+        // map.addLayer(layers.intrvl);
 
         if (context.type == "map") {
             $(".legend.spgf").toggle(true);
@@ -684,7 +684,7 @@ function layerToggle(context){
 
 function removeLayers(type){
     // if(type == "intrvl"){
-        map.removeLayer(layers.intrvl);
+        // map.removeLayer(layers.intrvl);
     // }else{
         clearSource('현위치');
         clearSource('위치이동');

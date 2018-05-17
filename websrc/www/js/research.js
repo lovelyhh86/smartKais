@@ -960,7 +960,7 @@ function changeOneFeatherStyle(){
 }
 
 //팝업상태 정상점검
-function insertResearchForPopup(index){
+function insertResearchForPopup(index,rdGdftySn,rdFtyLcSn,rdGdftySe){
     try {
         //조사자일련번호
         var rcrSn = app.info.rcrSn;
@@ -986,10 +986,34 @@ function insertResearchForPopup(index){
                 var mtchSn = "";
                 //대상일련번호
                 var trgSn = featureClone[index].get("BUL_NMT_NO");
+                if(rdGdftySn != null){
+                    trgSn = rdGdftySn;
+                }
                 //대상위치일련번호
                 var trgLocSn = featureClone[index].get("BUL_MAN_NO");
+                if(rdFtyLcSn != null){
+                    trgLocSn = rdFtyLcSn;
+                }
                 //대상구분
                 var trgGbn = "02";
+                if(rdGdftySe != null){
+                    switch(rdGdftySe){
+                        case 110:
+                        case 210:
+                        case 310:
+                        trgGbn = "01";
+                        break;
+                        case 510:
+                        trgGbn = "04";
+                        break;
+                        case 610:
+                        trgGbn = "03";
+                        break;
+                        default :
+                        trgGbn = "02";
+                        break;
+                    }
+                }
                 //점검상태(무조건 정상)
                 var rcSttCd = '1000';
                 
