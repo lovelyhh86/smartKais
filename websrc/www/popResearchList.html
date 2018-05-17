@@ -7,7 +7,7 @@
         <div class="infoWrap">
             <div class="infoHeader" onclick="toggleDetailView();">
                 <p class="listTitle">
-                    <span class="">목록관리</span>
+                    <span class="">점검목록</span>
                 </p>
             </div>
             <div class="infoListContent">
@@ -51,6 +51,7 @@
                                         <select id="searchOptRcrSn" onchange="" class="cell100">
                                             <option value =''>전체</option>
                                             <option value ='Y'>배정</option>
+                                            <option value ='N'>미배정</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -100,7 +101,7 @@
             </div>
             <!-- footer 시작 -->
             <div class="infoFooter">
-                    <span onclick="closeDetailView();" class="btnNormal">닫기</span>
+                    <span onclick="closeDetailView('listView');" class="btnNormal">닫기</span>
             </div>
             <!-- footer 끝 -->
         </div>

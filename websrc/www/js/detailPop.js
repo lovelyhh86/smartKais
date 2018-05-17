@@ -1,8 +1,16 @@
-function closeDetailView(){
+function closeDetailView(id){
+    if(id == null){
+        id = "detailView";
+    }
     if(changedIdList.length != 0){
         navigator.notification.confirm(msg.lossClose, function(btnindex){
             if(btnindex == 1){
-                $("#detailView").popup("close", { transition: "slideup" });
+                $("#"+id).popup({
+                    afterclose: function( event, ui ) {
+                        null;
+                    }
+                })
+                $("#"+id).popup("close", { transition: "slideup" });
                 //팝업창 상태 초기화
                 isPopState = "on";
                 //리스트초기화
@@ -13,7 +21,12 @@ function closeDetailView(){
         }, "알림", ["확인","취소"]);
     }else{
         $("#viewMapInfo").hide();    
-        $("#detailView").popup("close", { transition: "slideup" });
+        $("#"+id).popup({
+            afterclose: function( event, ui ) {
+                null;
+            }
+        })
+        $("#"+id).popup("close", { transition: "slideup" });
         //팝업창 상태 초기화
         isPopState = "on";
         currentPositionLayerCheck();
@@ -22,6 +35,9 @@ function closeDetailView(){
         //원본데이터 초기화
         $("#originDiv").empty();
     }
+
+    //점검목록 검색조건 초기화
+    app.info.searchValue = "";
 
     // var newLbl = $("p[name*='newLbl']").text();
     // if(newLbl != ""){

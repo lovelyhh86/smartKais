@@ -26,7 +26,6 @@ $(function(){
                 console.log("resultHeight : "+ resultHeight);
             }
         }); 
-        
     });
 
     // $( document ).on("pagebeforeshow",pages.detailAddressListPage.div,  function(event,data) {
@@ -133,6 +132,8 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     var searchOptRcrSn = $("#searchOptRcrSn").val();
     if(searchOptRcrSn == ""){
         rcrSn = null;
+    }else if(searchOptRcrSn == "N"){
+        rcrSn = searchOptRcrSn;
     }
 
     if(trgGbn == null){
@@ -143,6 +144,13 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     
     var searchOptRcSttCd = $("#searchOptRcSttCd").val() == "" ? null : $("#searchOptRcSttCd").val();
     var searchOptDelSttCd = $("#searchOptDelSttCd").val() == "" ? null : $("#searchOptDelSttCd").val();
+
+    app.info.searchValue = {
+        searchOptRcrSn : searchOptRcrSn,
+        searchOptTrgGbn : searchOptTrgGbn,
+        searchOptRcSttCd : searchOptRcSttCd,
+        searchOptDelSttCd : searchOptDelSttCd,
+    }
 
     var param = {
         sigCd : app.info.sigCd
@@ -373,9 +381,33 @@ function goResearchDetail(i){
     }else{
         
     }
-    
-    MapUtil.openDetail(trgGbn, null, rdGdftySe);
+    $("#listView").popup({
+        afterclose: function( event, ui ) {
+            MapUtil.openDetail(trgGbn, null, rdGdftySe);
+        }
+    });
+
+    $("#listView").popup("close");
 }
+//상세 -> 점검목록 이동
+function goResearchList(type){
+
+    var listSize = $("#myResearchTable tbody tr").length;
+    var rowSize = $("#rowSize").text();
+
+    if(listSize > 0 && rowSize > 0){
+        $("#detailView").popup({
+            afterclose: function( event, ui ) {
+                $("#listView").popup("open", { transition: "slideup" });
+            }
+        });
+        $("#detailView").popup("close");
+    }else{
+        MapUtil.openList(type);
+    }
+    
+}
+
 //상세정보 위치찾기
 function getDetailLocation(){
     //대상일련번호

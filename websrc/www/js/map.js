@@ -469,7 +469,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearch ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>목록관리</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>점검목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -498,7 +498,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearchSpbd ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>목록관리</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>점검목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -569,9 +569,11 @@ var MapUtil = {
         switch (type) {
             case "myResearch":
                 url = pages.detail_researchList;
+                detailTaget = '#listView';
             break;
             case "myResearchSpbd":
                 url = pages.detail_researchList;
+                detailTaget = '#listView';
             break;
             case "locationManageSpgf":
                 url = pages.locationManageSpgfPage;
@@ -588,7 +590,7 @@ var MapUtil = {
             // MapUtil.handler.delPhotoHandler();
             MapUtil.handler.dataPopupCloserHandler();
 
-            $("#detailView").popup("open", { transition: "slideup" });
+            $(detailTaget).popup("open", { transition: "slideup" });
         })
     },
     openDetail: function(layerID, f, rdGdftySe) {
@@ -661,7 +663,7 @@ var MapUtil = {
                 MapUtil.handler.delPhotoHandler();
                 MapUtil.handler.dataPopupCloserHandler();
                 
-                $("#detailView").popup("open", { transition: "slideup" });
+                $(detailTaget).popup("open", { transition: "slideup" });
             })
         }
         
@@ -726,6 +728,15 @@ var MapUtil = {
                 //삭제상태코드
                 // makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
 
+                var searchValue = app.info.searchValue;
+
+                if(searchValue != null && searchValue != ""){
+                    $("#searchOptRcrSn").val(searchValue.searchOptRcrSn);
+                    $("#searchOptTrgGbn").val(searchValue.searchOptTrgGbn);
+                    $("#searchOptRcSttCd").val(searchValue.searchOptRcSttCd);
+                    $("#searchOptDelSttCd").val(searchValue.searchOptDelSttCd);
+                }
+
             break;
             case "myResearchSpbd":
                 //점검목록
@@ -742,6 +753,15 @@ var MapUtil = {
                 makeOptSelectBox("searchOptTrgGbn","","","건물번호판","02");
                 //삭제상태코드
                 // makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
+
+                var searchValue = app.info.searchValue;
+
+                if(searchValue != null && searchValue != ""){
+                    $("#searchOptRcrSn").val(searchValue.searchOptRcrSn);
+                    $("#searchOptTrgGbn").val(searchValue.searchOptTrgGbn);
+                    $("#searchOptRcSttCd").val(searchValue.searchOptRcSttCd);
+                    $("#searchOptDelSttCd").val(searchValue.searchOptDelSttCd);
+                }
             break;
             case "locationManageSpgf":
                 selectLocationMoveSpgfContent();
