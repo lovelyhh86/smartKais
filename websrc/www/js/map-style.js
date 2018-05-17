@@ -261,7 +261,10 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         var instlSe = feature.get('INSTL_SE');
         //설치일자
         var instlDe = feature.get('INSTL_DE');
-        var instlDeYear = instlDe.substr(0,4);
+        var instlDeYear ;
+        if(instlDe != null){
+            instlDeYear = instlDe.substr(0,4);
+        }
         var newYear = util.getToday().substr(0,4);    
     
     
