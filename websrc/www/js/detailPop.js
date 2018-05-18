@@ -2382,7 +2382,7 @@ function modify(){
             //시작기초번호
             var backStartBaseMasterNo = $("#backStartBaseMasterNo").val() == ""? 0 : $("#backStartBaseMasterNo").val();
             var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val() == ""? 0 : $("#backStartBaseSlaveNo").val();
-            if(backStartBaseMasterNo == "" || backStartBaseSlaveNo == ""){
+            if(bdrclAt == "1" && (backStartBaseMasterNo == "" || backStartBaseSlaveNo == "")){
                 navigator.notification.alert(msg.dontInsertNull.format("뒷면 시작기초번호"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
@@ -2391,7 +2391,7 @@ function modify(){
             //종료기초번호
             var backEndBaseMasterNo = $("#backEndBaseMasterNo").val() == ""? 0 : $("#backEndBaseMasterNo").val();
             var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val() == ""? 0 : $("#backEndBaseSlaveNo").val();
-            if(backEndBaseMasterNo == "" || backEndBaseSlaveNo == ""){
+            if(bdrclAt == "1" && (backEndBaseMasterNo == "" || backEndBaseSlaveNo == "")){
                 navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
