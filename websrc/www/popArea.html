@@ -133,7 +133,38 @@
 				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
 				<!--점검 end-->
 				<!-- 정보  -->
-
+				<div id="rcrNotice" class = "redNotice">
+					<span>※ 다른사람에게 배정된 시설물은 점검이 불가합니다.</span>
+				</div>
+				<div id="updtNotice" class = "redNotice">
+					<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
+				</div>
+				<div class="blueTitle">
+					<h2>일련번호</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="내용">
+						<caption>일련번호</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">안내시설번호</th>
+								<td>
+									<p id="rdGdftySnLbl">&nbsp;</p>
+								</td>
+								<th scope="row">위치일련번호</th>
+								<td>
+									<p id="rdFtyLcSnLbl">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<div class="blueTitle">
 					<h2>위치정보</h2>
 				</div>
@@ -169,12 +200,7 @@
 
 					</table>
 				</div>
-				<div id="rcrNotice" class = "redNotice">
-					<span>※ 다른사람에게 배정된 시설물은 점검이 불가합니다.</span>
-				</div>
-				<div id="updtNotice" class = "redNotice">
-					<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
-				</div>
+				
 				<div class="blueTitle">
 					<h2>기본정보</h2>
 				</div>

@@ -894,14 +894,23 @@ var MapUtil = {
                     if(rdGdftySe == null){
                         //일련번호
                         $("#trgSn").val(data.bulNmtNo);
+                        $("#bulNmtNoLbl").text(data.bulNmtNo);
                         //위치일련번호
                         $("#trgLocSn").val(data.bulManNo);
+                        $("#bulManNoLbl").text(data.bulManNo);
+                        $("#eqbManSnLbl").text(data.eqbManSn);
+                        if(data.eqbManSn != 0){
+                            $(".eqbLbl").show();
+                        }else{
+                            $(".bulLbl").show();
+                        }
                     }else{ //도로안내시설물인 경우
                         //일련번호
                         $("#trgSn").val(sn);
+                        $("#rdGdftySnLbl").text(sn);
                         //위치일련번호
                         $("#trgLocSn").val(data.rdFtyLcSn);
-
+                        $("#rdFtyLcSnLbl").text(data.rdFtyLcSn);
 
                         //****도로안내시설 위치정보****
                         //도로시설물
@@ -2775,10 +2784,18 @@ var mapInit = function(mapId, pos) {
                                         // var DEL_STT_CD = feature.get("DEL_STT_CD");
                                         var DEL_STT_CD = resultList[i].delStateCd;
                                         var delStateCdLbl = resultList[i].delStateCdLbl;
+                                        //점검상태
+                                        var rcSttCdLbl = resultList[i].rcSttCdLbl;
+                                        var rcsttCdClass = "info";
+                                        if(rcSttCdLbl == null){
+                                            rcSttCdLbl = "미점검";
+                                            rcsttCdClass = "info redText";
+                                        }
 
                                         var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
-                                        var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
+                                        var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                        var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
 
                                         var button1 = "" ;
 
@@ -2792,7 +2809,8 @@ var mapInit = function(mapId, pos) {
                                         strHtml += title
                                         // strHtml += commonP.format("", bdrclAt + rdpqGdSd);
                                         strHtml += commonP.format("", text0);
-                                        strHtml += commonP.format("", text1 + text2);
+                                        strHtml += commonP.format("", text1);
+                                        strHtml += commonP.format("", text2 + text3);
 
                                         resultHtml += popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + resultList[i].rdGdftySn + "," +rdGdftySe +")", strHtml);
 
@@ -2868,10 +2886,18 @@ var mapInit = function(mapId, pos) {
                                         // var DEL_STT_CD = feature.get("DEL_STT_CD");
                                         var DEL_STT_CD = resultList[i].delStateCd;
                                         var delStateCdLbl = resultList[i].delStateCdLbl;
+                                        //점검상태
+                                        var rcSttCdLbl = resultList[i].rcSttCdLbl;
+                                        var rcsttCdClass = "info";
+                                        if(rcSttCdLbl == null){
+                                            rcSttCdLbl = "미점검";
+                                            rcsttCdClass = "info redText";
+                                        }
 
                                         var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
-                                        var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
+                                        var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                        var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
 
                                         var button1 = "" ;
 
@@ -2884,7 +2910,8 @@ var mapInit = function(mapId, pos) {
                                         strHtml += title
                                         // strHtml += commonP.format("", bdrclAt + areaGdSd);
                                         strHtml += commonP.format("", text0);
-                                        strHtml += commonP.format("", text1 + text2);
+                                        strHtml += commonP.format("", text1);
+                                        strHtml += commonP.format("", text2 + text3);
 
 
 
@@ -2970,10 +2997,18 @@ var mapInit = function(mapId, pos) {
                                         // var DEL_STT_CD = feature.get("DEL_STT_CD");
                                         var DEL_STT_CD = resultList[i].delStateCd;
                                         var delStateCdLbl = resultList[i].delStateCdLbl;
+                                        //점검상태
+                                        var rcSttCdLbl = resultList[i].rcSttCdLbl;
+                                        var rcsttCdClass = "info";
+                                        if(rcSttCdLbl == null){
+                                            rcSttCdLbl = "미점검";
+                                            rcsttCdClass = "info redText";
+                                        }
 
                                         var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
-                                        var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
+                                        var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                        var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
                                         var button1 = "" ;
 
                                         //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
@@ -2986,7 +3021,8 @@ var mapInit = function(mapId, pos) {
                                         // strHtml += commonP.format("", bfbs);
                                         // strHtml += commonP.format("", ntbs);
                                         strHtml += commonP.format("", text0);
-                                        strHtml += commonP.format("", text1 + text2);
+                                        strHtml += commonP.format("", text1);
+                                        strHtml += commonP.format("", text2 + text3);
 
                                         // if(features.length > 1 && index == 1){
                                         //     resultHtml += commonP.format("infoLine","");
@@ -3117,6 +3153,18 @@ var mapInit = function(mapId, pos) {
                                 // var DEL_STT_CD = feature.get("DEL_STT_CD");
                                 var DEL_STT_CD = data.delStateCd;
                                 var delStateCdLbl = data.delStateCdLbl;
+                                //점검상태
+                                var rcSttCdLbl = data.rcSttCdLbl;
+                                var rcsttCdClass = "info";
+                                if(rcSttCdLbl == null){
+                                    rcSttCdLbl = "미점검";
+                                    rcsttCdClass = "info redText";
+                                }
+
+                                var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
+                                var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
+                                var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
+                                var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
 
                                 //설치 건물명
                                 var rnCdLbl = data.rnCdLbl;
@@ -3139,9 +3187,6 @@ var mapInit = function(mapId, pos) {
                                 
                                 title = commonP.format("localTitle",titleTxt);
                                 
-                                var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
-                                var text1 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
                                 var button1 = "" ;
 
                                 //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
@@ -3152,7 +3197,8 @@ var mapInit = function(mapId, pos) {
                                 strHtml = gbn
                                 strHtml += title
                                 strHtml += commonP.format("", text0);
-                                strHtml += commonP.format("", text1 + text2);
+                                strHtml += commonP.format("", text1);
+                                strHtml += commonP.format("", text2 + text3);
 
                                 resultHtml = popDiv.format("", "openDetailPopupCall("+index+")", strHtml);
 
