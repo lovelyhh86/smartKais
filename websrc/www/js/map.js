@@ -3072,7 +3072,7 @@ var mapInit = function(mapId, pos) {
 
                         break;
                     case DATA_TYPE.ENTRC:
-                        var link = URLs.selectEntrcLink;
+                        var link = URLs.entrclink;
                         //도로시설물위치일련번호
                         var BUL_MAN_NO = feature.get("BUL_MAN_NO");
 
