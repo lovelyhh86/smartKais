@@ -433,7 +433,7 @@ function changeBsisInstlFtyMain(){
             customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
             changeBsisInstlFty();
     
-            $("#bsis_instlFty_td").show();
+            $("#bsis_instlFty").show();
         }else{
             customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
             $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
@@ -444,7 +444,7 @@ function changeBsisInstlFtyMain(){
     
             $("#bsis_instlFty_main").val(bsis_instlFty_main);
     
-            $("#bsis_instlFty_td").hide();
+            $("#bsis_instlFty").hide();
         }
         
     } catch (error) {
@@ -476,7 +476,7 @@ function changeBsisInstlFty(id){
             $("#bsis_instlFty_main").val(bsis_instlFty_main);
     
             //서브 초기화
-            // $("#bsis_instlFty").val('');
+            $("#bsis_instlFty").val('');
     
             // $("#bsis_instlFty").attr("disabled","disabled");
             $("#bsis_instlFty").hide();
@@ -1068,6 +1068,11 @@ var changedIdList = new Array();
 function checkChangeOrigin(id){
     var origin = $("#"+id+"_origin").val();
     var newData = $("#"+id).val();
+
+    if(id == "bsis_instlFty_main"){
+        origin = $("#bsis_instlFty_origin").val();
+        newData = $("#bsis_instlFty_main").val() == "99" ? $("#bsis_instlFty").val() : $("#bsis_instlFty_main").val();
+    }
 
     if(origin != newData){
         $("#"+id).attr("style","color:blue");

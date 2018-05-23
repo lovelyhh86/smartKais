@@ -3069,19 +3069,18 @@ function loadUpdtData(isImages){
 
                                 if(d == "bsis_instlFty"){//기초번호판 설치위치
                                     if(data[d].charAt(0) == 0){
-                                        $("#"+d+"_main").attr("style","color:red");
                                         $("#"+d+"_main").val(data[d]);
-                                        // changeBsisInstlFtyMain();
+                                        changeBsisInstlFty('bsis_instlFty_main');
+                                        $("#"+d+"_main").attr("style","color:red");
                                     }else{
                                         $("#"+d+"_main").val('00');
-                                        $("#"+d+"_main").attr("style","color:red");
-                                        
                                         $("#"+d).val(data[d]);
-                                        $("#"+d).attr("style","color:red");
+                                        changeBsisInstlFty('bsis_instlFty');
 
-                                        changeBsisInstlFty();
+                                        $("#"+d+"_main").attr("style","color:red");
+                                        $("#"+d).attr("style","color:red");
                                     }
-                                        
+                                    continue;
                                 }else if(d == "bdtypCd"){//건물용도
                                     var bdtypCd_main = data[d].substr(0, 2) + "000";
                                     // customSelectBox("bdtypCd_main","BDTYP_CD","000",2,4);
@@ -3097,10 +3096,12 @@ function loadUpdtData(isImages){
                                     $("#"+d).attr("style","color:red");
                                 }
                                 
-                                //셀렉트박스 변경을 위한 적용
-                                $("#"+d).trigger('change');
-                                $("#"+d).trigger('input');
-                                $("#"+d).attr("style","color:red");
+                                if(d != "bsis_instlFty"){
+                                    //셀렉트박스 변경을 위한 적용
+                                    $("#"+d).trigger('change');
+                                    $("#"+d).trigger('input');
+                                    $("#"+d).attr("style","color:red");
+                                }
                                 
                                 //변경 체크를 위한 셋팅
                                 $("#"+d+"_origin").val(data[d]);
