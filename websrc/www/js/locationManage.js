@@ -235,7 +235,9 @@ function createRnNm(type ,d){
 
         }else if(type == "310"){
             // plqDirection = data.rddr_plqDrc;
-            frontKoreanRoadNm = d.prnt_ftKorRn;
+            var prnt_ftRdLt = d.prnt_ftRdLt == null ? "" : d.prnt_ftRdLt + "M";
+            frontKoreanRoadNm = d.prnt_ftKorRn + " " + prnt_ftRdLt;
+            // frontKoreanRoadNm = d.prnt_ftKorRn;
             frontStartBaseMasterNo = "0";
             frontStartBaseSlaveNo = "0";
             frontEndBaseMasterNo = "0";
@@ -251,13 +253,15 @@ function createRnNm(type ,d){
                     frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',
                     frontEndBaseNo
                 )
-        }else{
+        }else if(plqDirection == '00100' || plqDirection == '00300'){
             rnLbl = "{0} {1} {2} {3}".format(
                     frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',
                     frontStartBaseNo,
                     (plqDirection == '00100' ? '→' : (plqDirection == '00300' ? '↑' : '')),
                     frontEndBaseNo
                 )
+        }else{
+            rnLbl = "{0}".format(frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음')
         }
 
     }else if(type == "510"){

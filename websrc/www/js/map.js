@@ -1072,8 +1072,9 @@ var MapUtil = {
                                 frontEndBaseMasterNo = data.rddr_edbsMn;
                                 frontEndBaseSlaveNo = data.rddr_edbsSn;
                             }else if(rdGdftySe == "310"){
-                                plqDirection = data.rddr_plqDrc;
-                                frontKoreanRoadNm = data.prnt_ftKorRn;
+                                plqDirection = "";
+                                var prnt_ftRdLt = data.prnt_ftRdLt == null ? "" : data.prnt_ftRdLt + "M";
+                                frontKoreanRoadNm = data.prnt_ftKorRn + " " + prnt_ftRdLt;
                                 frontStartBaseMasterNo = "";
                                 frontStartBaseSlaveNo = "";
                                 frontEndBaseMasterNo = "";
@@ -1084,9 +1085,9 @@ var MapUtil = {
                             var frontStartBaseNo = "{0}{1}".format(frontStartBaseMasterNo, (frontStartBaseSlaveNo != "0" ? '-' + frontStartBaseSlaveNo : ''));
                             var frontEndBaseNo = "{0}{1}".format(frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
 
-                            //도로명,시작번호,종료번호가 null 일경우 명판정보없음으로 표시
+                            //도로명,시작번호,종료번호가 null 일경우 명판정보정비대상으로 표시
                             if(frontKoreanRoadNm == null ||frontStartBaseMasterNo == null || frontEndBaseMasterNo == null || frontStartBaseSlaveNo == null || frontEndBaseSlaveNo == null){
-                                title = "명판정보없음";
+                                title = "명판정보정비대상";
                             }else{
                                 if(plqDirection == '00200'){
                                     title = "<span class='label'>[{0}] {1} {2} {3}<span>".format(
@@ -1304,9 +1305,9 @@ var MapUtil = {
                             //종료기초번호(0-0)
                             var area_edbsNo = "{0}{1}".format(data.area_edbsMn, (data.area_edbsSn != "0" ? '-' + data.area_edbsSn : ''));
                             
-                            //도로명,시작번호,종료번호가 null 일경우 명판정보없음으로 표시
+                            //도로명,시작번호,종료번호가 null 일경우 명판정보정비대상으로 표시
                             if(data.area_areaKorRn == null ||data.area_stbsMn == null || data.area_stbsSn == null || data.area_edbsMn == null || data.area_edbsSn == null){
-                                title = "명판정보없음";
+                                title = "명판정보정비대상";
                             }else{
                                 title = "<span class='label'>[{0}] ←{1} {2} {3}→<span>".format(
                                     data.rdGdftySeLbl,
@@ -1374,9 +1375,9 @@ var MapUtil = {
                             //기초번호(0-0)
                             var bsis_ctbsNo = "{0}{1}".format(data.bsis_ctbsMn, (data.bsis_ctbsSn != "0" ? '-' + data.bsis_ctbsSn : ''));
                             
-                            //도로명,시작번호,종료번호가 null 일경우 명판정보없음으로 표시
+                            //도로명,시작번호,종료번호가 null 일경우 명판정보정비대상으로 표시
                             if(data.bsis_korRn == null ||data.bsis_ctbsMn == null || data.bsis_ctbsSn == null){
-                                title = "명판정보없음";
+                                title = "명판정보정비대상";
                             }else{  
                                 title = "<span class='label'>[{0}] {1} {2}<span>".format(
                                     data.rdGdftySeLbl,
@@ -2701,7 +2702,9 @@ var mapInit = function(mapId, pos) {
 
                                         }else if(rdGdftySe == "310"){
                                             // plqDirection = data.rddr_plqDrc;
-                                            frontKoreanRoadNm = resultList[i].prnt_ftKorRn;
+                                            var prnt_ftRdLt = resultList[i].prnt_ftRdLt == null ? "" : resultList[i].prnt_ftRdLt + "M";
+                                            frontKoreanRoadNm = resultList[i].prnt_ftKorRn + " " + prnt_ftRdLt;
+                                            // frontKoreanRoadNm = resultList[i].prnt_ftKorRn;
                                             frontStartBaseMasterNo = "0";
                                             frontStartBaseSlaveNo = "0";
                                             frontEndBaseMasterNo = "0";
@@ -2715,9 +2718,9 @@ var mapInit = function(mapId, pos) {
                                         var frontEndBaseNo = "{0}{1}".format(frontEndBaseMasterNo == "0"? "" : frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
                                         
 
-                                        //도로명,시작번호,종료번호가 null 일경우 명판정보없음으로 표시
+                                        //도로명,시작번호,종료번호가 null 일경우 명판정보정비대상으로 표시
                                         if(frontKoreanRoadNm == null ||frontStartBaseMasterNo == null || frontEndBaseMasterNo == null || frontStartBaseSlaveNo == null || frontEndBaseSlaveNo == null){
-                                            title = "명판정보없음";
+                                            title = "명판정보정비대상";
                                         }else{
                                             if(plqDirection == '00200'){
                                                 title = commonP.format("localTitle",
@@ -2847,9 +2850,9 @@ var mapInit = function(mapId, pos) {
                                         //종료기초번호(0-0)
                                         var area_edbsNo = "{0}{1}".format(resultList[i].area_edbsMn, (resultList[i].area_edbsSn != "0" ? '-' + resultList[i].area_edbsSn : ''));
                                         
-                                        //도로명,시작번호,종료번호가 null 일경우 명판정보없음으로 표시
+                                        //도로명,시작번호,종료번호가 null 일경우 명판정보정비대상으로 표시
                                         if(resultList[i].area_areaKorRn == null ||resultList[i].area_stbsMn == null || resultList[i].area_stbsSn == null || resultList[i].area_edbsMn == null || resultList[i].area_edbsSn == null){
-                                            title = "명판정보없음";
+                                            title = "명판정보정비대상";
                                         }else{
                                             title = commonP.format("localTitle",
                                                 "←{0} {1} {2}→".format(
@@ -2947,9 +2950,9 @@ var mapInit = function(mapId, pos) {
                                         //기초번호(0-0)
                                         var bsis_ctbsNo = "{0}{1}".format(resultList[i].bsis_ctbsMn, (resultList[i].bsis_ctbsSn != "0" ? '-' + resultList[i].bsis_ctbsSn : ''));
                                         
-                                        //도로명,시작번호,종료번호가 null 일경우 명판정보없음으로 표시
+                                        //도로명,시작번호,종료번호가 null 일경우 명판정보정비대상으로 표시
                                         if(resultList[i].bsis_korRn == null ||resultList[i].bsis_ctbsMn == null || resultList[i].bsis_ctbsSn == null){
-                                            title = "명판정보없음";
+                                            title = "명판정보정비대상";
                                         }else{  
                                             title = commonP.format("localTitle",
                                                 "{0} {1}".format(
