@@ -447,9 +447,13 @@ var util = {
 
         if(mode == "error") {
             toastr.error(msg);
+        } else if(mode == "success"){
+            toastr.success(msg);
+        } else if(mode == "warning"){
+            toastr.warning(msg);
         } else {
             toastr.info(msg);
-        }
+        } 
     },
     showProgress: function () {
         SmartKaisPlugins.showProgress("", function (jsondata) { });

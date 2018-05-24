@@ -30,10 +30,14 @@ function closeDetailView(id){
         //팝업창 상태 초기화
         isPopState = "on";
         currentPositionLayerCheck();
-        //리스트초기화
+        //변경값 리스트초기화
         changedIdList = new Array();
         //원본데이터 초기화
         $("#originDiv").empty();
+        //점검목록 리스트초기화
+        if(id == "listView"){
+            emptyResearchList();
+        }
     }
 
     //점검목록 검색조건 초기화

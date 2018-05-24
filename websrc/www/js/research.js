@@ -698,7 +698,18 @@ function submitResearch(){
                     // trgSnGlobal = trgSn
                     // MapUtil.openDetail(trgGbn, null);
                     
-                    closeDetailView();
+                    var listSize = $("#myResearchDiv tbody tr").length;
+                    var rowSize = $("#rowSize").text();
+
+                    var searchType = "myResearch";
+                    if(trgGbn == '02'){
+                        searchType = "myResearchSpbd";
+                    }
+                    if(listSize > 0 && rowSize > 0){
+                        goResearchList(searchType);
+                    }else{
+                        closeDetailView();
+                    }
                     
                     util.dismissProgress();
     
@@ -1071,4 +1082,12 @@ function insertResearchForPopup(index,rdGdftySn,rdFtyLcSn,rdGdftySe){
     } catch (error) {
         util.toast("점검실패","error");
     }
+}
+
+function emptyResearchList(){
+    $("#myResearchTable > tbody").empty();
+    $("#rowSize").text(0);
+    pos = 0;
+    posParam = 0;
+    sizeParam = 9;
 }
