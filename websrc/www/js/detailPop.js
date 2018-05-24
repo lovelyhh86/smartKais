@@ -1544,18 +1544,18 @@ function closePopupAndClearMap(type){
     $("#popup-content").empty();
     $("#popup").hide();
     
-    try {
-        if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
-            //지도 초기화
-            getVectorSource(map , "위치레이어").clear();
-        }else if(type == DATA_TYPE.ENTRC){
-            // getVectorSource(map , "건물").clear();
-            getVectorSource(map , "출입구").clear();
-        }
-    }catch(e) {
-        util.dismissProgress();
-        util.toast('데이터 처리에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요.');
-    }
+    // try {
+    //     if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
+    //         //지도 초기화
+    //         getVectorSource(map , "위치레이어").clear();
+    //     }else if(type == DATA_TYPE.ENTRC){
+    //         // getVectorSource(map , "건물").clear();
+    //         getVectorSource(map , "출입구").clear();
+    //     }
+    // }catch(e) {
+    //     util.dismissProgress();
+    //     util.toast('데이터 처리에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요.');
+    // }
 
 
 }

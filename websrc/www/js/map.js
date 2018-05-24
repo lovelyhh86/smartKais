@@ -7,7 +7,8 @@ var MapUtil = {
         MapUtil.controls.init();
         MapUtil.handler.init();
     },
-    setting:{ maxResolution : 0.5 },
+    setting:{ maxResolution : 0.5 ,
+              cluster : 30},
     photo: {
         // 사진 조회 및 촬영에 대한 상태 코드(L: 원거리(tl_spgf_loc), M: 근거리(tn_spgf_manage))
         state: {
@@ -2363,7 +2364,7 @@ var mapInit = function(mapId, pos) {
                 // textOffsetY: -20
             // }
         },
-        cluster: { distance: 50 },
+        cluster: { distance: MapUtil.setting.cluster },
         maxResolution: MapUtil.setting.maxResolution,
         viewProgress: false,
         renderMode: 'vector',
@@ -2436,7 +2437,7 @@ var mapInit = function(mapId, pos) {
             },
             radius: 12
         },
-        cluster: { distance: 50 },
+        cluster: { distance: MapUtil.setting.cluster },
         // maxResolution: MapUtil.setting.maxResolution,
         maxResolution: 1,
         viewProgress: false,
@@ -2457,7 +2458,7 @@ var mapInit = function(mapId, pos) {
             // },
             radius: 12
         },
-        cluster: { distance: 50 },
+        cluster: { distance: MapUtil.setting.cluster },
         // maxResolution: MapUtil.setting.maxResolution,
         viewProgress: false,
         renderMode: 'vector',
@@ -3970,8 +3971,10 @@ function openDetailPopupCall(index, layer, sn, rdGdftySe) {
         }
 
     }else if(layerID == DATA_TYPE.ENTRC){
+        featureIndex = index;
         MapUtil.openDetail(DATA_TYPE.ENTRC, featureClone[index]);
     }else {
+        featureIndex = index;
         MapUtil.openDetail(layer, featureClone[index], rdGdftySe);
 
     }
