@@ -707,6 +707,7 @@ function submitResearch(){
                     }
                     if(listSize > 0 && rowSize > 0){
                         goResearchList(searchType);
+                        selectResearchContent();
                     }else{
                         closeDetailView();
                     }
