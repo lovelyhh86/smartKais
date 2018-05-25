@@ -129,6 +129,7 @@ var defaultStyle = function (feature, resolution, options) {
         var key = "";
         var _text = styleOptions.label.text;
         var clusterCnt = size;
+        
         if( size == 1 ) {
             if(_text) {
                 if( typeof(_text) === "object" ) {
@@ -266,7 +267,10 @@ var locStyle = function (styleOptions, feature, mixStyle) {
             instlDeYear = instlDe.substr(0,4);
         }
         var newYear = util.getToday().substr(0,4);    
-    
+        var featureCnt = parseInt(feature.get("LABEL"));
+        if(isNaN(featureCnt)){
+            featureCnt = 0;
+        }
     
         var anchorY = 44;
 
@@ -283,7 +287,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         }else if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){//도로명판,예고용도로명판,이면용도로명판
             switch(instlSe){
                 case "00002": //벽면형
-                    if(ltChcYn == 0 && instlDeYear != newYear){ // 점검 x , 올해설치 x
+                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn ){ // 점검 x , 올해설치 x
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, 35],
@@ -301,7 +305,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                                 src: 'image/icon_cw_legend01.png'
                             }))
                         };
-                    }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
+                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, anchorY],
@@ -322,7 +326,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                     }
                     break;
                 default: //벽면형 아님
-                    if(ltChcYn == 0 && instlDeYear != newYear){ // 점검 x , 올해설치 x
+                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, 35],
@@ -340,7 +344,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                                 src: 'image/icon_c_legend01.png'
                             }))
                         };
-                    }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
+                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, anchorY],
@@ -364,7 +368,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         }else if(rdGdftySe == "510"){ // 지역안내판
             switch(instlSe){
                 case "00002": //벽면형
-                    if(ltChcYn == 0 && instlDeYear != newYear){ // 점검 x , 올해설치 x
+                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, 35],
@@ -382,7 +386,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                                 src: 'image/icon_cw_legend03.png'
                             }))
                         };
-                    }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
+                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, anchorY],
@@ -403,7 +407,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                     }
                     break;
                 default: //벽면형 아님
-                    if(ltChcYn == 0 && instlDeYear != newYear){ // 점검 x , 올해설치 x
+                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, 35],
@@ -421,7 +425,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                                 src: 'image/icon_c_legend03.png'
                             }))
                         };
-                    }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
+                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, anchorY],
@@ -445,7 +449,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         }else if(rdGdftySe == "610"){
             switch(instlSe){
                 case "00002": //벽면형
-                    if(ltChcYn == 0 && instlDeYear != newYear){ // 점검 x , 올해설치 x
+                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, 35],
@@ -463,7 +467,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                                 src: 'image/icon_cw_legend02.png'
                             }))
                         };
-                    }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
+                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, anchorY],
@@ -484,7 +488,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                     }
                     break;
                 default: //벽면형 아님
-                    if(ltChcYn == 0 && instlDeYear != newYear){ // 점검 x , 올해설치 x
+                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, 35],
@@ -502,7 +506,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                                 src: 'image/icon_c_legend02.png'
                             }))
                         };
-                    }else if(ltChcYn == 0 && instlDeYear == newYear){ // 점검 x , 올해설치 o
+                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
                         opt = {
                             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                                 anchor: [0.45, anchorY],
