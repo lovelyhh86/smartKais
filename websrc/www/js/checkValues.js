@@ -1,50 +1,64 @@
 //공통 입풋창 열기
 function openInputPop(id){
-    $("#inputPop").show();
-    $("#targetId").val(id);
-    var type = $("#"+id).attr("type");
-    var value = $("#"+id).val();
-    var onchange = $("#"+id).attr("onchange");
-    var oninput = $("#"+id).attr("oninput");
-    var onfocusout = $("#"+id).attr("onfocusout");
-
-    $("#fixedValue").removeAttr("onchange");
-    $("#fixedValue").removeAttr("oninput");
-
-    $("#fixedValue").attr("type",type);
-    // $("#fixedValue").attr("onchange",onchange);
-    $("#fixedValue").attr("oninput",oninput);
-    $("#fixedValue").attr("onfocusout",onchange);
+    try {
+        $("#inputPop").show();
+        $("#targetId").val(id);
+        var type = $("#"+id).attr("type");
+        var value = $("#"+id).val();
+        var onchange = $("#"+id).attr("onchange");
+        var oninput = $("#"+id).attr("oninput");
+        var onfocusout = $("#"+id).attr("onfocusout");
     
-
-    // $("#comInputBtn").attr("onclick",onchange);
+        $("#fixedValue").removeAttr("onchange");
+        $("#fixedValue").removeAttr("oninput");
     
-    $("#fixedValue").val(value);
-
-    wrapWindowByMask('mask');
-
-    $("#fixedValue").focus();
+        $("#fixedValue").attr("type",type);
+        // $("#fixedValue").attr("onchange",onchange);
+        $("#fixedValue").attr("oninput",oninput);
+        $("#fixedValue").attr("onfocusout",onchange);
+        
+    
+        // $("#comInputBtn").attr("onclick",onchange);
+        
+        $("#fixedValue").val(value);
+    
+        wrapWindowByMask('mask');
+    
+        $("#fixedValue").focus();
+        
+    } catch (error) {
+        
+    }
 
 }
 
 //변경된 값 셋팅
 function setInputPop(){
-    //변경된 값
-    var fixedValue = $("#fixedValue").val();
-    //원래 인풋에 셋팅
-    var targetId = $("#targetId").val();
-    $("#"+targetId).val(fixedValue);
-
-    // $("#fixedValue").change();
-    closeInput();
+    try {
+        //변경된 값
+        var fixedValue = $("#fixedValue").val();
+        //원래 인풋에 셋팅
+        var targetId = $("#targetId").val();
+        $("#"+targetId).val(fixedValue);
+    
+        // $("#fixedValue").change();
+        closeInput();
+        
+    } catch (error) {
+        
+    }
 }
 
 //인풋창 변경 체크
 function fixedValueChecked(){
-    // $("#fixedValue").change();
-    var targetId = $("#targetId").val();
-    // $("#"+targetId).attr("onchange");
-    // $("#fixedValue").focus();
+    try {
+        // $("#fixedValue").change();
+        var targetId = $("#targetId").val();
+        // $("#"+targetId).attr("onchange");
+        // $("#fixedValue").focus();
+    } catch (error) {
+        
+    }
 }
 
 //글자수 제한
@@ -1051,54 +1065,64 @@ function inputBaseNum(id){
 
 //원본데이터 받아놓기
 function setOriginData(data){
-    var inputText = "<input type='hidden' id='{0}' value='{1}'></input>";
-    var originDiv = $("#originDiv");
-    originDiv.empty();
-    for(d in data){
-        if(data[d] != null){
-            $("#originDiv").append(inputText.format(d+"_origin", data[d]));
+    try {
+        var inputText = "<input type='hidden' id='{0}' value='{1}'></input>";
+        var originDiv = $("#originDiv");
+        originDiv.empty();
+        for(d in data){
+            if(data[d] != null){
+                $("#originDiv").append(inputText.format(d+"_origin", data[d]));
+            }
         }
+    
+        changedIdList = new Array();
+        
+    } catch (error) {
+        
     }
-
-    changedIdList = new Array();
 }
 
 //원본비교
 var changedIdList = new Array();
 function checkChangeOrigin(id){
-    var origin = $("#"+id+"_origin").val();
-    var newData = $("#"+id).val();
-
-    if(id == "bsis_instlFty_main"){
-        origin = $("#bsis_instlFty_origin").val();
-        newData = $("#bsis_instlFty_main").val() == "99" ? $("#bsis_instlFty").val() : $("#bsis_instlFty_main").val();
-    }
-
-    if(origin != newData){
-        $("#"+id).attr("style","color:blue");
-        changedIdList.push(id);
-    }else{
-        $("#"+id).removeAttr("style","color:blue");
-        changedIdList = jQuery.grep(changedIdList, function(value) {
-            return value != id;
-        });
-
-        //양면여부 원복시 뒷면정보 다시 셋팅
-        if(id == "bdrclAt"){
-            var backKoreanRoadNm_origin = $("#backKoreanRoadNm_origin").val();
-            var backRomeRoadNm_origin = $("#backRomeRoadNm_origin").val();
-            var backStartBaseMasterNo_origin = $("#backStartBaseMasterNo_origin").val();
-            var backStartBaseSlaveNo_origin = $("#backStartBaseSlaveNo_origin").val();
-            var backEndBaseMasterNo_origin = $("#backEndBaseMasterNo_origin").val();
-            var backEndBaseSlaveNo_origin = $("#backEndBaseSlaveNo_origin").val();
-
-            $("#backKoreanRoadNm").val(backKoreanRoadNm_origin);
-            $("#backRomeRoadNm").text(backRomeRoadNm_origin);
-            $("#backStartBaseMasterNo").val(backStartBaseMasterNo_origin);
-            $("#backStartBaseSlaveNo").val(backStartBaseSlaveNo_origin);
-            $("#backEndBaseMasterNo").val(backEndBaseMasterNo_origin);
-            $("#backEndBaseSlaveNo").val(backEndBaseSlaveNo_origin);
+    try {
+        var origin = $("#"+id+"_origin").val();
+        var newData = $("#"+id).val();
+    
+        if(id == "bsis_instlFty_main"){
+            origin = $("#bsis_instlFty_origin").val();
+            newData = $("#bsis_instlFty_main").val() == "99" ? $("#bsis_instlFty").val() : $("#bsis_instlFty_main").val();
         }
+    
+        if(origin != newData){
+            $("#"+id).attr("style","color:blue");
+            changedIdList.push(id);
+        }else{
+            $("#"+id).removeAttr("style","color:blue");
+            changedIdList = jQuery.grep(changedIdList, function(value) {
+                return value != id;
+            });
+    
+            //양면여부 원복시 뒷면정보 다시 셋팅
+            if(id == "bdrclAt"){
+                var backKoreanRoadNm_origin = $("#backKoreanRoadNm_origin").val();
+                var backRomeRoadNm_origin = $("#backRomeRoadNm_origin").val();
+                var backStartBaseMasterNo_origin = $("#backStartBaseMasterNo_origin").val();
+                var backStartBaseSlaveNo_origin = $("#backStartBaseSlaveNo_origin").val();
+                var backEndBaseMasterNo_origin = $("#backEndBaseMasterNo_origin").val();
+                var backEndBaseSlaveNo_origin = $("#backEndBaseSlaveNo_origin").val();
+    
+                $("#backKoreanRoadNm").val(backKoreanRoadNm_origin);
+                $("#backRomeRoadNm").text(backRomeRoadNm_origin);
+                $("#backStartBaseMasterNo").val(backStartBaseMasterNo_origin);
+                $("#backStartBaseSlaveNo").val(backStartBaseSlaveNo_origin);
+                $("#backEndBaseMasterNo").val(backEndBaseMasterNo_origin);
+                $("#backEndBaseSlaveNo").val(backEndBaseSlaveNo_origin);
+            }
+        }
+        
+    } catch (error) {
+        
     }
 
 }
@@ -1113,8 +1137,13 @@ function changePlqDrc(id){
 
 //코드목록 갯수 체크
 function checkSelectBoxLength(id){
+    try {
+        var cnt = $("#"+id+" option").length
+        
+        return cnt;
+        
+    } catch (error) {
+        
+    }
 
-    var cnt = $("#"+id+" option").length
-    
-    return cnt;
 }
