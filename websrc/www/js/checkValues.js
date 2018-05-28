@@ -261,7 +261,7 @@ function changePlqDir(id){
             // $("#bdrclAt").val("0"); //양면 아니오
             $("#bdrclAt").attr("disabled","disabled");
         }
-        $("#bdrclAt").trigger("change");
+        // $("#bdrclAt").trigger("change");
     
         changeRdpqGdSd('rdpqGdSd');
         checkChangeOrigin(id);
@@ -952,7 +952,7 @@ function changeBdrclAt(id){
             // $("#backEndBaseSlaveNo").val(frontEndBaseSlaveNo);
     
             $(".bk").show();
-            util.toast("뒷면입력은 C/S를 통하여 입력하시길 권장합니다.","error");
+            util.toast("뒷면입력은 C/S를 통하여 입력하시길 권장합니다.","warning");
         }
     
         // setNameplateView();
