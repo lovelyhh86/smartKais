@@ -2459,7 +2459,7 @@ var mapInit = function(mapId, pos) {
             radius: 12
         },
         cluster: { distance: MapUtil.setting.cluster },
-        // maxResolution: MapUtil.setting.maxResolution,
+        maxResolution: 2,
         viewProgress: false,
         renderMode: 'vector',
         zIndex : 1

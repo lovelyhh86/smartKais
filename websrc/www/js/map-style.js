@@ -171,7 +171,8 @@ var defaultStyle = function (feature, resolution, options) {
             styleOptions.label._text = key = String(clusterCnt);
         }
         
-        style = getStyle(options.dataType, styleOptions, features[index]);
+        style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
+        styleCache[options.dataType][key] = style;
     }else if(dataType == DATA_TYPE.BULD){
         key = features[0].get("LT_CHC_YN");
         var eqbManSn = feature.get('EQB_MAN_SN');
@@ -213,7 +214,22 @@ var defaultStyle = function (feature, resolution, options) {
 
         styleOptions.label._text = text;
         
-        style = getStyle(options.dataType, styleOptions, features[index]);
+        style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
+        styleCache[options.dataType][key] = style;
+    }else{
+        // var text = options.style.label.text;
+        
+        // key = text;
+
+        var clusterCnt = size;
+        if(clusterCnt > 1){
+            styleOptions.label._text = key = String(clusterCnt);
+        }
+
+        // styleOptions.label._text = text;
+
+        style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
+        styleCache[options.dataType][key] = style;
     }
 
     return style;
