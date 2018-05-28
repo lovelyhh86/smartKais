@@ -92,7 +92,7 @@ function tableListDivScroll(){
         // }
 
         if(mod > 0 && rowSize >= resultSize){
-            if(scrollTop == resultHeight - tableHeight){
+            if(scrollTop >= resultHeight - tableHeight){
                 var paramPos = pos;
                 var paramSize = size;
                 if(pos < rowSize){
