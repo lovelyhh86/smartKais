@@ -76,7 +76,7 @@ $(function(){
 
 });
 
-function tableListDivScroll(){
+function tableListDivScroll(event){
     // $(".tableListDiv").scroll(function() {
         var scrollTop = $('.tableListDiv').scrollTop();
         var tableHeight = $(".tableListDiv").height();
@@ -107,9 +107,18 @@ function tableListDivScroll(){
     
                 selectResearchContent(null,paramPos,paramSize);
             }else{
+                var buttonText = event.target.textContent;
+                if(buttonText != "정비"){
+                    util.toast("페이지를 아래로 당기면 다음 데이터가 조회됩니다.","success");
+
+                }
                 // console.log("scrollTop : "+ scrollTop);
                 // console.log("tableHeight : "+ tableHeight);
                 // console.log("resultHeight : "+ resultHeight);
+            }
+        }else if(rowSize == resultSize){
+            if(scrollTop >= resultHeight - tableHeight){
+                util.toast("마지막 페이지입니다.","warning");
             }
         }
     // }); 
@@ -236,7 +245,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     //설치 도로명
                     var rnLbl = "{0} {1}{2}".format(
                         d.bsisRnLbl,
-                        d.bsisMnnm,
+                        d.bsisMnnm == null? "": d.bsisMnnm,
                         d.bsisSlno == "0"? "" : "-" + d.bsisSlno
                     );
                     //시설물구분

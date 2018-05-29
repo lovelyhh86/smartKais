@@ -137,7 +137,7 @@ var app = {
             $(this).addClass('button_hover');
         });
         $(document).on('touchend', '#myResearchTable', function(e) {
-            tableListDivScroll();
+            tableListDivScroll(e);
         });
         
         // $(document).on('touchmove', '#myResearchTable', function(e) {

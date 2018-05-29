@@ -60,7 +60,7 @@ function selectLocationMoveSpgfContent(){
                     //설치 도로명
                     rnLbl = "{0} {1}{2}".format(
                         d.bsisRnLbl,
-                        d.bsisMnnm,
+                        d.bsisMnnm == null? "": d.bsisMnnm,
                         d.bsisSlno == "0"? "" : "-" + d.bsisSlno
                     );
                 }
