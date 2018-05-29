@@ -2802,9 +2802,10 @@ var mapInit = function(mapId, pos) {
                                         var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
 
                                         var button1 = "" ;
-
+                                        var mtchRcrSn = resultList[i].rcrSn;
+                                        var nowRcrSn = app.info.rcrSn;
                                         //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
-                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0 && (mtchRcrSn == null || mtchRcrSn == nowRcrSn)){
                                             button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+','+resultList[i].rdGdftySn+','+resultList[i].rdFtyLcSn+','+rdGdftySe+')',"정상점검");
                                         }
         
@@ -2905,8 +2906,10 @@ var mapInit = function(mapId, pos) {
 
                                         var button1 = "" ;
 
+                                        var mtchRcrSn = resultList[i].rcrSn;
+                                        var nowRcrSn = app.info.rcrSn;
                                         //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
-                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0 && (mtchRcrSn == null || mtchRcrSn == nowRcrSn)){
                                             button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+','+resultList[i].rdGdftySn+','+resultList[i].rdFtyLcSn+','+rdGdftySe+')',"정상점검");
                                         }
 
@@ -3015,8 +3018,10 @@ var mapInit = function(mapId, pos) {
                                         var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
                                         var button1 = "" ;
 
+                                        var mtchRcrSn = resultList[i].rcrSn;
+                                        var nowRcrSn = app.info.rcrSn;
                                         //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
-                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                        if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0 && (mtchRcrSn == null || mtchRcrSn == nowRcrSn)){
                                             button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+','+resultList[i].rdGdftySn+','+resultList[i].rdFtyLcSn+','+rdGdftySe+')',"정상점검");
                                         }
 
@@ -3193,8 +3198,10 @@ var mapInit = function(mapId, pos) {
                                 
                                 var button1 = "" ;
 
+                                var mtchRcrSn = data.rcrSn;
+                                var nowRcrSn = app.info.rcrSn;
                                 //설치상태 정상 근거리 원거리 사진 1개 이상인 경우 점검가능
-                                if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0){
+                                if(DEL_STT_CD == "01" && CNT_M_FILES > 0 && CNT_L_FILES > 0 && (mtchRcrSn == null || mtchRcrSn == nowRcrSn)){
                                     button1 = commonButton.format("ui-btn ui-corner-all ui-shadow btnPossible",'insertResearchForPopup('+index+')',"정상점검");
                                 }
                                 

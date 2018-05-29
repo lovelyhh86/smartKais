@@ -90,6 +90,8 @@ function changeUser(){
     app.info.rcrSn = rcrSn;
     app.info.rcrNm = rcrNm;
     app.info.rcrTyp = rcrTyp;
+
+    $("#popup").hide();
 }
 
 //버전정보 확인
