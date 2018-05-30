@@ -292,13 +292,24 @@ var locStyle = function (styleOptions, feature, mixStyle) {
 
         var opt;
         if(mixStyle == true){
-            opt = {
-                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                    anchor: [0.45, 40],
-                    anchorXUnits: 'fraction',
-                    anchorYUnits: 'pixels',
-                    src: 'image/mixPos4.png'
-                }))
+            if(ltChcYn == 0 || featureCnt > ltChcYn){
+                opt = {
+                    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                        anchor: [0.45, 40],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'pixels',
+                        src: 'image/mix_pos.png'
+                    }))
+                }
+            }else{
+                opt = {
+                    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                        anchor: [0.45, 40],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'pixels',
+                        src: 'image/mix_pos_c.png'
+                    }))
+                }
             };
         }else if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){//도로명판,예고용도로명판,이면용도로명판
             switch(instlSe){
