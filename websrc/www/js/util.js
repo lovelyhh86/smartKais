@@ -444,6 +444,8 @@ var util = {
 //        toastr.remove();
         toastr.options.positionClass = 'toast-bottom-center';
         toastr.options.timeOut = 1500;
+        //중복방지
+        toastr.options.preventDuplicates = true;
 
         if(mode == "error") {
             toastr.error(msg);

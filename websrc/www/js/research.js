@@ -426,6 +426,10 @@ function goResearchList(type){
 
 //상세정보 위치찾기
 function getDetailLocation(){
+    //사진창 닫기
+    closePhotoView();
+    //심플정보창 숨김
+    $("#popup").hide();
     //대상일련번호
     var trgLocSn = $("#trgLocSn").val();
     //대상구분
@@ -434,7 +438,7 @@ function getDetailLocation(){
     var layerNm = "tlv_spgf_loc_skm";
     var searchList = {rdftylc_sn: trgLocSn}
 
-    if(trgGbn == "02"){
+    if(trgGbn == "02" || trgGbn == "99"){
         layerNm = "tlv_spbd_buld_skm";
 
         var sigCd = $("#sigCd").val();

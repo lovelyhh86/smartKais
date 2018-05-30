@@ -201,14 +201,16 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .dataClose{position: absolute;top:15px;right:20px}
 
 /************* 사진 ****************/
-.photoWrap{display: none; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
+.photoWrap{display: none; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; 
+	/* width:48em; height: 560px; */
+}
 .photoTitle{padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
 .photoPage{display: inline-block; position: absolute; top: -5px;right: 0}
 .photoPage li{ display: inline-block; list-style: none;padding: 0 20px; background: url(../image/menuLine.png) 0 3px no-repeat;}
 .photoPage li:FIRST-CHILD{background: none;}
 .pic_on, .pic_over{ }
 
-.photoTable{min-width:320px; width:100%; border-collapse:collapse;}
+.photoTable{min-width:320px; width:29em;border-collapse:collapse;}
 .photoTable .row{display: table-row; text-align: left;}
 .photoTable .cell{display: table-cell; padding:0 10px;  vertical-align: middle;}
 .photoTable .photoTItle{display: block; margin-bottom:10px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
@@ -443,7 +445,7 @@ table caption{display: none}
 
 /** modal*/
 /* The Modal (background) */
-.ui-dialog-contain{max-width: 100%; background-color: white;top:-5em; padding-bottom: 1em;overflow-y: hidden;}
+.ui-dialog-contain{max-width: 700px; background-color: white;top:-5em; padding-bottom: 1em;overflow-y: hidden;top: -4.7em; right: 40px;position: absolute;}
 #mask {
   position:absolute;
   left:0;

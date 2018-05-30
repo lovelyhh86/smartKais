@@ -1532,6 +1532,7 @@ var MapUtil = {
                             //제작유형
                             makeOptSelectBox("buldMnfCd","BUL_MNF_CD","","","");
                             $("#buldMnfCd").val(data.buldMnfCd);
+                            changeMnf("buldMnfCd");
 
                             //형태
                             var buldNmtType = data.buldNmtType;
@@ -1826,6 +1827,16 @@ var MapUtil = {
 
                     //건물군번호
                     $("#eqbManSn").val(data.eqbManSn);
+
+                    //위치찾기용
+                    $("#emdCd").val(data.emdCd);
+                    $("#rnCd").val(data.rnCd);
+                    $("#buldSeCd").val(data.buldSeCd);
+                    //설치도로명
+                    $("#rnCdLbl").html(data.rnCdLbl);
+                    //건물번호
+                    $("#buldMnnm").html(data.buldMnnm);
+                    $("#buldSlno").html(data.buldSlno);
 
                     util.dismissProgress();
 
