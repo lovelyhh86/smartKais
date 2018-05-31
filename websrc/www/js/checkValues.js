@@ -258,10 +258,10 @@ function changePlqDir(id){
             // $("#bdrclAt").val("1"); //양면 예
             $("#bdrclAt").removeAttr("disabled");
         }else{
-            // $("#bdrclAt").val("0"); //양면 아니오
+            $("#bdrclAt").val("0"); //양면 아니오
             $("#bdrclAt").attr("disabled","disabled");
+            $("#bdrclAt").trigger("change");
         }
-        // $("#bdrclAt").trigger("change");
     
         changeRdpqGdSd('rdpqGdSd');
         checkChangeOrigin(id);
