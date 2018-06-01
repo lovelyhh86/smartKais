@@ -1154,19 +1154,19 @@ var MapUtil = {
                                 } else {
                                     $(".bk").hide();
                                 }
-                                $("#bdrclAt").show();
+                                // $("#bdrclAt").show();
                                 
                                 //안내시설방향
                                 var plqDirection = data.plqDirection;
                                 makeOptSelectBox("plqDirection","PLQ_DRC","","","");
                                 $("#plqDirection").val(plqDirection);
-                                if(plqDirection == "00300"){//앞쪽방향용 일 경우
+                                // if(plqDirection == "00300"){//앞쪽방향용 일 경우
                                     // $("#bdrclAt").val("1"); //양면 예
-                                    $("#bdrclAt").removeAttr("disabled");
-                                }else{
+                                    // $("#bdrclAt").removeAttr("disabled");
+                                // }else{
                                     // $("#bdrclAt").val("0"); //양면 아니오
-                                    $("#bdrclAt").attr("disabled","disabled");
-                                }
+                                    // $("#bdrclAt").attr("disabled","disabled");
+                                // }
                                 //규격
                                 var useTarget = data.useTarget;
                                 var rdpqGdSd = data.rdpqGdSd;

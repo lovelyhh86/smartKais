@@ -253,15 +253,15 @@ function changeUseTarget(id){
 //도로명판 안내시설 방향
 function changePlqDir(id){
     try {
-        var plqDirection = $("#plqDirection").val();
-        if(plqDirection == "00300"){//앞쪽방향용 일 경우
+        // var plqDirection = $("#plqDirection").val();
+        // if(plqDirection == "00300"){//앞쪽방향용 일 경우
             // $("#bdrclAt").val("1"); //양면 예
-            $("#bdrclAt").removeAttr("disabled");
-        }else{
-            $("#bdrclAt").val("0"); //양면 아니오
-            $("#bdrclAt").attr("disabled","disabled");
-            $("#bdrclAt").trigger("change");
-        }
+            // $("#bdrclAt").removeAttr("disabled");
+        // }else{
+            // $("#bdrclAt").val("0"); //양면 아니오
+            // $("#bdrclAt").attr("disabled","disabled");
+            // $("#bdrclAt").trigger("change");
+        // }
     
         changeRdpqGdSd('rdpqGdSd');
         checkChangeOrigin(id);
@@ -952,7 +952,7 @@ function changeBdrclAt(id){
             // $("#backEndBaseSlaveNo").val(frontEndBaseSlaveNo);
     
             $(".bk").show();
-            util.toast("뒷면입력은 C/S를 통하여 입력하시길 권장합니다.","warning");
+            util.toast("양면여부 및 뒷면 내용 입력은 C/S를 통하여 입력하시는 것을 권장합니다.","warning");
         }
     
         // setNameplateView();

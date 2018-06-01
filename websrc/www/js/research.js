@@ -110,7 +110,7 @@ function tableListDivScroll(event){
                 var buttonText = event.target.textContent;
                 var tagName = event.target.tagName;
                 if(tagName !='IMG' && buttonText != '정비' ){
-                    util.toast("페이지를 아래로 당기면 다음 데이터가 조회됩니다.");
+                    util.toast("페이지 하단 끝에서 스크롤을 아래로 내리면 다음 데이터가 조회됩니다.");
 
                 }
                 // console.log("scrollTop : "+ scrollTop);
@@ -1172,5 +1172,5 @@ function emptyResearchList(){
     pos = 0;
     posParam = 0;
     sizeParam = 9;
-    $('.tableListDiv').scrollTop(0);
+    // $('.tableListDiv').scrollTop(0);
 }
