@@ -963,7 +963,11 @@ var MapUtil = {
                         //****도로안내시설 속성****
                         //안내시설형식
                         // $("#gdftyFormLbl").html(data.gdftyFormLbl);
-                        makeOptSelectBox("gdftyForm","GDFTY_FOM","","","");
+                        if(rdGdftySe == "610"){
+                            makeOptSelectBox("gdftyForm","BSIS_GDFTY_FOM","","","");
+                        }else{
+                            makeOptSelectBox("gdftyForm","GDFTY_FOM","","","");
+                        }
                         $("#gdftyForm").val(data.gdftyForm);
                         // $("#gdftyForm").hide();
                         //사용대상

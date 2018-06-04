@@ -283,6 +283,8 @@ CODE_GROUP["PLANE_CD"] = "GFTY611";
 CODE_GROUP["BSIS_GD_SD"] = "GFTY610";
 //기초번호판 표기방법
 CODE_GROUP["BSIS_MTHD"] = "GFTY602";
+//기초번호판 안내시설형식
+CODE_GROUP["BSIS_GDFTY_FOM"] = "GFTY009";
 
 //****** 건물번호판 *******
 //형태
