@@ -171,8 +171,7 @@ var defaultStyle = function (feature, resolution, options) {
             styleOptions.label._text = key = String(clusterCnt);
         }
         
-        style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
-        styleCache[options.dataType][key] = style;
+        style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
     }else if(dataType == DATA_TYPE.BULD){
         key = features[0].get("LT_CHC_YN");
         var eqbManSn = feature.get('EQB_MAN_SN');
