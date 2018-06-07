@@ -35,13 +35,14 @@ function closeDetailView(id){
         //원본데이터 초기화
         $("#originDiv").empty();
         //점검목록 리스트초기화
-        if(id == "listView"){
-            emptyResearchList();
+        // if(id == "listView"){
+            // }
         }
-    }
-
-    //점검목록 검색조건 초기화
+        
+    //점검목록 초기화
+    emptyResearchList();
     // app.info.searchValue = "";
+    //사진 변경값 초기화
     MapUtil.photo.refresh();
 
     // var newLbl = $("p[name*='newLbl']").text();
@@ -1758,6 +1759,7 @@ function closePhotoView(force){
                 case 1: //닫기
                     $("#photoDialog").hide();
                     $("#mask").hide();
+                    MapUtil.photo.refresh();
 
                     break;
                 case 2: //취소
