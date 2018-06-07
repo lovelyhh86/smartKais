@@ -41,7 +41,8 @@ function closeDetailView(id){
     }
 
     //점검목록 검색조건 초기화
-    app.info.searchValue = "";
+    // app.info.searchValue = "";
+    MapUtil.photo.refresh();
 
     // var newLbl = $("p[name*='newLbl']").text();
     // if(newLbl != ""){

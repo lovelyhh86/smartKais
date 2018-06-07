@@ -31,6 +31,12 @@ var MapUtil = {
                 }
             }
         },
+        refresh: function(){
+            MapUtil.photo.state.L.isPhoto = false;
+            MapUtil.photo.state.L.edited = false;
+            MapUtil.photo.state.M.isPhoto = false;
+            MapUtil.photo.state.M.edited = false;
+        },
         isEdited: function(type) {
             if(type) {
                 return Function("return MapUtil.photo.state.{0}.edited".format(type))();

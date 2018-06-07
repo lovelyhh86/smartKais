@@ -423,9 +423,25 @@ function goResearchList(type){
     changedIdList = new Array();
     $("#detailView").popup("close");
 }
-
+//사진창 활성화 여부
+function isPhotoDialogGbn(){
+    try {
+        var displayGbn = $("#photoDialog").attr("style");
+        var displayTxt = "display: none;";
+        if(displayGbn != null && displayGbn.indexOf(displayTxt) == -1){
+            return true;
+        }else{
+            return false;
+        }
+    } catch (error) {
+        
+    }
+}
 //상세정보 위치찾기
 function getDetailLocation(){
+    if(isPhotoDialogGbn()){
+        return;
+    }
     //사진창 닫기
     closePhotoView();
     //심플정보창 숨김

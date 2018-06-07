@@ -342,6 +342,11 @@ function controlRadioAll(){
 
 var isPopState = "on";
 function toggleDetailView(){
+
+    //사진창 열여있을떄 작동 안함
+    if(isPhotoDialogGbn()){
+        return;
+    }
     
     if(isPopState == "on"){
         $(".detailView").css("height","148px");
