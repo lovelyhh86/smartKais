@@ -38,10 +38,10 @@ function closeDetailView(id){
         // if(id == "listView"){
             // }
         }
+    app.info.searchValue = "";
         
     //점검목록 초기화
     emptyResearchList();
-    // app.info.searchValue = "";
     //사진 변경값 초기화
     MapUtil.photo.refresh();
 
