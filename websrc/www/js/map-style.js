@@ -213,8 +213,7 @@ var defaultStyle = function (feature, resolution, options) {
 
         styleOptions.label._text = text;
         
-        style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
-        styleCache[options.dataType][key] = style;
+        style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
     }else{
         // var text = options.style.label.text;
         
@@ -810,17 +809,21 @@ var intrvlStyle = function(styleOptions,feature){
     var endY = feature.getGeometry().getCoordinateAt(1)[1];
 
     var offsetX = 0;
-    var offsetY = 0;
+    var oddOffsetY = 0;
+    var eveOffsetY = 0;
+    
     //왼쪽이 홀수
     if(startX - endX > 0){
-        offsetY = 10;
+        oddOffsetY = 10;
+        eveOffsetY = -10;
     }else{
-        offsetY = -10;
+        oddOffsetY = -10;
+        eveOffsetY = 10;
     }
 
 
-    var text = "{0}{1}".format(feature.get("ODD_BSI_MN") , feature.get("ODD_BSI_SL") == "0"?"":"-"+feature.get("ODD_BSI_SL"));
-    var opt = {
+    var oddText = "{0}{1}".format(feature.get("ODD_BSI_MN") , feature.get("ODD_BSI_SL") == "0"?"":"-"+feature.get("ODD_BSI_SL"));
+    var opt1 = {
         
         stroke: new ol.style.Stroke({
             color: 'green',
@@ -828,13 +831,13 @@ var intrvlStyle = function(styleOptions,feature){
           }),
         text: new ol.style.Text({
             textAlign: "center",
-            textBaseline: "hanging",
+            textBaseline: "middle",
             // font: font,
-            text: text,
+            text: oddText,
             fill: new ol.style.Fill({color: "red"}),
             // stroke: new ol.style.Stroke({color: outlineColor, width: outlineWidth}),
             offsetX: offsetX,
-            offsetY: offsetY,
+            offsetY: oddOffsetY,
             placement: "line",
             // maxAngle: maxAngle,
             // overflow: overflow,
@@ -842,13 +845,52 @@ var intrvlStyle = function(styleOptions,feature){
             scale : 1.3
             })
     };
-
-    var ODD_BSI_MN = feature.get("ODD_BSI_MN");
-    var ODD_BSI_SL = feature.get("ODD_BSI_SL");
+    var eveText = "{0}{1}".format(feature.get("EVE_BSI_MN") , feature.get("EVE_BSI_SL") == "0"?"":"-"+feature.get("EVE_BSI_SL"));
+    var opt2 = {
+        
+        stroke: new ol.style.Stroke({
+            color: 'green',
+            width: 2
+          }),
+        text: new ol.style.Text({
+            textAlign: "center",
+            textBaseline: "middle",
+            // font: font,
+            text: eveText,
+            fill: new ol.style.Fill({color: "blue"}),
+            // stroke: new ol.style.Stroke({color: outlineColor, width: outlineWidth}),
+            offsetX: offsetX,
+            offsetY: eveOffsetY,
+            placement: "line",
+            // maxAngle: maxAngle,
+            // overflow: overflow,
+            // rotation: rotation
+            scale : 1.3
+            })
+    };
     
+    var dx = endX - startX;
+    var dy = endY - startY;
+    var rotation = Math.atan2(dy, dx);
+
+    var opt3 = {
+            geometry: new ol.geom.Point([endX,endY]),
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            //    anchor: [0.45, 35],
+            //    anchorXUnits: 'fraction',
+            //    anchorYUnits: 'pixels',
+               src: 'image/blocksLine.png',
+            rotateWithView: true,
+            rotation: -rotation
+           }))
+    }
+
+    var style1 = new ol.style.Style(opt1);
+    var style2 = new ol.style.Style(opt2);
+    var style3 = new ol.style.Style(opt3);
 
     // opt.text = createTextStyle(styleOptions);
-    return new ol.style.Style(opt);
+    return [style1,style2,style3];
 }
 
 // 시설물 상태(정상)
