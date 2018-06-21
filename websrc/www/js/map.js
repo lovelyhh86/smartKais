@@ -1009,7 +1009,7 @@ var MapUtil = {
                         //재질
                         makeOptSelectBox("gdftyQlt","GDFTY_QLT","","","");
                         $("#gdftyQlt").val(data.gdftyQlt);
-                        //인쇄방식
+                        //표면처리방법
                         makeOptSelectBox("prtTy","PRT_TY","","","");
                         $("#prtTy").val(data.prtTy);
 
@@ -1465,7 +1465,7 @@ var MapUtil = {
                             // changeBsisGdSd("bsis_bsisGdSd");
                             $("#bsis_bsisGdSd").val(data.bsis_bsisGdSd);
 
-                            //표기방법
+                            //표면처리방법
                             makeOptSelectBox("bsisMthd","BSIS_MTHD","","","");
                             $("#bsisMthd").val(data.bsisMthd);
 
