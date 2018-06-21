@@ -75,9 +75,18 @@ public class CameraActivity extends Activity implements SensorEventListener {
     //줌이벤트 거리계산
     float mDist = 0;
 
+    Intent getIntent;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		//파라미터 테스트
+		getIntent = getIntent();
+		String abc = getIntent.getStringExtra("abc");
+		Log.d("abc",abc);
+
+
 		setContentView(R.layout.camera);
 
 		//button layout 배치

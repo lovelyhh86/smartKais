@@ -203,7 +203,7 @@ public class Plugins extends CordovaPlugin {
             dialogProgress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             // Dialog가 사라질 때 동작하도록 하기 위해서 셋팅
 
-            dialogProgress.setCancelable(false);
+            dialogProgress.setCancelable(true);
         }
 
         dialogProgress.show();
@@ -248,6 +248,8 @@ public class Plugins extends CordovaPlugin {
         Intent intent = new Intent(context, kr.go.juso.smartKais.camera.CameraActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //파라미터 테스트
+        intent.putExtra("abc","123");
         cameraCallback = cbc;
         this.cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
         //   startActivity(intent);

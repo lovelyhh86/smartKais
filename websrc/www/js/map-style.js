@@ -826,7 +826,7 @@ var intrvlStyle = function(styleOptions,feature){
     var opt1 = {
         
         stroke: new ol.style.Stroke({
-            color: 'green',
+            color: 'black',
             width: 2
           }),
         text: new ol.style.Text({
@@ -849,7 +849,7 @@ var intrvlStyle = function(styleOptions,feature){
     var opt2 = {
         
         stroke: new ol.style.Stroke({
-            color: 'green',
+            color: 'black',
             width: 2
           }),
         text: new ol.style.Text({
