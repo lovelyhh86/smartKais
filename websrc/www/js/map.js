@@ -184,6 +184,7 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);    // 지도 새로고침
             ol.inherits(MapUtil.controls.researchControl, ol.control.Control);      // 나의배정목록(안내시설물)
             ol.inherits(MapUtil.controls.researchSpbdControl, ol.control.Control);  // 나의배정목록(건물번호판)
+            ol.inherits(MapUtil.controls.measureControl, ol.control.Control);  // 거리측정
             // ol.inherits(MapUtil.controls.selectSearchUser, ol.control.Control);
         },
         /**
@@ -515,6 +516,35 @@ var MapUtil = {
                 target: options.target
             });
         },
+        measureControl: function(opt_options){
+            
+            var measureToggle = function(){
+                var measureGbn = $("#measureGbn").val();
+                if(measureGbn == "0"){
+                    $("#measureGbn").val("1");
+                    $("#popup").hide();
+                }else{
+                    $("#measureGbn").val("0");
+                }
+                $("#measureGbn").trigger("change");
+                $("#measureMapInfo").toggle();
+            }
+
+            var button = document.createElement('button');
+            button.innerHTML = '<img src="image/icon_rule_n.png" />';
+            button.addEventListener('click', measureToggle, false);
+            // button.addEventListener('touchstart', measureToggle, false);
+
+            var element = document.createElement('div');
+            element.className = 'measure ol-unselectable ol-control';
+            element.appendChild(button);
+
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+            
+        }
         // selectSearchUser:function(opt_options){
         //     var searchUserList = function(){
         //         MapUtil.openDetail(DATA_TYPE.searchUser);
@@ -2345,6 +2375,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.refreshMapControl(),
             new MapUtil.controls.researchControl(),
             new MapUtil.controls.researchSpbdControl(),
+            new MapUtil.controls.measureControl(),
             // new MapUtil.controls.selectSearchUser(),
 
 
@@ -2520,13 +2551,270 @@ var mapInit = function(mapId, pos) {
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
 
-//    마우스 이동 이벤트 정의(현재 좌표 보여주기) (--start--)
-//    map.on('pointermove', function(event) {});
-//    마우스 이동 이벤트 정의(현재 좌표 보여주기) (--end--)
+//    마우스 이동 이벤트 정의 (거리측정) (--start--)
+      /**
+       * Currently drawn feature.
+       * @type {ol.Feature}
+       */
+      var sketch;
+
+
+      /**
+       * The help tooltip element.
+       * @type {Element}
+       */
+      var helpTooltipElement;
+
+
+      /**
+       * Overlay to show the help messages.
+       * @type {ol.Overlay}
+       */
+      var helpTooltip;
+
+
+      /**
+       * The measure tooltip element.
+       * @type {Element}
+       */
+      var measureTooltipElement;
+
+
+      /**
+       * Overlay to show the measurement.
+       * @type {ol.Overlay}
+       */
+      var measureTooltip;
+
+    /**
+     * Message to show when the user is drawing a polygon.
+     * @type {string}
+     */
+    var continuePolygonMsg = 'Click to continue drawing the polygon';
+
+
+    /**
+     * Message to show when the user is drawing a line.
+     * @type {string}
+     */
+    var continueLineMsg = '종료 하시려면 같은 지점을 두번 클릭하세요.';
+    /**
+     * Handle pointer move.
+     * @param {ol.MapBrowserEvent} evt The event.
+     */
+    var pointerMoveHandler = function(evt) {
+        if (evt.dragging) {
+        return;
+        }
+        /** @type {string} */
+        var helpMsg = '거리를 측정할 지점을 선택하세요.';
+
+        if (sketch) {
+        var geom = (sketch.getGeometry());
+        if (geom instanceof ol.geom.Polygon) {
+            helpMsg = continuePolygonMsg;
+        } else if (geom instanceof ol.geom.LineString) {
+            helpMsg = continueLineMsg;
+        }
+        }
+
+        // helpTooltipElement.innerHTML = helpMsg;
+        // helpTooltip.setPosition(evt.coordinate);
+
+        $("#measureMapInfo span").html(helpMsg);
+
+        helpTooltipElement.classList.remove('hidden');
+    };
+
+    // map.on('pointermove', pointerMoveHandler);
+    
+    // map.getViewport().addEventListener('touchend', function() {
+    //     helpTooltipElement.classList.add('hidden');
+    // });
+
+    //   var typeSelect = document.getElementById('type');
+    var typeSelect = 'LineString';
+
+    var draw; // global so we can remove it later
+
+
+    /**
+     * Format length output.
+     * @param {ol.geom.LineString} line The line.
+     * @return {string} The formatted length.
+     */
+    var formatLength = function(line) {
+      var length = ol.Sphere.getLength(line);
+      var output;
+      if (length > 100) {
+        output = (Math.round(length / 1000 * 100) / 100) +
+            ' ' + 'km';
+      } else {
+        output = (Math.round(length * 100) / 100) +
+            ' ' + 'm';
+      }
+      return output;
+    };
+
+
+    /**
+     * Format area output.
+     * @param {ol.geom.Polygon} polygon The polygon.
+     * @return {string} Formatted area.
+     */
+    var formatArea = function(polygon) {
+      var area = ol.Sphere.getArea(polygon);
+      var output;
+      if (area > 10000) {
+        output = (Math.round(area / 1000000 * 100) / 100) +
+            ' ' + 'km<sup>2</sup>';
+      } else {
+        output = (Math.round(area * 100) / 100) +
+            ' ' + 'm<sup>2</sup>';
+      }
+      return output;
+    };
+    // var source = new ol.source.Vector();
+    var source = getVectorSource(map , "현위치");
+
+    function addInteraction() {
+      var type = (typeSelect.value == 'area' ? 'Polygon' : 'LineString');
+      draw = new ol.interaction.Draw({
+        source: source,
+        type: type,
+        style: new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: 'rgba(255, 255, 255, 0.2)'
+          }),
+          stroke: new ol.style.Stroke({
+            color: 'rgba(0, 0, 0, 0.5)',
+            lineDash: [10, 10],
+            width: 2
+          }),
+          image: new ol.style.Circle({
+            radius: 5,
+            stroke: new ol.style.Stroke({
+              color: 'rgba(0, 0, 0, 0.7)'
+            }),
+            fill: new ol.style.Fill({
+              color: 'rgba(255, 255, 255, 0.2)'
+            })
+          })
+        })
+      });
+      map.addInteraction(draw);
+
+      createMeasureTooltip();
+    //   createHelpTooltip();
+
+      var listener;
+      draw.on('drawstart',
+          function(evt) {
+            // set sketch
+            sketch = evt.feature;
+
+            /** @type {ol.Coordinate|undefined} */
+            var tooltipCoord = evt.coordinate;
+
+            listener = sketch.getGeometry().on('change', function(evt) {
+              var geom = evt.target;
+              var output;
+              if (geom instanceof ol.geom.Polygon) {
+                output = formatArea(geom);
+                tooltipCoord = geom.getInteriorPoint().getCoordinates();
+              } else if (geom instanceof ol.geom.LineString) {
+                output = formatLength(geom);
+                tooltipCoord = geom.getLastCoordinate();
+              }
+              measureTooltipElement.innerHTML = output;
+              measureTooltip.setPosition(tooltipCoord);
+            });
+          }, this);
+
+      draw.on('drawend',
+          function() {
+            // measureTooltipElement.className = 'tooltip tooltip-static';
+            // measureTooltip.setOffset([0, -7]);
+            //거리측정 후 지우기
+            map.removeOverlay(measureTooltip);
+            // unset sketch
+            sketch = null;
+            // unset tooltip so that a new one can be created
+            measureTooltipElement = null;
+            createMeasureTooltip();
+            ol.Observable.unByKey(listener);
+            
+          }, this);
+    }
+
+
+    /**
+     * Creates a new help tooltip
+     */
+    function createHelpTooltip() {
+      if (helpTooltipElement) {
+        helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+      }
+      helpTooltipElement = document.createElement('div');
+      helpTooltipElement.className = 'tooltip hidden';
+      helpTooltip = new ol.Overlay({
+        element: helpTooltipElement,
+        offset: [15, 0],
+        positioning: 'center-left'
+      });
+      map.addOverlay(helpTooltip);
+    }
+
+
+    /**
+     * Creates a new measure tooltip
+     */
+    function createMeasureTooltip() {
+      if (measureTooltipElement) {
+        measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+      }
+      measureTooltipElement = document.createElement('div');
+      measureTooltipElement.className = 'tooltip tooltip-measure';
+      measureTooltip = new ol.Overlay({
+        element: measureTooltipElement,
+        offset: [0, -15],
+        positioning: 'bottom-center'
+      });
+      map.addOverlay(measureTooltip);
+    }
+
+
+    /**
+     * Let user change the geometry type.
+     */
+    $("#measureGbn").change(function(){
+        var gbn = $("#measureGbn").val();
+        if(gbn == "1"){
+            addInteraction();
+        }else{
+            map.removeInteraction(draw);
+            map.removeOverlay(measureTooltip);
+        }
+    })
+
+    typeSelect.onchange = function() {
+      map.removeInteraction(draw);
+      addInteraction();
+    };
+
+    // addInteraction();
+//    마우스 이동 이벤트 정의(거리측정) (--end--)
 
 //     선택 이벤트 정의()(--start--)
     map.on('click', function(event) {
 //    map.getViewport().addEventListener('click', function(event) {
+
+        //거리측정 모드 일 경우 터치 이벤트 발생 무시
+        var measureGbn = $("#measureGbn").val();
+        if(measureGbn == "1"){
+            return;
+        }
+
         var coordinate = event.coordinate;
 
         var resultHtml = "";

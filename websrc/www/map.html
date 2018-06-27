@@ -17,8 +17,13 @@
               
         </div>
     </div>
-    <div id="moveInfo" style="display:none;"><span class="label">화면을 선택하여 이동하고자 하는 위치를 터치해 주세요.</span></div>
-    <div id="viewMapInfo" style="display:none;"><span class="label">↓위치 확인만 가능합니다. 하단 제목창을 클릭해 주세요.↓</span></div>
+    <div id="moveInfo" class="mapNotice" style="display:none;"><span class="label">화면을 선택하여 이동하고자 하는 위치를 터치해 주세요.</span></div>
+    <div id="viewMapInfo" class="mapNotice" style="display:none;"><span class="label">↓위치 확인만 가능합니다. 하단 제목창을 클릭해 주세요.↓</span></div>
+    <div id="measureMapInfo" class="mapNotice" style="display:none;"><span class="label">거리를 측정할 지점을 선택하세요. 종료하시려면 우측 상단 버튼을 다시 한번 클릭하세요.</span></div>
+    <select id="measureGbn" onchange="" hidden>
+        <option value = "0"></option>
+        <option value = "1"></option>
+    </select>
     <div class="buttonDiv"> 
         <span class="btnNormal" onclick="cancleNewPos()">취소</span> 
         <span class="btnPoint" onclick="showNewPosMemo()">위치선택</span> 
