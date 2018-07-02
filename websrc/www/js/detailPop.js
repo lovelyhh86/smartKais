@@ -2318,10 +2318,10 @@ function modify(){
     var link = URLs.insertSpgfChange;
 
     if(trgGbn == DATA_TYPE.RDPQ){
-        //인쇄방식
+        //표면처리방법
         var prtTy = $("#prtTy").val();
         if(prtTy == null){
-            navigator.notification.alert(msg.dontInsertNull.format("인쇄방식"), function(){
+            navigator.notification.alert(msg.dontInsertNull.format("표면처리방법"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
