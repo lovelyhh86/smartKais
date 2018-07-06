@@ -3789,7 +3789,8 @@ var getFeatureLayer = function(options) {
             };
 
             var urldata = URLs.postURL(URLs.mapServiceLink, param);
-
+            // util.toast("지도요청시작","success");
+            // alert(JSONtoString(urldata));
             util.showProgress();
             util.postAJAX('', urldata, true)
                 .then(function(context, rCode, results) {
@@ -3890,7 +3891,7 @@ var getFeatureLayer = function(options) {
                     // }
 
                     console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
-
+                    // util.toast("레이어표출완료","success");
                     //피처 추가시 기존피처는 변경하지 않음
 
                     // if(options.typeName == "tlv_spgf_loc_skm"){
@@ -3902,6 +3903,9 @@ var getFeatureLayer = function(options) {
                     util.dismissProgress();
                 }, function(context, xhr, error) {
                     console.log("조회 error >> " + error + '   ' + xhr);
+                    util.toast("레이어표출에러","success");
+                    // alert(JSONtoString(error));
+                    // alert(JSONtoString(xhr));
                     util.dismissProgress();
                 });
             if (options.viewProgress != undefined && !options.viewProgress)
@@ -4337,11 +4341,13 @@ function moveToXy(x, y) {
     setPosition(cood)
     map.getView().setCenter(cood);
 
-    var zoom = map.getView().getZoom();
-    if (zoom < 14) {
-        map.getView().setZoom(14);
-    }
-    map.updateSize();
+    // var zoom = map.getView().getZoom();
+    // if (zoom < 14) {
+    //     map.getView().setZoom(14);
+    // }
+    // map.updateSize();
+
+    // util.toast("이동완료","success");
 }
 
 
@@ -4553,7 +4559,14 @@ function autocompleteRd(){
                     $ul.trigger("updatelayout");            
                     $("#autocomplete .noIcon").removeClass("ui-screen-hidden");
                 }   
+                // util.toast("검색완료","success");
                      
+            },function(context, xhr, error) {
+                    console.log("조회 error >> " + error + '   ' + xhr);
+                    util.toast("검색에러","error");
+                    // alert(JSONtoString(error));
+                    // alert(JSONtoString(xhr));
+                    util.dismissProgress();
             });        
         }
         $("#autocomplete-input").val(regExpCheckJuso(value));    

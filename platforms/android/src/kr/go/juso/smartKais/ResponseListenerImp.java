@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 //import com.sds.mobile.servicebrokerLib.ServiceBrokerLib;
 //import com.sds.mobile.servicebrokerLib.event.ResponseEvent;
@@ -252,10 +253,10 @@ class ResponseListenerImp implements ResponseListener
             }
         });
 
-/*
-        Toast.makeText(ServiceBrokerActivity.this,
-                "서비스브로커 요청결과\n" + "resultCode=" + resultCode + "\n" + "resultData=" + resultData,
-                Toast.LENGTH_SHORT).show();
-                //*/
+
+        // Toast.makeText(this.context_,
+        //         "서비스브로커 요청결과\n" + "resultCode=" + resultCode + "\n" + "resultData=" + resultData,
+        //         Toast.LENGTH_SHORT).show();
+
     }
 }

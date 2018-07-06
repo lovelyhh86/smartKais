@@ -800,3 +800,14 @@ function insertString(key,index,string){
     else
         return string+key;
 }
+
+function JSONtoString(object) {
+    var results = [];
+    for (var property in object) {
+        var value = object[property];
+        if (value)
+            results.push(property.toString() + ': ' + value);
+        }
+                
+        return '{' + results.join(', ') + '}';
+}
