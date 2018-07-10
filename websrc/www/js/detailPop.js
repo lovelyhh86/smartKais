@@ -2199,7 +2199,7 @@ function modify(){
     };
 
     //** 안내시설물 */
-    if(trgGbn != "02"){
+    if(trgGbn != "02" && trgGbn != "99"){
 
         //설치지점
         var instSpotCd = $("#instSpotCd").val();
