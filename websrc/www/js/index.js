@@ -263,7 +263,7 @@ var app = {
                 mapBaseConfig = {
                     zoom : {
                         spgf : 13,
-                        buld : 14
+                        buld : 13
                     }
                 }
                 localStorage["mapBaseConfig"] = JSON.stringify(mapBaseConfig);
