@@ -2315,24 +2315,24 @@ var mapInit = function(mapId, pos) {
     });
 
     //기초구간
-    var lyr_tl_sprd_intrvl = getFeatureLayer({
-        title: "기초구간",
-        typeName: "tl_sprd_intrvl",
-        dataType: DATA_TYPE.INTRVL,
-        style: {
-            label: {
-                // format: ["{1}-{2}"],
-                // data: ["ODD_BSI_MN", "ODD_BSI_SL"],
-                // text: { key: "ODD_BSI_MN", func: function(text) { return text } },
-                // textOffsetY: -20
-            },
-            radius: 12
-        },
-        maxResolution: 0.25,
-        viewProgress: false,
-        renderMode: 'image',
-        zIndex : 2
-    });
+    // var lyr_tl_sprd_intrvl = getFeatureLayer({
+    //     title: "기초구간",
+    //     typeName: "tl_sprd_intrvl",
+    //     dataType: DATA_TYPE.INTRVL,
+    //     style: {
+    //         label: {
+    //             // format: ["{1}-{2}"],
+    //             // data: ["ODD_BSI_MN", "ODD_BSI_SL"],
+    //             // text: { key: "ODD_BSI_MN", func: function(text) { return text } },
+    //             // textOffsetY: -20
+    //         },
+    //         radius: 12
+    //     },
+    //     maxResolution: 0.25,
+    //     viewProgress: false,
+    //     renderMode: 'image',
+    //     zIndex : 2
+    // });
 
 
     // Feature 정보보기 레이어 생성
@@ -2357,7 +2357,8 @@ var mapInit = function(mapId, pos) {
     map = new ol.Map({
         target: mapId,
         logo: false,
-        layers: [baseLayer, lyr_tl_sprd_intrvl],
+        // layers: [baseLayer, lyr_tl_sprd_intrvl],
+        layers: [baseLayer],
         controls: ol.control.defaults({
             //rotate: false,
             attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
@@ -2546,7 +2547,7 @@ var mapInit = function(mapId, pos) {
         "entrc": lyr_tl_spbd_entrc,
         "buld": lyr_tl_spbd_buld,
         "sppn": lyr_tl_sppn_paninfo,
-        "intrvl":lyr_tl_sprd_intrvl
+        // "intrvl":lyr_tl_sprd_intrvl
     };
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
