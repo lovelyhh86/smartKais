@@ -102,8 +102,11 @@ var defaultStyle = function (feature, resolution, options) {
     if(dataType == DATA_TYPE.LOC){
         var oldRdGdftySe;
         var newRdGdftySe;
+        var oldInstlSe;
+        var newInstlSe;
         for(var i = 0 ; size > i; i++){
             var LT_CHC_YN = features[i].get("LT_CHC_YN");
+
             if(LT_CHC_YN == 0 && size >= 2){
                 // console.log(features[i].get("RDFTYLC_SN"));
                 index = i;
@@ -111,6 +114,7 @@ var defaultStyle = function (feature, resolution, options) {
 
             if(i==0){
                 oldRdGdftySe = features[i].get("RD_GDFTY_SE");
+                oldInstlSe = features[i].get("INSTL_SE");
             }
             
             if(oldRdGdftySe == "999"){
@@ -118,8 +122,12 @@ var defaultStyle = function (feature, resolution, options) {
                 break;
             }else{
                 newRdGdftySe = features[i].get("RD_GDFTY_SE");
+                newInstlSe = features[i].get("INSTL_SE");
                 
                 if(oldRdGdftySe != newRdGdftySe){
+                    mixStyle = true ;
+                    break;
+                }else if(oldInstlSe != newInstlSe && (oldInstlSe == "00002" || newInstlSe == "00002")){
                     mixStyle = true ;
                     break;
                 }
