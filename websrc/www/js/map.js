@@ -2982,6 +2982,9 @@ var mapInit = function(mapId, pos) {
                                     resultHtml = "";
 
                                     var rdGdftySe = resultList[i].rdGdftySe;
+                                    //울릉군 점검용
+                                    // var rdGdftySn = resultList[i].rdGdftySn;
+                                    // var rdFtyLcSn = resultList[i].rdFtyLcSn;
 
                                     // if (rdGdftySe == "110") {
                                     if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){
@@ -3112,6 +3115,9 @@ var mapInit = function(mapId, pos) {
                                         var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
                                         var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
 
+                                        // var text4 = commonSpan.format("info", "위치일련번호 : " + rdFtyLcSn);
+                                        // var text5 = commonSpan.format("info", "안내시설일련번호 : " + rdGdftySn);
+
                                         var button1 = "" ;
                                         var mtchRcrSn = resultList[i].rcrSn;
                                         var nowRcrSn = app.info.rcrSn;
@@ -3124,6 +3130,8 @@ var mapInit = function(mapId, pos) {
                                         strHtml += gbn
                                         strHtml += title
                                         // strHtml += commonP.format("", bdrclAt + rdpqGdSd);
+                                        // strHtml += commonP.format("", text4);
+                                        // strHtml += commonP.format("", text5);
                                         strHtml += commonP.format("", text0);
                                         strHtml += commonP.format("", text1);
                                         strHtml += commonP.format("", text2 + text3);
@@ -3215,6 +3223,9 @@ var mapInit = function(mapId, pos) {
                                         var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
                                         var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
 
+                                        // var text4 = commonSpan.format("info", "위치일련번호 : " + rdFtyLcSn);
+                                        // var text5 = commonSpan.format("info", "안내시설일련번호 : " + rdGdftySn);
+
                                         var button1 = "" ;
 
                                         var mtchRcrSn = resultList[i].rcrSn;
@@ -3227,6 +3238,8 @@ var mapInit = function(mapId, pos) {
                                         strHtml += gbn
                                         strHtml += title
                                         // strHtml += commonP.format("", bdrclAt + areaGdSd);
+                                        // strHtml += commonP.format("", text4);
+                                        // strHtml += commonP.format("", text5);
                                         strHtml += commonP.format("", text0);
                                         strHtml += commonP.format("", text1);
                                         strHtml += commonP.format("", text2 + text3);
@@ -3322,7 +3335,8 @@ var mapInit = function(mapId, pos) {
                                             rcSttCdLbl = "미점검";
                                             rcsttCdClass = "info redText";
                                         }
-
+                                        // var text4 = commonSpan.format("info", "위치일련번호 : " + rdFtyLcSn);
+                                        // var text5 = commonSpan.format("info", "안내시설일련번호 : " + rdGdftySn);
                                         var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
                                         var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
                                         var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
@@ -3340,6 +3354,8 @@ var mapInit = function(mapId, pos) {
                                         strHtml += title
                                         // strHtml += commonP.format("", bfbs);
                                         // strHtml += commonP.format("", ntbs);
+                                        // strHtml += commonP.format("", text4);
+                                        // strHtml += commonP.format("", text5);
                                         strHtml += commonP.format("", text0);
                                         strHtml += commonP.format("", text1);
                                         strHtml += commonP.format("", text2 + text3);
@@ -3429,14 +3445,19 @@ var mapInit = function(mapId, pos) {
                         break;
                     case DATA_TYPE.ENTRC:
                         var link = URLs.entrclink;
-                        //도로시설물위치일련번호
+                        //건물일련번호
                         var BUL_MAN_NO = feature.get("BUL_MAN_NO");
+                        //건물번호판일련번호
+                        var BUL_NMT_NO = feature.get("BUL_NMT_NO");
+                        //시군구코드
+                        var SIG_CD = feature.get("SIG_CD");
 
                         var sendParam = {
                             // svcNm: 'sEntrc',
                             // mode : "11",
+                            bulNmtNo : BUL_NMT_NO,
                             sn: BUL_MAN_NO,
-                            sigCd: app.info.sigCd,
+                            sigCd: SIG_CD,
                             workId: app.info.opeId
                         };
 
