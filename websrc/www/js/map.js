@@ -1179,7 +1179,7 @@ var MapUtil = {
                                 $("#frontEndBaseMasterNo").val(data.frontEndBaseMasterNo);
                                 $("#frontEndBaseSlaveNo").val(data.frontEndBaseSlaveNo);
                                 
-                                if (data.bdrclAt == 1) {
+                                // if (data.bdrclAt == 1) {
                                     //뒷면 도로명(국문)
                                     $("#backKoreanRoadNm").val(data.backKoreanRoadNm);
                                     //뒷면 도로명(로마자)
@@ -1191,7 +1191,7 @@ var MapUtil = {
                                     //뒷면종료기초번호(0-0)
                                     $("#backEndBaseMasterNo").val(data.backEndBaseMasterNo);
                                     $("#backEndBaseSlaveNo").val(data.backEndBaseSlaveNo);
-                                } else {
+                                if (data.bdrclAt == 0) {
                                     $(".bk").hide();
                                 }
                                 // $("#bdrclAt").show();
@@ -1306,14 +1306,15 @@ var MapUtil = {
                                 $("#prnt_ftRomRn").html(data.prnt_ftRomRn);
                                 //앞면 도로거리
                                 $("#prnt_ftRdLt").html(data.prnt_ftRdLt);
-                                if (data.bdrclAt == 1) {
-                                    //뒷면 도로명(국문)
-                                    $("#prnt_bkKorRn").html(data.prnt_bkKorRn);
-                                    //뒷면 도로명(로마자)
-                                    $("#prnt_bkRomRn").html(data.prnt_bkRomRn);
-                                    //뒷면 도로거리
-                                    $("#prnt_bkRdLt").html(data.prnt_bkRdLt);
-                                } else {
+                                
+                                //뒷면 도로명(국문)
+                                $("#prnt_bkKorRn").html(data.prnt_bkKorRn);
+                                //뒷면 도로명(로마자)
+                                $("#prnt_bkRomRn").html(data.prnt_bkRomRn);
+                                //뒷면 도로거리
+                                $("#prnt_bkRdLt").html(data.prnt_bkRdLt);
+                                
+                                if (data.bdrclAt == 0) {
                                     $(".bk").hide();
                                 }
                                 //규격

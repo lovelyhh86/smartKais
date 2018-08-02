@@ -295,13 +295,13 @@
 								<td>
 									<input type='number' class="cell30" id="frontStartBaseMasterNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
 									<span>-</span>
-									<input type='number' class="cell30" id="frontStartBaseSlaveNo"  maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
+									<input type='number' class="cell30" id="frontStartBaseSlaveNo"  maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
 								</td>
 								<th scope="row">종료기초번호</th>
 								<td>
 									<input type='number' class="cell30" id="frontEndBaseMasterNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
 									<span>-</span>
-									<input type='number' class="cell30" id="frontEndBaseSlaveNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
+									<input type='number' class="cell30" id="frontEndBaseSlaveNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
 								</td>
 							</tr>
 						</tbody>
@@ -403,18 +403,18 @@
 								<tr class="bk">
 									<th scope="row">시작기초번호</th>
 									<td>
-										<input type='number' class="cell30" id="backStartBaseMasterNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
+										<input type='number' class="cell30" id="backStartBaseMasterNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" onblur="inputBaseNum(this.id)"/>
 										<span>-</span>
-										<input type='number' class="cell30" id="backStartBaseSlaveNo"  maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
+										<input type='number' class="cell30" id="backStartBaseSlaveNo"  maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
 										<!-- <span id="backStartBaseMasterNo"></span>
 										<span>-</span>
 										<span id="backStartBaseSlaveNo"></span> -->
 									</td>
 									<th scope="row">종료기초번호</th>
 									<td>
-										<input type='number' class="cell30" id="backEndBaseMasterNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
+										<input type='number' class="cell30" id="backEndBaseMasterNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" onblur="inputBaseNum(this.id)"/>
 										<span>-</span>
-										<input type='number' class="cell30" id="backEndBaseSlaveNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="inputBaseNum(this.id)"/>
+										<input type='number' class="cell30" id="backEndBaseSlaveNo" maxlength="5" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
 										<!-- <span id="backEndBaseMasterNo"></span>
 										<span>-</span>
 										<span id="backEndBaseSlaveNo"></span> -->

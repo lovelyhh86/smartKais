@@ -80,7 +80,8 @@ function txtMaxlength(id, size, min) {
             navigator.notification.alert("빈칸을 넣을 수 없습니다.", function () {
                 targetText.val(targetText.val().substring(0, size));
                 $("#"+id).focus();
-                setNameplateView();
+                $("#"+id).val($("#"+id+"_origin").val());
+                // setNameplateView();
             }, '알림', '확인');
         }else{
             setInputPop();
@@ -1056,11 +1057,18 @@ function changeBdtypCd(id){
 
 //기초번호 입력시 확인체크
 function inputBaseNum(id){
-    
+    var nowVal = $("#"+id).val();
+    //기초번호 본번 0 입력 안됨
+    if("0" == nowVal){
+        navigator.notification.alert('본번에 0 을 넣을 수 없습니다.', '', '알림', '확인');
+        $("#"+id).val($("#"+id+'_origin').val());
+        return;
+    }
+
     //첫숫자 0 지움
     firstTextZero(id);
     //명판모양 변경
-    setNameplateView();
+    // setNameplateView();
 }
 
 //원본데이터 받아놓기
