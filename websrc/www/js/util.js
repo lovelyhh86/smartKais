@@ -33,11 +33,11 @@ var util = {
     /** @return jQuery deferred promise object */
     postAJAX: function (context, params, direct) {
         var def = $.Deferred();
-        if (app != undefined && app.info)   //시군구 코드 필수 추가
-            params = $.extend({}, { mode: app.info.mode, testServerNo : app.info.testServerNo, brokerMode: 1, sigCd: app.info.sigCd }, params);
-        else
+        if (app != undefined && app.info){   //시군구 코드 필수 추가
+            params = $.extend({}, { mode: app.info.mode, testServerNo : app.info.testServerNo, brokerMode: 1, sigCd: app.info.sigCd, guIncYn: app.info.guIncYn }, params);
+        }else{
             params = $.extend({}, { mode: '00', brokerMode: 1 }, params);
-
+        }
         SmartKaisPlugins.callServiceBroker(
             params,
             // success
