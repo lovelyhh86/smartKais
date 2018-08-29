@@ -74,6 +74,14 @@ $(function () {
 });
 
 function changeAutoImgRoading(){
+    var autoImgRoadConf = $("#autoImgRoadConf").val();
+    localStorage["autoImgRoadConf"] = autoImgRoadConf;
+}
+
+function warnnigAlert(){
+    var autoImgRoadConf = $("#autoImgRoadConf").val();
     
-    localStorage["autoImgRoadConf"] = $("#autoImgRoadConf").val();
+    if(autoImgRoadConf == "on"){
+        navigator.notification.alert(msg.autoImgRoadingAlert, '', '알림', '확인');
+    }
 }

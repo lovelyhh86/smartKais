@@ -124,7 +124,8 @@ var MapUtil = {
 
                 var autoImgRoadConf = localStorage["autoImgRoadConf"];
                 if(photoNum > 0 && autoImgRoadConf == "on"){
-                    selectOriImg();
+                    // selectOriImg();
+                    selectOldImg();
                 }
 
                 // 사진모드
@@ -398,10 +399,12 @@ var MapUtil = {
                     // if (id == DATA_TYPE.LOC) {
                     // }
 
+                    var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
+
                     if (id == DATA_TYPE.BULD) {
-                        map.getView().setZoom(14);
+                        map.getView().setZoom(mapBaseConfig.zoom.buld);
                     }else{
-                        map.getView().setZoom(13);
+                        map.getView().setZoom(mapBaseConfig.zoom.spgf);
                     }
 
                 }

@@ -217,7 +217,8 @@ var util = {
         var url = pages.map;
         var param = {
             categoryid: tasktype,
-            sig_cd: app.info.sigCd
+            sig_cd: app.info.sigCd,
+            type: ''
         };
         var activePage = $.mobile.activePage.attr('id');
 
@@ -248,7 +249,9 @@ var util = {
                 break;
             case "baseConfig":
                 url = pages.baseConfigPage;
-                param.type = app.context.type;
+                if(app.context){
+                    param.type = app.context.type;
+                }
                 break;
             case "address":
                 if (activePage == 'bbs_page')
