@@ -15,7 +15,7 @@
                 <div>
                     <div class="settingInfo">
                         <h2>환경설정</h2>
-                        <p class="setTxt">각 레이어의 시작 축척을 설정합니다.</p>
+                        <!-- <p class="setTxt">각 레이어의 시작 축척을 설정합니다.</p> -->
                     </div>
                     <div class="dataContent">
                         <h3><span>시설물관리 축척</span></h3>
@@ -23,9 +23,9 @@
                         <!--     <label for="slider-spgf">시설물관리 기본 축척</label> -->
                             <input type="range" name="slider-spgf" id="slider-spgf" min="10" max="15" value="">
                         </form>
-                        <div class="dataImg">
+                        <!-- <div class="dataImg">
                             <img id="slider-spgf-img" src="">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="dataContent">
                         <h3><span>건물관리 축척</span></h3>
@@ -33,9 +33,23 @@
                         <!--     <label for="slider-buld">건물 기본 축척</label> -->
                             <input type="range" name="slider-buld" id="slider-buld" min="10" max="15" value="">
                         </form>
-                        <div class="dataImg">
+                        <!-- <div class="dataImg">
                             <img id="slider-buld-img" src="">
-                        </div>
+                        </div> -->
+                    </div>
+                    <div class="dataContent">
+                        <h3><span>원본사진 조회</span></h3>
+                        <!-- <div>
+                            <span>도로안내시설물 및 건물번호판의 사진정보 조회시 자동으로 원본사진 조회여부</span>
+                            <input type="checkbox" data-role="flipswitch" name="imgChk" id="oriImg" class="configSwitch">
+                        </div> -->
+                        <div class="ui-field-contain">
+                            <span>도로안내시설물 및 건물번호판의 사진정보 조회시 자동으로 원본사진 조회여부</span>
+                            <select name="flip-1" id="autoImgRoadConf" data-role="flipswitch" onchange="changeAutoImgRoading()">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <!-- <div data-role="header">

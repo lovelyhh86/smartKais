@@ -248,6 +248,7 @@ var util = {
                 break;
             case "baseConfig":
                 url = pages.baseConfigPage;
+                param.type = app.context.type;
                 break;
             case "address":
                 if (activePage == 'bbs_page')

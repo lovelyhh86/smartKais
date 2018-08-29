@@ -98,8 +98,6 @@ var MapUtil = {
                 isPopState = "off";
                 toggleDetailView();
 
-                var photoNum = $(".infoHeader .photo .photoNum").text();
-
                 // 사진 조회 및 편집 상태 초기화
                 MapUtil.photo.state.init();
 
@@ -121,6 +119,13 @@ var MapUtil = {
 
                 //2번쨰 클릭부터 표출이 안되서 추가
                 $("#photoDialog").show();
+
+                var photoNum = $(".infoHeader .photo .photoNum").text();
+
+                var autoImgRoadConf = localStorage["autoImgRoadConf"];
+                if(photoNum > 0 && autoImgRoadConf == "on"){
+                    selectOriImg();
+                }
 
                 // 사진모드
                 // if ($(".detailView .infoWrap .infoContent .photoWrap").css("display") != "none") {

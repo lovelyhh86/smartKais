@@ -2278,21 +2278,21 @@ function modify(){
         //가로세로두께
         var gdftyWide = $("#gdftyWide").val();
         //가로
-        if(gdftyWide == null){
+        if(gdftyWide == null || gdftyWide == ""){
             navigator.notification.alert(msg.dontInsertNull.format("가로"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
         }
         var gdftyVertical = $("#gdftyVertical").val();
-        if(gdftyVertical == null){
+        if(gdftyVertical == null || gdftyVertical == ""){
             navigator.notification.alert(msg.dontInsertNull.format("세로"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
         }
         var gdftyThickness = $("#gdftyThickness").val();
-        if(gdftyThickness == null){
+        if(gdftyThickness == null || gdftyThickness == ""){
             navigator.notification.alert(msg.dontInsertNull.format("두께"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
@@ -3419,7 +3419,97 @@ function modifyImg(type){
     }, "알림", ["저장","취소"]);
 
 }
+function selectOriImg(){
+    var photoNum = $(".infoHeader .photo .photoNum").text();
+    // 속성 조회 시 사진 건수가 없는 경우 서버로 부터 조회 하지 않음.
+    if(photoNum == 0){
+        util.toast("사진정보가 없습니다.");
+        return;
+    } else {
+        var url="", param="";
+        // if(layerID == ""){
+        layerID = $("#trgGbn").val();
+        // }
+        switch (layerID) {
+            case DATA_TYPE.RDPQ:
+                // var sn = f.get("RD_GDFTY_SN");
+                param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
+                url = URLs.postURL(URLs.roadsignlink, param);
+                break;
+            case DATA_TYPE.AREA:
+                // var sn = f.get("RD_GDFTY_SN");
+                param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
+                url = URLs.postURL(URLs.roadsignlink, param);
+                break;
+            case DATA_TYPE.BSIS:
+                // var sn = f.get("RD_GDFTY_SN");
+                param = { "sn": trgSnGlobal, "sigCd": app.info.sigCd, "isImages": true };
+                url = URLs.postURL(URLs.roadsignlink, param);
+                break;
+            case DATA_TYPE.ENTRC:
+                var sn = $("#trgLocSn").val();
+                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                var url = URLs.postURL(URLs.entrclink, param);
+                break;
+            case DATA_TYPE.BULD:
+                var sn = $("#trgLocSn").val();
+                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                url = URLs.postURL(URLs.buildSelectlink, param);
+                break;
+            case DATA_TYPE.SPPN:
+                var sn = $("#trgSn").val();
+                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                url = URLs.postURL(URLs.spotSelectlink, param);
+                break;
+            case DATA_TYPE.ADRDC:
+                var sn = $("#sn").val();
+                param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
+                url = URLs.postURL(URLs.addresslink, param);
+                break;
+        }
+        
 
+        util.showProgress();
+        util.postAJAX({}, url).then(
+            function(context, rcode, results) {
+
+                var data = results.data;
+                // var emptyObj = "<img style='height: 220px; width: 100%; object-fit: contain' src=''/>";
+                // emptyObj+= "<input id='imaFilSn' type='hidden' value=''/>";
+                // emptyObj+= "<input id='tbGbn' type='hidden' value='{0}'/>";
+
+                if (rcode != 0 || util.isEmpty(data) || util.isEmpty(data.files)) {
+                    util.dismissProgress();
+                    // util.toast("사진정보 읽어오는데 실패 하였습니다", "error");
+                    util.toast(msg.wrongPhoto);
+                    return;
+                }else{
+                    util.toast(msg.successImg);
+                    // 사진 조회 및 편집 상태 초기화
+                    MapUtil.photo.state.init();
+                }
+
+                for (var index in data.files) {
+                    var image = data.files[index];
+                    if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                        var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                        obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
+                        obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+
+                        $(".picInfo." + image.tbGbn + " .picImg").html('');
+                        $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                        MapUtil.photo.doLoaded(true, image.tbGbn);
+                        
+                    } else {
+                        util.toast(msg.wrongPhoto);
+                    }
+                }
+                
+                util.dismissProgress();
+            }
+        );
+    }
+}
 function selectOldImg(){
 
     navigator.notification.confirm(msg.loadOldImg, function(btnindex){

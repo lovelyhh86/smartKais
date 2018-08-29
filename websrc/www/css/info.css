@@ -537,3 +537,8 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
 .leftText{
 	text-align: left;
 }
+
+.configSwitch{
+	position: absolute;
+	right: 56px;
+}

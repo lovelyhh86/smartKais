@@ -16,6 +16,7 @@ $(function () {
         $("#telNo").text("{0}".format(appInfo.opeId));
         
         var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
+        localStorage["autoImgRoadConf"]
         
         //슬라이더 값 셋팅 후 리플레시
         $("#slider-spgf").val(mapBaseConfig.zoom.spgf).slider("refresh");
@@ -28,6 +29,13 @@ $(function () {
         //슬라이더 변경시 자동저장
         $("#slider-spgf").change(changedMapBaseConfig);
         $("#slider-buld").change(changedMapBaseConfig);
+
+        var autoImgRoadConf = localStorage["autoImgRoadConf"];
+    
+        if(autoImgRoadConf){
+            $("#autoImgRoadConf").val(autoImgRoadConf).attr("selected","selected");
+            $("#autoImgRoadConf").trigger("change");
+        }
         
     });
 
@@ -62,4 +70,10 @@ $(function () {
         
     }
 
+    
 });
+
+function changeAutoImgRoading(){
+    
+    localStorage["autoImgRoadConf"] = $("#autoImgRoadConf").val();
+}
