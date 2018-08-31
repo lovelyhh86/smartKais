@@ -223,11 +223,26 @@ function changeUseTarget(id){
         var useTarget = $("#useTarget").val();
         var trgGbn = $("#trgGbn").val();
         var rdGdftySe = $("#rdGdftySe").val();
+        var plqDirection = $("#plqDirection").val();
+        var gdftyForm = $("#gdftyForm").val();
     
         if(trgGbn == "01"){
             if(rdGdftySe == "310"){
                 checkPrntRdsd("prntGdSd");
             }else if(rdGdftySe == "110"){
+
+                //차로용 소로용의 경우 앞쪽방향용 선택 불가
+                if(gdftyForm == "10000" && (useTarget == "04000" || useTarget == "05000")){
+                    if(plqDirection == "00300"){
+                        //최초 값으로 되돌림
+                        $("#useTarget").val($("#useTarget_origin").val());
+                        $("#useTarget").trigger("change");
+                        // util.toast("방향이 앞쪽 방향용인 경우 사용대상을 차로용 소로용을 선택할 수 없습니다.","warning");
+                        navigator.notification.alert(msg.plqUseTargetCheck, '', '알림', '확인');
+                        return;
+                    }
+                }
+
                 if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){//보행자 차로용 소로용
                     var scfggMkty = $("#scfggMkty").val();
                     makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
@@ -263,7 +278,22 @@ function changePlqDir(id){
             // $("#bdrclAt").attr("disabled","disabled");
             // $("#bdrclAt").trigger("change");
         // }
-    
+
+        var plqDirection = $("#plqDirection").val();
+        var useTarget = $("#useTarget").val();
+        var gdftyForm = $("#gdftyForm").val();
+
+        //차로용 소로용의 경우 앞쪽방향용 선택 불가
+        if(gdftyForm == "10000" && plqDirection == "00300"){
+            if(useTarget == "04000" || useTarget == "05000"){
+                //최초 값으로 되돌림
+                $("#plqDirection").val($("#plqDirection_origin").val());
+                $("#plqDirection").trigger("change");
+                // util.toast("사용대상이 차로용 소로용인 경우 앞쪽 방향용을 선택할 수 없습니다.","warning");
+                navigator.notification.alert(msg.plqUseTargetCheck, '', '알림', '확인');
+                return;
+            }
+        }
         changeRdpqGdSd('rdpqGdSd');
         checkChangeOrigin(id);
         
