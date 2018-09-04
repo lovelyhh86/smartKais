@@ -2690,10 +2690,10 @@ function modify(){
         //다음승강장 번호
         var bsis_ntbsMn = $("#bsis_ntbsMn").val();
         var bsis_ntbsSn = $("#bsis_ntbsSn").val();
-        //표기방법
+        //표면처리방법
         var bsisMthd = $("#bsisMthd").val();
         if(bsisMthd == null){
-            navigator.notification.alert(msg.dontInsertNull.format("표기방법"), function(){
+            navigator.notification.alert(msg.dontInsertNull.format("표면처리방법"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
@@ -2738,6 +2738,14 @@ function modify(){
         })
 
     }else if(trgGbn == DATA_TYPE.ENTRC){
+        //표면처리방법
+        var prtTy = $("#prtTy").val();
+        if(prtTy == null){
+            navigator.notification.alert(msg.dontInsertNull.format("표면처리방법"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
         //조명여부
         var lghtCd = $("#lghtCd").val();
         if(lghtCd == null){
@@ -2851,6 +2859,7 @@ function modify(){
             buldNmtUnitPrice : buldNmtUnitPrice,
             bulNmtFtWi : bulNmtFtWi,
             bulNmtFtVe : bulNmtFtVe,
+            prtTy : prtTy,
         })
 
         link = URLs.insertSpbdChange;

@@ -949,6 +949,9 @@ var MapUtil = {
                         }else{
                             $(".bulLbl").show();
                         }
+                        //표면처리방법
+                        makeOptSelectBox("prtTy","PRT_TY","","","");
+                        $("#prtTy").val(data.prtTy);
                     }else{ //도로안내시설물인 경우
                         //일련번호
                         $("#trgSn").val(sn);
