@@ -134,21 +134,26 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		ibCapture.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				mCamera.autoFocus (new Camera.AutoFocusCallback() {
+//				mCamera.autoFocus (new Camera.AutoFocusCallback() {
+//
+//					public void onAutoFocus(boolean success, Camera camera) {
+//
+//
+//						Log.d(TAG, "autoFocus = " + success);
+//						mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() {
+//								Log.d(TAG, "onShutter");
+//							} }, null, mPicture);
+//
+//
+//
+//					}
+//
+//				});
 
-					public void onAutoFocus(boolean success, Camera camera) {
 
-//						if(success){
-						Log.d(TAG, "autoFocus = " + success);
-							mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() {
+				mCamera.takePicture(new Camera.ShutterCallback() { @Override public void onShutter() {
 								Log.d(TAG, "onShutter");
 							} }, null, mPicture);
-
-//						}
-
-					}
-
-				});
 
 			}
 		});
@@ -279,18 +284,23 @@ public class CameraActivity extends Activity implements SensorEventListener {
                 //float mDist = 0;
                 if (newDist > mDist) {
                     //zoom in
-                    for(int i = 0 ; i < 2 ; i ++) {
-                        if (zoom < maxZoom)
+//                    for(int i = 0 ; i < 2 ; i ++) {
+//                        if (zoom < maxZoom)
                             zoom++;
+							zoom++;
+							Log.d(TAG, "zoom ++ : "+zoom);
 //                        zoom++;
-                    }
+//                    }
                 } else if (newDist < mDist) {
                     //zoom out
                     if (zoom > 0)
                         zoom--;
-                        //zoom--;
+						Log.d(TAG, "zoom -- : "+zoom);
                 }
                 mDist = newDist;
+                if(zoom >= 100){
+                	zoom = 99;
+				}
                 params.setZoom(zoom);
                 mCamera.setParameters(params);
             }
