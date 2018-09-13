@@ -233,6 +233,33 @@ function createRnNm(type ,d){
             frontEndBaseSlaveNo = d.rddr_edbsSn;
             PLQ_DRC = d.rddr_plqDrcLbl;
 
+            //이면도로명판 독립형인 경우 첫번째 도로명 표시
+            var rddr_afRdplqSe = d.rddr_afRdplqSe;
+            if(rddr_afRdplqSe == "01000"){
+                //이면도로명판 내용
+                var rddrCnList = d.rddrCn;
+                try {
+                    if(rddrCnList != null && rddrCnList.length > 0){
+                        //방향
+                        var drcRdDrc =rddrCnList[0].drcRdDrc;
+
+                        var drcRdDrcLbl = "-";
+                        if(drcRdDrc == "1"){
+                            drcRdDrcLbl = "⇳";
+                        }else if(drcRdDrc == "2"){
+                            drcRdDrcLbl == "↑";
+                        }else if(drcRdDrc == "3"){
+                            drcRdDrcLbl == "↓";
+                        }
+
+                        frontKoreanRoadNm = rddrCnList[0].drcKorRn + " " + rddrCnList[0].drcRdLt+ "m " + drcRdDrcLbl;
+
+                        }
+                } catch (error) {
+                    util.toast(msg.checkObject.format("이면도로명판 내용"),"error");
+                }
+            }
+
         }else if(type == "310"){
             // plqDirection = data.rddr_plqDrc;
             var prnt_ftRdLt = d.prnt_ftRdLt == null ? "" : d.prnt_ftRdLt + "M";
@@ -246,8 +273,12 @@ function createRnNm(type ,d){
 
         var frontStartBaseNo = "{0}{1}".format(frontStartBaseMasterNo == "0"? "" : frontStartBaseMasterNo, (frontStartBaseSlaveNo != "0" ? '-' + frontStartBaseSlaveNo : ''));
         var frontEndBaseNo = "{0}{1}".format(frontEndBaseMasterNo == "0"? "" : frontEndBaseMasterNo, (frontEndBaseSlaveNo != "0" ? '-' + frontEndBaseSlaveNo : ''));
-
-        if(plqDirection == '00200'){
+        
+        if(type == "210" && d.rddr_afRdplqSe == "01000"){
+            rnLbl = "{0}".format(
+                frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',
+            );
+        }else if(plqDirection == '00200'){
             rnLbl = "{0} {1} {2}".format(
                     frontStartBaseNo,
                     frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',

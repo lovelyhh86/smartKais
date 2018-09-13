@@ -1123,6 +1123,34 @@ var MapUtil = {
                                 frontStartBaseSlaveNo = data.rddr_stbsSn;
                                 frontEndBaseMasterNo = data.rddr_edbsMn;
                                 frontEndBaseSlaveNo = data.rddr_edbsSn;
+
+                                //이면도로명판 독립형인 경우 첫번째 도로명 표시
+                                var rddr_afRdplqSe = data.rddr_afRdplqSe;
+                                if(rddr_afRdplqSe == "01000"){
+                                    //이면도로명판 내용
+                                    var rddrCnList = data.rddrCn;
+                                    try {
+                                        if(rddrCnList != null && rddrCnList.length > 0){
+                                            //방향
+                                            var drcRdDrc =rddrCnList[0].drcRdDrc;
+
+                                            var drcRdDrcLbl = "-";
+                                            if(drcRdDrc == "1"){
+                                                drcRdDrcLbl = "⇳";
+                                            }else if(drcRdDrc == "2"){
+                                                drcRdDrcLbl == "↑";
+                                            }else if(drcRdDrc == "3"){
+                                                drcRdDrcLbl == "↓";
+                                            }
+
+                                            frontKoreanRoadNm = rddrCnList[0].drcKorRn + " " + rddrCnList[0].drcRdLt+ "m " + drcRdDrcLbl;
+
+                                            }
+                                    } catch (error) {
+                                        util.toast(msg.checkObject.format("이면도로명판 내용"),"error");
+                                    }
+                                }
+
                             }else if(rdGdftySe == "310"){
                                 plqDirection = "";
                                 var prnt_ftRdLt = data.prnt_ftRdLt == null ? "" : data.prnt_ftRdLt + "M";
@@ -1140,6 +1168,11 @@ var MapUtil = {
                             //도로명,시작번호,종료번호가 null 일경우 명판정보정비대상으로 표시
                             if(frontKoreanRoadNm == null ||frontStartBaseMasterNo == null || frontEndBaseMasterNo == null || frontStartBaseSlaveNo == null || frontEndBaseSlaveNo == null){
                                 title = "명판정보정비대상";
+                            }else if(rdGdftySe == "210"){
+                                title = "<span class='label'>[{0}] {1}<span>".format(
+                                    data.rdGdftySeLbl,
+                                    frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음'
+                                );
                             }else{
                                 if(plqDirection == '00200'){
                                     title = "<span class='label'>[{0}] {1} {2} {3}<span>".format(

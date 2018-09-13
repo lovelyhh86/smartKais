@@ -255,6 +255,9 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     var instSe = d.instSe;
                     //명판내용
                     var korRnLbl = createRnNm(rdGdftySe,d);
+                    if(rdGdftySe == "210"){
+                        korRnLbl
+                    }
                     
                     var researchOkBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='{0}' {1}>정상</button>";
                     
