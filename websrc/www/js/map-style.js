@@ -301,19 +301,19 @@ var locStyle = function (styleOptions, feature, mixStyle) {
             if(ltChcYn == 0 || featureCnt > ltChcYn){
                 opt = {
                     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                        anchor: [0.45, 40],
+                        anchor: [0.45, 35],
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
-                        src: 'image/mix_pos.png'
+                        src: 'image/icon_w_legend03.png'
                     }))
                 }
             }else{
                 opt = {
                     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                        anchor: [0.45, 40],
+                        anchor: [0.45, 35],
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
-                        src: 'image/mix_pos_c.png'
+                        src: 'image/icon_cw_legend03.png'
                     }))
                 }
             };
@@ -400,45 +400,45 @@ var locStyle = function (styleOptions, feature, mixStyle) {
             }
         }else if(rdGdftySe == "510"){ // 지역안내판
             switch(instlSe){
-                case "00002": //벽면형
-                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, 35],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_w_legend03.png'
-                            }))
-                        };
-                    }else if(ltChcYn != 0 && instlDeYear != newYear){ // 점검 o , 올해설치 x
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, 35],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_cw_legend03.png'
-                            }))
-                        };
-                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, anchorY],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_nw_legend03.png'
-                            }))
-                        };
-                    }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, anchorY],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_ncw_legend03.png'
-                            }))
-                        };
-                    }
-                    break;
+                // case "00002": //벽면형
+                //     if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, 35],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_w_legend03.png'
+                //             }))
+                //         };
+                //     }else if(ltChcYn != 0 && instlDeYear != newYear){ // 점검 o , 올해설치 x
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, 35],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_cw_legend03.png'
+                //             }))
+                //         };
+                //     }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, anchorY],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_nw_legend03.png'
+                //             }))
+                //         };
+                //     }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, anchorY],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_ncw_legend03.png'
+                //             }))
+                //         };
+                //     }
+                //     break;
                 default: //벽면형 아님
                     if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
                         opt = {
@@ -481,45 +481,45 @@ var locStyle = function (styleOptions, feature, mixStyle) {
             }
         }else if(rdGdftySe == "610"){
             switch(instlSe){
-                case "00002": //벽면형
-                    if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, 35],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_w_legend02.png'
-                            }))
-                        };
-                    }else if(ltChcYn != 0 && instlDeYear != newYear){ // 점검 o , 올해설치 x
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, 35],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_cw_legend02.png'
-                            }))
-                        };
-                    }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, anchorY],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_nw_legend02.png'
-                            }))
-                        };
-                    }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
-                        opt = {
-                            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                                anchor: [0.45, anchorY],
-                                anchorXUnits: 'fraction',
-                                anchorYUnits: 'pixels',
-                                src: 'image/icon_ncw_legend02.png'
-                            }))
-                        };
-                    }
-                    break;
+                // case "00002": //벽면형
+                //     if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, 35],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_w_legend02.png'
+                //             }))
+                //         };
+                //     }else if(ltChcYn != 0 && instlDeYear != newYear){ // 점검 o , 올해설치 x
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, 35],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_cw_legend02.png'
+                //             }))
+                //         };
+                //     }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, anchorY],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_nw_legend02.png'
+                //             }))
+                //         };
+                //     }else if(ltChcYn != 0 && instlDeYear == newYear){ // 점검 o , 올해설치 o
+                //         opt = {
+                //             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                //                 anchor: [0.45, anchorY],
+                //                 anchorXUnits: 'fraction',
+                //                 anchorYUnits: 'pixels',
+                //                 src: 'image/icon_ncw_legend02.png'
+                //             }))
+                //         };
+                //     }
+                //     break;
                 default: //벽면형 아님
                     if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 x
                         opt = {
@@ -566,7 +566,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                     anchor: [0.45, 40],
                     anchorXUnits: 'fraction',
                     anchorYUnits: 'pixels',
-                    src: 'image/mixPos.png'
+                    src: 'image/icon_w_legend03.png'
                 }))
             };
         }else{

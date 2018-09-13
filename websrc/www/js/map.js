@@ -207,10 +207,10 @@ var MapUtil = {
             legendHtml += '<li class="rdpq">도로명판<span class="total">0건</span></li>';
             legendHtml += '<li class="rdpqW">도로명판(벽)<span class="total">0건</span></li>';
             legendHtml += '<li class="bsis">기초번호판<span class="total">0건</span></li>'
-            legendHtml += '<li class="bsisW">기초번호판(벽)<span class="total">0건</span></li>';
+            // legendHtml += '<li class="bsisW">기초번호판(벽)<span class="total">0건</span></li>';
             legendHtml += '<li class="area">지역안내판<span class="total">0건</span></li>';
-            legendHtml += '<li class="areaW">지역안내판(벽)<span class="total">0건</span></li>';
-            legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
+            legendHtml += '<li class="mixPoint">종류가 다른 시설물들</li>';
+            // legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
 
@@ -401,9 +401,9 @@ var MapUtil = {
 
                     var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
 
-                    if (id == DATA_TYPE.BULD) {
+                    if (id == DATA_TYPE.ENTRC) {
                         map.getView().setZoom(mapBaseConfig.zoom.buld);
-                    }else{
+                    }else if( id == DATA_TYPE.LOC){
                         map.getView().setZoom(mapBaseConfig.zoom.spgf);
                     }
 
@@ -957,7 +957,7 @@ var MapUtil = {
                         $("#trgSn").val(sn);
                         $("#rdGdftySnLbl").text(sn);
                         //위치일련번호
-                        $("#trgLocSn").val(data.rdFtyLcSn);
+                        $("#trgLocSn").val(data.rdFtyLcSn);legend
                         $("#rdFtyLcSnLbl").text(data.rdFtyLcSn);
 
                         //****도로안내시설 위치정보****
@@ -1370,9 +1370,9 @@ var MapUtil = {
                                 );
                             }
                             var imgNm = 'icon_legend03.png';
-                            if(data.instSe == '00002'){
-                                imgNm = 'icon_w_legend03.png'
-                            }
+                            // if(data.instSe == '00002'){
+                            //     imgNm = 'icon_w_legend03.png'
+                            // }
                             var titleIcon = '<span class="titleIcon"><img src="image/'+imgNm+'" title="지역안내판"></span>';
                             $(".title").empty();
                             $(".title").append(titleIcon);
@@ -1439,9 +1439,9 @@ var MapUtil = {
                                 );
                             }
                             var imgNm = 'icon_legend02.png';
-                            if(data.instSe == '00002'){
-                                imgNm = 'icon_w_legend02.png'
-                            }
+                            // if(data.instSe == '00002'){
+                            //     imgNm = 'icon_w_legend02.png'
+                            // }
                             var titleIcon = '<span class="titleIcon"><img src="image/'+imgNm+'" title="기초번호판"></span>';
                             $(".title").empty();
                             $(".title").append(titleIcon);

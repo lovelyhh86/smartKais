@@ -277,15 +277,15 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                         locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
                     }else if(rdGdftySe == '510'){
                         var imgNm = 'icon_legend03.png';
-                        if(instSe == "00002"){
-                            imgNm = 'icon_w_legend03.png';
-                        }
+                        // if(instSe == "00002"){
+                        //     imgNm = 'icon_w_legend03.png';
+                        // }
                         locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
                     }else if(rdGdftySe == '610'){
                         var imgNm = 'icon_legend02.png';
-                        if(instSe == "00002"){
-                            imgNm = 'icon_w_legend02.png';
-                        }
+                        // if(instSe == "00002"){
+                        //     imgNm = 'icon_w_legend02.png';
+                        // }
                         locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
                     }else{
                         locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/iconNumber.png'></img>";

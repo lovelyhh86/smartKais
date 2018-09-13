@@ -29,14 +29,18 @@
 .legend ul li.rdpqW{background: #fff url(../image/icon_w_legend01.png) 6px 5px no-repeat; background-size: 20px;}
 .legend ul li.rdpqW.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.rdpqW.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;}
-
+/* 
 .legend ul li.bsisW{background: #fff url(../image/icon_w_legend02.png) 6px 5px no-repeat; background-size: 20px;}
 .legend ul li.bsisW.over{background: #f9745c url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
-.legend ul li.bsisW.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/blocksLine.png) 0 3px no-repeat; color: #fff;}
+.legend ul li.bsisW.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/blocksLine.png) 0 3px no-repeat; color: #fff;} */
 
-.legend ul li.areaW{background: #fff url(../image/icon_w_legend03.png) 6px 5px no-repeat; background-size: 20px;}
+/* .legend ul li.areaW{background: #fff url(../image/icon_w_legend03.png) 6px 5px no-repeat; background-size: 20px;}
 .legend ul li.areaW.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
-.legend ul li.areaW.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
+.legend ul li.areaW.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;} */
+
+.legend ul li.mixPoint{background: #fff url(../image/icon_w_legend03.png) 6px 5px no-repeat; background-size: 20px;}
+.legend ul li.mixPoint.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
+.legend ul li.mixPoint.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 
 .legend ul li.spot{background: #fff url(../image/spotIconS.png) 6px 5px no-repeat;}
 .legend ul li.spot.over{background: #58C428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
@@ -48,8 +52,8 @@
 
 
 /*지도 위 버튼*/
-.selectResearch {top: 17.5em;width: 9em;height: 3em;}
-.locManageSpgf { top: 20.5em; width: 9em; height: 3em;}
+.selectResearch {top: 13.5em;width: 9em;height: 3em;}
+.locManageSpgf { top: 16.5em; width: 9em; height: 3em;}
 .selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
 
 .selectResearchSpbd {top: 5.5em;width: 9em;height: 3em;}
