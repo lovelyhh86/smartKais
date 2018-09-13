@@ -957,7 +957,7 @@ var MapUtil = {
                         $("#trgSn").val(sn);
                         $("#rdGdftySnLbl").text(sn);
                         //위치일련번호
-                        $("#trgLocSn").val(data.rdFtyLcSn);legend
+                        $("#trgLocSn").val(data.rdFtyLcSn);
                         $("#rdFtyLcSnLbl").text(data.rdFtyLcSn);
 
                         //****도로안내시설 위치정보****
@@ -2530,25 +2530,25 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
     //지점번호판 레이어
-    var lyr_tl_sppn_paninfo = getFeatureLayer({
-        title: "지점번호판",
-        typeName: "tl_sppn_paninfo",
-        dataType: DATA_TYPE.SPPN,
-        style: {
-            // label: {
-            //     text: { key: "LABEL", func: function(text) { return text } },
-            //     textOffsetX: -1,
-            //     textOffsetY: -18,
-            //     width: 1
-            // },
-            radius: 12
-        },
-        cluster: { distance: MapUtil.setting.cluster },
-        maxResolution: 2,
-        viewProgress: false,
-        renderMode: 'vector',
-        zIndex : 1
-    });
+    // var lyr_tl_sppn_paninfo = getFeatureLayer({
+    //     title: "지점번호판",
+    //     typeName: "tl_sppn_paninfo",
+    //     dataType: DATA_TYPE.SPPN,
+    //     style: {
+    //         // label: {
+    //         //     text: { key: "LABEL", func: function(text) { return text } },
+    //         //     textOffsetX: -1,
+    //         //     textOffsetY: -18,
+    //         //     width: 1
+    //         // },
+    //         radius: 12
+    //     },
+    //     cluster: { distance: MapUtil.setting.cluster },
+    //     maxResolution: 2,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
     
 
     layers = {
@@ -2558,7 +2558,7 @@ var mapInit = function(mapId, pos) {
         // "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc,
         "buld": lyr_tl_spbd_buld,
-        "sppn": lyr_tl_sppn_paninfo,
+        // "sppn": lyr_tl_sppn_paninfo,
         // "intrvl":lyr_tl_sprd_intrvl
     };
 
