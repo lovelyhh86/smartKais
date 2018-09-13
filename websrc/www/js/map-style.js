@@ -304,7 +304,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                         anchor: [0.45, 35],
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
-                        src: 'image/icon_w_legend03.png'
+                        src: 'image/n_mixPos.png'
                     }))
                 }
             }else{
@@ -313,7 +313,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                         anchor: [0.45, 35],
                         anchorXUnits: 'fraction',
                         anchorYUnits: 'pixels',
-                        src: 'image/icon_cw_legend03.png'
+                        src: 'image/c_mixPos.png'
                     }))
                 }
             };

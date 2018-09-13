@@ -38,7 +38,7 @@
 .legend ul li.areaW.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.areaW.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;} */
 
-.legend ul li.mixPoint{background: #fff url(../image/icon_w_legend03.png) 6px 5px no-repeat; background-size: 20px;}
+.legend ul li.mixPoint{background: #fff url(../image/n_mixPos.png) 6px 5px no-repeat; background-size: 20px;}
 .legend ul li.mixPoint.over{background: #bfc428 url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.mixPoint.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/localLine.png) 0 3px no-repeat; color: #fff;}
 

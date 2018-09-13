@@ -209,7 +209,7 @@ var MapUtil = {
             legendHtml += '<li class="bsis">기초번호판<span class="total">0건</span></li>'
             // legendHtml += '<li class="bsisW">기초번호판(벽)<span class="total">0건</span></li>';
             legendHtml += '<li class="area">지역안내판<span class="total">0건</span></li>';
-            legendHtml += '<li class="mixPoint">종류가 다른 시설물들</li>';
+            legendHtml += '<li class="mixPoint">다중설치시설</li>';
             // legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
