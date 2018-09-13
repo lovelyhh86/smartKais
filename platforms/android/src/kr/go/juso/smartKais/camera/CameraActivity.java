@@ -77,6 +77,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
     Intent getIntent;
 
+	private Bitmap picbitmap;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -432,7 +434,16 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 			cameraPreview.setVisibility(LinearLayout.GONE);
 			takePreview.setVisibility(LinearLayout.VISIBLE);
-            //프리뷰용 이미지(회전없음)
+
+			//비트맵 옵션설정
+			// BitmapFactory.Options options = new BitmapFactory.Options();
+//			options.inJustDecodeBounds = true;
+//			options.inSampleSize = 2;			//사이즈 배율로 줄임
+			// options.inBitmap = picbitmap;
+
+
+
+			//프리뷰용 이미지(회전없음)
             Bitmap picbitmap = BitmapFactory.decodeByteArray(data,0,data.length); //BitmapFactory.decodeFile(pictureFile.toString());
 
 //            fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()).toString() + ".jpg";
@@ -470,6 +481,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
             //이미지 저장
 			storedImage = newData;
 
+//			picbitmap.recycle(); // 에러남
+			bmRotated.recycle(); //비트맵초기화
 
 
 			/*
@@ -651,7 +664,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
         }
         try {
             Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            //bitmap.recycle();
+            //bitmap.recycle(); // 에러남
             return bmRotated;
         }
         catch (OutOfMemoryError e) {
@@ -666,4 +679,27 @@ public class CameraActivity extends Activity implements SensorEventListener {
         byte[] byteArray = stream.toByteArray() ;
         return byteArray ;
     }
+
+	public static int calculateInSampleSize(
+			BitmapFactory.Options options, int reqWidth, int reqHeight) {
+		// Raw height and width of image
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+
+			final int halfHeight = height / 2;
+			final int halfWidth = width / 2;
+
+			// Calculate the largest inSampleSize value that is a power of 2 and keeps both
+			// height and width larger than the requested height and width.
+			while ((halfHeight / inSampleSize) > reqHeight
+					&& (halfWidth / inSampleSize) > reqWidth) {
+				inSampleSize *= 2;
+			}
+		}
+
+		return inSampleSize;
+	}
 }
