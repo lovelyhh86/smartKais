@@ -1293,6 +1293,18 @@ var MapUtil = {
                                 makeOptSelectBox("rddr_afRdCo","AF_RD_CD","","","");
                                 $("#rddr_afRdCo").val(rddr_afRdCo);
 
+                                //규격
+                                // var useTarget = data.useTarget;
+                                // var rddr_rddrGdSd = data.rddr_rddrGdSd;
+                                try{
+                                    var useCd = rddr_afRdplqSe.charAt(1) +  rddr_afRdCo.charAt(2);    
+                                } catch (error) {
+                                    util.toast(msg.checkObject.format("도로명판 유형 및 이면도로갯수"),"error");
+                                }
+                                
+                                customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
+                                $("#rddr_rddrGdSd").val(data.rddr_rddrGdSd);
+
                                 changeAfRdplqSe('rddr_afRdplqSe');
                                 changeAfrdCo('rddr_afRdCo');
 
@@ -1328,18 +1340,7 @@ var MapUtil = {
                                 } catch (error) {
                                     util.toast(msg.checkObject.format("이면도로명판 내용"),"error");
                                 }
-
-                                //규격
-                                // var useTarget = data.useTarget;
-                                // var rddr_rddrGdSd = data.rddr_rddrGdSd;
-                                try{
-                                    var useCd = rddr_afRdplqSe.charAt(1) +  rddr_afRdCo.charAt(2);    
-                                } catch (error) {
-                                    util.toast(msg.checkObject.format("도로명판 유형 및 이면도로갯수"),"error");
-                                }
                                 
-                                customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
-                                $("#rddr_rddrGdSd").val(data.rddr_rddrGdSd);
                                 
                                 // setNameplateView();
 
