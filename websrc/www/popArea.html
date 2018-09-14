@@ -26,6 +26,35 @@
 				<!-- 시설물 별로 확정 -->
 				<input id="trgGbn" type="hidden" value="04"/>
 
+				<div class="blueTitle">
+					<h2>기본정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="기본정보">
+						<caption>기본정보</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">시설일련번호</th>
+								<td>
+									<p id="rdGdftySnLbl">&nbsp;</p>
+								</td>
+								<th scope="row">설치상태</th>
+								<td>
+									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
+									<p id="delStateCd" style="display:none;"></p>
+									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
+									<p id="delStateCd_new" style="display:none"></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<!-- 배정 -->
 				<div class="blueTitle">
 					<h2>배정정보</h2>
@@ -52,32 +81,6 @@
 								<td>
 									<p id="rcrNm" name="oldRcLbl" ></p>
 									<p id="rcrSn" name="newRcLbl" style="display:none;"></p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<div class="blueTitle">
-					<h2>상태</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="상태">
-						<caption>상태</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">설치상태</th>
-								<td colspan="3">
-									<p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
-									<p id="delStateCd" style="display:none;"></p>
-									<p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
-									<p id="delStateCd_new" style="display:none"></p>
 								</td>
 							</tr>
 						</tbody>
@@ -143,117 +146,7 @@
 				<div id="updtNotice" class = "redNotice">
 					<span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
 				</div>
-				<div class="blueTitle">
-					<h2>일련번호</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="내용">
-						<caption>일련번호</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">안내시설번호</th>
-								<td>
-									<p id="rdGdftySnLbl">&nbsp;</p>
-								</td>
-								<th scope="row">위치일련번호</th>
-								<td>
-									<p id="rdFtyLcSnLbl">&nbsp;</p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="blueTitle">
-					<h2>위치정보</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="위치정보">
-						<caption>위치정보</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">도로시설물</th>
-								<td colspan="3">
-									<p id="rdftySeLbl"></p>
-									<p id="rdftySe" style="display:none"></p>
-								</td>
-								
-							</tr>
-							<tr>
-								<th scope="row">설치도로명</th>
-								<td>
-									<p id="bsisRnLbl">&nbsp;</p>
-								</td>
-								<th scope="row">설치기초번호</th>
-								<td>
-									<p id="bsis">&nbsp;</p>
-								</td>
-							</tr>
-						</tbody>
-
-					</table>
-				</div>
-				
-				<div class="blueTitle">
-					<h2>기본정보</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="기본정보">
-						<caption>기본정보</caption>
-						<colgroup>
-							<col class="cell20">
-							<col class="cell30">
-							<col class="cell20">
-							<col class="cell30">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th scope="row">설치유형</th>
-								<td>
-									<p id="instSeLbl">&nbsp;</p>
-									<p id="instSe" style="display:none"></p>
-								</td>
-								<th scope="row">제작형식</th>
-								<td>
-									<p id="gdftyMnfLbl">&nbsp;</p>
-									<p id="gdftyMnf" style="display:none"></p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">설치지점</th>
-								<td>
-									<select id="instSpotCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">조명여부</th>
-								<td>
-									<select id="lghtCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">교차로 유형</th>
-								<td>
-									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">설치일자</th>
-								<td>
-									<p id="instDate"></p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
+			
 				<div class="blueTitle">
 					<h2>내용</h2>
 				</div>
@@ -293,23 +186,27 @@
 									<input type='number' class="cell30" id="area_edbsSn" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
 								</td>
 							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>위치정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="위치정보">
+						<caption>위치정보</caption>
+						<colgroup>
+							<col class="cell20">
+							<col class="cell30">
+							<col class="cell20">
+							<col class="cell30">
+						</colgroup>
+						<tbody>
 							<tr>
-								<th scope="row">광고에따른<br>분류</th>
-								<td>
-									<select id="area_advrtsCd" class="cell100 notNull" onchange="changeAdvrtsCd(this.id)"/>
-								</td>
-								<td/><td/>
-							</tr>
-							<tr>
-								<th scope="row">광고내용</th>
+								<th scope="row">위치</th>
 								<td colspan="3">
-									<textarea class="cell100" id="area_advCn" onclick="scrollDown(999)" onchange="txtMaxlength(this.id,'127','0')"/>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">기타내용</th>
-								<td colspan="3">
-									<textarea class="cell100" id="area_etcCn" onclick="scrollDown(999)" onchange="txtMaxlength(this.id,'127','0')"/>
+									<span id="bsisRnLbl">&nbsp;</span>&nbsp;<span id="bsis">&nbsp;</span>
 								</td>
 							</tr>
 						</tbody>
@@ -330,42 +227,26 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">안내시설형식</th>
+								<th scope="row">형식</th>
 								<td>
 									<!-- <p id="gdftyFormLbl">&nbsp;</p> -->
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
 									<select id="gdftyForm" class="cell100 notNull" disabled="disabled" onchange="changeGdftyForm(this.id)"/>
 								</td>
+								<th scope="row">설치일자</th>
+								<td>
+									<p id="instDate"></p>
+								</td>
+							</tr>
+							<tr>
+								
 								<th scope="row">사용대상</th>
 								<td>
 									<select id="useTarget" class="cell100 notNull" onchange="changeUseTarget(this.id)"/>
 								</td>
-							</tr>
-							<tr>
-								<th scope="row">재질</th>
+								<th scope="row">조명여부</th>
 								<td>
-									<select id="gdftyQlt" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">양면여부</th>
-								<td>
-									<select id="bdrclAt" class="cell100 notNull" disabled="disabled"/>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">제2외국어여부</th>
-								<td>
-									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
-								</td>
-								<td></td><td></td>
-							</tr>
-							<tr>
-								<th scope="row">언어1</th>
-								<td>
-									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">언어2</th>
-								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
+									<select id="lghtCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 							</tr>
 							<tr>
@@ -380,7 +261,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">가로세로두께</th>
+								<th scope="row">가로∙세로∙두께</th>
 								<td colspan="3">
 									<input type='number' class="cell10" id="gdftyWide" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
 									<span>mm *</span>
@@ -388,6 +269,86 @@
 									<span>mm *</span>
 									<input type='number' class="cell10" id="gdftyThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')" oninput="firstTextZero(this.id)"/>
 								</td>
+							</tr>
+							<tr>
+								<th scope="row">광고에따른<br>분류</th>
+								<td>
+									<select id="area_advrtsCd" class="cell100 notNull" onchange="changeAdvrtsCd(this.id)"/>
+								</td>
+								<td/><td/>
+							</tr>
+							
+							<!-- 숨김 항목-->
+							<tr hidden="hidden">
+								<th scope="row">설치시설물</th>
+								<td colspan="3">
+									<p id="rdftySeLbl"></p>
+									<p id="rdftySe" style="display:none"></p>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">광고내용</th>
+								<td colspan="3">
+									<textarea class="cell100" id="area_advCn" onclick="scrollDown(999)" onchange="txtMaxlength(this.id,'127','0')"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">기타내용</th>
+								<td colspan="3">
+									<textarea class="cell100" id="area_etcCn" onclick="scrollDown(999)" onchange="txtMaxlength(this.id,'127','0')"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">재질</th>
+								<td>
+									<select id="gdftyQlt" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								<th scope="row">양면여부</th>
+								<td>
+									<select id="bdrclAt" class="cell100 notNull" disabled="disabled"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">제2외국어여부</th>
+								<td>
+									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
+								</td>
+								<td></td><td></td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">언어1</th>
+								<td>
+									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								<th scope="row">언어2</th>
+								<td>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">제작형식</th>
+								<td>
+									<p id="gdftyMnfLbl">&nbsp;</p>
+									<p id="gdftyMnf" style="display:none"></p>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">설치유형</th>
+								<td>
+									<p id="instSeLbl">&nbsp;</p>
+									<p id="instSe" style="display:none"></p>
+								</td>
+								<th scope="row">설치지점</th>
+								<td>
+									<select id="instSpotCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">교차로 유형</th>
+								<td>
+									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								
 							</tr>
 						</tbody>
 					</table>
