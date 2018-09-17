@@ -45,8 +45,12 @@
                         </colgroup>
                         <tbody>
                             <tr>
+                                <th scope="row">시설일련번호</th>
+                                <td>
+                                    <p id="bulNmtNoLbl">&nbsp;</p>
+                                </td>
                                 <th scope="row">설치상태</th>
-                                <td colspan="3">
+                                <td>
                                     <p id="delStateCdLbl" name="oldLbl" >&nbsp;</p>
                                     <p id="delStateCd" style="display:none;"></p>
                                     <p id="delStateCdLbl_new" name="newLbl" style="display:none; color:red"></p>
@@ -150,39 +154,11 @@
                     <span>※ 빨간색 항목은 승인 대기 중인 데이터 입니다.</span>
                 </div>
                 <div class="blueTitle">
-                    <h2>일련번호</h2>
+                    <h2>내용</h2>
                 </div>
                 <div class="tableWrap">
                     <table class="dataTable" summary="내용">
-                        <caption>일련번호</caption>
-                        <colgroup>
-                            <col class="cell20">
-                            <col class="cell30">
-                            <col class="cell20">
-                            <col class="cell30">
-                        </colgroup>
-                        <tbody>
-                            <tr>
-                                <th scope="row">건물번호판</th>
-                                <td>
-                                    <p id="bulNmtNoLbl">&nbsp;</p>
-                                </td>
-                                <th class="bulLbl" scope="row" style="display: none">건물</th>
-                                <th class="eqbLbl" scope="row" style="display: none">건물군</th>
-                                <td>
-                                    <p class ="bulLbl" id="bulManNoLbl" style="display: none">&nbsp;</p>
-                                    <p class ="eqbLbl" id="eqbManSnLbl" style="display: none">&nbsp;</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="blueTitle">
-                    <h2>관련정보</h2>
-                </div>
-                <div class="tableWrap">
-                    <table class="dataTable" summary="관련정보">
-                        <caption>관련정보</caption>
+                        <caption>내용</caption>
                         <colgroup>
                             <col class="cell20">
                             <col class="cell30">
@@ -205,12 +181,13 @@
                         </tbody>
                     </table>
                 </div>
+                
                 <div class="blueTitle">
-                    <h2>설치정보</h2>
+                    <h2>속성</h2>
                 </div>
                 <div class="tableWrap">
-                    <table class="dataTable" summary="설치정보">
-                        <caption>설치정보</caption>
+                    <table class="dataTable" summary="속성">
+                        <caption>속성</caption>
                         <colgroup>
                             <col class="cell20">
                             <col class="cell30">
@@ -219,17 +196,18 @@
                         </colgroup>
                         <tbody>
                             <tr>
+                                <th scope="row">형식</th>
+                                <td>
+                                    <select id="buldNmtType" class="cell100" disabled="disabled" onchange="changeBuldNmtPurpose(this.id);"/>
+                                    <!-- <p id="buldNmtTypeLbl"></p> -->
+                                </td>
                                 <th scope="row">설치일자</th>
                                 <td>
                                     <p id="instDate"></p>
                                 </td>
-                                <th scope="row">유형</th>
-                                <td>
-                                    <select id="buldNmtSe" class="cell100" onchange="checkChangeOrigin(this.id)"/>
-                                </td>
                             </tr>
                             <tr>
-                                <th scope="row">제작유형</th>
+                                <th scope="row">제작형식</th>
                                 <td>
                                     <select id="buldMnfCd" class="cell100" onchange="changeMnf(this.id)"/>
                                 </td>
@@ -238,43 +216,16 @@
                                     <select id="lghtCd" class="cell100" onchange="checkChangeOrigin(this.id)"/>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="blueTitle">
-                    <h2>세부입력정보</h2>
-                </div>
-                <div class="tableWrap">
-                    <table class="dataTable" summary="세부입력정보">
-                        <caption>세부입력정보</caption>
-                        <colgroup>
-                            <col class="cell20">
-                            <col class="cell30">
-                            <col class="cell20">
-                            <col class="cell30">
-                        </colgroup>
-                        <tbody>
                             <tr>
-                                <th scope="row">형태</th>
-                                <td>
-                                    <select id="buldNmtType" class="cell100" disabled="disabled" onchange="changeBuldNmtPurpose(this.id);"/>
-                                    <!-- <p id="buldNmtTypeLbl"></p> -->
-                                </td>
-                                <th scope="row">용도</th>
-                                <td>
-                                    <select id="buldNmtPurpose" class="cell100 notNull" onchange="changeBuldNmtCd(this.id);"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">표면처리방법</th>
-								<td>
-									<select id="prtTy" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
-								</td>
                                 <th scope="row">재질</th>
                                 <td>
                                     <select id="buldNmtMaterial" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
                                     <input type = "hidden" id="buldNmtMaterial_new">
                                 </td>
+                                <th scope="row">표면처리방법</th>
+								<td>
+									<select id="prtTy" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+								</td>
                             </tr>
                             <tr>
                                 <th scope="row">규격</th>
@@ -288,7 +239,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row">가로세로두께</th>
+                                <th scope="row">가로∙세로∙두께</th>
                                 <td colspan="3">
                                     <input type='number' class="cell10" id="buldNmtWide" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
                                     <span>mm *</span>
@@ -305,6 +256,25 @@
                                 <th scope="row">자율형 한글자 크기(세로)</th>
                                 <td >
                                     <input type='number' class="cell30" id="bulNmtFtVe" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
+                                </td>
+                            </tr>
+                            <!-- 숨김항목-->
+                            <tr hidden="hidden">
+                                <th scope="row">설치유형</th>
+                                <td>
+                                    <select id="buldNmtSe" class="cell100" onchange="checkChangeOrigin(this.id)"/>
+                                </td>
+                                <th scope="row">용도</th>
+                                <td>
+                                    <select id="buldNmtPurpose" class="cell100 notNull" onchange="changeBuldNmtCd(this.id);"/>
+                                </td>
+                            </tr>
+                            <tr hidden="hidden">
+                                <th class="bulLbl" scope="row" style="display: none">건물</th>
+                                <th class="eqbLbl" scope="row" style="display: none">건물군</th>
+                                <td>
+                                    <p class ="bulLbl" id="bulManNoLbl" style="display: none">&nbsp;</p>
+                                    <p class ="eqbLbl" id="eqbManSnLbl" style="display: none">&nbsp;</p>
                                 </td>
                             </tr>
                         </tbody>
