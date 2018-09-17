@@ -3601,6 +3601,7 @@ function selectOldImg(){
 
                                 $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                                $(".picInfo." + image.tbGbn + " .opertDe").html('촬영일자 : '+ image.opertDe);
                                 MapUtil.photo.doLoaded(true, image.tbGbn);
                                 
                             } else {

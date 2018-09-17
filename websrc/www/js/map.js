@@ -18,6 +18,7 @@ var MapUtil = {
                 var picInfo = $(".photoTable .picInfo" + (type ? "."+type : ""));
 
                 picInfo.find(".picImg IMG").remove();   // 기존 사진 화면 제거
+                picInfo.find(".opertDe").html('-');
                 picInfo.each(function(i, o){
                     $(o).data('picSn', '');  // 기존 사진 일련번호 초기화
                 });
@@ -26,7 +27,7 @@ var MapUtil = {
                     MapUtil.photo.doLoaded(false, type);
                     MapUtil.photo.doEdit(false, type);
                 } else {
-                    MapUtil.photo.state.L.isPhoto = MapUtil.photo.state.L.edited =
+                    MapUtil.photo.state.L.isPhoto = MapUtil.photo.state.L.edited = false;
                     MapUtil.photo.state.M.isPhoto = MapUtil.photo.state.M.edited = false;
                 }
             }
@@ -121,9 +122,11 @@ var MapUtil = {
                 $("#photoDialog").show();
 
                 var photoNum = $(".infoHeader .photo .photoNum").text();
+                var cntMphoto = $("#cntMphoto").text();
+                var cntLphoto = $("#cntLphoto").text();
 
                 var autoImgRoadConf = localStorage["autoImgRoadConf"];
-                if(photoNum > 0 && autoImgRoadConf == "on"){
+                if((cntMphoto > 0 || cntLphoto > 0) && autoImgRoadConf == "on"){
                     // selectOriImg();
                     selectOldImg();
                 }
@@ -150,6 +153,7 @@ var MapUtil = {
                     var photoType = picInfo.data("picType");   // 구분(원거리: L, 근거리: M)
 
                     picInfo.find(".picImg IMG").remove();   // 기존 사진 화면 제거
+                    picInfo.find(".opertDe").html('-');   // 기존 사진 저장일자 제거
                     picInfo.find(".picImg").append(imgHtml);
                     MapUtil.photo.doEdit(true, photoType);    // 편집 상태 반영
                 });

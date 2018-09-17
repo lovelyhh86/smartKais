@@ -199,7 +199,7 @@
 div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .cell2 >.radioBox> div.ui-checkbox, .cell2 >.radioBox >div.ui-radio {margin: .8em 0;position: relative;}
 
-.dataBtn{border-top:1px solid #e5e5e5; text-align: center; margin-top:20px; padding: 20px 0  15px 0;}
+.dataBtn{border-top:1px solid #e5e5e5; text-align: center; margin-top:5px; padding: 20px 0  15px 0;}
 .dataBtn >.btnPoint{display:inline-block; margin-left:5px ; padding:8px 50px; background-color: #496388; color:#fff;text-shadow: none; font-size: 0.8em}
 .dataBtn >.btnNormal{display:inline-block; padding:8px 50px; background-color: #c0c0c0; color:#e5e5e5;text-shadow: none;font-size: 0.9em}
 .dataClose{position: absolute;top:15px;right:20px}
@@ -219,7 +219,15 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .photoTable .cell{display: table-cell; padding:0 10px;  vertical-align: middle;}
 .photoTable .photoTItle{display: block; margin-bottom:10px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
 
-.photoSub{display:inline-block; text-align: center; padding-top: 15px; padding-bottom: 15px; width: 320px; margin-bottom:5px; color: #000;font-weight: 500;}
+.photoSub{display:inline-block;
+	text-align: center;
+	padding-top: 10px; 
+	padding-bottom: 20px; 
+	width: 320px; 
+	height: 7px;
+	/* margin-bottom:5px; */
+	color: #000;
+	font-weight: 500;}
 .picInfo{padding:5px; background-color:#fff; vertical-align: middle; color: #fff;}
 .picImg{display:inline-block; width: 320px; height: 240px; line-height: 240px; text-align: center; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
 .picImg img {max-height: 100%; vertical-align: middle;}
