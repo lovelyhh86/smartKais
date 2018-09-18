@@ -2358,15 +2358,23 @@ function modify(){
                 return;
             }
             var frontRomeRoadNm = $("#frontRomeRoadNm").text();
-            //시작기초번호
+            //시작기초번호 본번
             var frontStartBaseMasterNo = $("#frontStartBaseMasterNo").val();
-            var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
-            if(frontStartBaseMasterNo == "" || frontStartBaseSlaveNo == ""){
-                navigator.notification.alert(msg.dontInsertNull.format("앞면 시작기초번호"), function(){
+            if(frontStartBaseMasterNo == "" || frontStartBaseMasterNo == 0){
+                navigator.notification.alert(msg.checkZero.format("앞면 시작기초번호 본번"), function(){
                     util.dismissProgress();
                 }, '알림', '확인');
                 return;
             }
+            //시작기초번호 부번
+            var frontStartBaseSlaveNo = $("#frontStartBaseSlaveNo").val();
+            if(frontStartBaseSlaveNo == ""){
+                navigator.notification.alert(msg.dontInsertNull.format("앞면 시작기초번호 부번"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
+
             //종료기초번호
             var frontEndBaseMasterNo = $("#frontEndBaseMasterNo").val();
             var frontEndBaseSlaveNo = $("#frontEndBaseSlaveNo").val();
@@ -2386,31 +2394,40 @@ function modify(){
                 return;
             }
             var backRomeRoadNm = $("#backRomeRoadNm").text();
-            // if(bdrclAt == "1"){
-                //시작기초번호
-                // var backStartBaseMasterNo = $("#backStartBaseMasterNo").val() == ""? 0 : $("#backStartBaseMasterNo").val();
-                // var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val() == ""? 0 : $("#backStartBaseSlaveNo").val();
+            if(bdrclAt == "1"){
+                //시작기초번호 본번
                 var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
+                if(backStartBaseMasterNo == "" || backStartBaseMasterNo == 0){
+                    navigator.notification.alert(msg.checkZero.format("뒷면 시작기초번호 본번"), function(){
+                        util.dismissProgress();
+                    }, '알림', '확인');
+                    return;
+                }
+                //시작기초번호 부번
                 var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
-
-                if(bdrclAt == "1" && (backStartBaseMasterNo == "" || backStartBaseSlaveNo == "")){
-                    navigator.notification.alert(msg.dontInsertNull.format("뒷면 시작기초번호"), function(){
+                if(backStartBaseSlaveNo == ""){
+                    navigator.notification.alert(msg.dontInsertNull.format("뒷면 시작기초번호 부번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
                     return;
                 }
-                //종료기초번호
-                // var backEndBaseMasterNo = $("#backEndBaseMasterNo").val() == ""? 0 : $("#backEndBaseMasterNo").val();
-                // var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val() == ""? 0 : $("#backEndBaseSlaveNo").val();
+                //종료기초번호 본번
                 var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();
-                var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val();
-                if( bdrclAt == "1" && (backEndBaseMasterNo == "" || backEndBaseSlaveNo == "")){
-                    navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호"), function(){
+                if(backEndBaseMasterNo == "" || backEndBaseMasterNo == 0){
+                    navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호 본번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
                     return;
                 }
-            // }
+                //종료기초번호 부번
+                var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val();
+                if(backEndBaseSlaveNo == ""){
+                    navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호 부번"), function(){
+                        util.dismissProgress();
+                    }, '알림', '확인');
+                    return;
+                }
+            }
 
             //규격
             var rdpqGdSd = $("#rdpqGdSd").val();
@@ -2424,6 +2441,18 @@ function modify(){
                     util.dismissProgress();
                 }, '알림', '확인');
                 return;
+            }
+
+            //차로용 소로용의 경우 앞쪽방향용 선택 불가
+            if(gdftyForm == "10000" && (useTarget == "04000" || useTarget == "05000")){
+                if(plqDirection == "00300"){
+                    //최초 값으로 되돌림
+                    $("#useTarget").val($("#useTarget_origin").val());
+                    $("#useTarget").trigger("change");
+                    // util.toast("방향이 앞쪽 방향용인 경우 사용대상을 차로용 소로용을 선택할 수 없습니다.","warning");
+                    navigator.notification.alert(msg.plqUseTargetCheck, '', '알림', '확인');
+                    return;
+                }
             }
             
             commomParams = $.extend(commomParams,{

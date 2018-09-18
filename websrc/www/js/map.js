@@ -986,11 +986,11 @@ var MapUtil = {
                         makeOptSelectBox("instSpotCd","INS_SPO_CD","","","");
                         $("#instSpotCd").val(data.instSpotCd);
                         //조명여부
-                        if(gdftyMnf == "1"){
-                            customSelectBox("lghtCd","LGHT_CD","2",0,1);
-                        }else{
-                            makeOptSelectBox("lghtCd","LGHT_CD","2","","");
-                        }
+                        // if(gdftyMnf == "1"){
+                        //     customSelectBox("lghtCd","LGHT_CD","2",0,1);
+                        // }else{
+                            makeOptSelectBox("lghtCd","LGHT_CD","","","");
+                        // }
                         $("#lghtCd").val(data.lghtCd);
                         //교차로유형
                         makeOptSelectBox("instCrossCd","INS_CRS_CD","","","");
@@ -1439,9 +1439,26 @@ var MapUtil = {
 
                             //규격
                             var colume = "AREA_GD_SD";
+                            var area_areaGdSd = data.area_areaGdSd;
                             makeOptSelectBox("area_areaGdSd",colume,"","","");
-                            $("#area_areaGdSd").val(data.area_areaGdSd);
-                            
+                            $("#area_areaGdSd").val(area_areaGdSd);
+
+                            var areaGbnLbl = "-";
+                            switch (area_areaGdSd) {
+                                case '10001':
+                                    areaGbnLbl = '소형'
+                                    break;
+                                case '10002':
+                                    areaGbnLbl = '중형'
+                                    break;
+                                case '10003':
+                                    areaGbnLbl = '대형'
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            $("#areaGbnLbl").text(areaGbnLbl);
                             //임시데이터 존재 여부
                             var isUpdtGbn = data.isUpdtGbn;
                             $("#isUpdtGbn").val(isUpdtGbn);
@@ -1626,7 +1643,7 @@ var MapUtil = {
 
                             //형태
                             var buldNmtType = data.buldNmtType;
-                            // $("#buldNmtTypeLbl").html(data.buldNmtTypeLbl);
+                            $("#buldNmtTypeLbl").html(data.buldNmtTypeLbl);
                             customSelectBox("buldNmtType","BUL_NMT_TY","000",1,3);
                             $("#buldNmtType").val(data.buldNmtType);
                             // $("#buldNmtType").hide();
@@ -1642,7 +1659,9 @@ var MapUtil = {
                                util.toast(msg.checkObject.format("용도"),"error");
                             }
                             var buldNmtPurpose = data.buldNmtPurpose;
+                            // var buldNmtPurposeLbl = data.buldNmtPurposeLbl;
                             $("#buldNmtPurpose").val(buldNmtPurpose);
+                            // $("#buldNmtPurposeLbl").text(buldNmtPurposeLbl);
                             // changeBuldNmtPurpose("buldNmtPurpose");
                             //규격
                             try{
@@ -3039,7 +3058,12 @@ var mapInit = function(mapId, pos) {
                                     // if (rdGdftySe == "110") {
                                     if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){
                                         layerID = DATA_TYPE.RDPQ;
-                                        var gbn = commonP.format("gbn", "[{0}]".format(resultList[i].rdGdftySeLbl));
+                                        var rdftySe = resultList[i].rdftySe;
+                                        var rdGdftySeLbl = resultList[i].rdGdftySeLbl;
+                                        if(rdftySe == '06'){
+                                            rdGdftySeLbl = rdGdftySeLbl + '(벽)';
+                                        }
+                                        var gbn = commonP.format("gbn", "[{0}]".format(rdGdftySeLbl));
                                         //제목창
                                         var title = '';
                                         //명판방향

@@ -179,18 +179,18 @@
 								<td onclick="scrollDown(999)">
 									<input type='text' class="cell70" id="bsis_korRn" onchange="txtMaxlength(this.id,'40')"/>
 								</td>
+								<th scope="row">로마자</th>
+								<td>
+									<p id="bsis_romRn">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
 								<th scope="row">기초번호</th>
 								<td>
 									<p id="bsis_ctbsNo">&nbsp;</p>
 									<!-- <input type='number' class="cell30" id="bsis_ctbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
 									<span>-</span>
 									<input type='number' class="cell30" id="bsis_ctbsSn"  readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">로마자</th>
-								<td>
-									<p id="bsis_romRn">&nbsp;</p>
 								</td>
 								<td/><td/>
 							</tr>
@@ -208,29 +208,6 @@
 									<!-- <input type='number' class="cell30" id="bsis_ntbsMn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/>
 									<span>-</span>
 									<input type='number' class="cell30" id="bsis_ntbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')"/> -->
-								</td>
-							</tr>
-							<tr hidden="hidden">
-								<th scope="row">양면여부</th>
-								<td>
-									<select id="bdrclAt" class="cell100 notNull" />
-								</td>
-							</tr>
-							<tr hidden="hidden">
-								<th scope="row">제2외국어여부</th>
-								<td>
-									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
-								</td>
-								<td></td><td></td>
-							</tr>
-							<tr hidden="hidden">
-								<th scope="row">언어1</th>
-								<td>
-									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">언어2</th>
-								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
 							</tr>
 						</tbody>
@@ -251,12 +228,6 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">위치</th>
-								<td colspan="3">
-									<span id="bsisRnLbl">&nbsp;</span>&nbsp;<span id="bsis">&nbsp;</span>
-								</td>
-							</tr>
-							<tr>
 								<!-- <th scope="row">도로시설물</th>
 								<td>
 									<p id="rdftySeLbl"></p>
@@ -276,18 +247,13 @@
 									<textarea class="cell100" id="bsis_insFtyDc" onclick="scrollDown(999)" onchange="txtMaxlength(this.id,'50','0')"/>
 								</td>
 							</tr>
-							<tr hidden="hidden">
-								<th scope="row">설치지점</th>
-								<td>
-									<select id="instSpotCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">교차로 유형</th>
-								<td>
-									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+							<tr>
+								<th scope="row">위치</th>
+								<td colspan="3">
+									<span id="bsisRnLbl">&nbsp;</span>&nbsp;<span id="bsis">&nbsp;</span>
 								</td>
 							</tr>
 						</tbody>
-
 					</table>
 				</div>
 
@@ -305,31 +271,19 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">형식</th>
+								<th scope="row">설치일자</th>
+								<td>
+									<p id="instDate"></p>
+								</td>
+								<th scope="row">설치유형</th>
 								<td>
 									<!-- <p id="gdftyFormLbl">&nbsp;</p> -->
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
 									<select id="gdftyForm" class="cell100 notNull" disabled="disabled" onchange="changeGdftyForm(this.id)"/>
 								</td>
-								<th scope="row">설치일자</th>
-                                <td>
-                                    <p id="instDate"></p>
-                                </td>
 							</tr>
 							<tr>
-								<th scope="row">설치유형</th>
-								<td>
-									<p id="instSeLbl">&nbsp;</p>
-									<p id="instSe" style="display:none"></p>
-								</td>
 								<th scope="row">제작형식</th>
-								<td>
-									<p id="gdftyMnfLbl">&nbsp;</p>
-									<p id="gdftyMnf" style="display:none"></p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">조명여부</th>
 								<td>
 									<select id="lghtCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
@@ -368,6 +322,50 @@
 									<input type='number' class="cell10" id="gdftyVertical" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
 									<span>mm *</span>
 									<input type='number' class="cell10" id="gdftyThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')" oninput="firstTextZero(this.id)"/>
+								</td>
+							</tr>
+							<!-- 숨김항목-->
+							<tr hidden="hidden">
+								<th scope="row">설치유형</th>
+								<td>
+									<p id="instSeLbl">&nbsp;</p>
+									<p id="instSe" style="display:none"></p>
+								</td>
+								<th scope="row">양면여부</th>
+								<td>
+									<select id="bdrclAt" class="cell100 notNull" />
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">제2외국어여부</th>
+								<td>
+									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
+								</td>
+								<td></td><td></td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">언어1</th>
+								<td>
+									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								<th scope="row">언어2</th>
+								<td>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">설치지점</th>
+								<td>
+									<select id="instSpotCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								<th scope="row">교차로 유형</th>
+								<td>
+									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								<th scope="row">제작형식</th>
+								<td>
+									<p id="gdftyMnfLbl">&nbsp;</p>
+									<p id="gdftyMnf" style="display:none"></p>
 								</td>
 							</tr>
 						</tbody>

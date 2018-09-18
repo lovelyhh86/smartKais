@@ -232,16 +232,16 @@ function changeUseTarget(id){
             }else if(rdGdftySe == "110"){
 
                 //차로용 소로용의 경우 앞쪽방향용 선택 불가
-                if(gdftyForm == "10000" && (useTarget == "04000" || useTarget == "05000")){
-                    if(plqDirection == "00300"){
-                        //최초 값으로 되돌림
-                        $("#useTarget").val($("#useTarget_origin").val());
-                        $("#useTarget").trigger("change");
-                        // util.toast("방향이 앞쪽 방향용인 경우 사용대상을 차로용 소로용을 선택할 수 없습니다.","warning");
-                        navigator.notification.alert(msg.plqUseTargetCheck, '', '알림', '확인');
-                        return;
-                    }
-                }
+                // if(gdftyForm == "10000" && (useTarget == "04000" || useTarget == "05000")){
+                //     if(plqDirection == "00300"){
+                //         //최초 값으로 되돌림
+                //         $("#useTarget").val($("#useTarget_origin").val());
+                //         $("#useTarget").trigger("change");
+                //         // util.toast("방향이 앞쪽 방향용인 경우 사용대상을 차로용 소로용을 선택할 수 없습니다.","warning");
+                //         navigator.notification.alert(msg.plqUseTargetCheck, '', '알림', '확인');
+                //         return;
+                //     }
+                // }
 
                 if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){//보행자 차로용 소로용
                     var scfggMkty = $("#scfggMkty").val();
@@ -283,17 +283,17 @@ function changePlqDir(id){
         var useTarget = $("#useTarget").val();
         var gdftyForm = $("#gdftyForm").val();
 
-        //차로용 소로용의 경우 앞쪽방향용 선택 불가
-        if(gdftyForm == "10000" && plqDirection == "00300"){
-            if(useTarget == "04000" || useTarget == "05000"){
-                //최초 값으로 되돌림
-                $("#plqDirection").val($("#plqDirection_origin").val());
-                $("#plqDirection").trigger("change");
-                // util.toast("사용대상이 차로용 소로용인 경우 앞쪽 방향용을 선택할 수 없습니다.","warning");
-                navigator.notification.alert(msg.plqUseTargetCheck, '', '알림', '확인');
-                return;
-            }
-        }
+        // //차로용 소로용의 경우 앞쪽방향용 선택 불가
+        // if(gdftyForm == "10000" && plqDirection == "00300"){
+        //     if(useTarget == "04000" || useTarget == "05000"){
+        //         //최초 값으로 되돌림
+        //         $("#plqDirection").val($("#plqDirection_origin").val());
+        //         $("#plqDirection").trigger("change");
+        //         // util.toast("사용대상이 차로용 소로용인 경우 앞쪽 방향용을 선택할 수 없습니다.","warning");
+        //         navigator.notification.alert(msg.plqUseTargetCheck, '', '알림', '확인');
+        //         return;
+        //     }
+        // }
         changeRdpqGdSd('rdpqGdSd');
         checkChangeOrigin(id);
         
@@ -561,12 +561,12 @@ function changeAdvrtsCd(id){
 //제작형식에 따른 조명
 function changeMnf(id){
     try {
-        var thisValue = $("#"+id).val();
-        if(thisValue == "1"){//판자형
-            customSelectBox("lghtCd","LGHT_CD","2",0,1);
-        }else{
-            makeOptSelectBox("lghtCd","LGHT_CD","2","","");
-        }
+        // var thisValue = $("#"+id).val();
+        // if(thisValue == "1"){//판자형
+        //     customSelectBox("lghtCd","LGHT_CD","2",0,1);
+        // }else{
+            // makeOptSelectBox("lghtCd","LGHT_CD","","","");
+        // }
         checkChangeOrigin(id);
         
     } catch (error) {
@@ -1184,4 +1184,26 @@ function checkSelectBoxLength(id){
         
     }
 
+}
+
+function changeArea_areaGdSd(id){
+    var area_areaGdSd = $("#area_areaGdSd").val();
+
+    var areaGbnLbl = "-";
+    switch (area_areaGdSd) {
+        case '10001':
+            areaGbnLbl = '소형'
+            break;
+        case '10002':
+            areaGbnLbl = '중형'
+            break;
+        case '10003':
+            areaGbnLbl = '대형'
+            break;
+        default:
+            break;
+    }
+    $("#areaGbnLbl").text(areaGbnLbl);
+    // checkChangeOrigin('areaGbnLbl');
+    setGdfyWide(id);
 }

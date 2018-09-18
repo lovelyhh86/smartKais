@@ -437,31 +437,18 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">형식</th>
-								<td>
-									<!-- <p id="gdftyFormLbl">&nbsp;</p> -->
-									<!-- <p id="gdftyForm" style="display:none"></p> -->
-									<select id="gdftyForm" class="cell100 notNull" disabled="disabled" onchange="checkChangeOrigin(this.id)"/>
-								</td>
 								<th scope="row">설치일자</th>
                                 <td>
                                     <p id="instDate"></p>
-                                </td>
-							</tr>
-							<tr>
+								</td>
 								<th scope="row">설치유형</th>
 								<td>
 									<p id="instSeLbl">&nbsp;</p>
 									<p id="instSe" style="display:none"></p>
 								</td>
-								<th scope="row">제작형식</th>
-								<td>
-									<p id="gdftyMnfLbl">&nbsp;</p>
-									<p id="gdftyMnf" style="display:none"></p>
-								</td>
 							</tr>
 							<tr>
-								<th scope="row">조명여부</th>
+								<th scope="row">제작형식</th>
 								<td>
 									<select id="lghtCd" class="cell100" onchange="checkChangeOrigin(this.id)"/>
 								</td>
@@ -499,6 +486,21 @@
 									<input type='number' class="cell10" id="gdftyVertical" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
 									<span>mm *</span>
 									<input type='number' class="cell10" id="gdftyThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')" oninput="firstTextZero(this.id)"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">제작형식</th>
+								<td>
+									<p id="gdftyMnfLbl">&nbsp;</p>
+									<p id="gdftyMnf" style="display:none"></p>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">형식</th>
+								<td>
+									<!-- <p id="gdftyFormLbl">&nbsp;</p> -->
+									<!-- <p id="gdftyForm" style="display:none"></p> -->
+									<select id="gdftyForm" class="cell100 notNull" disabled="disabled" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 							</tr>
 						</tbody>
