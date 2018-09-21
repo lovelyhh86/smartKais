@@ -2394,10 +2394,10 @@ function modify(){
                 return;
             }
             var backRomeRoadNm = $("#backRomeRoadNm").text();
-            if(bdrclAt == "1"){
+            // if(bdrclAt == "1"){
                 //시작기초번호 본번
                 var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
-                if(backStartBaseMasterNo == "" || backStartBaseMasterNo == 0){
+                if(backStartBaseMasterNo == "" || (bdrclAt == "1" && backStartBaseMasterNo == 0)){
                     navigator.notification.alert(msg.checkZero.format("뒷면 시작기초번호 본번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
@@ -2413,7 +2413,7 @@ function modify(){
                 }
                 //종료기초번호 본번
                 var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();
-                if(backEndBaseMasterNo == "" || backEndBaseMasterNo == 0){
+                if(backEndBaseMasterNo == "" || bdrclAt == "1" && backEndBaseMasterNo == 0){
                     navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호 본번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
@@ -2427,7 +2427,7 @@ function modify(){
                     }, '알림', '확인');
                     return;
                 }
-            }
+            // }
 
             //규격
             var rdpqGdSd = $("#rdpqGdSd").val();
