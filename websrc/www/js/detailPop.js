@@ -2606,6 +2606,14 @@ function modify(){
                 }, '알림', '확인');
                 return;
             }
+            //양면여부
+            var bdrclAt = $("#bdrclAt").val();
+            if(bdrclAt == null){
+                navigator.notification.alert(msg.dontInsertNull.format("양면여부"), function(){
+                    util.dismissProgress();
+                }, '알림', '확인');
+                return;
+            }
 
             commomParams = $.extend(commomParams,{
                 prntGdSd : prntGdSd,
@@ -2663,6 +2671,15 @@ function modify(){
             return;
         }
 
+        //표면처리방법
+        var prtTy = $("#prtTy").val();
+        if(prtTy == null){
+            navigator.notification.alert(msg.dontInsertNull.format("표면처리방법"), function(){
+                util.dismissProgress();
+            }, '알림', '확인');
+            return;
+        }
+
         commomParams = $.extend(commomParams,{
             area_areaKorRn : area_areaKorRn,
             // area_stbsMn : area_stbsMn,
@@ -2673,8 +2690,8 @@ function modify(){
             area_advCn : area_advCn,
             area_etcCn : area_etcCn,
             area_areaGdSd : area_areaGdSd,
-            bdrclAt : bdrclAt
-
+            bdrclAt : bdrclAt,
+            prtTy : prtTy
         })
     }else if(trgGbn == DATA_TYPE.BSIS){
         //설치장소구분
@@ -2749,6 +2766,15 @@ function modify(){
             return;
         }
 
+        //표면처리방법
+        var prtTy = $("#prtTy").val();
+        // if(prtTy == null){
+        //     navigator.notification.alert(msg.dontInsertNull.format("표면처리방법"), function(){
+        //         util.dismissProgress();
+        //     }, '알림', '확인');
+        //     return;
+        // }
+
         commomParams = $.extend(commomParams,{
             bsis_itlpcSe : bsis_itlpcSe,
             bsis_instlFty : bsis_instlFty,
@@ -2762,7 +2788,8 @@ function modify(){
             bsis_ntbsSn : bsis_ntbsSn,
             bsisMthd : bsisMthd,
             bsis_bsisGdSd : bsis_bsisGdSd,
-            bdrclAt : bdrclAt
+            bdrclAt : bdrclAt,
+            prtTy : prtTy
 
         })
 
