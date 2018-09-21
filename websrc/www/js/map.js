@@ -1058,15 +1058,15 @@ var MapUtil = {
                         makeOptSelectBox("prtTy","PRT_TY","","","");
                         $("#prtTy").val(data.prtTy);
 
-                        //가로*세로*두께
-                        $("#gdftyWide").val(data.gdftyWide);
-                        $("#gdftyVertical").val(data.gdftyVertical);
-                        $("#gdftyThickness").val(data.gdftyThickness);
-                        //표준형 일때
-                        if(data.gdftyForm == "10000"){
-                            $("#gdftyWide").attr("disabled","disabled");
-                            $("#gdftyVertical").attr("disabled","disabled");
-                        }
+                        // //가로*세로*두께
+                        // $("#gdftyWide").val(data.gdftyWide);
+                        // $("#gdftyVertical").val(data.gdftyVertical);
+                        // $("#gdftyThickness").val(data.gdftyThickness);
+                        // //표준형 일때
+                        // if(data.gdftyForm == "10000"){
+                        //     $("#gdftyWide").attr("disabled","disabled");
+                        //     $("#gdftyVertical").attr("disabled","disabled");
+                        // }
 
                     }
 
@@ -1690,6 +1690,17 @@ var MapUtil = {
                             $("#buldNmtMaterial").val(data.buldNmtMaterial);
                            
                     }
+
+                    //가로*세로*두께
+                    $("#gdftyWide").val(data.gdftyWide);
+                    $("#gdftyVertical").val(data.gdftyVertical);
+                    $("#gdftyThickness").val(data.gdftyThickness);
+                    //표준형 일때
+                    if(data.gdftyForm == "10000"){
+                        $("#gdftyWide").attr("disabled","disabled");
+                        $("#gdftyVertical").attr("disabled","disabled");
+                    }
+                    
                     //*****************점검정보*****************
                     //****배정정보*****
                     //계획년도

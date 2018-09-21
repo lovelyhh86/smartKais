@@ -431,13 +431,13 @@ function changeBsisGdSd(id){
         var scfggMkty = $("#scfggMkty").val();
         var bsis_bsisGdSd = $("#bsis_bsisGdSd").val();
         
-        //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
-        if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
-            // makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
-            $("#bsis_bsisGdSd").empty();
-            checkChangeOrigin(id);
-            return;
-        }
+        // //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
+        // if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
+        //     // makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
+        //     $("#bsis_bsisGdSd").empty();
+        //     checkChangeOrigin(id);
+        //     return;
+        // }
 
         var codeValue = gdftyForm.charAt(0) + useTarget.charAt(1) +  bsis_itlpcSe.charAt(2);
         // var lastNum = 3;
@@ -450,6 +450,11 @@ function changeBsisGdSd(id){
         // }else if(useTarget == "02000" || useTarget == "03000" || useTarget == "06000"){
         //     codeValue = "13"
         //     lastNum = 2;
+        }else if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){//제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
+            // makeOptSelectBox("bsis_bsisGdSd","","","규격없음","");
+            $("#bsis_bsisGdSd").empty();
+            checkChangeOrigin(id);
+            return;
         }
 
         customSelectBox("bsis_bsisGdSd","BSIS_GD_SD",codeValue,0,3);
