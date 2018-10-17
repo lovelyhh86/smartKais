@@ -243,7 +243,7 @@ function createRnNm(type ,d){
                         //방향
                         var drcRdDrc =rddrCnList[0].drcRdDrc;
 
-                        var drcRdDrcLbl = "-";
+                        var drcRdDrcLbl = "";
                         if(drcRdDrc == "1"){
                             drcRdDrcLbl = "⇳";
                         }else if(drcRdDrc == "2"){
@@ -276,8 +276,8 @@ function createRnNm(type ,d){
         
         if(type == "210" && d.rddr_afRdplqSe == "01000"){
             rnLbl = "{0}".format(
-                frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음',
-            );
+                frontKoreanRoadNm ? frontKoreanRoadNm : '도로명없음'
+            )
         }else if(plqDirection == '00200'){
             rnLbl = "{0} {1} {2}".format(
                     frontStartBaseNo,

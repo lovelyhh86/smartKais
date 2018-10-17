@@ -1138,7 +1138,7 @@ var MapUtil = {
                                             //방향
                                             var drcRdDrc =rddrCnList[0].drcRdDrc;
 
-                                            var drcRdDrcLbl = "-";
+                                            var drcRdDrcLbl = "";
                                             if(drcRdDrc == "1"){
                                                 drcRdDrcLbl = "⇳";
                                             }else if(drcRdDrc == "2"){
