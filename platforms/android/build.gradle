@@ -267,8 +267,10 @@ dependencies {
     releaseCompile project(path: 'CordovaLib', configuration: 'release')
     // SUB-PROJECT DEPENDENCIES END
     compile 'com.android.support:design:23.2.1'
-    compile files('libs/MFF-Mobile-Lib_v1.7.4.jar')
-//    compile files('libs/MFF-Mobile-Lib_testbed_1.7.5_18032901.jar')
+    //운영 사용시
+//    compile files('libs/MFF-Mobile-Lib_v1.7.4.jar')
+    //테스트베드 사용시
+    compile files('/libs/MFF-Mobile-Lib_testbed_1.7.5_18032901.jar')
 
 }
 
