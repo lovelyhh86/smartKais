@@ -160,13 +160,13 @@ class ResponseListenerImp implements ResponseListener
             }
             else {
                 // 현장행정용 앱은 반드시 "10.1.1.10"으로 설정
-                intent.putExtra("ipAddress", "10.1.1.10");
+//                intent.putExtra("ipAddress", "10.1.1.10");
                 // 현장행정용 앱은 반드시 "https"으로 설정
-                intent.putExtra("connectionType", "https");
+//                intent.putExtra("connectionType", "https");
                 // 행정용 앱들은 반드시 "mois/rpc" 로 기입해야 합니다.
-                intent.putExtra("contextUrl", "mois/rpc");
+//                intent.putExtra("contextUrl", "mois/rpc");
                 // 연결port
-                intent.putExtra("portNumber", "443");
+//                intent.putExtra("portNumber", "443");
                 // 행정용 앱들은 반드시 "json" 으로 기입해야 합니다.
 
             }
