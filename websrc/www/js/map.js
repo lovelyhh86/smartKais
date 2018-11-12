@@ -1201,7 +1201,9 @@ var MapUtil = {
                                 }
                             }
                             var imgNm = 'icon_legend01.png';
-                            if(data.instSe == '00002'){
+                            var instSe = data.instSe;
+                            var useTarget = data.useTarget;
+                            if(instSe == '00002' && (useTarget == "01000" || useTarget == "04000" || useTarget == "05000")){
                                 imgNm = 'icon_w_legend01.png'
                             }
                             var titleIcon = '<span class="titleIcon"><img src="image/'+imgNm+'" title="도로명판"></span>';
@@ -3069,9 +3071,10 @@ var mapInit = function(mapId, pos) {
                                     // if (rdGdftySe == "110") {
                                     if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){
                                         layerID = DATA_TYPE.RDPQ;
-                                        var rdftySe = resultList[i].rdftySe;
+                                        var instSe = resultList[i].instSe;
                                         var rdGdftySeLbl = resultList[i].rdGdftySeLbl;
-                                        if(rdftySe == '06'){
+                                        var useTarget = resultList[i].useTarget;
+                                        if(instSe == '00002' && (useTarget == '01000' || useTarget == '04000' || useTarget == '05000')){
                                             rdGdftySeLbl = rdGdftySeLbl + '(벽)';
                                         }
                                         var gbn = commonP.format("gbn", "[{0}]".format(rdGdftySeLbl));

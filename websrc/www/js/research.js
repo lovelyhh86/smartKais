@@ -253,6 +253,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     var rdGdftySe = d.rdGdftySe;
                     //설치유형(벽면형 : 00002)
                     var instSe = d.instSe;
+                    var useTarget = d.useTarget;
                     //명판내용
                     var korRnLbl = createRnNm(rdGdftySe,d);
                     if(rdGdftySe == "210"){
@@ -274,7 +275,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     if(rdGdftySe == '110'|| rdGdftySe == "210" || rdGdftySe == "310"){
                     // if(rdGdftySe == '110'){
                         var imgNm = 'icon_legend01.png';
-                        if(instSe == "00002"){
+                        if(instSe == "00002" && (useTarget == "01000" || useTarget == "04000" || useTarget == "05000")){
                             imgNm = 'icon_w_legend01.png';
                         }
                         locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
