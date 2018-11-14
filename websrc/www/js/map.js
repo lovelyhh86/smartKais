@@ -1026,6 +1026,14 @@ var MapUtil = {
                         makeOptSelectBox("useTarget","USE_TRGET","","","");
                         $("#useTarget").val(useTarget);
                         
+                        //도로명판 벽면형일 경우 사용대상은 보행자용으로만 처리되게 변경
+                        var instSe = data.instSe;
+                        var rdGdftySe = data.rdGdftySe;
+                        if(rdGdftySe == "110" && instSe == "00002"){
+                            customSelectBox("useTarget","USE_TRGET","1","1","1");
+                            checkChangeOrigin("useTarget");
+                        }
+                        
                         //양면여부
                         makeOptSelectBox("bdrclAt","BDRCL_AT","","","");
                         
@@ -3958,24 +3966,19 @@ var getFeatureLayer = function(options) {
                                 var rdGdftySe = features[i].get("RD_GDFTY_SE");
                                 //설치유형(벽면형 : 00002)
                                 var instlSe = features[i].get('INSTL_SE');
-                                if (rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310") {
-                                    if(instlSe == "00002"){
+                                var useTarget = features[i].get('USE_TRGET');
+                                if (rdGdftySe == "110") {
+                                    if(instlSe == "00002" && useTarget == "01000"){
                                         rdpqWCnt++;
                                     }else{
                                         rdpqCnt++;
                                     }
-                                } else if (rdGdftySe == "510") {
-                                    if(instlSe == "00002"){
-                                        areaWCnt++;
-                                    }else{
-                                        areaCnt++;
-                                    }
+                                }else if(rdGdftySe == "210" || rdGdftySe == "310"){
+                                    rdpqCnt++;
+                                }else if (rdGdftySe == "510") {
+                                    areaCnt++;
                                 } else if (rdGdftySe == "610") {
-                                    if(instlSe == "00002"){
-                                        bsisWCnt++;
-                                    }else{
-                                        bsisCnt++;
-                                    }
+                                    bsisCnt++;
                                 }
                             }
 
@@ -3983,8 +3986,8 @@ var getFeatureLayer = function(options) {
                             $('.legend .area .total').text(areaCnt + '건');
                             $('.legend .bsis .total').text(bsisCnt + '건');
                             $('.legend .rdpqW .total').text(rdpqWCnt + '건');
-                            $('.legend .areaW .total').text(areaWCnt + '건');
-                            $('.legend .bsisW .total').text(bsisWCnt + '건');
+                            // $('.legend .areaW .total').text(areaWCnt + '건');
+                            // $('.legend .bsisW .total').text(bsisWCnt + '건');
                         }
                     }
 

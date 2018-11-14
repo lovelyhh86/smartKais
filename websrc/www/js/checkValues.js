@@ -204,7 +204,7 @@ function changeScfggMkty(id){
             }else if(rdGdftySe =="210"){
                 //181108 이면도로명판 외국어에 따른 규격변경 없음
                 // checkRddrRdsd("rddr_rddrGdSd");
-                return;
+                // return;
             }else if(rdGdftySe =="310"){
                 checkPrntRdsd("prntGdSd");
             }
