@@ -1026,10 +1026,10 @@ var MapUtil = {
                         makeOptSelectBox("useTarget","USE_TRGET","","","");
                         $("#useTarget").val(useTarget);
                         
-                        //도로명판 벽면형일 경우 사용대상은 보행자용으로만 처리되게 변경
+                        //도로명판 벽면형일 경우 사용대상은 보행자용으로만 처리되게 변경 + 이면도로명판도 보행자용만 선택
                         var instSe = data.instSe;
                         var rdGdftySe = data.rdGdftySe;
-                        if(rdGdftySe == "110" && instSe == "00002"){
+                        if((rdGdftySe == "110" && instSe == "00002") || rdGdftySe == "210"){
                             customSelectBox("useTarget","USE_TRGET","1","1","1");
                             checkChangeOrigin("useTarget");
                         }

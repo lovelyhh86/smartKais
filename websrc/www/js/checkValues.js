@@ -348,7 +348,7 @@ function setGdfyWide(id){
 
         if(util.isEmpty(gdfyWide) || gdfyWide == "규격없음"){
             if(trgGbn == "02"){
-                if(gdsdCnt == 0){
+                if(gdftyForm != "10000" && gdsdCnt == 0){
                     $("#buldNmtWide").removeAttr("disabled");
                     $("#buldNmtVertical").removeAttr("disabled");
                 }
@@ -356,7 +356,7 @@ function setGdfyWide(id){
                 $("#buldNmtWide").val($("#buldNmtWide").val());
                 $("#buldNmtVertical").val($("#buldNmtWide").val());
             }else{
-                if(gdsdCnt == 0){
+                if(gdftyForm != "10000" && gdsdCnt == 0){
                     $("#gdftyWide").removeAttr("disabled");
                     $("#gdftyVertical").removeAttr("disabled");
                 }
