@@ -206,7 +206,7 @@ function changeScfggMkty(id){
                 // checkRddrRdsd("rddr_rddrGdSd");
                 // return;
             }else if(rdGdftySe =="310"){
-                checkPrntRdsd("prntGdSd");
+                // checkPrntRdsd("prntGdSd");
             }
         }else if(trgGbn == "03"){
             changeBsisGdSd();
@@ -230,7 +230,7 @@ function changeUseTarget(id){
     
         if(trgGbn == "01"){
             if(rdGdftySe == "310"){
-                checkPrntRdsd("prntGdSd");
+                // checkPrntRdsd("prntGdSd");
             }else if(rdGdftySe == "110"){
 
                 //차로용 소로용의 경우 앞쪽방향용 선택 불가
@@ -312,6 +312,7 @@ function changeRdpqGdSd(id){
         var plqDirection = $("#plqDirection").val();
         var rdpqGdSd = $("#rdpqGdSd").val();
         var scfggMkty = $("#scfggMkty").val();
+        var scfggMkty_origin = $("#scfggMkty_origin").val();
     
         var colume = "RDPQ_GD_SD";
         
@@ -322,7 +323,12 @@ function changeRdpqGdSd(id){
         }
         
         customSelectBox("rdpqGdSd",colume,useCd,0,3);
-        $("#rdpqGdSd").val(rdpqGdSd);
+        //외국어 변경이 아닐경우에만 규격값 다시 셋팅 변경시에는 규격 비움
+        if(scfggMkty == scfggMkty_origin){
+            $("#rdpqGdSd").val(rdpqGdSd);
+        }else{
+            $("#rdpqGdSd").val("");
+        }
         
         if($("#rdpqGdSd").val() == null){
             // $("#rdpqGdSd").val($("#rdpqGdSd option:first").val());
@@ -600,7 +606,10 @@ function changeBuldNmtCd(id){
     try {
         var buldNmtPurpose = $("#buldNmtPurpose").val();
         var usedCode = buldNmtPurpose.substr(0,2);
+        var buldNmtCd = $("#buldNmtCd").val();
+
         customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
+        $("#buldNmtCd").val(buldNmtCd);
     
         if(usedCode.substr(0,1) == "1"){
             $("#buldNmtCd").removeAttr("disabled");
@@ -849,11 +858,16 @@ function changeAfrdCo(id){
 function changeAfRdplqSe(id){
     try {
         var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
-        // if(rddr_afRdplqSe == "01000"){
-        //     $(".namePlateTable").hide();
-        // }else if(rddr_afRdplqSe == "02000"){
-        //     $(".namePlateTable").show();
-        // }
+        var rddr_plqDrc = $("#rddr_plqDrc").val();
+        //통합형인 경우 한방향 용만 가능
+        if(rddr_afRdplqSe == "02000"){
+            //명판방향
+            customSelectBox("rddr_plqDrc","PLQ_DRC","00100",0,5);
+        }else{
+            //명판방향
+            makeOptSelectBox("rddr_plqDrc","PLQ_DRC","","","");
+        }
+        $("#rddr_plqDrc").val(rddr_plqDrc);
     
         checkRddrRdsd('rddr_rddrGdSd');
 
@@ -877,16 +891,16 @@ function checkRddrRdsd(id){
         var scfggMkty = $("#scfggMkty").val();
         
         //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
-        if(scfggMkty != "1" ||  gdftyForm == "20000"){
-            // makeOptSelectBox("rddr_rddrGdSd","","","규격없음","");
-            $("#rddr_rddrGdSd").empty();
-            checkChangeOrigin(id);
-            return;
-        }
+        // if(scfggMkty != "1" ||  gdftyForm == "20000"){
+        //     // makeOptSelectBox("rddr_rddrGdSd","","","규격없음","");
+        //     $("#rddr_rddrGdSd").empty();
+        //     checkChangeOrigin(id);
+        //     return;
+        // }
     
-        var useCd = rddr_afRdplqSe.charAt(1) + rddr_afRdCo.charAt(2);
+        var useCd = gdftyForm.charAt(0) + rddr_afRdplqSe.charAt(1) + rddr_afRdCo.charAt(2);
         
-        customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,1,2);
+        customSelectBox("rddr_rddrGdSd","RDDR_GD_SD",useCd,0,3);
         $("#rddr_rddrGdSd").val(rddr_rddrGdSd);
     
         if($("#rddr_rddrGdSd").val() == null){
@@ -921,13 +935,13 @@ function checkPrntRdsd(id){
         // }
 
         //제2외국어가 있거나 사용대상이 차로용,소로용,차량용70일 경우 규격없음
-        if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
-            // makeOptSelectBox("prntGdSd","","","규격없음","");
-            $("#prntGdSd").empty();
-            checkChangeOrigin(id);
-            setGdfyWide(id);
-            return;
-        }
+        // if(scfggMkty != "1" ||  useTarget == "04000" || useTarget == "05000" || useTarget == "06000"){
+        //     // makeOptSelectBox("prntGdSd","","","규격없음","");
+        //     $("#prntGdSd").empty();
+        //     checkChangeOrigin(id);
+        //     setGdfyWide(id);
+        //     return;
+        // }
 
         customSelectBox("prntGdSd","PRNT_GD_SD",useCd,0,2);
         $("#prntGdSd").val(prntGdSd);

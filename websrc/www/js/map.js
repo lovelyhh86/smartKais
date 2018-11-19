@@ -1281,7 +1281,7 @@ var MapUtil = {
                                 customSelectBox("rdpqGdSd",colume,useCd,1,2);
                                 $("#rdpqGdSd").val(rdpqGdSd);
                                 changeUseTarget();
-                                setNameplateView();
+                                // setNameplateView();
                             }else if(rdGdftySe == "210"){//이면도로용
                             
                                 //도로명(국문)
@@ -1294,13 +1294,20 @@ var MapUtil = {
                                 //앞면종료기초번호(0-0)
                                 $("#rddr_edbsMn").html(data.rddr_edbsMn);
                                 $("#rddr_edbsSn").html(data.rddr_edbsSn);
-                                //명판방향
-                                makeOptSelectBox("rddr_plqDrc","PLQ_DRC","","","");
-                                $("#rddr_plqDrc").val(data.rddr_plqDrc);
                                 //이면도로용 도로명판 유형
                                 var rddr_afRdplqSe = data.rddr_afRdplqSe;
                                 makeOptSelectBox("rddr_afRdplqSe","AF_RDPLQ_SE","","","");
                                 $("#rddr_afRdplqSe").val(rddr_afRdplqSe);
+
+                                //통합형인 경우 한방향 용만 가능
+                                if(rddr_afRdplqSe == "02000"){
+                                    //명판방향
+                                    customSelectBox("rddr_plqDrc","PLQ_DRC","00100",0,5);
+                                }else{
+                                    //명판방향
+                                    makeOptSelectBox("rddr_plqDrc","PLQ_DRC","","","");
+                                }
+                                $("#rddr_plqDrc").val(data.rddr_plqDrc);
                                 
                                 //이면도로갯수
                                 var rddr_afRdCo = data.rddr_afRdCo;

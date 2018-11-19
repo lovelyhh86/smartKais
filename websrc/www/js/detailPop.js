@@ -2278,22 +2278,22 @@ function modify(){
         //가로세로두께
         var gdftyWide = $("#gdftyWide").val();
         //가로
-        if(gdftyWide == null || gdftyWide == ""){
-            navigator.notification.alert(msg.dontInsertNull.format("가로"), function(){
+        if(gdftyWide == null || gdftyWide == "" || gdftyWide == 0){
+            navigator.notification.alert(msg.checkZero.format("가로"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
         }
         var gdftyVertical = $("#gdftyVertical").val();
-        if(gdftyVertical == null || gdftyVertical == ""){
-            navigator.notification.alert(msg.dontInsertNull.format("세로"), function(){
+        if(gdftyVertical == null || gdftyVertical == "" || gdftyVertical == 0){
+            navigator.notification.alert(msg.checkZero.format("세로"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
         }
         var gdftyThickness = $("#gdftyThickness").val();
-        if(gdftyThickness == null || gdftyThickness == ""){
-            navigator.notification.alert(msg.dontInsertNull.format("두께"), function(){
+        if(gdftyThickness == null || gdftyThickness == "" || gdftyThickness == 0){
+            navigator.notification.alert(msg.checkZero.format("두께"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
@@ -2852,24 +2852,24 @@ function modify(){
 
         //가로
         var buldNmtWide = $("#buldNmtWide").val();
-        if(buldNmtWide == null){
-            navigator.notification.alert(msg.dontInsertNull.format("가로"), function(){
+        if(buldNmtWide == null || buldNmtWide == 0){
+            navigator.notification.alert(msg.checkZero.format("가로"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
         }
         //세로
         var buldNmtVertical = $("#buldNmtVertical").val();
-        if(buldNmtVertical == null){
-            navigator.notification.alert(msg.dontInsertNull.format("세로"), function(){
+        if(buldNmtVertical == null || buldNmtVertical == 0){
+            navigator.notification.alert(msg.checkZero.format("세로"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
         }
         //두께
         var buldNmtThickness = $("#buldNmtThickness").val();
-        if(buldNmtThickness == null){
-            navigator.notification.alert(msg.dontInsertNull.format("두께"), function(){
+        if(buldNmtThickness == null || buldNmtThickness == 0){
+            navigator.notification.alert(msg.checkZero.format("두께"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
@@ -2878,16 +2878,16 @@ function modify(){
         var buldNmtUnitPrice = $("#buldNmtUnitPrice").text();
         //자율형 한글자 크기(가로)
         var bulNmtFtWi = $("#bulNmtFtWi").val();
-        if(buldNmtType == '2000' && bulNmtFtWi == null){
-            navigator.notification.alert(msg.dontInsertNull.format("자율형 한글자 크기(가로)"), function(){
+        if(buldNmtType == '2000' && (bulNmtFtWi == null || bulNmtFtWi == 0)){
+            navigator.notification.alert(msg.checkZero.format("자율형 한글자 크기(가로)"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
         }
         //자율형 한글자 크기(세로)
         var bulNmtFtVe = $("#bulNmtFtVe").val();
-        if(buldNmtType == '2000' && bulNmtFtVe == null){
-            navigator.notification.alert(msg.dontInsertNull.format("자율형 한글자 크기(세로)"), function(){
+        if(buldNmtType == '2000' && (bulNmtFtVe == null || bulNmtFtVe == 0)){
+            navigator.notification.alert(msg.checkZero.format("자율형 한글자 크기(세로)"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
