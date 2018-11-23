@@ -320,7 +320,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                 }
             };
         }else if(rdGdftySe == "110" || rdGdftySe == "210" || rdGdftySe == "310"){//도로명판,예고용도로명판,이면용도로명판
-            if(useTarget == "01000" || useTarget == "04000" || useTarget == "05000"){ // 사용대상이 보행자용이 맞는 경우에만 벽면형 표현
+            if(useTarget == "01000"){ // 사용대상이 보행자용이 맞는 경우에만 벽면형 표현
                 switch(instlSe){
                     case "00002": //벽면형
                         if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn ){ // 점검 x , 올해설치 x
