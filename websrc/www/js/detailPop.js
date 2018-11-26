@@ -2667,12 +2667,12 @@ function modify(){
 
         //표면처리방법
         var prtTy = $("#prtTy").val();
-        if(prtTy == null){
-            navigator.notification.alert(msg.dontInsertNull.format("표면처리방법"), function(){
-                util.dismissProgress();
-            }, '알림', '확인');
-            return;
-        }
+        // if(prtTy == null){
+        //     navigator.notification.alert(msg.dontInsertNull.format("표면처리방법"), function(){
+        //         util.dismissProgress();
+        //     }, '알림', '확인');
+        //     return;
+        // }
 
         commomParams = $.extend(commomParams,{
             area_areaKorRn : area_areaKorRn,
@@ -2928,6 +2928,14 @@ function modify(){
         var buldNmDc = $("#buldNmDc").val();
         //메모
         var buldMemo = $("#buldMemo").val();
+        var buldMemoSize = buldMemo.length
+        if(buldMemoSize > 200){
+            navigator.notification.alert("건물메모는 200자 제한입니다.", function () {
+            }, '알림', '확인');
+
+            $("#buldMemo").val(buldMemo.substring(0, 200));
+            return;
+        }
 
         commomParams = $.extend(commomParams,{
             bdtypCd : bdtypCd,
@@ -3184,6 +3192,14 @@ function loadUpdtData(isImages){
                                     $("#"+d).attr("style","color:red");
                                 }
                             }
+                        }
+
+                        //건물번호판인 경우 마지막에 규격 한번더 셋팅(파라미터 명칭 순서상 규격이 최초에 셋팅되고 나중에 영향이 가는 값이 셋팅되어 규격이 없어짐)
+                        var trgGbn = $("#trgGbn").val();
+                        if(trgGbn == "02" && data["buldNmtPurpose"] != "" && data["buldNmtCd"]){
+                            $("#buldNmtCd").val(data["buldNmtCd"]);
+                            changeBuldNmtCd("buldNmtCd");
+                            $("#buldNmtCd").attr("style","color:red");
                         }
                     }
                     util.toast(msg.successLoadUpdt);

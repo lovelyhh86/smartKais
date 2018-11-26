@@ -23,7 +23,7 @@
             <intent-filter>
                 <action android:name="com.dkitec.pns.ACTION_PUSH_REGISTERED" />
                 <category android:name="kr.go.juso.smartKais" />
-            </intent-filter>
+            </intent-filter>['
             <intent-filter>
                 <action android:name="com.dkitec.pns.ACTION_AGENTALIVED" />
                 <category android:name="kr.go.juso.smartKais" />

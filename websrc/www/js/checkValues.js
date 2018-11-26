@@ -399,6 +399,10 @@ function setGdfyWide(id){
         checkChangeOrigin(id);
         checkChangeOrigin("gdftyWide");
         checkChangeOrigin("gdftyVertical");
+        if(trgGbn == "02"){
+            checkChangeOrigin("buldNmtWide");
+            checkChangeOrigin("buldNmtVertical");
+        }
     } catch (error) {
         util.toast(msg.checkObject.format("규격정보"),"error");
     }

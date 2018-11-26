@@ -3215,8 +3215,8 @@ var mapInit = function(mapId, pos) {
 
                                         var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
                                         var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
-                                        var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                        var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text3 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
 
                                         // var text4 = commonSpan.format("info", "위치일련번호 : " + rdFtyLcSn);
                                         // var text5 = commonSpan.format("info", "안내시설일련번호 : " + rdGdftySn);
@@ -3323,8 +3323,8 @@ var mapInit = function(mapId, pos) {
 
                                         var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
                                         var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
-                                        var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                        var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text3 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
 
                                         // var text4 = commonSpan.format("info", "위치일련번호 : " + rdFtyLcSn);
                                         // var text5 = commonSpan.format("info", "안내시설일련번호 : " + rdGdftySn);
@@ -3442,8 +3442,8 @@ var mapInit = function(mapId, pos) {
                                         // var text5 = commonSpan.format("info", "안내시설일련번호 : " + rdGdftySn);
                                         var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
                                         var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
-                                        var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                        var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                        var text3 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
                                         var button1 = "" ;
 
                                         var mtchRcrSn = resultList[i].rcrSn;
@@ -3607,8 +3607,8 @@ var mapInit = function(mapId, pos) {
 
                                 var text0 = commonSpan.format("info", "설치상태 : " + delStateCdLbl);
                                 var text1 = commonSpan.format(rcsttCdClass, "점검상태 : " + rcSttCdLbl);
-                                var text2 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
-                                var text3 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                var text2 = commonSpan.format("info", "원거리사진 : " + CNT_L_FILES);
+                                var text3 = commonSpan.format("info", "근거리사진 : " + CNT_M_FILES);
 
                                 //설치 건물명
                                 var rnCdLbl = data.rnCdLbl;

@@ -709,7 +709,9 @@ function removeLayers(type){
         $("#moveInfo").hide();
     // }
 }
-
+function appExitConfirm(){
+    navigator.notification.confirm("현장조사 Smart KAIS를 종료하시겠습니까?", appExitCallback,"알림", ['확인', '취소']);
+}
 function appExitCallback(btnIndex){
     if(btnIndex == 1){
         util.appExit()
