@@ -759,30 +759,38 @@ function submitResearch(){
 
 //검색 옵션 추가
 function makeOptSelectBox(target,colume,unUsed,defaultText,defaultValue){
-
-    var targetId = $("#"+target);
-    targetId.empty();
-    
-    if(defaultText != ""){
-        targetId.append("<option value='"+defaultValue+"'>"+defaultText+"</option>");
-    }
-
-    var optionFormat = "<option value='{0}'>{1}</option>";
-
-    var optionTxt = ""; 
-    // var colume = "DEL_STT_CD";
-    var codeList = app.codeMaster[CODE_GROUP[colume]];
-    
-    for(var c in codeList){
-        if(c != "GroupNm"){
-
-            if(c != unUsed){
-                optionTxt = optionFormat.format(c,codeList[c]);
-                targetId.append(optionTxt); 
-            }
+    try {
+        var targetId = $("#"+target);
+        targetId.empty();
         
+        if(defaultText != ""){
+            targetId.append("<option value='"+defaultValue+"'>"+defaultText+"</option>");
         }
+
+        var optionFormat = "<option value='{0}'>{1}</option>";
+
+        var optionTxt = ""; 
+        // var colume = "DEL_STT_CD";
+        var codeList = app.codeMaster[CODE_GROUP[colume]];
+        
+        var keys = Object.keys(codeList);
+        keys.sort();
+        
+        for(var k in keys){
+            var c = keys[k];
+            if(c != "GroupNm"){
+
+                if(c != unUsed){
+                    optionTxt = optionFormat.format(c,codeList[c]);
+                    targetId.append(optionTxt); 
+                }
+            
+            }
+        }
+    } catch (error) {
+        
     }
+    
 }
 //커스텀 셀렉트박스 만들기
 function customSelectBox(target, colume, useCode, startIndex, endIndex){
@@ -794,7 +802,11 @@ function customSelectBox(target, colume, useCode, startIndex, endIndex){
     var optionTxt = ""; 
     var codeList = app.codeMaster[CODE_GROUP[colume]];
     
-    for(var c in codeList){
+    var keys = Object.keys(codeList);
+        keys.sort();
+        
+    for(var k in keys){
+        var c = keys[k];
         if(c != "GroupNm"){
 
             if(c.substr(startIndex,endIndex) == useCode){
@@ -816,7 +828,11 @@ function customSelectBox2(target, colume, useCode, startIndex, endIndex,unUsedSt
     var optionTxt = ""; 
     var codeList = app.codeMaster[CODE_GROUP[colume]];
     
-    for(var c in codeList){
+    var keys = Object.keys(codeList);
+    keys.sort();
+    
+    for(var k in keys){
+        var c = keys[k];
         if(c != "GroupNm"){
 
             if(c.substr(startIndex,endIndex) == useCode && c.substr(unUsedStr,unUsedEnd) != "000"){
@@ -838,7 +854,11 @@ function customSelectBox3(target, colume, unUseCode, startIndex, endIndex ,defau
     var optionTxt = ""; 
     var codeList = app.codeMaster[CODE_GROUP[colume]];
     
-    for(var c in codeList){
+    var keys = Object.keys(codeList);
+    keys.sort();
+    
+    for(var k in keys){
+        var c = keys[k];
         if(c != "GroupNm"){
 
             if(c.substr(startIndex,endIndex) != unUseCode){
