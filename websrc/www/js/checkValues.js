@@ -988,10 +988,10 @@ function changeBdrclAt(id){
             
             $("#backKoreanRoadNm").val("");
             $("#backRomeRoadNm").text("");
-            $("#backStartBaseMasterNo").val("");
-            $("#backStartBaseSlaveNo").val("");
-            $("#backEndBaseMasterNo").val("");
-            $("#backEndBaseSlaveNo").val("");
+            $("#backStartBaseMasterNo").val("0");
+            $("#backStartBaseSlaveNo").val("0");
+            $("#backEndBaseMasterNo").val("0");
+            $("#backEndBaseSlaveNo").val("0");
         }else{
             var korRnView = $("#frontKoreanRoadNm").val();
             var romRnView = $("#frontRomeRoadNm").text();
