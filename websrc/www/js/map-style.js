@@ -91,6 +91,8 @@ var defaultStyle = function (feature, resolution, options) {
 
     var dataType = options.dataType; //건물 : 99
 
+    console.log("레이어타입" + dataType);
+
     // feature 정보 이용 시 다중 건 단일 건 통일
     if (options.cluster) {
         features = feature.get("features");

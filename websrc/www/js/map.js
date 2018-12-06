@@ -2541,22 +2541,22 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
     // 도로명판 레이어
-    // var lyr_tl_spgf_rdpq = getFeatureLayer({
-    //     title: "도로명판",
-    //     typeName: "tlv_spgf_rdpq",
-    //     dataType: DATA_TYPE.RDPQ,
-    //     style: {
-    //         label: {
-    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-    //             textOffsetX: -1,
-    //             textOffsetY: -18,
-    //             width: 1
-    //         },
-    //         radius: 12
-    //     },
-    //     cluster: { distance: 30 },
-    //     maxResolution: 2
-    // });
+    var lyr_tl_spgf_rdpq = getFeatureCoodi({
+        title: "도로명판",
+        typeName: "tlv_spgf_rdpq",
+        dataType: DATA_TYPE.RDPQ,
+        style: {
+            label: {
+                // text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
+                textOffsetX: -1,
+                textOffsetY: -18,
+                width: 1
+            },
+            radius: 12
+        },
+        cluster: { distance: 30 },
+        maxResolution: 2
+    });
     // 지역안내판 레이어
     // var lyr_tl_spgf_area = getFeatureLayer({
     //     title: "지역안내판",
@@ -2638,7 +2638,7 @@ var mapInit = function(mapId, pos) {
 
     layers = {
         "loc": lyr_tlv_spgf_loc_skm,
-        // "rdpq": lyr_tl_spgf_rdpq,
+        "rdpq": lyr_tl_spgf_rdpq,
         // "area": lyr_tl_spgf_area,
         // "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc,
@@ -2724,7 +2724,13 @@ var mapInit = function(mapId, pos) {
         helpTooltipElement.classList.remove('hidden');
     };
 
-    // map.on('pointermove', pointerMoveHandler);
+    var getCoodiMapService = function(evt){
+        var bbox = map.previousExtent_;
+        console.log('지도 이동' + bbox);
+
+    }
+
+    map.on('moveend', getCoodiMapService);
     
     // map.getViewport().addEventListener('touchend', function() {
     //     helpTooltipElement.classList.add('hidden');
@@ -3896,8 +3902,112 @@ var getVectorSource = function(mapObj, name) {
 
     return source;
 };
+var getFeatureCoodi = function(options){
+    var vectorSource = new ol.source.Vector({
+        id: "vectorSource:" + options.typeName,
+        // format: new ol.format(),
+        loader: function(extent, resolution, projection) {
+            // extent = ol.proj.transformExtent(extent, baseProjection.getCode(), sourceProjection.getCode());
+            var param = {
+                // SERVICE: 'WFS',
+                // VERSION: '1.1.0',
+                // REQUEST: 'GetFeature',
+                bbox: extent,
+                // srsName: serviceProjection.getCode(),
+                // typeName: options.typeName,
+                sigCd : app.info.sigCd
+            };
+
+            var urldata = URLs.postURL(URLs.coodiMapSvc, param);
+            // util.toast("지도요청시작","success");
+            // alert(JSONtoString(urldata));
+            util.showProgress();
+            util.postAJAX('', urldata)
+                .then(function(context, rCode, results) {
+
+                    //통신오류처리
+                    if (rCode != 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    var data = results.data;
+
+                    var features = new Array();
+
+                    if(data == null || data.length == 0){
+                        util.toast("데이터 없음", "error");
+                        util.dismissProgress();
+                        return;
+                    }else{
+                        console.log(data);
+
+                        for(i in data){
+                            var ponitX = data[i].pointX;
+                            var ponitY = data[i].pointY;
+
+                            var feature = new ol.Feature({
+                                geometry : new ol.geom.Point([ponitX,ponitY])
+                            });
+
+                            features.push(feature);
+                        }
+                    }
 
 
+                    console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
+
+                    vectorSource.addFeatures(features);
+                    //피처 추가 후 리플레시 기능(건수 표현때문에 추가.. 확실치 않음)
+                    map.changed();
+                    util.dismissProgress();
+                }, function(context, xhr, error) {
+                    console.log("조회 error >> " + error + '   ' + xhr);
+                    util.toast("레이어표출에러","success");
+                    // alert(JSONtoString(error));
+                    // alert(JSONtoString(xhr));
+                    util.dismissProgress();
+                });
+            if (options.viewProgress != undefined && !options.viewProgress)
+                util.dismissProgress();
+        },
+        strategy: ol.loadingstrategy.bbox,
+    });
+
+    var source;
+
+    if (options.cluster) {
+        source =
+            new ol.source.Cluster({
+                distance: options.cluster.distance,
+                geometryFunction: function(feature) {
+                    if (feature.getGeometry().getType() == "Polygon")
+                        return feature.getGeometry().getInteriorPoint();
+                    else
+                        return feature.getGeometry();
+                },
+                source: vectorSource
+            });
+    } else {
+        source = vectorSource;
+    }
+
+    // 벡터 레이어 생성
+    var vectorOptions = {
+        id: options.dataType,
+        title: options.title,
+        maxResolution: options.maxResolution,
+        source: source,
+        renderMode: options.renderMode,
+        // renderBuffer: 50
+    }
+    vectorOptions.style = function(feature, resolution) {
+        return defaultStyle(feature, resolution, options);
+    }
+
+    return new ol.layer.Vector(vectorOptions);
+};
 var getFeatureLayer = function(options) {
     var vectorSource = new ol.source.Vector({
         id: "vectorSource:" + options.typeName,

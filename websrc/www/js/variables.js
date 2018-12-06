@@ -66,6 +66,9 @@ var URLs = {
     "selectSpbdChange":{svcNm: "vSPBDChg"},
     //시설물 변경 내용 삭제
     "deleteUpdtChange":{svcNm: "dUpdtChg"},
+
+    //좌표조회
+    "coodiMapSvc":{svcNm: "coodiMapSvc"},
     
     getURL: function (srcurl, jsondata) {
 
