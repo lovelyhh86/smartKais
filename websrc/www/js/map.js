@@ -2520,10 +2520,48 @@ var mapInit = function(mapId, pos) {
         renderMode: 'image',
     });
     // 출입구 레이어
-    var lyr_tl_spbd_entrc = getFeatureLayer({
+    // var lyr_tl_spbd_entrc = getFeatureLayer({
+    //     title: "출입구",
+    //     // typeName: "tl_spbd_entrc",
+    //     typeName: "tlv_spbd_entrc_skm",
+    //     dataType: DATA_TYPE.ENTRC,
+    //     style: {
+    //         radius: 15,
+    //         // label: {
+    //             // format: ["{0}({1}-{2})"],
+    //             // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+    //             // text: { key: "ENTRC_SE", func: function(text) { return text } },
+    //             // textOffsetY: -20
+    //         // }
+    //     },
+    //     cluster: { distance: MapUtil.setting.cluster },
+    //     maxResolution: MapUtil.setting.maxResolution,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
+    // 도로명판 레이어
+    var lyr_tl_spgf_rdpq = getFeatureLayer_new({
+        title: "도로명판",
+        typeName: "tn_spgf_rdpq_position",
+        dataType: DATA_TYPE.RDPQ,
+        style: {
+            label: {
+                // text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
+                textOffsetX: -1,
+                textOffsetY: -18,
+                width: 1
+            },
+            radius: 12
+        },
+        cluster: { distance: 30 },
+        maxResolution: 2
+    });
+    // 출입구 레이어(좌표)
+    var lyr_tl_spbd_entrc = getFeatureLayer_new({
         title: "출입구",
         // typeName: "tl_spbd_entrc",
-        typeName: "tlv_spbd_entrc_skm",
+        typeName: "tn_spbd_entrc_position",
         dataType: DATA_TYPE.ENTRC,
         style: {
             radius: 15,
@@ -2540,23 +2578,6 @@ var mapInit = function(mapId, pos) {
         renderMode: 'vector',
         zIndex : 1
     });
-    // 도로명판 레이어
-    // var lyr_tl_spgf_rdpq = getFeatureLayer({
-    //     title: "도로명판",
-    //     typeName: "tlv_spgf_rdpq",
-    //     dataType: DATA_TYPE.RDPQ,
-    //     style: {
-    //         label: {
-    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-    //             textOffsetX: -1,
-    //             textOffsetY: -18,
-    //             width: 1
-    //         },
-    //         radius: 12
-    //     },
-    //     cluster: { distance: 30 },
-    //     maxResolution: 2
-    // });
     // 지역안내판 레이어
     // var lyr_tl_spgf_area = getFeatureLayer({
     //     title: "지역안내판",
@@ -2635,14 +2656,17 @@ var mapInit = function(mapId, pos) {
     //     zIndex : 1
     // });
     
+    // var lyr_tl_spgf_rdpq = getFeatureLayer_new({
+
+    // });
 
     layers = {
         "loc": lyr_tlv_spgf_loc_skm,
-        // "rdpq": lyr_tl_spgf_rdpq,
+        "rdpq": lyr_tl_spgf_rdpq,
         // "area": lyr_tl_spgf_area,
         // "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc,
-        "buld": lyr_tl_spbd_buld,
+        // "buld": lyr_tl_spbd_buld,
         // "sppn": lyr_tl_sppn_paninfo,
         // "intrvl":lyr_tl_sprd_intrvl
     };
@@ -3028,6 +3052,8 @@ var mapInit = function(mapId, pos) {
                 currentPositionLayerCheck();
                 return;
             }
+
+            alert(feature.getId() + " : rdFtyLcSn : " + feature.get('rdFtyLcSn') + " rdGdftySn : " + feature.get('rdGdftySn'));
 
             var sn, features, rdGdftySe;
 

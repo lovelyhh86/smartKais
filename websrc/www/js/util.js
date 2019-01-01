@@ -650,10 +650,11 @@ function layerToggle(context){
             
             
             
-            // map.addLayer(layers.rdpq);
+            map.addLayer(layers.rdpq);
+            map.addLayer(layers.entrc);
             // map.addLayer(layers.bsis);
             // map.addLayer(layers.area);
-            map.addLayer(layers.loc);
+            // map.addLayer(layers.loc);
             // map.addLayer(layers.sppn);
             
 
