@@ -30,12 +30,15 @@ $(function () {
         $("#slider-spgf").change(changedMapBaseConfig);
         $("#slider-buld").change(changedMapBaseConfig);
 
+        // 원본사진 자동조회
         var autoImgRoadConf = localStorage["autoImgRoadConf"];
     
         if(autoImgRoadConf){
             $("#autoImgRoadConf").val(autoImgRoadConf).attr("selected","selected");
             $("#autoImgRoadConf").trigger("change");
         }
+        // 일제점검 지도조회 기준년도
+        addResearchYear();
         
     });
 
@@ -84,4 +87,41 @@ function warnnigAlert(){
     if(autoImgRoadConf == "on"){
         navigator.notification.alert(msg.autoImgRoadingAlert, '', '알림', '확인');
     }
+}
+
+function changeCheckResearchYear(){
+    var researchYear = $("#researchYear").val();
+    localStorage["researchYear"] = researchYear;
+
+    if(map){
+        removeLayers();
+    }
+}
+
+function addResearchYear(){
+    $('#researchYear option').remove();
+
+    $('#researchYear').append($('<option>', {
+        value: 'ALL',
+        text: '작년 + 올해'
+    }));
+
+    $('#researchYear').append($('<option>', {
+        value: util.getToday().substr(0,4) -1,
+        text: util.getToday().substr(0,4) -1
+    }));
+
+    $('#researchYear').append($('<option>', {
+        value: util.getToday().substr(0,4),
+        text: util.getToday().substr(0,4)
+    }));
+
+    var researchYear = localStorage["researchYear"];
+
+    if(researchYear){
+        $("#researchYear").val(researchYear).attr("selected","selected");
+    }else{
+        $('#researchYear option:last').attr('selected','selected');
+    }
+    $('#researchYear').trigger('change');
 }
