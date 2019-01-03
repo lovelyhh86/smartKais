@@ -2794,10 +2794,10 @@ function modify(){
             }, '알림', '확인');
             return;
         }
-        //조명여부
+        //제작형식
         var lghtCd = $("#lghtCd").val();
         if(lghtCd == null){
-            navigator.notification.alert(msg.dontInsertNull.format("조명여부"), function(){
+            navigator.notification.alert(msg.dontInsertNull.format("제작형식"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;

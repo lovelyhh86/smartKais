@@ -1645,18 +1645,17 @@ var MapUtil = {
                             //     $("#rcRslt").attr("placeholder","올해에 설치한 시설물은 점검 불가")
                             // }
                             
-                            //조명여부
-                            makeOptSelectBox("lghtCd","LGHT_CD","","","");
-                            $("#lghtCd").val(data.lghtCd);
-
                             //유형
                             var buldNmtSe = data.buldNmtSe;
                             makeOptSelectBox("buldNmtSe","BUL_NMT_SE","","","");
                             $("#buldNmtSe").val(data.buldNmtSe);
-                            //제작유형
+                            //설치유형
                             makeOptSelectBox("buldMnfCd","BUL_MNF_CD","","","");
                             $("#buldMnfCd").val(data.buldMnfCd);
                             changeMnf("buldMnfCd");
+                            //조명여부
+                            // makeOptSelectBox("lghtCd","LGHT_CD","","","");
+                            $("#lghtCd").val(data.lghtCd);
 
                             //형태
                             var buldNmtType = data.buldNmtType;

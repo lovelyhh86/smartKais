@@ -575,16 +575,18 @@ function changeAdvrtsCd(id){
         util.toast(msg.checkObject.format("광고에따른 분류"),"error");
     }
 }
-//제작형식에 따른 조명
+//설치유형에 따른 제작형식
 function changeMnf(id){
     try {
-        // var thisValue = $("#"+id).val();
-        // if(thisValue == "1"){//판자형
-        //     customSelectBox("lghtCd","LGHT_CD","2",0,1);
-        // }else{
+        var thisValue = $("#"+id).val();
+        if(thisValue == "1"){//판자형
+            customSelectBox("lghtCd","LGHT_CD","2",0,1);
+        }else{
+            customSelectBox3("lghtCd","LGHT_CD","2",0,1);
             // makeOptSelectBox("lghtCd","LGHT_CD","","","");
-        // }
+        }
         checkChangeOrigin(id);
+        $('#lghtCd').trigger('change');
         
     } catch (error) {
         util.toast(msg.checkObject.format("제작형식"),"error");
