@@ -34,6 +34,8 @@ $(function(){
 
     // $( document ).on("pageshow",pages.detail_researchList.div,  function() {
         
+    //     addResearchYear('searchOptPlnYr',false);
+        
     // });
 
     // $( document ).on("pagebeforeshow",pages.baseResearchPage.div,  function(event,data) {
@@ -75,7 +77,7 @@ $(function(){
     
 
 });
-
+//스크롤 처리
 function tableListDivScroll(event){
     // $(".tableListDiv").scroll(function() {
         var scrollTop = $('.tableListDiv').scrollTop();
@@ -104,6 +106,10 @@ function tableListDivScroll(event){
                     paramSize = mod;
                 }
                 // console.log("paramPos : "+ paramPos + " paramSize : " +paramSize);
+
+                if(checkChangeSearchOption()){
+                    paramPos = null;
+                };
     
                 selectResearchContent(null,paramPos,paramSize);
             }else{
@@ -124,6 +130,25 @@ function tableListDivScroll(event){
         }
     // }); 
 }
+//검색옵션 변경 시 체크
+function checkChangeSearchOption(){
+    if(app.info.searchValue){
+
+        var searchOptTrgGbn = $("#searchOptTrgGbn").val() == "" ? null : $("#searchOptTrgGbn").val();
+        var searchOptRcSttCd = $("#searchOptRcSttCd").val() == "" ? null : $("#searchOptRcSttCd").val();
+        var searchOptDelSttCd = $("#searchOptDelSttCd").val() == "" ? null : $("#searchOptDelSttCd").val();
+        var searchOptPlnYr = $("#searchOptPlnYr").val() == "" ? null : $("#searchOptPlnYr").val();
+        var searchOptTrgSn = $("#searchOptTrgSn").val() == "" ? null : $("#searchOptTrgSn").val();
+
+        if(searchOptTrgGbn != app.info.searchValue.searchOptTrgGbn){return true;}
+        if(searchOptRcSttCd != app.info.searchValue.searchOptRcSttCd){return true;}
+        if(searchOptDelSttCd != app.info.searchValue.searchOptDelSttCd){return true;}
+        if(searchOptPlnYr != app.info.searchValue.searchOptPlnYr){return true;}
+        if(searchOptTrgSn != app.info.searchValue.searchOptTrgSn){return true;}
+    }
+    
+};
+
 var pos = 0;
 var size = 9;
 //점검대상 조회
@@ -155,11 +180,18 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     var searchOptRcSttCd = $("#searchOptRcSttCd").val() == "" ? null : $("#searchOptRcSttCd").val();
     var searchOptDelSttCd = $("#searchOptDelSttCd").val() == "" ? null : $("#searchOptDelSttCd").val();
 
+    //기준년도
+    var searchOptPlnYr =  $("#searchOptPlnYr").val() == "" ? null : $("#searchOptPlnYr").val();
+    //일련번호
+    var searchOptTrgSn = $("#searchOptTrgSn").val() == "" ? null : $("#searchOptTrgSn").val();
+
     app.info.searchValue = {
         searchOptRcrSn : searchOptRcrSn,
         searchOptTrgGbn : searchOptTrgGbn,
         searchOptRcSttCd : searchOptRcSttCd,
         searchOptDelSttCd : searchOptDelSttCd,
+        searchOptPlnYr : searchOptPlnYr,
+        searchOptTrgSn : searchOptTrgSn
     }
 
     var param = {
@@ -171,6 +203,9 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
         ,delStateCd : searchOptDelSttCd
         ,pos : posParam
         ,size : sizeParam
+        ,plnYr : searchOptPlnYr
+        ,trgSn : searchOptTrgSn
+        ,workId : app.info.opeId
     } ;
 
     var url = URLs.postURL(URLs.researchListLink, param);

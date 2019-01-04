@@ -761,6 +761,7 @@ var MapUtil = {
     setList: function(type){
         switch (type) {
             case "myResearch":
+                addResearchYear('searchOptPlnYr',false);
                 //점검목록
                 pos = 0;
                 // selectResearchContent(null,0,9);
@@ -788,6 +789,7 @@ var MapUtil = {
 
             break;
             case "myResearchSpbd":
+                addResearchYear('searchOptPlnYr',false);
                 //점검목록
                 pos = 0;
                 // selectResearchContent("02",0,9);

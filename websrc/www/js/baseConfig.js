@@ -38,7 +38,7 @@ $(function () {
             $("#autoImgRoadConf").trigger("change");
         }
         // 일제점검 지도조회 기준년도
-        addResearchYear();
+        addResearchYear('researchYear',true);
         
     });
 
@@ -98,30 +98,32 @@ function changeCheckResearchYear(){
     }
 }
 
-function addResearchYear(){
-    $('#researchYear option').remove();
+function addResearchYear(id, option){
+    $('#' + id + ' option').remove();
 
-    $('#researchYear').append($('<option>', {
-        value: 'ALL',
-        text: '작년 + 올해'
-    }));
+    if(option){
+        $('#'+id).append($('<option>', {
+            value: 'ALL',
+            text: '작년 + 올해'
+        }));
+    }
 
-    $('#researchYear').append($('<option>', {
+    $('#'+id).append($('<option>', {
         value: util.getToday().substr(0,4) -1,
         text: util.getToday().substr(0,4) -1
     }));
 
-    $('#researchYear').append($('<option>', {
+    $('#'+id).append($('<option>', {
         value: util.getToday().substr(0,4),
         text: util.getToday().substr(0,4)
     }));
 
     var researchYear = localStorage["researchYear"];
 
-    if(researchYear){
-        $("#researchYear").val(researchYear).attr("selected","selected");
+    if(researchYear && researchYear != 'ALL'){
+        $("#"+ id).val(researchYear).attr("selected","selected");
     }else{
-        $('#researchYear option:last').attr('selected','selected');
+        $('#'+ id +' option:last').attr('selected','selected');
     }
-    $('#researchYear').trigger('change');
+    $('#'+id).trigger('change');
 }
