@@ -296,6 +296,30 @@ function changePlqDir(id){
         //         return;
         //     }
         // }
+        
+        //설치유형
+        var instSe = $("#instSe").text();
+
+        //뒷면 컨트롤
+        //앞쪽방향용이고 벽부착식이 아닌경우
+        if(plqDirection == "00300" && instSe != "00002"){
+            $('.bk').show();
+            //뒷면 로마자 셋팅
+            $("#backRomeRoadNm").text($("#frontRomeRoadNm").text());
+
+            util.toast("도로명 및 로마자 입력은 주소 유효성 검증이 가능한 c/s를 이용하여 입력하시기를 권장합니다.","warning");
+        }else{
+            $('.bk').hide();
+            // 뒷면정보 초기화
+            $("#backKoreanRoadNm").val("");
+            $("#backRomeRoadNm").text("");
+            $("#backStartBaseMasterNo").val("0");
+            $("#backStartBaseSlaveNo").val("0");
+            $("#backEndBaseMasterNo").val("0");
+            $("#backEndBaseSlaveNo").val("0");
+        }
+
+
         changeRdpqGdSd('rdpqGdSd');
         checkChangeOrigin(id);
         
@@ -979,14 +1003,14 @@ function checkScfggUla2(id){
     }
 
 }
-//도로명판 양면여부 변경
+//도로명판 양면여부 변경 (사용안함)
 function changeBdrclAt(id){
     try {
         
         var bdrclAt = $("#bdrclAt").val();
     
         if(bdrclAt == '0'){//단면
-            $(".bk").hide();
+            // $(".bk").hide();
             
             $("#backKoreanRoadNm").val("");
             $("#backRomeRoadNm").text("");

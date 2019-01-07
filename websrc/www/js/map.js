@@ -1240,33 +1240,34 @@ var MapUtil = {
                                 $("#frontEndBaseSlaveNo").val(data.frontEndBaseSlaveNo);
                                 
                                 // if (data.bdrclAt == 1) {
-                                    //뒷면 도로명(국문)
-                                    $("#backKoreanRoadNm").val(data.backKoreanRoadNm);
-                                    //뒷면 도로명(로마자)
-                                    // $("#backRomeRoadNm").val(data.backRomeRoadNm);
-                                    $("#backRomeRoadNm").text(data.backRomeRoadNm);
-                                    //뒷면시작기초번호(0-0)
-                                    $("#backStartBaseMasterNo").val(data.backStartBaseMasterNo);
-                                    $("#backStartBaseSlaveNo").val(data.backStartBaseSlaveNo);
-                                    //뒷면종료기초번호(0-0)
-                                    $("#backEndBaseMasterNo").val(data.backEndBaseMasterNo);
-                                    $("#backEndBaseSlaveNo").val(data.backEndBaseSlaveNo);
-                                if (data.bdrclAt == 0) {
-                                    $(".bk").hide();
-                                }
+                                //뒷면 도로명(국문)
+                                $("#backKoreanRoadNm").val(data.backKoreanRoadNm);
+                                //뒷면 도로명(로마자)
+                                // $("#backRomeRoadNm").val(data.backRomeRoadNm);
+                                $("#backRomeRoadNm").text(data.backRomeRoadNm);
+                                //뒷면시작기초번호(0-0)
+                                $("#backStartBaseMasterNo").val(data.backStartBaseMasterNo);
+                                $("#backStartBaseSlaveNo").val(data.backStartBaseSlaveNo);
+                                //뒷면종료기초번호(0-0)
+                                $("#backEndBaseMasterNo").val(data.backEndBaseMasterNo);
+                                $("#backEndBaseSlaveNo").val(data.backEndBaseSlaveNo);
+                                // if (data.bdrclAt == 0) {
+                                    // $(".bk").hide();
+                                // }
                                 // $("#bdrclAt").show();
                                 
                                 //안내시설방향
                                 var plqDirection = data.plqDirection;
                                 makeOptSelectBox("plqDirection","PLQ_DRC","","","");
                                 $("#plqDirection").val(plqDirection);
-                                // if(plqDirection == "00300"){//앞쪽방향용 일 경우
+                                if(plqDirection == "00300" && data.instSe != "00002"){//앞쪽방향용 이고 벽부착식이 아닐 경우에만 뒷면
                                     // $("#bdrclAt").val("1"); //양면 예
                                     // $("#bdrclAt").removeAttr("disabled");
-                                // }else{
+                                }else{
+                                    $(".bk").hide();
                                     // $("#bdrclAt").val("0"); //양면 아니오
                                     // $("#bdrclAt").attr("disabled","disabled");
-                                // }
+                                }
                                 //규격
                                 var useTarget = data.useTarget;
                                 var rdpqGdSd = data.rdpqGdSd;

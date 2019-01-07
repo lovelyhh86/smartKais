@@ -2384,49 +2384,78 @@ function modify(){
                 }, '알림', '확인');
                 return;
             }
-
+            
             //뒷면도로명
             var backKoreanRoadNm = $("#backKoreanRoadNm").val();
-            if(bdrclAt == "1" && util.isEmpty(backKoreanRoadNm)){
-                navigator.notification.alert(msg.dontInsertNull.format("뒷면도로명"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
+            //뒷면영문명
             var backRomeRoadNm = $("#backRomeRoadNm").text();
-            // if(bdrclAt == "1"){
-                //시작기초번호 본번
-                var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
-                if(backStartBaseMasterNo == "" || (bdrclAt == "1" && backStartBaseMasterNo == 0)){
+            //시작기초번호 본번
+            var backStartBaseMasterNo = $("#backStartBaseMasterNo").val();
+            //시작기초번호 부번
+            var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
+            //종료기초번호 본번
+            var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();
+            //종료기초번호 부번
+            var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val();
+
+            /*
+                뒷면내용은 항상 저장은 해야되지만 검증은 뒷면이 표현되는 경우에만 체크
+            */
+
+            //설치유형
+            var instSe = $("#instSe").text();
+
+            //앞쪽방향용 이면서 벽면형이 아닐경우에만 뒷면 체크
+            if(plqDirection == "00300" && instSe != "00002"){
+                
+                if(util.isEmpty(backKoreanRoadNm)){
+                    navigator.notification.alert(msg.dontInsertNull.format("뒷면도로명"), function(){
+                        util.dismissProgress();
+                    }, '알림', '확인');
+                    return;
+                }    
+                
+                if(backStartBaseMasterNo == "" || backStartBaseMasterNo == 0){
                     navigator.notification.alert(msg.checkZero.format("뒷면 시작기초번호 본번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
                     return;
                 }
-                //시작기초번호 부번
-                var backStartBaseSlaveNo = $("#backStartBaseSlaveNo").val();
+                
                 if(backStartBaseSlaveNo == ""){
                     navigator.notification.alert(msg.dontInsertNull.format("뒷면 시작기초번호 부번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
                     return;
                 }
-                //종료기초번호 본번
-                var backEndBaseMasterNo = $("#backEndBaseMasterNo").val();
-                if(backEndBaseMasterNo == "" || bdrclAt == "1" && backEndBaseMasterNo == 0){
+                
+                if(backEndBaseMasterNo == "" || backEndBaseMasterNo == 0){
                     navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호 본번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
                     return;
                 }
-                //종료기초번호 부번
-                var backEndBaseSlaveNo = $("#backEndBaseSlaveNo").val();
+                
                 if(backEndBaseSlaveNo == ""){
                     navigator.notification.alert(msg.dontInsertNull.format("뒷면 종료기초번호 부번"), function(){
                         util.dismissProgress();
                     }, '알림', '확인');
                     return;
                 }
+
+                //앞,뒷면 도로내용 같으면 안됨
+                if(frontKoreanRoadNm == backKoreanRoadNm
+                    && frontStartBaseMasterNo == backStartBaseMasterNo 
+                    && frontStartBaseSlaveNo == backStartBaseSlaveNo 
+                    && frontEndBaseMasterNo == backEndBaseMasterNo 
+                    && frontEndBaseSlaveNo == backEndBaseSlaveNo){
+                    navigator.notification.alert("앞,뒷면 도로내용이 같을 수 없습니다.", function(){
+                        util.dismissProgress();
+                    }, '알림', '확인');
+                    return;
+                }
+
+            }
             // }
 
             //규격
