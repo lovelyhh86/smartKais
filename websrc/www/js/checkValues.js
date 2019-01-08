@@ -311,6 +311,8 @@ function changePlqDir(id){
             util.toast("도로명 및 로마자 입력은 주소 유효성 검증이 가능한 c/s를 이용하여 입력하시기를 권장합니다.","warning");
         }else{
             $('.bk').hide();
+            //양면여부 변경
+            $("#bdrclAt").val('0');
             // 뒷면정보 초기화
             $("#backKoreanRoadNm").val("");
             $("#backRomeRoadNm").text("");
