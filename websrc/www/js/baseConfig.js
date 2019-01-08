@@ -120,7 +120,7 @@ function addResearchYear(id, option){
 
     var researchYear = localStorage["researchYear"];
 
-    if(researchYear && researchYear != 'ALL'){
+    if(researchYear && (researchYear != 'ALL' || option)){
         $("#"+ id).val(researchYear).attr("selected","selected");
     }else{
         $('#'+ id +' option:last').attr('selected','selected');

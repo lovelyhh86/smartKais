@@ -2449,7 +2449,7 @@ function modify(){
                     && frontStartBaseSlaveNo == backStartBaseSlaveNo 
                     && frontEndBaseMasterNo == backEndBaseMasterNo 
                     && frontEndBaseSlaveNo == backEndBaseSlaveNo){
-                    navigator.notification.alert("앞,뒷면 도로내용이 같을 수 없습니다.", function(){
+                    navigator.notification.alert("앞,뒷면의 명판내용이 같을 수 없습니다.", function(){
                         util.dismissProgress();
                     }, '알림', '확인');
                     return;
@@ -3613,8 +3613,10 @@ function selectOriImg(){
 }
 function selectOldImg(){
 
-    navigator.notification.confirm(msg.loadOldImg, function(btnindex){
-        if(btnindex == 1){
+    // navigator.notification.confirm(msg.loadOldImg, function(btnindex){
+    //     if(btnindex == 1){
+            util.toast("원본사진을 조회합니다. 잠시만 기다려주세요.");
+
             var photoNum = $(".infoHeader .photo .photoNum").text();
             // 속성 조회 시 사진 건수가 없는 경우 서버로 부터 조회 하지 않음.
             if(photoNum == 0){
@@ -3707,10 +3709,10 @@ function selectOldImg(){
             }
 
 
-        }else{
-            return;
-        }
-    }, "알림", ["확인","취소"]);
+    //     }else{
+    //         return;
+    //     }
+    // }, "알림", ["확인","취소"]);
     
 }
 
