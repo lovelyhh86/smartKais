@@ -304,6 +304,7 @@ function changePlqDir(id){
         //앞쪽방향용이고 벽부착식이 아닌경우
         if(plqDirection == "00300" && instSe != "00002"){
             $('.bk').show();
+            $("#bdrclAt").val('1');
             //뒷면 로마자 셋팅
             $("#backRomeRoadNm").text($("#frontRomeRoadNm").text());
 
@@ -606,8 +607,8 @@ function changeMnf(id){
         if(thisValue == "1"){//판자형
             customSelectBox("lghtCd","LGHT_CD","2",0,1);
         }else{
-            customSelectBox3("lghtCd","LGHT_CD","2",0,1);
-            // makeOptSelectBox("lghtCd","LGHT_CD","","","");
+            // customSelectBox3("lghtCd","LGHT_CD","2",0,1);
+            makeOptSelectBox("lghtCd","LGHT_CD","","","");
         }
         checkChangeOrigin(id);
         $('#lghtCd').trigger('change');
