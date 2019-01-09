@@ -7,7 +7,7 @@ var MapUtil = {
         MapUtil.controls.init();
         MapUtil.handler.init();
     },
-    setting:{ maxResolution : 0.5 ,
+    setting:{ maxResolution : 0.5 , // [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25] (0.5 = 13 level)
               cluster : 30},
     photo: {
         // 사진 조회 및 촬영에 대한 상태 코드(L: 원거리(tl_spgf_loc), M: 근거리(tn_spgf_manage))
