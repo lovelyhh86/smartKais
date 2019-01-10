@@ -93,6 +93,9 @@ function tableListDivScroll(event){
         //     selectResearchContent(null,pos,size);
         // }
 
+        var buttonText = event.target.textContent;
+        var tagName = event.target.tagName;
+
         if(mod > 0 && rowSize >= resultSize){
             if(scrollTop >= resultHeight - tableHeight){
                 var paramPos = pos;
@@ -124,7 +127,7 @@ function tableListDivScroll(event){
                 // console.log("resultHeight : "+ resultHeight);
             }
         }else if(rowSize == resultSize){
-            if(scrollTop >= resultHeight - tableHeight){
+            if(scrollTop >= resultHeight - tableHeight && tagName !='IMG' && buttonText != '정비'){
                 util.toast("마지막 페이지입니다.","warning");
             }
         }
