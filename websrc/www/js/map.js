@@ -194,7 +194,9 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);    // 지도 새로고침
             ol.inherits(MapUtil.controls.researchControl, ol.control.Control);      // 나의배정목록(안내시설물)
             ol.inherits(MapUtil.controls.researchSpbdControl, ol.control.Control);  // 나의배정목록(건물번호판)
-            ol.inherits(MapUtil.controls.measureControl, ol.control.Control);  // 거리측정
+            ol.inherits(MapUtil.controls.measureControl, ol.control.Control);       // 거리측정
+            ol.inherits(MapUtil.controls.oldResearchCheckControl, ol.control.Control);  // 작년점검여부표시
+            
             // ol.inherits(MapUtil.controls.selectSearchUser, ol.control.Control);
         },
         /**
@@ -556,24 +558,41 @@ var MapUtil = {
                 target: options.target
             });
             
-        }
-        // selectSearchUser:function(opt_options){
-        //     var searchUserList = function(){
-        //         MapUtil.openDetail(DATA_TYPE.searchUser);
-        //     }
-        //     var element = document.createElement('div');
-        //     element.className = 'legend selectSearchUser ol-unselectable ol-control';
+        },
+        oldResearchCheckControl: function(opt_options){
+            var oldResearchCheck = function(){
+                
+                var researchCheckGbn = $('#oResChk').is( ":checked" );//체크여부
 
-        //     var searchUserListHtml = "<ul><li class='sUsr'>조사자 선택</li></ul>";
-        //     element.innerHTML = searchUserListHtml;
+                // if(researchCheckGbn){
+                //     $('#oResChk' ).prop('checked','checked');
+                // }else{
+                //     $('#oResChk' ).prop('checked','');
+                // }
+                
+                localStorage["researchCheckGbn"] = researchCheckGbn;
 
-        //     element.addEventListener('click', searchUserList, false);
+                if(map){
+                    $('.refreshMap button').click();
+                    util.toast('점검상태를 다시 표시합니다.');
+                }
 
-        //     ol.control.Control.call(this, {
-        //         element: element,
-        //         target: options.target
-        //     });
-        // }
+            }
+            
+            
+            var element = document.createElement('div');
+            element.className = 'legend oldResearchCheck ol-unselectable ol-control';
+    
+            var buttonHtml = "<ul><li class='oRes'><input type='checkBox' id='oResChk'></input><span id='oResSpan'>18년 점검여부 표시</span></li></ul>";
+            element.innerHTML = buttonHtml;
+    
+            element.addEventListener('change', oldResearchCheck, false);
+    
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+        },
 
     },
     openPopup: function(type, f) {
@@ -2476,6 +2495,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.researchControl(),
             new MapUtil.controls.researchSpbdControl(),
             new MapUtil.controls.measureControl(),
+            new MapUtil.controls.oldResearchCheckControl(),
             // new MapUtil.controls.selectSearchUser(),
 
 

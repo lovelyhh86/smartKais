@@ -283,13 +283,9 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         //작년점검여부
         var ltChcYnOld = feature.get('LT_CHC_YN_OLD');
 
-        if(localStorage["researchYear"]){
-            
-            if(localStorage["researchYear"] == "ALL"){
-                ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
-            }else if(util.getToday().substr(0,4) != localStorage["researchYear"]){
-                ltChcYn = ltChcYnOld;
-            }
+        //작년 점검여부 표시
+        if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
+            ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
         }
 
         //설치유형(벽면형 : 00002)
@@ -801,13 +797,9 @@ var entrcStyle = function (styleOptions,feature) {
         //작년점검여부
         var ltChcYnOld = feature.get('LT_CHC_YN_OLD');
         
-        if(localStorage["researchYear"]){
-            
-            if(localStorage["researchYear"] == "ALL"){
-                ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
-            }else if(util.getToday().substr(0,4) != localStorage["researchYear"]){
-                ltChcYn = ltChcYnOld;
-            }
+        //작년 점검여부 표시
+        if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
+            ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
         }
         
         //설치일자

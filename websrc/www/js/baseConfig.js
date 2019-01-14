@@ -101,12 +101,12 @@ function changeCheckResearchYear(){
 function addResearchYear(id, option){
     $('#' + id + ' option').remove();
 
-    if(option){
-        $('#'+id).append($('<option>', {
-            value: 'ALL',
-            text: '작년 + 올해'
-        }));
-    }
+    // if(option){
+    //     $('#'+id).append($('<option>', {
+    //         value: 'ALL',
+    //         text: '작년 + 올해'
+    //     }));
+    // }
 
     $('#'+id).append($('<option>', {
         value: util.getToday().substr(0,4) -1,
@@ -118,12 +118,12 @@ function addResearchYear(id, option){
         text: util.getToday().substr(0,4)
     }));
 
-    var researchYear = localStorage["researchYear"];
+    // var researchYear = localStorage["researchYear"];
 
-    if(researchYear && (researchYear != 'ALL' || option)){
-        $("#"+ id).val(researchYear).attr("selected","selected");
-    }else{
+    // if(researchYear && (researchYear != 'ALL' || option)){
+    //     $("#"+ id).val(researchYear).attr("selected","selected");
+    // }else{
         $('#'+ id +' option:last').attr('selected','selected');
-    }
-    $('#'+id).trigger('change');
+    // }
+    // $('#'+id).trigger('change');
 }

@@ -632,6 +632,15 @@ function layerToggle(context){
         removeLayers();
         // map.addLayer(layers.intrvl);
 
+        // 작년 점검여부 체크
+        var researchCheckGbn = localStorage["researchCheckGbn"];
+        if(researchCheckGbn == 'true'){
+            $('#oResChk' ).prop('checked','checked');
+        }
+
+        $(".legend.oldResearchCheck").toggle(true);
+
+
         if (context.type == "map") {
             $(".legend.spgf").toggle(true);
             $(".legend.spbd").toggle(false);
@@ -648,6 +657,7 @@ function layerToggle(context){
             $(".selectAdrdc").toggle(false);
             $(".locManageSpbd").toggle(false);
             
+            $('.legend.oldResearchCheck').attr('style','top : 19.5em; display: block');
             
             
             // map.addLayer(layers.rdpq);
@@ -677,6 +687,8 @@ function layerToggle(context){
             $(".selectResearchSpbd").toggle(true);
             $(".selectAdrdc").toggle(true);
             $(".locManageSpbd").toggle(true);
+
+            $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
             
             
             // map.addLayer(layers.buld);

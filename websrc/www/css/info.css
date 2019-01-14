@@ -54,6 +54,7 @@
 /*지도 위 버튼*/
 .selectResearch {top: 13.5em;width: 9em;height: 3em;}
 .locManageSpgf { top: 16.5em; width: 9em; height: 3em;}
+.oldResearchCheck { top: 19.5em; width: 9em; height: 3em;}
 .selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
 
 .selectResearchSpbd {top: 5.5em;width: 9em;height: 3em;}
@@ -66,11 +67,13 @@
 .selectResearch ul {width: 9em;}
 .selectResearchSpbd ul {width: 9em;}
 .selectAdrdc ul {width: 9em;}
+.oldResearchCheck ul {width: 9em;}
 
 .legend ul li.nPos{background: #fff url(../image/plusPos2.png) 7px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
 .legend ul li.sRes{background: #fff url(../image/checkList.png) 5px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
 .legend ul li.sUsr{background: #fff url(../image/man.png) 5px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
 .legend ul li.sAdr{background: #fff url(../image/baseAdrdc1.png) 5px 4px no-repeat;    background-size: 1.4em; width: 7.5em;}
+.legend ul li.oRes{padding :0.1em 0em 0.3em 0em ;width: 9.5em;}
 /* .legend ul li.nPos.over{background: #009abf url(../image/normalIcon.png) 15px 9px no-repeat; color:#fff;}
 .legend ul li.nPos.over > .total.over{display:inline-block; position:absolute; right:0; width:55px; padding-left:20px; background: url(../image/roadLine.png) 0 3px no-repeat; color: #fff;} */
 
