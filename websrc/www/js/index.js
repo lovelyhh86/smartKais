@@ -277,6 +277,12 @@ var app = {
 
             localStorage["versionInfo"] = JSON.stringify(versionInfo);
 
+            //원본사진조회
+            if(!localStorage["autoImgRoadConf"]){
+                localStorage["autoImgRoadConf"] = "off";
+            }
+            
+
             // localStorage["telNo"] = sso.TEL;
 
             setTimeout(def.resolve, 300);

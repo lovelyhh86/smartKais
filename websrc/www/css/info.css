@@ -212,7 +212,8 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 	/* width:48em; height: 560px; */
 }
 .photoTitle{padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
-.photoPage{display: inline-block; position: absolute; top: -5px;right: 0}
+.photoPage{display: inline-block; position: absolute; right: 1em}
+.photoPage .autoTitle{right: 4em;width: 8em; position: absolute;}
 .photoPage li{ display: inline-block; list-style: none;padding: 0 20px; background: url(../image/menuLine.png) 0 3px no-repeat;}
 .photoPage li:FIRST-CHILD{background: none;}
 .pic_on, .pic_over{ }
@@ -234,7 +235,9 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .picInfo{padding:5px; background-color:#fff; vertical-align: middle; color: #fff;}
 .picImg{display:inline-block; width: 320px; height: 240px; line-height: 240px; text-align: center; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
 .picImg img {max-height: 100%; vertical-align: middle;}
-.photoNotice{text-align: left; padding-left: 75px; color: red;}
+.photoNotice{text-align: left; padding-left: 75px;}
+.black{color: black;}
+.red{color: red;}
 /************* 사진(END) ****************/
 
 /*board table*/

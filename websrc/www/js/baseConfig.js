@@ -16,7 +16,7 @@ $(function () {
         $("#telNo").text("{0}".format(appInfo.opeId));
         
         var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
-        localStorage["autoImgRoadConf"]
+        // localStorage["autoImgRoadConf"]
         
         //슬라이더 값 셋팅 후 리플레시
         $("#slider-spgf").val(mapBaseConfig.zoom.spgf).slider("refresh");
@@ -31,14 +31,14 @@ $(function () {
         $("#slider-buld").change(changedMapBaseConfig);
 
         // 원본사진 자동조회
-        var autoImgRoadConf = localStorage["autoImgRoadConf"];
+        // var autoImgRoadConf = localStorage["autoImgRoadConf"];
     
-        if(autoImgRoadConf){
-            $("#autoImgRoadConf").val(autoImgRoadConf).attr("selected","selected");
-            $("#autoImgRoadConf").trigger("change");
-        }
+        // if(autoImgRoadConf){
+            // $("#autoImgRoadConf").val(autoImgRoadConf).attr("selected","selected");
+            // $("#autoImgRoadConf").trigger("change");
+        // }
         // 일제점검 지도조회 기준년도
-        addResearchYear('researchYear',true);
+        // addResearchYear('researchYear',true);
         
     });
 
@@ -79,6 +79,12 @@ $(function () {
 function changeAutoImgRoading(){
     var autoImgRoadConf = $("#autoImgRoadConf").val();
     localStorage["autoImgRoadConf"] = autoImgRoadConf;
+    // warnnigToast();
+
+    if(autoImgRoadConf == "on" && !MapUtil.photo.isPhoto()){
+        selectOldImg();
+    }
+    
 }
 
 function warnnigAlert(){
@@ -86,6 +92,14 @@ function warnnigAlert(){
     
     if(autoImgRoadConf == "on"){
         navigator.notification.alert(msg.autoImgRoadingAlert, '', '알림', '확인');
+    }
+}
+
+function warnnigToast(){
+    var autoImgRoadConf = $("#autoImgRoadConf").val();
+    
+    if(autoImgRoadConf == "on"){
+        util.toast(msg.autoImgRoadingAlert,'warning');
     }
 }
 

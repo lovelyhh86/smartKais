@@ -126,6 +126,11 @@ var MapUtil = {
                 var cntLphoto = $("#cntLphoto").text();
 
                 var autoImgRoadConf = localStorage["autoImgRoadConf"];
+
+                //원본사진 자동조회
+                $("#autoImgRoadConf").val(autoImgRoadConf);
+                $("#autoImgRoadConf").trigger('changed');
+
                 if((cntMphoto > 0 || cntLphoto > 0) && autoImgRoadConf == "on"){
                     // selectOriImg();
                     selectOldImg();

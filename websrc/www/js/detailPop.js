@@ -3615,6 +3615,7 @@ function selectOldImg(){
 
     // navigator.notification.confirm(msg.loadOldImg, function(btnindex){
     //     if(btnindex == 1){
+            // warnnigToast();
             util.toast("원본사진을 조회합니다. 잠시만 기다려주세요.");
 
             var photoNum = $(".infoHeader .photo .photoNum").text();

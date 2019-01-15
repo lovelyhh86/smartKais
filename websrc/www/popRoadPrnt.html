@@ -394,10 +394,15 @@
 	<!-- 사진 style="display: none"-->
 	<div id="" class="">
 		<div class="photoTitle">사진
-			<ul class="photoPage">
+			<div class="photoPage">
 				<!--li><span class="pic_over">전면</span></li>
-                <li><span class="pic">후면</span></li -->
-			</ul>
+				<li><span class="pic">후면</span></li -->
+				<span class='autoTitle'>원본사진 조회설정 : </span>
+		        <select id="autoImgRoadConf" onchange="changeAutoImgRoading()">
+		            <option value="off">수동</option>
+		            <option value="on">자동</option>
+		        </select>
+			</div>
 		</div>
 		<div class="photoTable">
 			<div class="row">
@@ -436,11 +441,13 @@
 			</div>
 		</div>
 		<div class="photoNotice">
-			<span>※ 근거리(안내시설물) ,원거리(설치시설물) 사진은 최근사진 1장씩만 조회</span>
+			<span class = 'red'>※ 원본사진 조회설정을 [자동]으로 설정 시 데이터 사용량이 증가합니다.</span>
 			<br>
-			<span>※ 우측 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
+			<span class = 'black'>※ 원거리(설치시설물), 근거리(안내시설물) 사진은 최근사진 1장씩만 조회</span>
 			<br>
-			<span>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
+			<span class = 'black'>※ 우측 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
+			<br>
+			<span class = 'black'>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
 		</div>
 	</div>
 	<div class="infoFooter">
