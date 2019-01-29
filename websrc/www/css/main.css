@@ -50,20 +50,32 @@
 #write_reply_memo{height: 20em;min-height: 20em}
 
 /** Content pages */
-#work_page .title { margin-top: 20.5%; text-align: center; }
+/* 탭s4*/
+@media (min-height:1001px){
+    #work_page .title { margin-top: 20.5%; text-align: center; position: relative; top:2em;}
+    #work_page .menu-list { margin: 2% 15%; position: absolute; top:22em; }
+}
+/* 탭s3*/
+@media (max-height:1000px){
+    #work_page .title { margin-top: 20.5%; text-align: center; }
+    #work_page .menu-list { margin: 2% 15%; }
+    
+}
 #work_page .title img { width: 32%; }
 #work_page .title .text { margin-top: .5rem; }
 #work_page .title .text p { margin: .5rem; }
 #work_page .title .text .msg { font-size: 3.2vw; }
 #work_page .title .text .ver { font-size: 3vw; color: rgb(71,154,231);}
+
+
 #work_page .ui-content {
     height: 100%; border: 0; padding: 0;
     background-image: url('../img/main/menu_bg.png');
     background-position: 0 0;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
 }
-#work_page .menu-list { margin: 2% 15%; }
+
 #work_page .menu-list .ui-btn { background-color: transparent; margin: 0; padding: .2em 0; }
 
 
@@ -172,26 +184,52 @@
 .ui-popup-container.slideup.in.ui-popup-active {
     height: 60%;
 }
+/* 탭s4*/
+@media (min-height:1001px){
+    .newPos {
+        position: absolute;
+        left: 19.1em;
+        /* right: 0; */
+        top: 32.3em;
+        /* bottom: 0; */
+        width: 6.5em;
+        height: 8em;
+        background-color: transparent;
+        z-index: 1;
+        /*pointer-events: none;*/
+        text-align: center;
+        display: none;
+        /*border: 5px solid black;*/
+        /*border: 5px dotted black;*/
+        /*border: 5px dashed black;*/
+        /*border: 5px double black;*/
+        
+      }
+}
+/* 탭s3*/
+@media (max-height:1000px){
+    .newPos {
+        position: absolute;
+        left: 20.8em;
+        right: 0;
+        top: 30.3em;
+        bottom: 0;
+        width: 6.5em;
+        height: 8em;
+        background-color: transparent;
+        z-index: 1;
+        /*pointer-events: none;*/
+        text-align: center;
+        display: none;
+        /*border: 5px solid black;*/
+        /*border: 5px dotted black;*/
+        /*border: 5px dashed black;*/
+        /*border: 5px double black;*/
+        
+      }
+    
+}
 
-.newPos {
-      position: absolute;
-      left: 20.8em;
-      right: 0;
-      top: 30.3em;
-      bottom: 0;
-      width: 6.5em;
-      height: 8em;
-      background-color: transparent;
-      z-index: 1;
-      /*pointer-events: none;*/
-      text-align: center;
-      display: none;
-      /*border: 5px solid black;*/
-      /*border: 5px dotted black;*/
-      /*border: 5px dashed black;*/
-      /*border: 5px double black;*/
-      
-    }
 
     /*.centerPosIn .location{border: 3px dotted black;}*/
     .newPosContent {position: relative}
@@ -201,10 +239,10 @@
         border-radius: 0.5em;
         padding: 1em;
     }
-    .newPosContent .label { position: fixed; width: 300px; margin-top: -2.2em; margin-left: -1.8em; }
+    .newPosContent .label { position: fixed; width: 300px; margin-top: -2.2em; margin-left: -26%; }
     #moveInfo .label { bottom: 1em; position: fixed; left: 12em; }
     #viewMapInfo .label { bottom: 11em; position: fixed; left: 11em; }
-    #measureMapInfo .label { bottom: 2em; position: fixed; left: 6em; }
+    #measureMapInfo .label { bottom: 2em; position: fixed; left: 9%; }
   
   .buttonDiv{    
       width: 100%;
@@ -217,12 +255,12 @@
 
   /* .buttonDiv button:first-child{ position: relative; width: 50%; height: 100%}
   .buttonDiv button{ position: absolute; width: 50%; height: 100%; top: 0;right: 0;} */
-  .buttonDiv .btnNormal{width: 18em;position: absolute;bottom: 0;left: -1em;height: 2em; text-align: center;    padding-top: 1em;}
-  .buttonDiv .btnPoint{width: 18em;position: absolute;bottom: 0;right: 0em;height: 2em; text-align: center;    padding-top: 1em;}
+  .buttonDiv .btnNormal{width: 37.5%;position: absolute;bottom: 0;left: -1em;height: 2em; text-align: center;    padding-top: 1em;}
+  .buttonDiv .btnPoint{width: 37.5%;position: absolute;bottom: 0;right: 0em;height: 2em; text-align: center;    padding-top: 1em;}
 
   .newPosContent img{padding: 1em;}
   
-  .newPosMemo{display: none; position:absolute; top:23em; right:12em; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff;z-index: 9001; }
+  .newPosMemo{display: none; position:absolute; top:23em; right:24%; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff;z-index: 9001; }
   /* .newPosMemoText{min-height: 50px} */
 
   #newPosMemoText {-webkit-box-shadow: inset 0 0px 3px rgba(0,0,0,.2);box-shadow:'';    min-height: 100px;}

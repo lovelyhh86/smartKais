@@ -362,9 +362,9 @@ function toggleDetailView(){
         $("#viewMapInfo").show();
         isPopState = "off";
     }else{
-        $(".detailView").css("height","955px");
+        $(".detailView").css("height","160%");
         //상세정보페이지
-        $(".infoContent").css("height","762px");
+        $(".infoContent").css("height","81%");
         $(".infoContent").css("padding","18px");
         //리스트페이지
         $(".infoListContent").show();

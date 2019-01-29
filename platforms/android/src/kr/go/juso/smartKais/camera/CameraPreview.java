@@ -3,8 +3,10 @@ package kr.go.juso.smartKais.camera;
 import java.io.IOException;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -30,8 +32,23 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 	public void surfaceCreated(SurfaceHolder holder) {
 		// The Surface has been created, now tell the camera where to draw the
 		// preview.
+
+		// 카메라 설정
+        Camera.Parameters parameters = mCamera .getParameters();
 		try {
+			// 카메라의 회전이 가로/세로일때 화면을 설정한다.
+            if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+                parameters.set("orientation", "portrait");
+                mCamera.setDisplayOrientation(90);
+                parameters.setRotation(90);
+            } else {
+                parameters.set("orientation", "landscape");
+                mCamera.setDisplayOrientation(0);
+                parameters.setRotation(0);
+            }
+
 			mCamera.setPreviewDisplay(holder);
+			// 카메라 미리보기를 시작한다.
 			mCamera.startPreview();
 		} catch (IOException e) {
 			Log.d("DG_DEBUG", "Error setting camera preview: " + e.getMessage());
@@ -57,7 +74,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 		}
 
 		// make any resize, rotate or reformatting changes here
-
+		
 		// start preview with new settings
 		try {
 			mCamera.setPreviewDisplay(mHolder);

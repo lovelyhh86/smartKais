@@ -357,9 +357,9 @@ function newPoint(type) {
         // var centerPoint = new ol.geom.Point(map.getView().getCenter());
         // moveingPointFeature.setGeometry(centerPoint);
         // movingPoint_source.addFeature(moveingPointFeature);
-        if (map.getView().getZoom() < 14) {
-            map.getView().setZoom(14);
-        }
+        // if (map.getView().getZoom() < 14) {
+        //     map.getView().setZoom(14);
+        // }
         //범례숨김
         $(".legend").hide();
         //방위 숨김
@@ -370,6 +370,8 @@ function newPoint(type) {
         $(".returnZoom").hide();
         //지도초기화 숨김
         $(".refreshMap").hide();
+        //거리재기 숨김
+        $(".measure").hide();
 
         //심플팝업 초기화
         $("#popup-content").empty();

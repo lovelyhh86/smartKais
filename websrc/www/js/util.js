@@ -652,6 +652,7 @@ function layerToggle(context){
             $(".curPosition").toggle(true);
             $(".returnZoom").toggle(true);
             $(".refreshMap").toggle(true);
+            $(".measure").toggle(true);
             
             $(".selectResearchSpbd").toggle(false);
             $(".selectAdrdc").toggle(false);
@@ -683,6 +684,7 @@ function layerToggle(context){
             $(".curPosition").toggle(true);
             $(".returnZoom").toggle(true);
             $(".refreshMap").toggle(true);
+            $(".measure").toggle(true);
 
             $(".selectResearchSpbd").toggle(true);
             $(".selectAdrdc").toggle(true);

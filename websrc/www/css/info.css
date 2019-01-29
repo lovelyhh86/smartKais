@@ -122,7 +122,7 @@
 
 /*top*/
 
-.detailView {position:fixed;bottom:0;height: 955px; width:100%; left: 0px;}
+.detailView {position:fixed;bottom:0;height: 160%; width:100%; left: 0px;}
 .detailView >p.openImage{display: block; text-align: center}
 .detailView >p >span{display:inline-block; width:76px; background:url(../image/open_image.png) 0 0 no-repeat;text-indent: -9999em;}
 .closeDetailSpanImg{display:inline-block; width:76px; background:url(../image/close_image.png) 0 0 no-repeat;text-indent: -9999em;}
@@ -130,12 +130,11 @@
 /*layout*/
 .infoWrap{ bottom:0; width:auto; height:100%; padding:20px; background-color:#3b3a40; overflow: hidden;}
 .infoHeader {height:28px; padding:15px 20px; background-color: #0071bf ;color:#fff;}
-.infoContent{width:auto; height: 762px ;padding:18px; overflow-y: scroll ;background-color:#f5f7f8}
+.infoContent{width:auto; height: 81% ;padding:18px; overflow-y: scroll ;background-color:#f5f7f8}
 .infoListContent{width:auto; 
 	/* height: 808px ; overflow-y: scroll ; */
 	background-color:#f5f7f8}
-.tableListDiv{width:auto; height: 807px ; overflow-y: scroll ;background-color:#f5f7f8}
-#myResearchDiv{width:auto; height: 38em ; overflow-y: scroll ;background-color:#f5f7f8}
+
 
 .infoFooter{padding:10px 20px 0 20px; text-align: center;}
 
@@ -181,7 +180,18 @@
 .btnPossibleDetail{display:inline-block; margin-bottom:4px; padding: 4px 8px; background-color: #0071bf; color:#e6e6e6;width: 100%;}
 
 /*setting*/
-.dataWrap{display: inline-block; position:absolute; right:256px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
+/* 탭s4*/
+@media (min-height:1001px){
+	.dataWrap{display: inline-block; position:absolute; right:12em; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
+	.tableListDiv{width:auto; height: 54.5em ; overflow-y: scroll ;background-color:#f5f7f8}
+	#myResearchDiv{width:auto; height: 42.5em ; overflow-y: scroll ;background-color:#f5f7f8}
+}
+/* 탭s3*/
+@media (max-height:1000px){
+	.dataWrap{display: inline-block; position:absolute; right:256px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
+	.tableListDiv{width:auto; height: 807px ; overflow-y: scroll ;background-color:#f5f7f8}
+	#myResearchDiv{width:auto; height: 38em ; overflow-y: scroll ;background-color:#f5f7f8}
+}
 .dataTItle{display: block; margin-bottom:20px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
 
 
@@ -220,20 +230,28 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 
 .photoTable{min-width:320px; width:29em;border-collapse:collapse;}
 .photoTable .row{display: table-row; text-align: left;}
-.photoTable .cell{display: table-cell; padding:0 10px;  vertical-align: middle;}
+
+/* 탭s4*/
+@media (min-height:1001px){
+	.photoTable .cell{display: table-cell; padding:0 9px;  vertical-align: middle;}
+}
+/* 탭s3*/
+@media (max-height:1000px){
+	.photoTable .cell{display: table-cell; padding:0 20px;  vertical-align: middle;}
+}
 .photoTable .photoTItle{display: block; margin-bottom:10px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
 
 .photoSub{display:inline-block;
 	text-align: center;
 	padding-top: 10px; 
 	padding-bottom: 20px; 
-	width: 320px; 
+	width: 300px; 
 	height: 7px;
 	/* margin-bottom:5px; */
 	color: #000;
 	font-weight: 500;}
 .picInfo{padding:5px; background-color:#fff; vertical-align: middle; color: #fff;}
-.picImg{display:inline-block; width: 320px; height: 240px; line-height: 240px; text-align: center; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
+.picImg{display:inline-block; width: 300px; height: 240px; line-height: 240px; text-align: center; background: #ccc url(../image/picImg.png) 50% 50% no-repeat;  box-shadow:3px 3px 5px rgba(0, 0 , 0, .1);}
 .picImg img {max-height: 100%; vertical-align: middle;}
 .photoNotice{text-align: left; padding-left: 75px;}
 .black{color: black;}
@@ -262,8 +280,8 @@ table caption{display: none}
 .position{position: absolute;left: 20px; bottom: 0;}
 
 /**************** width ****************/
-.cell10{ width:10%!important;} .cell15{ width:15%;}
-.cell20{ width:20%;} .cell25{ width:25%;}
+.cell10{ width:9%!important;} .cell15{ width:16%;}
+.cell20{ width:22%;} .cell25{ width:25%;}
 .cell30{ width:30%;} .cell33{ width:33%;} .cell35{ width:35%;}
 .cell40{ width:40%;} .cell45{ width:45%;}
 .cell50{ width:50%;} .cell55{ width:55%;}
@@ -463,7 +481,7 @@ table caption{display: none}
 
 /** modal*/
 /* The Modal (background) */
-.ui-dialog-contain{max-width: 700px; background-color: white;top:-5em; padding-bottom: 1em;overflow-y: hidden;top: -4.7em; right: 40px;position: absolute;}
+.ui-dialog-contain{max-width: 95%; background-color: white;top:-5em; padding-bottom: 1em; top: -4.7em; right: 2em;position: absolute;}
 #mask {
   position:absolute;
   left:0;

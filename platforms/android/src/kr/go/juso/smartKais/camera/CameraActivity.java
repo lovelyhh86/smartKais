@@ -58,6 +58,10 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 
 	private FrameLayout flBtnContainer;
+    private FrameLayout ic_menu_ok;
+    private FrameLayout ic_menu_cancel;
+
+
 	private LinearLayout pickBtnContainer;
 	File sdRoot;
 	String dir;
@@ -117,6 +121,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		ibCapture = (Button) findViewById(R.id.ibCapture);
 		flBtnContainer = (FrameLayout) findViewById(R.id.flBtnContainer);
 		pickBtnContainer = (LinearLayout) findViewById(R.id.pickBtnContainer);
+        ic_menu_ok = (FrameLayout) findViewById(R.id.ic_menu_ok);
+        ic_menu_cancel = (FrameLayout) findViewById(R.id.ic_menu_cancel);
 
 		// Getting the sensor service.
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -171,7 +177,9 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 				// Reorganize the buttons on the screen
 				flBtnContainer.setVisibility(LinearLayout.VISIBLE);
-				pickBtnContainer.setVisibility(LinearLayout.GONE);
+				// pickBtnContainer.setVisibility(LinearLayout.GONE);
+                ic_menu_ok.setVisibility(LinearLayout.GONE);
+                ic_menu_cancel.setVisibility(LinearLayout.GONE);
 
 
 				cameraPreview.setVisibility(LinearLayout.VISIBLE);
@@ -243,10 +251,10 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 		btnview.getMeasuredHeight();
 
-		LinearLayout dummyview = (LinearLayout) findViewById(R.id.linearLayoutDummy);
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-				(int)(deviceDm.widthPixels) - btnview.getMeasuredWidth() - 100, (int)(deviceDm.heightPixels));
-		dummyview.setLayoutParams(layoutParams);
+		// LinearLayout dummyview = (LinearLayout) findViewById(R.id.linearLayoutDummy);
+		// LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+		// 		(int)(deviceDm.widthPixels) - btnview.getMeasuredWidth() - 100, (int)(deviceDm.heightPixels));
+		// dummyview.setLayoutParams(layoutParams);
 
 		//줌이벤트
 		mPreview.setOnTouchListener(new View.OnTouchListener(){
@@ -425,11 +433,15 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 			// Replacing the button after a photho was taken.
 			flBtnContainer.setVisibility(View.GONE);
-			pickBtnContainer.setVisibility(View.VISIBLE);
+			// pickBtnContainer.setVisibility(View.VISIBLE);
+            ic_menu_ok.setVisibility(View.VISIBLE);
+            ic_menu_cancel.setVisibility(View.VISIBLE);
 
 			cameraPreview.setVisibility(LinearLayout.GONE);
 			takePreview.setVisibility(LinearLayout.VISIBLE);
-			//프리뷰용 이미지(회전없음)
+			//프리뷰용 이미지
+//          BitmapFactory.Options options = new BitmapFactory.Options();
+//          options.inSampleSize = 1;
 			Bitmap picbitmap = BitmapFactory.decodeByteArray(data,0,data.length); //BitmapFactory.decodeFile(pictureFile.toString());
 
 //            fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()).toString() + ".jpg";
@@ -458,12 +470,14 @@ public class CameraActivity extends Activity implements SensorEventListener {
 //                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
 //                    ExifInterface.ORIENTATION_UNDEFINED);
 
-			Bitmap bmRotated = rotateBitmap(picbitmap, orientation);
 
+            //프리뷰 이미지
+            takeImage.setImageBitmap(rotateBitmapToPreview(picbitmap));
+
+            Bitmap bmRotated = rotateBitmap(picbitmap, orientation);
 			byte[] newData = bitmapToByteArray(bmRotated);
 
-			//프리뷰 이미지
-			takeImage.setImageBitmap(picbitmap);
+
 			//이미지 저장
 			storedImage = newData;
 
@@ -510,6 +524,19 @@ public class CameraActivity extends Activity implements SensorEventListener {
 	 * Putting in place a listener so we can get the sensor data only when
 	 * something changes.
 	 */
+    //핸드폰 버튼 기준 (카메라 값)
+    //              8
+    //           3  폰  1
+    //              6
+    //
+    //
+
+    // 세로버전
+    //              6
+    //           1     3
+    //              8
+
+
 	public void onSensorChanged(SensorEvent event) {
 		synchronized (this) {
 			if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -518,43 +545,43 @@ public class CameraActivity extends Activity implements SensorEventListener {
 					if (event.values[1] > 0 && orientation != ExifInterface.ORIENTATION_ROTATE_90) {
 						// UP
 						orientation = ExifInterface.ORIENTATION_ROTATE_90;
-						animation = getRotateAnimation(270);
-						degrees = 270;
+						animation = getRotateAnimation(0);
+						degrees = 0;
 						//새로
 						rotation = 90;
 					} else if (event.values[1] < 0 && orientation != ExifInterface.ORIENTATION_ROTATE_270) {
 						// UP SIDE DOWN
 						orientation = ExifInterface.ORIENTATION_ROTATE_270;
-						animation = getRotateAnimation(90);
-						degrees = 90;
+						animation = getRotateAnimation(180);
+						degrees = 180;
 						rotation = 270;
 					}
 				} else if (event.values[1] < 4 && event.values[1] > -4) {
 					if (event.values[0] > 0 && orientation != ExifInterface.ORIENTATION_NORMAL) {
 						// LEFT
 						orientation = ExifInterface.ORIENTATION_NORMAL;
-						animation = getRotateAnimation(0);
-						degrees = 0;
+						animation = getRotateAnimation(90);
+						degrees = 90;
 						rotation = 0;
 					} else if (event.values[0] < 0 && orientation != ExifInterface.ORIENTATION_ROTATE_180) {
 						// RIGHT
 						orientation = ExifInterface.ORIENTATION_ROTATE_180;
-						animation = getRotateAnimation(180);
-						degrees = 180;
+						animation = getRotateAnimation(270);
+						degrees = 270;
 						rotation = 180;
 					}
 				}
 				if (animation != null) {
-					rotatingImage.startAnimation(animation);
-					ImageView textView =  (ImageView) findViewById(R.id.btn_text_l);
-					textView.startAnimation(animation);
+//					rotatingImage.startAnimation(animation);
+                    ImageView textView =  (ImageView) findViewById(R.id.btn_text_l);
+//					textView.startAnimation(animation);
 					textView =  (ImageView) findViewById(R.id.btn_text_r);
-					textView.startAnimation(animation);
+//					textView.startAnimation(animation);
 
 					if(mCamera != null){
 						Camera.Parameters params = mCamera.getParameters();
 
-						params.setRotation(rotation);
+//						params.setRotation(rotation);
 
 						mCamera.setParameters(params);
 					}
@@ -606,6 +633,27 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		Log.d(TAG, "onAccuracyChanged");
 	}
 
+    public static Bitmap rotateBitmapToPreview(Bitmap bitmap) {
+        // 세로버전
+        //              6
+        //           1     3
+        //              8
+
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+//        matrix.setScale(-1, 1);
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            //bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return bitmap;
+        }
+
+    }
+
 	public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
 
 
@@ -614,33 +662,37 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		//           3  폰  1
 		//              6
 		//
-		//
+		// 세로버전
+        //              6
+        //           1     3
+        //              8
+
 		Matrix matrix = new Matrix();
 		switch (orientation) {
-			case ExifInterface.ORIENTATION_NORMAL:
+			case ExifInterface.ORIENTATION_NORMAL: //1
 				return bitmap;
-			case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+			case ExifInterface.ORIENTATION_FLIP_HORIZONTAL: //2
 				matrix.setScale(-1, 1);
 				break;
-			case ExifInterface.ORIENTATION_ROTATE_180:
+			case ExifInterface.ORIENTATION_ROTATE_180: //3
 				matrix.setRotate(180);
 				break;
-			case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+			case ExifInterface.ORIENTATION_FLIP_VERTICAL: //4
 				matrix.setRotate(180);
 				matrix.postScale(-1, 1);
 				break;
-			case ExifInterface.ORIENTATION_TRANSPOSE:
+			case ExifInterface.ORIENTATION_TRANSPOSE: //5
 				matrix.setRotate(90);
 				matrix.postScale(-1, 1);
 				break;
-			case ExifInterface.ORIENTATION_ROTATE_90:
+			case ExifInterface.ORIENTATION_ROTATE_90: //6
 				matrix.setRotate(90);
 				break;
-			case ExifInterface.ORIENTATION_TRANSVERSE:
+			case ExifInterface.ORIENTATION_TRANSVERSE: //7
 				matrix.setRotate(-90);
 				matrix.postScale(-1, 1);
 				break;
-			case ExifInterface.ORIENTATION_ROTATE_270:
+			case ExifInterface.ORIENTATION_ROTATE_270: //8
 				matrix.setRotate(270);
 				break;
 			default:
@@ -653,7 +705,7 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		}
 		catch (OutOfMemoryError e) {
 			e.printStackTrace();
-			return null;
+			return bitmap;
 		}
 	}
 
@@ -663,4 +715,27 @@ public class CameraActivity extends Activity implements SensorEventListener {
 		byte[] byteArray = stream.toByteArray() ;
 		return byteArray ;
 	}
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
 }
