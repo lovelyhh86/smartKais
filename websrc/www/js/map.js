@@ -1238,7 +1238,7 @@ var MapUtil = {
                             var instSe = data.instSe;
                             var useTarget = data.useTarget;
                             if(instSe == '00002' && (useTarget == "01000")){
-                                imgNm = 'icon_w_legend01.png'
+                                imgNm = 'icon_legend01_w.png'
                             }
                             var titleIcon = '<span class="titleIcon"><img src="image/'+imgNm+'" title="도로명판"></span>';
                             $(".title").empty();

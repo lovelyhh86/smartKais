@@ -314,7 +314,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                     // if(rdGdftySe == '110'){
                         var imgNm = 'icon_legend01.png';
                         if(instSe == "00002" && (useTarget == "01000" || useTarget == "04000" || useTarget == "05000")){
-                            imgNm = 'icon_w_legend01.png';
+                            imgNm = 'icon_legend01_w.png';
                         }
                         locBtn = "<img onclick='getResearchLocation("+d.pos+")' src='./image/"+imgNm+"'></img>";
                     }else if(rdGdftySe == '510'){
@@ -761,7 +761,7 @@ function submitResearch(){
                     //     index = 1;
                     //     trgSn = trgLocSn;
 
-                        changeOneFeatherStyle(trgGbn);
+                        changeOneFeatherStyle(trgGbn,rcSttCd);
                     // }else{
                         closePopupAndClearMap(trgGbn);
                     // }
@@ -1036,7 +1036,7 @@ function disableResearch(){
 }
 
 //피처 한건만 점검 업데이트
-function changeOneFeatherStyle(trgGbn){
+function changeOneFeatherStyle(trgGbn, rcSttCd){
     try {
         var type = DATA_TYPE.LOC;
         var layerOption = {
@@ -1105,7 +1105,17 @@ function changeOneFeatherStyle(trgGbn){
             if(layerId == type){
                 if(featureClone != null){
                     var featureId = featureClone[featureIndex].id_;
-                    featureClone[featureIndex].set("LT_CHC_YN",1);
+                    var featureLtChcYn = parseInt(featureClone[featureIndex].get("LT_CHC_YN"));
+                    var featureReSttSum = featureClone[featureIndex].get("RE_STT_SUM");
+
+                    featureClone[featureIndex].set("LT_CHC_YN",featureLtChcYn + 1);
+
+                    if(rcSttCd == '1000'){
+                        featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum + 1);
+                    }else{
+                        featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum);
+                    }
+                    
 
                     var layerFeatures = layerList[layer].get("source").features;
 
@@ -1227,7 +1237,7 @@ function insertResearchForPopup(index,rdGdftySn,rdFtyLcSn,rdGdftySe){
     
                         // selectResearchContent();
                         featureIndex = index;
-                        changeOneFeatherStyle(trgGbn);
+                        changeOneFeatherStyle(trgGbn,rcSttCd);
                         closePopupAndClearMap(trgGbn);
     
                         util.dismissProgress();
