@@ -5,7 +5,7 @@ $(function () {
     });
 
     $(document).on("pagebeforeshow", pages.baseConfigPage.div, function (event, data) {
-        
+        //기본정보 표시
         var versionInfo = JSON.parse(localStorage["versionInfo"]);
         $("#versionName").text("{0}({1})".format(versionInfo.versionName,versionInfo.versionCode));
 
@@ -15,20 +15,18 @@ $(function () {
         $("#sigNm").text(appInfo.sigNm);
         $("#telNo").text("{0}".format(appInfo.opeId));
         
-        var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
-        // localStorage["autoImgRoadConf"]
+
+        //심볼표시 레벨설정
+        var maxResolution = JSON.parse(localStorage["maxResolution"]);
+        
+        var zoomList = [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125] ;
         
         //슬라이더 값 셋팅 후 리플레시
-        $("#slider-spgf").val(mapBaseConfig.zoom.spgf).slider("refresh");
-        $("#slider-buld").val(mapBaseConfig.zoom.buld).slider("refresh");
-        
-        //이미지셋팅
-        setLevelImg("spgf",mapBaseConfig.zoom.spgf);
-        setLevelImg("buld",mapBaseConfig.zoom.buld);
-        
-        //슬라이더 변경시 자동저장
-        $("#slider-spgf").change(changedMapBaseConfig);
-        $("#slider-buld").change(changedMapBaseConfig);
+        $("#slider-spgf").val(zoomList.indexOf(maxResolution.spgf)+1).slider("refresh");
+        $("#slider-buld").val(zoomList.indexOf(maxResolution.buld)+1).slider("refresh");
+
+        $("#slider-spgf").change(changedMaxResolution);
+        $("#slider-buld").change(changedMaxResolution);
 
         // 원본사진 자동조회
         // var autoImgRoadConf = localStorage["autoImgRoadConf"];
@@ -46,35 +44,77 @@ $(function () {
 
     });
 
-    function changedMapBaseConfig(){
-        
-        mapBaseConfig = {
-            zoom : {
-                spgf : $("#slider-spgf").val(),
-                buld : $("#slider-buld").val()
-            }
-        }
-
-        localStorage["mapBaseConfig"] = JSON.stringify(mapBaseConfig);
-
-        //이미지셋팅
-        setLevelImg("spgf",mapBaseConfig.zoom.spgf);
-        setLevelImg("buld",mapBaseConfig.zoom.buld);
-
-    }
-
-    function setLevelImg(type, level){
-        
-        if(level > 12){
-            $("#slider-"+type+"-img").attr("src","image/" + type + "-" + level + ".png");
-        }else{
-            $("#slider-"+type+"-img").attr("src","image/level-" + level + ".png");
-        }
-        
-    }
+    
 
     
 });
+var zoomList = [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125] ;
+function changedMapBaseConfig(){
+        
+    mapBaseConfig = {
+        zoom : {
+            spgf : $("#slider-spgf").val(),
+            buld : $("#slider-buld").val()
+        }
+    }
+
+    localStorage["mapBaseConfig"] = JSON.stringify(mapBaseConfig);
+
+    //이미지셋팅
+    // setLevelImg("spgf",mapBaseConfig.zoom.spgf);
+    // setLevelImg("buld",mapBaseConfig.zoom.buld);
+
+}
+
+function changedMaxResolution(){
+    // [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25] (0.5 = 13 level, 1 = 12 level)
+
+    
+
+    maxResolution = {
+        spgf : zoomList[$("#slider-spgf").val() -1],
+        buld : zoomList[$("#slider-buld").val() -1]
+    }
+
+    localStorage["maxResolution"] = JSON.stringify(maxResolution);
+
+    setMapResolotion();
+
+    MapUtil.setting.maxResolution_spgf = zoomList[$("#slider-spgf").val() -1];
+    MapUtil.setting.maxResolution_buld = zoomList[$("#slider-buld").val() -1];
+
+    //이미지셋팅
+    // setLevelImg("spgf",mapBaseConfig.zoom.spgf);
+    // setLevelImg("buld",mapBaseConfig.zoom.buld);
+
+}
+
+function setMapResolotion(){
+    //심볼표시 레벨설정
+    var maxResolution = JSON.parse(localStorage["maxResolution"]);
+
+    if(map != null){//맵을 연상태 일때는 직접변경
+        var layerList = map.getLayers().getArray();
+        for(var i in layerList){
+            var id = layerList[i].get('id');
+            if(id == DATA_TYPE.LOC){
+                layerList[i].setMaxResolution(maxResolution.spgf);
+            }else if(id == DATA_TYPE.ENTRC){
+                layerList[i].setMaxResolution(maxResolution.buld);
+            }
+        }
+    }
+}
+
+function setLevelImg(type, level){
+    
+    if(level > 12){
+        $("#slider-"+type+"-img").attr("src","image/" + type + "-" + level + ".png");
+    }else{
+        $("#slider-"+type+"-img").attr("src","image/level-" + level + ".png");
+    }
+    
+}
 
 function changeAutoImgRoading(){
     var autoImgRoadConf = $("#autoImgRoadConf").val();
@@ -140,4 +180,20 @@ function addResearchYear(id, option){
         $('#'+ id +' option:last').attr('selected','selected');
     // }
     // $('#'+id).trigger('change');
+}
+
+function refreshMaxResolution(){
+
+    $("#slider-spgf").val(12);
+    $("#slider-buld").val(13);
+
+    changedMaxResolution();
+
+    //슬라이더 값 셋팅 후 리플레시
+    $("#slider-spgf").val(zoomList.indexOf(maxResolution.spgf)+1).slider("refresh");
+    $("#slider-buld").val(zoomList.indexOf(maxResolution.buld)+1).slider("refresh");
+
+    $("#slider-spgf").change(changedMaxResolution);
+    $("#slider-buld").change(changedMaxResolution);
+
 }

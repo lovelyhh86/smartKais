@@ -506,7 +506,7 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
 .setting h2{font-size: 1.25em; color:#0071bf ; font-weight: bold;}
 
 .common{border-bottom: 1px solid #666; margin-bottom: 30px; padding-bottom: 30px; }
-.common ul{margin:0; padding: 0;}
+.common ul{margin:0; padding: 0; list-style: none;}
 .common ul li{margin-left:30px; padding: 0.5em 0; font-size: 1em; text-align: left;}
 .common ul li span{display:inline-block; width:100px; color: #000}
 .common ul li p{display:inline-block; color: #666}
@@ -515,6 +515,7 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
 .settingInfo h2{margin:0 0 5px 55px; padding-top: 5px;}
 .settingInfo .setTxt{display:inline-block; margin-left: 55px; line-height: 1em;  }
 .dataContent{margin: 30px 0;}
+.dataContent .notice {margin : 0 20px; font-weight: bold;}
 .dataContent h3{margin-bottom: 5px; background:url(../image/lineBg.png) 0 50% repeat-x;}
 .dataContent h3 span{display: inline-block; padding: 5px 10px 5px 0; background-color: #fff}
 .dataContent .dataImg{width: 100%; height: 200px; border: 1px solid #ccc; background: #f9f9f9;}
@@ -577,4 +578,14 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
 .configSwitch{
 	position: absolute;
 	right: 56px;
+}
+.slider{
+	width: 15%!important;
+	text-align: center;
+}
+
+.refreshDiv{
+	width: 10%;
+	position: absolute;
+	right: 48px;
 }

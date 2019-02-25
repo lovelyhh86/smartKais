@@ -267,8 +267,16 @@ var app = {
                         buld : 13
                     }
                 }
-                localStorage["mapBaseConfig"] = JSON.stringify(mapBaseConfig);
             }
+
+            if(localStorage.getItem('maxResolution') == null){
+                maxResolution = {
+                    spgf : 1,
+                    buld : 0.5
+                }
+                localStorage["maxResolution"] = JSON.stringify(maxResolution);
+            }
+
 
             versionInfo = {
                 versionName : versionName,

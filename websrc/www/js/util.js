@@ -668,7 +668,7 @@ function layerToggle(context){
             // map.addLayer(layers.sppn);
             
 
-            map.getView().setZoom(mapBaseConfig.zoom.spgf);
+            // map.getView().setZoom(mapBaseConfig.zoom.spgf);
 
             // if(mapZoom <= 12){
             //     map.getView().setZoom(13);
@@ -696,13 +696,15 @@ function layerToggle(context){
             // map.addLayer(layers.buld);
             map.addLayer(layers.entrc);
             
-            map.getView().setZoom(mapBaseConfig.zoom.buld);
+            // map.getView().setZoom(mapBaseConfig.zoom.buld);
 
             // if(mapZoom <= 13){
             //     map.getView().setZoom(14);
             // }
 
         }
+
+        setMapResolotion();
     });
 }
 

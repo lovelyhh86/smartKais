@@ -18,25 +18,61 @@
                         <!-- <p class="setTxt">각 레이어의 시작 축척을 설정합니다.</p> -->
                     </div>
                     <div class="dataContent">
-                        <h3><span>시설물관리 축척</span></h3>
-                        <form>
-                        <!--     <label for="slider-spgf">시설물관리 기본 축척</label> -->
-                            <input type="range" name="slider-spgf" id="slider-spgf" min="10" max="15" value="">
-                        </form>
+                        <h3><span>심볼 표시 레벨 설정</span></h3>
+                        <!-- <div class="notice">
+                            <p>선택하신 레벨 이상에서만 시설물의 심볼을 표시합니다.</p>
+                        </div> -->
+                        <div class="common">
+                            <ul>
+                                <li>
+                                    <div class="ui-field-contain">
+                                        <label for="slider-spgf" class="slider">• 안내시설물 [10~15]</label>
+                                        <input type="range" name="slider-spgf" id="slider-spgf" min="10" max="15" value="1">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="ui-field-contain">
+                                        <label for="slider-buld" class="slider">• 건물번호판 [12~15]</label>
+                                        <input type="range" name="slider-buld" id="slider-buld" min="12" max="15" value="1">
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="refreshDiv">
+                                <button id="refreshBtn" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left btnPossible cell15" onclick="refreshMaxResolution()">초기화</button>
+                            </div>
+                            <br>
+                            <div class="notice">
+                                <p class="red iconPosition">※경고※</p>
+                                <p class="red">※ 레벨 숫자가 작아질수록 넓은 범위에서 많은 심볼이 조회됩니다.(권장레벨 : [13])</p>
+                                <p class="red">※ 데이터 소모량이 급격히 증가합니다.(3,000건 조회시 회당 2MB)</p>
+                                <p class="red">※ 한번에 조회되는 심볼의 갯수는 최대 3,000개로 제한 되어있습니다.</p>
+                            </div>
+                        </div>
+                        <!-- <div class="ui-field-contain">
+                            <label for="slider-spgf" class="slider">안내시설물 [10~15]</label>
+                            <input type="range" name="slider-spgf" id="slider-spgf" min="10" max="15" value="1">
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="slider-buld" class="slider">건물번호판 [12~15]</label>
+                            <input type="range" name="slider-buld" id="slider-buld" min="12" max="15" value="1">
+                        </div> -->
+
+                       
+                        
                         <!-- <div class="dataImg">
                             <img id="slider-spgf-img" src="">
                         </div> -->
                     </div>
-                    <div class="dataContent">
-                        <h3><span>건물정보관리 축척</span></h3>
-                        <form>
+                    <!-- <div class="dataContent"> -->
+                        <!-- <h3><span>건물정보관리 축척</span></h3> -->
+                        <!-- <form> -->
                         <!--     <label for="slider-buld">건물 기본 축척</label> -->
-                            <input type="range" name="slider-buld" id="slider-buld" min="10" max="15" value="">
-                        </form>
+                        <!--     <input type="range" name="slider-buld" id="slider-buld" min="12" max="15" value=""> -->
+                        <!-- </form> -->
                         <!-- <div class="dataImg">
                             <img id="slider-buld-img" src="">
                         </div> -->
-                    </div>
+                    <!-- </div> -->
                     <!-- <div class="dataContent">
                         <h3><span>원본사진 조회</span></h3>
                         <div class="ui-field-contain">

@@ -7,7 +7,8 @@ var MapUtil = {
         MapUtil.controls.init();
         MapUtil.handler.init();
     },
-    setting:{ maxResolution : 0.5 , // [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25] (0.5 = 13 level, 1 = 12 level)
+    setting:{ maxResolution_spgf : JSON.parse(localStorage["maxResolution"]).spgf , // [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25] (0.5 = 13 level, 1 = 12 level)
+              maxResolution_buld : JSON.parse(localStorage["maxResolution"]).buld,
               cluster : 30},
     photo: {
         // 사진 조회 및 촬영에 대한 상태 코드(L: 원거리(tl_spgf_loc), M: 근거리(tn_spgf_manage))
@@ -2542,7 +2543,7 @@ var mapInit = function(mapId, pos) {
         //         width: 3
         //     }
         // },
-        maxResolution: MapUtil.setting.maxResolution,
+        // maxResolution: MapUtil.setting.maxResolution,
         viewProgress: false,
         renderMode: 'image',
     });
@@ -2562,7 +2563,7 @@ var mapInit = function(mapId, pos) {
             // }
         },
         cluster: { distance: MapUtil.setting.cluster },
-        maxResolution: MapUtil.setting.maxResolution,
+        maxResolution: MapUtil.setting.maxResolution_buld,
         viewProgress: false,
         renderMode: 'vector',
         zIndex : 1
@@ -2636,7 +2637,7 @@ var mapInit = function(mapId, pos) {
         },
         cluster: { distance: MapUtil.setting.cluster },
         // maxResolution: MapUtil.setting.maxResolution,
-        maxResolution: 1,
+        maxResolution: MapUtil.setting.maxResolution_spgf,
         viewProgress: false,
         renderMode: 'vector',
         zIndex : 1
