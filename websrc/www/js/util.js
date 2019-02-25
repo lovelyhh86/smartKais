@@ -626,8 +626,8 @@ function layerToggle(context){
         //심플팝업 초기화
         $("#popup-content").empty();
         $("#popup").hide();
-        var mapZoom = map.getView().getZoom();
-        var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
+        // var mapZoom = map.getView().getZoom();
+        // var mapBaseConfig = JSON.parse(localStorage["mapBaseConfig"]);
         
         removeLayers();
         // map.addLayer(layers.intrvl);
