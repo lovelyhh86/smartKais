@@ -3754,7 +3754,7 @@ var mapInit = function(mapId, pos) {
 
                 for (var i in useLayers) {
                     var id = useLayers[i].get("id");
-                    if (mapRS == useLayers[i].getMaxResolution()) {
+                    if (mapRS >= useLayers[i].getMaxResolution()) {
 
                         if (id == DATA_TYPE.LOC) {
                             $('.legend .rdpq .total').text('0건');
@@ -3775,6 +3775,20 @@ var mapInit = function(mapId, pos) {
 
                     }
                 }
+                var mapZoom = map.getView().getZoom();
+                //심볼표시 레벨설정
+                var maxResolution = JSON.parse(localStorage["maxResolution"]);
+
+                if(mapZoom == 10){
+                    if (id == DATA_TYPE.LOC && maxResolution.spgf == 4) {
+                        util.toast(msg.maxResolutionWarning,'warning');
+                    }
+                }else if(mapZoom == 12){
+                    if (id == DATA_TYPE.ENTRC && maxResolution.buld == 1) {
+                        util.toast(msg.maxResolutionWarning,'warning');
+                    }
+                }
+                
                 break;
         }
     });
