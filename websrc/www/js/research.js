@@ -1107,14 +1107,30 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
                     var featureId = featureClone[featureIndex].id_;
                     var featureLtChcYn = parseInt(featureClone[featureIndex].get("LT_CHC_YN"));
                     var featureReSttSum = featureClone[featureIndex].get("RE_STT_SUM");
+                    var sumCount = 0;
 
-                    featureClone[featureIndex].set("LT_CHC_YN",featureLtChcYn + 1);
+                    //2건 이상인경우
+                    if(featureClone.length > 1){
+                        sumCount = 1;
+                        featureClone[featureIndex].set("LT_CHC_YN",featureLtChcYn + sumCount);
 
-                    if(rcSttCd == '1000'){
-                        featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum + 1);
+                        if(rcSttCd == '1000'){
+                            featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum + sumCount);
+                        }else{
+                            featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum);
+                        }
+
                     }else{
-                        featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum);
+                        featureClone[featureIndex].set("LT_CHC_YN",1);
+
+                        if(rcSttCd == '1000'){
+                            featureClone[featureIndex].set("RE_STT_SUM",1);
+                        }else{
+                            featureClone[featureIndex].set("RE_STT_SUM",0);
+                        }    
                     }
+
+                    
                     
 
                     var layerFeatures = layerList[layer].get("source").features;
