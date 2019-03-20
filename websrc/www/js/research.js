@@ -187,6 +187,19 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     var searchOptPlnYr =  $("#searchOptPlnYr").val() == "" ? null : $("#searchOptPlnYr").val();
     //일련번호
     var searchOptTrgSn = $("#searchOptTrgSn").val() == "" ? null : $("#searchOptTrgSn").val();
+    //설치위치 도로명
+    var searchOptRnCdLbl = $("#searchOptRnCdLbl").val() == "" ? null : $("#searchOptRnCdLbl").val();
+    //설치위치 기초번호
+    var searchOptBsisMnnm = $("#searchOptBsisMnnm").val() == "" ? null : $("#searchOptBsisMnnm").val();
+    var searchOptBsisSlno = $("#searchOptBsisSlno").val() == "" ? null : $("#searchOptBsisSlno").val();
+
+    if(searchOptBsisMnnm != null || searchOptBsisSlno != null){
+        if(searchOptRnCdLbl == null){
+            util.toast('[설치위치 도로명]을 입력하고\n검색해 주세요.');
+            util.dismissProgress();
+            return;
+        }
+    }
 
     app.info.searchValue = {
         searchOptRcrSn : searchOptRcrSn,
@@ -194,7 +207,10 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
         searchOptRcSttCd : searchOptRcSttCd,
         searchOptDelSttCd : searchOptDelSttCd,
         searchOptPlnYr : searchOptPlnYr,
-        searchOptTrgSn : searchOptTrgSn
+        searchOptTrgSn : searchOptTrgSn,
+        searchOptRnCdLbl : searchOptRnCdLbl,
+        searchOptBsisMnnm : searchOptBsisMnnm,
+        searchOptBsisSlno : searchOptBsisSlno
     }
 
     var param = {
@@ -209,6 +225,9 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
         ,plnYr : searchOptPlnYr
         ,trgSn : searchOptTrgSn
         ,workId : app.info.opeId
+        ,bsisRnLbl :searchOptRnCdLbl
+        ,bsisMnnm : searchOptBsisMnnm
+        ,bsisSlno : searchOptBsisSlno
     } ;
 
     var url = URLs.postURL(URLs.researchListLink, param);
