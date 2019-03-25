@@ -280,7 +280,8 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
                             "row"+d.pos
                             ,locBtn
                             ,'건물번호판'
-                            ,posBulNm
+                            // ,posBulNm
+                            ,korRnLbl
                             ,korRnLbl
                             ,d.delStateCdLbl
                             ,d.rcSttCdLbl
