@@ -66,6 +66,13 @@ var URLs = {
     "selectSpbdChange":{svcNm: "vSPBDChg"},
     //시설물 변경 내용 삭제
     "deleteUpdtChange":{svcNm: "dUpdtChg"},
+
+    //시군구 조회
+    "selectSigList":{svcNm: "sSigList"},
+    //읍면동 조회
+    "selectEmdList":{svcNm: "sEmdList"},
+    //읍면동(행정동) 조회
+    "selectHangEmdList":{svcNm: "sHangEmdList"},
     
     getURL: function (srcurl, jsondata) {
 

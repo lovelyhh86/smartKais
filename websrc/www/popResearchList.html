@@ -20,7 +20,27 @@
                                 <col class="cell20">
                                 <col class="cell20">
                             </colgroup>
-                            <tbody> 
+                            <tbody>
+                                <tr>
+                                    <th scope="row">읍면동</th>
+                                    <td>
+                                            <select id = "emdGbn" class="cell100" onchange="fnSelectEmdList('#selEmd')">
+                                                <option value='amd'>법정동</option>
+                                                <option value='ha'>행정동</option>
+                                            </select>
+                                        </td>
+                                    <td>
+                                        <select id = "selSig" class="cell100" onchange="fnSelectEmdList('#selEmd')">
+                                            <!-- <option value=''>전주시 덕진구</option>
+                                            <option value=''>전주시 완산구</option> -->
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id = "selEmd" class="cell100">
+                                            <option value = "">-읍면동-</option>
+                                        </select>
+                                    </td>
+                                </tr> 
                                 <tr>
                                     <th scope="row">시설구분</th>
                                     <td>
@@ -32,18 +52,10 @@
                                         <input type="number" id="searchOptTrgSn" oninput="maxLengthCheck(this)" maxlength="10" class="cell100" ></input>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr hidden>
                                     <th scope="row">점검기준년도</th>
                                     <td>
                                         <select id="searchOptPlnYr" onchange="" class="cell100"></select>
-                                    </td>
-                                    <th scope="row">점검여부</th>
-                                    <td>
-                                        <select id="searchOptRcSttCd" onchange="" class="cell100">
-                                            <option value =''>전체</option>
-                                            <option value ='Y'>점검</option>
-                                            <option value ='N'>미점검</option>
-                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -56,12 +68,12 @@
                                             <option value ='04'>망실</option>
                                         </select>
                                     </td>
-                                    <th scope="row">배정여부</th>
+                                    <th scope="row">점검여부</th>
                                     <td>
-                                        <select id="searchOptRcrSn" onchange="" class="cell100">
+                                        <select id="searchOptRcSttCd" onchange="" class="cell100">
                                             <option value =''>전체</option>
-                                            <option value ='Y'>나의배정</option>
-                                            <option value ='N'>미배정</option>
+                                            <option value ='Y'>점검</option>
+                                            <option value ='N'>미점검</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -78,8 +90,16 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row">배정여부</th>
+                                    <td>
+                                        <select id="searchOptRcrSn" onchange="" class="cell100">
+                                            <option value =''>전체</option>
+                                            <option value ='Y'>나의배정</option>
+                                            <option value ='N'>미배정</option>
+                                        </select>
+                                    </td>
                                     <th scope="row">건수</th>
-                                    <td colspan="3">
+                                    <td>
                                         <p id='rowSize'>0</p>
                                     </td>
                                 </tr>

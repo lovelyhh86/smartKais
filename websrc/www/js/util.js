@@ -839,3 +839,87 @@ function maxLengthCheck(object){
      object.value = object.value.slice(0, object.maxLength);
     }   
    }
+
+//콤보박스 셋팅
+function makeCombo(tagId, selectList, initText){
+    $(tagId).empty();
+    $(tagId).val("");
+
+    if(typeof initText != "undefined" && initText != ""){
+        $(tagId).append('<option value="">'+initText+'</option>');
+    }
+    for(var i = 0; i< selectList.length; i++){
+        $(tagId).append('<option value="'+selectList[i].CODE_ID+'">'+selectList[i].CODE_NM+'</option>');
+    }
+
+}
+
+//시군구 검색
+function fnSelectSigList(tagId){
+    try {
+        // util.showProgress();
+        var link = URLs.selectSigList;
+        var sendParam = {
+            sigCd: app.info.sigCd,
+            workId: app.info.opeId
+        }
+
+        var url = URLs.postURL(link, sendParam);
+        util.postAJAX({}, url)
+            .then(function(context, rCode, results) {
+                    util.dismissProgress();
+
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    var resultList = results.data;
+                    makeCombo(tagId,resultList);
+
+            })
+    }catch(error){
+        util.toast(msg.callCenter,"error");
+        util.dismissProgress();
+    }
+}
+
+//읍면동 조회
+function fnSelectEmdList(tagId){
+    try{
+        // util.showProgress();
+        var sigCd = $("#selSig").val();
+        var emdGbn = $("#emdGbn").val();
+
+        var link = URLs.selectEmdList;
+        if(emdGbn == "ha"){
+            link = URLs.selectHangEmdList;
+        }
+        var sendParam = {
+            sigCd: sigCd,
+            workId: app.info.opeId
+        }
+
+        var url = URLs.postURL(link, sendParam);
+        util.postAJAX({}, url)
+            .then(function(context, rCode, results) {
+                    util.dismissProgress();
+
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    var resultList = results.data;
+                    makeCombo(tagId,resultList,'-읍면동-');
+
+            })
+    }catch(error){
+        util.toast(msg.callCenter,"error");
+        util.dismissProgress();
+    }
+}

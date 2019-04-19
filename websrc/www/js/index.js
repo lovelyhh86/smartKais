@@ -172,6 +172,7 @@ var app = {
                     if (resultCode == 0 && !(util.isEmpty(results.data))) {
                         var d = results.data;
 
+                        localStorage["admCd"] = d.admCd;
                         localStorage["guIncYn"] = d.guIncYn;
                         
                         localStorage["serviceProj"] = d.trgnptLbl;

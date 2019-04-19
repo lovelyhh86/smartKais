@@ -1543,18 +1543,27 @@ function submit(type){
 
 function closePopupAndClearMap(type){
     
-    //심플팝업이 2개 이상 떠있는 경우 닫지 않음
-    // var popLength = $("#popup-content").children().length; // 엘리먼트 갯수
-    // if(popLength > 2){
-    //     //심플팝업 초기화
-    //     $("#popup-content").empty();
-    //     $("#popup").hide();
-    //     selectFeatureInfo(featureClone);
-    // }else{
-    //     //심플팝업 초기화
-    //     $("#popup-content").empty();
-    //     $("#popup").hide();
-    // }
+    // 심플팝업이 2개 이상 떠있는 경우 닫지 않음
+    var popLength = $("#popup-content").children().length / 2; // 엘리먼트 갯수
+    if(popLength > 1){
+        //심플팝업 초기화
+        $("#popup-content").empty();
+        $("#popup").hide();
+        
+        var LT_CHC_YN_SUM = 0;
+        for(var i in featureClone){
+            LT_CHC_YN_SUM = LT_CHC_YN_SUM + parseInt(featureClone[0].get("LT_CHC_YN"));
+        }
+        
+        if(LT_CHC_YN_SUM < popLength){
+            selectFeatureInfo(featureClone);
+        }
+        
+    }else{
+        //심플팝업 초기화
+        $("#popup-content").empty();
+        $("#popup").hide();
+    }
     //심플팝업 초기화
     $("#popup-content").empty();
     $("#popup").hide();

@@ -193,6 +193,16 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     var searchOptBsisMnnm = $("#searchOptBsisMnnm").val() == "" ? null : $("#searchOptBsisMnnm").val();
     var searchOptBsisSlno = $("#searchOptBsisSlno").val() == "" ? null : $("#searchOptBsisSlno").val();
 
+    //시군구 코드
+    var searchOptSigCd = $("#selSig").val() == "" ? app.info.sigCd : $("#selSig").val();
+    if(app.info.guIncYn == "Y" && localStorage["admCd"] == searchOptSigCd){
+        searchOptSigCd = app.info.sigCd;
+    }
+    //읍면동 구분
+    var searchOptEmdGbn = $("#emdGbn").val() == "" ? null : $("#emdGbn").val();
+    //읍면동 코드
+    var searchOptEmdHaCd = $("#selEmd").val() == "" ? null : $("#selEmd").val();
+
     if(searchOptBsisMnnm != null || searchOptBsisSlno != null){
         if(searchOptRnCdLbl == null){
             util.toast('[설치위치 도로명]을 입력하고\n검색해 주세요.');
@@ -210,11 +220,14 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
         searchOptTrgSn : searchOptTrgSn,
         searchOptRnCdLbl : searchOptRnCdLbl,
         searchOptBsisMnnm : searchOptBsisMnnm,
-        searchOptBsisSlno : searchOptBsisSlno
+        searchOptBsisSlno : searchOptBsisSlno,
+        searchOptSigCd : searchOptSigCd,
+        searchOptEmdGbn : searchOptEmdGbn,
+        searchOptEmdHaCd : searchOptEmdHaCd
     }
 
     var param = {
-        sigCd : app.info.sigCd
+        sigCd : searchOptSigCd
         ,rcrSn : rcrSn
         ,rdGdftySe : searchOptTrgGbn
         ,trgGbn : searchOptTrgGbn
@@ -228,6 +241,8 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
         ,bsisRnLbl :searchOptRnCdLbl
         ,bsisMnnm : searchOptBsisMnnm
         ,bsisSlno : searchOptBsisSlno
+        ,emdGbn : searchOptEmdGbn
+        ,emdHaCd : searchOptEmdHaCd
     } ;
 
     var url = URLs.postURL(URLs.researchListLink, param);
@@ -781,7 +796,7 @@ function submitResearch(){
                     //     index = 1;
                     //     trgSn = trgLocSn;
 
-                        changeOneFeatherStyle(trgGbn,rcSttCd);
+                        changeOneFeatherStyle(trgGbn,rcSttCdSel);
                     // }else{
                         closePopupAndClearMap(trgGbn);
                     // }
@@ -1127,20 +1142,27 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
                     var featureId = featureClone[featureIndex].id_;
                     var featureLtChcYn = parseInt(featureClone[featureIndex].get("LT_CHC_YN"));
                     var featureReSttSum = featureClone[featureIndex].get("RE_STT_SUM");
+                    var featureLabel = featureClone[featureIndex].get("LABEL")
                     var sumCount = 0;
 
                     //2건 이상인경우
-                    if(featureClone.length > 1){
+                    if(featureLabel > 1){
                         sumCount = 1;
-                        featureClone[featureIndex].set("LT_CHC_YN",featureLtChcYn + sumCount);
+                        var sum = featureLtChcYn + sumCount;
+                        if(sum > featureClone.length || sum > featureLabel){
+                            sum = featureLtChcYn;
+                        }
+
+                        featureClone[featureIndex].set("LT_CHC_YN",sum);
 
                         if(rcSttCd == '1000'){
-                            featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum + sumCount);
+                            featureClone[featureIndex].set("RE_STT_SUM",sum);
                         }else{
                             featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum);
                         }
 
                     }else{
+
                         featureClone[featureIndex].set("LT_CHC_YN",1);
 
                         if(rcSttCd == '1000'){
