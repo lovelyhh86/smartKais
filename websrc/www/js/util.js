@@ -878,6 +878,9 @@ function fnSelectSigList(tagId){
 
                     var resultList = results.data;
                     makeCombo(tagId,resultList);
+                    if(resultList.length == 1){
+                        $(tagId).trigger('change');
+                    }
 
             })
     }catch(error){
