@@ -803,7 +803,12 @@ var MapUtil = {
                 //삭제상태코드
                 // makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
                 //시군구목록
-                fnSelectSigList('#selSig');
+
+                var guIncYn = app.info.guIncYn;
+                if(guIncYn == "Y"){
+                    //구재시 경우에만 조회
+                    fnSelectSigList('#selSig');
+                }
 
                 var searchValue = app.info.searchValue;
 
@@ -831,8 +836,11 @@ var MapUtil = {
                 makeOptSelectBox("searchOptTrgGbn","","","건물번호판","02");
                 //삭제상태코드
                 // makeOptSelectBox("searchOptDelSttCd","DEL_STT_CD","","전체","");
-                //시군구목록
-                fnSelectSigList('#selSig');
+                var guIncYn = app.info.guIncYn;
+                if(guIncYn == "Y"){
+                    //구재시 경우에만 조회
+                    fnSelectSigList('#selSig');
+                }
                 
                 var searchValue = app.info.searchValue;
 
