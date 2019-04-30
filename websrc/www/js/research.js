@@ -194,7 +194,7 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
     var searchOptBsisSlno = $("#searchOptBsisSlno").val() == "" ? null : $("#searchOptBsisSlno").val();
 
     //시군구 코드
-    var searchOptSigCd = $("#selSig").val() == "" ? app.info.sigCd : $("#selSig").val();
+    var searchOptSigCd = $("#selSig").val() == null ? app.info.sigCd : $("#selSig").val();
     if(app.info.guIncYn == "Y" && localStorage["admCd"] == searchOptSigCd){
         searchOptSigCd = app.info.sigCd;
     }
@@ -1141,22 +1141,25 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
                 if(featureClone != null){
                     var featureId = featureClone[featureIndex].id_;
                     var featureLtChcYn = parseInt(featureClone[featureIndex].get("LT_CHC_YN"));
-                    var featureReSttSum = featureClone[featureIndex].get("RE_STT_SUM");
-                    var featureLabel = featureClone[featureIndex].get("LABEL")
+                    var featureReSttSum = parseInt(featureClone[featureIndex].get("RE_STT_SUM"));
+                    var featureLabel = parseInt(featureClone[featureIndex].get("LABEL"));
                     var sumCount = 0;
 
                     //2건 이상인경우
                     if(featureLabel > 1){
-                        sumCount = 1;
+                        if(featureLabel > featureLtChcYn){
+                            sumCount = 1;
+                        }
+                        
                         var sum = featureLtChcYn + sumCount;
-                        if(sum > featureClone.length || sum > featureLabel){
+                        if((featureLabel != NaN && sum > featureLabel) || (featureLabel == NaN && sum > featureClone.length)){
                             sum = featureLtChcYn;
                         }
 
                         featureClone[featureIndex].set("LT_CHC_YN",sum);
 
                         if(rcSttCd == '1000'){
-                            featureClone[featureIndex].set("RE_STT_SUM",sum);
+                            featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum + sumCount);
                         }else{
                             featureClone[featureIndex].set("RE_STT_SUM",featureReSttSum);
                         }

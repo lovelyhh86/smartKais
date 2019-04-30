@@ -1552,7 +1552,7 @@ function closePopupAndClearMap(type){
         
         var LT_CHC_YN_SUM = 0;
         for(var i in featureClone){
-            LT_CHC_YN_SUM = LT_CHC_YN_SUM + parseInt(featureClone[0].get("LT_CHC_YN"));
+            LT_CHC_YN_SUM = LT_CHC_YN_SUM + parseInt(featureClone[i].get("LT_CHC_YN"));
         }
         
         if(LT_CHC_YN_SUM < popLength){
