@@ -173,6 +173,7 @@ var app = {
                         var d = results.data;
 
                         localStorage["admCd"] = d.admCd;
+                        localStorage["admNm"] = d.admNm;
                         localStorage["guIncYn"] = d.guIncYn;
                         
                         localStorage["serviceProj"] = d.trgnptLbl;
