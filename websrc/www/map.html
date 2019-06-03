@@ -46,20 +46,20 @@
         </div>
         <p onclick="closeNewPosMemo()" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
     </div>
-    <div id="layerToggle" class="newPosMemo">
-        <div class="dataTItle">레이어컨트롤</div>
+    <div id="layerTogglePop" class="layerTogglePop">
+        <div class="dataTItle">레이어관리</div>
             <div class="ui-field-contain">
-                <label for="locSel">안내시설</label>
+                <label for="locSel" class="lytgLabel locBack">도로시설물</label>
                 <select name="locSel" id="locSel" data-role="flipswitch" onchange="layerToggleController(this.id)">
-                        <option value="off">Off</option>
-                        <option value="on" selected="">On</option>
+                        <option value="off">끄기</option>
+                        <option value="on" selected="">켜기</option>
                 </select>
             </div>
             <div class="ui-field-contain">
-                <label for="nmtgSel">건물번호판</label>
+                <label for="nmtgSel" class="lytgLabel nmtgBack">건물번호판</label>
                 <select name="nmtgSel" id="nmtgSel" data-role="flipswitch" onchange="layerToggleController(this.id)">
-                        <option value="off">Off</option>
-                        <option value="on" selected="">On</option>
+                        <option value="off">끄기</option>
+                        <option value="on" selected="">켜기</option>
                 </select>
             </div>
             <!-- <div class="ui-field-contain">
@@ -69,7 +69,7 @@
                         <option value="on" selected="">On</option>
                 </select>
             </div> -->
-        <p onclick="closeNewPosMemo()" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+        <p onclick="closePopup('layerTogglePop')" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
     </div>
     <div id="search">
         <form class="ui-filterable" >

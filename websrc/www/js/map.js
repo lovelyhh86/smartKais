@@ -605,7 +605,7 @@ var MapUtil = {
         layerOnOffControl: function(opt_options){
             var layerOnOff = function(){
                 
-                $("#layerToggle").toggle();
+                $("#layerTogglePop").toggle();
 
             }
             
@@ -4879,6 +4879,10 @@ function closeNewPosMemo() {
     $("#newPosMemoText").val('');
     $("#newPosMemo").hide();
     $("#memoMask").hide();
+}
+
+function closePopup(id){
+    $("#"+id).hide();
 }
 
 /** 새위치등록 입력 */
