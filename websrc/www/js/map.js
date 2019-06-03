@@ -816,7 +816,8 @@ var MapUtil = {
                 // selectResearchContent(null,0,9);
                 /**검색조건 */
                 $("#searchOptTrgGbn").empty();
-                $("#searchOptTrgGbn").append('<option value="">전체</option>');
+                // $("#searchOptTrgGbn").append('<option value="">전체</option>');
+                $("#searchOptTrgGbn").append('<option value="02">건물번호판</option>');
                 $("#searchOptTrgGbn").append('<option value="110">도로명판</option>');
                 $("#searchOptTrgGbn").append('<option value="210">도로명판(이면)</option>');
                 $("#searchOptTrgGbn").append('<option value="310">도로명판(예고)</option>');
