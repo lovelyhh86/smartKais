@@ -68,6 +68,18 @@ var createTextStyle = function (styleOptions) {
     });
 };
 
+var createTextStyle_new = function (styleOptions , label) {
+    return new ol.style.Text({
+        text: label,
+        textAlign: 'center',
+        fill: new ol.style.Fill({ color: 'white' }),
+        stroke: new ol.style.Stroke({ color: 'black',width: styleOptions.style.label.width}),
+        offsetX: styleOptions.style.label.textOffsetX,
+        offsetY: styleOptions.style.label.textOffsetY,
+        scale : 1.3
+    });
+};
+
 var getStyleLabel = function (feature, labelOptions) {
     var arr = [];
     labelOptions.data.forEach(function (obj, index) {
@@ -747,8 +759,8 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         };
         
         
-        if( styleOptions.label._text)
-            opt.text = createTextStyle(styleOptions);
+        if(feature.get("LABEL"))
+            opt.text = createTextStyle_new(styleOptions,feature.get("LABEL"));
 
         return new ol.style.Style(opt);
     } catch (error) {
@@ -992,8 +1004,8 @@ var entrcStyle = function (styleOptions,feature) {
            }))
         };
         
-        if( styleOptions.label._text)
-            opt.text = createTextStyle(styleOptions);
+        // if( styleOptions.label._text)
+        //     opt.text = createTextStyle(styleOptions);
     
         return new ol.style.Style(opt);
     } catch (error) {

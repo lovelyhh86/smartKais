@@ -637,34 +637,54 @@ function layerToggle(context){
         if(researchCheckGbn == 'true'){
             $('#oResChk' ).prop('checked','checked');
         }
-
-        $(".legend.oldResearchCheck").toggle(true);
+        
+        //범례
+        //18년도 점검여부
+        $(".legend.oldResearchCheck").toggle(false);
 
 
         if (context.type == "map") {
-            $(".legend.spgf").toggle(true);
-            $(".legend.spbd").toggle(false);
-            
-            $(".selectResearch").toggle(true);
-            $(".locManageSpgf").toggle(true);
 
+            //전체
+            $(".legend.spgf").toggle(true);
+            //건물번호판
+            // $(".legend.spbd").toggle(false);
+
+            //점검목록
+            $(".selectResearch").toggle(true);
+            //레이어관리
+            $(".layerOnOffBtn").toggle(true);
+            //위치이동
+            $(".locManageSpgf").toggle(true);
+            //상세주소
+            $(".selectAdrdc").toggle(true);
+            
+            //지도기능버튼
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
             $(".returnZoom").toggle(true);
             $(".refreshMap").toggle(true);
             $(".measure").toggle(true);
             
-            $(".selectResearchSpbd").toggle(false);
-            $(".selectAdrdc").toggle(false);
-            $(".locManageSpbd").toggle(false);
+            //점검목록(건물번호판)
+            // $(".selectResearchSpbd").toggle(false);
             
-            $('.legend.oldResearchCheck').attr('style','top : 19.5em; display: block');
+            //위치이동(건물번호판)
+            // $(".locManageSpbd").toggle(false);
+            
+            
+            
+            // $('.legend.oldResearchCheck').attr('style','top : 19.5em; display: block');
             
             
             // map.addLayer(layers.rdpq);
             // map.addLayer(layers.bsis);
             // map.addLayer(layers.area);
-            map.addLayer(layers.loc);
+            // map.addLayer(layers.loc);
+            // map.addLayer(layers.entrc);
+            // map.addLayer(layers.intrvl);
+            map.addLayer(layers.loc_pos);
+            map.addLayer(layers.entrc_pos);
             // map.addLayer(layers.sppn);
             
 
@@ -687,7 +707,7 @@ function layerToggle(context){
             $(".measure").toggle(true);
 
             $(".selectResearchSpbd").toggle(true);
-            $(".selectAdrdc").toggle(true);
+            
             $(".locManageSpbd").toggle(true);
 
             $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
@@ -695,6 +715,10 @@ function layerToggle(context){
             
             // map.addLayer(layers.buld);
             map.addLayer(layers.entrc);
+            // map.addLayer(layers.loc);
+            // map.addLayer(layers.intrvl);
+            // map.addLayer(layers.loc_pos);
+            // map.addLayer(layers.entrc_pos);
             
             // map.getView().setZoom(mapBaseConfig.zoom.buld);
 
@@ -717,6 +741,9 @@ function removeLayers(type){
         map.removeLayer(layers.move);
         map.removeLayer(layers.buld);
         map.removeLayer(layers.entrc);
+        map.removeLayer(layers.entrc_pos);
+        map.removeLayer(layers.loc_pos);
+        map.removeLayer(layers.intrvl);
         // map.removeLayer(layers.rdpq);
         // map.removeLayer(layers.bsis);
         // map.removeLayer(layers.area);
