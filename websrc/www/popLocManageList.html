@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html LANG="ko">
+<body class="intro">
+<div data-role="" id="locationManage_page">
+    <div class="detailView">
+        <p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
+        <div class="infoWrap">
+            <div class="infoHeader">
+                <p class="listTitle" onclick="toggleDetailView();">
+                    <span class="">위치이동관리</span>
+                </p>
+            </div>
+            <div class="infoListContent">
+                    <div class="tableWrap">
+                            <table class="dataTable" summary="">
+                                    <caption>검색조건</caption>
+                                    <colgroup>
+                                        <col class="cell20">
+                                        <col class="cell20">
+                                        <col class="cell20">
+                                        <col class="cell20">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">시설구분</th>
+                                            <td>
+                                                <select id="searchOptLocTrgGbn" onchange="" class="cell100">
+                                                    <option value = ''>도로시설물</option>
+                                                    <option value = '02'>건물번호판</option>
+                                                </select>
+                                            </td>
+                                            <th scope="row">작업구분</th>
+                                            <td>
+                                                <select id="searchOptjobSeCd" onchange="" class="cell100">
+                                                    <option value = ''>전체</option>
+                                                    <option value = 'N'>신규</option>
+                                                    <option value = 'C'>이동</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="selectLocationMoveContent()">검색</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                <div id='locManageDiv' class='tableListDiv'>
+                    <table id="locManageTable">
+                        <colgroup>
+                            <col class="cell10"></col>
+                            <col class="cell20"></col>
+                            <col class="cell20"></col>
+                            <!-- <col class="cell10"></col>
+                            <col class="cell10"></col> -->
+                            <col class="cell15"></col>
+                            <col class="cell20"></col>
+                            <col class="cell10"></col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>작업구분</th>
+                                <th>설치 도로명</th>
+                                <th>명판내용</th>
+                                <!-- <th>X좌표</th>
+                                <th>Y좌표</th> -->
+                                <th>작업일자</th>
+                                <th>메모</th>
+                                <th>위치</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="">
+                                <td colspan="6">검색 조건을 선택하고 검색 버튼을 눌러주세요.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- footer 시작 -->
+            <div class="infoFooter">
+                <span onclick="closeDetailView();" class="btnNormal">닫기</span>
+                <span onclick="newPoint('spgf');" class="btnPoint">신규위치등록</span>
+            </div>
+            <!-- footer 끝 -->
+        </div>
+    </div>
+</div>
+</body>

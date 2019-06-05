@@ -4,7 +4,119 @@ $(function(){
 
 });
 
-//안내시설물 위치이동 내용 조회
+//안내시설 위치이동 내용 조회
+function selectLocationMoveContent(){
+    util.showProgress();
+
+    var searchOptLocTrgGbn = $("#searchOptLocTrgGbn").val();
+    var searchOptjobSeCd = $("#searchOptjobSeCd").val();
+
+    var link = URLs.selectLocationMoveSpgfLink;
+    if(searchOptLocTrgGbn == '02'){
+        link = URLs.selectLocationMoveSpbdNmgtLink;
+    }
+    
+    var param = {
+        sigCd : app.info.sigCd,
+        jobSeCd : searchOptjobSeCd
+        // delStateCd : type
+    } ;
+    
+    var url = URLs.postURL(link, param);
+
+    util.postAJAX("", url)
+    .then(function (context, rcode, results) {
+        
+        $("#locManageTable > tbody").empty();
+        $("#rowSize").empty();
+        var data = results.data;
+        
+        if (rcode != 0 || util.isEmpty(data) === true) {
+            // navigator.notification.alert('검색된 목록이 없습니다.', function () {
+            //     // util.goBack();
+            //     var rowHtml = '<tr class=""><td colspan="5">검색된 목록이 없습니다.</td></tr>';
+            //     $("#myResearchTable > tbody:last").append(rowHtml);
+            // }, '점검대상', '확인');
+
+            var rowHtml = '<tr><td colspan="7">검색된 목록이 없습니다.</td></tr>';
+            $("#locManageTable > tbody:last").append(rowHtml);
+            $("#rowSize").append('0');
+            util.dismissProgress();
+            return;
+        } else {
+            for(var i in data) {
+                //검색조건 생성
+                // var selectFormat = "<select id='sel{0}'>{1}</select>";
+                // var optionFormat = "<option value='{0}'>{1}</option>";
+                // var optionTxt = ""; 
+                // var colume = "RC_STT_CD";
+
+                // var codeList = app.codeMaster[CODE_GROUP[colume]];
+                // for(var c in codeList){
+                //     if(c != "GroupNm"){
+                //         optionTxt += optionFormat.format(c,codeList[c]);
+                        
+                //     }
+                // }
+                // var researchSelect = selectFormat.format(i,optionTxt);
+
+                var rowHtml = '<tr><td onclick=\"{0}\">{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
+                var d = data[i];
+
+                var bsisRnLbl = d.bsisRnLbl;
+                var rnLbl = '-';
+                if(bsisRnLbl != null){
+                    //설치 도로명
+                    rnLbl = "{0} {1}{2}".format(
+                        d.bsisRnLbl,
+                        d.bsisMnnm == null? "": d.bsisMnnm,
+                        d.bsisSlno == "0"? "" : "-" + d.bsisSlno
+                    );
+                }
+                var rdGdftySe = d.rdGdftySe;
+                var korRnLbl = createRnNm(rdGdftySe,d);
+                
+                var memo = d.memo == null? '' : d.memo;
+
+                var rdFtyLcSn = d.rdFtyLcSn;
+                var locBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='moveToXyTranceProj("+d.posX+","+d.posY+")'>위치</button>";
+                
+                // if(rdFtyLcSn != null){
+                //     locBtn = "<button class='location' onclick='getResearchLocation("+rdFtyLcSn+")'>위치</button>";    
+                // }
+
+                $("#locManageTable > tbody:last").append(
+                    rowHtml.format(
+                        // "goResearchDetail('"+d.rdGdftySn+"','"+d.rdGdftySe+"')"
+                        ""
+                        ,d.jobSeCdLbl
+                        ,rnLbl 
+                        ,korRnLbl
+                        // ,d.posX
+                        // ,d.posY
+                        ,d.mopertDe
+                        ,memo
+                        ,locBtn));
+            }
+            var size = $("#locManageTable > tbody > tr").size();
+
+            $("#rowSize").append(size);
+        }
+        
+        util.dismissProgress();
+    }, function(context,xhr,error) {
+                console.log("갱신실패"+ error+'   '+ xhr);
+
+                navigator.notification.alert('위치이동 목록 요청을 실패하였습니다. 잠시 후 다시 시도하십시오.',
+                        function (){
+                            util.goBack();
+                    },'위치이동', '확인');
+                    util.dismissProgress();
+            });
+        
+}
+
+//안내시설 위치이동 내용 조회
 function selectLocationMoveSpgfContent(){
     util.showProgress();
     

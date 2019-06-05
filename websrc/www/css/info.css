@@ -190,12 +190,14 @@
 	.dataWrap{display: inline-block; position:absolute; right:12em; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
 	.tableListDiv{width:auto; height: 54.5em ; overflow-y: scroll ;background-color:#f5f7f8}
 	#myResearchDiv{width:auto; height: 40.5em ; overflow-y: scroll ;background-color:#f5f7f8}
+	#locManageDiv{width:auto; height: 48.5em ; overflow-y: scroll ;background-color:#f5f7f8}
 }
 /* 탭s3*/
 @media (max-height:1000px){
 	.dataWrap{display: inline-block; position:absolute; right:256px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
 	.tableListDiv{width:auto; height: 807px ; overflow-y: scroll ;background-color:#f5f7f8}
 	#myResearchDiv{width:auto; height: 36em ; overflow-y: scroll ;background-color:#f5f7f8}
+	#locManageDiv{width:auto; height: 44em ; overflow-y: scroll ;background-color:#f5f7f8}
 }
 .dataTItle{display: block; margin-bottom:20px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
 

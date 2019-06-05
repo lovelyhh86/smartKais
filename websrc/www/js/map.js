@@ -193,7 +193,7 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
             ol.inherits(MapUtil.controls.legendEntrcControl, ol.control.Control);   // 범례(건물번호판)
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
-            ol.inherits(MapUtil.controls.locManageSpgfControl, ol.control.Control); // 안내시설물 위치관리
+            ol.inherits(MapUtil.controls.locManageControl, ol.control.Control); // 안내시설 위치관리
             ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);   // 상세주소 기초조사
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);    // 기본 축척으로 변경
@@ -295,7 +295,7 @@ var MapUtil = {
                 target: options.target
             });
         },
-        locManageSpgfControl: function(opt_options) {
+        locManageControl: function(opt_options) {
 
             var potisionManage = function() {
                 if(util.isEmpty(app.info.rcrSn)){
@@ -310,7 +310,7 @@ var MapUtil = {
                     }, '알림', '확인');
                     
                 }else{
-                    MapUtil.openList('locationManageSpgf');
+                    MapUtil.openList('locationManage');
 
                     //심플팝업 초기화
                     $("#popup-content").empty();
@@ -673,6 +673,9 @@ var MapUtil = {
                 url = pages.detail_researchList;
                 detailTaget = '#listView';
             break;
+            case "locationManage":
+                url = pages.locationManagePage;
+            break;
             case "locationManageSpgf":
                 url = pages.locationManageSpgfPage;
             break;
@@ -881,6 +884,9 @@ var MapUtil = {
                     $("#searchOptRcSttCd").val(searchValue.searchOptRcSttCd);
                     $("#searchOptDelSttCd").val(searchValue.searchOptDelSttCd);
                 }
+            break;
+            case "locationManage":
+                // selectLocationMoveContent();
             break;
             case "locationManageSpgf":
                 selectLocationMoveSpgfContent();
@@ -2537,7 +2543,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.legendControl(),
             new MapUtil.controls.legendEntrcControl(),
             new MapUtil.controls.currentControl(),
-            new MapUtil.controls.locManageSpgfControl(),
+            new MapUtil.controls.locManageControl(),
             new MapUtil.controls.locManageSpbdNmtgControl(),
             new MapUtil.controls.selectAdrdcControl(),
             new MapUtil.controls.returnZoomControl(),
@@ -3119,9 +3125,11 @@ var mapInit = function(mapId, pos) {
                 movingPoint_source.addFeature(newPointFeature);
 
                 // var SIG_CD = featureClone[featureIndex].get("SIG_CD");
-                var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
-                var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
-                var pointSn = popTableP.format("위치일련번호", RDFTYLC_SN);
+                // var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
+                var sn = localStorage["moveTrgSn"];
+                
+                // var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
+                // var pointSn = popTableP.format("위치일련번호", RDFTYLC_SN);
                 var newCoodi = new ol.proj.transform(coordinate, baseProjection, sourceProjection);
 
                 strHtml = "<b>검정(원)</b>-&gt; <span style='color:red;'>빨강(원)</span>으로 이동하고자 합니다.<br>(맞으면 저장, 틀리면 다른 위치 선택)";
@@ -3130,7 +3138,7 @@ var mapInit = function(mapId, pos) {
 
                 var param = "";
                 param = $.extend({}, {
-                    sn: RDFTYLC_SN,
+                    sn: sn,
                     // sigCd : SIG_CD,
                     // rdftySe : RDFTY_SE,
                     posX: newCoodi[0],
@@ -4383,6 +4391,7 @@ var clickPoint;
 function moveingPoint(sn, pointX, pointY, index) {
     // console.log(sn);
     // console.log(pointX + " , " + pointY);
+    localStorage["moveTrgSn"] = sn ;
 
     $("#moveInfo").show();
 
@@ -4398,7 +4407,7 @@ function moveingPoint(sn, pointX, pointY, index) {
     $("#popup").hide();
 
     //기본레이어 삭제
-    map.removeLayer(layers.loc);
+    // map.removeLayer(layers.loc);
     // map.removeLayer(layers.rdpq);
     // map.removeLayer(layers.bsis);
     // map.removeLayer(layers.area);
@@ -4439,11 +4448,13 @@ function moveingPoint(sn, pointX, pointY, index) {
 }
 
 function insertMoveingPoint(param) {
+
+    var trgGbn = param.trgGbn;
     
     var link = URLs.moveingPointSpgf;
-    if(insertPointType == "spgf" || param.sn != null){
+    if(trgGbn != "02"){
         link = URLs.moveingPointSpgf;
-    }else if(insertPointType == "nmtg"){
+    }else if(trgGbn == "02"){
         link = URLs.moveingPointSpbdNmtg;
     }
 
@@ -4464,7 +4475,7 @@ function insertMoveingPoint(param) {
                         util.toast('이동한 위치 정보가 저장되었습니다.');
                         var msgText = msg.successSpgfInsertPoint;
                         
-                        if(insertPointType == "nmtg"){
+                        if(trgGbn == "02"){
                             msgText = msg.successNmtgInsertPoint;
                         }
                         
@@ -4895,13 +4906,16 @@ function insertNewPos() {
 
             var centerPoint = new ol.proj.transform(coordinate, baseProjection, sourceProjection);
 
+            var newPosTrgGbn = $("#newPosTrgGbn").val();
+
             param = $.extend({}, {
                 // sn : RDFTYLC_SN,
                 // rdftySe : RDFTY_SE,
                 posX: centerPoint[0],
                 posY: centerPoint[1],
                 memo: $("#newPosMemoText").val(),
-                jobSeCd: 'N'
+                jobSeCd: 'N',
+                trgGbn : newPosTrgGbn
             });
 
             insertMoveingPoint(param);

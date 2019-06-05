@@ -135,6 +135,7 @@ var pages = {
     "baseConfigPage": { link: function () { return URLs.realPath() + "baseConfig.html"; }, div: "#baseConfig_page" },
     "locationManageSpgfPage": { link: function () { return URLs.realPath() + "popLocManageSpgfList.html"; }, div: "#locationManageSpgf_page" },
     "locationManageSpbdNmtgPage": { link: function () { return URLs.realPath() + "popLocManageSpbdNmtgList.html"; }, div: "#locationManageSpbdNmtg_page" },
+    "locationManagePage": { link: function () { return URLs.realPath() + "popLocManageList.html"; }, div: "#locationManage_page" },
 };
 
 //var SSO = {
