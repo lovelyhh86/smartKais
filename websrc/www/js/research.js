@@ -1074,52 +1074,55 @@ function disableResearch(){
 function changeOneFeatherStyle(trgGbn, rcSttCd){
     try {
         var type = DATA_TYPE.LOC;
-        var layerOption = {
-            title: "위치레이어",
-            typeName: "tlv_spgf_loc_skm",
-            dataType: DATA_TYPE.LOC,
-            style: {
-                label: {
-                    text: { key: "LABEL", func: function(text) { return text } },
-                    textOffsetX: -1,
-                    textOffsetY: -18,
-                    width: 1
-                },
-                radius: 12
-            },
-            cluster: { distance: 50 },
-            // maxResolution: MapUtil.setting.maxResolution,
-            maxResolution: 1,
-            viewProgress: false,
-            renderMode: 'vector',
-            zIndex : 1}
-
         if(trgGbn == "02"){
             type = DATA_TYPE.ENTRC;
-            option = {
-                title: "출입구",
-                // typeName: "tl_spbd_entrc",
-                typeName: "tlv_spbd_entrc_skm",
-                dataType: DATA_TYPE.ENTRC,
-                style: {
-                    radius: 15,
-                    // label: {
-                        // format: ["{0}({1}-{2})"],
-                        // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-                        // text: { key: "ENTRC_SE", func: function(text) { return text } },
-                        // textOffsetY: -20
-                    // }
-                },
-                cluster: { distance: 50 },
-                maxResolution: MapUtil.setting.maxResolution,
-                viewProgress: false,
-                renderMode: 'vector',
-                zIndex : 1}
         }
+        // var layerOption = {
+        //     title: "위치레이어",
+        //     typeName: "tlv_spgf_loc_skm",
+        //     dataType: DATA_TYPE.LOC,
+        //     style: {
+        //         label: {
+        //             text: { key: "LABEL", func: function(text) { return text } },
+        //             textOffsetX: -1,
+        //             textOffsetY: -18,
+        //             width: 1
+        //         },
+        //         radius: 12
+        //     },
+        //     cluster: { distance: 50 },
+        //     // maxResolution: MapUtil.setting.maxResolution,
+        //     maxResolution: 1,
+        //     viewProgress: false,
+        //     renderMode: 'vector',
+        //     zIndex : 1}
+
+        // if(trgGbn == "02"){
+        //     type = DATA_TYPE.ENTRC;
+        //     option = {
+        //         title: "출입구",
+        //         // typeName: "tl_spbd_entrc",
+        //         typeName: "tlv_spbd_entrc_skm",
+        //         dataType: DATA_TYPE.ENTRC,
+        //         style: {
+        //             radius: 15,
+        //             // label: {
+        //                 // format: ["{0}({1}-{2})"],
+        //                 // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+        //                 // text: { key: "ENTRC_SE", func: function(text) { return text } },
+        //                 // textOffsetY: -20
+        //             // }
+        //         },
+        //         cluster: { distance: 50 },
+        //         maxResolution: MapUtil.setting.maxResolution,
+        //         viewProgress: false,
+        //         renderMode: 'vector',
+        //         zIndex : 1}
+        // }
         var layerList = map.getLayers().getArray();
-        for(var layer in layerList){
-            var title = layerList[layer].get('title');
-            var layerId = layerList[layer].get('id');
+        for(var i in layerList){
+            var title = layerList[i].get('title');
+            var layerId = layerList[i].get('id');
             
             // if(title == "건물"){
             //     if(featureClone == null){
@@ -1178,19 +1181,26 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
                     
                     
 
-                    var layerFeatures = layerList[layer].get("source").features;
+                    var layerFeature = layerList[i].get("source").getFeatureById(featureId);
 
-                    for(var i  in layerFeatures){
-                        var id_ = layerFeatures[i].get("features")[0].id_;
-                        if(id_ == featureId){
-                            if(type == DATA_TYPE.LOC){
-                                layerFeatures[i].setStyle(defaultStyle(featureClone, null,option));
-                            }else{
-                                layerFeatures[i].setStyle(defaultStyle(featureClone, null, option));
-                            }
-                            
-                        }
+                    if(layerId == DATA_TYPE.LOC){
+                        layerFeature.setStyle(locStyle(null, layerFeature));
+                    }else if(layerId == DATA_TYPE.ENTRC){
+                        layerFeature.setStyle(entrcStyle(null, layerFeature));
                     }
+                    
+
+                    // for(var i  in layerFeatures){
+                    //     var id_ = layerFeatures[i].get("features")[0].id_;
+                    //     if(id_ == featureId){
+                    //         if(type == DATA_TYPE.LOC){
+                    //             layerFeatures[i].setStyle(defaultStyle(featureClone, null,option));
+                    //         }else{
+                    //             layerFeatures[i].setStyle(defaultStyle(featureClone, null, option));
+                    //         }
+                            
+                    //     }
+                    // }
                 }
             }
         }

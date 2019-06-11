@@ -3165,7 +3165,14 @@ var mapInit = function(mapId, pos) {
 
         /********** 피쳐 클릭 셋팅 (심플팝업)**********/
         var firstClick = true;
+        featureClone = null;
         map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
+
+            var zoomLevel = map.getView().getZoom();
+            if(zoomLevel < 13){
+                util.toast("지도를 확대하신 후 심볼을 클릭해 주세요");
+                return;
+            }
 
             if(layer == null){
                 currentPositionLayerCheck();
@@ -3180,7 +3187,12 @@ var mapInit = function(mapId, pos) {
                 features = [feature];
 
             //상세내용 셋팅 및 위치이동시 사용하기 위해 복사
-            featureClone = features;
+            if(featureClone){
+                featureClone.push(feature);
+            }else{
+                featureClone = features;
+                
+            }
             //레이어ID
             layerID = layer.get('id');
 
@@ -4971,14 +4983,14 @@ function selectFeatureInfo(features,gbn){
         //         layerID = DATA_TYPE.LOC;
         //     }
         // }
-        for(var i in features){
-            var layerType = features[i].get('type');
-            if(layerType == "tlv_spbd_entrc_skm" || layerType == "tlv_spbd_entrc_pos_skm"){
-                layerID = DATA_TYPE.ENTRC;
-            }else if(layerType == "tlv_spgf_loc_skm" || layerType == "tlv_spgf_loc_pos_skm"){
-                layerID = DATA_TYPE.LOC;
-            }
-        }
+        // for(var i in features){
+        //     var layerType = features[i].get('type');
+        //     if(layerType == "tlv_spbd_entrc_skm" || layerType == "tlv_spbd_entrc_pos_skm"){
+        //         layerID = DATA_TYPE.ENTRC;
+        //     }else if(layerType == "tlv_spgf_loc_skm" || layerType == "tlv_spgf_loc_pos_skm"){
+        //         layerID = DATA_TYPE.LOC;
+        //     }
+        // }
 
 
         var resultHtml = "";
@@ -5002,20 +5014,26 @@ function selectFeatureInfo(features,gbn){
 
         features.forEach(function(feature, index) {
 
+            var layerType = feature.get('type');
+            if(layerType == "tlv_spbd_entrc_skm" || layerType == "tlv_spbd_entrc_pos_skm"){
+                layerID = DATA_TYPE.ENTRC;
+            }else if(layerType == "tlv_spgf_loc_skm" || layerType == "tlv_spgf_loc_pos_skm"){
+                layerID = DATA_TYPE.LOC;
+            }
+
             switch (layerID) {
                 case DATA_TYPE.LOC:
                     var link = URLs.selectLocLink;
                     //도로시설물위치일련번호
                     var RDFTYLC_SN = feature.get("RDFTYLC_SN");
-                    var RDFTYLC_SN = feature.get("rdFtyLcSn");
 
-                    var sigCd = feature.get("sigCd");
+                    var SIG_CD = feature.get("SIG_CD");
 
                     var sendParam = {
                         // svcNm: 'sLOC',
                         // mode : "11",
                         sn: RDFTYLC_SN,
-                        sigCd: sigCd,
+                        sigCd: SIG_CD,
                         workId: app.info.opeId
                     };
 
@@ -5545,13 +5563,10 @@ function selectFeatureInfo(features,gbn){
                     var link = URLs.entrclink;
                     //건물일련번호
                     var BUL_MAN_NO = feature.get("BUL_MAN_NO");
-                    var BUL_MAN_NO = feature.get("bulManNo");
                     //건물번호판일련번호
                     var BUL_NMT_NO = feature.get("BUL_NMT_NO");
-                    var BUL_NMT_NO = feature.get("bulNmtNo");
                     //시군구코드
                     var SIG_CD = feature.get("SIG_CD");
-                    var SIG_CD = feature.get("sigCd");
 
                     var sendParam = {
                         // svcNm: 'sEntrc',
@@ -5580,9 +5595,9 @@ function selectFeatureInfo(features,gbn){
 
                             var gbn = commonP.format("gbn", "[{0}]".format("건물번호판"));
                             //건물번호판 일련번호
-                            var bulNmtNo = feature.get("bulNmtNo");
+                            var bulNmtNo = feature.get("BUL_NMT_NO");
                             //건물일련번호
-                            var bulManNo = feature.get("bulManNo");
+                            var bulManNo = feature.get("BUL_MAN_NO");
 
                             //근거리 사진건수
                             // var CNT_M_FILES = feature.get("CNT_M_FILES");

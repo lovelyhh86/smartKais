@@ -190,18 +190,14 @@ var getFeatureLayer_new = function(options) {
 
                         var feature = new ol.Feature({
                             type : layerType,
-                            sigCd : data[i].sigCd,
+                            SIG_CD : data[i].sigCd,
                             
-                            rdFtyLcSn : data[i].rdFtyLcSn,
-                            bulNmtNo : data[i].bulNmtNo,
-                            bulManNo : data[i].bulManNo,
-
                             LT_CHC_YN : data[i].ltChcYn,
                             RE_STT_SUM : data[i].reSttSum,
                             INSTL_DE : data[i].instlDe,
 
                             USE_TRGET : data[i].useTrg,
-                            RD_GDFTY_SE : data[i].rdGdftySe,
+                            
                             LABEL : data[i].label,
                             INSTL_SE : data[i].instlSe,
                             USE_TRGET : data[i].useTrg,
@@ -216,12 +212,16 @@ var getFeatureLayer_new = function(options) {
                         var point =  new ol.geom.Point([ponitX,ponitY]);
 
                         feature.setGeometry(point);
-                        // var color = 'red';
                         if(options.dataType == DATA_TYPE.ENTRC){
-                            // color = 'blue';
+                            feature.set("BUL_NMT_NO",data[i].bulNmtNo);
+                            feature.set("BUL_MAN_NO",data[i].bulManNo);
+
                             feature.setStyle(entrcStyle(options, feature));
                             feature.setId(options.typeName + '.' +data[i].bulNmtNo);
                         }else if(options.dataType == DATA_TYPE.LOC){
+                            feature.set("RDFTYLC_SN",data[i].rdFtyLcSn);
+                            feature.set("RD_GDFTY_SE",data[i].rdGdftySe);
+
                             feature.setStyle(locStyle(options, feature));
                             feature.setId(options.typeName + '.' +data[i].rdFtyLcSn);
                         }

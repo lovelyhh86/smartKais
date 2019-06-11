@@ -1,9 +1,11 @@
 var defaultStyleOptions = {
     label: {
-        textOffsetX: -1,
-        textOffsetY: -17
+        text: { key: "LABEL", func: function(text) { return text } },
+                textOffsetX: -1,
+                textOffsetY: -18,
+                width: 1
     },
-    radius: 5
+    radius: 12
 };
 
 var LAST_CHECK_STATUS = {
@@ -68,14 +70,14 @@ var createTextStyle = function (styleOptions) {
     });
 };
 
-var createTextStyle_new = function (styleOptions , label) {
+var createTextStyle_new = function (label) {
     return new ol.style.Text({
         text: label,
         textAlign: 'center',
         fill: new ol.style.Fill({ color: 'white' }),
-        stroke: new ol.style.Stroke({ color: 'black',width: styleOptions.style.label.width}),
-        offsetX: styleOptions.style.label.textOffsetX,
-        offsetY: styleOptions.style.label.textOffsetY,
+        stroke: new ol.style.Stroke({ color: 'black',width: defaultStyleOptions.label.width}),
+        offsetX: defaultStyleOptions.label.textOffsetX,
+        offsetY: defaultStyleOptions.label.textOffsetY,
         scale : 1.3
     });
 };
@@ -204,8 +206,10 @@ var defaultStyle = function (feature, resolution, options) {
         if(clusterCnt > 1){
             styleOptions.label._text = key = String(clusterCnt);
         }
-        
-        style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
+        style = styleCache[options.dataType];
+        if(style){
+            style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
+        }
     }else if(dataType == DATA_TYPE.BULD){
         key = features[0].get("LT_CHC_YN");
         var eqbManSn = feature.get('EQB_MAN_SN');
@@ -760,7 +764,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         
         
         if(feature.get("LABEL"))
-            opt.text = createTextStyle_new(styleOptions,feature.get("LABEL"));
+            opt.text = createTextStyle_new(feature.get("LABEL"));
 
         return new ol.style.Style(opt);
     } catch (error) {
