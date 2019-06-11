@@ -318,10 +318,10 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         var ltChcYnOld = feature.get('LT_CHC_YN_OLD');
 
         //작년 점검여부 표시 + 올해 점검 포함
-        if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
-            ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
-            reSttSum == 0 ? reSttSum = reSttSumOld : reSttSum = reSttSum;
-        }
+        // if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
+        //     ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
+        //     reSttSum == 0 ? reSttSum = reSttSumOld : reSttSum = reSttSum;
+        // }
 
         //설치유형(벽면형 : 00002)
         var instlSe = feature.get('INSTL_SE');
