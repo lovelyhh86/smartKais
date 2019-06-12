@@ -470,7 +470,7 @@ function goResearchDetail(i){
     }
     $("#listView").popup({
         afterclose: function( event, ui ) {
-            MapUtil.openDetail(trgGbn, null, rdGdftySe);
+            MapUtil.openDetail(trgGbn, trgSnGlobal, rdGdftySe);
         }
     });
 
