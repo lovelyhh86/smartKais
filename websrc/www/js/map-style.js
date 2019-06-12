@@ -725,7 +725,8 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                     break;
             }
         }else if(rdGdftySe == "999"){
-            iconNm = 'image/icon_w_legend03.png';
+            iconNm = 'image/icon_mixPos.png';
+            anchorY = 35;
             // opt = {
             //     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
             //         anchor: [0.45, 40],
