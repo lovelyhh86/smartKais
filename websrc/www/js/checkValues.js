@@ -641,6 +641,12 @@ function changeBuldNmtCd(id){
         var usedCode = buldNmtPurpose.substr(0,2);
         var buldNmtCd = $("#buldNmtCd").val();
 
+        if(buldNmtPurpose == '2100'){
+            $("#bulNmtFt").show();
+        }else{
+            $("#bulNmtFt").hide();
+        }
+
         customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
         $("#buldNmtCd").val(buldNmtCd);
     

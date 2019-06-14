@@ -215,23 +215,6 @@
 								</td>
 								<td/><td/>
 							</tr>
-							<tr>
-								<th scope="row">제2외국어여부</th>
-								<td>
-									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
-								</td>
-								<td></td><td></td>
-							</tr>
-							<tr>
-								<th scope="row">언어1</th>
-								<td>
-									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">언어2</th>
-								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
-								</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -351,6 +334,23 @@
 									<!-- <p id="gdftyFormLbl">&nbsp;</p> -->
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
 									<select id="gdftyForm" disabled="disabled" class="cell100 notNull" onchange=""/>
+								</td>
+							</tr>
+							<tr hidden='hidden'>
+								<th scope="row">제2외국어여부</th>
+								<td>
+									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
+								</td>
+								<td></td><td></td>
+							</tr>
+							<tr hidden='hidden'>
+								<th scope="row">언어1</th>
+								<td>
+									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								<th scope="row">언어2</th>
+								<td>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
 							</tr>
 						</tbody>

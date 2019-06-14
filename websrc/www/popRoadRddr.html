@@ -165,13 +165,13 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">종류</th>
+								<th scope="row">설치형태</th>
 								<td>
-									<select id="rddr_plqDrc" class="cell100 notNull" onchange="changePlqDrc(this.id)"/>
+									<select id="rddr_afRdplqSe" class="cell100 notNull" onchange="changeAfRdplqSe(this.id)"/>
 								</td>
-								<th scope="row">양면여부</th>
+								<th scope="row">이면도로갯수</th>
 								<td>
-									<select id="bdrclAt" disabled="disabled" class="cell100 notNull" onchange="changeBdrclAt()"/>
+									<select id="rddr_afRdCo" disabled="disabled" class="cell100 notNull" onchange="changeAfrdCo(this.id)"/>
 								</td>
 							</tr>
 							<tr>
@@ -203,31 +203,11 @@
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">제2외국어여부</th>
+								<th scope="row">양면여부</th>
 								<td>
-									<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
+									<select id="bdrclAt" disabled="disabled" class="cell100 notNull" onchange="changeBdrclAt()"/>
 								</td>
-								<td/><td/>
-							</tr>
-							<tr>
-								<th scope="row">언어1</th>
-								<td>
-									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
-								</td>
-								<th scope="row">언어2</th>
-								<td>
-									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">설치형태</th>
-								<td>
-									<select id="rddr_afRdplqSe" class="cell100 notNull" onchange="changeAfRdplqSe(this.id)"/>
-								</td>
-								<th scope="row">이면도로갯수</th>
-								<td>
-									<select id="rddr_afRdCo" disabled="disabled" class="cell100 notNull" onchange="changeAfrdCo(this.id)"/>
-								</td>
+								<td/></td/>
 							</tr>
 						</tbody>
 					</table>
@@ -494,6 +474,10 @@
 									<p id="gdftyMnfLbl">&nbsp;</p>
 									<p id="gdftyMnf" style="display:none"></p>
 								</td>
+								<th scope="row">종류</th>
+								<td>
+									<select id="rddr_plqDrc" class="cell100 notNull" onchange="changePlqDrc(this.id)"/>
+								</td>
 							</tr>
 							<tr hidden="hidden">
 								<th scope="row">형식</th>
@@ -501,6 +485,23 @@
 									<!-- <p id="gdftyFormLbl">&nbsp;</p> -->
 									<!-- <p id="gdftyForm" style="display:none"></p> -->
 									<select id="gdftyForm" class="cell100 notNull" disabled="disabled" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+							</tr>
+							<tr hidden="hidden">
+									<th scope="row">제2외국어여부</th>
+									<td>
+										<select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
+									</td>
+									<td/><td/>
+								</tr>
+							<tr hidden="hidden">
+								<th scope="row">언어1</th>
+								<td>
+									<select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
+								</td>
+								<th scope="row">언어2</th>
+								<td>
+									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
 							</tr>
 						</tbody>

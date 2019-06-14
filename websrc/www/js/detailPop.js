@@ -2526,14 +2526,14 @@ function modify(){
             })
 
         }else if(rdGdftySe == "210"){//이면도로용
-            //안내시설방향
+            //안내시설방향 관리대상에서 제거
             var rddr_plqDrc = $("#rddr_plqDrc").val();
-            if(rddr_plqDrc == null){
-                navigator.notification.alert(msg.dontInsertNull.format("안내시설방향"), function(){
-                    util.dismissProgress();
-                }, '알림', '확인');
-                return;
-            }
+            // if(rddr_plqDrc == null){
+            //     navigator.notification.alert(msg.dontInsertNull.format("안내시설방향"), function(){
+            //         util.dismissProgress();
+            //     }, '알림', '확인');
+            //     return;
+            // }
             //설치형태
             var rddr_afRdplqSe = $("#rddr_afRdplqSe").val();
             if(rddr_afRdplqSe == null){
@@ -2931,7 +2931,7 @@ function modify(){
         var buldNmtUnitPrice = $("#buldNmtUnitPrice").text();
         //자율형 한글자 크기(가로)
         var bulNmtFtWi = $("#bulNmtFtWi").val();
-        if(buldNmtType == '2000' && (bulNmtFtWi == null || bulNmtFtWi == 0)){
+        if(buldNmtPurpose == '2100' && (bulNmtFtWi == null || bulNmtFtWi == 0)){
             navigator.notification.alert(msg.checkZero.format("자율형 한글자 크기(가로)"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
@@ -2939,7 +2939,7 @@ function modify(){
         }
         //자율형 한글자 크기(세로)
         var bulNmtFtVe = $("#bulNmtFtVe").val();
-        if(buldNmtType == '2000' && (bulNmtFtVe == null || bulNmtFtVe == 0)){
+        if(buldNmtPurpose == '2100' && (bulNmtFtVe == null || bulNmtFtVe == 0)){
             navigator.notification.alert(msg.checkZero.format("자율형 한글자 크기(세로)"), function(){
                 util.dismissProgress();
             }, '알림', '확인');
@@ -3035,7 +3035,7 @@ function modify(){
                                 trgSnGlobal = trgSn;
                             }
                             
-                            MapUtil.openDetail(trgGbn, null);
+                            MapUtil.openDetail(trgGbn, trgSnGlobal);
         
                             util.dismissProgress();
         

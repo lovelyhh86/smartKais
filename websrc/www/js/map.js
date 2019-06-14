@@ -1742,7 +1742,6 @@ var MapUtil = {
                             $("#buldNmtType").val(data.buldNmtType);
                             // $("#buldNmtType").hide();
                             if(buldNmtType == '1000'){
-                                $("#bulNmtFt").hide();
                                 $("#buldNmtWide").attr("disabled","disabled");
                                 $("#buldNmtVertical").attr("disabled","disabled");
                             }
@@ -1752,11 +1751,22 @@ var MapUtil = {
                             } catch (error) {
                                util.toast(msg.checkObject.format("용도"),"error");
                             }
+                            //종류
                             var buldNmtPurpose = data.buldNmtPurpose;
                             // var buldNmtPurposeLbl = data.buldNmtPurposeLbl;
                             $("#buldNmtPurpose").val(buldNmtPurpose);
                             // $("#buldNmtPurposeLbl").text(buldNmtPurposeLbl);
                             // changeBuldNmtPurpose("buldNmtPurpose");
+                            if(buldNmtPurpose == '2100'){
+                                $("#bulNmtFt").show();
+                            }else{
+                                $("#bulNmtFt").hide();
+                            }
+                             //자율형건물번호판 가로 한글자크기
+                             $("#bulNmtFtWi").val(data.bulNmtFtWi);
+                             //자율형건물번호판 세로 한글자크기
+                             $("#bulNmtFtVe").val(data.bulNmtFtVe);
+                             
                             //규격
                             try{
                                 customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
@@ -1772,12 +1782,6 @@ var MapUtil = {
                             $("#buldNmtWide").val(data.buldNmtWide);
                             $("#buldNmtVertical").val(data.buldNmtVertical);
                             $("#buldNmtThickness").val(data.buldNmtThickness);
-
-                            //자율형건물번호판 가로 한글자크기
-                            $("#bulNmtFtWi").val(data.bulNmtFtWi);
-                            //자율형건물번호판 세로 한글자크기
-                            $("#bulNmtFtVe").val(data.bulNmtFtVe);
-                            
 
                             //재질
                             makeOptSelectBox("buldNmtMaterial","BUL_NMT_QL","","","");
