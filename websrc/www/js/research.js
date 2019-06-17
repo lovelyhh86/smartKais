@@ -809,9 +809,9 @@ function submitResearch(){
                     var rowSize = $("#rowSize").text();
 
                     var searchType = "myResearch";
-                    if(trgGbn == '02'){
-                        searchType = "myResearchSpbd";
-                    }
+                    // if(trgGbn == '02'){
+                    //     searchType = "myResearchSpbd";
+                    // }
                     if(listSize > 0 && rowSize > 0){
                         goResearchList(searchType);
                         selectResearchContent();

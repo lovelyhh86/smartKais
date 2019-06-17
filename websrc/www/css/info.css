@@ -286,7 +286,7 @@ table caption{display: none}
 /*map position*/
 .position{position: absolute;left: 20px; bottom: 0;}
 
-.lytgLabel{width:30%!important; margin-left: 10px!important; padding-left: 30px; }
+.lytgLabel{width:30%!important; margin-left: 10px!important; padding: 0 10px 0px 40px; }
 
 .locBack{background: #fff url(../image/mix_pos.png) no-repeat; background-size: 30px;}
 .nmtgBack{background: #fff url(../image/icon_legend04.png) no-repeat; background-size: 17px; background-position-x: 6px;}

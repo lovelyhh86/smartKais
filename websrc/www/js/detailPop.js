@@ -1542,47 +1542,34 @@ function submit(type){
 }
 
 function closePopupAndClearMap(type){
-    
-    // 심플팝업이 2개 이상 떠있는 경우 닫지 않음
-    var popLength = $("#popup-content").children().length / 2; // 엘리먼트 갯수
-    if(popLength > 1){
+    try {
+        // 심플팝업이 2개 이상 떠있는 경우 닫지 않음
+        var popLength = $("#popup-content").children().length / 2; // 엘리먼트 갯수
+        if(popLength > 1){
+            //심플팝업 초기화
+            $("#popup-content").empty();
+            $("#popup").hide();
+            
+            var LT_CHC_YN_SUM = 0;
+            for(var i in featureClone){
+                LT_CHC_YN_SUM = LT_CHC_YN_SUM + parseInt(featureClone[i].get("LT_CHC_YN"));
+            }
+            
+            if(LT_CHC_YN_SUM < popLength){
+                selectFeatureInfo(featureClone);
+            }
+            
+        }else{
+            //심플팝업 초기화
+            $("#popup-content").empty();
+            $("#popup").hide();
+        }
         //심플팝업 초기화
         $("#popup-content").empty();
         $("#popup").hide();
+    } catch (error) {
         
-        var LT_CHC_YN_SUM = 0;
-        for(var i in featureClone){
-            LT_CHC_YN_SUM = LT_CHC_YN_SUM + parseInt(featureClone[i].get("LT_CHC_YN"));
-        }
-        
-        if(LT_CHC_YN_SUM < popLength){
-            selectFeatureInfo(featureClone);
-        }
-        
-    }else{
-        //심플팝업 초기화
-        $("#popup-content").empty();
-        $("#popup").hide();
     }
-    //심플팝업 초기화
-    $("#popup-content").empty();
-    $("#popup").hide();
-
-    
-    
-    // try {
-    //     if(type == DATA_TYPE.RDPQ||type == DATA_TYPE.AREA||type == DATA_TYPE.BSIS){
-    //         //지도 초기화
-    //         getVectorSource(map , "위치레이어").clear();
-    //     }else if(type == DATA_TYPE.ENTRC){
-    //         // getVectorSource(map , "건물").clear();
-    //         getVectorSource(map , "출입구").clear();
-    //     }
-    // }catch(e) {
-    //     util.dismissProgress();
-    //     util.toast('데이터 처리에 문제가 발생 하였습니다. 잠시후 다시 시도해 주세요.');
-    // }
-
 
 }
 
