@@ -1766,7 +1766,7 @@ var MapUtil = {
                              $("#bulNmtFtWi").val(data.bulNmtFtWi);
                              //자율형건물번호판 세로 한글자크기
                              $("#bulNmtFtVe").val(data.bulNmtFtVe);
-                             
+
                             //규격
                             try{
                                 customSelectBox("buldNmtCd","BUL_NMT_CD",buldNmtPurpose.substr(0,2),0,2);
@@ -3192,16 +3192,18 @@ var mapInit = function(mapId, pos) {
 
             //상세내용 셋팅 및 위치이동시 사용하기 위해 복사
             if(featureClone){
+                featureIndex = featureClone.length;
                 featureClone.push(feature);
             }else{
                 featureClone = features;
+                featureIndex = 0;
                 
             }
             //레이어ID
             layerID = layer.get('id');
 
             //간략정보 조회
-            selectFeatureInfo(features);
+            selectFeatureInfo(features,featureIndex);
 
             // features.forEach(function(feature, index) {
 
@@ -4965,7 +4967,7 @@ function clearSource(title) {
 }
 
 //지도 간략정보 표시
-function selectFeatureInfo(features,gbn){
+function selectFeatureInfo(features,popIndex){
     try {
         var coordinate = clickPoint;
         var layerID = DATA_TYPE.LOC;
@@ -5017,6 +5019,8 @@ function selectFeatureInfo(features,gbn){
         var overlay = map.getOverlayById('popup');
 
         features.forEach(function(feature, index) {
+
+            index = popIndex;
 
             var layerType = feature.get('type');
             if(layerType == "tlv_spbd_entrc_skm" || layerType == "tlv_spbd_entrc_pos_skm"){
