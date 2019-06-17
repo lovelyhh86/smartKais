@@ -4403,7 +4403,7 @@ var options = {
 
 var featureClone;
 var featureIndex;
-var layerID = "";
+// var layerID = "";
 var clickPoint;
 //좌표이동
 function moveingPoint(sn, pointX, pointY, index) {
@@ -4970,16 +4970,16 @@ function clearSource(title) {
 function selectFeatureInfo(features,popIndex){
     try {
         var coordinate = clickPoint;
-        var layerID = DATA_TYPE.LOC;
+        // var layerID = DATA_TYPE.LOC;
         //레이어 id 확인
-        var layerList = map.getLayers().getArray();
-        for (var i = 0; i < layerList.length; i++) {
-            if (layerList[i].get('title') == '위치레이어') {
-                layerID = DATA_TYPE.LOC;
-            }else if(layerList[i].get('title') == '출입구'){
-                layerID = DATA_TYPE.ENTRC;
-            }
-        }
+        // var layerList = map.getLayers().getArray();
+        // for (var i = 0; i < layerList.length; i++) {
+        //     if (layerList[i].get('title') == '위치레이어') {
+        //         layerID = DATA_TYPE.LOC;
+        //     }else if(layerList[i].get('title') == '출입구'){
+        //         layerID = DATA_TYPE.ENTRC;
+        //     }
+        // }
         //레이어 id 확인 190522(엔진사용)
         // for(var i in features){
         //     var layerType = features[i].getId().split('.')[0];
@@ -5019,8 +5019,10 @@ function selectFeatureInfo(features,popIndex){
         var overlay = map.getOverlayById('popup');
 
         features.forEach(function(feature, index) {
-
-            index = popIndex;
+            var layerID;
+            if(popIndex){
+                index = popIndex;
+            }
 
             var layerType = feature.get('type');
             if(layerType == "tlv_spbd_entrc_skm" || layerType == "tlv_spbd_entrc_pos_skm"){
@@ -5568,6 +5570,7 @@ function selectFeatureInfo(features,popIndex){
 
                     break;
                 case DATA_TYPE.ENTRC:
+                    layerID = DATA_TYPE.ENTRC;
                     var link = URLs.entrclink;
                     //건물일련번호
                     var BUL_MAN_NO = feature.get("BUL_MAN_NO");
