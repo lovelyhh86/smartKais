@@ -1604,11 +1604,12 @@ var MapUtil = {
                             // $("#bsis_itlpcSe").hide();
                             //설치시설물
                             var bsis_instlFty = data.bsis_instlFty;
-                            customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+                            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+                            customSelectBox4("bsis_instlFty_main","INSTL_FTY","2",0,1);
                             $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
-                            customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1);
+                            customSelectBox5("bsis_instlFty","INSTL_FTY","2",0,1);
                             
-                            if(bsis_instlFty.charAt(0) == '0'){
+                            if(bsis_instlFty.charAt(0) < '2'){
                                 $("#bsis_instlFty_main").val(bsis_instlFty);
                                 
                                 changeBsisInstlFty();

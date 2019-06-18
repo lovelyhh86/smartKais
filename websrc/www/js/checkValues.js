@@ -519,12 +519,14 @@ function changeBsisInstlFtyMain(){
             
             $("#bsis_instlFty_main").val(bsis_instlFty_main);
     
-            customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
+            // customSelectBox3("bsis_instlFty","INSTL_FTY","0",0,1); 
+            customSelectBox5("bsis_instlFty","INSTL_FTY","2",0,1);
             changeBsisInstlFty();
     
             $("#bsis_instlFty").show();
         }else{
-            customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+            // customSelectBox("bsis_instlFty_main","INSTL_FTY","0",0,1);
+            customSelectBox4("bsis_instlFty_main","INSTL_FTY","2",0,1);
             $("#bsis_instlFty_main").append("<option value='00'>기타</option>");
     
             //서브 초기화

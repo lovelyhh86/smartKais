@@ -3186,7 +3186,7 @@ function loadUpdtData(isImages){
                             if(data[d] != null){
 
                                 if(d == "bsis_instlFty"){//기초번호판 설치위치
-                                    if(data[d].charAt(0) == 0){
+                                    if(data[d].charAt(0) < 2){
                                         $("#"+d+"_main").val(data[d]);
                                         changeBsisInstlFty('bsis_instlFty_main');
                                         $("#"+d+"_main").attr("style","color:red");

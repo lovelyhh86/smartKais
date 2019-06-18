@@ -947,6 +947,66 @@ function customSelectBox3(target, colume, unUseCode, startIndex, endIndex ,defau
     }
 }
 
+//커스텀 셀렉트박스 만들기4
+function customSelectBox4(target, colume, useCode, startIndex, endIndex ,defaultValue ,defaultText){
+    var targetId = $("#"+target);
+    targetId.empty();
+
+    var optionFormat = "<option value='{0}'>{1}</option>";
+
+    var optionTxt = ""; 
+    var codeList = app.codeMaster[CODE_GROUP[colume]];
+    
+    var keys = Object.keys(codeList);
+    keys.sort();
+    
+    for(var k in keys){
+        var c = keys[k];
+        if(c != "GroupNm"){
+
+            if(c.substr(startIndex,endIndex) < useCode){
+                optionTxt = optionFormat.format(c,codeList[c]);
+                targetId.append(optionTxt); 
+            }
+        
+        }
+    }
+    if(defaultText != null){
+        optionTxt = optionFormat.format(defaultValue, defaultText);
+        targetId.append(optionTxt);
+    }
+}
+
+//커스텀 셀렉트박스 만들기5
+function customSelectBox5(target, colume, useCode, startIndex, endIndex ,defaultValue ,defaultText){
+    var targetId = $("#"+target);
+    targetId.empty();
+
+    var optionFormat = "<option value='{0}'>{1}</option>";
+
+    var optionTxt = ""; 
+    var codeList = app.codeMaster[CODE_GROUP[colume]];
+    
+    var keys = Object.keys(codeList);
+    keys.sort();
+    
+    for(var k in keys){
+        var c = keys[k];
+        if(c != "GroupNm"){
+
+            if(c.substr(startIndex,endIndex) > useCode){
+                optionTxt = optionFormat.format(c,codeList[c]);
+                targetId.append(optionTxt); 
+            }
+        
+        }
+    }
+    if(defaultText != null){
+        optionTxt = optionFormat.format(defaultValue, defaultText);
+        targetId.append(optionTxt);
+    }
+}
+
 function impossibleAlert(){
     navigator.notification.alert(msg.impossibleNormal,
         function(){
