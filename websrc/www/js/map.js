@@ -2629,7 +2629,7 @@ var mapInit = function(mapId, pos) {
     // 건물번호판 레이어(좌표계)
     // var lyr_tl_spbd_entrc = getFeatureLayer({
     var lyr_tl_spbd_entrc_pos = getFeatureLayer_new({
-            title: "출입구",
+            title: "건물번호판",
             // typeName: "tn_spbd_nmtg",
             typeName: "tlv_spbd_entrc_pos_skm",
             // typeName: "tlv_spbd_entrc_skm",

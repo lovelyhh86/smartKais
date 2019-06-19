@@ -166,7 +166,7 @@ var getFeatureLayer_new = function(options) {
                     var data = results.data;
 
                     if(data == null || data.length == 0){
-                        util.toast("조회된 공간정보가 없습니다.", "error");
+                        util.toast("조회된 " + options.title + " 공간정보가 없습니다.", "error");
                         util.dismissProgress();
                         return;
                     }
