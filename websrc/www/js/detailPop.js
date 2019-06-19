@@ -2147,14 +2147,14 @@ function checkPrice(type){
 
 function goPopBuild(){
     var sn = $("#trgLocSn").val();
-    trgSnGlobal = sn;
-    MapUtil.openDetail(DATA_TYPE.BULD, null);
+    trgSnGlobal = $("#trgSn").val();
+    MapUtil.openDetail(DATA_TYPE.BULD, sn);
 }
 
 function goPopNmtg(){
-    var sn = $("#trgLocSn").val();
-    trgSnGlobal = sn;
-    MapUtil.openDetail(DATA_TYPE.ENTRC, null);
+    // var sn = $("#trgSn").val();
+    // trgSnGlobal = sn;
+    MapUtil.openDetail(DATA_TYPE.ENTRC, trgSnGlobal);
 }
 
 //정비내용 저장

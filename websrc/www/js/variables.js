@@ -25,6 +25,7 @@ var URLs = {
     "buildSelectlink": { svcNm: "vBULD" },
     "spotSelectlink": { svcNm: "vSPOT" },
     "entrclink": { svcNm: "vENTRC" },
+    "nmtglink": { svcNm: "vNMTG" },
     "updateFacilityInfo": { svcNm: "uSPGF" },
     "updateBuildNumberInfo": { svcNm: "uSPBD" },
     "updateBuilingInfo": { svcNm: "uBULD" },

@@ -928,7 +928,8 @@ var MapUtil = {
                 // }else{
                     // var sn = trgSnGlobal
                 // }
-                var link = URLs.entrclink;
+                // var link = URLs.entrclink;
+                var link = URLs.nmtglink;
 
                 MapUtil.setValues(layerID, link, sn);
 
@@ -5572,7 +5573,8 @@ function selectFeatureInfo(features,popIndex){
                     break;
                 case DATA_TYPE.ENTRC:
                     layerID = DATA_TYPE.ENTRC;
-                    var link = URLs.entrclink;
+                    // var link = URLs.entrclink;
+                    var link = URLs.nmtglink;
                     //건물일련번호
                     var BUL_MAN_NO = feature.get("BUL_MAN_NO");
                     //건물번호판일련번호
@@ -5583,8 +5585,8 @@ function selectFeatureInfo(features,popIndex){
                     var sendParam = {
                         // svcNm: 'sEntrc',
                         // mode : "11",
-                        bulNmtNo : BUL_NMT_NO,
-                        sn: BUL_MAN_NO,
+                        // bulNmtNo : BUL_NMT_NO,
+                        sn: BUL_NMT_NO,
                         sigCd: SIG_CD,
                         workId: app.info.opeId
                     };
@@ -5671,9 +5673,9 @@ function selectFeatureInfo(features,popIndex){
                             strHtml += commonP.format("", text1);
                             strHtml += commonP.format("", text2 + text3);
 
-                            resultHtml = popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + bulManNo + ")", strHtml);
+                            resultHtml = popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + bulNmtNo + ")", strHtml);
 
-                            buttonHtml = buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + bulManNo + ")", "image/more.png", "더보기");
+                            buttonHtml = buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + bulNmtNo + ")", "image/more.png", "더보기");
 
                             resultHtml += commonDiv.format("mapAdd", buttonHtml);
                             
