@@ -461,9 +461,9 @@ function goResearchDetail(i){
     
     var bulNmtNo = targetE.data("bulNmtNo");
     var bulManNo = targetE.data("bulManNo");
-    if(bulManNo != null){
+    if(bulNmtNo != null){
         //시설물 번호 전역변수
-        trgSnGlobal = bulManNo;
+        trgSnGlobal = bulNmtNo;
         trgGbn = "02"
     }else{
         
