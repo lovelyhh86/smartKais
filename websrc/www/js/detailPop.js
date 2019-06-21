@@ -3016,7 +3016,7 @@ function modify(){
                             // closePopupAndClearMap(trgGbn);
 
                             //시설물 번호 전역변수
-                            if(trgGbn == "02" || trgGbn == "99"){
+                            if(trgGbn == "99"){
                                 trgSnGlobal = trgLocSn;
                             }else{
                                 trgSnGlobal = trgSn;
@@ -3320,13 +3320,13 @@ function deleteUpdtData(isImages){
                     util.dismissProgress();
 
                     //시설물 번호 전역변수
-                    if(trgGbn == "02" || trgGbn == "99"){
+                    if(trgGbn == "99"){
                         trgSnGlobal = trgLocSn;
                     }else{
                         trgSnGlobal = trgSn;
                     }
                     
-                    MapUtil.openDetail(trgGbn, null);
+                    MapUtil.openDetail(trgGbn, trgSnGlobal);
 
 
 
