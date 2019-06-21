@@ -163,13 +163,7 @@ var getFeatureLayer_new = function(options) {
                         util.dismissProgress();
                         return;
                     }
-                    var data = results.data;
-
-                    if(data == null || data.length == 0){
-                        util.toast("조회된 " + options.title + " 공간정보가 없습니다.", "error");
-                        util.dismissProgress();
-                        return;
-                    }
+                    
                     var layerType = options.typeName;
                     var features = new Array();
 
@@ -183,6 +177,27 @@ var getFeatureLayer_new = function(options) {
 
                     var entrcCnt = 0;
                     var lntrvlCnt = 0;
+
+                    var data = results.data;
+
+                    if(data == null || data.length == 0){
+                        util.toast("조회된 " + options.title + " 공간정보가 없습니다.", "error");
+
+                        //범례건수 체크
+                        if(layerType == "tlv_spbd_entrc_pos_skm"){
+                            $('.legend .entrc .total').text(entrcCnt + '건');
+                        }else if(layerType == "tlv_spgf_loc_pos_skm"){
+                            $('.legend .rdpq .total').text(rdpqCnt + '건');
+                            $('.legend .area .total').text(areaCnt + '건');
+                            $('.legend .bsis .total').text(bsisCnt + '건');
+                            $('.legend .rdpqW .total').text(rdpqWCnt + '건');
+                        }else if(layerType == "tl_sprd_intrvl"){
+                            $('.legend .intrvl .total').text(lntrvlCnt + '건');
+                        }
+
+                        util.dismissProgress();
+                        return;
+                    }
 
                     for(i in data){
                         var ponitX = data[i].pointX;
