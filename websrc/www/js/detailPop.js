@@ -3017,13 +3017,13 @@ function modify(){
 
                             //시설물 번호 전역변수
                             if(trgGbn == "99"){
-                                trgSnGlobal = trgLocSn;
+                                // trgSnGlobal = trgLocSn;
+                                MapUtil.openDetail(trgGbn, trgLocSn);
                             }else{
-                                trgSnGlobal = trgSn;
+                                // trgSnGlobal = trgSn;
+                                MapUtil.openDetail(trgGbn, trgSn);
                             }
                             
-                            MapUtil.openDetail(trgGbn, trgSnGlobal);
-        
                             util.dismissProgress();
         
                             
@@ -3321,15 +3321,12 @@ function deleteUpdtData(isImages){
 
                     //시설물 번호 전역변수
                     if(trgGbn == "99"){
-                        trgSnGlobal = trgLocSn;
+                        // trgSnGlobal = trgLocSn;
+                        MapUtil.openDetail(trgGbn, trgLocSn);
                     }else{
-                        trgSnGlobal = trgSn;
+                        // trgSnGlobal = trgSn;
+                        MapUtil.openDetail(trgGbn, trgSn);
                     }
-                    
-                    MapUtil.openDetail(trgGbn, trgSnGlobal);
-
-
-
                 },
                 util.dismissProgress
             );

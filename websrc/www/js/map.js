@@ -1994,7 +1994,7 @@ var MapUtil = {
                     $(".title").append(title);
 
                     //일련번호
-                    $("#trgSn").val('0');
+                    $("#trgSn").val(trgSnGlobal);
                     //위치일련번호
                     $("#trgLocSn").val(sn);
                     //시군구코드
