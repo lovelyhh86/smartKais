@@ -343,7 +343,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         var iconNm = 'image/icon_legend01.png'; // 아이콘 명칭
 
         var opt;
-        if(mixStyle == true){
+        if(mixStyle == true || rdGdftySe == "999"){
             if(ltChcYn == 0 || featureCnt > ltChcYn){
                 iconNm = 'image/icon_mixPos.png';
                 anchorY = 35;
