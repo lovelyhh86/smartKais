@@ -3888,41 +3888,54 @@ var mapInit = function(mapId, pos) {
         switch (event.key) {
             case 'resolution':
                 var mapRS = map.getView().getResolution();
-                var useLayers = map.getLayers().getArray();
-
-                for (var i in useLayers) {
-                    var id = useLayers[i].get("id");
-                    if (mapRS >= useLayers[i].getMaxResolution()) {
-
-                        if (id == DATA_TYPE.LOC) {
-                            $('.legend .rdpq .total').text('0건');
-                            $('.legend .area .total').text('0건');
-                            $('.legend .bsis .total').text('0건');
-                            $('.legend .spot .total').text('0건');
-                            $('.legend .rdpqW .total').text('0건');
-                            $('.legend .areaW .total').text('0건');
-                            $('.legend .bsisW .total').text('0건');
-                            util.toast('시설물을 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
-                        }else if(id == DATA_TYPE.ENTRC){
-                            $('.legend .entrc .total').text('0건');
-                            util.toast('건물번호판 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
-                        }
-                        if (id == DATA_TYPE.BULD) {
-                            util.toast('건물정보를 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
-                        }
-
-                    }
-                }
+                // var useLayers = map.getLayers().getArray();
                 var mapZoom = map.getView().getZoom();
                 //심볼표시 레벨설정
                 var maxResolution = JSON.parse(localStorage["maxResolution"]);
 
+                if(mapRS >= maxResolution.spgf && mapRS >= maxResolution.buld){
+                    util.toast('심볼조회가 가능한 지도 레벨을<br/>초과하였습니다. 확대해 주세요.');
+                    return;
+                }else if(mapRS >= maxResolution.spgf){
+                    util.toast('도로안내시설 조회 지도 레벨을<br/>초과하였습니다. 확대해 주세요.');
+                    return;
+                }else if(mapRS >= maxResolution.buld){
+                    util.toast('건물번호판 조회 지도 레벨을<br/>초과하였습니다. 확대해 주세요.');
+                    return;
+                }
+
+                // for (var i in useLayers) {
+                
+                //     if (mapRS >= useLayers[i].getMaxResolution()) {
+
+                //         if (id == DATA_TYPE.LOC) {
+                //             $('.legend .rdpq .total').text('0건');
+                //             $('.legend .area .total').text('0건');
+                //             $('.legend .bsis .total').text('0건');
+                //             $('.legend .spot .total').text('0건');
+                //             $('.legend .rdpqW .total').text('0건');
+                //             $('.legend .areaW .total').text('0건');
+                //             $('.legend .bsisW .total').text('0건');
+                            
+                //         }else if(id == DATA_TYPE.ENTRC){
+                //             $('.legend .entrc .total').text('0건');
+                //             util.toast('건물번호판 조회 가능한 지도레벨이 <br/>아닙니다. 확대해 주세요.');
+                //         }
+                //         if (id == DATA_TYPE.BULD) {
+                //             util.toast('건물정보를 조회 가능한 지도레벨이 아닙니다. 확대해 주세요.');
+                //         }
+
+                //     }
+                // }
+                
+                
+
                 if(mapZoom == 10){
-                    if (id == DATA_TYPE.LOC && maxResolution.spgf == 4) {
+                    if (maxResolution.spgf == 4) {
                         util.toast(msg.maxResolutionWarning,'warning');
                     }
                 }else if(mapZoom == 12){
-                    if (id == DATA_TYPE.ENTRC && maxResolution.buld == 1) {
+                    if (maxResolution.buld == 1) {
                         util.toast(msg.maxResolutionWarning,'warning');
                     }
                 }
