@@ -683,8 +683,10 @@ function layerToggle(context){
             // map.addLayer(layers.loc);
             // map.addLayer(layers.entrc);
             // map.addLayer(layers.intrvl);
-            map.addLayer(layers.loc_pos);
-            map.addLayer(layers.entrc_pos);
+            layerToggleController('locSel');
+            layerToggleController('nmtgSel')
+            // map.addLayer(layers.loc_pos);
+            // map.addLayer(layers.entrc_pos);
             // map.addLayer(layers.sppn);
             
 
