@@ -435,6 +435,16 @@ function setGdfyWide(id){
     }
 
 }
+//자율형건물번호판 사이즈 체크
+function checkbuldNmtSize(id,min){
+    var size = $("#"+id).val();
+    if(size < min){
+        navigator.notification.alert("한글자의 크기를 " + min + " 이하로 입력할 수 없습니다.", function () {}, '알림', '확인');
+        return;
+    }
+
+    txtMaxlength(id,'5','0');
+}
 
 //단가 변경
 function checkUnitPrice(id){
