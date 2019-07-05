@@ -458,9 +458,18 @@ function layerToggleController(type){
     if(type == 'locSel'){
         //위치(좌표계)
         layerType = layers.loc_pos;
+        if(localStorage['engineUse'] == 'Y'){
+            //위치(엔진)
+            layerType = layers.loc;
+        }
+        
     }else if(type == 'nmtgSel'){
         //건판(좌표계)
         layerType = layers.entrc_pos;
+        if(localStorage['engineUse'] == 'Y'){
+            //건판(엔진)
+            layerType = layers.entrc
+        }
     }else if(type == 'intrvlSel'){
         //기초구간
         layerType = layers.intrvl;

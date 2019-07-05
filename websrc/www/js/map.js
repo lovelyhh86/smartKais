@@ -2605,28 +2605,27 @@ var mapInit = function(mapId, pos) {
     //     renderMode: 'image',
     // });
     // 출입구 레이어
-    // var lyr_tl_spbd_entrc = getFeatureLayer({
-    // // var lyr_tl_spbd_entrc = getFeatureLayer_new({
-    //     title: "출입구",
-    //     // typeName: "tl_spbd_entrc",
-    //     typeName: "tlv_spbd_entrc_skm",
-    //     // typeName: "tn_spbd_entrc_position",
-    //     dataType: DATA_TYPE.ENTRC,
-    //     style: {
-    //         radius: 15,
-    //         // label: {
-    //             // format: ["{0}({1}-{2})"],
-    //             // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-    //             // text: { key: "ENTRC_SE", func: function(text) { return text } },
-    //             // textOffsetY: -20
-    //         // }
-    //     },
-    //     cluster: { distance: MapUtil.setting.cluster },
-    //     maxResolution: MapUtil.setting.maxResolution_buld,
-    //     viewProgress: false,
-    //     renderMode: 'vector',
-    //     zIndex : 1
-    // });
+    var lyr_tl_spbd_entrc = getFeatureLayer({
+        title: "출입구",
+        // typeName: "tl_spbd_entrc",
+        typeName: "tlv_spbd_entrc_skm",
+        // typeName: "tn_spbd_entrc_position",
+        dataType: DATA_TYPE.ENTRC,
+        style: {
+            radius: 15,
+            // label: {
+                // format: ["{0}({1}-{2})"],
+                // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+                // text: { key: "ENTRC_SE", func: function(text) { return text } },
+                // textOffsetY: -20
+            // }
+        },
+        // cluster: { distance: MapUtil.setting.cluster },
+        maxResolution: MapUtil.setting.maxResolution_buld,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
     // 건물번호판 레이어(좌표계)
     // var lyr_tl_spbd_entrc = getFeatureLayer({
     var lyr_tl_spbd_entrc_pos = getFeatureLayer_new({
@@ -2705,26 +2704,26 @@ var mapInit = function(mapId, pos) {
     //     viewProgress: false
     // });
     // 위치레이어
-    // var lyr_tlv_spgf_loc_skm = getFeatureLayer({
-    //     title: "위치레이어",
-    //     typeName: "tlv_spgf_loc_skm",
-    //     dataType: DATA_TYPE.LOC,
-    //     style: {
-    //         label: {
-    //             text: { key: "LABEL", func: function(text) { return text } },
-    //             textOffsetX: -1,
-    //             textOffsetY: -18,
-    //             width: 1
-    //         },
-    //         radius: 12
-    //     },
-    //     cluster: { distance: MapUtil.setting.cluster },
-    //     // maxResolution: MapUtil.setting.maxResolution,
-    //     maxResolution: MapUtil.setting.maxResolution_spgf,
-    //     viewProgress: false,
-    //     renderMode: 'vector',
-    //     zIndex : 1
-    // });
+    var lyr_tlv_spgf_loc_skm = getFeatureLayer({
+        title: "위치레이어",
+        typeName: "tlv_spgf_loc_skm",
+        dataType: DATA_TYPE.LOC,
+        style: {
+            label: {
+                text: { key: "LABEL", func: function(text) { return text } },
+                textOffsetX: -1,
+                textOffsetY: -18,
+                width: 1
+            },
+            radius: 12
+        },
+        // cluster: { distance: MapUtil.setting.cluster },
+        // maxResolution: MapUtil.setting.maxResolution,
+        maxResolution: MapUtil.setting.maxResolution_spgf,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
     //위치레이어_좌표계
     var lyr_tl_spgf_loc_pos = getFeatureLayer_new({
         title: "위치레이어",
@@ -2770,16 +2769,16 @@ var mapInit = function(mapId, pos) {
     
 
     layers = {
-        // "loc": lyr_tlv_spgf_loc_skm,
+        "loc": lyr_tlv_spgf_loc_skm,
         // "rdpq": lyr_tl_spgf_rdpq,
         // "area": lyr_tl_spgf_area,
         // "bsis": lyr_tl_spgf_bsis,
-        // "entrc": lyr_tl_spbd_entrc,
+        "entrc": lyr_tl_spbd_entrc,
         // "buld": lyr_tl_spbd_buld,
         // "sppn": lyr_tl_sppn_paninfo,
         // "intrvl":lyr_tl_sprd_intrvl,
-        "loc_pos": lyr_tl_spgf_loc_pos,
-        "entrc_pos": lyr_tl_spbd_entrc_pos
+        // "loc_pos": lyr_tl_spgf_loc_pos,
+        // "entrc_pos": lyr_tl_spbd_entrc_pos
     };
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
@@ -3174,6 +3173,8 @@ var mapInit = function(mapId, pos) {
         featureClone = null;
         map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
 
+            // console.log(feature, layer);
+
             var zoomLevel = map.getView().getZoom();
             if(zoomLevel < 13){
                 util.toast("지도를 확대하신 후 심볼을 클릭해 주세요");
@@ -3193,14 +3194,17 @@ var mapInit = function(mapId, pos) {
                 features = [feature];
 
             //상세내용 셋팅 및 위치이동시 사용하기 위해 복사
-            if(featureClone){
-                featureIndex = featureClone.length;
-                featureClone.push(feature);
-            }else{
-                featureClone = features;
-                featureIndex = 0;
-                
-            }
+            // if(localStorage['engineUse'] = 'Y'){
+                if(featureClone){
+                    featureIndex = featureClone.length;
+                    featureClone.push(feature);
+                }else{
+                    featureClone = features;
+                    featureIndex = 0;
+                }
+            // }else{
+            //     featureClone = features;
+            // }
             //레이어ID
             layerID = layer.get('id');
 
@@ -4207,8 +4211,8 @@ var getFeatureLayer = function(options) {
                     //     }
                     // }
 
-                    console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
-                    util.toast(options.typeName + " : " + features.length + "건")
+                    // console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
+                    // util.toast(options.typeName + " : " + features.length + "건")
                     // util.toast("레이어표출완료","success");
                     //피처 추가시 기존피처는 변경하지 않음
 
@@ -5039,12 +5043,23 @@ function selectFeatureInfo(features,popIndex){
                 index = popIndex;
             }
 
-            var layerType = feature.get('type');
-            if(layerType == "tlv_spbd_entrc_skm" || layerType == "tlv_spbd_entrc_pos_skm"){
-                layerID = DATA_TYPE.ENTRC;
-            }else if(layerType == "tlv_spgf_loc_skm" || layerType == "tlv_spgf_loc_pos_skm"){
-                layerID = DATA_TYPE.LOC;
+            if(localStorage['engineUse'] == 'Y'){
+                var layerId = feature.id_.split('.')[0];
+                if(layerId == "tlv_spbd_entrc_skm"){
+                    layerID = DATA_TYPE.ENTRC;
+                }else if(layerId == "tlv_spgf_loc_skm"){
+                    layerID = DATA_TYPE.LOC;
+                }
+            }else{
+                var layerType = feature.get('type');    
+                if(layerType == "tlv_spbd_entrc_pos_skm"){
+                    layerID = DATA_TYPE.ENTRC;
+                }else if(layerType == "tlv_spgf_loc_pos_skm"){
+                    layerID = DATA_TYPE.LOC;
+                }
             }
+            
+            
 
             switch (layerID) {
                 case DATA_TYPE.LOC:

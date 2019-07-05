@@ -763,10 +763,14 @@ var locStyle = function (styleOptions, feature, mixStyle) {
             }))
         };
         
-        
-        if(feature.get("LABEL"))
-            opt.text = createTextStyle_new(feature.get("LABEL"));
-
+        // if(localStorage['engineUse'] == 'Y'){
+        //     if( styleOptions.label._text)
+        //         opt.text = createTextStyle(styleOptions);
+        // }else{
+            if(feature.get("LABEL"))
+                opt.text = createTextStyle_new(feature.get("LABEL"));
+            
+        // }
         return new ol.style.Style(opt);
     } catch (error) {
         navigator.notification.alert(msg.errorLoadLayer, '', '알림', '확인');

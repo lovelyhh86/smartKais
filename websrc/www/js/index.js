@@ -176,6 +176,9 @@ var app = {
                         localStorage["admNm"] = d.admNm;
                         localStorage["guIncYn"] = d.guIncYn;
                         
+                        //엔진사용여부
+                        localStorage['engineUse'] = 'Y';
+                        
                         localStorage["serviceProj"] = d.trgnptLbl;
                         if(d.trgnpt == "01") {
                             localStorage["sourceProj"] = "EPSG:5176";
