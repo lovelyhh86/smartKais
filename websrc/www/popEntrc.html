@@ -254,24 +254,23 @@
                                     <input type='number' class="cell10" id="buldNmtVertical" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/>
                                     <span>mm *</span>
                                     <input type='number' class="cell10" id="buldNmtThickness" readonly = "readonly" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'8','0')" oninput="firstTextZero(this.id)"/>
+                                    <span>mm</span>
                                 </td>
                             </tr>
                             <tr id="bulNmtFt" hidden="hidden">
                                 <th scope="row">자율형 한글자 크기(가로)</th>
                                 <td>
-                                    <input type='number' class="cell30" id="bulNmtFtWi" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkbuldNmtSize(this.id,20)" oninput="firstTextZero(this.id)"/>
+                                    <input type='number' class="cell30" id="bulNmtFtWi" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkbuldNmtSize(this.id,200)" oninput="firstTextZero(this.id)"/>
+                                    <span>mm</span>
                                 </td>
                                 <th scope="row">자율형 한글자 크기(세로)</th>
                                 <td >
-                                    <input type='number' class="cell30" id="bulNmtFtVe" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkbuldNmtSize(this.id,20)" oninput="firstTextZero(this.id)"/>
+                                    <input type='number' class="cell30" id="bulNmtFtVe" readonly = "readonly" onclick="openInputPop(this.id)" onchange="checkbuldNmtSize(this.id,200)" oninput="firstTextZero(this.id)"/>
+                                    <span>mm</span>
                                 </td>
                             </tr>
                             <!-- 숨김항목-->
                             <tr hidden="hidden">
-                                <th scope="row">용도</th>
-                                <td>
-                                    <select id="buldNmtPurpose" class="cell100 notNull" onchange="changeBuldNmtCd(this.id);"/>
-                                </td>
                                 <th scope="row">설치유형</th>
                                 <td>
                                     <select id="buldNmtSe" class="cell100" onchange="checkChangeOrigin(this.id)"/>

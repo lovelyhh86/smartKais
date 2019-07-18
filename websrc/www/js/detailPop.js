@@ -2844,12 +2844,12 @@ function modify(){
         }
         //유형
         var buldNmtSe = $("#buldNmtSe").val();
-        if(buldNmtSe == null){
-            navigator.notification.alert(msg.dontInsertNull.format("유형"), function(){
-                util.dismissProgress();
-            }, '알림', '확인');
-            return;
-        }
+        // if(buldNmtSe == null){
+        //     navigator.notification.alert(msg.dontInsertNull.format("유형"), function(){
+        //         util.dismissProgress();
+        //     }, '알림', '확인');
+        //     return;
+        // }
         //용도
         var buldNmtPurpose = $("#buldNmtPurpose").val();
         if(buldNmtPurpose == null){

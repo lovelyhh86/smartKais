@@ -3164,6 +3164,7 @@ var mapInit = function(mapId, pos) {
                 $("#popup").show();
 
                 overlay.setPosition(coordinate);
+                return;
             }
         }
         /********** 위치이동 팝업 셋팅 end **********/
