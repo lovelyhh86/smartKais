@@ -2495,24 +2495,24 @@ var mapInit = function(mapId, pos) {
     });
 
     //기초구간
-    // var lyr_tl_sprd_intrvl = getFeatureLayer({
-    //     title: "기초구간",
-    //     typeName: "tl_sprd_intrvl",
-    //     dataType: DATA_TYPE.INTRVL,
-    //     style: {
-    //         label: {
-    //             // format: ["{1}-{2}"],
-    //             // data: ["ODD_BSI_MN", "ODD_BSI_SL"],
-    //             // text: { key: "ODD_BSI_MN", func: function(text) { return text } },
-    //             // textOffsetY: -20
-    //         },
-    //         radius: 12
-    //     },
-    //     maxResolution: 1,
-    //     viewProgress: false,
-    //     renderMode: 'image',
-    //     zIndex : 2
-    // });
+    var lyr_tl_sprd_intrvl = getFeatureLayer({
+        title: "기초구간",
+        typeName: "tl_sprd_intrvl",
+        dataType: DATA_TYPE.INTRVL,
+        style: {
+            label: {
+                // format: ["{1}-{2}"],
+                // data: ["ODD_BSI_MN", "ODD_BSI_SL"],
+                // text: { key: "ODD_BSI_MN", func: function(text) { return text } },
+                // textOffsetY: -20
+            },
+            radius: 12
+        },
+        maxResolution: 0.5,
+        viewProgress: false,
+        renderMode: 'image',
+        zIndex : 0
+    });
 
 
     // Feature 정보보기 레이어 생성
@@ -2776,7 +2776,7 @@ var mapInit = function(mapId, pos) {
         "entrc": lyr_tl_spbd_entrc,
         // "buld": lyr_tl_spbd_buld,
         // "sppn": lyr_tl_sppn_paninfo,
-        // "intrvl":lyr_tl_sprd_intrvl,
+        "intrvl":lyr_tl_sprd_intrvl,
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
     };
