@@ -5679,8 +5679,8 @@ function selectFeatureInfo(features,popIndex){
                                 (data.buldSlno == '0' ? '' : '-' + data.buldSlno)
                             )
 
-                            if(rnCdLbl == null && rnCdLbl == ""){
-                                titleTxt = "설치건물명 없음";
+                            if(rnCdLbl == null || rnCdLbl == ""){
+                                titleTxt = "도로명없음";
                             }
                             //제목창
                             var title = '';
