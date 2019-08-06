@@ -560,7 +560,7 @@ function getResearchLocation(i){
     var searchList = {rdftylc_sn: rdFtyLcSn}
 
     if(rdGdftySe == null){
-        layerNm = "tlv_spbd_buld_skm";
+        layerNm = "tl_spbd_buld";
 
         var sigCd = targetID.data('sigCd');
         var emdCd = targetID.data('emdCd');
