@@ -560,16 +560,18 @@ function getResearchLocation(i){
     var searchList = {rdftylc_sn: rdFtyLcSn}
 
     if(rdGdftySe == null){
-        layerNm = "tl_spbd_buld";
+        layerNm = "tlv_spbd_entrc_skm";
 
-        var sigCd = targetID.data('sigCd');
-        var emdCd = targetID.data('emdCd');
-        var rnCd  = targetID.data('rnCd');
-        var buldMnnm = targetID.data('buldMnnm');
-        var buldSlno = targetID.data('buldSlno');
-        var buldSeCd = targetID.data('buldSeCd');
+        // var sigCd = targetID.data('sigCd');
+        // var emdCd = targetID.data('emdCd');
+        // var rnCd  = targetID.data('rnCd');
+        // var buldMnnm = targetID.data('buldMnnm');
+        // var buldSlno = targetID.data('buldSlno');
+        // var buldSeCd = targetID.data('buldSeCd');
 
-        searchList = {sig_cd: sigCd, emd_cd: emdCd, rn_cd: rnCd, buld_mnnm: buldMnnm, buld_slno: buldSlno, buld_se_cd:buldSeCd}
+        var bulNmtNo = targetID.data('bulNmtNo');
+
+        searchList = {bul_nmt_no: bulNmtNo}
     }
     
     getLocationByFeature(layerNm, searchList);
