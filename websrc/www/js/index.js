@@ -278,7 +278,8 @@ var app = {
             if(localStorage.getItem('maxResolution') == null){
                 maxResolution = {
                     spgf : 1,
-                    buld : 0.5
+                    buld : 0.5,
+                    intrvl : 0.25
                 }
                 localStorage["maxResolution"] = JSON.stringify(maxResolution);
             }

@@ -290,6 +290,7 @@ table caption{display: none}
 
 .locBack{background: #fff url(../image/mix_pos.png) no-repeat; background-size: 30px;}
 .nmtgBack{background: #fff url(../image/icon_legend04.png) no-repeat; background-size: 17px; background-position-x: 6px;}
+.intrvlBack{background: #fff url(../image/baseLine.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 10px;}
 
 /**************** width ****************/
 .cell10{ width:9%!important;} .cell15{ width:16%;}

@@ -9,6 +9,7 @@ var MapUtil = {
     },
     setting:{ maxResolution_spgf : JSON.parse(localStorage["maxResolution"]).spgf , // [2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25] (0.5 = 13 level, 1 = 12 level)
               maxResolution_buld : JSON.parse(localStorage["maxResolution"]).buld,
+              maxResolution_intrvl : JSON.parse(localStorage["maxResolution"]).intrvl,
               cluster : 30},
     photo: {
         // 사진 조회 및 촬영에 대한 상태 코드(L: 원거리(tl_spgf_loc), M: 근거리(tn_spgf_manage))
@@ -2508,7 +2509,7 @@ var mapInit = function(mapId, pos) {
             },
             radius: 12
         },
-        maxResolution: 0.5,
+        maxResolution: MapUtil.setting.maxResolution_intrvl,
         viewProgress: false,
         renderMode: 'image',
         zIndex : 0

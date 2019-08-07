@@ -24,9 +24,11 @@ $(function () {
         //슬라이더 값 셋팅 후 리플레시
         $("#slider-spgf").val(zoomList.indexOf(maxResolution.spgf)+1).slider("refresh");
         $("#slider-buld").val(zoomList.indexOf(maxResolution.buld)+1).slider("refresh");
+        $("#slider-intrvl").val(zoomList.indexOf(maxResolution.intrvl)+1).slider("refresh");
 
         $("#slider-spgf").change(changedMaxResolution);
         $("#slider-buld").change(changedMaxResolution);
+        $("#slider-intrvl").change(changedMaxResolution);
 
         // 원본사진 자동조회
         // var autoImgRoadConf = localStorage["autoImgRoadConf"];
@@ -73,7 +75,8 @@ function changedMaxResolution(){
 
     maxResolution = {
         spgf : zoomList[$("#slider-spgf").val() -1],
-        buld : zoomList[$("#slider-buld").val() -1]
+        buld : zoomList[$("#slider-buld").val() -1],
+        intrvl : zoomList[$("#slider-intrvl").val() -1]
     }
 
     localStorage["maxResolution"] = JSON.stringify(maxResolution);
@@ -82,6 +85,7 @@ function changedMaxResolution(){
 
     MapUtil.setting.maxResolution_spgf = zoomList[$("#slider-spgf").val() -1];
     MapUtil.setting.maxResolution_buld = zoomList[$("#slider-buld").val() -1];
+    MapUtil.setting.maxResolution_intrvl = zoomList[$("#slider-intrvl").val() -1];
 
     //이미지셋팅
     // setLevelImg("spgf",mapBaseConfig.zoom.spgf);
@@ -101,6 +105,8 @@ function setMapResolotion(){
                 layerList[i].setMaxResolution(maxResolution.spgf);
             }else if(id == DATA_TYPE.ENTRC){
                 layerList[i].setMaxResolution(maxResolution.buld);
+            }else if(id == DATA_TYPE.INTRVL){
+                layerList[i].setMaxResolution(maxResolution.intrvl);
             }
         }
     }
@@ -186,14 +192,18 @@ function refreshMaxResolution(){
 
     $("#slider-spgf").val(12);
     $("#slider-buld").val(13);
+    $("#slider-intrvl").val(14);
+
 
     changedMaxResolution();
 
     //슬라이더 값 셋팅 후 리플레시
     $("#slider-spgf").val(zoomList.indexOf(maxResolution.spgf)+1).slider("refresh");
     $("#slider-buld").val(zoomList.indexOf(maxResolution.buld)+1).slider("refresh");
+    $("#slider-intrvl").val(zoomList.indexOf(maxResolution.intrvl)+1).slider("refresh");
 
     $("#slider-spgf").change(changedMaxResolution);
     $("#slider-buld").change(changedMaxResolution);
+    $("#slider-intrvl").change(changedMaxResolution);
 
 }
