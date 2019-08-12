@@ -2880,7 +2880,7 @@ function modify(){
         //규격
         var buldNmtCd = $("#buldNmtCd").val();
         var gdsdCnt = checkSelectBoxLength("buldNmtCd");
-        var buldNmtType = $("#buldNmtType").val();
+        // var buldNmtType = $("#buldNmtType").val();
 
         //표준형이면서 규격이 없는 경우
         if(buldNmtCd == null && buldNmtType == "1000"){
@@ -2935,6 +2935,7 @@ function modify(){
 
         commomParams = $.extend(commomParams,{
             lghtCd : lghtCd,
+            buldNmtType : buldNmtType,
             buldNmtSe : buldNmtSe,
             buldNmtPurpose : buldNmtPurpose,
             buldMnfCd : buldMnfCd,
