@@ -562,7 +562,7 @@ function getResearchLocation(i){
     if(rdGdftySe == null){
         layerNm = "tlv_spbd_entrc_skm";
 
-        // var sigCd = targetID.data('sigCd');
+        var sigCd = targetID.data('sigCd');
         // var emdCd = targetID.data('emdCd');
         // var rnCd  = targetID.data('rnCd');
         // var buldMnnm = targetID.data('buldMnnm');
@@ -571,7 +571,7 @@ function getResearchLocation(i){
 
         var bulNmtNo = targetID.data('bulNmtNo');
 
-        searchList = {bul_nmt_no: bulNmtNo}
+        searchList = {sig_cd : sigCd, bul_nmt_no: bulNmtNo}
     }
     
     getLocationByFeature(layerNm, searchList);
