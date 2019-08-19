@@ -202,14 +202,6 @@
 									<!-- <input type='number' class="cell30" id="rddr_edbsSn" readonly = "readonly" maxlength="5" onclick="openInputPop(this.id)" onchange="txtMaxlength(this.id,'5','0')" oninput="firstTextZero(this.id)"/> -->
 								</td>
 							</tr>
-							<tr>
-								<th scope="row">양면내용<br/>상이여부</th>
-								<td>
-									<select id="bdrclAt" disabled="disabled" class="cell100 notNull" onchange="changeBdrclAt()"/>
-								</td>
-								<td></td>
-								<td></td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -504,6 +496,14 @@
 								<td>
 									<select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
 								</td>
+							</tr>
+							<tr hidden="hidden">
+								<th scope="row">양면내용<br/>상이여부</th>
+								<td>
+									<select id="bdrclAt" disabled="disabled" class="cell100 notNull" onchange="changeBdrclAt()"/>
+								</td>
+								<td></td>
+								<td></td>
 							</tr>
 						</tbody>
 					</table>
