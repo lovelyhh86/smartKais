@@ -3133,6 +3133,7 @@ var mapInit = function(mapId, pos) {
                 // var SIG_CD = featureClone[featureIndex].get("SIG_CD");
                 // var RDFTYLC_SN = featureClone[featureIndex].get("RDFTYLC_SN");
                 var sn = localStorage["moveTrgSn"];
+                var trgGbn = localStorage["moveTrgGbn"];
                 
                 // var RDFTY_SE = featureClone[featureIndex].get("RDFTY_SE");
                 // var pointSn = popTableP.format("위치일련번호", RDFTYLC_SN);
@@ -3145,6 +3146,7 @@ var mapInit = function(mapId, pos) {
                 var param = "";
                 param = $.extend({}, {
                     sn: sn,
+                    trgGbn : trgGbn,
                     // sigCd : SIG_CD,
                     // rdftySe : RDFTY_SE,
                     posX: newCoodi[0],
@@ -4427,10 +4429,16 @@ var featureIndex;
 // var layerID = "";
 var clickPoint;
 //좌표이동
-function moveingPoint(sn, pointX, pointY, index) {
+function moveingPoint(sn, pointX, pointY, index, trgGbn) {
     // console.log(sn);
     // console.log(pointX + " , " + pointY);
     localStorage["moveTrgSn"] = sn ;
+    if(trgGbn){
+        trgGbn = DATA_TYPE.ENTRC;
+    }else{
+        trgGbn = DATA_TYPE.LOC;
+    }
+    localStorage["moveTrgGbn"] = trgGbn;
 
     $("#moveInfo").show();
 
@@ -5704,8 +5712,12 @@ function selectFeatureInfo(features,popIndex){
                             strHtml += commonP.format("", text2 + text3);
 
                             resultHtml = popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + bulNmtNo + ")", strHtml);
+                            
+                            //위치정보
+                            var geom = feature.getGeometry().getCoordinates();
 
                             buttonHtml = buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + bulNmtNo + ")", "image/more.png", "더보기");
+                            buttonHtml += buttonForm.format("addition", "moveingPoint(" + data.bulNmtNo + "," + geom[0] + "," + geom[1] + "," + index + ","+ layerID +")", "image/addtion.png", "이동");
 
                             resultHtml += commonDiv.format("mapAdd", buttonHtml);
                             
