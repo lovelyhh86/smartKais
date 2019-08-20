@@ -3654,9 +3654,12 @@ function selectOldImg(){
                         url = URLs.postURL(URLs.roadsignlink, param);
                         break;
                     case DATA_TYPE.ENTRC:
-                        var sn = $("#trgLocSn").val();
+                        // var sn = $("#trgLocSn").val();
+                        var sn = trgSnGlobal
                         param = { "sn": sn, "sigCd": app.info.sigCd, "isImages": true };
-                        var url = URLs.postURL(URLs.entrclink, param);
+                        
+                        // var url = URLs.postURL(URLs.entrclink, param);
+                        var url = URLs.postURL(URLs.nmtglink, param);
                         break;
                     case DATA_TYPE.BULD:
                         var sn = $("#trgLocSn").val();
