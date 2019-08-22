@@ -501,7 +501,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearch ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>점검목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>안내시설목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -530,7 +530,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearchSpbd ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>점검목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>안내시설목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -815,7 +815,7 @@ var MapUtil = {
         switch (type) {
             case "myResearch":
                 addResearchYear('searchOptPlnYr',false);
-                //점검목록
+                //안내시설목록
                 pos = 0;
                 // selectResearchContent(null,0,9);
                 /**검색조건 */
@@ -854,7 +854,7 @@ var MapUtil = {
             break;
             case "myResearchSpbd":
                 addResearchYear('searchOptPlnYr',false);
-                //점검목록
+                //안내시설목록
                 pos = 0;
                 // selectResearchContent("02",0,9);
                 /**검색조건 */

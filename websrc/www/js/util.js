@@ -650,7 +650,7 @@ function layerToggle(context){
             //건물번호판
             // $(".legend.spbd").toggle(false);
 
-            //점검목록
+            //안내시설목록
             $(".selectResearch").toggle(true);
             //레이어관리
             $(".layerOnOffBtn").toggle(true);
@@ -666,7 +666,7 @@ function layerToggle(context){
             $(".refreshMap").toggle(true);
             $(".measure").toggle(true);
             
-            //점검목록(건물번호판)
+            //안내시설목록(건물번호판)
             // $(".selectResearchSpbd").toggle(false);
             
             //위치이동(건물번호판)

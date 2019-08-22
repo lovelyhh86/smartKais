@@ -476,7 +476,7 @@ function goResearchDetail(i){
 
     $("#listView").popup("close");
 }
-//상세 -> 점검목록 이동
+//상세 -> 안내시설목록 이동
 function goResearchList(type){
 
     var listSize = $("#myResearchTable tbody tr").length;

@@ -34,13 +34,13 @@ function closeDetailView(id){
         changedIdList = new Array();
         //원본데이터 초기화
         $("#originDiv").empty();
-        //점검목록 리스트초기화
+        //안내시설목록 리스트초기화
         // if(id == "listView"){
             // }
         }
     app.info.searchValue = "";
         
-    //점검목록 초기화
+    //안내시설목록 초기화
     emptyResearchList();
     //사진 변경값 초기화
     MapUtil.photo.refresh();
