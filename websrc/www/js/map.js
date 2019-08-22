@@ -1534,6 +1534,21 @@ var MapUtil = {
                             //기타내용
                             $("#area_etcCn").val(data.area_etcCn);
 
+                            var advBegDe = data.advBegDe;
+                            var advEndDe = data.advEndDe;
+                            var advDe = "데이터없음";
+                            if(advBegDe != null && advEndDe != null){
+                                var advBegDeLbl = "{0}년{1}월{2}일".format(advBegDe.substr(0, 4), advBegDe.substr(4, 2), advBegDe.substr(6, 2));
+                                var advEndDeLbl = "{0}년{1}월{2}일".format(advEndDe.substr(0, 4), advEndDe.substr(4, 2), advEndDe.substr(6, 2));
+                                advDe = advBegDeLbl + " ~ " + advEndDeLbl;
+                            }
+                            $("#advDe").html(advDe);
+                            
+                            //광고시작일자
+                            $("#advBegDe").val(advBegDe);
+                            //광고종료일자
+                            $("#advEndDe").val(advEndDe);
+
                             //규격
                             var colume = "AREA_GD_SD";
                             var area_areaGdSd = data.area_areaGdSd;
