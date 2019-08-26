@@ -756,8 +756,13 @@ function submitResearch(){
     
     //작업자ID
     var workId = app.info.opeId;
+    var msgText = msg.updateResearch;
+    var rcSttCd_origin = $("#rcSttCd_origin").val();
+    if(rcSttCd_origin){
+        msgText = msg.updateReResearch;
+    }
 
-    navigator.notification.confirm(msg.updateResearch, function(btnindex){
+    navigator.notification.confirm(msgText, function(btnindex){
 
         if(btnindex == 1){
             var sendParams = {

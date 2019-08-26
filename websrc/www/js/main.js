@@ -35,6 +35,7 @@ var msg = {
     notPubRearcher: "공무원만 이용할 수 있습니다.",
     impossibleNormal: "정상처리 할 수 없는 시설물 입니다.\n정비를 통해 점검해 주십시요.",
     updateResearch: "해당 시설물을 점검하시겠습니까?",
+    updateReResearch: "해당 시설물을 점검하시겠습니까?\n(재점검시 기존 점검이력 및 조치결과가 삭제됩니다.)",
     successResearch: "정상적으로 점검되었습니다.",
     successModify: "정상적으로 저장 되었습니다. \n해당 내용은 [KAIS웹]을 통한 승인 후 적용됩니다.",
     loadUpdtData: "승인 대기중인 데이터를 불러오시겠습니까?",
