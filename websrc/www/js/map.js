@@ -501,7 +501,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearch ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>안내시설목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>안내시설 목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -1078,7 +1078,7 @@ var MapUtil = {
                         //설치일자
                         var instDate = data.instDate;
                         try {
-                            var instDateText = "{0}년{1}월{2}일".format(instDate.substr(0, 4), instDate.substr(4, 2), instDate.substr(6, 2));
+                            var instDateText = "{0}년 {1}월 {2}일".format(instDate.substr(0, 4), instDate.substr(4, 2), instDate.substr(6, 2));
                             $("#instDate").html(instDateText);    
                         } catch (error) {
                             util.toast(msg.checkObject.format("설치일자"),"error");
@@ -1538,8 +1538,8 @@ var MapUtil = {
                             var advEndDe = data.advEndDe;
                             var advDe = "데이터없음";
                             if(advBegDe != null && advEndDe != null){
-                                var advBegDeLbl = "{0}년{1}월{2}일".format(advBegDe.substr(0, 4), advBegDe.substr(4, 2), advBegDe.substr(6, 2));
-                                var advEndDeLbl = "{0}년{1}월{2}일".format(advEndDe.substr(0, 4), advEndDe.substr(4, 2), advEndDe.substr(6, 2));
+                                var advBegDeLbl = "{0}년 {1}월 {2}일".format(advBegDe.substr(0, 4), advBegDe.substr(4, 2), advBegDe.substr(6, 2));
+                                var advEndDeLbl = "{0}년 {1}월 {2}일".format(advEndDe.substr(0, 4), advEndDe.substr(4, 2), advEndDe.substr(6, 2));
                                 advDe = advBegDeLbl + " ~ " + advEndDeLbl;
                             }
                             $("#advDe").html(advDe);
