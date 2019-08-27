@@ -473,6 +473,9 @@ function layerToggleController(type){
     }else if(type == 'intrvlSel'){
         //기초구간
         layerType = layers.intrvl;
+        if(onOffGbn == "on"){
+            util.toast('기초구간을 사용하는 경우 안내시설 심볼요청이 원활하지 않을 수 있습니다.참고용으로만 사용해 주시기 바랍니다.','warning',3000);
+        }
     }
 
     if(onOffGbn == "on"){

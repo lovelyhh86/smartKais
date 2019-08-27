@@ -444,10 +444,16 @@ var util = {
             slider.flexAnimate(slider.count - 1); // go back to the first slide
         });
     },
-    toast: function (msg, mode) {
+    toast: function (msg, mode, timeOut) {
+        
 //        toastr.remove();
         toastr.options.positionClass = 'toast-bottom-center';
-        toastr.options.timeOut = 1500;
+        if(timeOut){
+            toastr.options.timeOut = timeOut;
+        }else{
+            toastr.options.timeOut = 1500;
+        }
+        
         //중복방지
         toastr.options.preventDuplicates = true;
 
