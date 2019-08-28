@@ -4253,6 +4253,7 @@ var getFeatureLayer = function(options) {
                 util.dismissProgress();
         },
         strategy: ol.loadingstrategy.bbox,
+        useSpatialIndex: false
     });
 
     var source;
