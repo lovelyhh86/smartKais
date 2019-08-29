@@ -1804,6 +1804,29 @@ var MapUtil = {
                             //재질
                             makeOptSelectBox("buldNmtMaterial","BUL_NMT_QL","","","");
                             $("#buldNmtMaterial").val(data.buldNmtMaterial);
+
+                            //제2외국어여부
+                            var scfggMkty = data.scfggMkty;
+                            makeOptSelectBox("scfggMkty","SCFGG_MKTY","","","");
+                            $("#scfggMkty").val(scfggMkty);
+                            //언어1
+                            makeOptSelectBox("scfggUla1","SCFGG_ULA1","","","");
+                            $("#scfggUla1").val(data.scfggUla1);
+                            //언어2
+                            makeOptSelectBox("scfggUla2","SCFGG_ULA1","","","");
+                            $("#scfggUla2").val(data.scfggUla2);
+                            
+                            //추수 변경가능으로 변경시 사용가능하게 변경
+                            $("#scfggMkty").attr("disabled","disabled");
+                            $("#scfggUla1").attr("disabled","disabled");
+                            $("#scfggUla2").attr("disabled","disabled");
+
+                            // if(scfggMkty == "1"){
+                            //     $("#scfggUla1").attr("disabled","disabled")
+                            //     $("#scfggUla2").attr("disabled","disabled")
+                            // }else if(scfggMkty == "2"){
+                            //     $("#scfggUla2").attr("disabled","disabled")
+                            // }
                            
                     }
 

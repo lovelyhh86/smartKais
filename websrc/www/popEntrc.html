@@ -233,7 +233,20 @@
 								<td>
 									<select id="prtTy" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
                                 </td>
-                                <td></td><td></td>
+                                <th scope="row">제2외국어여부</th>
+                                <td>
+                                    <select id="scfggMkty" class="cell100 notNull" onchange="changeScfggMkty(this.id)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">언어1</th>
+                                <td>
+                                    <select id="scfggUla1" class="cell100" onchange="checkChangeOrigin(this.id)"/>
+                                </td>
+                                <th scope="row">언어2</th>
+                                <td>
+                                    <select id="scfggUla2" class="cell100" onchange="checkScfggUla2(this.id)"/>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row">규격</th>
