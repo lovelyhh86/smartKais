@@ -375,9 +375,8 @@ var locStyle = function (styleOptions, feature, mixStyle) {
             if(useTarget == "01000"){ // 사용대상이 보행자용이 맞는 경우에만 벽면형 표현
                 switch(instlSe){
                     case "00002": //벽면형
-                        if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn ){ // 점검 x , 올해설치 x
-                            iconNm = 'image/icon_legend01_w.png';
-                            anchorY = 35;
+                        if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
+                            iconNm = 'image/icon_legend01_wn.png';
                             // opt = {
                             //     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                             //         anchor: [0.45, 35],
@@ -401,8 +400,9 @@ var locStyle = function (styleOptions, feature, mixStyle) {
                             //         src: 'image/icon_legend01_wc.png'
                             //     }))
                             // };
-                        }else if((ltChcYn == 0 && instlDeYear == newYear) || featureCnt > ltChcYn){ // 점검 x , 올해설치 o
-                            iconNm = 'image/icon_legend01_wn.png';
+                        }else if((ltChcYn == 0 && instlDeYear != newYear) || featureCnt > ltChcYn ){ // 점검 x , 올해설치 x
+                            iconNm = 'image/icon_legend01_w.png';
+                            anchorY = 35;
                             // opt = {
                             //     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                             //         anchor: [0.45, anchorY],
