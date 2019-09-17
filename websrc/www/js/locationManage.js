@@ -64,13 +64,22 @@ function selectLocationMoveContent(){
                 var d = data[i];
 
                 var bsisRnLbl = d.bsisRnLbl;
+                var rnCdLbl = d.rnCdLbl;
                 var rnLbl = '-';
                 if(bsisRnLbl != null){
+                    //도로시설물
                     //설치 도로명
                     rnLbl = "{0} {1}{2}".format(
                         d.bsisRnLbl,
                         d.bsisMnnm == null? "": d.bsisMnnm,
                         d.bsisSlno == "0"? "" : "-" + d.bsisSlno
+                    );
+                }else if(rnCdLbl != null){
+                    //건판
+                    rnLbl = "{0} {1}{2}".format(
+                        d.rnCdLbl,
+                        d.buldMnnm == null? "": d.buldMnnm,
+                        d.buldSlno == "0"? "" : "-" + d.buldSlno
                     );
                 }
                 var rdGdftySe = d.rdGdftySe;

@@ -5756,7 +5756,7 @@ function selectFeatureInfo(features,popIndex){
                             var geom = feature.getGeometry().getCoordinates();
 
                             buttonHtml = buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + bulNmtNo + ")", "image/more.png", "더보기");
-                            buttonHtml += buttonForm.format("addition", "moveingPoint(" + data.bulNmtNo + "," + geom[0] + "," + geom[1] + "," + index + ","+ layerID +")", "image/addtion.png", "이동");
+                            // buttonHtml += buttonForm.format("addition", "moveingPoint(" + data.bulNmtNo + "," + geom[0] + "," + geom[1] + "," + index + ","+ layerID +")", "image/addtion.png", "이동");
 
                             resultHtml += commonDiv.format("mapAdd", buttonHtml);
                             
