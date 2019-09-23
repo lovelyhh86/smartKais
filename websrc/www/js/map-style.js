@@ -933,10 +933,10 @@ var entrcStyle = function (styleOptions,feature) {
         var ltChcYnOld = feature.get('LT_CHC_YN_OLD');
         
         //작년 점검여부 표시 + 올해 점검 포함
-        if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
-            ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
-            reSttSum == 0 ? reSttSum = reSttSumOld : reSttSum = reSttSum;
-        }
+        // if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
+        //     ltChcYn == 0 ? ltChcYn = ltChcYnOld : ltChcYn = ltChcYn;
+        //     reSttSum == 0 ? reSttSum = reSttSumOld : reSttSum = reSttSum;
+        // }
         
         //설치일자
         var instlDe = feature.get('INSTL_DE');

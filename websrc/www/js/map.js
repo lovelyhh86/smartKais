@@ -814,7 +814,7 @@ var MapUtil = {
     setList: function(type){
         switch (type) {
             case "myResearch":
-                addResearchYear('searchOptPlnYr',false);
+                // addResearchYear('searchOptPlnYr',false);
                 //안내시설목록
                 pos = 0;
                 // selectResearchContent(null,0,9);
