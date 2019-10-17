@@ -2786,25 +2786,18 @@ var mapInit = function(mapId, pos) {
     });
     
     //지점번호판 레이어
-    // var lyr_tl_sppn_paninfo = getFeatureLayer({
-    //     title: "지점번호판",
-    //     typeName: "tl_sppn_paninfo",
-    //     dataType: DATA_TYPE.SPPN,
-    //     style: {
-    //         // label: {
-    //         //     text: { key: "LABEL", func: function(text) { return text } },
-    //         //     textOffsetX: -1,
-    //         //     textOffsetY: -18,
-    //         //     width: 1
-    //         // },
-    //         radius: 12
-    //     },
-    //     cluster: { distance: MapUtil.setting.cluster },
-    //     maxResolution: 2,
-    //     viewProgress: false,
-    //     renderMode: 'vector',
-    //     zIndex : 1
-    // });
+    var lyr_tl_sppn_pan = getFeatureCoodi_Center({
+        title: "지점번호판",
+        typeName: "kodis.tl_sppn_pan",
+        dataType: DATA_TYPE.SPPN,
+        style: {
+            radius: 12
+        },
+        maxResolution: 2,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
     
 
     layers = {
@@ -2814,7 +2807,7 @@ var mapInit = function(mapId, pos) {
         // "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc,
         // "buld": lyr_tl_spbd_buld,
-        // "sppn": lyr_tl_sppn_paninfo,
+        "sppn": lyr_tl_sppn_pan,
         "intrvl":lyr_tl_sprd_intrvl,
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos

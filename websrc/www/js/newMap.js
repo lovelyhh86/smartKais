@@ -341,24 +341,23 @@ var getFeatureLayer_new = function(options) {
     return new ol.layer.Vector(vectorOptions);
 };
 
-
-var getFeatureCoodi = function(options){
+/** 중앙 공간정보 좌표조회 */
+var getFeatureCoodi_Center = function(options){
     var vectorSource = new ol.source.Vector({
         id: "vectorSource:" + options.typeName,
         // format: new ol.format(),
         loader: function(extent, resolution, projection) {
-            // extent = ol.proj.transformExtent(extent, baseProjection.getCode(), sourceProjection.getCode());
+            
             var param = {
-                // SERVICE: 'WFS',
-                // VERSION: '1.1.0',
-                // REQUEST: 'GetFeature',
+                svcNm : URLs.coodiMapSvcCenter,
+                typeName : options.typeName,
                 bbox: extent,
-                // srsName: serviceProjection.getCode(),
-                // typeName: options.typeName,
-                sigCd : app.info.sigCd
+                sigCd : app.info.sigCd,
+                workId : app.info.opeId,
+                mode : app.info.mode == "11"? "10" : null // 중앙테스트용
             };
 
-            var urldata = URLs.postURL(URLs.coodiMapSvc, param);
+            var urldata = URLs.postURL(URLs.coodiMapSvcCenter, param);
             // util.toast("지도요청시작","success");
             // alert(JSONtoString(urldata));
             util.showProgress();

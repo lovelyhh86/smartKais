@@ -75,8 +75,11 @@ var URLs = {
     //읍면동(행정동) 조회
     "selectHangEmdList":{svcNm: "sHangEmdList"},
 
-    //좌표조회
+    //좌표조회(시군구)
     "coodiMapSvc":{svcNm: "coodiMapSvc"},
+
+    //좌표조회(중앙)
+    "coodiMapSvcCenter":{svcNm: "coodiMapSvcCenter"},
     
     getURL: function (srcurl, jsondata) {
 
