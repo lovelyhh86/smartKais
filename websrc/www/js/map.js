@@ -2219,7 +2219,6 @@ var MapUtil = {
 
                     //토지소재지
                     $("#jibunAddr").html(data.jibunAddr);
-
             
                     util.dismissProgress();
                     return;
