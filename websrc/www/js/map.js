@@ -2764,40 +2764,40 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
     //위치레이어_좌표계
-    var lyr_tl_spgf_loc_pos = getFeatureLayer_new({
-        title: "위치레이어",
-        typeName: "tlv_spgf_loc_pos_skm",
-        dataType: DATA_TYPE.LOC,
-        style: {
-            label: {
-                text: { key: "LABEL", func: function(text) { return text } },
-                textOffsetX: -1,
-                textOffsetY: -18,
-                width: 1
-            },
-            radius: 12
-        },
-        cluster: { distance: MapUtil.setting.cluster },
-        // maxResolution: MapUtil.setting.maxResolution,
-        maxResolution: MapUtil.setting.maxResolution_spgf,
-        viewProgress: false,
-        renderMode: 'vector',
-        zIndex : 1
-    });
+    // var lyr_tl_spgf_loc_pos = getFeatureLayer_new({
+    //     title: "위치레이어",
+    //     typeName: "tlv_spgf_loc_pos_skm",
+    //     dataType: DATA_TYPE.LOC,
+    //     style: {
+    //         label: {
+    //             text: { key: "LABEL", func: function(text) { return text } },
+    //             textOffsetX: -1,
+    //             textOffsetY: -18,
+    //             width: 1
+    //         },
+    //         radius: 12
+    //     },
+    //     cluster: { distance: MapUtil.setting.cluster },
+    //     // maxResolution: MapUtil.setting.maxResolution,
+    //     maxResolution: MapUtil.setting.maxResolution_spgf,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
     
     //지점번호판 레이어
-    var lyr_tl_sppn_pan = getFeatureCoodi_Center({
-        title: "지점번호판",
-        typeName: "kodis.tl_sppn_pan",
-        dataType: DATA_TYPE.SPPN,
-        style: {
-            radius: 12
-        },
-        maxResolution: 2,
-        viewProgress: false,
-        renderMode: 'vector',
-        zIndex : 1
-    });
+    // var lyr_tl_sppn_pan = getFeatureCoodi_Center({
+    //     title: "지점번호판",
+    //     typeName: "kodis.tl_sppn_pan",
+    //     dataType: DATA_TYPE.SPPN,
+    //     style: {
+    //         radius: 12
+    //     },
+    //     maxResolution: 2,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
     
 
     layers = {
@@ -2807,7 +2807,7 @@ var mapInit = function(mapId, pos) {
         // "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc,
         // "buld": lyr_tl_spbd_buld,
-        "sppn": lyr_tl_sppn_pan,
+        // "sppn": lyr_tl_sppn_pan,
         "intrvl":lyr_tl_sprd_intrvl,
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
