@@ -746,7 +746,7 @@ var MapUtil = {
 
                     break;
                 case DATA_TYPE.SPPN:
-                    url = pages.detail_spot;
+                    url = pages.detail_sppn;
                     header = "지점번호판";
 
                     break;
@@ -769,6 +769,36 @@ var MapUtil = {
             })
         }
         
+    },
+    openDetailSigCd:function(layerID, sn, sigCd){
+        //조사자일련번호
+        if(util.isEmpty(app.info.rcrSn)){
+            navigator.notification.alert(msg.noRearcher, function () {
+                // util.goBack();
+                // return;
+            }, '조사자', '확인');
+        }else{
+            var detailTaget = '#detailView';
+
+            switch (layerID) {
+                case DATA_TYPE.SPPN:
+                    url = pages.detail_sppn;
+                    header = "지점번호판";
+
+                    break;
+            }
+
+            $(detailTaget).load(url.link(), function() {
+                MapUtil.setDetail(layerID, sn, sigCd);
+                MapUtil.handler.photoToggleHandler();
+                MapUtil.handler.takePhotoHandler();
+                MapUtil.handler.delPhotoHandler();
+                MapUtil.handler.dataPopupCloserHandler();
+                
+                $(detailTaget).popup("open", { transition: "slideup" });
+            })
+        }
+
     },
     getPlateDir: function(f) {
         var ft_stbs_mn = parseInt(f.get("FT_STBS_MN"));
@@ -897,7 +927,7 @@ var MapUtil = {
             break;
         }
     },
-    setDetail: function(layerID, sn) {
+    setDetail: function(layerID, sn, sigCd) {
         var codeList
         isPopState = "off";
         toggleDetailView();
@@ -953,13 +983,13 @@ var MapUtil = {
 
                 break;
             case DATA_TYPE.SPPN:
-                var link = URLs.spotSelectlink;
-                try{
-                    MapUtil.setValuesSppn(layerID, link, trgSnGlobal);
-                }catch(error){
-                    util.toast(msg.checkSetObjectError,"error");
-                    util.dismissProgress();
-                }
+                // var link = URLs.selectSppnPanInfo;
+                // try{
+                    MapUtil.setValuesSppn(layerID, sn, sigCd);
+                // }catch(error){
+                //     util.toast(msg.checkSetObjectError,"error");
+                //     util.dismissProgress();
+                // }
 
                 break;
             case DATA_TYPE.ADRDC:
@@ -2127,8 +2157,9 @@ var MapUtil = {
             util.dismissProgress
         )
     },
-    setValuesSppn:function(layerID, link, sn) {
-        var url = URLs.postURL(link, { "sn": sn, "sigCd": app.info.sigCd, "workId": app.info.opeId });
+    setValuesSppn:function(layerID, spoNoSeq, sigCd) {
+        var link = URLs.selectSppnPanInfo;
+        var url = URLs.postURL(link, { "spoNoSeq": spoNoSeq, "sigCd": sigCd, "workId": app.info.opeId });
         util.showProgress();
         util.postAJAX({}, url).then(
             function(context, rCode, results) {
@@ -2154,60 +2185,42 @@ var MapUtil = {
                 }
 
                 if(layerID == DATA_TYPE.SPPN){
-                    $("#imaFilSn").val(data.imaFilSn);
                     //제목
                     var title = "<span class='label'>[{0}] {1}<span>".format("지점번호판",data.spoNoCd);
                     $(".title").append(title);
-                    try{
-                        //점검일자
-                        var lastCheckDate = data.chkDe == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.chkDe.substr(0, 4), data.chkDe.substr(4, 2), data.chkDe.substr(6, 2));
-                        $("#lastCheckDate").html(lastCheckDate);
-                    } catch (error) {
-                        util.toast(msg.checkObject.format("점검이력"),"error");
-                    }
-                    // $("#lastCheckDate").addClass("edit");
-                    //메모
-                    $("#checkComment").html(data.chkSum);
-                    $("#checkComment").addClass("edit");
-                    //설치상태
-                    //토지소재지
-                    // var sigCd = data.sigCd;
-                    // $("#landAddress").html(sigCd);
-                    //시설물종류
-                    $("#fcltylcCd").html(data.fcltylcCd);
-                    $("#fcltylcCdLbl").html(data.fcltylcCdLbl);
-                    //설치기관
-                    $("#insttCd").html(data.insttCd);
-                    $("#insttCdLbl").html(data.insttCdLbl);
-                    //상세기관명
-                    $("#dtorNm").html(data.dtorNm);
-                    //좌표
-                    $("#xGrs80").html(data.xGrs80);
-                    $("#yGrs80").html(data.yGrs80);
-                    //검증일자
-                    var vrifyDe = data.vrifyDe;
-                    try{
-                        $("#vrifyDe").html("{0}년{1}월{2}일".format(vrifyDe.substr(0,4),vrifyDe.substr(4,2),vrifyDe.substr(6,2)));
-                    } catch (error) {
-                        util.toast(msg.checkObject.format("건축물용도"),"error");
-                    }
+                    //지점번호
+                    $("#spoNoCd").html(data.spoNoCd);
+                    //시설물 분류
+                    $("#fcltylc").html(data.fcltylc);
+
+                    //설치기관 명칭
+                    $("#instt").html(data.instt);
+                    //설치기관 사업자등록번호
+                    $("#insttNum").html(data.insttNum);
+                    //설치기관 주소
+                    $("#insttAddr").html(data.insttAddr);
                     //설치일자
-                    var spoInsDe = data.spoInsDe;
-                    try{
-                        $("#spoInsDe").html("{0}년{1}월{2}일".format(spoInsDe.substr(0,4),spoInsDe.substr(4,2),spoInsDe.substr(6,2)));
-                    } catch (error) {
-                        util.toast(msg.checkObject.format("설치일자"),"error");
-                    }
-                    //변경사유
-                    $("#chghy").html(data.chghy);
-                    $("#chghyLbl").html(data.chghyLbl);
-                    //표기지역내여부
-                    $("#mkareaIn").html(data.mkareaIn);
-                    $("#mkareaInLbl").html(data.mkareaInLbl);
+                    $("#insttDe").html(data.insttDe);
+                    //검증일자
+                    $("#vrifyDe").html(data.vrifyDe);
+
+                    //좌표 x
+                    $("#xGrs80").html(data.xGrs80);
+                    //좌표 y
+                    $("#yGrs80").html(data.yGrs80);
+                    //좌표 z
+                    $("#zVal").html(data.zVal);
                     //경도
                     $("#longitude").html(data.longitude);
                     //위도
                     $("#latitude").html(data.latitude);
+                    //높이
+                    $("#ellipseSolid").html(data.ellipseSolid);
+
+                    //토지소재지
+                    $("#vrifyDe").html(data.vrifyDe);
+
+            
                     util.dismissProgress();
                     return;
                 }
@@ -2764,36 +2777,36 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
     //위치레이어_좌표계
-    var lyr_tl_spgf_loc_pos = getFeatureLayer_new({
-        title: "위치레이어",
-        typeName: "tlv_spgf_loc_pos_skm",
-        dataType: DATA_TYPE.LOC,
-        style: {
-            label: {
-                text: { key: "LABEL", func: function(text) { return text } },
-                textOffsetX: -1,
-                textOffsetY: -18,
-                width: 1
-            },
-            radius: 12
-        },
-        cluster: { distance: MapUtil.setting.cluster },
-        // maxResolution: MapUtil.setting.maxResolution,
-        maxResolution: MapUtil.setting.maxResolution_spgf,
-        viewProgress: false,
-        renderMode: 'vector',
-        zIndex : 1
-    });
+    // var lyr_tl_spgf_loc_pos = getFeatureLayer_new({
+    //     title: "위치레이어",
+    //     typeName: "tlv_spgf_loc_pos_skm",
+    //     dataType: DATA_TYPE.LOC,
+    //     style: {
+    //         label: {
+    //             text: { key: "LABEL", func: function(text) { return text } },
+    //             textOffsetX: -1,
+    //             textOffsetY: -18,
+    //             width: 1
+    //         },
+    //         radius: 12
+    //     },
+    //     cluster: { distance: MapUtil.setting.cluster },
+    //     // maxResolution: MapUtil.setting.maxResolution,
+    //     maxResolution: MapUtil.setting.maxResolution_spgf,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
     
-    //지점번호판 레이어
+    //지점번호판 레이어(중앙)
     var lyr_tl_sppn_pan = getFeatureCoodi_Center({
         title: "지점번호판",
-        typeName: "kodis.tl_sppn_pan",
+        typeName: "kodis.tn_sppn_pan",
         dataType: DATA_TYPE.SPPN,
         style: {
             radius: 12
         },
-        maxResolution: 2,
+        // maxResolution: 2,
         viewProgress: false,
         renderMode: 'vector',
         zIndex : 1
@@ -4670,12 +4683,12 @@ function openDetailPopupCall(index, layer, sn, rdGdftySe) {
 
     // }
 
+}
 
-    // util.camera = function() {
-    //     var title = "{0} {1}-{2}".format(featureClone[index].get('FT_KOR_RN'), featureClone[index].get('BSIS_MNNM'), featureClone[index].get('BSIS_SLNO'));
-    //     util.slide_page('up', pages.detailview, { sn : featureClone[index].get('RD_GDFTY_SN'), categoryid: "roadsign", title: title});
-    // };
-
+function openDetailPopupCallSigCd(index, layer, sn, sigCd) {
+    trgSnGlobal = sn;
+    featureIndex = index;
+    MapUtil.openDetailSigCd(layer, sn, sigCd);
 
 }
 
@@ -5091,6 +5104,8 @@ function selectFeatureInfo(features,popIndex){
                     layerID = DATA_TYPE.ENTRC;
                 }else if(layerId == "tlv_spgf_loc_skm"){
                     layerID = DATA_TYPE.LOC;
+                }else{
+                    layerID = feature.get('layerID');
                 }
             }else{
                 var layerType = feature.get('type');    
@@ -5098,6 +5113,8 @@ function selectFeatureInfo(features,popIndex){
                     layerID = DATA_TYPE.ENTRC;
                 }else if(layerType == "tlv_spgf_loc_pos_skm"){
                     layerID = DATA_TYPE.LOC;
+                }else{
+                    layerID = feature.get('layerID');
                 }
             }
             
@@ -5773,9 +5790,10 @@ function selectFeatureInfo(features,popIndex){
                     strHtml = "";
                     buttonHtml = "";
                     //지점번호_시설물일련번호
-                    var SPO_FCL_SN = feature.get("SPO_FCL_SN");
+                    var SPO_NO_SEQ = feature.get("SPO_NO_SEQ");
                     //지점번호코드
                     var SPO_NO_CD = feature.get("SPO_NO_CD");
+                    var SIG_CD = feature.get("SIG_CD");
                     //상세기관명
                     // var DTOR_NM = feature.get("DTOR_NM");
 
@@ -5786,13 +5804,12 @@ function selectFeatureInfo(features,popIndex){
                     strHtml += title
                     // strHtml += commonP.format("",DTOR_NM);
 
-                    resultHtml += popDiv.format("", "openDetailPopupCall(" + index + ",'" + layerID + "'," + SPO_FCL_SN + ")", strHtml);
+                    resultHtml += popDiv.format("", "openDetailPopupCallSigCd(" + index + ",'" + layerID + "','" + SPO_NO_SEQ + "','"+ SIG_CD +"')", strHtml);
 
                     //도로시설물 공간정보
                     var geom = feature.getGeometry().getCoordinates();
 
-                    buttonHtml += buttonForm.format("more", "openDetailPopupCall(" + index + ",'" + layerID + "'," + SPO_FCL_SN + ")", "image/more.png", "더보기");
-                    // buttonHtml += buttonForm.format("addition", "moveingPoint(" + SPO_NO_CD + "," + geom[0] + "," + geom[1] + "," + index + ")", "image/addtion.png", "이동");
+                    buttonHtml += buttonForm.format("more", "openDetailPopupCallSigCd(" + index + ",'" + layerID + "','" + SPO_NO_SEQ + "','"+ SIG_CD +"')", "image/more.png", "더보기");
 
                     resultHtml += commonDiv.format("mapAdd", buttonHtml);
                     

@@ -790,16 +790,6 @@ var sppnStyle = function (styleOptions, feature, mixStyle) {
             src: 'img/icon_legend04.png'
         }))
     };
-    // var opt = {
-    //     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-    //         anchor: [0.45, 35],
-    //         anchorXUnits: 'fraction',
-    //         anchorYUnits: 'pixels',
-    //         src: 'image/check_road.png'
-    //     }))
-    // };
-    if( styleOptions.label._text)
-        opt.text = createTextStyle(styleOptions);
 
     return new ol.style.Style(opt);
 };

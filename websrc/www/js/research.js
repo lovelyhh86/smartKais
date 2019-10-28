@@ -1400,3 +1400,39 @@ function emptyResearchList(){
     sizeParam = 9;
     // $('.tableListDiv').scrollTop(0);
 }
+
+function testCenter(svcNm){
+
+    if(!svcNm){
+        svcNm = URLs.selectSpotObjadres;
+    }
+
+    var param = {
+//                 svcNm :svcNm,
+                sigCd : app.info.sigCd,
+                workId : app.info.opeId,
+                mode : app.info.mode == "11"? "10" : null // 중앙테스트용
+            };
+        
+        var urldata = URLs.postURL(svcNm ,param);
+        
+        util.postAJAX('', urldata)
+                        .then(function(context, rCode, results) {
+                            util.dismissProgress();
+
+                            //통신오류처리
+                            if (rCode != 0) {
+                                navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                                util.dismissProgress();
+                                return;
+                            }
+        
+        var resultList = results.data;
+        
+        console.log(resultList);
+        
+        
+        })
+}   
+
+    

@@ -206,6 +206,7 @@ var getFeatureLayer_new = function(options) {
                         var feature = new ol.Feature({
                             type : layerType,
                             SIG_CD : data[i].sigCd,
+                            layerID : options.dataType,
                             
                             LT_CHC_YN : data[i].ltChcYn,
                             RE_STT_SUM : data[i].reSttSum,
@@ -330,7 +331,7 @@ var getFeatureLayer_new = function(options) {
         title: options.title,
         maxResolution: options.maxResolution,
         // source: vectorSource,
-        source: vectorSource,
+        source: (vectorSource),
         renderMode: options.renderMode,
         // renderBuffer: 50
     }
@@ -349,7 +350,8 @@ var getFeatureCoodi_Center = function(options){
         loader: function(extent, resolution, projection) {
             
             var param = {
-                svcNm : URLs.coodiMapSvcCenter,
+                // 중앙요청시 svcNm param안에 작성 안함
+                // svcNm : URLs.coodiMapSvcCenter,
                 typeName : options.typeName,
                 bbox: extent,
                 sigCd : app.info.sigCd,
@@ -371,35 +373,46 @@ var getFeatureCoodi_Center = function(options){
                         return;
                     }
 
-                    var data = results.data;
-
+                    var layerType = options.typeName;
                     var features = new Array();
 
+                    var data = results.data;
+                    console.log(data);
+
                     if(data == null || data.length == 0){
-                        util.toast("데이터 없음", "error");
+                        util.toast("조회된 " + options.title + " 공간정보가 없습니다.", "error");
                         util.dismissProgress();
                         return;
-                    }else{
-                        console.log(data);
-
-                        for(i in data){
-                            var ponitX = data[i].pointX;
-                            var ponitY = data[i].pointY;
-
-                            var feature = new ol.Feature({
-                                geometry : new ol.geom.Point([ponitX,ponitY])
-                            });
-
-                            features.push(feature);
-                        }
                     }
 
+                    for(i in data){
+                        var ponitX = data[i].pointX;
+                        var ponitY = data[i].pointY;
 
-                    console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
+                        var feature = new ol.Feature({
+                            type : layerType,
+                            SIG_CD : data[i].sigCd,
+                            layerID : options.dataType,
+                            spoNoSeq : data[i].spoNoSeq,
+
+                            SPO_NO_CD : data[i].spoNoCd,
+                            
+                        });
+
+                        var point =  new ol.geom.Point([ponitX,ponitY]);
+                        feature.setGeometry(point);
+                        if(options.dataType == DATA_TYPE.SPPN){
+                            feature.set("SPO_NO_SEQ",data[i].spoNoSeq);
+                            
+                            feature.setStyle(sppnStyle(options,feature));
+                            feature.setId(options.typeName + '.' +data[i].spoNoSeq);
+                        }
+                        features.push(feature);
+                    }
+
+                    // console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));
 
                     vectorSource.addFeatures(features);
-                    //피처 추가 후 리플레시 기능(건수 표현때문에 추가.. 확실치 않음)
-                    map.changed();
                     util.dismissProgress();
                 }, function(context, xhr, error) {
                     console.log("조회 error >> " + error + '   ' + xhr);
@@ -413,31 +426,12 @@ var getFeatureCoodi_Center = function(options){
         },
         strategy: ol.loadingstrategy.bbox,
     });
-
-    var source;
-
-    if (options.cluster) {
-        source =
-            new ol.source.Cluster({
-                distance: options.cluster.distance,
-                geometryFunction: function(feature) {
-                    if (feature.getGeometry().getType() == "Polygon")
-                        return feature.getGeometry().getInteriorPoint();
-                    else
-                        return feature.getGeometry();
-                },
-                source: vectorSource
-            });
-    } else {
-        source = vectorSource;
-    }
-
     // 벡터 레이어 생성
     var vectorOptions = {
         id: options.dataType,
         title: options.title,
         maxResolution: options.maxResolution,
-        source: source,
+        source: vectorSource,
         renderMode: options.renderMode,
         // renderBuffer: 50
     }

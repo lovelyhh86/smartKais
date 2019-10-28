@@ -694,6 +694,7 @@ function layerToggle(context){
                 layerToggleController('intrvlSel');
                 layerToggleController('locSel');
                 layerToggleController('nmtgSel');
+                map.addLayer(layers.sppn);
             } catch (error) {
                 map.addLayer(layers.loc);
                 map.addLayer(layers.entrc);

@@ -80,6 +80,10 @@ var URLs = {
 
     //좌표조회(중앙)
     "coodiMapSvcCenter":{svcNm: "coodiMapSvcCenter"},
+    //지점번호 정보조회
+    "selectSppnPanInfo":{svcNm: "selectSppnPanInfo"},
+    //사물주소 정보조회
+    "selectSpotObjadres":{svcNm: "selectSpotObjadres"},
     
     getURL: function (srcurl, jsondata) {
 
@@ -125,6 +129,7 @@ var pages = {
     "detail_buld": { link: function () { return URLs.realPath() + "popBuild.html"; }, div: "#buildView_page" },
     "detail_entrc": { link: function () { return URLs.realPath() + "popEntrc.html"; }, div: "#entrcView_page" },
     "detail_spot": { link: function () { return URLs.realPath() + "popSpot.html"; }, div: "#spotView_page" },
+    "detail_sppn": { link: function () { return URLs.realPath() + "popSppnPan.html"; }, div: "#sppnView_page" },
     "detail_adrdc": { link: function () { return URLs.realPath() + "popAdrdc.html"; }, div: "#baseResearch_page" },
     "detail_adrdcList": { link: function () { return URLs.realPath() + "popAdrdcList.html"; }, div: "#detailAddress_page" },
     "detail_researchList": { link: function () { return URLs.realPath() + "popResearchList.html"; }, div: "#researchList_page" },
