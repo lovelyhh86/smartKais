@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<body class="intro">
+
+<div id="sppnView_page">
+	<div class="detailView">
+		
+		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
+		<div class="infoWrap">
+			<!-- header -->
+			<div class="infoHeader">
+				<p class="title" onclick="toggleDetailView();"><span class="titleIcon"><img src="image/spotIcon.png" title="지점번호판"></span></p>
+				<p class="location" onclick="getDetailLocation()"></p>
+				<p class="photo"><span class="photoNum">0</span></p>
+			</div>
+			
+			<!-- content -->
+			<div class="infoContent">
+				<div id="mask"></div>
+				
+				<input id="trgSn" type="hidden" value=""/>
+				<input id="sigCd" type="hidden" value="" />
+				<!-- 설물구분코드 10 : 지점번호판 -->
+				<input id="trgGbn" type="hidden" value="10"/>
+
+				<div class="blueTitle">
+					<h2>기본정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="기본정보">
+						<caption>기본정보</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">지점번호</th>
+								<td>
+									<p id="spoNoCd">&nbsp;</p>
+								</td>
+								<th scope="row">시설물 분류</th>
+								<td>
+									<p id="fcltylc">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">토지소재지</th>
+								<td colspan="3">
+									<p id="jibunAddr">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>설치기관</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="설치기관">
+						<caption>설치기관</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">명칭</th>
+								<td colspan="3">
+									<p id="instt">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">사업자등록번호</th>
+								<td colspan="3">
+									<p id="insttNum">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">주소</th>
+								<td colspan="3">
+									<p id="insttAddr">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">설치일자</th>
+								<td>
+									<p id="insttDe">&nbsp;</p>
+								</td>
+								<th scope="row">검증일자</th>
+								<td>
+									<p id="vrifyDe">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>좌표 및 경위도</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="좌표 및 경위도">
+						<caption>좌표 및 경위도</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">X</th>
+								<td>
+									<p id="xGrs80">&nbsp;</p>
+								</td>
+								<th scope="row">경도</th>
+								<td>
+									<p id="longitude">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">Y</th>
+								<td>
+									<p id="yGrs80">&nbsp;</p>
+								</td>
+								<th scope="row">위도</th>
+								<td>
+									<p id="latitude">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">Z</th>
+								<td>
+									<p id="zVal">&nbsp;</p>
+								</td>
+								<th scope="row">높이</th>
+								<td>
+									<p id="ellipseSolid">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
+			
+			</div> 
+			<!-- 정보 끝 -->
+			<!-- footer 시작 -->
+			<div class="infoFooter">
+				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
+				<!-- <span onclick="loadUpdtData();" class="btnNormal">승인대기</span> -->
+				<!-- <span id="delUpdtBtn" onclick="deleteUpdtData();" class="btnNormal">임시정보 삭제</span> -->
+				<!-- <span onclick="goResearchList('myResearch');" class="btnNormal">안내시설목록</span> -->
+			</div>
+			<!-- footer 끝 -->
+		</div>
+		<!-- content 끝  -->
+	</div>
+</div>
+
+<div id="photoDialog" class="photoWrap" >
+	<!-- 사진 style="display: none"-->
+	<div id="" class="">
+		<div class="photoTitle">사진
+			<div class="photoPage">
+				<!--li><span class="pic_over">전면</span></li>
+				<li><span class="pic">후면</span></li -->
+				<span class='autoTitle'>원본사진 조회설정 : </span>
+		        <select id="autoImgRoadConf" onchange="changeAutoImgRoading()">
+		            <option value="off">수동</option>
+		            <option value="on">자동</option>
+		        </select>
+			</div>
+		</div>
+		<div class="photoTable">
+			<div class="row">
+				<div class="cell">
+					<div class="picInfo L" data-pic-type="L" data-pic-sn="">
+						<div class="photoSub">
+							<span>원거리</span>
+							<span id="cntLphoto" class="photoNum"></span>
+						</div>
+						<span class="picImg"></span>
+						<div class="photoSub">
+							<span class="opertDe"></span>
+						</div>
+						<div class="dataBtn">
+							<!-- <span class="btnNormal">삭제</span> -->
+							<span class="btnPoint">촬영</span>
+						</div>
+					</div>
+				</div>
+				<div class="cell">
+					<div class="picInfo M" data-pic-type="M" data-pic-sn="">
+						<div class="photoSub">
+							<span>근거리</span>
+							<span id="cntMphoto" class="photoNum"></span>
+						</div>
+						<span class="picImg"></span>
+						<div class="photoSub">
+							<span class="opertDe"></span>
+						</div>
+						<div class="dataBtn">
+							<!-- <span class="btnNormal">삭제</span> -->
+							<span class="btnPoint">촬영</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="photoNotice">
+			<span class = 'red'>※ 원본사진 조회설정을 [자동]으로 설정 시 데이터 사용량이 증가합니다.</span>
+			<br>
+			<span class = 'black'>※ 원거리(설치시설물), 근거리(안내시설물) 사진은 최근사진 1장씩만 조회</span>
+			<br>
+			<span class = 'black'>※ 우측 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
+			<br>
+			<span class = 'black'>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
+		</div>
+	</div>
+	<div class="infoFooter">
+		<span id="updtPhotoBtn" onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
+		<span id="orginPhotoBtn" onclick="selectOldImg();" class="btnNormal">원본</span>
+		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
+		<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+	</div>
+</div>
+<!-- 사진 끝-->
+</body>
+</html>
