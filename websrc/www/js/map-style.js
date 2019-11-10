@@ -781,7 +781,7 @@ var locStyle = function (styleOptions, feature, mixStyle) {
 
 // 지점번호 스타일
 var sppnStyle = function (styleOptions, feature, mixStyle) {
-    
+
     var opt = {
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
             anchor: [0.45, 35],
@@ -790,6 +790,19 @@ var sppnStyle = function (styleOptions, feature, mixStyle) {
             src: 'img/icon_legend04.png'
         }))
     };
+
+    var ltChcYn = feature.get('rcSttCd');
+
+    if(ltChcYn == 1000){
+        opt = {
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                anchor: [0.45, 35],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                src: 'img/check_spot.png'
+            }))
+        };
+    }
 
     return new ol.style.Style(opt);
 };

@@ -377,12 +377,20 @@ var getFeatureCoodi_Center = function(options){
                     var features = new Array();
 
                     var data = results.data;
-                    console.log(data);
+                    // console.log(data);
 
                     if(data == null || data.length == 0){
                         util.toast("조회된 " + options.title + " 공간정보가 없습니다.", "error");
                         util.dismissProgress();
                         return;
+                    }else{
+                        var spotCnt = 0;
+                        var type = options.typeName;
+                        if(type.indexOf ("tn_sppn_pan") > -1){
+                            $('.legend .spot .total').text(data.length + '건');
+                        }else if(type.indexOf("aot") != -1){
+                            $('.legend .aot .total').text(data.length + '건');
+                        }
                     }
 
                     for(i in data){
@@ -394,7 +402,7 @@ var getFeatureCoodi_Center = function(options){
                             SIG_CD : data[i].sigCd,
                             layerID : options.dataType,
                             spoNoSeq : data[i].spoNoSeq,
-
+                            rcSttCd : data[i].rcSttCd,
                             SPO_NO_CD : data[i].spoNoCd,
                             
                         });

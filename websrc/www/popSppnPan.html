@@ -148,9 +148,105 @@
 						</tbody>
 					</table>
 				</div>
+
+				<!--점검-->
+				<div class="blueTitle">
+					<h2>점검정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="점검정보">
+						<caption>점검정보</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">점검일자</th>
+								<td colspan="3">
+									<p id="rcDeLbl_new" name="newRcLbl" style="display:none; color:red"></p>
+									<p id="rcDe" name="oldRcLbl" ></p>
+								</td>
+								<!-- <th scope="row">점검자</th>
+								<td>
+									<p id="reRcrNm" name="oldRcLbl" ></p>
+									<p id="rcrNm_new" name="newRcLbl" style="display:none; color:red"></p>
+									<p id="rcrSn_new" name="newRcLbl" style="display:none;"></p>
+								</td> -->
+							</tr>
+							<tr>
+								<th scope="row">점검상태</th>
+								<td id='rcSttCdTd' colspan="3">
+									<p id="rcSttCd" style="display:none;"></p>
+									<p id="rcSttCd_new" name="newRcLbl" style="display:none"></p>
+									<select id='rcSttCdSel' class="cell100" onchange="checkRcSttCdEtc()"/>
+								</td>
+								<!-- <td colspan="2">
+									<div id="researchtNotice" class = "redText">
+										<span>※ 철거인 경우 [망실]로 점검해 주세요.</span>
+									</div>
+								</td> -->
+							</tr>
+							<tr>
+								<th scope="row">점검결과</th>
+								<td colspan='3'>
+									<textarea id="rcRslt" oninput="checkRcRslt()" placeholder="점검결과를 입력하세요."></textarea>
+									<p id="rcRsltOld" name="oldLbl" style="display:none"></p>
+                           			<!-- <p id="rcRslt_new" name="newLbl" style="display:none; color:red"></p> -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				
-				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearch()">점검</button>
-			
+				<div class="blueTitle">
+					<h2>사진</h2>
+				</div>
+				<div id="photoDialog" class="photoWrap" >
+					<div id="" class="">
+						<div class="photoTable">
+							<div class="row">
+								<div class="cell">
+									<div class="picInfo L" data-pic-type="L" data-pic-sn="">
+										<div class="photoSubEtc">
+											<span>원거리</span>
+										</div>
+										<span class="picImg etc"></span>
+										<div class="photoSubEtc">
+											<!-- <span class="opertDe"></span> -->
+										</div>
+										<div class="dataBtn">
+											<span class="btnPoint">촬영</span>
+										</div>
+									</div>
+								</div>
+								<div class="cell">
+									<div class="picInfo M" data-pic-type="M" data-pic-sn="">
+										<div class="photoSubEtc">
+											<span>근거리</span>
+										</div>
+										<span class="picImg etc"></span>
+										<div class="photoSubEtc">
+											<!-- <span class="opertDe"></span> -->
+										</div>
+										<div class="dataBtn">
+											<span class="btnPoint">촬영</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="infoFooter">
+						<span onclick="closePhotoView();" class="btnNormal">닫기</span>
+						<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
+					</div> -->
+				</div>
+
+				<button id="submitRcBnt" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check btnPossible" onclick="submitResearchEtc()">점검</button>
+
 			</div> 
 			<!-- 정보 끝 -->
 			<!-- footer 시작 -->
@@ -165,74 +261,5 @@
 		<!-- content 끝  -->
 	</div>
 </div>
-
-<div id="photoDialog" class="photoWrap" >
-	<!-- 사진 style="display: none"-->
-	<div id="" class="">
-		<div class="photoTitle">사진
-			<div class="photoPage">
-				<!--li><span class="pic_over">전면</span></li>
-				<li><span class="pic">후면</span></li -->
-				<span class='autoTitle'>원본사진 조회설정 : </span>
-		        <select id="autoImgRoadConf" onchange="changeAutoImgRoading()">
-		            <option value="off">수동</option>
-		            <option value="on">자동</option>
-		        </select>
-			</div>
-		</div>
-		<div class="photoTable">
-			<div class="row">
-				<div class="cell">
-					<div class="picInfo L" data-pic-type="L" data-pic-sn="">
-						<div class="photoSub">
-							<span>원거리</span>
-							<span id="cntLphoto" class="photoNum"></span>
-						</div>
-						<span class="picImg"></span>
-						<div class="photoSub">
-							<span class="opertDe"></span>
-						</div>
-						<div class="dataBtn">
-							<!-- <span class="btnNormal">삭제</span> -->
-							<span class="btnPoint">촬영</span>
-						</div>
-					</div>
-				</div>
-				<div class="cell">
-					<div class="picInfo M" data-pic-type="M" data-pic-sn="">
-						<div class="photoSub">
-							<span>근거리</span>
-							<span id="cntMphoto" class="photoNum"></span>
-						</div>
-						<span class="picImg"></span>
-						<div class="photoSub">
-							<span class="opertDe"></span>
-						</div>
-						<div class="dataBtn">
-							<!-- <span class="btnNormal">삭제</span> -->
-							<span class="btnPoint">촬영</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="photoNotice">
-			<span class = 'red'>※ 원본사진 조회설정을 [자동]으로 설정 시 데이터 사용량이 증가합니다.</span>
-			<br>
-			<span class = 'black'>※ 원거리(설치시설물), 근거리(안내시설물) 사진은 최근사진 1장씩만 조회</span>
-			<br>
-			<span class = 'black'>※ 우측 상단 사진건수는 시스템에 저장된 전체건수 ('N'은 승인대기 상태의 사진 존재)</span>
-			<br>
-			<span class = 'black'>※ 기존 등록 된 사진을 조회 하시려면 [승인대기] 또는 [원본] 버튼을 클릭하세요.</span>
-		</div>
-	</div>
-	<div class="infoFooter">
-		<span id="updtPhotoBtn" onclick="loadUpdtData('true');" class="btnNormal">승인대기</span>
-		<span id="orginPhotoBtn" onclick="selectOldImg();" class="btnNormal">원본</span>
-		<span onclick="closePhotoView();" class="btnNormal">닫기</span>
-		<span onclick="modifyImg(DATA_TYPE.RDPQ);" class="btnPoint">저장</span>
-	</div>
-</div>
-<!-- 사진 끝-->
 </body>
 </html>

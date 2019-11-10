@@ -192,7 +192,7 @@ var MapUtil = {
     controls: {
         init: function() {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
-            ol.inherits(MapUtil.controls.legendEntrcControl, ol.control.Control);   // 범례(건물번호판)
+            ol.inherits(MapUtil.controls.legendSppnControl, ol.control.Control);   // 범례(건물번호판)
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
             ol.inherits(MapUtil.controls.locManageControl, ol.control.Control); // 안내시설 위치관리
             ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
@@ -238,13 +238,14 @@ var MapUtil = {
             });
 
         },
-        legendEntrcControl: function(opt_options) {
+        legendSppnControl: function(opt_options) {
             var options = opt_options || {};
 
             var legend = document.createElement('div');
-            legend.className = "legend spbd ol-unselectable ol-control";
+            legend.className = "legend spot ol-unselectable ol-control";
             var legendHtml = '<ul>';
-            legendHtml += '<li class="entrc">건물번호판<span class="total">0건</span></li>';
+            legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
+            legendHtml += '<li class="aot">사물주소판<span class="total">0건</span></li>';
             // legendHtml += '<li class="entrc" onclick = "removeLayers('+"'intrvl'"+')">기초구간<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
@@ -2188,6 +2189,10 @@ var MapUtil = {
                     //제목
                     var title = "<span class='label'>[{0}] {1}<span>".format("지점번호판",data.spoNoCd);
                     $(".title").append(title);
+                    //지점번호관리번호
+                    $("#trgSn").val(data.spoNoSeq);
+                    //시군구코드
+                    $("#sigCd").val(data.sigCd);
                     //지점번호
                     $("#spoNoCd").html(data.spoNoCd);
                     //시설물 분류
@@ -2219,6 +2224,46 @@ var MapUtil = {
 
                     //토지소재지
                     $("#jibunAddr").html(data.jibunAddr);
+
+                    //점검상태 및 점검결과
+                    var rcSttCd = data.rcSttCd; // 점검상태
+                    var rcRslt = data.rcRslt; //점검결과
+                    try{
+                        var rcDe = data.rcDe == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.rcDe.substr(0, 4), data.rcDe.substr(4, 2), data.rcDe.substr(6, 2));
+                    } catch (error) {
+                       util.toast(msg.checkObject.format("점검날짜"),"error");
+                    }
+        
+                    makeOptSelectBox("rcSttCdSel","RC_STT_CD","","선택","");
+
+                    $("#rcDe").html(rcDe);
+                    
+                    $("#rcSttCdSel").val(rcSttCd);
+
+                    $("#rcRslt").val(rcRslt);
+
+                    //사진셋팅
+                    if(data.files != null){
+                        for (var index in data.files) {
+                            var image = data.files[index];
+                            if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
+                                obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+    
+                                $(".picInfo." + image.tbGbn + " .picImg").html('');
+                                $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                                // $(".picInfo." + image.tbGbn + " .opertDe").html('촬영일자 : '+ image.opertDe);
+                                MapUtil.photo.doLoaded(true, image.tbGbn);
+                                
+                            } else {
+                                util.toast(msg.wrongPhoto);
+                            }
+                        }
+                    }
+
+                    //사진탭 오픈
+                    $("#photoDialog").show();
             
                     util.dismissProgress();
                     return;
@@ -2598,7 +2643,7 @@ var mapInit = function(mapId, pos) {
             })
         }).extend([
             new MapUtil.controls.legendControl(),
-            new MapUtil.controls.legendEntrcControl(),
+            new MapUtil.controls.legendSppnControl(),
             new MapUtil.controls.currentControl(),
             new MapUtil.controls.locManageControl(),
             new MapUtil.controls.locManageSpbdNmtgControl(),
@@ -2798,9 +2843,9 @@ var mapInit = function(mapId, pos) {
     // });
     
     //지점번호판 레이어(중앙)
-    var lyr_tl_sppn_pan = getFeatureCoodi_Center({
+    var lyr_tl_sppn_panel = getFeatureCoodi_Center({
         title: "지점번호판",
-        typeName: "kodis.tn_sppn_pan",
+        typeName: "tlv_sppn_panel_skm",
         dataType: DATA_TYPE.SPPN,
         style: {
             radius: 12
@@ -2819,7 +2864,7 @@ var mapInit = function(mapId, pos) {
         // "bsis": lyr_tl_spgf_bsis,
         "entrc": lyr_tl_spbd_entrc,
         // "buld": lyr_tl_spbd_buld,
-        "sppn": lyr_tl_sppn_pan,
+        "sppn": lyr_tl_sppn_panel,
         "intrvl":lyr_tl_sprd_intrvl,
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
@@ -3223,10 +3268,10 @@ var mapInit = function(mapId, pos) {
             // console.log(feature, layer);
 
             var zoomLevel = map.getView().getZoom();
-            if(zoomLevel < 13){
-                util.toast("지도를 확대하신 후 심볼을 클릭해 주세요");
-                return;
-            }
+            // if(zoomLevel < 13){
+            //     util.toast("지도를 확대하신 후 심볼을 클릭해 주세요");
+            //     return;
+            // }
 
             if(layer == null){
                 currentPositionLayerCheck();
@@ -3943,6 +3988,12 @@ var mapInit = function(mapId, pos) {
                 var mapZoom = map.getView().getZoom();
                 //심볼표시 레벨설정
                 var maxResolution = JSON.parse(localStorage["maxResolution"]);
+
+                //메뉴종류
+                var mapType = app.context.type;
+                if(mapType == 'map2'){
+                    return;
+                }
 
                 if(mapRS >= maxResolution.spgf && mapRS >= maxResolution.buld){
                     util.toast('심볼조회가 가능한 지도 레벨을<br/>초과하였습니다. 확대해 주세요.');

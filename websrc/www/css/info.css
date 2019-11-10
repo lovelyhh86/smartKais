@@ -263,6 +263,17 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .photoNotice{text-align: left; padding-left: 75px;}
 .black{color: black;}
 .red{color: red;}
+
+.photoSubEtc{display:inline-block;
+	text-align: center;
+	padding-top: 10px; 
+	padding-bottom: 20px; 
+	width: 17em; 
+	height: 7px;
+	/* margin-bottom:5px; */
+	color: #000;
+	font-weight: 500;}
+.etc{width: 17em; }
 /************* 사진(END) ****************/
 
 /*board table*/

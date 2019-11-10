@@ -19,6 +19,7 @@ var URLs = {
     "researchListLink": { svcNm: "sResearch" },
     // "updateResearchWorkDate": {svcNm: "uResearchWorkDate"},
     "insertResearchState": {svcNm: "iResearchState"},
+    "insertResearchStateEtc": {svcNm: "iResearchStateEtc"},
     //점검 end
     "roadsignlink": { svcNm: "vSPGF" },
     "buildsignlink": { svcNm: "vSPBD" },//사용안함

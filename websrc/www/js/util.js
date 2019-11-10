@@ -713,10 +713,21 @@ function layerToggle(context){
             // }
         } else {
             $(".legend.spgf").toggle(false);
-            $(".legend.spbd").toggle(true);
+            $(".legend.spot").toggle(true);
 
+            // $(".selectResearch").toggle(false);
+            // $(".locManageSpgf").toggle(false);
+            // $(".locManageSpbd").toggle(true);
+            // $(".selectResearchSpbd").toggle(true);
+
+            //안내시설목록
             $(".selectResearch").toggle(false);
+            //레이어관리
+            $(".layerOnOffBtn").toggle(false);
+            //위치이동
             $(".locManageSpgf").toggle(false);
+            //상세주소
+            $(".selectAdrdc").toggle(false);
 
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
@@ -724,26 +735,10 @@ function layerToggle(context){
             $(".refreshMap").toggle(true);
             $(".measure").toggle(true);
 
-            $(".selectResearchSpbd").toggle(true);
+            // $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
             
-            $(".locManageSpbd").toggle(true);
-
-            $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
+            map.addLayer(layers.sppn);
             
-            
-            // map.addLayer(layers.buld);
-            map.addLayer(layers.entrc);
-            // map.addLayer(layers.loc);
-            // map.addLayer(layers.intrvl);
-            // map.addLayer(layers.loc_pos);
-            // map.addLayer(layers.entrc_pos);
-            
-            // map.getView().setZoom(mapBaseConfig.zoom.buld);
-
-            // if(mapZoom <= 13){
-            //     map.getView().setZoom(14);
-            // }
-
         }
 
         setMapResolotion();

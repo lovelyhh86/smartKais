@@ -837,6 +837,90 @@ function submitResearch(){
     
 }
 
+//점검상태저장(지점번호, 사물주소)
+function submitResearchEtc(){
+    //점검상태
+    var rcSttCdSel = $("#rcSttCdSel").val();
+    //점검결과
+    var rcRslt = $("#rcRslt").val();
+
+    //점검상태가 없는 경우
+    if(rcSttCdSel == "" || rcSttCdSel == null){
+        navigator.notification.alert(msg.checkRcSttCd,'','알림','확인');
+        return;
+    }
+
+    //시설물 일련번호
+    var trgSn = $("#trgSn").val();
+    //구분
+    var trgGbn = $("#trgGbn").val();
+    //시군구
+    var sigCd = $("#sigCd").val();
+    
+    //작업자ID
+    var workId = app.info.opeId;
+    var msgText = msg.updateResearch;
+    var rcSttCd_origin = $("#rcSttCd_origin").val();
+    if(rcSttCd_origin){
+        msgText = msg.updateReResearch;
+    }
+    //사진
+    var files = makeImg();
+    if(files.length < 2){
+        util.toast("사진을 두장 모두 촬영해주세요.","warning");
+        return;
+    }
+    
+
+    navigator.notification.confirm(msgText, function(btnindex){
+
+        if(btnindex == 1){
+            var sendParams = {
+                // sigCd : app.info.sigCd,
+                // workId : app.info.opeId,
+                mode : app.info.mode == "11"? "10" : null, // 중앙테스트용
+                sigCd : sigCd,
+                trgSn : trgSn,
+                trgGbn : trgGbn,
+                rcSttCd : rcSttCdSel,
+                rcRslt : rcRslt,
+                opeManId : workId,
+                files : files
+            };
+    
+            var link = URLs.insertResearchStateEtc;
+    
+            util.showProgress();
+            var url = URLs.postURL(link, sendParams);
+            util.postAJAX({}, url).then(
+                function (context, rCode, results) {
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+    
+                    util.toast(msg.successResearch);
+    
+                    // $("p[name*='newLbl']").text('');
+
+                    // changeOneFeatherStyle(trgGbn,rcSttCdSel);
+                    // closePopupAndClearMap(trgGbn);
+                    
+                    closeDetailView();
+                    
+                    util.dismissProgress();
+    
+                },
+                util.dismissProgress
+            );
+        }
+        
+    }, "알림", ["확인","취소"]);
+    
+}
+
 //검색 옵션 추가
 function makeOptSelectBox(target,colume,unUsed,defaultText,defaultValue){
     try {
@@ -1057,6 +1141,28 @@ function checkRcSttCd(){
     }
 
 }
+
+//점검상태 변경처리(사물,지점)
+function checkRcSttCdEtc(){
+    //신규점검상태
+    var rcSttCdSel = $("#rcSttCdSel").val();
+    if(rcSttCdSel == ""){
+        navigator.notification.alert(msg.checkRcSttCd, function(){
+            
+        }, '알림', '확인');
+    }
+    //기존점검상태
+    var rcSttCd =$("#rcSttCd").text();
+    if(rcSttCdSel == "" || rcSttCd == rcSttCdSel){
+        //변경된 점검정보들 전체 리셋
+        resetResearchInfo();
+        return;
+    }
+    //점검상태 셋팅
+    $("#rcSttCd_new").text(rcSttCdSel);
+
+}
+
 //점검내용 변경처리
 function checkRcRslt(){
     var rcRslt = $("#rcRslt").val();
