@@ -905,9 +905,8 @@ function submitResearchEtc(){
     
                     // $("p[name*='newLbl']").text('');
 
-                    // changeOneFeatherStyle(trgGbn,rcSttCdSel);
+                    changeOneFeatherStyle(trgGbn,rcSttCdSel);
                     // closePopupAndClearMap(trgGbn);
-                    
                     closeDetailView();
                     
                     util.dismissProgress();
@@ -1249,6 +1248,8 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
         var type = DATA_TYPE.LOC;
         if(trgGbn == "02"){
             type = DATA_TYPE.ENTRC;
+        }else if(trgGbn == "10"){
+            type = DATA_TYPE.SPPN;
         }
         // var layerOption = {
         //     title: "위치레이어",
@@ -1360,6 +1361,8 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
                         layerFeature.setStyle(locStyle(null, layerFeature));
                     }else if(layerId == DATA_TYPE.ENTRC){
                         layerFeature.setStyle(entrcStyle(null, layerFeature));
+                    }else if(layerId == DATA_TYPE.SPPN){
+                        layerFeature.setStyle(sppnStyle(null, layerFeature));
                     }
                     
 

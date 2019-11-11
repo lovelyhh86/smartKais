@@ -651,8 +651,10 @@ function layerToggle(context){
 
         if (context.type == "map") {
 
-            //전체
+            //안내시설
             $(".legend.spgf").toggle(true);
+            //지점번호판
+            $(".legend.spot").toggle(false);
             //건물번호판
             // $(".legend.spbd").toggle(false);
 

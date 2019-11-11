@@ -402,7 +402,7 @@ var getFeatureCoodi_Center = function(options){
                             SIG_CD : data[i].sigCd,
                             layerID : options.dataType,
                             spoNoSeq : data[i].spoNoSeq,
-                            rcSttCd : data[i].rcSttCd,
+                            LT_CHC_YN : data[i].ltChcYn,
                             SPO_NO_CD : data[i].spoNoCd,
                             
                         });

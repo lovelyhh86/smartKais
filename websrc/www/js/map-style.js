@@ -791,9 +791,9 @@ var sppnStyle = function (styleOptions, feature, mixStyle) {
         }))
     };
 
-    var ltChcYn = feature.get('rcSttCd');
+    var ltChcYn = feature.get('LT_CHC_YN');
 
-    if(ltChcYn == 1000){
+    if(ltChcYn != null){
         opt = {
             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                 anchor: [0.45, 35],
