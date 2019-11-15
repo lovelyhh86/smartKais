@@ -230,7 +230,7 @@ function changeUseTarget(id){
     
         if(trgGbn == "01"){
             if(rdGdftySe == "310"){
-                // checkPrntRdsd("prntGdSd");
+                checkPrntRdsd("prntGdSd");
             }else if(rdGdftySe == "110"){
 
                 //차로용 소로용의 경우 앞쪽방향용 선택 불가
