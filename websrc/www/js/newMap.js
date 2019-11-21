@@ -386,7 +386,7 @@ var getFeatureCoodi_Center = function(options){
                     }else{
                         var spotCnt = 0;
                         var type = options.typeName;
-                        if(type.indexOf ("tn_sppn_pan") > -1){
+                        if(type.indexOf ("sppn") > -1){
                             $('.legend .spot .total').text(data.length + '건');
                         }else if(type.indexOf("aot") != -1){
                             $('.legend .aot .total').text(data.length + '건');

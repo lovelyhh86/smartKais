@@ -1248,7 +1248,7 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
         var type = DATA_TYPE.LOC;
         if(trgGbn == "02"){
             type = DATA_TYPE.ENTRC;
-        }else if(trgGbn == "10"){
+        }else if(trgGbn == "11"){
             type = DATA_TYPE.SPPN;
         }
         // var layerOption = {
