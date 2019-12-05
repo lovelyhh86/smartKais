@@ -2855,6 +2855,21 @@ var mapInit = function(mapId, pos) {
         renderMode: 'vector',
         zIndex : 1
     });
+
+    //사믈주소 레이어(중앙)
+    var lyr_tlv_spot_aot_panel = getFeatureCoodi_Center({
+        title: "사물주소",
+        //typeName: "tlv_aot_test_skm",
+        typeName: "tlv_spot_aot_obj_skm",
+        dataType: DATA_TYPE.AOT,
+        style: {
+            radius: 12
+        },
+        // maxResolution: 2,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
     
 
     layers = {
@@ -2865,7 +2880,8 @@ var mapInit = function(mapId, pos) {
         "entrc": lyr_tl_spbd_entrc,
         // "buld": lyr_tl_spbd_buld,
         "sppn": lyr_tl_sppn_panel,
-        "intrvl":lyr_tl_sprd_intrvl,
+        "aot":lyr_tlv_spot_aot_panel,
+        "intrvl":lyr_tl_sprd_intrvl
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
     };

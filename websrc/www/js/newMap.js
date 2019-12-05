@@ -386,35 +386,98 @@ var getFeatureCoodi_Center = function(options){
                     }else{
                         var spotCnt = 0;
                         var type = options.typeName;
-                        if(type.indexOf ("sppn") > -1){
+                        if(layerType.indexOf ("sppn") > -1){
                             $('.legend .spot .total').text(data.length + '건');
-                        }else if(type.indexOf("aot") != -1){
+                        }else if(layerType.indexOf("aot") > -1){
                             $('.legend .aot .total').text(data.length + '건');
                         }
                     }
 
                     for(i in data){
-                        var ponitX = data[i].pointX;
-                        var ponitY = data[i].pointY;
-
+                        
                         var feature = new ol.Feature({
-                            type : layerType,
+                            // layerType : layerType,
                             SIG_CD : data[i].sigCd,
                             layerID : options.dataType,
-                            spoNoSeq : data[i].spoNoSeq,
                             LT_CHC_YN : data[i].ltChcYn,
-                            SPO_NO_CD : data[i].spoNoCd,
-                            
                         });
 
-                        var point =  new ol.geom.Point([ponitX,ponitY]);
-                        feature.setGeometry(point);
                         if(options.dataType == DATA_TYPE.SPPN){
-                            feature.set("SPO_NO_SEQ",data[i].spoNoSeq);
-                            
-                            feature.setStyle(sppnStyle(options,feature));
+                            var ponitX = data[i].pointX;
+                            var ponitY = data[i].pointY;
+    
+                            var point =  new ol.geom.Point([ponitX,ponitY]);
+                            feature.setGeometry(point);
                             feature.setId(options.typeName + '.' +data[i].spoNoSeq);
+                            feature.setStyle(sppnStyle(options,feature));
+
+                            feature.set("SPO_NO_SEQ",data[i].spoNoSeq);
+                            // feature.set("spoNoSeq",data[i].spoNoSeq);
+                            feature.set("SPO_NO_CD",data[i].spoNoCd);
+
+                        }else if(options.dataType == DATA_TYPE.AOT){
+                            var ponitX = data[i].pointX;
+                            var ponitY = data[i].pointY;
+                            var objMngNo = data[i].objMngNo;
+                            var objKndCd = data[i].objKndCd;
+
+                            var coodiList = new Array();
+                            var coodiListResult = new Array();
+                            coodiListResult[0] = new Array();
+
+                            var geom, style;
+
+                            var geomText = data[i].geomText;
+
+                            // geomText.replace("POLYGON","").replace(/\(\(/g,"[[[").replace(/\)\)/g,"]]]").replace(/\,/g,"],[").replace(/ /g,",");
+
+                            if(geomText.indexOf('POINT') > -1){
+                                coodiList = geomText.split('(')[1].replace(')' ,'').split(' ');
+                                
+                                var geom =  new ol.geom.Point(coodiList);
+                                feature.setGeometry(geom);
+                                feature.setId(options.typeName + '.' + i);
+                                feature.setStyle(pointStyle(options,feature));
+                                // feature.setStyle(sppnStyle(options,feature));
+                            }
+                            else if(geomText.indexOf('POLYGON') > -1){
+                                coodiList = geomText.split('((')[1].replace('))' ,'').split(',');
+                                for(var j in coodiList){
+                                    var coodiList2 = new Array();
+                                    coodiList2 = coodiList[j].split(' ');
+                                    coodiListResult[0][j] = new Array();
+                                    coodiListResult[0][j] = coodiList2;
+                                }
+                                // coodiListResult2.push(coodiListResult);
+                                // geom = new ol.geom.Polygon([[[964836.25,1760554],[964805.25,1760523.5],[964824.75,1760508],[964853.25,1760539],[964836.25,1760554]]]);
+                                geom = new ol.geom.Polygon(coodiListResult);
+                                feature.setGeometry(geom);
+                                feature.setId(options.typeName + '.' + i);
+                                feature.setStyle(polygonStyle(options,feature));
+                            }
+                            else if(geomText.indexOf('MULTILINESTRING') > -1){
+                                coodiList = geomText.split('((')[1].replace('))' ,'').split(',');
+                                for(var j in coodiList){
+                                    var coodiList2 = new Array();
+                                    coodiList2 = coodiList[j].split(' ');
+                                    coodiListResult[0][j] = new Array();
+                                    // 멀티라인스트링은 문자열로 안됨;;
+                                    coodiList2[0] = parseInt(coodiList2[0]);
+                                    coodiList2[1] = parseInt(coodiList2[1])
+                                    coodiListResult[0][j] = coodiList2;
+                                    
+                                }
+                                // 멀티라인스트링은 문자열로 안됨;;
+                                // geom = new ol.geom.MultiLineString([[["964787.23241265","1760537.9296506"],["964809.48241265","1760538.1796506"],["964824.16991265","1760541.8046506"]]]);
+                                // geom = new ol.geom.MultiLineString([[[964787.23241265","1760537.9296506],[964809.48241265,1760538.1796506],[964824.16991265,1760541.8046506]]]);
+                                geom = new ol.geom.MultiLineString(coodiListResult);
+                                feature.setGeometry(geom);
+                                feature.setId(options.typeName + '.' + i);
+                                feature.setStyle(lineStyle(options,feature));
+                            }
+                            
                         }
+                        
                         features.push(feature);
                     }
 

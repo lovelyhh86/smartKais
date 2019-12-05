@@ -25,7 +25,7 @@ var LAST_CHECK_STATUS = {
 };
 
 var DATA_TYPE = {
-    LOC: "00", RDPQ: "01", ENTRC: "02", BSIS: "03", AREA: "04",  BULD: "99", SPPN: "06", ADRDC:"07",INTRVL:"08",
+    LOC: "00", RDPQ: "01", ENTRC: "02", BSIS: "03", AREA: "04",  BULD: "99", SPPN: "06", ADRDC:"07",INTRVL:"08",AOT:"10",
     getStatusNameWithCode: function (code) {
         switch (code) {
             case "00":
@@ -46,6 +46,8 @@ var DATA_TYPE = {
                 return DATA_TYPE.ADRDC;
             case "08":
                 return DATA_TYPE.INTRVL;
+            case "10":
+                return DATA_TYPE.AOT;
             default:
                 return;
         }
@@ -1196,3 +1198,48 @@ var etcStatusStyle = function (styleOptions) {
 
     return new ol.style.Style(opt);
 };
+
+//포인트
+var pointStyle = function(styleOptions,feature){
+    var opt = {
+        image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 0, 0 , 0.1)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'rgba(255, 0, 0)',
+                width: 1
+            })
+        })
+    };
+    return new ol.style.Style(opt);
+}
+
+//폴리곤
+var polygonStyle = function(styleOptions,feature){
+    var opt = {
+        stroke: new ol.style.Stroke({
+            color: 'rgba(0, 0, 255)',
+            width: 1
+            }),
+        fill: new ol.style.Fill({
+            color: 'rgba(1, 0, 255 , 0.1)'
+            })
+    };
+    return new ol.style.Style(opt);
+}
+
+//라인
+var lineStyle = function(styleOptions,feature){
+    var opt = {
+            // fill: new ol.style.Fill({
+            //     color: 'green'
+            // }),
+            stroke: new ol.style.Stroke({
+                color: 'black',
+                width: 3
+            })
+    };
+    return new ol.style.Style(opt);
+}

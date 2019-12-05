@@ -697,6 +697,7 @@ function layerToggle(context){
                 layerToggleController('locSel');
                 layerToggleController('nmtgSel');
                 map.removeLayer(layers.sppn);
+                map.removeLayer(layers.aot);
             } catch (error) {
                 map.addLayer(layers.loc);
                 map.addLayer(layers.entrc);
@@ -740,6 +741,7 @@ function layerToggle(context){
             // $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
             
             map.addLayer(layers.sppn);
+            map.addLayer(layers.aot);
             
         }
 
