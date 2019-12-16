@@ -696,8 +696,7 @@ function layerToggle(context){
                 layerToggleController('intrvlSel');
                 layerToggleController('locSel');
                 layerToggleController('nmtgSel');
-                map.removeLayer(layers.sppn);
-                map.removeLayer(layers.aot);
+                
             } catch (error) {
                 map.addLayer(layers.loc);
                 map.addLayer(layers.entrc);
@@ -741,7 +740,9 @@ function layerToggle(context){
             // $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
             
             map.addLayer(layers.sppn);
-            map.addLayer(layers.aot);
+            map.addLayer(layers.riverpk);
+            map.addLayer(layers.eqout);
+            map.addLayer(layers.taxist);
             
         }
 
@@ -758,9 +759,13 @@ function removeLayers(type){
         map.removeLayer(layers.move);
         map.removeLayer(layers.buld);
         map.removeLayer(layers.entrc);
-        map.removeLayer(layers.entrc_pos);
-        map.removeLayer(layers.loc_pos);
+        // map.removeLayer(layers.entrc_pos);
+        // map.removeLayer(layers.loc_pos);
         map.removeLayer(layers.intrvl);
+        map.removeLayer(layers.sppn);
+        map.removeLayer(layers.riverpk);
+        map.removeLayer(layers.eqout);
+        map.removeLayer(layers.taxist);
         // map.removeLayer(layers.rdpq);
         // map.removeLayer(layers.bsis);
         // map.removeLayer(layers.area);

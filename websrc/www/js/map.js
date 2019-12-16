@@ -192,7 +192,7 @@ var MapUtil = {
     controls: {
         init: function() {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
-            ol.inherits(MapUtil.controls.legendSppnControl, ol.control.Control);   // 범례(건물번호판)
+            ol.inherits(MapUtil.controls.legendSppnControl, ol.control.Control);   // 범례(기타점검)
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
             ol.inherits(MapUtil.controls.locManageControl, ol.control.Control); // 안내시설 위치관리
             ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
@@ -245,7 +245,9 @@ var MapUtil = {
             legend.className = "legend spot ol-unselectable ol-control";
             var legendHtml = '<ul>';
             legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
-            legendHtml += '<li class="aot">사물주소판<span class="total">0건</span></li>';
+            legendHtml += '<li class="riverPk"><div id="riverPkCircle"></div>둔치주차장<span class="total">0건</span></li>';
+            legendHtml += '<li class="eqOut"><div id="eqOutCircle"></div>지진옥외대피소<span class="total">0건</span></li>';
+            legendHtml += '<li class="taxiSt"><div id="taxiStCircle"></div>택시승강장<span class="total">0건</span></li>';
             // legendHtml += '<li class="entrc" onclick = "removeLayers('+"'intrvl'"+')">기초구간<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
@@ -772,33 +774,47 @@ var MapUtil = {
         
     },
     openDetailSigCd:function(layerID, sn, sigCd){
-        //조사자일련번호
-        if(util.isEmpty(app.info.rcrSn)){
-            navigator.notification.alert(msg.noRearcher, function () {
-                // util.goBack();
-                // return;
-            }, '조사자', '확인');
-        }else{
-            var detailTaget = '#detailView';
 
-            switch (layerID) {
-                case DATA_TYPE.SPPN:
-                    url = pages.detail_sppn;
-                    header = "지점번호판";
+        var detailTaget = '#detailView';
 
-                    break;
-            }
+        switch (layerID) {
+            case DATA_TYPE.SPPN:
+                url = pages.detail_sppn;
+                header = "지점번호판";
 
-            $(detailTaget).load(url.link(), function() {
-                MapUtil.setDetail(layerID, sn, sigCd);
-                MapUtil.handler.photoToggleHandler();
-                MapUtil.handler.takePhotoHandler();
-                MapUtil.handler.delPhotoHandler();
-                MapUtil.handler.dataPopupCloserHandler();
+                break;
+            case DATA_TYPE.AOT:
+                var objKndCd = sn.substr(0,5);
+                switch (objKndCd) {
+                    case "OBJ01"://둔치주차장 정보조회
+                        url     = pages.detail_spotAotRiverPk;
+                        header  = "둔치주차장";
+                        break;
+                    case "OBJ02"://지진옥외대피소 정보조회
+                        url     = pages.detail_spotAotEqOut;
+                        header  = "지진옥외대피소";
+                        break;
+                    case "OBJ04"://택시승강장 정보조회
+                        url     = pages.detail_spotAotTaxiSt;
+                        header  = "택시승강장";
+                        break;
                 
-                $(detailTaget).popup("open", { transition: "slideup" });
-            })
+                    default:
+                        break;
+                }
+                break;
         }
+
+        $(detailTaget).load(url.link(), function() {
+            MapUtil.setDetail(layerID, sn, sigCd);
+            MapUtil.handler.photoToggleHandler();
+            MapUtil.handler.takePhotoHandler();
+            MapUtil.handler.delPhotoHandler();
+            MapUtil.handler.dataPopupCloserHandler();
+            
+            $(detailTaget).popup("open", { transition: "slideup" });
+        })
+        
 
     },
     getPlateDir: function(f) {
@@ -999,6 +1015,16 @@ var MapUtil = {
                 // MapUtil.setValues(layerID, link, rdGdftySn);
 
                 detailAddressContent();
+
+                break;
+            case DATA_TYPE.AOT:
+                // var link = URLs.selectSppnPanInfo;
+                // try{
+                    MapUtil.setValuesAot(layerID, sn, sigCd);
+                // }catch(error){
+                //     util.toast(msg.checkSetObjectError,"error");
+                //     util.dismissProgress();
+                // }
 
                 break;
             // case DATA_TYPE.RESEARCH:
@@ -2229,7 +2255,7 @@ var MapUtil = {
                     var rcSttCd = data.rcSttCd; // 점검상태
                     var rcRslt = data.rcRslt; //점검결과
                     try{
-                        var rcDe = data.rcDe == null ? "점검이력이 없습니다." : "{0}년{1}월{2}일".format(data.rcDe.substr(0, 4), data.rcDe.substr(4, 2), data.rcDe.substr(6, 2));
+                        var rcDe = data.rcDe == null ? "-" : "{0}년{1}월{2}일".format(data.rcDe.substr(0, 4), data.rcDe.substr(4, 2), data.rcDe.substr(6, 2));
                     } catch (error) {
                        util.toast(msg.checkObject.format("점검날짜"),"error");
                     }
@@ -2273,6 +2299,202 @@ var MapUtil = {
             util.dismissProgress
         )
         
+    },
+    setValuesAot: function(layerID, objMngNo, sigCd) {
+        var link = URLs.selectSpotObjInfo;
+        var objKndCd = objMngNo.substr(0,5);
+        switch (objKndCd) {
+            case "OBJ01"://둔치주차장 정보조회
+                link = URLs.selectSpotRiverPkInfo;
+                break;
+            case "OBJ02"://지진옥외대피소 정보조회
+                link = URLs.selectSpotEqOutInfo;
+                break;
+            case "OBJ04"://택시승강장 정보조회
+                link = URLs.selectSpotTaxiStInfo;
+                break;
+        
+            default:
+                break;
+        }
+
+        var url = URLs.postURL(link, { "objMngNo": objMngNo, "sigCd": sigCd, "workId": app.info.opeId, mode : app.info.mode == "11"? "10" : null });
+        util.showProgress();
+        util.postAJAX({}, url).then(
+            function(context, rCode, results) {
+                //통신오류처리
+                if (rCode != 0 || results.response.status < 0) {
+                    navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                    util.dismissProgress();
+                    return;
+                }
+
+                //데이터 오류 처리
+                if (results.data == null) {
+                    navigator.notification.alert(msg.noItem,
+                        function() {
+                            $("#detailView").popup("close", { transition: "slideup" });
+                        },
+                        '알림', '확인'
+                    );
+                    util.dismissProgress();
+                    return;
+                }
+
+                var data = results.data;
+
+                if(layerID == DATA_TYPE.AOT){
+                    
+                    //사물주소일련번호
+                    $("#trgSn").val(data.OBJ_MNG_NO);
+                    //시군구코드
+                    $("#sigCd").val(data.SIG_CD);
+                    //사물종류
+                    $("#trgCd").val(data.OBJ_KND_CD);
+
+                    /** 기본정보 */
+                    //지역
+                    $("#sigCdNm").html(data.SIG_CD_NM);
+                    //진행상태
+                    $("#progrsSttCdNm").html(data.PROGRS_STT_CD_NM);
+                    //사물명
+                    $("#objNm").html(data.OBJ_NM);
+                    //고유번호
+                    $("#innb").html(data.INNB);
+                    //건물여부
+                    $("#buldYn").html(data.BULD_YN);
+                    //관리기관
+                    $("#manIns").html(data.MAN_INS);
+                    //관리부서
+                    $("#manDeptNm").html(data.MAN_DEPT_NM);
+                    //관리자명
+                    $("#mngrNm").html(data.MNGR_NM);
+                    //전화번호
+                    $("#mngrTelNo").html(data.MNGR_TELNO);
+                    //관련지번
+                    $("#jibunAdres").html(data.JIBUN_ADRES);
+                    
+
+
+                    /** 부가정보 */
+                    //영문명
+                    $("#objEngNm").html(data.OBJ_ENG_NM);
+
+                    /** 사물주소 */
+                    var objAddrList = data.objAddrList;
+                    if(objAddrList.length == 0){
+                        $("#objAddrTable > tbody").empty();
+                        var rowHtml = '<tr class=""><td colspan="4">검색된 목록이 없습니다.</td></tr>';
+                        $("#objAddrTable > tbody:last").append(rowHtml);
+                    }else{
+                        var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>';
+
+                        for(var i in objAddrList){
+                            var ADRES          = objAddrList[i].ADRES;
+
+                            var POINT_SE_NM    = objAddrList[i].POINT_SE_NM;
+                            var MAIN_ENT_SE_NM = objAddrList[i].MAIN_ENT_SE_NM;
+
+                            $("#objAddrTable > tbody:last").append(
+                                rowHtml.format(
+                                    "row"+(i+1)
+                                    ,++i
+                                    ,POINT_SE_NM
+                                    ,ADRES
+                                    ,MAIN_ENT_SE_NM
+                                    ));
+
+                        }
+                                
+                    }
+                    
+                    
+                    /** 업무별 구분 */
+                    var titleText = "사물주소";
+                    var objKndCd = data.OBJ_KND_CD;
+                    switch (objKndCd) {
+                        case "OBJ01"://둔치
+                            titleText = "둔치주차장";
+                            //설치형태
+                            $("#fcltyForm").html(data.FCLTY_FORM);
+                            //주차가능대수
+                            $("#parkngPosblCo").html(data.PARKNG_POSBL_CO+"대");
+                            //위험등급
+                            $("#riskGrad").html(data.RISK_GRAD);
+                            //하천명
+                            $("#riverNm").html(data.RIVER_NM);
+                            break;
+                        case "OBJ02":
+                            titleText = "지진옥외대피소";
+                            //시설설치
+                            $("#fcltyForm").html(data.FCLTY_FORM);
+                            //시설구분
+                            $("#fcltySe").html(data.FCLTY_SE);
+                            //수용가능인원
+                            $("#acmdPosblNmpr").html(data.ACMD_POSBL_NMPR);
+                                
+                            break;
+                        case "OBJ04":
+                            titleText = "택시승강장";
+                            //승강장유형
+                            $("#fcltyForm").html(data.FCLTY_FORM);
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    // //제목
+                    var title = "<span class='label'>[{0}] {1}<span>".format(titleText,data.OBJ_NM);
+                    $(".title").append(title);
+
+                    /**점검상태 및 점검결과 */
+                    var rcSttCd = data.RC_STT_CD; // 점검상태
+                    var rcRslt = data.RC_RSLT; //점검결과
+                    var rcDe = data.RC_DE; //점검일자
+                    try{
+                        var rcDeTxt = rcDe == null ? "-" : "{0}년{1}월{2}일".format(rcDe.substr(0, 4), rcDe.substr(4, 2), rcDe.substr(6, 2));
+                    } catch (error) {
+                       util.toast(msg.checkObject.format("점검날짜"),"error");
+                    }
+        
+                    makeOptSelectBox("rcSttCdSel","RC_STT_CD","","선택","");
+
+                    $("#rcDe").html(rcDeTxt);
+                    
+                    $("#rcSttCdSel").val(rcSttCd);
+
+                    $("#rcRslt").val(rcRslt);
+
+                    //사진셋팅
+                    if(data.files != null){
+                        for (var index in data.files) {
+                            var image = data.files[index];
+                            if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
+                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
+                                obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+    
+                                $(".picInfo." + image.tbGbn + " .picImg").html('');
+                                $(".picInfo." + image.tbGbn + " .picImg").html(obj);
+                                // $(".picInfo." + image.tbGbn + " .opertDe").html('촬영일자 : '+ image.opertDe);
+                                MapUtil.photo.doLoaded(true, image.tbGbn);
+                                
+                            } else {
+                                util.toast(msg.wrongPhoto);
+                            }
+                        }
+                    }
+
+                    //사진탭 오픈
+                    $("#photoDialog").show();
+            
+                    util.dismissProgress();
+                    return;
+                }
+              
+            },
+            util.dismissProgress
+        )
     },
     setPopup: function(type, f) {
         switch (type) {
@@ -2723,29 +2945,28 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
     // 건물번호판 레이어(좌표계)
-    // var lyr_tl_spbd_entrc = getFeatureLayer({
-    var lyr_tl_spbd_entrc_pos = getFeatureLayer_new({
-            title: "건물번호판",
-            // typeName: "tn_spbd_nmtg",
-            typeName: "tlv_spbd_entrc_pos_skm",
-            // typeName: "tlv_spbd_entrc_skm",
-            // typeName: "tn_spbd_entrc_position",
-            dataType: DATA_TYPE.ENTRC,
-            style: {
-                radius: 15,
-                // label: {
-                    // format: ["{0}({1}-{2})"],
-                    // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-                    // text: { key: "ENTRC_SE", func: function(text) { return text } },
-                    // textOffsetY: -20
-                // }
-            },
-            cluster: { distance: MapUtil.setting.cluster },
-            maxResolution: MapUtil.setting.maxResolution_buld,
-            viewProgress: false,
-            renderMode: 'vector',
-            zIndex : 1
-        });
+    // var lyr_tl_spbd_entrc_pos = getFeatureLayer_new({
+    //         title: "건물번호판",
+    //         // typeName: "tn_spbd_nmtg",
+    //         typeName: "tlv_spbd_entrc_pos_skm",
+    //         // typeName: "tlv_spbd_entrc_skm",
+    //         // typeName: "tn_spbd_entrc_position",
+    //         dataType: DATA_TYPE.ENTRC,
+    //         style: {
+    //             radius: 15,
+    //             // label: {
+    //                 // format: ["{0}({1}-{2})"],
+    //                 // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
+    //                 // text: { key: "ENTRC_SE", func: function(text) { return text } },
+    //                 // textOffsetY: -20
+    //             // }
+    //         },
+    //         cluster: { distance: MapUtil.setting.cluster },
+    //         maxResolution: MapUtil.setting.maxResolution_buld,
+    //         viewProgress: false,
+    //         renderMode: 'vector',
+    //         zIndex : 1
+    //     });
     // 도로명판 레이어
     // var lyr_tl_spgf_rdpq = getFeatureLayer({
     //     title: "도로명판",
@@ -2856,14 +3077,50 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
 
-    //사믈주소 레이어(중앙)
-    var lyr_tlv_spot_aot_panel = getFeatureCoodi_Center({
-        title: "사물주소",
+    //사믈주소(둔치주차장) 레이어(중앙)
+    var tlv_spot_aot_riverpk_skm = getFeatureCoodi_Center({
+        title: "사믈주소(둔치주차장)",
         //typeName: "tlv_aot_test_skm",
-        typeName: "tlv_spot_aot_obj_skm",
+        // typeName: "tlv_spot_aot_obj_skm",
+        typeName: "tlv_spot_aot_riverpk_skm",
         dataType: DATA_TYPE.AOT,
         style: {
-            radius: 12
+            pointSt:"#ff0000"
+            ,polygonSt:"rgba(255, 051, 102, 0.5)"
+            ,lineSt:"rgba(204, 0, 0, 0.5)"
+            ,radius: 12
+        },
+        // maxResolution: 2,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
+
+    //사믈주소(지진옥외대피소) 레이어(중앙)
+    var tlv_spot_aot_eqout_skm = getFeatureCoodi_Center({
+        title: "사믈주소(지진옥외대피소)",
+        typeName: "tlv_spot_aot_eqout_skm",
+        dataType: DATA_TYPE.AOT,
+        style: {
+            pointSt:"#00ff00"
+            ,polygonSt:"rgba(0, 102, 0, 0.5)"
+            ,lineSt:"rgba(0, 051, 0, 0.5)"
+            ,radius: 12
+        },
+        // maxResolution: 2,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
+
+    //사믈주소(택시승강장) 레이어(중앙)
+    var tlv_spot_aot_taxist_skm = getFeatureCoodi_Center({
+        title: "사믈주소(택시승강장)",
+        typeName: "tlv_spot_aot_taxist_skm",
+        dataType: DATA_TYPE.AOT,
+        style: {
+            pointSt:"#ff7300"
+            ,radius: 12
         },
         // maxResolution: 2,
         viewProgress: false,
@@ -2873,15 +3130,17 @@ var mapInit = function(mapId, pos) {
     
 
     layers = {
-        "loc": lyr_tlv_spgf_loc_skm,
+        "loc": lyr_tlv_spgf_loc_skm
         // "rdpq": lyr_tl_spgf_rdpq,
         // "area": lyr_tl_spgf_area,
         // "bsis": lyr_tl_spgf_bsis,
-        "entrc": lyr_tl_spbd_entrc,
+        ,"entrc": lyr_tl_spbd_entrc
         // "buld": lyr_tl_spbd_buld,
-        "sppn": lyr_tl_sppn_panel,
-        "aot":lyr_tlv_spot_aot_panel,
-        "intrvl":lyr_tl_sprd_intrvl
+        ,"sppn": lyr_tl_sppn_panel
+        ,"intrvl":lyr_tl_sprd_intrvl
+        ,"riverpk":tlv_spot_aot_riverpk_skm
+        ,"eqout":tlv_spot_aot_eqout_skm
+        ,"taxist":tlv_spot_aot_taxist_skm
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
     };
@@ -5890,6 +6149,61 @@ function selectFeatureInfo(features,popIndex){
 
                     $("#popup").show();
                     overlay.setPosition(coordinate);
+
+                    break;
+                case DATA_TYPE.AOT:
+                        resultHtml = "";
+                        strHtml = "";
+                        buttonHtml = "";
+                        //사물주소 일련번호
+                        var objMngNo = feature.get("objMngNo");
+                        var objKndCd = feature.get("objKndCd");
+                        var objNm = feature.get("objNm");
+                        var SIG_CD = feature.get("SIG_CD");
+                        var titleText = "사물주소";
+                        
+                        switch (objKndCd) {
+                            case "OBJ01"://둔치주차장 정보조회
+                                titleText  = "둔치주차장";
+                                break;
+                            case "OBJ02"://지진옥외대피소 정보조회
+                                titleText  = "지진옥외대피소";
+                                break;
+                            case "OBJ04"://택시승강장 정보조회
+                                titleText  = "택시승강장";
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                        
+                        var gbn = commonP.format("gbn", "[{0}]".format(titleText));
+                        var title = commonP.format("localTitle",objNm);
+
+                        strHtml += gbn
+                        strHtml += title
+                        // strHtml += commonP.format("",DTOR_NM);
+
+                        resultHtml += popDiv.format("", "openDetailPopupCallSigCd(" + index + ",'" + layerID + "','" + objMngNo + "','"+ SIG_CD +"')", strHtml);
+
+                        // 공간정보
+                        var geom = feature.getGeometry().getCoordinates();
+
+                        buttonHtml += buttonForm.format("more", "openDetailPopupCallSigCd(" + index + ",'" + layerID + "','" + objMngNo + "','"+ SIG_CD +"')", "image/more.png", "더보기");
+
+                        resultHtml += commonDiv.format("mapAdd", buttonHtml);
+                        
+                        resultHtml = commonDiv.format("mapInfo", resultHtml);
+
+                        popupDiv.append(resultHtml);
+
+                        if(features.length > 1){
+                            resultHtml = commonP.format("infoLine", "");
+                            popupDiv.append(resultHtml);
+                        }
+
+                        $("#popup").show();
+                        overlay.setPosition(coordinate);
 
                     break;
             }

@@ -856,6 +856,8 @@ function submitResearchEtc(){
     var trgGbn = $("#trgGbn").val();
     //시군구
     var sigCd = $("#sigCd").val();
+    //기타코드
+    var trgCd = $("#trgCd").val();
     
     //작업자ID
     var workId = app.info.opeId;
@@ -866,7 +868,7 @@ function submitResearchEtc(){
     }
     //사진
     var files = makeImg();
-    if(files.length < 2){
+    if(rcSttCdSel != "1000" && files.length < 2){
         util.toast("사진을 두장 모두 촬영해주세요.","warning");
         return;
     }
@@ -882,6 +884,7 @@ function submitResearchEtc(){
                 sigCd : sigCd,
                 trgSn : trgSn,
                 trgGbn : trgGbn,
+                trgCd  : trgCd,
                 rcSttCd : rcSttCdSel,
                 rcRslt : rcRslt,
                 opeManId : workId,

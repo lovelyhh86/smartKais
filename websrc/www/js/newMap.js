@@ -341,6 +341,9 @@ var getFeatureLayer_new = function(options) {
 
     return new ol.layer.Vector(vectorOptions);
 };
+var riverpkCnt = 0;
+var eqoutCnt = 0;
+var taxistCnt = 0;
 
 /** 중앙 공간정보 좌표조회 */
 var getFeatureCoodi_Center = function(options){
@@ -388,13 +391,11 @@ var getFeatureCoodi_Center = function(options){
                         var type = options.typeName;
                         if(layerType.indexOf ("sppn") > -1){
                             $('.legend .spot .total').text(data.length + '건');
-                        }else if(layerType.indexOf("aot") > -1){
-                            $('.legend .aot .total').text(data.length + '건');
                         }
                     }
 
                     for(i in data){
-                        
+
                         var feature = new ol.Feature({
                             // layerType : layerType,
                             SIG_CD : data[i].sigCd,
@@ -416,10 +417,26 @@ var getFeatureCoodi_Center = function(options){
                             feature.set("SPO_NO_CD",data[i].spoNoCd);
 
                         }else if(options.dataType == DATA_TYPE.AOT){
+                            
                             var ponitX = data[i].pointX;
                             var ponitY = data[i].pointY;
                             var objMngNo = data[i].objMngNo;
                             var objKndCd = data[i].objKndCd;
+
+                            switch (objKndCd) {
+                                case 'OBJ01':
+                                    riverpkCnt = data.length;
+                                    break;
+                                case 'OBJ02':
+                                    eqoutCnt = data.length;
+                                    break;
+                                case 'OBJ04':
+                                    taxistCnt = data.length;
+                                    break;
+                            
+                                default:
+                                    break;
+                            } 
 
                             var coodiList = new Array();
                             var coodiListResult = new Array();
@@ -474,11 +491,20 @@ var getFeatureCoodi_Center = function(options){
                                 feature.setGeometry(geom);
                                 feature.setId(options.typeName + '.' + i);
                                 feature.setStyle(lineStyle(options,feature));
+                                
                             }
                             
                         }
-                        
+                        feature.set("objMngNo",data[i].objMngNo);
+                        feature.set("objNm",data[i].objNm);
+                        feature.set("objKndCd",data[i].objKndCd);
                         features.push(feature);
+                    }
+
+                    if(layerType.indexOf("aot") > -1){
+                        $('.legend .riverPk .total').text(riverpkCnt + '건');
+                        $('.legend .eqOut .total').text(eqoutCnt + '건');
+                        $('.legend .taxiSt .total').text(taxistCnt + '건');
                     }
 
                     // console.log("({2}) The number of features viewed is {0}. extent({1})".format(features.length, extent.join(','), options.typeName));

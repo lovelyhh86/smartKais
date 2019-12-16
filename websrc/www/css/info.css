@@ -613,3 +613,46 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
 	position: absolute;
 	right: 48px;
 }
+
+
+#riverPkCircle {
+	position: absolute;
+    background-color: #ff0000;
+    border: 2px solid rgba(0, 0, 0);
+    width: 10px;
+    height: 10px;
+    border-radius: 75px;
+    text-align: center;
+	margin-left: -22px;
+    margin-top: 2px;
+    color: #fff;
+    vertical-align: middle;
+}
+
+#eqOutCircle {
+	position: absolute;
+	background-color: #00ff00;
+    border: 2px solid rgba(0, 0, 0);
+    width: 10px;
+    height: 10px;
+    border-radius: 75px;
+    text-align: center;
+	margin-left: -22px;
+    margin-top: 2px;
+    color: #fff;
+    vertical-align: middle;
+}
+
+#taxiStCircle {
+	position: absolute;
+	background-color: #ff7300;
+    border: 2px solid rgba(0, 0, 0);
+    width: 10px;
+    height: 10px;
+    border-radius: 75px;
+    text-align: center;
+	margin-left: -22px;
+    margin-top: 2px;
+    color: #fff;
+    vertical-align: middle;
+}

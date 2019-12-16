@@ -25,8 +25,12 @@ var LAST_CHECK_STATUS = {
 };
 
 var DATA_TYPE = {
-    LOC: "00", RDPQ: "01", ENTRC: "02", BSIS: "03", AREA: "04",  BULD: "99", SPPN: "06", ADRDC:"07",INTRVL:"08",AOT:"10",
-    getStatusNameWithCode: function (code) {
+    LOC: "00", RDPQ: "01", ENTRC: "02", BSIS: "03", AREA: "04"
+    ,BULD: "99"
+    ,SPPN: "06"
+    ,ADRDC:"07",INTRVL:"08"
+    ,AOT:"10",RIVERPK:"11"
+    ,getStatusNameWithCode: function (code) {
         switch (code) {
             case "00":
                 return DATA_TYPE.LOC;
@@ -48,6 +52,8 @@ var DATA_TYPE = {
                 return DATA_TYPE.INTRVL;
             case "10":
                 return DATA_TYPE.AOT;
+            case "11":
+                return DATA_TYPE.RIVERPK;
             default:
                 return;
         }
@@ -1205,10 +1211,10 @@ var pointStyle = function(styleOptions,feature){
         image: new ol.style.Circle({
             radius: 5,
             fill: new ol.style.Fill({
-                color: 'rgba(255, 0, 0 , 0.1)'
+                color: styleOptions.style.pointSt,
             }),
             stroke: new ol.style.Stroke({
-                color: 'rgba(255, 0, 0)',
+                color: 'rgba(0, 0, 0)',
                 width: 1
             })
         })
@@ -1219,12 +1225,12 @@ var pointStyle = function(styleOptions,feature){
 //폴리곤
 var polygonStyle = function(styleOptions,feature){
     var opt = {
-        stroke: new ol.style.Stroke({
-            color: 'rgba(0, 0, 255)',
-            width: 1
-            }),
         fill: new ol.style.Fill({
-            color: 'rgba(1, 0, 255 , 0.1)'
+            color: styleOptions.style.polygonSt
+            }),
+        stroke: new ol.style.Stroke({
+            color: 'rgba(0, 0, 0)',
+            width: 1
             })
     };
     return new ol.style.Style(opt);
@@ -1237,7 +1243,7 @@ var lineStyle = function(styleOptions,feature){
             //     color: 'green'
             // }),
             stroke: new ol.style.Stroke({
-                color: 'black',
+                color: styleOptions.style.lineSt,
                 width: 3
             })
     };

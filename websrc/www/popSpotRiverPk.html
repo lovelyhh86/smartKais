@@ -3,14 +3,14 @@
 
 <body class="intro">
 
-<div id="sppnView_page">
+<div id="popSpotRiverPk_page">
 	<div class="detailView">
 		
 		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
 		<div class="infoWrap">
 			<!-- header -->
 			<div class="infoHeader">
-				<p class="title" onclick="toggleDetailView();"><span class="titleIcon"><img src="image/spotIcon.png" title="지점번호판"></span></p>
+				<p class="title" onclick="toggleDetailView();"></p>
 				<p class="location" onclick="getDetailLocation()"></p>
 				<!-- <p class="photo"><span class="photoNum">0</span></p> -->
 			</div>
@@ -21,9 +21,9 @@
 				
 				<input id="trgSn" type="hidden" value=""/>
 				<input id="sigCd" type="hidden" value="" />
-				<!-- 시설구분코드 11 : 지점번호판 -->
-				<input id="trgGbn" type="hidden" value="11"/>
-
+				<!-- 시설구분코드 10 : 사물주소 -->
+				<input id="trgGbn" type="hidden" value="10"/>
+				<input id="trgCd" type="hidden"/>
 				<div class="blueTitle">
 					<h2>기본정보</h2>
 				</div>
@@ -38,19 +38,49 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">지점번호</th>
+								<th scope="row">지역</th>
 								<td>
-									<p id="spoNoCd">&nbsp;</p>
+									<p id="sigCdNm">&nbsp;</p>
 								</td>
-								<th scope="row">시설물 분류</th>
+								<th scope="row">진행상태</th>
 								<td>
-									<p id="fcltylc">&nbsp;</p>
+									<p id="progrsSttCdNm">&nbsp;</p>
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">토지소재지</th>
+								<th scope="row">사물명</th>
 								<td colspan="3">
-									<p id="jibunAddr">&nbsp;</p>
+									<p id="objNm">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">고유번호</th>
+								<td>
+									<p id="innb">&nbsp;</p>
+								</td>
+								<th scope="row">건물여부</th>
+								<td>
+									<p id="buldYn">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">관리기관</th>
+								<td>
+									<p id="manIns">&nbsp;</p>
+								</td>
+								<th scope="row">관리부서</th>
+								<td>
+									<p id="manDeptNm">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">관리자명</th>
+								<td>
+									<p id="mngrNm">&nbsp;</p>
+								</td>
+								<th scope="row">전화번호</th>
+								<td>
+									<p id="mngrTelNo">&nbsp;</p>
 								</td>
 							</tr>
 						</tbody>
@@ -58,11 +88,11 @@
 				</div>
 
 				<div class="blueTitle">
-					<h2>설치기관</h2>
+					<h2>부가정보</h2>
 				</div>
 				<div class="tableWrap">
-					<table class="dataTable" summary="설치기관">
-						<caption>설치기관</caption>
+					<table class="dataTable" summary="부가정보">
+						<caption>부가정보</caption>
 						<colgroup>
 							<col class="cell25">
 							<col class="cell25">
@@ -71,80 +101,62 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="row">명칭</th>
-								<td colspan="3">
-									<p id="instt">&nbsp;</p>
+								<th scope="row">영문명</th>
+								<td>
+									<p id="objEngNm">&nbsp;</p>
+								</td>
+								<th scope="row">설치형태</th>
+								<td>
+									<p id="fcltyForm">&nbsp;</p>
 								</td>
 							</tr>
 							<tr>
-								<th scope="row">사업자등록번호</th>
-								<td colspan="3">
-									<p id="insttNum">&nbsp;</p>
+								<th scope="row">주차가능대수</th>
+								<td>
+									<p id="parkngPosblCo">&nbsp;</p>
+								</td>
+								<th scope="row">위험등급</th>
+								<td>
+									<p id="riskGrad">&nbsp;</p>
 								</td>
 							</tr>
 							<tr>
+								<th scope="row">하천명</th>
+								<td colspan="3">
+									<p id="riverNm">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">지번</th>
+								<td colspan="3">
+									<p id="jibunAdres">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>사물주소</h2>
+				</div>
+				<div class="tableWrap">
+					<table id="objAddrTable" class="dataTable" summary="사물주소">
+						<caption>사물주소</caption>
+						<colgroup>
+							<col class="cell15">
+							<col class="cell15">
+							<col class="cell50">
+							<col class="cell20">
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="row">순번</th>
+								<th scope="row">구분</th>
 								<th scope="row">주소</th>
-								<td colspan="3">
-									<p id="insttAddr">&nbsp;</p>
-								</td>
+								<th scope="row">주출입구</th>
 							</tr>
-							<tr>
-								<th scope="row">설치일자</th>
-								<td>
-									<p id="insttDe">&nbsp;</p>
-								</td>
-								<th scope="row">검증일자</th>
-								<td>
-									<p id="vrifyDe">&nbsp;</p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<div class="blueTitle">
-					<h2>좌표 및 경위도</h2>
-				</div>
-				<div class="tableWrap">
-					<table class="dataTable" summary="좌표 및 경위도">
-						<caption>좌표 및 경위도</caption>
-						<colgroup>
-							<col class="cell25">
-							<col class="cell25">
-							<col class="cell25">
-							<col class="cell25">
-						</colgroup>
+						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">X</th>
-								<td>
-									<p id="xGrs80">&nbsp;</p>
-								</td>
-								<th scope="row">경도</th>
-								<td>
-									<p id="longitude">&nbsp;</p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">Y</th>
-								<td>
-									<p id="yGrs80">&nbsp;</p>
-								</td>
-								<th scope="row">위도</th>
-								<td>
-									<p id="latitude">&nbsp;</p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">Z</th>
-								<td>
-									<p id="zVal">&nbsp;</p>
-								</td>
-								<th scope="row">높이</th>
-								<td>
-									<p id="ellipseSolid">&nbsp;</p>
-								</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>

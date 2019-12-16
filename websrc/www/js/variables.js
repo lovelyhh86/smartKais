@@ -84,7 +84,13 @@ var URLs = {
     //지점번호 정보조회
     "selectSppnPanInfo":{svcNm: "selectSppnPanInfo"},
     //사물주소 정보조회
-    "selectSpotObjadres":{svcNm: "selectSpotObjadres"},
+    "selectSpotObjInfo":{svcNm: "selectSpotObjInfo"},
+    //둔치주차장 정보조회
+    "selectSpotRiverPkInfo":{svcNm: "selectSpotRiverPkInfo"},
+    //지진옥외대피소 정보조회
+    "selectSpotEqOutInfo":{svcNm: "selectSpotEqOutInfo"},
+    //택시승강장 정보조회
+    "selectSpotTaxiStInfo":{svcNm: "selectSpotTaxiStInfo"},
     
     getURL: function (srcurl, jsondata) {
 
@@ -122,6 +128,7 @@ var pages = {
     "workpage": { link: function () { return URLs.realPath() + "work.html"; }, div: "#work_page" },
     "map": { link: function () { return URLs.realPath() + "map.html"; }, div: "#mapview_page" },
     "map2": { link: function () { return URLs.realPath() + "map2.html"; }, div: "#map2view_page" },
+
     "detail_road": { link: function () { return URLs.realPath() + "popRoad.html"; }, div: "#roadView_page" },
     "detail_road_rddr": { link: function () { return URLs.realPath() + "popRoadRddr.html"; }, div: "#roadRddrView_page" },
     "detail_road_prnt": { link: function () { return URLs.realPath() + "popRoadPrnt.html"; }, div: "#roadPrntView_page" },
@@ -131,9 +138,15 @@ var pages = {
     "detail_entrc": { link: function () { return URLs.realPath() + "popEntrc.html"; }, div: "#entrcView_page" },
     "detail_spot": { link: function () { return URLs.realPath() + "popSpot.html"; }, div: "#spotView_page" },
     "detail_sppn": { link: function () { return URLs.realPath() + "popSppnPan.html"; }, div: "#sppnView_page" },
+    
+    "detail_spotAotRiverPk": { link: function () { return URLs.realPath() + "popSpotRiverPk.html"; }, div: "#popSpotRiverPk_page" },
+    "detail_spotAotEqOut": { link: function () { return URLs.realPath() + "popSpotEqOut.html"; }, div: "#popSpotEqOut_page" },
+    "detail_spotAotTaxiSt": { link: function () { return URLs.realPath() + "popSpotTaxiSt.html"; }, div: "#popSpotTaxiSt_page" },
+
     "detail_adrdc": { link: function () { return URLs.realPath() + "popAdrdc.html"; }, div: "#baseResearch_page" },
     "detail_adrdcList": { link: function () { return URLs.realPath() + "popAdrdcList.html"; }, div: "#detailAddress_page" },
     "detail_researchList": { link: function () { return URLs.realPath() + "popResearchList.html"; }, div: "#researchList_page" },
+
     "minwonListPage": { link: function () { return URLs.realPath() + "minwon.html"; }, div: "#minwonList_page" },
     "detailAddressListPage": { link: function () { return URLs.realPath() + "detailAddress.html"; }, div: "#detailAddress_page" },
     "baseResearchPage": { link: function () { return URLs.realPath() + "baseResearch.html"; }, div: "#baseResearch_page" },
