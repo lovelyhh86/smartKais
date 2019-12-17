@@ -422,6 +422,7 @@ var getFeatureCoodi_Center = function(options){
                             var ponitY = data[i].pointY;
                             var objMngNo = data[i].objMngNo;
                             var objKndCd = data[i].objKndCd;
+                            var compositionNo = data[i].compositionNo;
 
                             switch (objKndCd) {
                                 case 'OBJ01':
@@ -453,7 +454,7 @@ var getFeatureCoodi_Center = function(options){
                                 
                                 var geom =  new ol.geom.Point(coodiList);
                                 feature.setGeometry(geom);
-                                feature.setId(options.typeName + '.' + i);
+                                feature.setId(options.typeName + '.' + objMngNo+'_'+compositionNo);
                                 feature.setStyle(pointStyle(options,feature));
                                 // feature.setStyle(sppnStyle(options,feature));
                             }
@@ -469,7 +470,7 @@ var getFeatureCoodi_Center = function(options){
                                 // geom = new ol.geom.Polygon([[[964836.25,1760554],[964805.25,1760523.5],[964824.75,1760508],[964853.25,1760539],[964836.25,1760554]]]);
                                 geom = new ol.geom.Polygon(coodiListResult);
                                 feature.setGeometry(geom);
-                                feature.setId(options.typeName + '.' + i);
+                                feature.setId(options.typeName + '.' + objMngNo+'_'+compositionNo);
                                 feature.setStyle(polygonStyle(options,feature));
                             }
                             else if(geomText.indexOf('MULTILINESTRING') > -1){
@@ -489,7 +490,7 @@ var getFeatureCoodi_Center = function(options){
                                 // geom = new ol.geom.MultiLineString([[[964787.23241265","1760537.9296506],[964809.48241265,1760538.1796506],[964824.16991265,1760541.8046506]]]);
                                 geom = new ol.geom.MultiLineString(coodiListResult);
                                 feature.setGeometry(geom);
-                                feature.setId(options.typeName + '.' + i);
+                                feature.setId(options.typeName + '.' + objMngNo+'_'+compositionNo);
                                 feature.setStyle(lineStyle(options,feature));
                                 
                             }
