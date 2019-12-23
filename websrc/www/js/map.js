@@ -2418,7 +2418,7 @@ var MapUtil = {
                             //설치형태
                             $("#fcltyForm").html(data.FCLTY_FORM);
                             //주차가능대수
-                            $("#parkngPosblCo").html(data.PARKNG_POSBL_CO+"대");
+                            $("#parkngPosblCo").html(data.PARKNG_POSBL_CO);
                             //위험등급
                             $("#riskGrad").html(data.RISK_GRAD);
                             //하천명

@@ -850,6 +850,22 @@ function submitResearchEtc(){
         return;
     }
 
+    //사진상태
+    var state = MapUtil.photo.state;
+    if(rcSttCdSel != "1000"){
+        if(!state.L.edited || !state.M.edited){
+            util.toast("사진을 두장 모두 촬영해주세요.","warning");
+            return;
+        }
+    }else if(rcSttCdSel == "1000"){
+        if(!state.L.isPhoto || !state.M.isPhoto){
+            if(!state.L.edited || !state.M.edited){
+                util.toast("사진을 두장 모두 촬영해주세요.","warning");
+                return;
+            }
+        }
+    }
+
     //시설물 일련번호
     var trgSn = $("#trgSn").val();
     //구분
@@ -866,12 +882,14 @@ function submitResearchEtc(){
     if(rcSttCd_origin){
         msgText = msg.updateReResearch;
     }
+
     //사진
     var files = makeImg();
-    if(rcSttCdSel != "1000" && files.length < 2){
-        util.toast("사진을 두장 모두 촬영해주세요.","warning");
-        return;
-    }
+    
+    // if(files.length < 2){
+    //     util.toast("사진을 두장 모두 촬영해주세요.","warning");
+    //     return;
+    // }
     
 
     navigator.notification.confirm(msgText, function(btnindex){
