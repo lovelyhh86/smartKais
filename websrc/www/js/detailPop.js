@@ -1770,6 +1770,10 @@ function closePhotoView(force){
                 case 1: //닫기
                     $("#photoDialog").hide();
                     $("#mask").hide();
+                    //확대창 삭제
+                    $(".smartphoto").parents("div").remove();
+                    //사진창 클리어
+                    $(".picImg").children().remove();
                     MapUtil.photo.refresh();
 
                     break;
@@ -1780,6 +1784,10 @@ function closePhotoView(force){
     } else {
         $("#photoDialog").hide();
         $("#mask").hide();
+        //확대창 삭제
+        $(".smartphoto").parents("div").remove();
+        //사진창 클리어
+        $(".picImg").children().remove();
     }
 
 }
@@ -1790,9 +1798,9 @@ function makeImg(){
     var date = util.getToday();
     var title = $(".infoHeader .title .label").text();
 
-    $("#photoDialog .photoTable .picInfo .picImg img").each(function(i, o){
+    $("#photoDialog .photoTable .picInfo .picImg a img").each(function(i, o){
         var data = new Object() ;
-        var picInfo = $(o).parent().parent();
+        var picInfo = $(o).parent().parent().parent();
         var picType = picInfo.data('picType');
         var state;
         if(picType == "L"){
@@ -1800,10 +1808,10 @@ function makeImg(){
         }else if(picType == "M"){
             state = MapUtil.photo.state.M;
         }else{
-            //사진 생성 에러
+            return;
         }
 
-        if(state.edited == true){
+        if(state.edited){
             data.base64 = $(o).attr("src").replace(/.+base64,/,'');
             data.imageFilesSn = picInfo.data('picSn');
             data.tbGbn = picInfo.data('picType');
@@ -3164,15 +3172,21 @@ function loadUpdtData(isImages){
                     }
 
                     if(isImages == "true"){
+                        //확대창 삭제
+                        $(".smartphoto").parents("div").remove();
+                        $(".js-smartPhoto").remove();
                         // 사진 조회 및 편집 상태 초기화
                         MapUtil.photo.state.init();
 
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
-                                obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
-                                obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+
+                                var obj = "<a href = 'data:image;base64," + image.base64 + "' class='js-smartPhoto'>" 
+                                    obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
+                                    obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+                                    obj += "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                    obj += "</a>";
 
                                 $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
@@ -3181,6 +3195,7 @@ function loadUpdtData(isImages){
                                 util.toast(msg.wrongPhoto);
                             }
                         }
+                        $(".js-smartPhoto").SmartPhoto();
                         
                     }else{
                         for(var d in data){
@@ -3602,10 +3617,11 @@ function selectOriImg(){
                 for (var index in data.files) {
                     var image = data.files[index];
                     if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                        var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
-                        obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
-                        obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
-
+                        var obj = "<a href = 'data:image;base64," + image.base64 + "' class='js-smartPhoto'>";
+                            obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
+                            obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+                            obj += "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                            obj += "</a>";
                         $(".picInfo." + image.tbGbn + " .picImg").html('');
                         $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                         MapUtil.photo.doLoaded(true, image.tbGbn);
@@ -3626,6 +3642,9 @@ function selectOldImg(){
     //     if(btnindex == 1){
             // warnnigToast();
             util.toast("원본사진을 조회합니다. 잠시만 기다려주세요.");
+            //확대창 삭제
+            $(".smartphoto").parents("div").remove();
+            $(".js-smartPhoto").remove();
 
             var photoNum = $(".infoHeader .photo .photoNum").text();
             // 속성 조회 시 사진 건수가 없는 경우 서버로 부터 조회 하지 않음.
@@ -3702,19 +3721,25 @@ function selectOldImg(){
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
-                                obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
-                                obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+                                var obj = "<a href = 'data:image;base64," + image.base64 + "' class='js-smartPhoto'>" 
+                                    obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
+                                    obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+                                    obj += "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                    obj += "</a>";
 
                                 $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
                                 $(".picInfo." + image.tbGbn + " .opertDe").html('촬영일자 : '+ image.opertDe);
+                                
                                 MapUtil.photo.doLoaded(true, image.tbGbn);
                                 
                             } else {
                                 util.toast(msg.wrongPhoto);
                             }
                         }
+                        $(".js-smartPhoto").SmartPhoto();
+                        // setSmartPhoto();
+                        
                         
                         util.dismissProgress();
                     }

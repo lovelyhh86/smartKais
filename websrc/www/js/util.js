@@ -71,6 +71,14 @@ var util = {
     //뒤로가기
     goBack: function () {
         util.dismissProgress();
+
+        //사진확대창 닫기
+        var smartphotoLength = $(".smartphoto").parents("div").length;
+        var smartphotoGbn = $(".smartphoto").attr('aria-hidden');
+        if(smartphotoLength > 0 && smartphotoGbn == "false"){
+            $(".smartphoto").attr('aria-hidden','true');
+            return;
+        }
         //사진창이 열려있을때
         var photo = $("#photoDialog").css("display");
         if(photo == "block"){

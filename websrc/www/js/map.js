@@ -154,15 +154,33 @@ var MapUtil = {
             $(".photoWrap .picInfo .btnPoint").click(function(evt) {
                 var _this = $(this);
                 util.takePictureFromCamera(function(ret) {
-                    // <img style='height: 220px; width: 100%; object-fit: contain' src=''/>
-                    var imgHtml = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image/jpeg;base64," + ret.src +"'/>";
                     var picInfo = $(evt.target).parent().parent(); // class="picInfo"
                     var photoType = picInfo.data("picType");   // 구분(원거리: L, 근거리: M)
 
-                    picInfo.find(".picImg IMG").remove();   // 기존 사진 화면 제거
-                    picInfo.find(".opertDe").html('-');   // 기존 사진 저장일자 제거
+                    var imgHtml = "<a href = 'data:image;base64," + ret.src + "' class='js-smartPhoto'>" 
+                        imgHtml += "<input id='tbGbn' type='hidden' value='" + photoType + "'/>";
+                        imgHtml += "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image/jpeg;base64," + ret.src +"'/>";
+                        imgHtml += "</a>";
+
+                    //smartphoto 초기화 *************************************************
+                    $(".smartphoto").parents("div").remove();
+
+                    $(".picInfo.L .picImg").html($(".picInfo.L .picImg").html());
+                    $(".picInfo.M .picImg").html($(".picInfo.M .picImg").html());
+                    
+                    $(".picInfo .picImg a").removeAttr('data-group');
+                    $(".picInfo .picImg a").removeAttr('data-id');
+                    $(".picInfo .picImg a").removeAttr('data-index');
+                    $(".picInfo .picImg a").removeAttr('data-transition');
+                    $(".picInfo .picImg a").removeAttr('data-direction');
+                    //smartphoto 초기화 *************************************************
+
+                    picInfo.find("a").remove();                 // 기존 a태그 제거
+                    picInfo.find(".picImg IMG").remove();       // 기존 사진 화면 제거
+                    picInfo.find(".opertDe").html('-');         // 기존 사진 저장일자 제거
                     picInfo.find(".picImg").append(imgHtml);
-                    MapUtil.photo.doEdit(true, photoType);    // 편집 상태 반영
+                    MapUtil.photo.doEdit(true, photoType);      // 편집 상태 반영
+                    $(".js-smartPhoto").SmartPhoto();           // 사진확대기능
                 });
             });
         },

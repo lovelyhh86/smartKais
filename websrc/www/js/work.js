@@ -15,7 +15,7 @@ $.when(app.deviceReadyOK, workPageReadyOK).then(function(){
     //1000m -> 1초 
     // setInterval(function(){ sendMois(); }, 600000);
     // setInterval(function(){ addSearchUser(); }, 300000);// 조사자정보 최신화 5분단위
-    setInterval(function(){ checkVersion(); }, 600000); //버전조회 10분단위
+    // setInterval(function(){ checkVersion(); }, 600000); //버전조회 10분단위
     util.on("notification",function(json,param){
 
         util.toast('push:' + json.message);

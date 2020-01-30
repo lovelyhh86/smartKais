@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "transform-html-import-to-string",
+    "add-module-exports"
+  ]
+}
