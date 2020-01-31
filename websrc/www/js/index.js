@@ -4,7 +4,7 @@ var versionName;
 var tmDevice;
 var tmSerial
 var msg = {
-    callCenter: "\n해당 메시지가 반복될 경우 도움센터(02-3703-3600)로 문의 주시기 바랍니다.",
+    callCenter: "\n해당 메시지가 반복될 경우 도움센터(1800-5187)로 문의 주시기 바랍니다.",
     appRun: "\n\"바로일터\"를 통해 다시 시작해 주십시오.",
     server: "\n서버에 연결할 수 없습니다({0}).",
     exit: "\n\n스마트KAIS를 종료합니다."
