@@ -63,7 +63,8 @@ var msg = {
     checkGdSd : "규격정보가 없습니다. 그래도 저장 하시겠습니까?",
     autoImgRoadingAlert : "사진창을 열때마다 항상 자동으로 원본사진이 조회됩니다.\n데이터 사용량이 증가합니다.",
     plqUseTargetCheck: "[표준형]중에서 사용대상이 [차로용] 또는 [소로용] 이고\n안내시설방향이 [앞쪽 방향용] 일 수 없습니다.\n속성정보를 확인하여 주시기 바랍니다.",
-    maxResolutionWarning : "심볼표시 최대 레벨을 사용중입니다.<br/>데이터 사용량에 주의하세요!"
+    maxResolutionWarning : "심볼표시 최대 레벨을 사용중입니다.<br/>데이터 사용량에 주의하세요!",
+    coodiLength :"좌표값은 총 17자리, 소수점 8자리 까지 허용됩니다."
     
 };
 var app = {

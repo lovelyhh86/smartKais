@@ -748,9 +748,9 @@ function layerToggle(context){
             // $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
             
             map.addLayer(layers.sppn);
-            map.addLayer(layers.riverpk);
-            map.addLayer(layers.eqout);
-            map.addLayer(layers.taxist);
+            // map.addLayer(layers.riverpk);
+            // map.addLayer(layers.eqout);
+            // map.addLayer(layers.taxist);
             
         }
 
@@ -981,5 +981,23 @@ function fnSelectEmdList(tagId){
     }catch(error){
         util.toast(msg.callCenter,"error");
         util.dismissProgress();
+    }
+}
+
+function setDeviceCoodi(){
+    var devicePos = geolocation.getPosition();
+    if(devicePos != null){
+
+        // 소수점 8자리까지 저장(보류)
+        // geolocation.getPosition()[1].toString().split('.')[0] +'.'+ geolocation.getPosition()[1].toString().split('.')[1].substr(0,8);
+
+        $("#posXDevice").text(devicePos[0]);
+        $("#posYDevice").text(devicePos[1]);
+        $("#posXDevice").attr('class','red');
+        $("#posYDevice").attr('class','red');
+    }else{
+        var message = "점검위치 재조회";
+        $("#posXDevice").text(message);
+        $("#posYDevice").text(message);
     }
 }

@@ -53,14 +53,14 @@
 /* 탭s4*/
 @media (min-height:1001px){
     #work_page .title { margin-top: 20.5%; text-align: center; position: relative; top:2em;}
-    /* #work_page .menu-list { margin: 2% 15%; position: absolute; top:22em; } */
-    #work_page .menu-list { margin: 2% 15%; position: absolute; top:26em; }
+    #work_page .menu-list { margin: 2% 15%; position: absolute; top:22em; }
+    /* #work_page .menu-list { margin: 2% 15%; position: absolute; top:26em; } */
 }
 /* 탭s3*/
 @media (max-height:1000px){
     #work_page .title { margin-top: 20.5%; text-align: center; }
-    /* #work_page .menu-list { margin: 2% 15%; position: absolute; top:19em; } */
-    #work_page .menu-list { margin: 2% 15%; position: absolute; top:23em; }
+    #work_page .menu-list { margin: 2% 15%; position: absolute; top:19em; }
+    /* #work_page .menu-list { margin: 2% 15%; position: absolute; top:23em; } */
     
 }
 #work_page .title img { width: 32%; }
@@ -288,3 +288,5 @@
  .redText{color:red}
  
  .mainBtn{height: 15em;}
+
+ .txtCenter{text-align: center;}

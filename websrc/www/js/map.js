@@ -263,9 +263,9 @@ var MapUtil = {
             legend.className = "legend spot ol-unselectable ol-control";
             var legendHtml = '<ul>';
             legendHtml += '<li class="spot">지점번호판<span class="total">0건</span></li>';
-            legendHtml += '<li class="riverPk"><div id="riverPkCircle"></div>둔치주차장<span class="total">0건</span></li>';
-            legendHtml += '<li class="eqOut"><div id="eqOutCircle"></div>지진옥외대피소<span class="total">0건</span></li>';
-            legendHtml += '<li class="taxiSt"><div id="taxiStCircle"></div>택시승강장<span class="total">0건</span></li>';
+            // legendHtml += '<li class="riverPk"><div id="riverPkCircle"></div>둔치주차장<span class="total">0건</span></li>';
+            // legendHtml += '<li class="eqOut"><div id="eqOutCircle"></div>지진옥외대피소<span class="total">0건</span></li>';
+            // legendHtml += '<li class="taxiSt"><div id="taxiStCircle"></div>택시승강장<span class="total">0건</span></li>';
             // legendHtml += '<li class="entrc" onclick = "removeLayers('+"'intrvl'"+')">기초구간<span class="total">0건</span></li>';
             legendHtml += '</ul>';
             legend.innerHTML = legendHtml;
@@ -2286,14 +2286,28 @@ var MapUtil = {
 
                     $("#rcRslt").val(rcRslt);
 
+                    //현재위치 좌표셋팅
+                    if(data.posXDevice != null){
+                        $("#posXDevice").text(data.posXDevice);
+                        $("#posYDevice").text(data.posYDevice);
+                    }else{
+                        setDeviceCoodi();
+                    }
+
+                    //사용자 입력좌표
+                    $("#posXUser").val(data.posXUser);
+                    $("#posYUser").val(data.posYUser);
+
                     //사진셋팅
                     if(data.files != null){
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                var obj = "<a href = 'data:image;base64," + image.base64 + "' class='js-smartPhoto'>" 
                                 obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
                                 obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+                                obj += "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                obj += "</a>";
     
                                 $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
@@ -2304,6 +2318,7 @@ var MapUtil = {
                                 util.toast(msg.wrongPhoto);
                             }
                         }
+                        $(".js-smartPhoto").SmartPhoto();
                     }
 
                     //사진탭 오픈
@@ -2488,9 +2503,11 @@ var MapUtil = {
                         for (var index in data.files) {
                             var image = data.files[index];
                             if (util.isEmpty(image.base64) === false && image.base64.length > 0) {
-                                var obj = "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                var obj = "<a href = 'data:image;base64," + image.base64 + "' class='js-smartPhoto'>" 
                                 obj += "<input id='imaFilSn' type='hidden' value='" + image.imageFilesSn + "'/>";
                                 obj += "<input id='tbGbn' type='hidden' value='" + image.tbGbn + "'/>";
+                                obj += "<img style='height: 220px; width: 100%; object-fit: contain' src='data:image;base64," + image.base64 + "'/>";
+                                obj += "</a>";
     
                                 $(".picInfo." + image.tbGbn + " .picImg").html('');
                                 $(".picInfo." + image.tbGbn + " .picImg").html(obj);
@@ -2501,6 +2518,7 @@ var MapUtil = {
                                 util.toast(msg.wrongPhoto);
                             }
                         }
+                        $(".js-smartPhoto").SmartPhoto();
                     }
 
                     //사진탭 오픈
@@ -2790,6 +2808,17 @@ switch (mode) {
         serviceProjection = ol.proj.get('SR-ORG:6640');
         break;
 }
+
+ //현재위치 셋팅
+ var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
+    tracking: true,
+    projection: baseProjection,
+    trackingOptions: {
+        maximumAge: 0,
+        enableHighAccuracy: true,
+        timeout: 600000
+    }
+});
 
 // 레이어 리스트(/** @type {json} */ )
 var layers, map;
@@ -3096,55 +3125,55 @@ var mapInit = function(mapId, pos) {
     });
 
     //사믈주소(둔치주차장) 레이어(중앙)
-    var tlv_spot_aot_riverpk_skm = getFeatureCoodi_Center({
-        title: "사믈주소(둔치주차장)",
-        //typeName: "tlv_aot_test_skm",
-        // typeName: "tlv_spot_aot_obj_skm",
-        typeName: "tlv_spot_aot_riverpk_skm",
-        dataType: DATA_TYPE.AOT,
-        style: {
-            pointSt:"#ff0000"
-            ,polygonSt:"rgba(255, 051, 102, 0.5)"
-            ,lineSt:"rgba(204, 0, 0, 0.5)"
-            ,radius: 12
-        },
-        // maxResolution: 2,
-        viewProgress: false,
-        renderMode: 'vector',
-        zIndex : 1
-    });
+    // var tlv_spot_aot_riverpk_skm = getFeatureCoodi_Center({
+    //     title: "사믈주소(둔치주차장)",
+    //     //typeName: "tlv_aot_test_skm",
+    //     // typeName: "tlv_spot_aot_obj_skm",
+    //     typeName: "tlv_spot_aot_riverpk_skm",
+    //     dataType: DATA_TYPE.AOT,
+    //     style: {
+    //         pointSt:"#ff0000"
+    //         ,polygonSt:"rgba(255, 051, 102, 0.5)"
+    //         ,lineSt:"rgba(204, 0, 0, 0.5)"
+    //         ,radius: 12
+    //     },
+    //     // maxResolution: 2,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
 
     //사믈주소(지진옥외대피소) 레이어(중앙)
-    var tlv_spot_aot_eqout_skm = getFeatureCoodi_Center({
-        title: "사믈주소(지진옥외대피소)",
-        typeName: "tlv_spot_aot_eqout_skm",
-        dataType: DATA_TYPE.AOT,
-        style: {
-            pointSt:"#00ff00"
-            ,polygonSt:"rgba(0, 102, 0, 0.5)"
-            ,lineSt:"rgba(0, 051, 0, 0.5)"
-            ,radius: 12
-        },
-        // maxResolution: 2,
-        viewProgress: false,
-        renderMode: 'vector',
-        zIndex : 1
-    });
+    // var tlv_spot_aot_eqout_skm = getFeatureCoodi_Center({
+    //     title: "사믈주소(지진옥외대피소)",
+    //     typeName: "tlv_spot_aot_eqout_skm",
+    //     dataType: DATA_TYPE.AOT,
+    //     style: {
+    //         pointSt:"#00ff00"
+    //         ,polygonSt:"rgba(0, 102, 0, 0.5)"
+    //         ,lineSt:"rgba(0, 051, 0, 0.5)"
+    //         ,radius: 12
+    //     },
+    //     // maxResolution: 2,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
 
     //사믈주소(택시승강장) 레이어(중앙)
-    var tlv_spot_aot_taxist_skm = getFeatureCoodi_Center({
-        title: "사믈주소(택시승강장)",
-        typeName: "tlv_spot_aot_taxist_skm",
-        dataType: DATA_TYPE.AOT,
-        style: {
-            pointSt:"#ff7300"
-            ,radius: 12
-        },
-        // maxResolution: 2,
-        viewProgress: false,
-        renderMode: 'vector',
-        zIndex : 1
-    });
+    // var tlv_spot_aot_taxist_skm = getFeatureCoodi_Center({
+    //     title: "사믈주소(택시승강장)",
+    //     typeName: "tlv_spot_aot_taxist_skm",
+    //     dataType: DATA_TYPE.AOT,
+    //     style: {
+    //         pointSt:"#ff7300"
+    //         ,radius: 12
+    //     },
+    //     // maxResolution: 2,
+    //     viewProgress: false,
+    //     renderMode: 'vector',
+    //     zIndex : 1
+    // });
     
 
     layers = {
@@ -3156,9 +3185,9 @@ var mapInit = function(mapId, pos) {
         // "buld": lyr_tl_spbd_buld,
         ,"sppn": lyr_tl_sppn_panel
         ,"intrvl":lyr_tl_sprd_intrvl
-        ,"riverpk":tlv_spot_aot_riverpk_skm
-        ,"eqout":tlv_spot_aot_eqout_skm
-        ,"taxist":tlv_spot_aot_taxist_skm
+        // ,"riverpk":tlv_spot_aot_riverpk_skm
+        // ,"eqout":tlv_spot_aot_eqout_skm
+        // ,"taxist":tlv_spot_aot_taxist_skm
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
     };

@@ -1279,3 +1279,20 @@ function changeArea_areaGdSd(id){
     // checkChangeOrigin('areaGbnLbl');
     setGdfyWide(id);
 }
+
+function checkMaxNum(event) {
+
+    var _pattern = /^(\d{1,8}([.]\d{0,8})?)?$/;
+
+    var _value = event.srcElement.value;
+    
+    if (!_pattern.test(_value)) {
+        alert(msg.coodiLength);
+
+        event.srcElement.value = event.srcElement.value.substring(0,event.srcElement.value.length - 1);
+
+        event.srcElement.focus();
+
+    }
+
+}

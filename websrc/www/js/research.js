@@ -890,6 +890,22 @@ function submitResearchEtc(){
     //     util.toast("사진을 두장 모두 촬영해주세요.","warning");
     //     return;
     // }
+
+    //점검위치좌표
+    var posXDevice = $("#posXDevice").text();
+    var posYDevice = $("#posYDevice").text();
+
+    //사용자입력좌표
+    var posXUser = $("#posXUser").val();
+    var posYUser = $("#posYUser").val();
+
+    var _pattern = /^(\d{1,8}([.]\d{0,8})?)?$/;
+    if (!_pattern.test(posXUser) || !_pattern.test(posYUser)) {
+
+        util.toast(msg.coodiLength,"warning");
+
+        return;
+    }
     
 
     navigator.notification.confirm(msgText, function(btnindex){
@@ -906,7 +922,11 @@ function submitResearchEtc(){
                 rcSttCd : rcSttCdSel,
                 rcRslt : rcRslt,
                 opeManId : workId,
-                files : files
+                files : files,
+                posXDevice : posXDevice,
+                posYDevice : posYDevice,
+                posXUser : posXUser,
+                posYUser : posYUser
             };
     
             var link = URLs.insertResearchStateEtc;

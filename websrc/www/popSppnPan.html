@@ -177,6 +177,33 @@
 								</td>
 							</tr>
 							<tr>
+								<th scope="row">단말기 x좌표</th>
+								<td colspan="2">
+									<p id="posXDevice">&nbsp;</p>
+								</td>
+								<td rowspan="2">
+									<button onclick="setDeviceCoodi()" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left btnPossible">점검위치</button>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">단말기 y좌표</th>
+								<td colspan="2">
+									<p id="posYDevice">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">사용자 x좌표</th>
+								<td colspan="3">
+									<input type='text' id='posXUser' class="cell100 txtCenter" placeholder='좌표입력(필수아님)' inputmode="decimal" oninput="checkMaxNum(event)"/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">사용자 y좌표</th>
+								<td colspan="3">
+									<input type='text' id='posYUser' class="cell100 txtCenter" placeholder='좌표입력(필수아님)' inputmode="decimal" oninput="checkMaxNum(event)" />
+								</td>
+							</tr>
+							<tr>
 								<th scope="row">점검결과</th>
 								<td colspan='3'>
 									<textarea id="rcRslt" oninput="checkRcRslt()" placeholder="점검결과를 입력하세요."></textarea>

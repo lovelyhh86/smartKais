@@ -213,7 +213,8 @@ public class CameraActivity extends Activity implements SensorEventListener {
 
 		List<Camera.Size> previewSizeList = params.getSupportedPreviewSizes();
 		for(Camera.Size cs : previewSizeList){
-			if(cs.width / 100 == 19) {
+//			if(cs.width / 100 == 19) {
+			if(cs.width / 100 == 6) {
 				params.setPreviewSize(cs.width, cs.height);
 				break;
 			}
