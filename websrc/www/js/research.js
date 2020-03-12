@@ -896,11 +896,11 @@ function submitResearchEtc(){
     var posYDevice = $("#posYDevice").text();
 
     //사용자입력좌표
-    var posXUser = $("#posXUser").val();
-    var posYUser = $("#posYUser").val();
+    var posXSurvey = $("#posXSurvey").val();
+    var posYSurvey = $("#posYSurvey").val();
 
     var _pattern = /^(\d{1,8}([.]\d{0,8})?)?$/;
-    if (!_pattern.test(posXUser) || !_pattern.test(posYUser)) {
+    if (!_pattern.test(posXSurvey) || !_pattern.test(posYSurvey)) {
 
         util.toast(msg.coodiLength,"warning");
 
@@ -925,8 +925,8 @@ function submitResearchEtc(){
                 files : files,
                 posXDevice : posXDevice,
                 posYDevice : posYDevice,
-                posXUser : posXUser,
-                posYUser : posYUser
+                posXSurvey : posXSurvey,
+                posYSurvey : posYSurvey
             };
     
             var link = URLs.insertResearchStateEtc;
@@ -1200,6 +1200,11 @@ function checkRcSttCdEtc(){
     }
     //점검상태 셋팅
     $("#rcSttCd_new").text(rcSttCdSel);
+
+    //점검일자 셋팅
+    setResearchDate();
+    //글자수 체크
+    txtMaxlength('rcRslt',50);
 
 }
 

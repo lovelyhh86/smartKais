@@ -228,6 +228,9 @@ div.ui-checkbox, div.ui-radio {margin: .55em 0;position: relative;}
 .photoWrap{display: none; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; 
 	/* width:48em; height: 560px; */
 }
+.photoWrapEtc{border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; 
+	/* width:48em; height: 560px; */
+}
 .photoTitle{padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
 .photoPage{display: inline-block; position: absolute; right: 1em}
 .photoPage .autoTitle{right: 4em;width: 8em; position: absolute;}

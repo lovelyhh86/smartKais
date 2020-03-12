@@ -44,6 +44,8 @@ function closeDetailView(id){
     emptyResearchList();
     //사진 변경값 초기화
     MapUtil.photo.refresh();
+    //확대창 삭제
+    $(".smartphoto").parents("div").remove();
 
     // var newLbl = $("p[name*='newLbl']").text();
     // if(newLbl != ""){
@@ -1798,7 +1800,7 @@ function makeImg(){
     var date = util.getToday();
     var title = $(".infoHeader .title .label").text();
 
-    $("#photoDialog .photoTable .picInfo .picImg a img").each(function(i, o){
+    $(".picImg a img").each(function(i, o){
         var data = new Object() ;
         var picInfo = $(o).parent().parent().parent();
         var picType = picInfo.data('picType');

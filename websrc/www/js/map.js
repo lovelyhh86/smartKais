@@ -151,7 +151,7 @@ var MapUtil = {
             });
         },
         takePhotoHandler: function() {
-            $(".photoWrap .picInfo .btnPoint").click(function(evt) {
+            $(".picInfo .btnPoint").click(function(evt) {
                 var _this = $(this);
                 util.takePictureFromCamera(function(ret) {
                     var picInfo = $(evt.target).parent().parent(); // class="picInfo"
@@ -2229,6 +2229,9 @@ var MapUtil = {
                     return;
                 }
 
+                //원본 데이터 셋팅
+                setOriginData(data);
+
                 if(layerID == DATA_TYPE.SPPN){
                     //제목
                     var title = "<span class='label'>[{0}] {1}<span>".format("지점번호판",data.spoNoCd);
@@ -2295,8 +2298,8 @@ var MapUtil = {
                     }
 
                     //사용자 입력좌표
-                    $("#posXUser").val(data.posXUser);
-                    $("#posYUser").val(data.posYUser);
+                    $("#posXSurvey").val(data.posXSurvey);
+                    $("#posYSurvey").val(data.posYSurvey);
 
                     //사진셋팅
                     if(data.files != null){

@@ -790,27 +790,27 @@ var locStyle = function (styleOptions, feature, mixStyle) {
 // 지점번호 스타일
 var sppnStyle = function (styleOptions, feature, mixStyle) {
 
-    var opt = {
-        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.45, 35],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'pixels',
-            src: 'img/icon_legend04.png'
-        }))
-    };
-
     var ltChcYn = feature.get('LT_CHC_YN');
 
-    if(ltChcYn != null){
-        opt = {
-            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                anchor: [0.45, 35],
-                anchorXUnits: 'fraction',
-                anchorYUnits: 'pixels',
-                src: 'img/check_spot.png'
-            }))
-        };
+    var anchorY = 35; // 아이콘 위치
+    var iconNm = 'image/icon_legend05.png'; // 아이콘 명칭
+
+    if(ltChcYn == null){
+        iconNm = 'image/icon_legend05.png'; // 아이콘 명칭
+    }else if(ltChcYn == '1000'){
+        iconNm = 'image/icon_legend05_c1.png'; // 아이콘 명칭
+    }else if(ltChcYn != '1000'){
+        iconNm = 'image/icon_legend05_c2.png'; // 아이콘 명칭
     }
+
+    opt = {
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            anchor: [0.45, anchorY],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            src: iconNm
+        }))
+    };
 
     return new ol.style.Style(opt);
 };

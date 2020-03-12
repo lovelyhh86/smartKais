@@ -996,7 +996,7 @@ function setDeviceCoodi(){
         $("#posXDevice").attr('class','red');
         $("#posYDevice").attr('class','red');
     }else{
-        var message = "점검위치 재조회";
+        var message = "점검위치 재조회(필수아님)";
         $("#posXDevice").text(message);
         $("#posYDevice").text(message);
     }
