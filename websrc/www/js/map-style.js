@@ -796,11 +796,11 @@ var sppnStyle = function (styleOptions, feature, mixStyle) {
     var iconNm = 'image/icon_legend05.png'; // 아이콘 명칭
 
     if(ltChcYn == null){
-        iconNm = 'image/icon_legend05.png'; // 아이콘 명칭
-    }else if(ltChcYn == '1000'){
-        iconNm = 'image/icon_legend05_c1.png'; // 아이콘 명칭
-    }else if(ltChcYn != '1000'){
-        iconNm = 'image/icon_legend05_c2.png'; // 아이콘 명칭
+        iconNm = 'image/icon_legend05.png';
+    }else if(ltChcYn == '1000' || ltChcYn == '1'){
+        iconNm = 'image/icon_legend05_c1.png'; 
+    }else{
+        iconNm = 'image/icon_legend05_c2.png';
     }
 
     opt = {
