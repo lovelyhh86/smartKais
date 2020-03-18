@@ -987,10 +987,6 @@ function fnSelectEmdList(tagId){
 function setDeviceCoodi(){
     var devicePos = geolocation.getPosition();
     if(devicePos != null){
-
-        // 소수점 8자리까지 저장(보류)
-        // geolocation.getPosition()[1].toString().split('.')[0] +'.'+ geolocation.getPosition()[1].toString().split('.')[1].substr(0,8);
-
         $("#posXDevice").text(devicePos[0]);
         $("#posYDevice").text(devicePos[1]);
         $("#posXDevice").attr('class','red');

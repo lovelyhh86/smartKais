@@ -914,7 +914,7 @@ function submitResearchEtc(){
             var sendParams = {
                 // sigCd : app.info.sigCd,
                 // workId : app.info.opeId,
-                mode : app.info.mode == "11"? "10" : null, // 중앙테스트용
+                mode : app.info.mode == "11"? "10" : 00, // 중앙테스트용
                 sigCd : sigCd,
                 trgSn : trgSn,
                 trgGbn : trgGbn,
@@ -1566,7 +1566,7 @@ function testCenter(svcNm){
 //                 svcNm :svcNm,
                 sigCd : app.info.sigCd,
                 workId : app.info.opeId,
-                mode : app.info.mode == "11"? "10" : null // 중앙테스트용
+                mode : app.info.mode == "11"? "10" :00// 중앙테스트용
             };
         
         var urldata = URLs.postURL(svcNm ,param);

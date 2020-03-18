@@ -359,7 +359,7 @@ var getFeatureCoodi_Center = function(options){
                 bbox: extent,
                 sigCd : app.info.sigCd,
                 workId : app.info.opeId,
-                mode : app.info.mode == "11"? "10" : null // 중앙테스트용
+                mode : app.info.mode == "11"? "10" : 00 // 중앙테스트용
             };
 
             var urldata = URLs.postURL(URLs.coodiMapSvcCenter, param);
