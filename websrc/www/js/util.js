@@ -983,16 +983,60 @@ function fnSelectEmdList(tagId){
         util.dismissProgress();
     }
 }
+//위치정보 동의 처리
+function checkAgreeLocation(){
+    var agreeLocation = localStorage['agreeLocation'];
+    if(agreeLocation == null || agreeLocation == undefined || agreeLocation == 'N'){
+        navigator.notification.confirm(msg.agreePersonCoodi, function(btnindex){
+            if(btnindex == 1){
+                localStorage['agreeLocation'] = 'Y';
+                setDeviceCoodi();
+            }else{
+                localStorage['agreeLocation'] = 'N';
+                var message = "점검위치 조회(필수아님)";
+                $("#posXDevice").text(message);
+                $("#posYDevice").text(message);
+            }
+        }, "위치정보 수집 및 이용안내", ["동의","취소"]);
+    }else if(agreeLocation == 'Y'){
+        setDeviceCoodi();
+    }else{
+        var message = "점검위치 조회(필수아님)";
+        $("#posXDevice").text(message);
+        $("#posYDevice").text(message);
+    }
 
+}
+
+//현재위치 좌표조회
 function setDeviceCoodi(){
     var devicePos = geolocation.getPosition();
+    var agreeLocation = localStorage['agreeLocation'];
+
+    if(agreeLocation == null || agreeLocation == undefined){
+        checkAgreeLocation();
+        return;
+    }else if(agreeLocation == 'N'){
+        var message = "점검위치 조회(필수아님)";
+        $("#posXDevice").text(message);
+        $("#posYDevice").text(message);
+        return;
+    }
+
     if(devicePos != null){
-        $("#posXDevice").text(devicePos[0]);
-        $("#posYDevice").text(devicePos[1]);
-        $("#posXDevice").attr('class','red');
-        $("#posYDevice").attr('class','red');
+        if(localStorage['agreeLocation'] == 'Y'){
+            $("#posXDevice").text(devicePos[0]);
+            $("#posYDevice").text(devicePos[1]);
+            $("#posXDevice").attr('class','red');
+            $("#posYDevice").attr('class','red');
+        }else{
+            var message = "점검위치 조회(필수아님)";
+            $("#posXDevice").text(message);
+            $("#posYDevice").text(message);
+        }
+
     }else{
-        var message = "점검위치 재조회(필수아님)";
+        var message = "점검위치 조회(필수아님)";
         $("#posXDevice").text(message);
         $("#posYDevice").text(message);
     }

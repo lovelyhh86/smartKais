@@ -97,7 +97,7 @@ function tableListDivScroll(event){
         var tagName = event.target.tagName;
 
         if(mod > 0 && rowSize >= resultSize){
-            if(scrollTop >= resultHeight - tableHeight){
+            if(scrollTop + 5 >= resultHeight - tableHeight){
                 var paramPos = pos;
                 var paramSize = size;
                 if(pos < rowSize){
@@ -1444,9 +1444,9 @@ function insertResearchForPopup(index,rdGdftySn,rdFtyLcSn,rdGdftySe){
 
         var msgForm = "정상 상태로 점검하시겠습니까?";
     
-        navigator.notification.confirm(msgForm, function(btnindex){
+        // navigator.notification.confirm(msgForm, function(btnindex){
     
-            if(btnindex == 1){
+        //     if(btnindex == 1){
                 // var targetID = $("#row" + i);
     
                 //배정년도
@@ -1539,8 +1539,8 @@ function insertResearchForPopup(index,rdGdftySn,rdFtyLcSn,rdGdftySe){
                     util.dismissProgress
                 );
                 
-            }
-        }, "알림", ["확인","취소"]);
+            // }
+    //     }, "알림", ["확인","취소"]);
         
     } catch (error) {
         util.toast("점검실패","error");

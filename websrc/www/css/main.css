@@ -1,5 +1,5 @@
 /** JQuery Mobile override CSS */
-.ui-mobile .ui-mobile-viewport { width: 100%; height: 100%; }
+.ui-mobile .ui-mobile-viewport { width: 100%; height: 100%; position: fixed;}
 
 /** effect all */
 .ui-btn { border: 0; background-color: transparent; background-size: 100%; background-repeat: no-repeat; }
