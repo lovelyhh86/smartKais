@@ -997,7 +997,7 @@ function checkAgreeLocation(){
                 $("#posXDevice").text(message);
                 $("#posYDevice").text(message);
             }
-        }, "위치정보 수집 및 이용안내", ["동의","취소"]);
+        }, "위치정보 수집 및 이용안내", ["동의","미동의"]);
     }else if(agreeLocation == 'Y'){
         setDeviceCoodi();
     }else{
