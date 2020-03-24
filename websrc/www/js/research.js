@@ -894,6 +894,10 @@ function submitResearchEtc(){
     //점검위치좌표
     var posXDevice = $("#posXDevice").text();
     var posYDevice = $("#posYDevice").text();
+    if(isNaN(posXDevice) || isNaN(posYDevice)){
+        posXDevice = null;
+        posYDevice = null;
+    }
 
     //사용자입력좌표
     var posXSurvey = $("#posXSurvey").val();
@@ -1395,7 +1399,11 @@ function changeOneFeatherStyle(trgGbn, rcSttCd){
                             featureClone[featureIndex].set("RE_STT_SUM",1);
                         }else{
                             featureClone[featureIndex].set("RE_STT_SUM",0);
-                        }    
+                        }
+                        
+                        if(type == DATA_TYPE.SPPN){
+                            featureClone[featureIndex].set("LT_CHC_YN",rcSttCd);
+                        }
                     }
 
                     

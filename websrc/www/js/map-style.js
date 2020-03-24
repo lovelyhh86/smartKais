@@ -797,7 +797,7 @@ var sppnStyle = function (styleOptions, feature, mixStyle) {
 
     if(ltChcYn == null){
         iconNm = 'image/icon_legend05.png';
-    }else if(ltChcYn == '1000' || ltChcYn == '1'){
+    }else if(ltChcYn == '1000'){
         iconNm = 'image/icon_legend05_c1.png'; 
     }else{
         iconNm = 'image/icon_legend05_c2.png';
