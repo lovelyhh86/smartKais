@@ -1645,6 +1645,7 @@ function selectSppnList(posParam){
 
                 var detailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
                 var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/icon_legend05.png'></img>";
+                var vrifyDe = d.vrifyDe.substr(0,4) + '-' + d.vrifyDe.substr(4,2) + '-' + d.vrifyDe.substr(6,2);
 
                 $("#mySppnListTable > tbody:last").append(
                     rowHtml.format(
@@ -1652,7 +1653,7 @@ function selectSppnList(posParam){
                         ,locBtn
                         ,d.spoNoCd
                         ,d.instt
-                        ,d.vrifyDe
+                        ,vrifyDe
                         ,d.fcltylc
                         ,detailBtn
                         ));

@@ -728,6 +728,7 @@ var MapUtil = {
             break;
             case "sppnList":
                 url = pages.sppnList;
+                detailTaget = '#listView';
             break;
             
             
