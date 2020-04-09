@@ -83,6 +83,8 @@ var URLs = {
     "coodiMapSvcCenter":{svcNm: "coodiMapSvcCenter"},
     //지점번호 정보조회
     "selectSppnPanInfo":{svcNm: "selectSppnPanInfo"},
+    //지점번호 정보 리스트 조회
+    "selectSppnPanelList":{svcNm: "selectSppnPanelList"},
     //사물주소 정보조회
     "selectSpotObjInfo":{svcNm: "selectSpotObjInfo"},
     //둔치주차장 정보조회
@@ -159,6 +161,7 @@ var pages = {
     "locationManageSpgfPage": { link: function () { return URLs.realPath() + "popLocManageSpgfList.html"; }, div: "#locationManageSpgf_page" },
     "locationManageSpbdNmtgPage": { link: function () { return URLs.realPath() + "popLocManageSpbdNmtgList.html"; }, div: "#locationManageSpbdNmtg_page" },
     "locationManagePage": { link: function () { return URLs.realPath() + "popLocManageList.html"; }, div: "#locationManage_page" },
+    "sppnList": { link: function () { return URLs.realPath() + "sppnList.html"; }, div: "#sppnList_page" },
 };
 
 //var SSO = {
@@ -353,3 +356,6 @@ CODE_GROUP["BULD_SE_CD"] = "CMMN017";
 CODE_GROUP["BUL_NMT_TY"] = "CMMN056";
 CODE_GROUP["BUL_NMT_LO"] = "CMMN068";
 CODE_GROUP["LGHT_CD"] = "CMMN130";
+
+//지점번호판 설치기관코드
+CODE_GROUP["INSTT_CD"] = "SCPN003";

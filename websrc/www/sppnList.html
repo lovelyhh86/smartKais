@@ -1,0 +1,93 @@
+w<!DOCTYPE html>
+<html LANG="ko">
+<body class="intro">
+<div data-role="" id="sppnList_page">
+    <div class="detailView">
+        <p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
+        <div class="infoWrap">
+            <div class="infoHeader" onclick="toggleDetailView();">
+                <p class="listTitle">
+                    <span class="">지점번호판 목록</span>
+                </p>
+            </div>
+            <div class="infoListContent">
+                <div class="tableWrap">
+                    <table class="dataTable" summary="">
+                            <caption>검색조건</caption>
+                            <colgroup>
+                                <col class="cell20">
+                                <col class="cell20">
+                                <col class="cell20">
+                                <col class="cell20">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">지점번호</th>
+                                    <td>
+                                        <input type="text" id="searchSpoNoCd" class="cell100"></input>
+                                    </td>
+                                    <th scope="row">설치기관</th>
+                                    <td>
+                                        <select id = "insttCdSel" class="cell100">
+                                        </select>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <th scope="row">검증일자</th>
+                                    <td colspan="3">
+                                        <input type="text" id="insttDeStart" class="cell30"></input>
+                                        <spen>~</spen>
+                                        <input type="text" id="insttDeEnd" class="cell30"></input>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">건수</th>
+                                    <td colspan="3">
+                                        <p id='rowSize'>0</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <button id="sppnListBnt" class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="selectSppnList()">검색</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+                <div id="mySppnListDiv" class='tableListDiv'>
+                    <table id="mySppnListTable">
+                        <colgroup>
+                            <col style="width:6%;"></col>
+                            <col class="cell20"></col>
+                            <col class="cell20"></col>
+                            <col class="cell10"></col>
+                            <col class="cell20"></col>
+                            <col class="cell10"></col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>위치</th>
+                                <th>지점번호</th>
+                                <th>설치기관</th>
+                                <th>검증일자</th>
+                                <th>시설물</th>
+                                <th>상세</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="">
+                                <td colspan="7">검색 조건을 선택하고 검색 버튼을 눌러주세요.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- footer 시작 -->
+            <div class="infoFooter">
+                    <span onclick="closeDetailView('listView');" class="btnNormal">닫기</span>
+            </div>
+            <!-- footer 끝 -->
+        </div>
+    </div>
+</div>
+</body>

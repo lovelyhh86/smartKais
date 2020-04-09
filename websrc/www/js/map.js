@@ -210,15 +210,16 @@ var MapUtil = {
     controls: {
         init: function() {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
-            ol.inherits(MapUtil.controls.legendSppnControl, ol.control.Control);   // 범례(기타점검)
+            ol.inherits(MapUtil.controls.legendSppnControl, ol.control.Control);    // 범례(기타점검)
             ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
-            ol.inherits(MapUtil.controls.locManageControl, ol.control.Control); // 안내시설 위치관리
+            ol.inherits(MapUtil.controls.locManageControl, ol.control.Control);     // 안내시설 위치관리
             ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);   // 상세주소 기초조사
             ol.inherits(MapUtil.controls.returnZoomControl, ol.control.Control);    // 기본 축척으로 변경
             ol.inherits(MapUtil.controls.refreshMapControl, ol.control.Control);    // 지도 새로고침
             ol.inherits(MapUtil.controls.researchControl, ol.control.Control);      // 나의배정목록(안내시설물)
             ol.inherits(MapUtil.controls.researchSpbdControl, ol.control.Control);  // 나의배정목록(건물번호판)
+            ol.inherits(MapUtil.controls.sppnListControl, ol.control.Control);      // 지점번호판목록
             ol.inherits(MapUtil.controls.measureControl, ol.control.Control);       // 거리측정
             ol.inherits(MapUtil.controls.oldResearchCheckControl, ol.control.Control);  // 작년점검여부표시
             ol.inherits(MapUtil.controls.layerOnOffControl, ol.control.Control);  // 레이어컨트롤
@@ -561,6 +562,27 @@ var MapUtil = {
                 target: options.target
             });
         },
+        sppnListControl: function(opt_options){
+            var sppnList = function(){
+                MapUtil.openList('sppnList');
+                //심플팝업 초기화
+                $("#popup-content").empty();
+                $("#popup").hide();
+            }
+            
+            var element = document.createElement('div');
+            element.className = 'legend selectSppnList ol-unselectable ol-control';
+    
+            var html = "<ul><li class='sSppnList'>지점번호판 목록</li></ul>";
+            element.innerHTML = html;
+    
+            element.addEventListener('click', sppnList, false);
+    
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+        },
         measureControl: function(opt_options){
             
             var measureToggle = function(){
@@ -704,6 +726,10 @@ var MapUtil = {
             case "locationManageSpbdNmtg":
                 url = pages.locationManageSpbdNmtgPage;
             break;
+            case "sppnList":
+                url = pages.sppnList;
+            break;
+            
             
         }
         $(detailTaget).load(url.link(), function() {
@@ -959,6 +985,18 @@ var MapUtil = {
             break;
             case "locationManageSpbdNmtg":
                 selectLocationMoveSpbdNmgtContent();
+            break;
+            case "sppnList":
+                
+                makeOptSelectBox("insttCdSel","INSTT_CD","","전체","");
+
+                $( "#datepicker" ).datepicker({
+                    changeMonth: true,
+                    changeYear: true
+                  });
+                $( "#datepicker" ).datepicker("option","dateFormat","yy-mm-dd");
+                $( "#datepicker" ).datepicker($.datepicker.regional[ "kr" ]);
+                
             break;
         }
     },
@@ -2354,7 +2392,7 @@ var MapUtil = {
                 break;
         }
 
-        var url = URLs.postURL(link, { "objMngNo": objMngNo, "sigCd": sigCd, "workId": app.info.opeId, mode : app.info.mode == "11"? "10" : null });
+        var url = URLs.postURL(link, { "objMngNo": objMngNo, "sigCd": sigCd, "workId": app.info.opeId, mode : app.info.mode == "11"? "10" : 00 });
         util.showProgress();
         util.postAJAX({}, url).then(
             function(context, rCode, results) {
@@ -2924,6 +2962,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.refreshMapControl(),
             new MapUtil.controls.researchControl(),
             new MapUtil.controls.researchSpbdControl(),
+            new MapUtil.controls.sppnListControl(),
             new MapUtil.controls.measureControl(),
             new MapUtil.controls.oldResearchCheckControl(),
             new MapUtil.controls.layerOnOffControl(),

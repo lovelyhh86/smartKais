@@ -665,7 +665,8 @@ function layerToggle(context){
             $(".legend.spot").toggle(false);
             //건물번호판
             // $(".legend.spbd").toggle(false);
-
+            //지점번호판 목록
+            $(".selectSppnList").toggle(false);
             //안내시설목록
             $(".selectResearch").toggle(true);
             //레이어관리
@@ -729,7 +730,9 @@ function layerToggle(context){
             // $(".locManageSpgf").toggle(false);
             // $(".locManageSpbd").toggle(true);
             // $(".selectResearchSpbd").toggle(true);
-
+            
+            //지점번호판 목록
+            $(".selectSppnList").toggle(true);
             //안내시설목록
             $(".selectResearch").toggle(false);
             //레이어관리

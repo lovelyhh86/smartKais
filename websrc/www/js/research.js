@@ -255,11 +255,14 @@ function selectResearchContent(trgGbn,posParam,sizeParam){
         var data = results.data;
         
         if (rcode != 0 || util.isEmpty(data) === true) {
-            $("#myResearchTable > tbody").empty();
-            var rowHtml = '<tr class=""><td colspan="7">검색된 목록이 없습니다.</td></tr>';
-            $("#myResearchTable > tbody:last").append(rowHtml);
-            $("#rowSize").text('0');
-            util.dismissProgress();
+            // $("#myResearchTable > tbody").empty();
+            // var rowHtml = '<tr class=""><td colspan="7">검색된 목록이 없습니다.</td></tr>';
+            // $("#myResearchTable > tbody:last").append(rowHtml);
+            // $("#rowSize").text('0');
+            // util.dismissProgress();
+
+            clearList("myResearchTable");
+
             return;
         } else {
             for(var i in data) {
@@ -1598,4 +1601,94 @@ function testCenter(svcNm){
         })
 }   
 
+function selectSppnList(posParam){
+    util.showProgress();
+
+    if(posParam == null){
+        $("#mySppnListTable > tbody").empty();
+        $("#rowSize").text(0);
+        pos = 0;
+        posParam = 0;
+        sizeParam = 9;
+    }
+
+    var searchSpoNoCd   = $("#searchSpoNoCd").val();
+    var insttCdSel      = $("#insttCdSel").val();
+    var insttDeStart    = $("#insttCdSel").val();
+    var insttDeEnd      = $("#insttDeEnd").val();
+
+    var param = {
+        mode : app.info.mode == "11"? "10" : 00
+        ,sigCd : app.info.sigCd
+        ,spoNoCd : searchSpoNoCd
+        ,insttCd : insttCdSel
+        ,insttDeStart : insttDeStart
+        ,insttDeEnd : insttDeEnd
+    };
+
+    var url = URLs.postURL(URLs.selectSppnPanelList, param);
+
+    util.postAJAX("", url).then(function (context, rcode, results) {
+        
+        var data = results.data;
+        if (rcode != 0 || util.isEmpty(data) === true) {
+
+            clearList("mySppnListTable",6);
+
+            return;
+        }else{
+            for(var i in data) {
+                var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
+                var d = data[i];
+                
+                $("#row" + i).removeData();
+
+                var detailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
+                var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/icon_legend05.png'></img>";
+
+                $("#mySppnListTable > tbody:last").append(
+                    rowHtml.format(
+                        "row" + i
+                        ,locBtn
+                        ,d.spoNoCd
+                        ,d.instt
+                        ,d.vrifyDe
+                        ,d.fcltylc
+                        ,detailBtn
+                        ));
+
+                $("#row" + i).data("xGrs80",d.xGrs80);
+                $("#row" + i).data("yGrs80",d.yGrs80);
+                
+            }
+        }
+
+
+        util.dismissProgress();
+    
+    }, function(context,xhr,error) {
+        console.log("갱신실패"+ error+'   '+ xhr);
+
+        navigator.notification.alert('목록 요청을 실패하였습니다. 잠시 후 다시 시도하십시오.',
+                function (){
+                    util.goBack();
+            },'알림', '확인');
+            util.dismissProgress();
+    });
+
+
+
+}
+
+function clearList(id,colCnt){
+    if(colCnt == null){
+        colCnt = 7;
+    }
+
+    $("#"+id+" > tbody").empty();
+    var rowHtml = '<tr class=""><td colspan="'+colCnt+'">검색된 목록이 없습니다.</td></tr>';
+    $("#"+id+" > tbody:last").append(rowHtml);
+    $("#rowSize").text('0');
+    util.dismissProgress();
+}
     
