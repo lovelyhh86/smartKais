@@ -793,11 +793,11 @@ var MapUtil = {
                     header = "건물정보";
 
                     break;
-                case DATA_TYPE.SPPN:
-                    url = pages.detail_sppn;
-                    header = "지점번호판";
+                // case DATA_TYPE.SPPN:
+                //     url = pages.detail_sppn;
+                //     header = "지점번호판";
 
-                    break;
+                //     break;
                 case DATA_TYPE.ADRDC:
                     // url = pages.detail_adrdc;
                     url = pages.detail_adrdcList;
@@ -991,12 +991,16 @@ var MapUtil = {
                 
                 makeOptSelectBox("insttCdSel","INSTT_CD","","전체","");
 
-                $( "#datepicker" ).datepicker({
-                    changeMonth: true,
-                    changeYear: true
-                  });
-                $( "#datepicker" ).datepicker("option","dateFormat","yy-mm-dd");
-                $( "#datepicker" ).datepicker($.datepicker.regional[ "kr" ]);
+                var dateNmlist = ["vrifyDeStart","vrifyDeEnd"]
+
+                for(i in dateNmlist){
+                    $( "#" + dateNmlist[i] ).datepicker({
+                        changeMonth: true,
+                        changeYear: true
+                      });
+                    $( "#" + dateNmlist[i] ).datepicker("option","dateFormat","yy-mm-dd");
+                    $( "#" + dateNmlist[i] ).datepicker($.datepicker.regional[ "kr" ]);
+                }
                 
             break;
         }

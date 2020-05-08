@@ -541,4 +541,13 @@ function moveToXyTranceProj(x,y){
     map.updateSize();
 
     toggleDetailView();
-}   
+}
+
+function moveToCoordi(x,y){
+    var coordinate = [x,y];
+    setPosition(coordinate);
+    map.updateSize();
+
+    toggleDetailView();
+
+}

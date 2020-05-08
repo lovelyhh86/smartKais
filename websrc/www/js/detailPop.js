@@ -3962,3 +3962,22 @@ function setNameplateView(){
     
 }
 
+
+function goSppnDetail(i){
+    var targetE = $("#row"+i);
+
+    var layerId = DATA_TYPE.SPPN;
+    var spoNoCd = targetE.data("spoNoSeq");
+    var sigCd = targetE.data("sigCd");
+
+    $("#listView").popup({
+        afterclose: function( event, ui ) {
+            MapUtil.openDetailSigCd(layerId, spoNoCd, sigCd);
+        }
+    });
+
+    $("#listView").popup("close");
+
+    
+}
+

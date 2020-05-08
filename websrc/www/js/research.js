@@ -1614,16 +1614,16 @@ function selectSppnList(posParam){
 
     var searchSpoNoCd   = $("#searchSpoNoCd").val();
     var insttCdSel      = $("#insttCdSel").val();
-    var insttDeStart    = $("#insttCdSel").val();
-    var insttDeEnd      = $("#insttDeEnd").val();
+    var vrifyDeStart    = $("#vrifyDeStart").val().replace(/-/gi,'');;
+    var vrifyDeEnd      = $("#vrifyDeEnd").val().replace(/-/gi,'');;
 
     var param = {
         mode : app.info.mode == "11"? "10" : 00
         ,sigCd : app.info.sigCd
         ,spoNoCd : searchSpoNoCd
         ,insttCd : insttCdSel
-        ,insttDeStart : insttDeStart
-        ,insttDeEnd : insttDeEnd
+        ,vrifyDeStart : vrifyDeStart
+        ,vrifyDeEnd : vrifyDeEnd
     };
 
     var url = URLs.postURL(URLs.selectSppnPanelList, param);
@@ -1637,14 +1637,19 @@ function selectSppnList(posParam){
 
             return;
         }else{
+
+            var rowSize = data.length;
+            $("#rowSize").text(rowSize);
+            
+
             for(var i in data) {
                 var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
                 var d = data[i];
                 
                 $("#row" + i).removeData();
 
-                var detailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goResearchDetail("+i+")'>정비</button>";
-                var locBtn = "<img onclick='getResearchLocation("+i+")' src='./image/icon_legend05.png'></img>";
+                var detailBtn = "<button class='ui-btn ui-corner-all ui-shadow btnPossible cell80' onclick='goSppnDetail("+i+")'>상세</button>";
+                var locBtn = "<img onclick='moveToCoordi("+d.xGrs80+","+d.yGrs80+")' src='./image/icon_legend05.png'></img>";
                 var vrifyDe = d.vrifyDe.substr(0,4) + '-' + d.vrifyDe.substr(4,2) + '-' + d.vrifyDe.substr(6,2);
 
                 $("#mySppnListTable > tbody:last").append(
@@ -1660,6 +1665,10 @@ function selectSppnList(posParam){
 
                 $("#row" + i).data("xGrs80",d.xGrs80);
                 $("#row" + i).data("yGrs80",d.yGrs80);
+                $("#row" + i).data("spoNoSeq",d.spoNoSeq);
+                $("#row" + i).data("sigCd",d.sigCd);
+                $("#row" + i).data("spoNoCd",d.spoNoCd);
+                
                 
             }
         }
