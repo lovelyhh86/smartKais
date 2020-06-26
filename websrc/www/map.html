@@ -54,6 +54,18 @@
     </div>
     <div id="layerTogglePop" class="layerTogglePop">
         <div class="dataTItle">레이어관리</div>
+            <div class="ui-field-contain resDiv">
+                <label class='resLabel'>[점검여부]</label>
+                <fieldset data-role="controlgroup" data-type="horizontal" class="resField">
+                    <input type="radio" name="researchRadio" id="researchRadio-a" value="YN" checked="checked" onclick="clickRefreschMap()">
+                    <label for="researchRadio-a">전체</label>
+                    <input type="radio" name="researchRadio" id="researchRadio-b" value="Y" onclick="clickRefreschMap()">
+                    <label for="researchRadio-b">점검완료</label>
+                    <input type="radio" name="researchRadio" id="researchRadio-c" value="N" onclick="clickRefreschMap()">
+                    <label for="researchRadio-c">미점검</label>
+                </fieldset>
+            </div>
+            
             <div class="ui-field-contain">
                 <label for="locSel" class="lytgLabel locBack">[도로명판]<br>[기초번호판]<br>[지역안내판]</label>
                 <select name="locSel" id="locSel" data-role="flipswitch" onchange="layerToggleController(this.id)">
@@ -61,6 +73,7 @@
                         <option value="on" selected="">켜기</option>
                 </select>
             </div>
+
             <div class="ui-field-contain">
                 <label for="nmtgSel" class="lytgLabel nmtgBack">[건물번호판]</label>
                 <select name="nmtgSel" id="nmtgSel" data-role="flipswitch" onchange="layerToggleController(this.id)">
@@ -75,17 +88,19 @@
                         <option value="on" >켜기</option>
                 </select>
             </div>
-            <form>
-                <fieldset data-role="controlgroup" data-type="horizontal">
-                    <legend>Horizontal:</legend>
-                    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
-                    <label for="radio-choice-h-2a">One</label>
-                    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
-                    <label for="radio-choice-h-2b">Two</label>
-                    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="other">
-                    <label for="radio-choice-h-2c">Three</label>
+
+            <div class="ui-field-contain crsrdDiv">
+                <label class='resLabel'>[교차로(설치량)]</label>
+                <fieldset data-role="controlgroup" data-type="horizontal" class="resField">
+                    <input type="radio" name="crsrdpRadio" id="crsrdpRadio-a" value="" checked="checked" onclick="layerToggleController('crsrdpSel')">
+                    <label for="crsrdpRadio-a">끄기</label>
+                    <input type="radio" name="crsrdpRadio" id="crsrdpRadio-b" value="C" onclick="layerToggleController('crsrdpSel')">
+                    <label for="crsrdpRadio-b">차량용</label>
+                    <input type="radio" name="crsrdpRadio" id="crsrdpRadio-c" value="P" onclick="layerToggleController('crsrdpSel')">
+                    <label for="crsrdpRadio-c">보행자용</label>
                 </fieldset>
-            </form>
+            </div>
+
         <p onclick="closePopup('layerTogglePop')" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
     </div>
     <div id="search">

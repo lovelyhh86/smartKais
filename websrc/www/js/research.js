@@ -974,7 +974,7 @@ function makeOptSelectBox(target,colume,unUsed,defaultText,defaultValue){
         var targetId = $("#"+target);
         targetId.empty();
         
-        if(defaultText != ""){
+        if(defaultText != "" && defaultText != null){
             targetId.append("<option value='"+defaultValue+"'>"+defaultText+"</option>");
         }
 
@@ -1614,14 +1614,24 @@ function selectSppnList(posParam){
 
     var searchSpoNoCd   = $("#searchSpoNoCd").val();
     var insttCdSel      = $("#insttCdSel").val();
-    var vrifyDeStart    = $("#vrifyDeStart").val().replace(/-/gi,'');;
-    var vrifyDeEnd      = $("#vrifyDeEnd").val().replace(/-/gi,'');;
+    var rcSttCdSel      = $("#srchRcSttCdSel").val();
+    var fcltylcCdSel    = $("#fcltylcCdSel").val();
+    var vrifyDeStart    = $("#vrifyDeStart").val().replace(/-/gi,'');
+    var vrifyDeEnd      = $("#vrifyDeEnd").val().replace(/-/gi,'');
+
+    // if(vrifyDeStart > vrifyDeEnd){
+    //     util.toast('검증일자 종료날짜보다 시작날짜가 클 수 없습니다. 다시 입력해 주시기 바랍니다.','warning');
+    //     return;
+    // }
+
 
     var param = {
         mode : app.info.mode == "11"? "10" : 00
         ,sigCd : app.info.sigCd
         ,spoNoCd : searchSpoNoCd
         ,insttCd : insttCdSel
+        ,rcSttCd : rcSttCdSel
+        ,fcltylcCd : fcltylcCdSel
         ,vrifyDeStart : vrifyDeStart
         ,vrifyDeEnd : vrifyDeEnd
     };
@@ -1633,7 +1643,7 @@ function selectSppnList(posParam){
         var data = results.data;
         if (rcode != 0 || util.isEmpty(data) === true) {
 
-            clearList("mySppnListTable",6);
+            clearList("mySppnListTable",7);
 
             return;
         }else{
@@ -1643,7 +1653,7 @@ function selectSppnList(posParam){
             
 
             for(var i in data) {
-                var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
+                var rowHtml = '<tr id={0}><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>{7}</td></tr>';
                 var d = data[i];
                 
                 $("#row" + i).removeData();
@@ -1660,6 +1670,7 @@ function selectSppnList(posParam){
                         ,d.instt
                         ,vrifyDe
                         ,d.fcltylc
+                        ,d.rcSttCd
                         ,detailBtn
                         ));
 

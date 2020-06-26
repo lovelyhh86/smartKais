@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html LANG="ko">
+
+<body class="intro">
+
+<div id="crsrdpView_page">
+	<div class="detailView">
+		
+		<p class="openImage"><span onclick="toggleDetailView();">열림</span></p>
+		<div class="infoWrap">
+			<!-- header -->
+			<div class="infoHeader">
+				<p class="title" onclick="toggleDetailView();"></p>
+			</div>
+			
+			<!-- content -->
+			<div class="infoContent">
+				<div id="mask"></div>
+				
+				<input id="sigCd" type="hidden" value="" />
+
+				<div class="blueTitle">
+					<h2>기본정보</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="기본정보">
+						<caption>기본정보</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">교차로일련번호</th>
+								<td>
+									<p id="crsrdSn">&nbsp;</p>
+								</td>
+								<th scope="row">교차로명</th>
+								<td>
+									<p id="korCrsrd">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">교차로 유형</th>
+								<td>
+									<p id="crsrdTycdLbl">&nbsp;</p>
+									<select hidden id="crsrdTycd"></select>
+								</td>
+								<th scope="row">교차로 구분</th>
+								<td>
+									<p id="crsrdSeLbl">&nbsp;</p>
+									<select hidden id="crsrdSe"></select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>사용여부</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="사용여부">
+						<caption>사용여부</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">교차로 사용여부</th>
+								<td colspan="3">
+									<!-- <p id="crsUseYnLbl">&nbsp;</p> -->
+									<select id="crsUseYn" onchange="changeCrsUseYn()"></select>
+								</td>
+							</tr>
+							<tr class = 'crsNotUseCdRow' hidden>
+								<th scope="row">변경사유</th>
+								<td colspan="3">
+									<!-- <p id="crsUseYnLbl">&nbsp;</p> -->
+									<select id="notUseCd">
+									</select>
+								</td>
+							</tr>
+							<tr class = 'crsNotUseCdRow' hidden>
+								<th scope="row">증빙자료</th>
+								<td colspan="3">
+									<div class="">
+										<div class="picInfo L" data-pic-type="L" data-pic-sn="">
+											<span class="picImg etc"></span>
+											<div class="dataBtn">
+												<span class="btnPoint">촬영</span>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>보행자용 도로명판 소요량</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="기본정보">
+						<caption>도로명판 소요량</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">보행자용 소요량</th>
+								<td>
+									<!-- <input type='number' id='reqamtP' class="cell100 txtCenter" inputmode="decimal" oninput="checkMaxNum(event)"/> -->
+									<select id="reqamtP" class="cell50">
+									</select>
+								</td>
+								<th scope="row">최소기준 소요량</th>
+								<td>
+									<p id="reqamtP_h">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">변경사유</th>
+								<td colspan="3">
+									<textarea id="reqamtPrn" class = 'cell100' oninput="txtMaxlength(this.id,50)" placeholder="변경사유를 입력하세요."></textarea>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">설치량</th>
+								<td>
+									<p id="baseLbl_P">&nbsp;</p>
+								</td>
+								<th scope="row">추가설치 필요량</th>
+								<td>
+									<p id="baseLbl_P_cnt">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>차량용 도로명판 소요량</h2>
+				</div>
+				<div class="tableWrap">
+					<table class="dataTable" summary="기본정보">
+						<caption>도로명판 소요량</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">차량용 소요량</th>
+								<td>
+									<!-- <input type='number' id='reqamtC' class="cell100 txtCenter" inputmode="decimal" oninput="checkMaxNum(event)"/> -->
+									<select id="reqamtC" class="cell50">
+									</select>
+								</td>
+								<th scope="row">최소기준 소요량</th>
+								<td>
+									<p id="reqamtC_h">&nbsp;</p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">변경사유</th>
+								<td colspan="3">
+									<textarea id="reqamtCrn" class = 'cell100' oninput="txtMaxlength(this.id,50)" placeholder="변경사유를 입력하세요."></textarea>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">설치량</th>
+								<td>
+									<p id="baseLbl_C">&nbsp;</p>
+								</td>
+								<th scope="row">추가설치 필요량</th>
+								<td>
+									<p id="baseLbl_C_cnt">&nbsp;</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="blueTitle">
+					<h2>관련 도로구간</h2>
+				</div>
+				<div class="tableWrap">
+					<table id = "relTable" class="dataTable" summary="관련 도로구간">
+						<caption>관련 도로구간</caption>
+						<colgroup>
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+							<col class="cell25">
+						</colgroup>
+						<thead>
+							<tr>
+								<td><spen>도로구간일련번호</spen></td>
+								<td><spen>도로명</spen></td>
+								<td><spen>도로명코드</spen></td>
+								<td><spen>도로구간시군구명</spen></td>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				
+				
+
+				<button id="submitCrsrdpBnt" class="ui-btn ui-corner-all ui-shadow btnPossible" onclick="submitCrsrdp()">저장</button>
+
+			</div> 
+			<!-- 정보 끝 -->
+			<!-- footer 시작 -->
+			<div class="infoFooter">
+				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
+			</div>
+			<!-- footer 끝 -->
+		</div>
+		<!-- content 끝  -->
+	</div>
+</div>
+</body>
+</html>

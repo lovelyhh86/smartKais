@@ -705,6 +705,8 @@ function layerToggle(context){
                 layerToggleController('intrvlSel');
                 layerToggleController('locSel');
                 layerToggleController('nmtgSel');
+                //교차로
+                layerToggleController('crsrdpSel');
                 
             } catch (error) {
                 map.addLayer(layers.loc);
@@ -782,6 +784,8 @@ function removeLayers(type){
         // map.removeLayer(layers.area);
         map.removeLayer(layers.loc);
         // map.removeLayer(layers.sppn);
+        map.removeLayer(layers.crsrdp_p);
+        map.removeLayer(layers.crsrdp_c);
         $("#moveInfo").hide();
     // }
 }
@@ -1043,4 +1047,18 @@ function setDeviceCoodi(){
         $("#posXDevice").text(message);
         $("#posYDevice").text(message);
     }
+}
+
+function clickRefreschMap(){
+    legendCntClear();
+    $('.refreshMap button').click();
+}
+
+function legendCntClear(){
+    $('.legend .rdpq .total').text(0 + '건');
+    $('.legend .area .total').text(0 + '건');
+    $('.legend .bsis .total').text(0 + '건');
+    $('.legend .rdpqW .total').text(0 + '건');
+    $('.legend .entrc .total').text(0 + '건');
+    $('.legend .spot .total').text(0 + '건');
 }

@@ -264,7 +264,7 @@
   
   .newPosMemo{display: none; position:absolute; top:23em; right:24%; width: 360px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff;z-index: 9001; }
   /* .newPosMemoText{min-height: 50px} */
-  .layerTogglePop{display: none; position:absolute; top:25em; right:24%; width: 20em; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff;z-index: 0; }
+  .layerTogglePop{display: none; position:absolute; top:21em; right:24%; width: 20em; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff;z-index: 0; }
 
   #newPosMemoText {-webkit-box-shadow: inset 0 0px 3px rgba(0,0,0,.2);box-shadow:'';    min-height: 100px;}
 

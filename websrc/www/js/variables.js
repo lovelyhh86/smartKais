@@ -93,6 +93,11 @@ var URLs = {
     "selectSpotEqOutInfo":{svcNm: "selectSpotEqOutInfo"},
     //택시승강장 정보조회
     "selectSpotTaxiStInfo":{svcNm: "selectSpotTaxiStInfo"},
+
+    //교차로 상세정보 조회
+    "selectCrsrdp":{svcNm: "selectCrsrdp"},
+    //교차로 정보 수정
+    "updateCrsrdp":{svcNm: "updateCrsrdp"},
     
     getURL: function (srcurl, jsondata) {
 
@@ -162,6 +167,9 @@ var pages = {
     "locationManageSpbdNmtgPage": { link: function () { return URLs.realPath() + "popLocManageSpbdNmtgList.html"; }, div: "#locationManageSpbdNmtg_page" },
     "locationManagePage": { link: function () { return URLs.realPath() + "popLocManageList.html"; }, div: "#locationManage_page" },
     "sppnList": { link: function () { return URLs.realPath() + "sppnList.html"; }, div: "#sppnList_page" },
+
+    "popCrsrdpPage": { link: function () { return URLs.realPath() + "popCrsrdp.html"; }, div: "#crsrdpView_page" },
+    
 };
 
 //var SSO = {
@@ -357,5 +365,22 @@ CODE_GROUP["BUL_NMT_TY"] = "CMMN056";
 CODE_GROUP["BUL_NMT_LO"] = "CMMN068";
 CODE_GROUP["LGHT_CD"] = "CMMN130";
 
+//****** 지점번호판 *******
 //지점번호판 설치기관코드
+CODE_GROUP["FCLTYLC_CD"] = "SCPN002";
 CODE_GROUP["INSTT_CD"] = "SCPN003";
+
+//****** 교차로 *******
+//교차로 유형
+CODE_GROUP["CRSRD_TYCD"] = "CMMN127";
+//교차로 구분코드
+CODE_GROUP["CRSRD_SE"] = "CMMN071";
+//교차로 사용대상 여부
+CODE_GROUP["CRS_USE_YN"] = "CMMN135";
+//교차로 사용안함 코드
+CODE_GROUP["NOT_USE_CD"] = "CMMN284";
+
+//보행자용 소요량(행안부 기준)
+CODE_GROUP["REQAMT_P"] = "CMMN132";
+//차량용 소요량(행안부 기준)
+CODE_GROUP["REQAMT_C"] = "CMMN133";

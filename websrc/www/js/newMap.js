@@ -546,6 +546,8 @@ function layerToggleController(type){
     var onOffGbn = $("#"+type).val();
     var layerType;
 
+    legendCntClear();
+
     if(type == 'locSel'){
         //위치(좌표계)
         layerType = layers.loc_pos;
@@ -565,9 +567,27 @@ function layerToggleController(type){
         //기초구간
         layerType = layers.intrvl;
         if(onOffGbn == "on"){
-            util.toast('기초구간을 사용하는 경우 안내시설 심볼요청이 원활하지 않을 수 있습니다.참고용으로만 사용해 주시기 바랍니다.','warning',5000);
+            util.toast('기초구간을 사용하는 경우 안내시설 표시가 원활하지 않을 수 있습니다. 참고용으로만 사용해 주시기 바랍니다.','warning',5000);
         }
+    }else if(type == 'crsrdpSel'){
+        
+        var crsrdpRadio = $("[name*=crsrdpRadio]:checked").val();
+
+        if(crsrdpRadio == "C"){//교차로_차량용
+            map.addLayer(layers.crsrdp_c);
+            map.removeLayer(layers.crsrdp_p);
+            util.toast('교차로를 사용하는 경우 안내시설 표시가 원활하지 않을 수 있습니다.','warning',5000);
+        }else if(crsrdpRadio == "P"){//교차로_보행자용
+            map.addLayer(layers.crsrdp_p);
+            map.removeLayer(layers.crsrdp_c);
+            util.toast('교차로를 사용하는 경우 안내시설 표시가 원활하지 않을 수 있습니다.','warning',5000);
+        }else{
+            map.removeLayer(layers.crsrdp_c);
+            map.removeLayer(layers.crsrdp_p);
+        }
+        return;
     }
+    
 
     if(onOffGbn == "on"){
         map.addLayer(layerType);
@@ -576,4 +596,8 @@ function layerToggleController(type){
     }
     
     
+}
+
+function crsrdpLayerToggle(layerType){
+
 }

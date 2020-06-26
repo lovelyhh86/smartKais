@@ -37,6 +37,21 @@
                                         <select id = "insttCdSel" class="cell100">
                                         </select>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">점검여부</th>
+                                    <td>
+                                        <select id = "srchRcSttCdSel" class="cell100">
+                                            <option value="">전체</option>
+                                            <option value="Y">점검</option>
+                                            <option value="N">미점검</option>
+                                        </select>
+                                    </td>
+                                    <th scope="row">시설물</th>
+                                    <td>
+                                        <select id = "fcltylcCdSel" class="cell100">
+                                        </select>
+                                    </td>
                                 </tr> 
                                 <tr>
                                     <th scope="row">검증일자</th>
@@ -64,10 +79,11 @@
                     <table id="mySppnListTable">
                         <colgroup>
                             <col style="width:6%;"></col>
-                            <col class="cell15"></col>
+                            <col class="cell20"></col>
                             <col class="cell15"></col>
                             <col class="cell15"></col>
                             <col class="cell20"></col>
+                            <col class="cell10"></col>
                             <col class="cell10"></col>
                         </colgroup>
                         <thead>
@@ -77,6 +93,7 @@
                                 <th>설치기관</th>
                                 <th>검증일자</th>
                                 <th>시설물</th>
+                                <th>점검</th>
                                 <th>상세</th>
                             </tr>
                         </thead>

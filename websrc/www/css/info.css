@@ -52,10 +52,10 @@
 
 
 /*지도 위 버튼*/
-.selectResearch {top: 15.5em;width: 9em;height: 3em;}
-.layerOnOffBtn { top: 18.5em; width: 9em; height: 3em;}
-.locManageSpgf { top: 21.5em; width: 9em; height: 3em;}
-.selectAdrdc { top: 24.5em; width: 9em; height: 3em;}
+.selectResearch {top: 19.5em;width: 9em;height: 3em;}
+.layerOnOffBtn { top: 22.5em; width: 9em; height: 3em;}
+.locManageSpgf { top: 25.5em; width: 9em; height: 3em;}
+.selectAdrdc { top: 28.5em; width: 9em; height: 3em;}
 
 .oldResearchCheck { top: 22.5em; width: 9em; height: 3em;}
 .selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
@@ -193,7 +193,7 @@
 	.dataWrap{display: inline-block; position:absolute; right:12em; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
 	.tableListDiv{width:auto; height: 54.5em ; overflow-y: scroll ;background-color:#f5f7f8}
 	#myResearchDiv{width:auto; height: 40.5em ; overflow-y: scroll ;background-color:#f5f7f8}
-	#mySppnListDiv{width:auto; height: 44.5em ; overflow-y: scroll ;background-color:#f5f7f8}
+	#mySppnListDiv{width:auto; height: 42.5em ; overflow-y: scroll ;background-color:#f5f7f8}
 	#locManageDiv{width:auto; height: 48.5em ; overflow-y: scroll ;background-color:#f5f7f8}
 }
 /* 탭s3*/
@@ -201,7 +201,7 @@
 	.dataWrap{display: inline-block; position:absolute; right:256px; border:1px solid #e3e5e6; box-shadow:1px 1px 1px #eef0f1; padding:5px; background-color: #fff; }
 	.tableListDiv{width:auto; height: 807px ; overflow-y: scroll ;background-color:#f5f7f8}
 	#myResearchDiv{width:auto; height: 36em ; overflow-y: scroll ;background-color:#f5f7f8}
-	#mySppnListDiv{width:auto; height: 40.5em ; overflow-y: scroll ;background-color:#f5f7f8}
+	#mySppnListDiv{width:auto; height: 38.5em ; overflow-y: scroll ;background-color:#f5f7f8}
 	#locManageDiv{width:auto; height: 44em ; overflow-y: scroll ;background-color:#f5f7f8}
 }
 .dataTItle{display: block; margin-bottom:20px; padding:10px 15px;background-color: #496388; text-align: left;color: #fff; text-shadow: none;}
@@ -307,9 +307,17 @@ table caption{display: none}
 
 .lytgLabel{width:30%!important; margin-left: 10px!important; padding: 0 10px 0px 40px; }
 
+.resDiv{border: 0.4em inset #008a31;}
+.resLabel{padding: 0 11em 0px 1em; width: 9em!important;}
+.resField{width:35em!important; margin: 1em 2em!important}
+
+.crsrdDiv{border: 0.4em inset #000596;}
+
+
 .locBack{background: #fff url(../image/mix_pos.png) no-repeat; background-size: 30px;}
 .nmtgBack{background: #fff url(../image/icon_legend04.png) no-repeat; background-size: 17px; background-position-x: 6px;}
 .intrvlBack{background: #fff url(../image/baseLine.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 10px;}
+.crsrdpBack{background: #fff url(../image/num.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 3px;}
 
 /**************** width ****************/
 .cell10{ width:9%!important;} .cell15{ width:16%;}
@@ -663,4 +671,12 @@ body{backface-visibility:hidden; display:block;margin:0; padding:0; font-family:
     margin-top: 2px;
     color: #fff;
     vertical-align: middle;
+}
+
+.dotText {
+	margin-left: -23px!important;
+  }
+
+.crsdpPhoto {
+	margin-left: 4em!important;
 }

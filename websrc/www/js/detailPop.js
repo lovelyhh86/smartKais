@@ -3980,4 +3980,137 @@ function goSppnDetail(i){
 
     
 }
+//교차로 사용여부 변경 체크
+function changeCrsUseYn(){
+    var crsUseYn = $("#crsUseYn").val();
+    
+    if(crsUseYn == "1"){
+        $(".crsNotUseCdRow").show();
+        util.toast("교차로 [사용안함] 선택 시 증빙자료(사진) 필수입니다.");
+        //변경사유
+        customSelectBox("notUseCd","NOT_USE_CD","03","0","2");
+    }else{
+        $(".crsNotUseCdRow").hide();
+        //변경사유 초기화
+        $("#notUseCd").empty();
+        //이미지 초기화
+        $(".picImg").empty();
+    }
+}
 
+//교차로 정보 수정
+function submitCrsrdp(){
+    var changeGbn = false;
+    //보행자용 소요량 변경
+    var reqamtP = $("#reqamtP").val();
+    var REQAMT_P_origin = $("#REQAMT_P_origin").val();
+    var reqamtPrn = $("#reqamtPrn").val();
+    var reqamtP_h = $("#reqamtP_h").text();
+    
+    if(reqamtP != REQAMT_P_origin){
+        if(reqamtPrn == ""){
+            util.toast("보행자용 소요량을 변경한 사유를 입력하세요.");
+            return;
+        }
+        changeGbn = true;
+    }
+
+     //차량용 소요량 변경
+     var reqamtC = $("#reqamtC").val();
+     var REQAMT_C_origin = $("#REQAMT_C_origin").val();
+     var reqamtCrn = $("#reqamtCrn").val();
+     var reqamtC_h = $("#reqamtC_h").text();
+
+     if(reqamtC != REQAMT_C_origin){
+         if(reqamtCrn == ""){
+             util.toast("차량용 소요량을 변경한 사유를 입력하세요.");
+             return;
+         }
+         changeGbn = true;
+     }
+
+     //교차로 사용여부
+     var crsUseYn = $("#crsUseYn").val();
+     var notUseCd = $("#notUseCd").val();
+     var CRS_USE_YN_origin = $("#CRS_USE_YN_origin").val();
+     if(crsUseYn != CRS_USE_YN_origin){
+        var files = makeImg();
+        if(files.length < 1){
+            util.toast("증빙자료는 필수입니다.");
+            return;
+        }else{
+            var base64 = files[0].base64;
+            var fileNm = files[0].name;
+        }
+        changeGbn = true;
+     }else{
+        notUseCd = null;
+     }
+
+
+     
+
+     //변경여부
+     if(!changeGbn){
+        util.toast("변경된 항목이 없습니다.");
+        return;
+     }else{
+        
+        navigator.notification.confirm(msg.isSave, function(btnindex){
+            
+            if(btnindex == 1){
+                var crsrdSn = $("#crsrdSn").text();
+                var sigCd = $("#sigCd").val();
+                
+                var sendParams = {
+                    crsrdSn     : crsrdSn
+                    ,sigCd      : sigCd
+                    ,reqamtP    : reqamtP
+                    ,reqamtPrn  : reqamtPrn
+                    ,reqamtC    : reqamtC
+                    ,reqamtCrn  : reqamtCrn
+                    ,crsUseYn   : crsUseYn
+                    ,notUseCd   : notUseCd
+                    
+                    ,base64      : base64
+                    ,fileNm      : fileNm
+
+                    ,opeManId   : app.info.opeId
+                }
+
+                var link = URLs.updateCrsrdp;
+
+                util.showProgress();
+                var url = URLs.postURL(link, sendParams);
+                util.postAJAX({}, url).then(
+                    function (context, rCode, results) {
+                        //통신오류처리
+                        if (rCode != 0 || results.response.status < 0) {
+                            navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                            util.dismissProgress();
+                            return;
+                        }
+    
+                        util.toast("저장이 완료 되었습니다.");
+    
+                        util.dismissProgress();
+
+                        //창닫기
+                        changedIdList = new Array();
+                        closeDetailView();
+
+                        //사용여부 변경시 지도 초기화
+                        if(crsUseYn != CRS_USE_YN_origin){
+                            $('.refreshMap button').click();
+                        }
+    
+                    },
+                    util.dismissProgress
+                );
+            }
+
+        }, "알림", ["확인","취소"]);
+
+     }
+
+}

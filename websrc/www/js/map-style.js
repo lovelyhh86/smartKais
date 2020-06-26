@@ -30,6 +30,7 @@ var DATA_TYPE = {
     ,SPPN: "06"
     ,ADRDC:"07",INTRVL:"08"
     ,AOT:"10",RIVERPK:"11"
+    ,CRSRDP_P:"20",CRSRDP_C:"21"
     ,getStatusNameWithCode: function (code) {
         switch (code) {
             case "00":
@@ -54,6 +55,10 @@ var DATA_TYPE = {
                 return DATA_TYPE.AOT;
             case "11":
                 return DATA_TYPE.RIVERPK;
+            case "20":
+                return DATA_TYPE.CRSRDP_P;
+            case "21":
+                return DATA_TYPE.CRSRDP_C;
             default:
                 return;
         }
@@ -87,6 +92,24 @@ var createTextStyle_new = function (label) {
         offsetX: defaultStyleOptions.label.textOffsetX,
         offsetY: defaultStyleOptions.label.textOffsetY,
         scale : 1.3
+    });
+};
+
+var createTextStyle_custom = function (label,styleOptions) {
+    var fillColor = styleOptions.text.fillColor;
+    var strokColor = styleOptions.text.strokColor;
+    var textOffsetX = styleOptions.text.width;
+    var textOffsetY = styleOptions.text.width;
+    var scale = styleOptions.text.scale;
+
+    return new ol.style.Text({
+        text: label,
+        textAlign: 'center',
+        fill: new ol.style.Fill({ color: fillColor }),
+        stroke: new ol.style.Stroke({ color: strokColor,width: defaultStyleOptions.label.width}),
+        offsetX: textOffsetX,
+        offsetY: textOffsetY,
+        scale : scale
     });
 };
 
@@ -260,6 +283,15 @@ var defaultStyle = function (feature, resolution, options) {
         styleOptions.label._text = text;
         
         style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
+    }else if(dataType == DATA_TYPE.CRSRDP_P || dataType == DATA_TYPE.CRSRDP_C){
+        // var format = options.style.label.format;
+        // var text = options.style.label.text;
+        
+        // key = text;
+
+        // styleOptions.label._text = text;
+        
+        style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
     }else{
         // var text = options.style.label.text;
         
@@ -306,6 +338,17 @@ var getStyle = function(dataType, styleOptions, feature, mixStyle) {
         case DATA_TYPE.INTRVL:
             retStyle = intrvlStyle(styleOptions,feature);
             break;
+        case DATA_TYPE.CRSRDP_P:
+            retStyle = crsrdpStyle(styleOptions,feature);
+            // retStyle = pointStyle2(styleOptions,feature);
+            break;
+        case DATA_TYPE.CRSRDP_C:
+            retStyle = crsrdpStyle(styleOptions,feature);
+            // retStyle = pointStyle2(styleOptions,feature);
+            // retStyle = iconStyle();
+            
+            
+            break;
 
     }
     return retStyle;
@@ -324,6 +367,24 @@ var locStyle = function (styleOptions, feature, mixStyle) {
         var ltChcYn = feature.get('LT_CHC_YN');
         //작년점검여부
         var ltChcYnOld = feature.get('LT_CHC_YN_OLD');
+        //해당위치 다수건
+        var label = feature.get('LABEL');
+
+        //점검상태에따른 표시 여부
+        var reasearchGbn = $('[name*=researchRadio]:checked').val();
+        if(reasearchGbn == "N"){
+            if(!isNaN(label) && label == ltChcYn){
+                return;
+            }else if(isNaN(label) && ltChcYn != 0){
+                return;
+            }
+        }else if(reasearchGbn == "Y"){
+            if(!isNaN(label) && label != ltChcYn){
+                return;
+            }else if(isNaN(label) && ltChcYn == 0){
+                return;
+            }
+        }
 
         //작년 점검여부 표시 + 올해 점검 포함
         // if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
@@ -944,6 +1005,17 @@ var entrcStyle = function (styleOptions,feature) {
         var ltChcYn = feature.get('LT_CHC_YN');
         //작년점검여부
         var ltChcYnOld = feature.get('LT_CHC_YN_OLD');
+        //점검상태에따른 표시 여부
+        var reasearchGbn = $('[name*=researchRadio]:checked').val();
+        if(reasearchGbn == "N"){
+            if(ltChcYn != 0){
+                return;
+            }
+        }else if(reasearchGbn == "Y"){
+            if(ltChcYn == 0){
+                return;
+            }
+        }
         
         //작년 점검여부 표시 + 올해 점검 포함
         // if(localStorage["researchCheckGbn"] != null && localStorage["researchCheckGbn"] == "true"){
@@ -1130,6 +1202,46 @@ var intrvlStyle = function(styleOptions,feature){
     return [style1,style2,style3];
 }
 
+//교차로
+var crsrdpStyle = function(styleOptions,feature){
+    var fillYn = feature.get('FILL_YN');
+    
+    var fillColor = 'rgba(0, 255, 0, 0.1)';
+    var strokeColor = 'green';
+    var strokeWidth = 4;
+    if(fillYn == 'N'){
+        fillColor = 'rgba(255, 0, 0, 0.1)';
+        strokeColor = 'red';
+        strokeWidth = 1;
+        styleOptions.text.strokColor = 'red';
+        styleOptions.text.fillColor = 'red';
+    }
+    opt = {
+        stroke: new ol.style.Stroke({
+            color: strokeColor,
+            width: strokeWidth
+          }),
+        fill: new ol.style.Fill({
+            color: fillColor
+          })
+    };
+    if(feature.get("BASELBL")){
+        opt.text = createTextStyle_custom(feature.get("BASELBL"),styleOptions);
+    }
+
+    return new ol.style.Style(opt);
+}
+
+var iconStyle = function(styleOptions,feature){
+    opt = {
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+               src: 'image/icon_crossRoad.png'
+        }))
+    };
+
+    return new ol.style.Style(opt);
+}
+
 // 시설물 상태(정상)
 var normalStatusStyle = function (styleOptions) {
     var opt = {
@@ -1214,6 +1326,23 @@ var pointStyle = function(styleOptions,feature){
             radius: 5,
             fill: new ol.style.Fill({
                 color: styleOptions.style.pointSt,
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'rgba(0, 0, 0)',
+                width: 1
+            })
+        })
+    };
+    return new ol.style.Style(opt);
+}
+
+//포인트2
+var pointStyle2 = function(styleOptions,feature){
+    var opt = {
+        image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({
+                color: styleOptions.color,
             }),
             stroke: new ol.style.Stroke({
                 color: 'rgba(0, 0, 0)',
