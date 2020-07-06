@@ -42,9 +42,10 @@ class PushReceiverRegister implements PushAppRegistListener
             appId = context.getApplicationContext().getPackageName();
         }
 
-        int res = PushLibrary.getInstance().setStart(context, SVRADDR, appId);
-        boolean regist = PushLibrary.getInstance().AppRegist(this, userId, null);
-        Log.d("-----------------------",res + "===" + regist);
+        //푸시호출막음
+//        int res = PushLibrary.getInstance().setStart(context, SVRADDR, appId);
+//        boolean regist = PushLibrary.getInstance().AppRegist(this, userId, null);
+//        Log.d("-----------------------",res + "===" + regist);
     }
 
     @Override
