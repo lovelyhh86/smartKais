@@ -894,25 +894,28 @@ function submitResearchEtc(){
     //     return;
     // }
 
-    //점검위치좌표
-    var posXDevice = $("#posXDevice").text();
-    var posYDevice = $("#posYDevice").text();
-    if(isNaN(posXDevice) || isNaN(posYDevice)){
-        posXDevice = null;
-        posYDevice = null;
+    if(trgGbn == "11"){
+        //점검위치좌표
+        var posXDevice = $("#posXDevice").text();
+        var posYDevice = $("#posYDevice").text();
+        if(isNaN(posXDevice) || isNaN(posYDevice)){
+            posXDevice = null;
+            posYDevice = null;
+        }
+
+        //사용자입력좌표
+        var posXSurvey = $("#posXSurvey").val();
+        var posYSurvey = $("#posYSurvey").val();
+
+        var _pattern = /^(\d{1,8}([.]\d{0,8})?)?$/;
+        if (!_pattern.test(posXSurvey) || !_pattern.test(posYSurvey)) {
+
+            util.toast(msg.coodiLength,"warning");
+
+            return;
+        }
     }
-
-    //사용자입력좌표
-    var posXSurvey = $("#posXSurvey").val();
-    var posYSurvey = $("#posYSurvey").val();
-
-    var _pattern = /^(\d{1,8}([.]\d{0,8})?)?$/;
-    if (!_pattern.test(posXSurvey) || !_pattern.test(posYSurvey)) {
-
-        util.toast(msg.coodiLength,"warning");
-
-        return;
-    }
+    
     
 
     navigator.notification.confirm(msgText, function(btnindex){

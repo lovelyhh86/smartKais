@@ -2537,6 +2537,9 @@ var MapUtil = {
                     var title = "<span class='label'>[{0}] {1}<span>".format(titleText,data.OBJ_NM);
                     $(".title").append(title);
 
+                    //사물유형
+                    $("#objKndNm").append(titleText);
+
                     /**점검상태 및 점검결과 */
                     var rcSttCd = data.RC_STT_CD; // 점검상태
                     var rcRslt = data.RC_RSLT; //점검결과
@@ -3386,55 +3389,55 @@ var mapInit = function(mapId, pos) {
     });
 
     //사믈주소(둔치주차장) 레이어(중앙)
-    // var tlv_spot_aot_riverpk_skm = getFeatureCoodi_Center({
-    //     title: "사믈주소(둔치주차장)",
-    //     //typeName: "tlv_aot_test_skm",
-    //     // typeName: "tlv_spot_aot_obj_skm",
-    //     typeName: "tlv_spot_aot_riverpk_skm",
-    //     dataType: DATA_TYPE.AOT,
-    //     style: {
-    //         pointSt:"#ff0000"
-    //         ,polygonSt:"rgba(255, 051, 102, 0.5)"
-    //         ,lineSt:"rgba(204, 0, 0, 0.5)"
-    //         ,radius: 12
-    //     },
-    //     // maxResolution: 2,
-    //     viewProgress: false,
-    //     renderMode: 'vector',
-    //     zIndex : 1
-    // });
+    var tlv_spot_aot_riverpk_skm = getFeatureCoodi_Center({
+        title: "사믈주소(둔치주차장)",
+        //typeName: "tlv_aot_test_skm",
+        // typeName: "tlv_spot_aot_obj_skm",
+        typeName: "tlv_spot_aot_riverpk_skm",
+        dataType: DATA_TYPE.AOT,
+        style: {
+            pointSt:"#ff0000"
+            ,polygonSt:"rgba(255, 051, 102, 0.5)"
+            ,lineSt:"rgba(204, 0, 0, 0.5)"
+            ,radius: 12
+        },
+        // maxResolution: 2,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
 
     //사믈주소(지진옥외대피소) 레이어(중앙)
-    // var tlv_spot_aot_eqout_skm = getFeatureCoodi_Center({
-    //     title: "사믈주소(지진옥외대피소)",
-    //     typeName: "tlv_spot_aot_eqout_skm",
-    //     dataType: DATA_TYPE.AOT,
-    //     style: {
-    //         pointSt:"#00ff00"
-    //         ,polygonSt:"rgba(0, 102, 0, 0.5)"
-    //         ,lineSt:"rgba(0, 051, 0, 0.5)"
-    //         ,radius: 12
-    //     },
-    //     // maxResolution: 2,
-    //     viewProgress: false,
-    //     renderMode: 'vector',
-    //     zIndex : 1
-    // });
+    var tlv_spot_aot_eqout_skm = getFeatureCoodi_Center({
+        title: "사믈주소(지진옥외대피소)",
+        typeName: "tlv_spot_aot_eqout_skm",
+        dataType: DATA_TYPE.AOT,
+        style: {
+            pointSt:"#00ff00"
+            ,polygonSt:"rgba(0, 102, 0, 0.5)"
+            ,lineSt:"rgba(0, 051, 0, 0.5)"
+            ,radius: 12
+        },
+        // maxResolution: 2,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
 
     //사믈주소(택시승강장) 레이어(중앙)
-    // var tlv_spot_aot_taxist_skm = getFeatureCoodi_Center({
-    //     title: "사믈주소(택시승강장)",
-    //     typeName: "tlv_spot_aot_taxist_skm",
-    //     dataType: DATA_TYPE.AOT,
-    //     style: {
-    //         pointSt:"#ff7300"
-    //         ,radius: 12
-    //     },
-    //     // maxResolution: 2,
-    //     viewProgress: false,
-    //     renderMode: 'vector',
-    //     zIndex : 1
-    // });
+    var tlv_spot_aot_taxist_skm = getFeatureCoodi_Center({
+        title: "사믈주소(택시승강장)",
+        typeName: "tlv_spot_aot_taxist_skm",
+        dataType: DATA_TYPE.AOT,
+        style: {
+            pointSt:"#ff7300"
+            ,radius: 12
+        },
+        // maxResolution: 2,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 1
+    });
     
 
     layers = {
@@ -3448,9 +3451,9 @@ var mapInit = function(mapId, pos) {
         ,"intrvl":lyr_tl_sprd_intrvl
         ,"crsrdp_p":lyr_tlv_sprd_crsrdp_p
         ,"crsrdp_c":lyr_tlv_sprd_crsrdp_c
-        // ,"riverpk":tlv_spot_aot_riverpk_skm
-        // ,"eqout":tlv_spot_aot_eqout_skm
-        // ,"taxist":tlv_spot_aot_taxist_skm
+        ,"riverpk":tlv_spot_aot_riverpk_skm
+        ,"eqout":tlv_spot_aot_eqout_skm
+        ,"taxist":tlv_spot_aot_taxist_skm
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
     };
@@ -5807,6 +5810,10 @@ function selectFeatureInfo(features,popIndex,layerID){
                         resultHtml = "";
                         strHtml = "";
                         buttonHtml = "";
+                        var fType = feature.getGeometry().getType();
+                        if(fType != "Point"){
+                            return;
+                        }
                         //사물주소 일련번호
                         var objMngNo = feature.get("objMngNo");
                         var objKndCd = feature.get("objKndCd");
