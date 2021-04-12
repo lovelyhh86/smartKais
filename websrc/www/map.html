@@ -103,6 +103,30 @@
 
         <p onclick="closePopup('layerTogglePop')" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
     </div>
+    <div id="layerTogglePop2" class="layerTogglePop">
+        <div class="dataTItle">레이어관리</div>
+            <div class="ui-field-contain">
+                <label for="panelReSSel" class="lytgLabel panelReBack">[점검여부]</label>
+        <!--         <select name="panelReSSel" id="panelReSSel" data-role="flipswitch" onchange="clickRefreschMap()">
+                        <option value="off" selected="">누적</option>
+                        <option value="on">올해</option>
+                </select> -->
+                <fieldset data-role="controlgroup" data-type="horizontal" class="sppnField">
+                    <input type="radio" name="panelReRadio" id="panelReRadio-a" value="A" checked="checked" onclick="clickRefreschMap()">
+                    <label for="panelReRadio-a">누적</label>
+                    <input type="radio" name="panelReRadio" id="panelReRadio-b" value="N" onclick="clickRefreschMap()">
+                    <label for="panelReRadio-b">올해</label>
+                </fieldset>
+            </div>
+        <div class="ui-field-contain">
+                <label for="panelGridSel" class="lytgLabel intrvlBack">[격자]</label>
+                <select name="panelGridSel" id="panelGridSel" data-role="flipswitch" onchange="layerToggleController(this.id)">
+                        <option value="off" selected="">끄기</option>
+                        <option value="on">켜기</option>
+                </select>
+            </div>
+        <p onclick="closePopup('layerTogglePop2')" class="dataClose"><img src="image/dataClose.png" title="닫기"></p>
+    </div>
     <div id="search">
         <form class="ui-filterable" >
             <input id="autocomplete-input" data-type="search" placeholder="도로명주소 검색(3글자 이상)">

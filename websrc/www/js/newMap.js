@@ -401,20 +401,23 @@ var getFeatureCoodi_Center = function(options){
                             SIG_CD : data[i].sigCd,
                             layerID : options.dataType,
                             LT_CHC_YN : data[i].ltChcYn,
+                            LT_CHC_YN_NEW : data[i].ltChcYnNew,
                         });
 
                         if(options.dataType == DATA_TYPE.SPPN){
                             var ponitX = data[i].pointX;
                             var ponitY = data[i].pointY;
-    
+                            
                             var point =  new ol.geom.Point([ponitX,ponitY]);
                             feature.setGeometry(point);
                             feature.setId(options.typeName + '.' +data[i].spoNoSeq);
-                            feature.setStyle(sppnStyle(options,feature));
-
+                            feature.set("VRIFY_DE",data[i].vrifyDe);
+                            feature.set("RESEARCH_GBN",data[i].researchGbn);
                             feature.set("SPO_NO_SEQ",data[i].spoNoSeq);
                             // feature.set("spoNoSeq",data[i].spoNoSeq);
                             feature.set("SPO_NO_CD",data[i].spoNoCd);
+
+                            feature.setStyle(sppnStyle(options,feature));
 
                         }else if(options.dataType == DATA_TYPE.AOT){
                             
@@ -586,9 +589,11 @@ function layerToggleController(type){
             map.removeLayer(layers.crsrdp_p);
         }
         return;
+    }else if(type == 'panelGridSel'){
+        layerType = layers.panelGrid;
     }
-    
 
+    
     if(onOffGbn == "on"){
         map.addLayer(layerType);
     }else{
@@ -600,4 +605,311 @@ function layerToggleController(type){
 
 function crsrdpLayerToggle(layerType){
 
+}
+
+function drawSppnGrid(){
+    var panelGridSource = new ol.source.Vector;
+
+    var option = {
+        style: {
+            lineSt:"rgba(0, 051, 0, 0.5)"
+        }
+    }
+
+    var extent = map.getView().calculateExtent();
+    // var extent = map.previousExtent_;
+
+    var zoomLevel = map.getView().getZoom();
+    var gridLevel;
+    switch (zoomLevel) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:    
+            gridLevel = 100000;
+            break;
+        case 5:
+        case 6:
+        case 7:
+            gridLevel = 10000;
+            break;
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            gridLevel = 1000;
+            break;
+        case 12:
+        case 13:
+        case 14:
+            gridLevel = 100;
+            break;
+        case 15:
+            gridLevel = 10;
+            break;
+        default:
+            gridLevel = 100000;
+            break;
+    }
+
+    var xp = parseInt(extent[0]/gridLevel) * gridLevel - gridLevel;
+    var yp = parseInt(extent[1]/gridLevel) * gridLevel - gridLevel;
+
+    var maxX = parseInt(extent[2]/gridLevel) * gridLevel + gridLevel;
+    var maxY = parseInt(extent[3]/gridLevel) * gridLevel + gridLevel;
+
+    var baseMinXp = 700000;
+    var baseMinYp = 1300000;
+    var baseMaxXp = 1400000;
+    var baseMaxYp = 2100000;
+
+    if(xp < baseMinXp){xp = baseMinXp;};
+    if(yp < baseMinYp){xp = baseMinYp;};
+    if(maxX > baseMaxXp){maxX = baseMaxXp;};
+    if(maxY > baseMaxYp){maxY = baseMaxYp;};
+
+    var pg;
+    var xpTmp = xp;
+    var ypTmp = yp;
+    var maxXTmp;
+    var maxYTmp;
+    var i = 0;
+
+    //가로선 그리기
+    while (ypTmp <= maxY) {
+        maxXTmp = maxX;
+        
+        //정해진 격자외에는 그리지 않게 하는 규칙
+        if(ypTmp >= 1700000 && ypTmp < 1800000 && maxX > 1300000){
+            maxXTmp = 1300000;
+        }else if(ypTmp >= 1500000 && ypTmp < 1700000 && maxX > 1200000){
+            maxXTmp = 1200000;
+        }else if(ypTmp >= 1400000 && ypTmp < 1500000 && maxX > 1000000){
+            maxXTmp = 1000000;
+        }else if(ypTmp >= 1300000 && ypTmp < 1400000 && maxX > 900000){
+            maxXTmp = 900000;
+        }
+        pg = new ol.geom.LineString();
+        pg.appendCoordinate([xp,ypTmp]);
+        pg.appendCoordinate([maxXTmp,ypTmp]);
+
+        var feature = new ol.Feature();
+        feature.setGeometry(pg);
+        feature.setStyle(lineStyle(option,feature));
+        feature.setId(i);
+        panelGridSource.addFeature(feature);
+
+        ypTmp += gridLevel;
+        i++;
+    }
+
+    //세로선 그리기
+    while (xpTmp <= maxX) {
+        ypTmp = yp;
+        
+        //정해진 격자외에는 그리지 않게 하는 규칙
+        if(xpTmp > 900000 && xpTmp <= 1000000 && ypTmp < 1400000){
+            ypTmp = 1400000;
+        }else if(xpTmp > 1000000 && xpTmp <= 1200000 && ypTmp < 1500000){
+            ypTmp = 1500000;
+        }else if(xpTmp > 1200000 && xpTmp <= 1300000 && ypTmp < 1700000){
+            ypTmp = 1700000;
+        }else if(xpTmp > 1300000 && xpTmp <= 1400000 && ypTmp < 1800000){
+            ypTmp = 1800000;
+        }
+        pg = new ol.geom.LineString();
+        pg.appendCoordinate([xpTmp,ypTmp]);
+        pg.appendCoordinate([xpTmp,maxY]);
+
+        var feature = new ol.Feature();
+        feature.setGeometry(pg);
+        feature.setStyle(lineStyle(option,feature));
+        feature.setId(i);
+        panelGridSource.addFeature(feature);
+
+        //라벨셋팅
+        // setGridLabel(extent, panelGridSource, gridLevel, i);
+
+        xpTmp += gridLevel;
+        i++;
+    }
+
+    //격자라벨
+    var isInit = true;
+    var labelLevel = gridLevel/2;
+    var gridLabel;
+    var gridLabelStyle;
+
+    while(ypTmp < maxY){
+        xpTmp = xp;
+        while(xpTmp < maxX){
+            isInit = true;
+
+            if(ypTmp >= 1700000 && ypTmp < 1800000 && xpTmp >= 1300000){
+                isInit = false;
+            }else if(ypTmp >= 1500000 && ypTmp < 1700000 && xpTmp >= 1200000){
+                isInit = false;
+            }else if(ypTmp >= 1400000 && ypTmp < 1500000 && xpTmp >= 1000000){
+                isInit = false;
+            }else if(ypTmp >= 1300000 && ypTmp < 1400000 && xpTmp >= 900000){
+                isInit = false;
+            }
+
+            if(isInit){
+
+                gridLabel = getKpnLabel(xpTmp + labelLevel, ypTmp + labelLevel, gridLevel);
+                
+                var opt = {
+                    // image: new ol.style.Circle({
+                    //     radius: 5,
+                    //     fill: new ol.style.Fill({
+                    //         color: 'red',
+                    //     }),
+                    //     stroke: new ol.style.Stroke({
+                    //         color: 'rgba(0, 0, 0)',
+                    //         width: 1
+                    //     })
+                    // }),
+                    text : new ol.style.Text({
+                        text: gridLabel,
+                        textAlign: 'center',
+                        fill: new ol.style.Fill({ color: 'white' }),
+                        stroke: new ol.style.Stroke({ color: 'black',width: 2}),
+                        offsetX: 0,
+                        offsetY: 0,
+                        scale : 2
+                    })
+                };
+                var pointStlye = new ol.style.Style(opt);
+                
+                var pointFeature = new ol.Feature();
+                var pointCd = new ol.geom.Point([xpTmp+gridLevel/2, ypTmp+gridLevel/2]);
+                pointFeature.setGeometry(pointCd);
+                pointFeature.setStyle(pointStlye);
+                pointFeature.setId(i);
+                panelGridSource.addFeature(pointFeature);
+
+            }
+
+            xpTmp += gridLevel;
+            i++;
+        }
+        ypTmp += gridLevel;
+    }
+
+    layers.panelGrid.getSource().clear();
+    layers.panelGrid.setSource(panelGridSource);
+
+    // map.addLayer(lyr_panel_grid);
+}
+
+//지점번호 격자 라벨 입력
+function setGridLabel(extent, panelGridSource, gridLevel, i){
+
+    var xp = parseInt(extent[0]/gridLevel) * gridLevel - gridLevel;
+    var yp = parseInt(extent[1]/gridLevel) * gridLevel - gridLevel;
+
+    var maxX = parseInt(extent[2]/gridLevel) * gridLevel + gridLevel;
+    var maxY = parseInt(extent[3]/gridLevel) * gridLevel + gridLevel;
+
+    var baseMinXp = 700000;
+    var baseMinYp = 1300000;
+    var baseMaxXp = 1400000;
+    var baseMaxYp = 2100000;
+
+    if(xp < baseMinXp){xp = baseMinXp;};
+    if(yp < baseMinYp){xp = baseMinYp;};
+    if(maxX > baseMaxXp){maxX = baseMaxXp;};
+    if(maxY > baseMaxYp){maxY = baseMaxYp;};
+
+    var xpTmp = xp;
+    var ypTmp = yp;
+
+    var labelLevel = gridLevel/2;
+    var gridLabel;
+    var gridLabelStyle;
+
+    var isInit = true;
+
+    while(ypTmp < maxY){
+        xpTmp = xp;
+        while(xpTmp < maxX){
+            isInit = true;
+
+            if(ypTmp >= 1700000 && ypTmp < 1800000 && xpTmp >= 1300000){
+                isInit = false;
+            }else if(ypTmp >= 1500000 && ypTmp < 1700000 && xpTmp >= 1200000){
+                isInit = false;
+            }else if(ypTmp >= 1400000 && ypTmp < 1500000 && xpTmp >= 1000000){
+                isInit = false;
+            }else if(ypTmp >= 1300000 && ypTmp < 1400000 && xpTmp >= 900000){
+                isInit = false;
+            }
+
+            if(isInit){
+
+                gridLabel = getKpnLabel(xpTmp + labelLevel,ypTmp + labelLevel, gridLevel);
+                
+               
+                
+                var styleOpt= new ol.style.Text({
+                    text: gridLabel,
+                    textAlign: 'center',
+                    fill: new ol.style.Fill({ color: 'white' }),
+                    stroke: new ol.style.Stroke({ color: 'black',width: 10}),
+                    offsetX: 0,
+                    offsetY: 0,
+                    scale : 1.3
+                });
+                gridLabelStyle = new ol.style.Style({
+                    text :  styleOpt
+                });
+
+                var opt = {
+                    image: new ol.style.Circle({
+                        radius: 5,
+                        fill: new ol.style.Fill({
+                            color: 'red',
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: 'rgba(0, 0, 0)',
+                            width: 1
+                        })
+                    })
+                };
+                var pointStlye = new ol.style.Style(opt);
+                
+                var feature = new ol.Feature();
+                var point = new ol.geom.Point([xpTmp+gridLevel/2, ypTmp+gridLevel/2]);
+                feature.setGeometry(point);
+                // feature.setStyle(pointStlye);
+                feature.setId(i+'-'+1);
+                panelGridSource.addFeature(feature);
+
+            }
+
+            xpTmp += gridLevel;
+        }
+        ypTmp += gridLevel;
+    }
+
+}
+
+//지점번호판 라벨 생성
+function getKpnLabel(x,y,level){
+    var hanCode = ["가","나","다","라","마","바","사","아","자","차","카","타","파","하"];
+    var base_x = 700000;
+    var base_y = 1300000;
+    var index = (7 - level.toString().length);
+    var xIndex = parseInt((x - base_x)/level).toString();
+    var yIndex = parseInt((y - base_y)/level).toString();
+
+    if(level < 1000000){
+        xIndex = ("00000"+xIndex).slice(-index);
+        yIndex = ("00000"+yIndex).slice(-index);
+    }
+
+    var kpnLabel = hanCode[xIndex.substr(0,1)] + hanCode[yIndex.substr(0,1)] + xIndex.substr(1,index) + yIndex.substr(1, index);
+
+    return kpnLabel;
 }

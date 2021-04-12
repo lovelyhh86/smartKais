@@ -671,6 +671,8 @@ function layerToggle(context){
             $(".selectResearch").toggle(true);
             //레이어관리
             $(".layerOnOffBtn").toggle(true);
+            //레이어관리2
+            $(".layerOnOffBtn2").toggle(false);
             //위치이동
             $(".locManageSpgf").toggle(true);
             //상세주소
@@ -739,6 +741,8 @@ function layerToggle(context){
             $(".selectResearch").toggle(false);
             //레이어관리
             $(".layerOnOffBtn").toggle(false);
+            //레이어관리2
+            $(".layerOnOffBtn2").toggle(true);
             //위치이동
             $(".locManageSpgf").toggle(false);
             //상세주소
@@ -753,6 +757,8 @@ function layerToggle(context){
             // $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
             
             map.addLayer(layers.sppn);
+            layerToggleController('panelGridSel');
+            
             // map.addLayer(layers.riverpk);
             // map.addLayer(layers.eqout);
             // map.addLayer(layers.taxist);
@@ -776,6 +782,7 @@ function removeLayers(type){
         // map.removeLayer(layers.loc_pos);
         map.removeLayer(layers.intrvl);
         map.removeLayer(layers.sppn);
+        map.removeLayer(layers.panelGrid);
         map.removeLayer(layers.riverpk);
         map.removeLayer(layers.eqout);
         map.removeLayer(layers.taxist);
@@ -783,7 +790,7 @@ function removeLayers(type){
         // map.removeLayer(layers.bsis);
         // map.removeLayer(layers.area);
         map.removeLayer(layers.loc);
-        // map.removeLayer(layers.sppn);
+        
         map.removeLayer(layers.crsrdp_p);
         map.removeLayer(layers.crsrdp_c);
         $("#moveInfo").hide();

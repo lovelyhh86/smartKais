@@ -279,6 +279,8 @@ CODE_GROUP["SCFGG_ULA1"] = "GFTY020";
 CODE_GROUP["DEL_STT_CD"] = "GFTY613";
 //점검상태코드
 CODE_GROUP["RC_STT_CD"] = "GFTY614";
+//지점번호판 점검코드
+CODE_GROUP["RC_STT_CD_2"] = "GFTY623";
 //인쇄방식
 CODE_GROUP["PRT_TY"] = "GFTY005";
 //재질
@@ -368,6 +370,7 @@ CODE_GROUP["LGHT_CD"] = "CMMN130";
 //****** 지점번호판 *******
 //지점번호판 설치기관코드
 CODE_GROUP["FCLTYLC_CD"] = "SCPN002";
+CODE_GROUP["INSTT_CD"] = "SCPN003";
 CODE_GROUP["INSTT_CD"] = "SCPN003";
 
 //****** 교차로 *******

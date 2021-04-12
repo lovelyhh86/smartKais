@@ -54,6 +54,7 @@
 /*지도 위 버튼*/
 .selectResearch {top: 19.5em;width: 9em;height: 3em;}
 .layerOnOffBtn { top: 22.5em; width: 9em; height: 3em;}
+.layerOnOffBtn2 { top: 8.5em; width: 9em; height: 3em;}
 .locManageSpgf { top: 25.5em; width: 9em; height: 3em;}
 .selectAdrdc { top: 28.5em; width: 9em; height: 3em;}
 
@@ -73,6 +74,7 @@
 .selectAdrdc ul {width: 9em;}
 .oldResearchCheck ul {width: 9em;}
 .layerOnOffBtn ul {width: 9em;}
+.layerOnOffBtn2 ul {width: 9em;}
 
 
 .legend ul li.nPos{background: #fff url(../image/plusPos2.png) 7px 4px no-repeat;background-size: 1.2em;width: 7.5em;}
@@ -310,6 +312,7 @@ table caption{display: none}
 .resDiv{border: 0.4em inset #008a31;}
 .resLabel{padding: 0 11em 0px 1em; width: 9em!important;}
 .resField{width:35em!important; margin: 1em 2em!important}
+.sppnField{width: 38em!important;margin: 0em 9em!important;position: relative;top: -1em;}
 
 .crsrdDiv{border: 0.4em inset #000596;}
 
@@ -318,6 +321,7 @@ table caption{display: none}
 .nmtgBack{background: #fff url(../image/icon_legend04.png) no-repeat; background-size: 17px; background-position-x: 6px;}
 .intrvlBack{background: #fff url(../image/baseLine.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 10px;}
 .crsrdpBack{background: #fff url(../image/num.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 3px;}
+.panelReBack{background: #fff url(../image/icon_legend05_c1.png) no-repeat; background-size: 17px; background-position-x: 10px;}
 
 /**************** width ****************/
 .cell10{ width:9%!important;} .cell15{ width:16%;}

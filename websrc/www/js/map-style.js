@@ -854,17 +854,40 @@ var locStyle = function (styleOptions, feature, mixStyle) {
 var sppnStyle = function (styleOptions, feature, mixStyle) {
 
     var ltChcYn = feature.get('LT_CHC_YN');
+    var ltChcYnNew = feature.get('LT_CHC_YN_NEW');
+    var vrifyDe = feature.get('VRIFY_DE');// 검증일자 (20220402) 21~23 년까지 20년까지 검증된 대상만 점검대상.. 추후미정
+    var researchGbn = feature.get('RESEARCH_GBN');
+    
+    // var today = $.datepicker.formatDate('yy/mm/dd', new Date());
+    
+
+    //올해점검여부 옵션 확인
+    var panelReRadio = $("[name*=panelReRadio]:checked").val();
+    if(panelReRadio == "N"){
+        ltChcYn = ltChcYnNew;
+    }
 
     var anchorY = 35; // 아이콘 위치
     var iconNm = 'image/icon_legend05.png'; // 아이콘 명칭
 
-    if(ltChcYn == null){
-        iconNm = 'image/icon_legend05.png';
-    }else if(ltChcYn == '1000'){
-        iconNm = 'image/icon_legend05_c1.png'; 
+    if(researchGbn == "N"){//점검대상아님
+        if(ltChcYn == null){
+            iconNm = 'image/icon_legend05_n.png';
+        }else if(ltChcYn == '1000'){
+            iconNm = 'image/icon_legend05_nc.png'; 
+        }else{
+            iconNm = 'image/icon_legend05_nc2.png';
+        }
     }else{
-        iconNm = 'image/icon_legend05_c2.png';
+        if(ltChcYn == null){
+            iconNm = 'image/icon_legend05.png';
+        }else if(ltChcYn == '1000'){
+            iconNm = 'image/icon_legend05_c1.png'; 
+        }else{
+            iconNm = 'image/icon_legend05_c2.png';
+        }
     }
+    
 
     opt = {
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({

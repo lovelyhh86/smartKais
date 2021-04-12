@@ -223,6 +223,7 @@ var MapUtil = {
             ol.inherits(MapUtil.controls.measureControl, ol.control.Control);       // 거리측정
             ol.inherits(MapUtil.controls.oldResearchCheckControl, ol.control.Control);  // 작년점검여부표시
             ol.inherits(MapUtil.controls.layerOnOffControl, ol.control.Control);  // 레이어컨트롤
+            ol.inherits(MapUtil.controls.layerOnOffControl2, ol.control.Control);  // 레이어컨트롤2
             
             // ol.inherits(MapUtil.controls.selectSearchUser, ol.control.Control);
         },
@@ -658,6 +659,27 @@ var MapUtil = {
             
             var element = document.createElement('div');
             element.className = 'legend layerOnOffBtn ol-unselectable ol-control';
+    
+            var buttonHtml = "<ul><li class='mLayer'>레이어관리</li></ul>";
+            element.innerHTML = buttonHtml;
+    
+            element.addEventListener('click', layerOnOff, false);
+    
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+        },
+        layerOnOffControl2: function(opt_options){
+            var layerOnOff = function(){
+                
+                $("#layerTogglePop2").toggle();
+
+            }
+            
+            
+            var element = document.createElement('div');
+            element.className = 'legend layerOnOffBtn2 ol-unselectable ol-control';
     
             var buttonHtml = "<ul><li class='mLayer'>레이어관리</li></ul>";
             element.innerHTML = buttonHtml;
@@ -2335,7 +2357,7 @@ var MapUtil = {
                        util.toast(msg.checkObject.format("점검날짜"),"error");
                     }
         
-                    makeOptSelectBox("rcSttCdSel","RC_STT_CD","","선택","");
+                    makeOptSelectBox("rcSttCdSel","RC_STT_CD_2","","선택","");
 
                     $("#rcDe").html(rcDe);
                     
@@ -3188,6 +3210,7 @@ var mapInit = function(mapId, pos) {
             new MapUtil.controls.measureControl(),
             new MapUtil.controls.oldResearchCheckControl(),
             new MapUtil.controls.layerOnOffControl(),
+            new MapUtil.controls.layerOnOffControl2(),
             // new MapUtil.controls.selectSearchUser(),
 
 
@@ -3388,6 +3411,143 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
 
+    //지점번호판 격자 레이어 생성
+    var panelGridSource = new ol.source.Vector;
+    var lyr_panel_grid = new ol.layer.Vector({
+        title: "격자레이어",
+        typeName: "lyr_panel_grid",
+        source: panelGridSource,
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: '#ffcc33',
+              width: 2
+            })
+          })
+      });
+
+    var option = {
+        style: {
+            lineSt:"rgba(0, 051, 0, 0.5)"
+        }
+    }
+
+    var extent = map.getView().calculateExtent();
+    // var extent = map.previousExtent_;
+
+    var zoomLevel = map.getView().getZoom();
+    var gridLevel;
+    switch (zoomLevel) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:    
+            gridLevel = 100000;
+            break;
+        case 5:
+        case 6:
+        case 7:
+            gridLevel = 10000;
+            break;
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            gridLevel = 1000;
+            break;
+        case 12:
+        case 13:
+        case 14:
+            gridLevel = 100;
+            break;
+        case 15:
+            gridLevel = 10;
+            break;
+        default:
+            gridLevel = 100000;
+            break;
+    }
+
+    var xp = parseInt(extent[0]/gridLevel) * gridLevel - gridLevel;
+    var yp = parseInt(extent[1]/gridLevel) * gridLevel - gridLevel;
+
+    var maxX = parseInt(extent[2]/gridLevel) * gridLevel + gridLevel;
+    var maxY = parseInt(extent[3]/gridLevel) * gridLevel + gridLevel;
+
+    var baseMinXp = 700000;
+    var baseMinYp = 1300000;
+    var baseMaxXp = 1400000;
+    var baseMaxYp = 2100000;
+
+    if(xp < baseMinXp){xp = baseMinXp;};
+    if(yp < baseMinYp){xp = baseMinYp;};
+    if(maxX > baseMaxXp){maxX = baseMaxXp;};
+    if(maxY > baseMaxYp){maxY = baseMaxYp;};
+
+    var pg;
+    var xpTmp = xp;
+    var ypTmp = yp;
+    var maxXTmp;
+    var maxYTmp;
+    var i = 0;
+
+    //가로선 그리기
+    while (ypTmp <= maxY) {
+        maxXTmp = maxX;
+        
+        //정해진 격자외에는 그리지 않게 하는 규칙
+        if(ypTmp >= 1700000 && ypTmp < 1800000 && maxX > 1300000){
+            maxXTmp = 1300000;
+        }else if(ypTmp >= 1500000 && ypTmp < 1700000 && maxX > 1200000){
+            maxXTmp = 1200000;
+        }else if(ypTmp >= 1400000 && ypTmp < 1500000 && maxX > 1000000){
+            maxXTmp = 1000000;
+        }else if(ypTmp >= 1300000 && ypTmp < 1400000 && maxX > 900000){
+            maxXTmp = 900000;
+        }
+        pg = new ol.geom.LineString();
+        pg.appendCoordinate([xp,ypTmp]);
+        pg.appendCoordinate([maxXTmp,ypTmp]);
+
+        var feature = new ol.Feature();
+        feature.setGeometry(pg);
+        feature.setStyle(lineStyle(option,feature));
+        feature.setId(i);
+        panelGridSource.addFeature(feature);
+
+        ypTmp += gridLevel;
+        i++;
+    }
+
+    //세로선 그리기
+    while (xpTmp <= maxX) {
+        ypTmp = yp;
+        
+        //정해진 격자외에는 그리지 않게 하는 규칙
+        if(xpTmp > 900000 && xpTmp <= 1000000 && ypTmp < 1400000){
+            ypTmp = 1400000;
+        }else if(xpTmp > 1000000 && xpTmp <= 1200000 && ypTmp < 1500000){
+            ypTmp = 1500000;
+        }else if(xpTmp > 1200000 && xpTmp <= 1300000 && ypTmp < 1700000){
+            ypTmp = 1700000;
+        }else if(xpTmp > 1300000 && xpTmp <= 1400000 && ypTmp < 1800000){
+            ypTmp = 1800000;
+        }
+        pg = new ol.geom.LineString();
+        pg.appendCoordinate([xpTmp,ypTmp]);
+        pg.appendCoordinate([xpTmp,maxY]);
+
+        var feature = new ol.Feature();
+        feature.setGeometry(pg);
+        feature.setStyle(lineStyle(option,feature));
+        feature.setId(i);
+        panelGridSource.addFeature(feature);
+
+        xpTmp += gridLevel;
+        i++;
+    }
+
+    
+
     //사믈주소(둔치주차장) 레이어(중앙)
     var tlv_spot_aot_riverpk_skm = getFeatureCoodi_Center({
         title: "사믈주소(둔치주차장)",
@@ -3438,7 +3598,7 @@ var mapInit = function(mapId, pos) {
         renderMode: 'vector',
         zIndex : 1
     });
-    
+
 
     layers = {
         "loc": lyr_tlv_spgf_loc_skm
@@ -3456,6 +3616,7 @@ var mapInit = function(mapId, pos) {
         ,"taxist":tlv_spot_aot_taxist_skm
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
+        ,"panelGrid":lyr_panel_grid
     };
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
@@ -3543,8 +3704,15 @@ var mapInit = function(mapId, pos) {
 
     // }
 
-    // //지도이동
-    // map.on('moveend', getCoodiMapService);
+    //지도이동
+    map.on('moveend', function(evt){
+        
+        // var bbox  = map.getView().calculateExtent();
+        // console.log('지도 이동' + bbox);
+
+        drawSppnGrid();
+
+    });
     
     // map.getViewport().addEventListener('touchend', function() {
     //     helpTooltipElement.classList.add('hidden');
@@ -3854,6 +4022,11 @@ var mapInit = function(mapId, pos) {
         map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
 
             // console.log(feature, layer);
+            //격자레이어 클릭시 이벤트 종료
+            var typeName = layer.get("typeName");
+            if(typeName == "lyr_panel_grid"){
+                return;
+            }
 
             var zoomLevel = map.getView().getZoom();
             // if(zoomLevel < 13){
