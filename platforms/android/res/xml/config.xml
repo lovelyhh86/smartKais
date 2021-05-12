@@ -44,7 +44,7 @@
         <param name="android-package" value="io.sqlc.SQLitePlugin" />
     </feature>
     <allow-intent href="market:*" />
-    <name>스마트 국가주소정보시스템</name>
+    <name>스마트 주소정보 현장지원시스템</name>
     <description>
     </description>
     <author email="kais01@klid.or.kr" href="">
