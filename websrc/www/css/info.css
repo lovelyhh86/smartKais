@@ -308,6 +308,7 @@ table caption{display: none}
 .position{position: absolute;left: 20px; bottom: 0;}
 
 .lytgLabel{width:30%!important; margin-left: 10px!important; padding: 0 10px 0px 40px; }
+.emdLabel{width:30%!important; margin-left: -56px!important; padding: 0 10px 0px 40px; }
 
 .resDiv{border: 0.4em inset #008a31;}
 .resLabel{padding: 0 11em 0px 1em; width: 9em!important;}
@@ -315,11 +316,14 @@ table caption{display: none}
 .sppnField{width: 38em!important;margin: 0em 9em!important;position: relative;top: -1em;}
 
 .crsrdDiv{border: 0.4em inset #000596;}
+.emdDiv{border: 0.4em inset #5171a2;}
+
 
 
 .locBack{background: #fff url(../image/mix_pos.png) no-repeat; background-size: 30px;}
 .nmtgBack{background: #fff url(../image/icon_legend04.png) no-repeat; background-size: 17px; background-position-x: 6px;}
 .intrvlBack{background: #fff url(../image/baseLine.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 10px;}
+/* .emdBack{background: #fff url(../image/baseLine.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 10px;} */
 .crsrdpBack{background: #fff url(../image/num.png) no-repeat; background-size: 17px; background-position-x: 6px; background-position-y: 3px;}
 .panelReBack{background: #fff url(../image/icon_legend05_c1.png) no-repeat; background-size: 17px; background-position-x: 10px;}
 

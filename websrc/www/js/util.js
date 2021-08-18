@@ -128,6 +128,21 @@ var util = {
             navigator.notification.confirm("현장조사 Smart KAIS를 종료하시겠습니까?", appExitCallback,"알림", ['확인', '취소']);
         }
         else if (app.historyStack.length == 1) {
+            
+            //위치추적 켜진 상태로 뒤로 갈 경우 위치 표시 끄기
+            if(map !=undefined){
+                var layerList = map.getLayers().getArray();
+                for(var layer in layerList){
+                    var title = layerList[layer].get('title');
+                    if(title == "현위치"){
+                        geolocation.setTracking(false);
+                        layerList[layer].getSource().clear();
+                        map.removeLayer(layerList[layer]);
+                        util.toast('내 위치를 추적을 중지합니다.','warning');
+                    }
+                }
+            }
+
             app.historyStack.pop();
             util.slide_page('right', pages.workpage);
         }
@@ -667,7 +682,7 @@ function layerToggle(context){
             // $(".legend.spbd").toggle(false);
             //지점번호판 목록
             $(".selectSppnList").toggle(false);
-            //안내시설목록
+            //주소정보시설목록
             $(".selectResearch").toggle(true);
             //레이어관리
             $(".layerOnOffBtn").toggle(true);
@@ -685,7 +700,7 @@ function layerToggle(context){
             $(".refreshMap").toggle(true);
             $(".measure").toggle(true);
             
-            //안내시설목록(건물번호판)
+            //주소정보시설목록(건물번호판)
             // $(".selectResearchSpbd").toggle(false);
             
             //위치이동(건물번호판)
@@ -709,6 +724,8 @@ function layerToggle(context){
                 layerToggleController('nmtgSel');
                 //교차로
                 layerToggleController('crsrdpSel');
+                //읍면동
+                layerToggleController('emdSel');
                 
             } catch (error) {
                 map.addLayer(layers.loc);
@@ -737,7 +754,7 @@ function layerToggle(context){
             
             //지점번호판 목록
             $(".selectSppnList").toggle(true);
-            //안내시설목록
+            //주소정보시설목록
             $(".selectResearch").toggle(false);
             //레이어관리
             $(".layerOnOffBtn").toggle(false);
@@ -757,6 +774,7 @@ function layerToggle(context){
             // $('.legend.oldResearchCheck').attr('style','top : 14.5em; display: block');
             
             map.addLayer(layers.sppn);
+            // map.addLayer(layers.emd);
             layerToggleController('panelGridSel');
             
             // map.addLayer(layers.riverpk);
@@ -793,6 +811,10 @@ function removeLayers(type){
         
         map.removeLayer(layers.crsrdp_p);
         map.removeLayer(layers.crsrdp_c);
+
+        map.removeLayer(layers.emd);
+        map.removeLayer(layers.hemd);
+        
         $("#moveInfo").hide();
     // }
 }
@@ -960,6 +982,41 @@ function fnSelectSigList(tagId){
     }
 }
 
+//시군구 검색
+function fnSelectSigList2(tagId){
+    try {
+        // util.showProgress();
+        var link = URLs.selectSigList;
+        var sendParam = {
+            sigCd: app.info.sigCd,
+            workId: app.info.opeId
+        }
+
+        var url = URLs.postURL(link, sendParam);
+        util.postAJAX({}, url)
+            .then(function(context, rCode, results) {
+                    util.dismissProgress();
+
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    var resultList = results.data;
+                    makeCombo(tagId,resultList);
+                    // if(resultList.length == 1){
+                        $(tagId).trigger('change');
+                    // }
+
+            })
+    }catch(error){
+        util.toast(msg.callCenter,"error");
+        util.dismissProgress();
+    }
+}
+
 //읍면동 조회
 function fnSelectEmdList(tagId){
     try{
@@ -990,6 +1047,48 @@ function fnSelectEmdList(tagId){
 
                     var resultList = results.data;
                     makeCombo(tagId,resultList,'-읍면동-');
+
+            })
+    }catch(error){
+        util.toast(msg.callCenter,"error");
+        util.dismissProgress();
+    }
+}
+
+//읍면동 조회
+function fnSelectEmdList2(tagId){
+    try{
+        // util.showProgress();
+        var sigCd = $("#selSigLayer").val();
+        var emdGbnLayer = $(':radio[name|="emdGbnLayerRadio"]:checked').val();
+        if(isNaN(sigCd)){
+            return;
+        }
+
+        var link = URLs.selectEmdList;
+        if(emdGbnLayer == "ha"){
+            link = URLs.selectHangEmdList;
+        }
+        var sendParam = {
+            sigCd: sigCd,
+            workId: app.info.opeId
+        }
+
+        var url = URLs.postURL(link, sendParam);
+        util.postAJAX({}, url)
+            .then(function(context, rCode, results) {
+                    util.dismissProgress();
+
+                    //통신오류처리
+                    if (rCode != 0 || results.response.status < 0) {
+                        navigator.notification.alert(msg.callCenter, '', '알림', '확인');
+                        util.dismissProgress();
+                        return;
+                    }
+
+                    var resultList = results.data;
+                    makeCombo(tagId,resultList,'-선택-');
+                    $("#selEmdLayer").trigger('change');
 
             })
     }catch(error){
@@ -1068,4 +1167,18 @@ function legendCntClear(){
     $('.legend .rdpqW .total').text(0 + '건');
     $('.legend .entrc .total').text(0 + '건');
     $('.legend .spot .total').text(0 + '건');
+}
+
+function currendPostionRemove(){
+    var layerList = map.getLayers().getArray();
+
+    for (var i = 0; i < layerList.length; i++) {
+
+        if (layerList[i].get('title') == '현위치') {
+            geolocation.setTracking(false);
+            layerList[i].getSource().clear();
+            map.removeLayer(layerList[i]);
+            util.toast('내 위치를 추적을 중지합니다.','warning');
+        }
+    }
 }

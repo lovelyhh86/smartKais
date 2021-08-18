@@ -211,7 +211,7 @@ var MapUtil = {
         init: function() {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
             ol.inherits(MapUtil.controls.legendSppnControl, ol.control.Control);    // 범례(기타점검)
-            ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
+            ol.inherits(MapUtil.controls.currentControl2, ol.control.Control);       // 내위치
             ol.inherits(MapUtil.controls.locManageControl, ol.control.Control);     // 안내시설 위치관리
             ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);   // 상세주소 기초조사
@@ -301,6 +301,7 @@ var MapUtil = {
             var curPosition = function() {
                 var coordinate = geolocation.getPosition();
                 // map.getView().setCenter(coordinate);
+                // console.log(coordinate);
 
                 setPosition(coordinate);
 
@@ -311,6 +312,111 @@ var MapUtil = {
 
             button.addEventListener('click', curPosition, false);
             button.addEventListener('touchstart', curPosition, false);
+
+            var element = document.createElement('div');
+            element.className = 'curPosition ol-unselectable ol-control';
+            element.appendChild(button);
+
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target
+            });
+        },
+        currentControl2: function(opt_options) {
+            var options = opt_options || {};
+
+            var button = document.createElement('button');
+            button.innerHTML = '<img src="image/icon_curr.png" />';
+
+            var curPosition = function() {
+                
+                var layerList = map.getLayers().getArray();
+
+                for (var i = 0; i < layerList.length; i++) {
+
+                    if (layerList[i].get('title') == '현위치') {
+                        geolocation.setTracking(false);
+                        layerList[i].getSource().clear();
+                        map.removeLayer(layerList[i]);
+                        util.toast('내 위치를 추적을 중지합니다.','warning');
+                        return;
+                    }
+                }
+
+                // var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
+                //     tracking: true,
+                //     projection: baseProjection,
+                //     trackingOptions: {
+                //         maximumAge: 0,
+                //         enableHighAccuracy: true,
+                //         timeout: 600000
+                //     }
+                // });
+                geolocation.setTracking(true);
+    
+                // var accuracyFeature = new ol.Feature();
+                // geolocation.on('change:accuracyGeometry', function() {
+                //     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+                // });
+    
+                var positionFeature = new ol.Feature();
+                positionFeature.setStyle(new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: 7,
+                        fill: new ol.style.Fill({
+                            color: '#ff0000'
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: '#fff',
+                            width: 2
+                        })
+                    })
+                }));
+    
+    
+                var cnt = 0;
+                geolocation.on('change:position', function() {
+                    // console.log('change:position');
+                    // util.toast('내 위치를 추적중 입니다.종료하시려면 내위치버튼을 한번 더 클릭하세요','warning',6000);
+                    var coordinates = geolocation.getPosition();
+                    positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
+    
+                    // console.log('coord ' + coordinates);
+                    var html = [
+                        ++cnt + ' Position: ' + coordinates
+                    ].join('<br />');
+                    document.getElementById('info').innerHTML = html;
+    
+                    map.getView().setCenter(coordinates);
+    
+                });
+    
+                var geolocation_source = new ol.source.Vector({});
+    
+                // geolocation_source.addFeature(accuracyFeature);
+                geolocation_source.addFeature(positionFeature);
+    
+                var geolocation_layer = new ol.layer.Vector({
+                    map: map,
+                    title:"현위치",
+                    source: geolocation_source
+                });
+    
+                map.addLayer(geolocation_layer);
+    
+                geolocation.on('error', function() {
+                    alert('geolocation error');
+                    // FIXME we should remove the coordinates in positions
+                });
+
+                util.toast('내 위치를 지속적으로 표시합니다. 위성 및 통신상태에 따라 표시가 원할하지 않을수 있습니다. 잠시만 기다려주세요','warning',6000);
+                //심플팝업 초기화
+                $("#popup-content").empty();
+                $("#popup").hide();
+            }
+
+            button.addEventListener('click', curPosition, false);
+            // button.addEventListener('touchstart', curPosition, false);
 
             var element = document.createElement('div');
             element.className = 'curPosition ol-unselectable ol-control';
@@ -526,7 +632,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearch ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>안내시설 목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>주소정보시설 목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -555,7 +661,7 @@ var MapUtil = {
             var element = document.createElement('div');
             element.className = 'legend selectResearchSpbd ol-unselectable ol-control';
     
-            var newPosHtml = "<ul><li class='sRes'>안내시설목록</li></ul>";
+            var newPosHtml = "<ul><li class='sRes'>주소정보시설 목록</li></ul>";
             element.innerHTML = newPosHtml;
     
             element.addEventListener('click', researchList, false);
@@ -938,7 +1044,7 @@ var MapUtil = {
         switch (type) {
             case "myResearch":
                 // addResearchYear('searchOptPlnYr',false);
-                //안내시설목록
+                //주소정보시설목록
                 pos = 0;
                 // selectResearchContent(null,0,9);
                 /**검색조건 */
@@ -977,7 +1083,7 @@ var MapUtil = {
             break;
             case "myResearchSpbd":
                 addResearchYear('searchOptPlnYr',false);
-                //안내시설목록
+                //주소정보시설목록
                 pos = 0;
                 // selectResearchContent("02",0,9);
                 /**검색조건 */
@@ -1223,8 +1329,11 @@ var MapUtil = {
                         // }
                         $("#lghtCd").val(data.lghtCd);
                         //교차로유형
-                        makeOptSelectBox("instCrossCd","INS_CRS_CD","","","");
-                        $("#instCrossCd").val(data.instCrossCd);
+                        $("#crsrdTycdLbl").text(data.crsrdTycdLbl);
+                            //사용안함
+                            makeOptSelectBox("instCrossCd","INS_CRS_CD","","","");
+                            //사용안함
+                            $("#instCrossCd").val(data.instCrossCd);
 
                         //설치일자
                         var instDate = data.instDate;
@@ -1339,6 +1448,10 @@ var MapUtil = {
                     }
                     //사진건수
                     $(".infoHeader .photo .photoNum").html(cntFiles);
+
+                    //읍면동명칭
+                    $("#admCdLbl").text(data.admCdLbl);
+                    $("#haCdLbl").text(data.haCdLbl);
                     //*****************공통*****************
 
                     
@@ -3164,7 +3277,7 @@ var mapInit = function(mapId, pos) {
         zIndex : 0
     });
 
-
+    
     // Feature 정보보기 레이어 생성
     var overlay = new ol.Overlay( /** @type {olx.OverlayOptions} */ ({
         id: 'popup',
@@ -3198,7 +3311,7 @@ var mapInit = function(mapId, pos) {
         }).extend([
             new MapUtil.controls.legendControl(),
             new MapUtil.controls.legendSppnControl(),
-            new MapUtil.controls.currentControl(),
+            new MapUtil.controls.currentControl2(),
             new MapUtil.controls.locManageControl(),
             new MapUtil.controls.locManageSpbdNmtgControl(),
             new MapUtil.controls.selectAdrdcControl(),
@@ -3278,82 +3391,6 @@ var mapInit = function(mapId, pos) {
         renderMode: 'vector',
         zIndex : 1
     });
-    // 건물번호판 레이어(좌표계)
-    // var lyr_tl_spbd_entrc_pos = getFeatureLayer_new({
-    //         title: "건물번호판",
-    //         // typeName: "tn_spbd_nmtg",
-    //         typeName: "tlv_spbd_entrc_pos_skm",
-    //         // typeName: "tlv_spbd_entrc_skm",
-    //         // typeName: "tn_spbd_entrc_position",
-    //         dataType: DATA_TYPE.ENTRC,
-    //         style: {
-    //             radius: 15,
-    //             // label: {
-    //                 // format: ["{0}({1}-{2})"],
-    //                 // data: ["BUL_MAN_NO", "ENTRC_SE", "NMT_INS_YN"],
-    //                 // text: { key: "ENTRC_SE", func: function(text) { return text } },
-    //                 // textOffsetY: -20
-    //             // }
-    //         },
-    //         cluster: { distance: MapUtil.setting.cluster },
-    //         maxResolution: MapUtil.setting.maxResolution_buld,
-    //         viewProgress: false,
-    //         renderMode: 'vector',
-    //         zIndex : 1
-    //     });
-    // 도로명판 레이어
-    // var lyr_tl_spgf_rdpq = getFeatureLayer({
-    //     title: "도로명판",
-    //     typeName: "tlv_spgf_rdpq",
-    //     dataType: DATA_TYPE.RDPQ,
-    //     style: {
-    //         label: {
-    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-    //             textOffsetX: -1,
-    //             textOffsetY: -18,
-    //             width: 1
-    //         },
-    //         radius: 12
-    //     },
-    //     cluster: { distance: 30 },
-    //     maxResolution: 2
-    // });
-    // 지역안내판 레이어
-    // var lyr_tl_spgf_area = getFeatureLayer({
-    //     title: "지역안내판",
-    //     typeName: "tlv_spgf_area",
-    //     dataType: DATA_TYPE.AREA,
-    //     style: {
-    //         label: {
-    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-    //             textOffsetX: -1,
-    //             textOffsetY: -18,
-    //             width: 1
-    //         },
-    //         radius: 12
-    //     },
-    //     cluster: { distance: 30 },
-    //     maxResolution: 4,
-    //     viewProgress: false
-    // });
-    // 기초번호판 레이어
-    // var lyr_tl_spgf_bsis = getFeatureLayer({
-    //     title: "기초번호판",
-    //     typeName: "tlv_spgf_bsis",
-    //     dataType: DATA_TYPE.BSIS,
-    //     style: {
-    //         label: {
-    //             text: { key: "USE_TRGET", func: function(text) { return app.codeMaster[CODE_GROUP["USE_TRGET"]][text].charAt(0) } },
-    //             textOffsetX: -1,
-    //             textOffsetY: -18,
-    //             width: 1
-    //         },
-    //         radius: 12
-    //     },
-    //     cluster: { distance: 30 },
-    //     maxResolution: 4,
-    //     viewProgress: false
-    // });
     // 위치레이어
     var lyr_tlv_spgf_loc_skm = getFeatureLayer({
         title: "위치레이어",
@@ -3599,12 +3636,57 @@ var mapInit = function(mapId, pos) {
         zIndex : 1
     });
 
+    //읍면동 레이어(법정동)
+    var lyr_tl_scco_emd = getFeatureLayer({
+        title: "읍면동",
+        typeName: "tl_scco_emd",
+        dataType: DATA_TYPE.EMD,
+        style: {
+            pointSt:"#ff0000"
+            ,polygonSt:"rgba(255, 255, 0, 0.1)"
+            ,lineSt:"rgba(77, 77, 0, 0.5)"
+            ,text : {
+                fillColor : 'rgba(77, 77, 0)'
+                ,strokColor : 'rgba(77, 77, 0)'
+                ,textOffsetX : 0
+                ,textOffsetY : 0
+                ,scale : 1.7
+            }
+            ,radius: 12
+        },
+        // maxResolution: MapUtil.setting.maxResolution_intrvl,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 0
+    });
+
+     //읍면동 레이어(행정동)
+     var lyr_tl_scco_hemd = getFeatureLayer({
+        title: "읍면동",
+        typeName: "tl_scco_hemd",
+        dataType: DATA_TYPE.HEMD,
+        style: {
+            pointSt:"#ff0000"
+            ,polygonSt:"rgba(0, 255, 0, 0.1)"
+            ,lineSt:"rgba(77, 77, 0, 0.5)"
+            ,text : {
+                fillColor : 'rgba(77, 77, 0)'
+                ,strokColor : 'rgba(77, 77, 0)'
+                ,textOffsetX : 0
+                ,textOffsetY : 0
+                ,scale : 1.7
+            }
+            ,radius: 12
+        },
+        // maxResolution: MapUtil.setting.maxResolution_intrvl,
+        viewProgress: false,
+        renderMode: 'vector',
+        zIndex : 0
+    });
+
 
     layers = {
         "loc": lyr_tlv_spgf_loc_skm
-        // "rdpq": lyr_tl_spgf_rdpq,
-        // "area": lyr_tl_spgf_area,
-        // "bsis": lyr_tl_spgf_bsis,
         ,"entrc": lyr_tl_spbd_entrc
         // "buld": lyr_tl_spbd_buld,
         ,"sppn": lyr_tl_sppn_panel
@@ -3617,6 +3699,9 @@ var mapInit = function(mapId, pos) {
         // "loc_pos": lyr_tl_spgf_loc_pos,
         // "entrc_pos": lyr_tl_spbd_entrc_pos
         ,"panelGrid":lyr_panel_grid
+        ,"emd":lyr_tl_scco_emd
+        ,"hemd":lyr_tl_scco_hemd
+        
     };
 
     /*********** 지도 화면 핸들러 (--start--) ***********/
@@ -4020,11 +4105,15 @@ var mapInit = function(mapId, pos) {
         var firstClick = true;
         featureClone = null;
         map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
-
+            if(layer == null){
+                // currentPositionLayerCheck();
+                return;
+            }
             // console.log(feature, layer);
+            var title = layer.get("title");
             //격자레이어 클릭시 이벤트 종료
-            var typeName = layer.get("typeName");
-            if(typeName == "lyr_panel_grid"){
+            // var typeName = layer.get("typeName");
+            if(title == "읍면동" || title == "격자레이어"){
                 return;
             }
 
@@ -4035,7 +4124,7 @@ var mapInit = function(mapId, pos) {
             // }
 
             if(layer == null){
-                currentPositionLayerCheck();
+                // currentPositionLayerCheck();
                 return;
             }
 
@@ -4219,10 +4308,15 @@ var mapInit = function(mapId, pos) {
 
     var geolocation_source = new ol.source.Vector({});
 
+    geolocation_source.addFeature(accuracyFeature);
+    geolocation_source.addFeature(positionFeature);
+
     var geolocation_layer = new ol.layer.Vector({
         map: map,
         source: geolocation_source
     });
+
+    map.addLayer(geolocation_layer);
 
     geolocation.on('error', function() {
         alert('geolocation error');
@@ -4874,7 +4968,7 @@ function baseNumberMix(mn, sn) {
 
 function moveToXy(x, y) {
     var cood = [x, y];
-    setPosition(cood)
+    // setPosition(cood);
     map.getView().setCenter(cood);
 
     // var zoom = map.getView().getZoom();

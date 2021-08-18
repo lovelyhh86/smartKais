@@ -31,6 +31,7 @@ var DATA_TYPE = {
     ,ADRDC:"07",INTRVL:"08"
     ,AOT:"10",RIVERPK:"11"
     ,CRSRDP_P:"20",CRSRDP_C:"21"
+    ,EMD:"30",HEMD:"31"
     ,getStatusNameWithCode: function (code) {
         switch (code) {
             case "00":
@@ -59,6 +60,10 @@ var DATA_TYPE = {
                 return DATA_TYPE.CRSRDP_P;
             case "21":
                 return DATA_TYPE.CRSRDP_C;
+            case "30":
+                return DATA_TYPE.EMD;
+            case "31":
+                return DATA_TYPE.HEMD;
             default:
                 return;
         }
@@ -143,6 +148,29 @@ var defaultStyle = function (feature, resolution, options) {
         features = [feature];
     }
     size = features.length;
+
+    //읍면동 레이어 처리 start
+    var emdSel      = $("#emdSel").val();
+    var selEmdLayer = $("#selEmdLayer").val();
+    var emdGbnLayer = $(':radio[name|="emdGbnLayerRadio"]:checked').val();
+    var featuerEmdCd = feature.get("ADM_CD");
+    if(emdGbnLayer == 'ha'){
+        featuerEmdCd = feature.get("HA_CD");
+    }
+
+    if(emdSel == "on" && !util.isEmpty(featuerEmdCd) ){
+        if(selEmdLayer == "" || isNaN(selEmdLayer)){
+            // console.log("읍면동 선택안함");
+            // return;
+        }else{
+            if(selEmdLayer.substr(0,8) != featuerEmdCd.substr(0,8)){
+                // console.log("읍면동 다름");
+                return;
+            }
+            
+        }
+    }
+    //읍면동 레이어 처리 end
 
     if(dataType == DATA_TYPE.LOC){
         var oldRdGdftySe;
@@ -292,7 +320,19 @@ var defaultStyle = function (feature, resolution, options) {
         // styleOptions.label._text = text;
         
         style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
-    }else{
+    }else if(dataType == DATA_TYPE.EMD || dataType == DATA_TYPE.HEMD){
+        
+        var featuerEmdCd2 = feature.get("EMD_CD");
+        if(emdSel == "on" && !util.isEmpty(selEmdLayer) ){
+            if(selEmdLayer.substr(0,8) != featuerEmdCd2.substr(0,8)){
+                // console.log("읍면동 레이어 다름");
+                return;
+            }
+        }
+
+        style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
+    }
+    else{
         // var text = options.style.label.text;
         
         // key = text;
@@ -346,7 +386,10 @@ var getStyle = function(dataType, styleOptions, feature, mixStyle) {
             retStyle = crsrdpStyle(styleOptions,feature);
             // retStyle = pointStyle2(styleOptions,feature);
             // retStyle = iconStyle();
-            
+            break;
+        case DATA_TYPE.EMD:
+        case DATA_TYPE.HEMD:
+            retStyle = emdStyle(styleOptions,feature);  
             
             break;
 
@@ -934,6 +977,26 @@ var buildStyle = function (styleOptions, feature) {
     
     if( styleOptions.label._text)
         opt.text = createTextStyle(styleOptions);
+    
+    return new ol.style.Style(opt);
+};
+
+// 읍면동 스타일
+var emdStyle = function (styleOptions, feature) {
+    
+    var opt;
+        opt = {
+            stroke: new ol.style.Stroke({
+                color: styleOptions.lineSt,
+                width: 4
+              }),
+            fill: new ol.style.Fill({
+                color: styleOptions.polygonSt
+              })
+        };
+    
+        if(feature.get("EMD_KOR_NM"))
+            opt.text = createTextStyle_custom(feature.get("EMD_KOR_NM"),styleOptions);
     
     return new ol.style.Style(opt);
 };

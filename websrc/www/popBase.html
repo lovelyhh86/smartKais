@@ -53,6 +53,16 @@
 									<p id="delStateCd_new" style="display:none"></p>
 								</td>
 							</tr>
+							<tr>
+								<th scope="row">법정동</th>
+								<td>
+									<p id="admCdLbl">&nbsp;</p>
+								</td>
+								<th scope="row">행정동</th>
+								<td>
+									<p id="haCdLbl">&nbsp;</p>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -360,7 +370,8 @@
 								</td>
 								<th scope="row">교차로 유형</th>
 								<td>
-									<select id="instCrossCd" class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
+									<p id="crsrdTycdLbl"></p>
+									<select id="instCrossCd" hidden class="cell100 notNull" onchange="checkChangeOrigin(this.id)"/>
 								</td>
 								<th scope="row">제작형식</th>
 								<td>
@@ -383,7 +394,7 @@
 				<span onclick="closeDetailView();" class="btnNormal">닫기</span>
 				<!-- <span onclick="loadUpdtData();" class="btnNormal">승인대기</span> -->
 				<span id="delUpdtBtn" onclick="deleteUpdtData();" class="btnNormal">임시정보 삭제</span>
-				<span onclick="goResearchList('myResearch');" class="btnNormal">안내시설목록</span>
+				<span onclick="goResearchList('myResearch');" class="btnNormal">목록</span>
 			</div>
 			<!-- footer 끝 -->
 		</div>

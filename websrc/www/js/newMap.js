@@ -591,6 +591,44 @@ function layerToggleController(type){
         return;
     }else if(type == 'panelGridSel'){
         layerType = layers.panelGrid;
+    }else if(type == 'emdSel'){
+        map.removeLayer(layers.emd);
+        map.removeLayer(layers.hemd);
+
+        layerType = layers.emd;
+        var emdGbnLayer = $(':radio[name|="emdGbnLayerRadio"]:checked').val();
+        if(emdGbnLayer == 'ha'){
+            layerType = layers.hemd;
+        }
+        if(onOffGbn == "on"){
+            util.toast('읍면동레이어를 사용하는 경우 안내시설 표시가 원활하지 않을 수 있습니다. 참고용으로만 사용해 주시기 바랍니다.','warning',5000);
+            $(':radio[name|="emdGbnLayerRadio"]').prop( "disabled", false );
+            $("#selSigLayer").prop( "disabled", false );
+            $("#selEmdLayer").prop( "disabled", false );
+
+            //시군구목록
+            var guIncYn = app.info.guIncYn;
+            if(guIncYn == "Y"){
+                //구재시 경우에만 조회
+                fnSelectSigList2('#selSigLayer');
+                // $("#selSigLayer").trigger('change');
+            }else{
+                $("#selSigLayer").append('<option value="'+ localStorage["admCd"]+ '">'+localStorage["admNm"]+'</option>');
+                $("#selSigLayer").val(localStorage["admCd"]);
+                $("#selSigLayer").trigger('change');
+            }
+            
+        }else{
+            $("#selSigLayer").empty();
+            $("#selEmdLayer").empty();
+            $("#selSigLayer").append('<option ">시군구</option>');
+            $("#selEmdLayer").append('<option ">읍면동</option>');
+            $("#selSigLayer").trigger('change');
+            $("#selEmdLayer").trigger('change');
+            $("#selSigLayer").prop( "disabled", true );
+            $("#selEmdLayer").prop( "disabled", true );
+            $(':radio[name|="emdGbnLayerRadio"]').prop( "disabled", true );
+        }
     }
 
     
@@ -601,6 +639,27 @@ function layerToggleController(type){
     }
     
     
+}
+function fnChangeEmdGbn(){
+    layerToggleController('emdSel');
+    fnSelectEmdList2('#selEmdLayer');
+
+}
+function fnCheckEmdSearch(){
+    var emdSel      = $("#emdSel").val();
+    var selSigLayer = $("#selSigLayer").val();
+    var selEmdLayer = $("#selEmdLayer").val();
+
+    // console.log("emdSel : " + emdSel + " selSigLayer : " + selSigLayer+" selEmdLayer : " +selEmdLayer);
+
+    if(emdSel == "on" ){
+        if(isNaN(selEmdLayer) || selEmdLayer == ""){
+            util.toast('[읍면동]을 선택해 주세요.','warning',3000);
+            return;
+        }else{
+            clickRefreschMap();
+        }
+    }
 }
 
 function crsrdpLayerToggle(layerType){

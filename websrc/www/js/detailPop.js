@@ -29,18 +29,19 @@ function closeDetailView(id){
         $("#"+id).popup("close", { transition: "slideup" });
         //팝업창 상태 초기화
         isPopState = "on";
-        currentPositionLayerCheck();
+        //현위치체크
+        // currentPositionLayerCheck();
         //변경값 리스트초기화
         changedIdList = new Array();
         //원본데이터 초기화
         $("#originDiv").empty();
-        //안내시설목록 리스트초기화
+        //주소정보시설목록 리스트초기화
         // if(id == "listView"){
             // }
         }
     app.info.searchValue = "";
         
-    //안내시설목록 초기화
+    //주소정보시설목록 초기화
     emptyResearchList();
     //사진 변경값 초기화
     MapUtil.photo.refresh();
@@ -2745,6 +2746,12 @@ function modify(){
                 util.dismissProgress();
             }, '알림', '확인');
             return;
+        }else{
+            var bsis_itlpcSe_origin = $("#bsis_itlpcSe_origin").val();
+            if(bsis_itlpcSe_origin != '00700' && bsis_itlpcSe == '00700'){
+                util.toast("승강장용으로 변경할 수 없습니다.",'warning');
+                return;
+            }
         }
         //설치시설물
         var bsis_instlFty = $("#bsis_instlFty_main").val() == '00'?$("#bsis_instlFty").val() : $("#bsis_instlFty_main").val();
