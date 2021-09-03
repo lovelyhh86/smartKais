@@ -211,7 +211,7 @@ var MapUtil = {
         init: function() {
             ol.inherits(MapUtil.controls.legendControl, ol.control.Control);        // 범례
             ol.inherits(MapUtil.controls.legendSppnControl, ol.control.Control);    // 범례(기타점검)
-            ol.inherits(MapUtil.controls.currentControl2, ol.control.Control);       // 내위치
+            ol.inherits(MapUtil.controls.currentControl, ol.control.Control);       // 내위치
             ol.inherits(MapUtil.controls.locManageControl, ol.control.Control);     // 안내시설 위치관리
             ol.inherits(MapUtil.controls.locManageSpbdNmtgControl, ol.control.Control); // 건물번호판 위치관리
             ol.inherits(MapUtil.controls.selectAdrdcControl, ol.control.Control);   // 상세주소 기초조사
@@ -322,111 +322,111 @@ var MapUtil = {
                 target: options.target
             });
         },
-        currentControl2: function(opt_options) {
-            var options = opt_options || {};
+        // currentControl2: function(opt_options) {
+        //     var options = opt_options || {};
 
-            var button = document.createElement('button');
-            button.innerHTML = '<img src="image/icon_curr.png" />';
+        //     var button = document.createElement('button');
+        //     button.innerHTML = '<img src="image/icon_curr.png" />';
 
-            var curPosition = function() {
+        //     var curPosition = function() {
                 
-                var layerList = map.getLayers().getArray();
+        //         var layerList = map.getLayers().getArray();
 
-                for (var i = 0; i < layerList.length; i++) {
+        //         for (var i = 0; i < layerList.length; i++) {
 
-                    if (layerList[i].get('title') == '현위치') {
-                        geolocation.setTracking(false);
-                        layerList[i].getSource().clear();
-                        map.removeLayer(layerList[i]);
-                        util.toast('내 위치를 추적을 중지합니다.','warning');
-                        return;
-                    }
-                }
+        //             if (layerList[i].get('title') == '현위치') {
+        //                 geolocation.setTracking(false);
+        //                 layerList[i].getSource().clear();
+        //                 map.removeLayer(layerList[i]);
+        //                 util.toast('내 위치를 추적을 중지합니다.','warning');
+        //                 return;
+        //             }
+        //         }
 
-                // var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
-                //     tracking: true,
-                //     projection: baseProjection,
-                //     trackingOptions: {
-                //         maximumAge: 0,
-                //         enableHighAccuracy: true,
-                //         timeout: 600000
-                //     }
-                // });
-                geolocation.setTracking(true);
+        //         // var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
+        //         //     tracking: true,
+        //         //     projection: baseProjection,
+        //         //     trackingOptions: {
+        //         //         maximumAge: 0,
+        //         //         enableHighAccuracy: true,
+        //         //         timeout: 600000
+        //         //     }
+        //         // });
+        //         geolocation.setTracking(true);
     
-                // var accuracyFeature = new ol.Feature();
-                // geolocation.on('change:accuracyGeometry', function() {
-                //     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
-                // });
+        //         // var accuracyFeature = new ol.Feature();
+        //         // geolocation.on('change:accuracyGeometry', function() {
+        //         //     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+        //         // });
     
-                var positionFeature = new ol.Feature();
-                positionFeature.setStyle(new ol.style.Style({
-                    image: new ol.style.Circle({
-                        radius: 7,
-                        fill: new ol.style.Fill({
-                            color: '#ff0000'
-                        }),
-                        stroke: new ol.style.Stroke({
-                            color: '#fff',
-                            width: 2
-                        })
-                    })
-                }));
+        //         var positionFeature = new ol.Feature();
+        //         positionFeature.setStyle(new ol.style.Style({
+        //             image: new ol.style.Circle({
+        //                 radius: 7,
+        //                 fill: new ol.style.Fill({
+        //                     color: '#ff0000'
+        //                 }),
+        //                 stroke: new ol.style.Stroke({
+        //                     color: '#fff',
+        //                     width: 2
+        //                 })
+        //             })
+        //         }));
     
     
-                var cnt = 0;
-                geolocation.on('change:position', function() {
-                    // console.log('change:position');
-                    // util.toast('내 위치를 추적중 입니다.종료하시려면 내위치버튼을 한번 더 클릭하세요','warning',6000);
-                    var coordinates = geolocation.getPosition();
-                    positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
+        //         var cnt = 0;
+        //         geolocation.on('change:position', function() {
+        //             // console.log('change:position');
+        //             // util.toast('내 위치를 추적중 입니다.종료하시려면 내위치버튼을 한번 더 클릭하세요','warning',6000);
+        //             var coordinates = geolocation.getPosition();
+        //             positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
     
-                    // console.log('coord ' + coordinates);
-                    var html = [
-                        ++cnt + ' Position: ' + coordinates
-                    ].join('<br />');
-                    document.getElementById('info').innerHTML = html;
+        //             // console.log('coord ' + coordinates);
+        //             var html = [
+        //                 ++cnt + ' Position: ' + coordinates
+        //             ].join('<br />');
+        //             document.getElementById('info').innerHTML = html;
     
-                    map.getView().setCenter(coordinates);
+        //             map.getView().setCenter(coordinates);
     
-                });
+        //         });
     
-                var geolocation_source = new ol.source.Vector({});
+        //         var geolocation_source = new ol.source.Vector({});
     
-                // geolocation_source.addFeature(accuracyFeature);
-                geolocation_source.addFeature(positionFeature);
+        //         // geolocation_source.addFeature(accuracyFeature);
+        //         geolocation_source.addFeature(positionFeature);
     
-                var geolocation_layer = new ol.layer.Vector({
-                    map: map,
-                    title:"현위치",
-                    source: geolocation_source
-                });
+        //         var geolocation_layer = new ol.layer.Vector({
+        //             map: map,
+        //             title:"현위치",
+        //             source: geolocation_source
+        //         });
     
-                map.addLayer(geolocation_layer);
+        //         map.addLayer(geolocation_layer);
     
-                geolocation.on('error', function() {
-                    alert('geolocation error');
-                    // FIXME we should remove the coordinates in positions
-                });
+        //         geolocation.on('error', function() {
+        //             alert('geolocation error');
+        //             // FIXME we should remove the coordinates in positions
+        //         });
 
-                util.toast('내 위치를 지속적으로 표시합니다. 위성 및 통신상태에 따라 표시가 원할하지 않을수 있습니다. 잠시만 기다려주세요','warning',6000);
-                //심플팝업 초기화
-                $("#popup-content").empty();
-                $("#popup").hide();
-            }
+        //         util.toast('내 위치를 지속적으로 표시합니다. 위성 및 통신상태에 따라 표시가 원할하지 않을수 있습니다. 잠시만 기다려주세요','warning',6000);
+        //         //심플팝업 초기화
+        //         $("#popup-content").empty();
+        //         $("#popup").hide();
+        //     }
 
-            button.addEventListener('click', curPosition, false);
-            // button.addEventListener('touchstart', curPosition, false);
+        //     button.addEventListener('click', curPosition, false);
+        //     // button.addEventListener('touchstart', curPosition, false);
 
-            var element = document.createElement('div');
-            element.className = 'curPosition ol-unselectable ol-control';
-            element.appendChild(button);
+        //     var element = document.createElement('div');
+        //     element.className = 'curPosition ol-unselectable ol-control';
+        //     element.appendChild(button);
 
-            ol.control.Control.call(this, {
-                element: element,
-                target: options.target
-            });
-        },
+        //     ol.control.Control.call(this, {
+        //         element: element,
+        //         target: options.target
+        //     });
+        // },
         locManageControl: function(opt_options) {
 
             var potisionManage = function() {
@@ -3311,7 +3311,7 @@ var mapInit = function(mapId, pos) {
         }).extend([
             new MapUtil.controls.legendControl(),
             new MapUtil.controls.legendSppnControl(),
-            new MapUtil.controls.currentControl2(),
+            new MapUtil.controls.currentControl(),
             new MapUtil.controls.locManageControl(),
             new MapUtil.controls.locManageSpbdNmtgControl(),
             new MapUtil.controls.selectAdrdcControl(),
@@ -4106,7 +4106,6 @@ var mapInit = function(mapId, pos) {
         featureClone = null;
         map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
             if(layer == null){
-                // currentPositionLayerCheck();
                 return;
             }
             // console.log(feature, layer);
@@ -4124,7 +4123,7 @@ var mapInit = function(mapId, pos) {
             // }
 
             if(layer == null){
-                // currentPositionLayerCheck();
+                currentPositionLayerCheck();
                 return;
             }
 
@@ -4308,15 +4307,15 @@ var mapInit = function(mapId, pos) {
 
     var geolocation_source = new ol.source.Vector({});
 
-    geolocation_source.addFeature(accuracyFeature);
-    geolocation_source.addFeature(positionFeature);
+    // geolocation_source.addFeature(accuracyFeature);
+    // geolocation_source.addFeature(positionFeature);
 
     var geolocation_layer = new ol.layer.Vector({
         map: map,
         source: geolocation_source
     });
 
-    map.addLayer(geolocation_layer);
+    // map.addLayer(geolocation_layer);
 
     geolocation.on('error', function() {
         alert('geolocation error');

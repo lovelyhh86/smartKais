@@ -130,18 +130,18 @@ var util = {
         else if (app.historyStack.length == 1) {
             
             //위치추적 켜진 상태로 뒤로 갈 경우 위치 표시 끄기
-            if(map !=undefined){
-                var layerList = map.getLayers().getArray();
-                for(var layer in layerList){
-                    var title = layerList[layer].get('title');
-                    if(title == "현위치"){
-                        geolocation.setTracking(false);
-                        layerList[layer].getSource().clear();
-                        map.removeLayer(layerList[layer]);
-                        util.toast('내 위치를 추적을 중지합니다.','warning');
-                    }
-                }
-            }
+            // if(map !=undefined){
+            //     var layerList = map.getLayers().getArray();
+            //     for(var layer in layerList){
+            //         var title = layerList[layer].get('title');
+            //         if(title == "현위치"){
+            //             geolocation.setTracking(false);
+            //             layerList[layer].getSource().clear();
+            //             map.removeLayer(layerList[layer]);
+            //             util.toast('내 위치를 추적을 중지합니다.','warning');
+            //         }
+            //     }
+            // }
 
             app.historyStack.pop();
             util.slide_page('right', pages.workpage);
@@ -1167,18 +1167,4 @@ function legendCntClear(){
     $('.legend .rdpqW .total').text(0 + '건');
     $('.legend .entrc .total').text(0 + '건');
     $('.legend .spot .total').text(0 + '건');
-}
-
-function currendPostionRemove(){
-    var layerList = map.getLayers().getArray();
-
-    for (var i = 0; i < layerList.length; i++) {
-
-        if (layerList[i].get('title') == '현위치') {
-            geolocation.setTracking(false);
-            layerList[i].getSource().clear();
-            map.removeLayer(layerList[i]);
-            util.toast('내 위치를 추적을 중지합니다.','warning');
-        }
-    }
 }

@@ -246,11 +246,36 @@ android {
                 keyPassword = "__unset" // And these must be set to non-empty in order to have the signing step added to the task graph.
                 storeFile = null
                 storePassword = "__unset"
+                // 프로가드 활성화
+                minifyEnabled true
+
+                // 기본 프로가드 설정
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
         }
         buildTypes {
+            //기존 소스
+//            release {
+//                signingConfig signingConfigs.release
+//            }
+            //21.9.2 난독화 관련 소스
+            debug {
+                // 프로가드 활성화
+                minifyEnabled true
+
+                // 기본 프로가드 설정
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            }
+
             release {
-                signingConfig signingConfigs.release
+                // 프로가드 활성화
+                minifyEnabled true
+
+                // 기본 프로가드 설정
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
             }
         }
         addSigningProps(cdvReleaseSigningPropertiesFile, signingConfigs.release)
