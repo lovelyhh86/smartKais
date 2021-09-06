@@ -300,6 +300,10 @@ var MapUtil = {
 
             var curPosition = function() {
                 var coordinate = geolocation.getPosition();
+                if(coordinate == undefined){
+                    util.toast("위치조회를 실패했습니다.<br>잠시후 다시 시도해 주시기 바랍니다.","warning");
+                    return;
+                }
                 // map.getView().setCenter(coordinate);
                 // console.log(coordinate);
 
@@ -3164,15 +3168,15 @@ switch (mode) {
 }
 
  //현재위치 셋팅
- var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
-    tracking: true,
-    projection: baseProjection,
-    trackingOptions: {
-        maximumAge: 0,
-        enableHighAccuracy: true,
-        timeout: 600000
-    }
-});
+//  var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
+//     tracking: true,
+//     projection: baseProjection,
+//     trackingOptions: {
+//         maximumAge: 0,
+//         enableHighAccuracy: true,
+//         timeout: 600000
+//     }
+// });
 
 // 레이어 리스트(/** @type {json} */ )
 var layers, map;
@@ -4258,69 +4262,69 @@ var mapInit = function(mapId, pos) {
     });
 
     // Geolocation Control
-    var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ ({
-        //tracking: true,
-        projection: map.getView().getProjection(),
-        trackingOptions: {
-            maximumAge: 10000,
-            enableHighAccuracy: true,
-            timeout: 600000
-        }
-    }));
+    // var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ ({
+    //     // tracking: true,
+    //     projection: map.getView().getProjection(),
+    //     trackingOptions: {
+    //         maximumAge: 10000,
+    //         enableHighAccuracy: true,
+    //         timeout: 600000
+    //     }
+    // }));
 
 
-    var accuracyFeature = new ol.Feature();
-    geolocation.on('change:accuracyGeometry', function() {
-        accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
-    });
+    // var accuracyFeature = new ol.Feature();
+    // geolocation.on('change:accuracyGeometry', function() {
+    //     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+    // });
 
-    var positionFeature = new ol.Feature();
-    positionFeature.setStyle(new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 7,
-            fill: new ol.style.Fill({
-                color: '#3399CC'
-            }),
-            stroke: new ol.style.Stroke({
-                color: '#fff',
-                width: 2
-            })
-        })
-    }));
+    // var positionFeature = new ol.Feature();
+    // positionFeature.setStyle(new ol.style.Style({
+    //     image: new ol.style.Circle({
+    //         radius: 7,
+    //         fill: new ol.style.Fill({
+    //             color: '#3399CC'
+    //         }),
+    //         stroke: new ol.style.Stroke({
+    //             color: '#fff',
+    //             width: 2
+    //         })
+    //     })
+    // }));
 
 
-    var cnt = 0;
-    geolocation.on('change:position', function() {
-        console.log('change:position');
-        var coordinates = geolocation.getPosition();
-        positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
+    // var cnt = 0;
+    // geolocation.on('change:position', function() {
+    //     console.log('change:position');
+    //     var coordinates = geolocation.getPosition();
+    //     positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
 
-        console.log('coord ' + coordinates);
-        var html = [
-            ++cnt + ' Position: ' + coordinates
-        ].join('<br />');
-        document.getElementById('info').innerHTML = html;
+    //     console.log('coord ' + coordinates);
+    //     var html = [
+    //         ++cnt + ' Position: ' + coordinates
+    //     ].join('<br />');
+    //     document.getElementById('info').innerHTML = html;
 
-        map.getView().setCenter(coordinates);
+    //     map.getView().setCenter(coordinates);
 
-    });
+    // });
 
-    var geolocation_source = new ol.source.Vector({});
+    // var geolocation_source = new ol.source.Vector({});
 
-    // geolocation_source.addFeature(accuracyFeature);
-    // geolocation_source.addFeature(positionFeature);
+    // // geolocation_source.addFeature(accuracyFeature);
+    // // geolocation_source.addFeature(positionFeature);
 
-    var geolocation_layer = new ol.layer.Vector({
-        map: map,
-        source: geolocation_source
-    });
+    // var geolocation_layer = new ol.layer.Vector({
+    //     map: map,
+    //     source: geolocation_source
+    // });
 
-    // map.addLayer(geolocation_layer);
+    // // map.addLayer(geolocation_layer);
 
-    geolocation.on('error', function() {
-        alert('geolocation error');
-        // FIXME we should remove the coordinates in positions
-    });
+    // geolocation.on('error', function() {
+    //     alert('geolocation error');
+    //     // FIXME we should remove the coordinates in positions
+    // });
 
     var isCheck = true;
     $("#map_current").click(function() {
