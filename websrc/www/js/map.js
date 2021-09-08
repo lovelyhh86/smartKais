@@ -3168,15 +3168,15 @@ switch (mode) {
 }
 
  //현재위치 셋팅
-//  var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
-//     tracking: true,
-//     projection: baseProjection,
-//     trackingOptions: {
-//         maximumAge: 0,
-//         enableHighAccuracy: true,
-//         timeout: 600000
-//     }
-// });
+ var geolocation = new ol.Geolocation( /** @type {olx.GeolocationOptions} */ {
+    tracking: true,
+    projection: baseProjection,
+    trackingOptions: {
+        maximumAge: 0,
+        enableHighAccuracy: true,
+        timeout: 600000
+    }
+});
 
 // 레이어 리스트(/** @type {json} */ )
 var layers, map;
