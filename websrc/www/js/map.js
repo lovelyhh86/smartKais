@@ -556,6 +556,8 @@ var MapUtil = {
                         map.getView().setZoom(mapBaseConfig.zoom.buld);
                     }else if( id == DATA_TYPE.LOC){
                         map.getView().setZoom(mapBaseConfig.zoom.spgf);
+                    }else{
+                        map.getView().setZoom(9);
                     }
 
                 }
