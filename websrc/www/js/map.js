@@ -3357,24 +3357,28 @@ var mapInit = function(mapId, pos) {
 
     // 도로안내시설물위치 레이어
     // 건물 레이어
-    // var lyr_tl_spbd_buld = getFeatureLayer({
-    //     title: "건물",
-    //     // typeName: "tlv_spbd_buld",
-    //     typeName: "tlv_spbd_buld_skm",
-    //     dataType: DATA_TYPE.BULD,
-    //     // style: {
-    //     //     label: {
-    //     //         chkCondition: function(f, o) { return (parseInt(f.get(o.data[2])) == 0) },
-    //     //         format: ["{1}-{2}({0})", "{1}({0})"],
-    //     //         data: ["BUL_MAN_NO", "BULD_MNNM", "BULD_SLNO"],
-    //     //         textOffsetY: 0,
-    //     //         width: 3
-    //     //     }
-    //     // },
-    //     // maxResolution: MapUtil.setting.maxResolution,
-    //     viewProgress: false,
-    //     renderMode: 'image',
-    // });
+    var lyr_tlv_spbd_buld = getFeatureLayer({
+        title: "건물",
+        typeName: "tlv_spbd_buld",
+        // typeName: "tlv_spbd_buld_skm",
+        dataType: DATA_TYPE.BULD,
+        style: {
+            pointSt:"#ff0000"
+            ,polygonSt:"rgba(0, 0, 255, 0.1)"
+            ,lineSt:"rgba(160, 100, 0, 0.5)"
+            ,text : {
+                fillColor : 'rgba(0, 0, 60)'
+                ,strokColor : 'rgba(0, 0, 60)'
+                ,textOffsetX : 0
+                ,textOffsetY : 0
+                ,scale : 1.7
+            }
+            ,radius: 12
+        },
+        maxResolution: MapUtil.setting.maxResolution,
+        viewProgress: false,
+        renderMode: 'image',
+    });
     // 출입구 레이어
     var lyr_tl_spbd_entrc = getFeatureLayer({
         title: "출입구",
@@ -3694,7 +3698,7 @@ var mapInit = function(mapId, pos) {
     layers = {
         "loc": lyr_tlv_spgf_loc_skm
         ,"entrc": lyr_tl_spbd_entrc
-        // "buld": lyr_tl_spbd_buld,
+        ,"buld": lyr_tlv_spbd_buld
         ,"sppn": lyr_tl_sppn_panel
         ,"intrvl":lyr_tl_sprd_intrvl
         ,"crsrdp_p":lyr_tlv_sprd_crsrdp_p
@@ -3986,6 +3990,8 @@ var mapInit = function(mapId, pos) {
     map.on('click', function(event) {
 //    map.getViewport().addEventListener('click', function(event) {
 
+        $("#searchTextUi").hide();
+
         //거리측정 모드 일 경우 터치 이벤트 발생 무시
         var measureGbn = $("#measureGbn").val();
         if(measureGbn == "1"){
@@ -4118,7 +4124,7 @@ var mapInit = function(mapId, pos) {
             var title = layer.get("title");
             //격자레이어 클릭시 이벤트 종료
             // var typeName = layer.get("typeName");
-            if(title == "읍면동" || title == "격자레이어"){
+            if(title == "읍면동" || title == "격자레이어" || title == "건물"){
                 return;
             }
 
@@ -4177,7 +4183,7 @@ var mapInit = function(mapId, pos) {
 
                 //메뉴종류
                 var mapType = app.context.type;
-                if(mapType == 'map2'){
+                if(mapType != 'map'){
                     return;
                 }
 
@@ -4971,10 +4977,32 @@ function baseNumberMix(mn, sn) {
     return baseNum;
 }
 
-function moveToXy(x, y) {
+function moveToXy(x, y , searchText) {
     var cood = [x, y];
     // setPosition(cood);
     map.getView().setCenter(cood);
+
+    
+    //최근 검색어 처리
+    var searchText;
+    var localSeaarchTextList = new Array();
+    if(localStorage["searchText"]){
+        var searchTextList = localStorage["searchText"].split(',');
+        for(var i = 0 ; searchTextList.length > i ; i++){
+            if(searchTextList[i] == searchText){
+                return;
+            }
+        }
+        if(searchTextList.length > 5){
+            searchTextList.shift();
+        }
+        localSeaarchTextList.push(searchTextList);
+    }
+    
+    localSeaarchTextList.push(searchText);
+    localStorage["searchText"] = localSeaarchTextList;
+
+    
 
     // var zoom = map.getView().getZoom();
     // if (zoom < 14) {
@@ -5069,7 +5097,8 @@ $(document).on("pagecreate", pages.map.div, function() {
         $ul.html("");
         
         if (value && value.length > 2) {          
-            
+            $("#searchTextUi").hide();
+
             var koreanList = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
             for(var i in koreanList ){
                 if(value.charAt(value.length - 1) == koreanList[i]){
@@ -5109,7 +5138,12 @@ $(document).on("pagecreate", pages.map.div, function() {
                             util.isEmpty($(this).find("lnbrSlno").text()) ? "" : "-{0}".format($(this).find("lnbrSlno").text())
                         );
                         var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
-                        var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);              
+                        var jsCmd = "javascript:moveToXy({0},{1},{2})".format(xy[0], xy[1],"'{0} {1}{2}{3}'".format(
+                            $(this).find("rn").text(),
+                            $(this).find("buldMnnm").text(),
+                            util.isEmpty($(this).find("buldSlno").text()) ? "" : "-{0}".format($(this).find("buldSlno").text()),
+                            util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text())
+                        ));
                         html += "<li class='icon' onclick=\"" + jsCmd + "\">" + label + "</li>";            
                     });            
                     $ul.html(html);            
@@ -5140,6 +5174,47 @@ $(document).on("pagecreate", pages.map.div, function() {
     });
 });
 
+function latestSearch(){
+    $("#searchTextUi").html('');
+
+    var html = "<li onclick = 'setLatestSearchText({0})'><span id='rnAddr'>{1}</span></li>";
+
+    if(localStorage["searchText"]){
+        var searchTextList = localStorage["searchText"].split(',');
+        for(var i = 0 ; searchTextList.length > i ; i++){
+            
+            $("#searchTextUi").append(html.format(i,searchTextList[i]));
+            
+        }
+
+        $("#searchTextUi").append("<li><button onclick='deleteSearchText();' class='btnDelete'>삭제</button></li>");
+        $("#searchTextUi").listview("refresh");
+        $("#searchTextUi").show();
+        
+    }else{
+        return;
+    }
+
+    
+    // $("#searchTextUi").trigger("updatelayout");
+}
+function deleteSearchText(){
+    navigator.notification.confirm('최근 검색기록을 삭제하시겠습니까?', function(btnIndex) {
+        if (btnIndex == 1) {
+            localStorage.removeItem('searchText');
+            $("#searchTextUi").hide();
+        }
+    }, "알림", ["확인", "취소"]);
+    
+}
+
+function setLatestSearchText(index){
+    var searchTextList = localStorage["searchText"].split(',');
+    $("#autocomplete-input").val(searchTextList[index]);
+    autocompleteRd();
+    
+}
+
 function autocompleteRd(){
     // $("#autocomplete").on("filterablebeforefilter", function(e, data) {        
         var $ul = $("#autocomplete"),
@@ -5148,6 +5223,7 @@ function autocompleteRd(){
                       html = "";        
         $ul.html("");        
         if (value && value.length > 2) {          
+            $("#searchTextUi").hide();
             $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");          
             $ul.listview("refresh");          
             $.ajax({
@@ -5178,12 +5254,19 @@ function autocompleteRd(){
                             util.isEmpty($(this).find("lnbrSlno").text()) ? "" : "-{0}".format($(this).find("lnbrSlno").text())
                         );
                         var xy = decrypt($(this).find("nX").text(), $(this).find("nY").text());
-                        var jsCmd = "javascript:moveToXy({0},{1})".format(xy[0], xy[1]);              
+                        var jsCmd = "javascript:moveToXy({0},{1},{2})".format(xy[0], xy[1],"'{0} {1}{2}{3}'".format(
+                            $(this).find("rn").text(),
+                            $(this).find("buldMnnm").text(),
+                            util.isEmpty($(this).find("buldSlno").text()) ? "" : "-{0}".format($(this).find("buldSlno").text()),
+                            util.isEmpty($(this).find("bdNm").text()) ? "" : "({0})".format($(this).find("bdNm").text())
+                        ));
                         html += "<li class='icon' onclick=\"" + jsCmd + "\">" + label + "</li>";            
                     });            
                     $ul.html(html);            
                     $ul.listview("refresh");            
                     $ul.trigger("updatelayout");       
+
+                    $("#searchTextUi").hide();
                     
                 }else{
                     var label = "<span id='rnAddr' class='noResult'>결과가 없습니다.</span>";

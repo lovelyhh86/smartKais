@@ -291,3 +291,8 @@
  .mainBtn{height: 15em;}
 
  .txtCenter{text-align: center;}
+
+ .mainBtnDiv{width: 100%;text-align: right;position: relative;}
+ .mainLeft{float: left;left: 0;width: 50%;}
+
+ .mainRight{position: absolute;float: right;right: 0;width: 50%;}

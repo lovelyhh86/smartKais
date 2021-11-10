@@ -56,7 +56,7 @@
 .layerOnOffBtn { top: 22.5em; width: 9em; height: 3em;}
 .layerOnOffBtn2 { top: 8.5em; width: 9em; height: 3em;}
 .locManageSpgf { top: 25.5em; width: 9em; height: 3em;}
-.selectAdrdc { top: 28.5em; width: 9em; height: 3em;}
+.selectAdrdc { top: 2.5em; width: 9em; height: 3em;}
 
 .oldResearchCheck { top: 22.5em; width: 9em; height: 3em;}
 .selectSearchUser {top: 11.3em;width: 9em;height: 3em;}
@@ -183,6 +183,7 @@
 .btnPoint{display:inline-block; margin-left:10px; padding:10px 50px; background-color: #0071bf; color:#e6e6e6}
 .btnNormal{display:inline-block; margin-left:10px ; padding:10px 36px; background-color: #9d9ca1; color:#fff}
 .btnPossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #0071bf!important; color:#e6e6e6!important;text-shadow: none!important;}
+.btnDelete{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #bf0000!important; color:#e6e6e6!important;text-shadow: none!important;}
 .btnImpossible{display:inline-block; margin-bottom:10px; padding: 4px 8px; background-color: #9d9ca1; color:#e6e6e6}
 .blueBtn{background-color: blue; color: white;}
 .grayBtn{background-color: #9d9ca1; color: white;}

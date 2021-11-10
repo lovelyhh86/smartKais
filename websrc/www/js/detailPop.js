@@ -2241,12 +2241,12 @@ function modify(){
         }
         //교차로유형
         var instCrossCd = $("#instCrossCd").val();
-        if(instCrossCd == null){
-            navigator.notification.alert(msg.dontInsertNull.format("교차로유형"), function(){
-                util.dismissProgress();
-            }, '알림', '확인');
-            return;
-        }
+        // if(instCrossCd == null){
+        //     navigator.notification.alert(msg.dontInsertNull.format("교차로유형"), function(){
+        //         util.dismissProgress();
+        //     }, '알림', '확인');
+        //     return;
+        // }
 
         //안내시설형식(규격참고용)// 모든 시설물 공통
         var gdftyForm = $("#gdftyForm").val();

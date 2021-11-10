@@ -111,6 +111,7 @@
                     <li><a href="javascript:util.gotoTask('home')">HOME</a></li>
                     <li><a href="javascript:util.gotoTask('mapservice')">주소정보시설관리</a></li>
                     <li><a href="javascript:util.gotoTask('mapservice2')">지점번호관리</a></li>
+                    <li><a href="javascript:util.gotoTask('mapservice3')">상세주소관리</a></li>
                     <li><a href="javascript:util.gotoTask('minwon');">민원관리</a></li>
                     <li><a href="javascript:util.gotoTask('baseConfig');">설정</a></li>
                 </ul>
@@ -170,9 +171,14 @@
                     <!-- <img src="img/main/img_menu02_new.png" /> -->
                     <img src="img/main/img_menu02_1_new.png" />
                 </a>
-                <a href="javascript:util.gotoTask('minwon')" data-role="butt3on" data-shadow="false">
-                    <img src="img/main/img_menu03_on.png"  class=""/>
-                </a>
+                <div class="mainBtnDiv">
+                    <a href="javascript:util.gotoTask('mapservice3')" data-role="button" data-shadow="false" class="mainLeft">
+                        <img src="img/main/img_menu03_half_on.png"/>
+                    </a>
+                    <a href="javascript:util.gotoTask('minwon')" data-role="button" data-shadow="false" class="mainRight">
+                        <img src="img/main/img_menu04_half_on.png"/>
+                    </a>
+                </div>
             </div>
             <div class="pushCnt body">
                 <div class="minwon"></div>

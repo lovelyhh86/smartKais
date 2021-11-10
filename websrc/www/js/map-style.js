@@ -270,38 +270,40 @@ var defaultStyle = function (feature, resolution, options) {
             style = getStyle(options.dataType, styleOptions, features[index] ,mixStyle);
         }
     }else if(dataType == DATA_TYPE.BULD){
-        key = features[0].get("LT_CHC_YN");
-        var eqbManSn = feature.get('EQB_MAN_SN');
+        // key = features[0].get("LT_CHC_YN");
+        // var eqbManSn = feature.get('EQB_MAN_SN');
 
-        if(key == 1){
-            if(eqbManSn != 0){
-                if(styleEqbManSnList.length != 0){
-                    var gbn = true;
-                    $.each(styleEqbManSnList,function( index, element ) {
-                        if(eqbManSn == element){
-                            gbn = false;
-                        }
-                    })
-                    if(gbn){
-                        styleEqbManSnList.push(eqbManSn);
-                    }
-                }else{
-                    styleEqbManSnList.push(eqbManSn);
-                }
-            }
-        }else{
-            if(styleEqbManSnList.length != 0){
-                $.each(styleEqbManSnList,function( index, element ) {
-                    if(eqbManSn == element){
-                        key = 1;
-                    }
-                })
-            }
+        // if(key == 1){
+        //     if(eqbManSn != 0){
+        //         if(styleEqbManSnList.length != 0){
+        //             var gbn = true;
+        //             $.each(styleEqbManSnList,function( index, element ) {
+        //                 if(eqbManSn == element){
+        //                     gbn = false;
+        //                 }
+        //             })
+        //             if(gbn){
+        //                 styleEqbManSnList.push(eqbManSn);
+        //             }
+        //         }else{
+        //             styleEqbManSnList.push(eqbManSn);
+        //         }
+        //     }
+        // }else{
+        //     if(styleEqbManSnList.length != 0){
+        //         $.each(styleEqbManSnList,function( index, element ) {
+        //             if(eqbManSn == element){
+        //                 key = 1;
+        //             }
+        //         })
+        //     }
 
-        }
-        // 스타일 캐쉬 처리
-        style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
-        styleCache[options.dataType][key] = style;
+        // }
+        // // 스타일 캐쉬 처리
+        // style = (styleCache[options.dataType][key]) ? styleCache[options.dataType][key] : getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
+        // styleCache[options.dataType][key] = style;
+
+        style = getStyle(options.dataType, styleOptions, features[0] ,mixStyle);
     }else if(dataType == DATA_TYPE.INTRVL){
         var format = options.style.label.format;
         var text = options.style.label.text;
@@ -948,35 +950,23 @@ var styleEqbManSnList = new Array();
 // 건물 스타일
 var buildStyle = function (styleOptions, feature) {
     
-    var ltChcYn = feature.get('LT_CHC_YN');
-    
+    var buldDong = feature.get('BULD_DONG');
+
     var opt;
-    if(ltChcYn == "1"){
+    if(feature.get("BULD_DONG"))
         opt = {
             stroke: new ol.style.Stroke({
-                color: 'red',
+                color: styleOptions.lineSt,
                 width: 4
               }),
             fill: new ol.style.Fill({
-                color: 'rgba(255, 0, 0, 0.1)'
+                color: styleOptions.polygonSt
               })
         };
-    }else{
-        opt = {
-            stroke: new ol.style.Stroke({
-                color: 'blue',
-                width: 3
-                }),
-            fill: new ol.style.Fill({
-                color: 'rgba(0, 0, 255, 0.1)'
-                })
-        };
-        
-    }
 
     
-    if( styleOptions.label._text)
-        opt.text = createTextStyle(styleOptions);
+    if(feature.get("BULD_DONG"))
+            opt.text = createTextStyle_custom(feature.get("BULD_DONG"),styleOptions);
     
     return new ol.style.Style(opt);
 };

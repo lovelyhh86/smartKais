@@ -266,6 +266,11 @@ var util = {
                 url = pages.map;
                 param.type = "map2";
                 break;
+            case "mapservice3":
+                app.historyStack = [];
+                url = pages.map;
+                param.type = "map3";
+                break;
             case "minwon":
                 url = pages.minwonListPage;
                 util.pushCount('minwon', 0);
@@ -691,7 +696,8 @@ function layerToggle(context){
             //위치이동
             $(".locManageSpgf").toggle(true);
             //상세주소
-            $(".selectAdrdc").toggle(true);
+            $(".selectAdrdc").toggle(false);
+            
             
             //지도기능버튼
             $(".ol-rotate").toggle(true);
@@ -743,7 +749,7 @@ function layerToggle(context){
             // if(mapZoom <= 12){
             //     map.getView().setZoom(13);
             // }
-        } else {
+        } else if(context.type == "map2") {
             $(".legend.spgf").toggle(false);
             $(".legend.spot").toggle(true);
 
@@ -765,6 +771,7 @@ function layerToggle(context){
             //상세주소
             $(".selectAdrdc").toggle(false);
 
+            //지도기능버튼
             $(".ol-rotate").toggle(true);
             $(".curPosition").toggle(true);
             $(".returnZoom").toggle(true);
@@ -781,6 +788,31 @@ function layerToggle(context){
             // map.addLayer(layers.eqout);
             // map.addLayer(layers.taxist);
             
+        } else if(context.type == "map3") {
+            $(".legend.spgf").toggle(false);
+            $(".legend.spot").toggle(false);
+            
+            map.addLayer(layers.buld);
+
+            //지점번호판 목록
+            $(".selectSppnList").toggle(false);
+            //주소정보시설목록
+            $(".selectResearch").toggle(false);
+            //레이어관리
+            $(".layerOnOffBtn").toggle(false);
+            //레이어관리2
+            $(".layerOnOffBtn2").toggle(false);
+            //위치이동
+            $(".locManageSpgf").toggle(false);
+            //상세주소
+            $(".selectAdrdc").toggle(true);
+
+            //지도기능버튼
+            $(".ol-rotate").toggle(true);
+            $(".curPosition").toggle(true);
+            $(".returnZoom").toggle(true);
+            $(".refreshMap").toggle(true);
+            $(".measure").toggle(true);
         }
 
         setMapResolotion();
@@ -814,6 +846,8 @@ function removeLayers(type){
 
         map.removeLayer(layers.emd);
         map.removeLayer(layers.hemd);
+
+        map.removeLayer(layers.buld);
         
         $("#moveInfo").hide();
     // }
@@ -1142,6 +1176,10 @@ function setDeviceCoodi(){
             $("#posYDevice").text(devicePos[1]);
             $("#posXDevice").attr('class','red');
             $("#posYDevice").attr('class','red');
+
+            var currentPanLocationNumber = getKpnLabel(devicePos[0],devicePos[1],10);
+            $("#currentPanLocationNumber").text(currentPanLocationNumber);
+            $("#currentPanLocationNumber").attr('class','red');
         }else{
             var message = "점검위치 조회(필수아님)";
             $("#posXDevice").text(message);

@@ -158,9 +158,10 @@
     </div>
     <div id="search">
         <form class="ui-filterable" >
-            <input id="autocomplete-input" data-type="search" placeholder="도로명주소 검색(3글자 이상)">
+            <input id="autocomplete-input" data-type="search" placeholder="도로명주소 검색(3글자 이상)" onclick="latestSearch()">
         </form>
         <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input" class="searchList"></ul>
+        <ul id="searchTextUi" data-role="listview" data-inset="true" data-filter="true" data-input="#autocomplete-input" class="searchList"></ul>
         <img class="searchIcon" src="image/btn_search.png" onclick="autocompleteRd()"></img>
     </div>
     <div id="popup" class="mapWrap">

@@ -51,6 +51,8 @@ legend, .ui-input-text input, .ui-input-search input {color: inherit;text-shadow
 #autocomplete{width:100%; position: absolute; top:6.3em;}
 #autocomplete-input{padding-left: 15px;}
 
+#searchTextUi{width:100%; position: absolute; top:6.3em; display: none;}
+
 /*.ui-input-search:after{left: 46.5em} */
 .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {text-shadow: none;}
 /*.ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {border: 0 none;	text-shadow: none;}*/
@@ -62,6 +64,8 @@ legend, .ui-input-text input, .ui-input-search input {color: inherit;text-shadow
     /* background: #fff url(../image/btn_search.png) 29.5em 11px no-repeat; background-size: 51px 33px;  */
     border-left: 0 none;font-size:1.5em ; text-indent: -9999px;}
 .searchIcon{    position: absolute; top: 4em; right: 0.5em; width: 3em;};
+#searchTextUi .ui-listview>.ui-li-static { border-color: #c7d7e6; overflow: hidden; padding-left: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important}
+#searchTextUi button{right: 5em; text-align: left; position: absolute;}
 ul.searchList{padding: 0; border:0 none; margin: 0}
 ul.searchList li{width:100%; height: 40px; border-bottom: 1px solid #c7d7e6; overflow: hidden;}
 .ui-listview>.ui-li-static { padding-left: 3em; border-color: #c7d7e6; overflow: hidden; padding-top: 0.7em;padding-bottom: 1.2em}
