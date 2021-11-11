@@ -950,8 +950,6 @@ var styleEqbManSnList = new Array();
 // 건물 스타일
 var buildStyle = function (styleOptions, feature) {
     
-    var buldDong = feature.get('BULD_DONG');
-
     var opt;
     if(feature.get("BULD_DONG"))
         opt = {
@@ -965,8 +963,8 @@ var buildStyle = function (styleOptions, feature) {
         };
 
     
-    if(feature.get("BULD_DONG"))
-            opt.text = createTextStyle_custom(feature.get("BULD_DONG"),styleOptions);
+    // if(feature.get("BULD_DONG"))
+            // opt.text = createTextStyle_custom(feature.get("BULD_DONG"),styleOptions);
     
     return new ol.style.Style(opt);
 };
